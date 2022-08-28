@@ -7,9 +7,17 @@
 	// jesli wszystkie pola sa ustawione i nie sa puste
 	if(((isset($_POST['stare_haslo_edit'])) && (isset($_POST['nowe_haslo_edit'])) && (isset($_POST['powtorz_haslo_edit']))) && ((!empty($_POST['stare_haslo_edit'])) && (!empty($_POST['nowe_haslo_edit'])) && (!empty($_POST['powtorz_haslo_edit'])))) 
 	{
-		$stare_haslo = $_POST['stare_haslo_edit'];
+		
+		//echo "<br> md5 -> <br>";		
+
+		//$stare_haslo =  md5($_POST['stare_haslo_edit']); // Powinienem to jakoś zakodować ? Zaszyfrować ? Tak aby nie było dostępne, bo ta zmienna trzyma jawnie hasło
+		//$nowe_haslo =  md5($_POST['nowe_haslo_edit']);
+		//$powtorz_haslo =  md5($_POST['powtorz_haslo_edit']);		
+
+		$stare_haslo = $_POST['stare_haslo_edit']; // Powinienem to jakoś zakodować ? Zaszyfrować ? Tak aby nie było dostępne, bo ta zmienna trzyma jawnie hasło
 		$nowe_haslo = $_POST['nowe_haslo_edit'];
-		$powtorz_haslo = $_POST['powtorz_haslo_edit'];		
+		$powtorz_haslo =$_POST['powtorz_haslo_edit'];		
+
 
 		$stare_haslo = htmlentities($stare_haslo, ENT_QUOTES, "UTF-8"); 
 		$nowe_haslo = htmlentities($nowe_haslo, ENT_QUOTES, "UTF-8"); 
