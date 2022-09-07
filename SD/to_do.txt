@@ -1,0 +1,5 @@
+to_do :
+
+-> 1. Stworzyć Kompletną Specyfikację Wymagań Funkcjonalnych - (Dokument Word).
+
+	- Wymagania Funkcjonalne - Dokument (Word).
