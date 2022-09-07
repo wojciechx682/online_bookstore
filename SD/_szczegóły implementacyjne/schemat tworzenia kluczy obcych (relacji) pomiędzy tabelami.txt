@@ -1,0 +1,5 @@
+
+
+	1. Wejdź to tabeli podrzędnej ("dziecka") - w której znajduje się KLUCZ OBCY (czyli KP innej tabeli)
+
+	2. wewnątrz niej ustaw relacje typu CASCADE, wybierając ten klucz obcy, w tabeli rodzica

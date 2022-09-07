@@ -1,0 +1,200 @@
+- Jak wygląda proces dyplomowania ? 
+	- Zasady procesu dyplomowania.
+		(regulamin studiów)
+                 	- Praca dyplomowa,
+		 	- Egzamin dyplomowy
+
+- Jak napisać pracę dyplomową ?
+	- Jak zacząć pisać pracę dyplomową ?
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+to_do : 
+- Obejrzeć (powtórzyć) materiały od Zelenta : 
+"Poznaj technologie webowe" -> https://www.youtube.com/watch?v=1M0YXFW31hg
+HTML (?) 1 2 3 4 5 6 7 
+CSS  (?) 1 2 3 4 5 6
+JS  !	 1 2 3 4 5 6 7 
+PHP	 - ! Powtórzyć materiał z odcinków - notatki z OneNote !, przeanalizować pliki / skrypty (HP-PC1 ? Laptop ? )  
+1 ✓ 
+2 ✓ 
+3 ✓  <- block try ... catch ✓ (zaimplementować ✓ ...)
+4 ✓
+5    Obejrzeć PHP5  - PDO ? 
+
+Zdecydować się jak programować (?) -> czysty PHP? , PDO ? -> Obiektowy ! (MySQLi)
+
+PDO - umożliwia tworzenie zapytań parametryzowanych. Większy poziom bezpieczeństwa.
+
+ALE mysqli() również umożliwia bezpieczeństwo poprzez funkcję mysqli_real_escape_strings() !!!
+
+https://stackoverflow.com/questions/4472285/php-should-i-bother-learning-mysql-extension-or-just-learn-pdo
+http://phpmajster.blogspot.com/2015/05/php-pdo-podstawy-3-bindowanie.html
+
+(PD) -> Uzasadnienie tego, dla czego nie korzystałem przy projektowaniu aplikacji z modelu MVC ( bo, należy go stosowac dla dużych aplikacji).
+
+MySQL    1 ✓ 2 ✓ 3 ✓ 4 5 6
+-------------------------------------------------------------------------
+-  ✓ (!) Opracować / Przygotować formatkę pracy dyplomowej
+                            (kartę tematu)
+	- Temat,
+	- Cel
+	- Zakres
+
+! - Zrobić research (księgarni - aplikacji internetowych). -> wymagania funkcjonalne, podobne rozwiązania, ...
+	przegląd istniejących rozwiązań. (podobne, istniejące platformy)
+        - Jakie są potrzeby / zainteresowania ?
+	jakie rozwiązania stosują tego typu aplikacje ?
+	JAKIE MAJĄ FUNKCJONALNOŚCI ?  
+
+! - Przygotować - skończyć - listę wymagań funkcjonalnych (funkcjonalności - zdefiniować i zrealizować)
+                                 (research).
+
+- Szyfrowanie połączenie (na domenie) - odcinek pasja infromatyki - SSL
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+- Przygotować spis literatury (5 pozycji).
+
+	- Jak korzystać ze źródeł podczas pisania pracy dyplomowej ? 
+
+	---
+
+	- Poczytać o temacie pracy : 
+
+		„Jak zaprojektować aplikację internetową” ( -> źródła - do spisu literatury )
+
+		Wykazac dlaczego ta akurat technologa jest optymalna. ( Możliwości ma takie i takie - na podstawie źródeł)
+			
+		Uzasadnienie tego, dlaczego zdecydowaliśmy się na ten język.
+
+			Opis środowiska pracy, z czego korzystaliśmy. Grafika (Figma), Back-end (PHP)
+		Bazy danych ( dlaczego taka struktura... )
+
+-----------------------------------------------------------------------------------------------------------------------
+
+- pisanie pierwszych rozdziałów: rozdziały teoretyczne.
+
+- Postepy w resarcu ? Literaturze ? Temacie ?
+  
+	Poczytac o temacie pracy.
+
+	Poszukać źródeł
+
+-> ! Zaplanować, CO ZROBIĆ aby stworzyć ten projekt aplikacji ksiegarni. 
+
+"zbudować księgarnię internetową od zera (PHP, MySQL)."
+
+"pomału przymierzać się do części związanej z tematyką pracy. 
+jakie są potrzeby ? zainteresowania ? funkcjonalności ? przegląd istniejących rozwiązań."
+
+"założeniem pr. inż. jest udowodnienie że potrafimy zostosować narzędziea informatyczne do stworzenia aplikacji/systemu".
+
+"wynikiem końcowym może być prototyp aplikacji (pokazać że coś działa, podpiąć front-end, back-end, ..." - taki który zawiera pewne funkcjonalności.
+
+-----------------------------------------------------------------------------------------------------------------------
+SPIS LITERATURY : 
+(5 pozycji) 
+
+		Wykazać, dlaczego ta akurat technologa jest optymalna. (rozdział 2).
+		Możliwości ma takie i takie - na podstawie źródeł.
+
+		Uzasadnienie tego, dlaczego zdecydowaliśmy się na ten język. (rozdział 2).
+
+		Opis środowiska pracy, z czego korzystaliśmy. 
+			Grafika (Figma), Back-end (PHP, MySQL)
+			Bazy danych (relacyjne, MySQL -  dlaczego taka struktura... )
+
+		Pokazac dobre strony danych technologi.
+
+- Źródła z wikipedii (EN)
+- Źródła internetowe (linki) :
+	- Manuale, 
+	- Dokumentacja, 
+		- opisy technologiczne,
+
+- Artykuły
+
+- Książki 
+
+	- Literatura techniczna - dotycząca podjętego tematu
+
+	- Literatura naukowa
+
+- Publikacje
+
+-------------------------------------------------------------
+Technologie : HTML, CSS, JS, PHP, MySQL
+
+Narzędzia : Figma, Domena/Hosting.
+
+Dokumentacja, Manuale - PHP, MySQL
+
+„Jak zaprojektować aplikację internetową” ( -> źródła - do spisu literatury )
+- pozycje literaturowe na ten temat 
+
+"Projektowanie bazy danych - źródła internetowe" :
+
+- ...
+  ...
+
+"Bezpieczeństwo aplikacji webowych" - źródła literaturowe na ten temat
+
+https://helion.pl/pobierz-fragment/bezapi/pdf   <- sam spis treści, ale tematy zawierają zagadnienia związane z bezpieczeństwem
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+
+Rozdział 1.
+
+------------------------------------------------------------------------------------
+
+O czym pisać w tym rozdziale ? 
+
+->
+
+"Projekt i implementacja księgarni internetowej."
+
+Ogólny opis tematyki pracy: 
+
+	Opis tematu, czego dotyczy
+	...
+
+	Wykorzystanie narzędzi i technologii informatycznych w celu stworzenia aplikacji internetowej, która ...
+
+Wprowadzenie w temat, opis teoretyczny.
+
+...
+
+Sformułowanie celu, opis sposobu realizacji celu.
+
+...
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Rozdział 1.
+
+Ogólny opis tematyki pracy. 		jest to rozdział opisujący tematykę pracy (projektu)
+	Opis tematu, czego dotyczy
+
+	pierwsze rozdział -> rozdział teoretyczne.
+
+Wprowadzenie w temat, opis teoretyczny.
+
+Opis tematu, czego dotyczy
+
+Sformułowanie celu, opis sposobu realizacji celu. (projektu)
+
+---------------------------------------------------------------------------------------------
+źródła - Literatura; rozdział 1 :
+
+https://pl.wikipedia.org/wiki/Aplikacja_internetowa (przypisy na dole)
+	https://highsolutions.pl/blog/wpis/php-to-jezyk-programowania-na-ktorym-warto-oprzec-swoj-biznes
+
+
+
+
+
+

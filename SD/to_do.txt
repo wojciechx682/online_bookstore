@@ -3,3 +3,19 @@ to_do :
 -> 1. Stworzyć Kompletną Specyfikację Wymagań Funkcjonalnych - (Dokument Word).
 
 	- Wymagania Funkcjonalne - Dokument (Word).
+								Research
+	  Funkcjonalności (zdefiniować i zrealizować)		
+	
+-> 2. Przejrzeć OneNote (php 1, 2, 3, ...)
+
+      - Powtórzyć materiał z odcinków (1, 2, 3, ...)            Pliki + Skrypty
+
+      Przejrzeć Notatki Papierone (php)
+--------------------------------------------------------------------------------------------------------
+ -> Zrobić research (księgarni - aplikacji internetowych). 
+    -> wymagania funkcjonalne, 		podobne rozwiązania, ...
+
+	przegląd istniejących rozwiązań. (podobne, istniejące platformy)
+        	- Jakie są potrzeby / zainteresowania ?
+	jakie rozwiązania stosują tego typu aplikacje ?
+	JAKIE MAJĄ FUNKCJONALNOŚCI ?  
