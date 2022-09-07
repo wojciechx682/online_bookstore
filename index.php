@@ -12,8 +12,6 @@
 		unset($_SESSION['account_error']);
 		//exit();
 	}	*/	
-
-
 ?>
 
 <!DOCTYPE HTML>
@@ -35,7 +33,6 @@
 </head>
 
 <body>	
-	<br>
 		
 	<div id="header_container">
 		
