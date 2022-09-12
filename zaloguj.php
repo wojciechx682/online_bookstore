@@ -2,6 +2,13 @@
 
 	session_start();
 	
+	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) 
+	{
+		header("Location: index.php");
+		exit();
+	}
+
+
 	include_once "functions.php"; // _once - sprawdzi, czy ten plik nie został zaincludowany wcześniej
 
 	//echo $_SESSION['login'] . '<br>';
@@ -12,7 +19,6 @@
 		unset($_SESSION['account_error']);
 		//exit();
 	}*/
-
 	
 ?>
 
@@ -326,14 +332,13 @@
 					echo "<b>".$kategoria."</b>";
 					echo "<hr>";					
 				}
-				
-
-
 			?>
 
 		</div>
 
 		<div id="content">
+
+			<!-- Formularz Logowania -->
 
 			Księgarnia online<br><br>
 			
