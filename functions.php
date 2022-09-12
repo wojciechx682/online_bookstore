@@ -208,6 +208,10 @@
 	{
 		$row = $result->fetch_assoc();
 
+		//echo '$_POST[login] = ' . $_POST['login'] . "<br>";
+		//echo '$_POST[haslo] = ' . $_POST['haslo'] . "<br>";		
+		//exit();
+
 		// WERYFIKACJA HASZA : (czy hasze hasła sa identyczne)
 		// porównanie hasha podanego przy logowaniu, z hashem zapisanym w bazie danych : 		
 
