@@ -192,7 +192,6 @@
 		$result->free_result();
 	}
 
-
 	function verify_password($result)
 	{
 		while ($row = $result->fetch_assoc()) 
@@ -202,6 +201,66 @@
 		}
 
 		$result->free_result();
+	}
+
+	// skrypt logowania (logowanie.php) - logowanie, weryfikacja hasła :
+	function log_in($result)
+	{
+		$row = $result->fetch_assoc();
+
+		// WERYFIKACJA HASZA : (czy hasze hasła sa identyczne)
+		// porównanie hasha podanego przy logowaniu, z hashem zapisanym w bazie danych : 		
+
+		$haslo = $_POST['haslo'];			
+
+		if(password_verify($haslo, $row['haslo'])) // true -> hasze sa takie same (podano poprawne hasło do konta)
+		{	
+			$_SESSION['zalogowany'] = true;			
+			$_SESSION['id'] = $row['id_klienta'];
+			$_SESSION['imie'] = $row['imie'];
+			$_SESSION['nazwisko'] = $row['nazwisko'];
+			$_SESSION['miejscowosc'] = $row['miejscowosc'];
+			$_SESSION['ulica'] = $row['ulica'];
+			$_SESSION['numer_domu'] = $row['numer_domu'];
+			$_SESSION['kod_pocztowy'] = $row['kod_pocztowy'];
+			$_SESSION['kod_miejscowosc'] = $row['kod_miejscowosc'];
+			$_SESSION['wojewodztwo'] = $row['wojewodztwo'];
+			$_SESSION['kraj'] = $row['kraj'];
+			$_SESSION['PESEL'] = $row['PESEL'];
+			$_SESSION['data_urodzenia'] = $row['data_urodzenia'];
+			$_SESSION['telefon'] = $row['telefon'];
+			$_SESSION['email'] = $row['email'];
+			$_SESSION['login'] = $row['login'];			
+			
+			unset($_SESSION['blad']);
+			
+			// pozbywamy się z pamięci rezultatu zapytania
+			$result->free_result(); // free() // close();				
+			
+			// przekierowanie do strony index.php :
+			header('Location: index.php');	
+			exit();		
+		}
+		else  // dobry login, złe hasło
+		{		
+			// błędne dane logowanie -> przekierowanie do index.php + komunikat
+			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy login lub hasło!</span>';
+			header('Location: zaloguj.php');	
+			exit();					  
+		}
+
+	}
+
+	function get_var_name($var) {
+
+	    foreach($GLOBALS as $var_name => $value) 
+	    {
+	        if ($value === $var) 
+	        {
+	            return $var_name;
+	        }
+	    }
+	    return false;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
@@ -246,10 +305,14 @@
 					{
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
 						
-							$num_of_rows = $result->num_rows; // ilość zwróconych wierszy				
+							$num_of_rows = $result->num_rows; // ilość zwróconych wierszy	
+
 							if($num_of_rows>0) // znaleziono rekordy ...
-							{
-								$fun($result); // wywołanie zewnętrznej funkcji					
+							{							
+
+								$fun($result); // wywołanie zewnętrznej funkcji		
+
+								// wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
 							}
 							else  // brak zwróconych rekordów
 							{				
@@ -257,15 +320,19 @@
 											//$_SESSION['blad'] = '<span style="color: red">Brak wyników</span>';
 											//header('Location: index.php');
 											//echo '<script>alert("functions - 436");</script>';	
-								echo '<h3>Brak wyników</h3>';
-								//exit();		  
-							}	
-						
-						/*else // INSERT, UPDATE ...
-						{
-							$result->free_result();		
-						}*/
-						
+								
+								if (get_var_name($value) == "login") // jeśli to było logowanie - (wywołanie funkcji query() z logowanie.php)
+								{
+									$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy login lub hasło!</span>';
+									header('Location: zaloguj.php');	
+									exit();		
+								}
+								else {
+									echo '<h3>Brak wyników</h3>';
+								}	
+								  
+							}			
+											
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
 					}
 					else 
@@ -279,7 +346,7 @@
 				else  // INSERT, UPDATE ...
 				{
 
-					//echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";									
+					//echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";						
 					
 					// Użycie funkcji mysqli_real_escape_string na tablicy parametrów (wartosci tj. imie, nazwisko, hasło ...)
 
