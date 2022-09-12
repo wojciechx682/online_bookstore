@@ -4,6 +4,8 @@
 
 	include_once "functions.php";
 
+	// Do czego służy ten plik ? Zmienić jego nazwę na change password ?
+
 	// jesli wszystkie pola sa ustawione i nie sa puste
 	if(((isset($_POST['stare_haslo_edit'])) && (isset($_POST['nowe_haslo_edit'])) && (isset($_POST['powtorz_haslo_edit']))) && ((!empty($_POST['stare_haslo_edit'])) && (!empty($_POST['nowe_haslo_edit'])) && (!empty($_POST['powtorz_haslo_edit'])))) 
 	{
