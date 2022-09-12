@@ -16,7 +16,16 @@
 	// sprawdzamy, czy zmienne login i hasło zostały ustawione (CZY ISTNIEJĄ!) :
 	// czy zmienne istnieją - (mogą być puste)
 
-	if((!isset($_POST['login'])) || (!isset($_POST['haslo']))) 
+
+
+	/*if( ((!isset($_POST['login'])) || (!isset($_POST['haslo'])))
+		|| ( ((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true"))  ) 
+	) */
+
+
+	if( ((!isset($_POST['login'])) || (!isset($_POST['haslo'])))
+		|| ( ((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true"))  ) // Uniemożliwi zalogowanie, poprzez wysłanie żądania POST (z loginem i hasłem) - wtedy, gdy już jesteśmy zalogowani. Np. jeśli zalogowany jest user1, to user2 nie będzie się mógł zalogować
+	) 
 	{
 		// przekierowanie do index, jeśli weszliśmy bezpośrednio pod adres "logowanie.php"
 		header('Location: index.php');  

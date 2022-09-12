@@ -98,7 +98,7 @@
 	
 	if((isset($_POST['test_html_ent'])) && (!empty($_POST['test_html_ent'])))
 	{
-		$test_html_ent = $_POST['test_html_ent'];
+		$test_html_ent = $_POST['test_html_ent']; 
 	
 		echo "<br>test_html_ent = $test_html_ent";
 		
