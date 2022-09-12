@@ -6,7 +6,7 @@
 	
 	//echo $_SESSION['login'] . '<br>';
 
-	if(isset($_SESSION['zalogowany']))
+	/*if(isset($_SESSION['zalogowany']))
 	{
 		//echo '<br>'.$_SESSION['account_error'];
 		unset($_SESSION['account_error']);
@@ -19,7 +19,13 @@
 		echo '<script>alert("Musisz być zalogowanym aby przeglądać swoje konto!")</script>';
 		//exit();
 		unset($_SESSION['account_error']);
-	}	
+	}	*/
+
+	if(!(isset($_SESSION['zalogowany'])))
+	{
+		header('Location: index.php');
+		exit();
+	}
 
 	// takiego ifa, należy dodać do każdej podstrony do której ma dostęp zalogowany użytkownik
 	/*if(!isset($_SESSION['zalogowany']))
