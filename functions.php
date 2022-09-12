@@ -3,6 +3,21 @@
 	// Funkcje php - połączenie z bazą danych, 
 	//			     wysyłanie zapytań (query) do bazy danych	
 	
+
+	// Blokada dostępu do adresu "localhost/../functions.php" przez URL
+	$currentPage = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+	if ($_SERVER['REQUEST_METHOD'] == "GET" && strcmp(basename($currentPage), basename(__FILE__)) == 0)
+	{
+	    http_response_code(404);
+	    //include('index.php'); // provide your own 404 error page
+	    header('Location: index.php');
+
+	    die(); /* remove this if you want to execute the rest of
+	              the code inside the file before redirecting. */
+	}
+
+
 	function get_categories($result) // wypisuje elementy listy <li> - wewnątrz kategorii (top_nav)
 	{
 		$cat = "Wszystkie";

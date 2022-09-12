@@ -302,7 +302,7 @@
 						echo '<script> display_nav(); </script>'; 
 						echo '<div id="content_books">';
 
-						$search_value = $_GET['input_search'];						
+						$search_value = $_GET['input_search'];				
 						
 						$search_value = htmlentities($search_value, ENT_QUOTES, "UTF-8"); // html entities = encje html'a // Sanityzacja danych wprowadzonych od użytkownika :  	<script>alert("yey");</script>	
 						
