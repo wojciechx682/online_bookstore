@@ -303,11 +303,11 @@
 
 		require "connect.php";
 
-		mysqli_report(MYSQLI_REPORT_STRICT); // ?
+		mysqli_report(MYSQLI_REPORT_STRICT);  // sposób raportowania błędów -> MYSLQI_REPORT_STRICT - zamiast warningów, chcemy rzucać exception
 
 		try 
 		{			
-			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);				
+			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);			
 			 
 			if($polaczenie->connect_errno!=0) // błąd połączenia
 			{			
@@ -360,7 +360,7 @@
 						//echo $_SESSION['blad'];
 					}
 
-					$polaczenie->close();
+					$polaczenie->close(); // Czy przenieść to poniżej aby nie pisać tego dwa razy ?
 				}
 				else  // INSERT, UPDATE ...
 				{
