@@ -270,6 +270,17 @@
 
 	}
 
+	function register_verify_email($result) // rejestracja (rejestracja_skrypt.php) - weryfikacja czy istnieje taki email
+	{
+		$_SESSION['wszystko_OK'] = false;
+		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
+	}
+
+	function register($result)
+	{
+
+	}
+
 	function get_var_name($var) {
 
 	    foreach($GLOBALS as $var_name => $value) 
@@ -340,15 +351,26 @@
 											//header('Location: index.php');
 											//echo '<script>alert("functions - 436");</script>';	
 								
-								if (get_var_name($value) == "email") // jeśli to było logowanie - (wywołanie funkcji query() z logowanie.php)
+								if ((get_var_name($value) == "email") && ($fun != "register_verify_email")) // jeśli to było logowanie - (wywołanie funkcji query() z logowanie.php)
 								{
+									// to sie wykona tylko dla skryptu logowania (logowanie.php)
+
 									$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>';
 									header('Location: zaloguj.php');	
 									exit();		
+
 								}
-								else {
+								/*elseif(($fun == "register_verify_email"))  // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php)
+								{
+
+									// ... 
+
+								}	*/
+								else 
+								{ 
 									echo '<h3>Brak wyników</h3>';
-								}	
+								}
+
 								  
 							}			
 											
@@ -383,6 +405,15 @@
 						//echo '<script>alert("udało się zmienić dane :)")</script>';
 						
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+						if(($_SESSION['wszystko_OK'] == true))
+						{
+							$_SESSION['udanarejestracja'] = true;
+							header('Location: zaloguj.php');
+						}
+
+
+
 					}
 					else 
 					{

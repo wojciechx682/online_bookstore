@@ -562,7 +562,8 @@
 
 			<!-- Formularz rejestracji -->	
 			
-			<form method="post">
+			<!-- <form method="post"> -->
+			<form method="post" action="rejestracja_skrypt.php">
 				<!-- brak atrybutu action - ten sam plik rejestracja.php przetwarza formularz		
 				bez atrybutu action, domyślnie - ten sam plik otrzyma post'em przesłane dane 
 								WALIZACJA DANYCH W W TYM SAMYM PLIKU ! (rejestracja.php) -->
