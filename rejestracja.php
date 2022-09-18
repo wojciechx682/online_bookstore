@@ -2,11 +2,7 @@
 
 	session_start();
 	
-	/*if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == true))
-	{		
-		header('Location: gra.php'); // jeśli jesteśmy zalogowani, przejdź do pliku gra.php :		
-		exit(); // kończymy działanie skryptu ! 
-	}*/
+	
 
 	include_once "functions.php";
 
@@ -17,58 +13,36 @@
 	(isset($_POST['haslo1'])) &&
 	(isset($_POST['haslo2'])) */
 
-	if( (isset($_POST['email']))
-		
-	) 
+	if( (isset($_POST['email'])) ) 
 	{
 		// zmienna $_POST['email'] istnieje ? -> Oznacza to, że nastąpił submit formularza.
-		// WYSTARCZY SPRAWDZIĆ TYLKO JEDNO POLE Z FORMULARZA, ale można ten warunek rozbudować
+		// WYSTARCZY SPRAWDZIĆ TYLKO JEDNO POLE Z FORMULARZA, ale można ten warunek rozbudować		
+		//////////////////////////////////////////////////////////////////
+		// 1. WALIDACJA DANYCH Z FORMULARZA : 
+		// Należy dodać walidację do wszystkich pól formularza rejestracji ! 
 		
-		/*echo "<br><br>";
-		echo "Twoje dane z formularza : <br>";		
-		echo $_POST['nick']; echo "<br>";
-		echo $_POST['email']; echo "<br>";
-		echo $_POST['haslo1']; echo "<br>";
-		echo $_POST['haslo2']; echo "<br>";		
-		echo "<br><br>";*/
-		
-		// WALIDACJA DANYCH Z FORMULARZA : 
-		
-		// 1. Ustanowienie flagi, która ma wartośc true : 
-		
-		// Udana walidacja? Załóżmy że tak ! 
-		
-		$wszystko_OK = true;
-		
-		//Sprawdzenie poprawności nickuname'a : 		
-		//$nick = $_POST['nick'];
+		// 1. Ustanowienie flagi, która ma wartośc true : 		
+		// Udana walidacja? Załóżmy że tak ! 	
+
+		$wszystko_OK = true;		
 
 		$imie = $_POST['imie'];
 		$nazwisko = $_POST['nazwisko'];
 		$email = $_POST['email'];
-
 		$miejscowosc = $_POST['miejscowosc'];
 		$ulica = $_POST['ulica'];
 		$numer_domu = $_POST['numer_domu'];
 		$kod_pocztowy = $_POST['kod_pocztowy'];
 		$kod_miejscowosc = $_POST['kod_miejscowosc'];
-		$telefon = $_POST['telefon'];
-
+		$telefon = $_POST['telefon'];		
 		//$wojewodztwo = $_POST['wojewodztwo'];
 		//$kraj = $_POST['kraj'];
 		//$PESEL = $_POST['pesel'];
-		//$data_urodzenia = $_POST['data_urodzenia'];
-				
+		//$data_urodzenia = $_POST['data_urodzenia'];	
+		$haslo1 = $_POST['haslo1'];
+		$haslo2 = $_POST['haslo2'];
 
-		///////////////////////////////////////////////////////////////////////////////////////////////
-
-		// Należy dodać walidację do wszystkich pól formularza rejestracji ! 
-
-		// ...
-
-		///////////////////////////////////////////////////////////////////////////////////////////////
-
-		
+		//////////////////////////////////////////////////////////////////		
 		// Załóżmy, że nick posiada od 3 do 20 znaków : 
 		
 		// Sprawdzenie długości nicka (loginu): 		
@@ -81,21 +55,20 @@
 		// nick ma składać się tylko ze znaków alfanumerycznych (bez polskich znaków itp...)
 		// ctype_alnum() - check for alphanumeric characters - sprawdź, czy wszystkie znaki w łańcuchu sa alfanumeryczne
 			// zwraca: TRUE / FALSE
-				// można też wykorzystać funkcję preg_match() - porównywanie tekstu z wyrażeniem regularnym
-		
+				// można też wykorzystać funkcję preg_match() - porównywanie tekstu z wyrażeniem regularnym		
 		/*if(ctype_alnum($nick) == false) // znaki alfanumeryczne ?
 		{
 			$wszystko_OK = false;
 			$_SESSION['e_nick'] = "Nick może składać się tylko z liter i cyfr (bez polskich znaków)";
 		}*/
 		
-		////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
 
 		// Walidacja imienia - czy podano poprawne imię	
 		
 		$name_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}+[a-ząćęłńóśźż]+\s?+$/';	// imię -> "Jakub"
 
-		if(!(preg_match($name_regex, $imie))) 
+		if(!(preg_match($name_regex, $imie))) // preg_match() sprawdza dopasowanie wzorca do ciągu, TRUE/FALSE
 		{		
 			$wszystko_OK = false;
 			$_SESSION['e_imie'] = "Imię może składać się tylko z liter alfabetu";
@@ -105,26 +78,19 @@
 		{		
 			$wszystko_OK = false;
 			$_SESSION['e_nazwisko'] = "Nazwisko może składać się tylko z liter alfabetu";
-		}
-		// preg_match() sprawdza dopasowanie wzorca do ciągu
-		// zwraca true jeżeli tekst pasuje do wyrażenia
+		}			
 
-		////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
 
-		// Sprawdzenie poprawności adresu email :
-		
-		//$email = $_POST['email'];
+		// Sprawdzenie poprawności adresu email :		
+	
 		// istnieje gotowa funkcja walidująca email -> filter_var(zmienna, filtr)
-		// - przefiltruj zmienną w sposób określony przez rodzaj filtru (drugi parametr funkcji)
-		
+		// - przefiltruj zmienną w sposób określony przez rodzaj filtru (drugi parametr funkcji)		
 		// sanityzacja kodu - wyczyszczenie źródła z potencjalnie groźnych zapisów
 		
-		$email_s = str_replace(' ', '', $email);
+		$email_s = str_replace(' ', '', $email); // usuwa spacje z adresu email
 
-		$email_s = filter_var($email, FILTER_SANITIZE_EMAIL); // email - po procesie sanityzacji. usunięcie znaków kodu źródłowego.
-		// FILTER_SANITIZE_EMAIL - filtr do adresów mailowych
-		
-		//if((filter_var($emailB, FILTER_VALIDATE_EMAIL)==false) || ($emailB!=$email))
+		$email_s = filter_var($email, FILTER_SANITIZE_EMAIL); // email - po procesie sanityzacji. usunięcie znaków kodu źródłowego. // FILTER_SANITIZE_EMAIL - filtr do adresów mailowych	
 		
 		if((filter_var($email_s, FILTER_VALIDATE_EMAIL) == false) || ($email_s != $email))
 		{
@@ -133,11 +99,8 @@
 			$_SESSION['e_email'] = "Podaj poprawny adres e-mail!";
 		}
 
-		////////////////////////////////////////////////
-		
-		// Sprawdzenie poprawności hasła : 
-		$haslo1 = $_POST['haslo1'];
-		$haslo2 = $_POST['haslo2'];
+		//////////////////////////////////////////////////////////////////		
+		// Sprawdzenie poprawności hasła : 		
 		
 		if((strlen($haslo1)<8) || (strlen($haslo1)>20)) // sprawdzenie długości hasła
 		{
@@ -154,11 +117,8 @@
 		}
 		
 		$haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
-			// adam // qwerty123
-			//echo $haslo_hash; exit();	
 
-
-		////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
 
 		// Miejscowosc
 
@@ -170,7 +130,7 @@
 			$_SESSION['e_miejscowosc'] = "Podaj poprawną nazwę miejscowości";
 		}
 
-		////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
 
 		// Ulica
 
@@ -192,7 +152,7 @@
 			$_SESSION['e_numer_domu'] = "Podaj poprawny numer domu";
 		}
 
-		////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
 		// kod pocztowy
 
 		$zip_regex = "/^[0-9]{2}(?:-[0-9]{3})?$/";
@@ -203,7 +163,7 @@
 			$_SESSION['e_kod_pocztowy'] = "Podaj poprawny kod pocztowy";
 		}
 
-		////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
 		// kod - miejscowosc 
 
 		if(!(preg_match($address_regex, $kod_miejscowosc))) 
@@ -212,7 +172,7 @@
 			$_SESSION['e_kod_miejscowosc'] = "Podaj poprawną miejscowość";
 		}
 
-		////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
 		// telefon
 
 		$phone_regex = "/^[+]?[0-9]{5,12}+$/";
@@ -222,12 +182,12 @@
 			$wszystko_OK = false;
 			$_SESSION['e_telefon'] = "Podaj poprawny numer telefonu";
 		}
-			
-		// Checkbox - ZAZNACZONY ? Niezaznaczony 		
-			//echo $_POST['regulamin']; exit();
-			// on - zaznaczony, off - niezaznaczony
-			
+
+		//////////////////////////////////////////////////////////////////
 		// Checkbox - czy zaakceptowano regulamin ?
+			
+		// Checkbox - ZAZNACZONY ? Niezaznaczony // echo $_POST['regulamin']; exit(); // on - zaznaczony, (zmienna nie istnieje) - niezaznaczony 		
+
 		if(!isset($_POST['regulamin']))
 		{
 			$wszystko_OK = false;
@@ -243,10 +203,10 @@
 		//$sprawdz = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$sekret.'&response='.$_POST['g-recaptcha-response']); // Pobierz zawartośc pliku do zmiennej
 		$sprawdz = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$sekret.'&response='.$_POST['g-recaptcha-response']);
 				
-		$odpowiedz = json_decode($sprawdz); //zdekoduj wartość z formatu json
+		$odpowiedz = json_decode($sprawdz); // zdekoduj wartość z formatu json
 		
-		//if(!($odpowiedz->success))     // można także użyć takiego zapisu
-		/*if($odpowiedz->success == false) // właściwość success
+		//if(!($odpowiedz->success))        // można także użyć takiego zapisu
+		/*if($odpowiedz->success == false)  // właściwość success
 		{
 			$wszystko_OK = false;
 			$_SESSION['e_bot'] = "Potwierdź, że nie jesteś botem!";
@@ -260,17 +220,14 @@
 		
 		//////////////////////////////////////////////////////////////////
 		
-		// Zapamiętanie danych z formularza : 
-		// Formularz pamiętający wprowadzone dane :
-		
-		// Zapamiętaj wprowadzone dane :
+		// Zapamiętanie danych z formularza // Formularz pamiętający wprowadzone dane :
 		
 		//$_SESSION['fr_nick'] = $nick; // fr - formularz rejestracji
 		$_SESSION['fr_imie'] = $imie; 
 		$_SESSION['fr_nazwisko'] = $nazwisko;
 		$_SESSION['fr_email'] = $email; 
-		$_SESSION['fr_haslo1'] = $haslo1; 
-		$_SESSION['fr_haslo2'] = $haslo2; 		
+		//$_SESSION['fr_haslo1'] = $haslo1; // nie przechowujemy haseł w zmiennych sesyjnych.
+		//$_SESSION['fr_haslo2'] = $haslo2; 		
 
 		$_SESSION['fr_miejscowosc'] = $miejscowosc; 
 		$_SESSION['fr_ulica'] = $ulica; 
@@ -288,10 +245,10 @@
 		{
 			$_SESSION['fr_regulamin'] = true;
 		}		
-		
+
 		//////////////////////////////////////////////////////////////////
 		
-		//sprawdzenie czy taki user (login i hasło) istnieje już w bazie :
+		//sprawdzenie czy taki user (email i hasło) istnieje już w bazie :
 		
 		// POŁĄCZENIE Z BAZĄ DANYCH : 
 		
@@ -368,8 +325,10 @@
 					{
 						// zapytanie się udało ✓
 						$_SESSION['udanarejestracja'] = true;
-						
+
 						header('Location: zaloguj.php');
+
+						//header('Location: zaloguj.php');
 					}
 					else // nie udało się wykonać zapytania INSERT
 					{						
@@ -674,13 +633,16 @@
 				?>
 
 				
-				Hasło: <br> <input type="password" name="haslo1" value="<?php 		
-					if(isset($_SESSION['fr_haslo1']))
+				Hasło: <br> <input type="password" name="haslo1"><br>
+
+				<!-- value="<?php 	// do usunięcia w przyszłości - nie przechowujemy haseł w zmiennych sesyjnych	
+					/*if(isset($_SESSION['fr_haslo1']))
 					{
 						echo $_SESSION['fr_haslo1'];
 						unset($_SESSION['fr_haslo1']);
-					}		
-				?>"> <br>
+					}*/		
+				?>" -->
+
 				<?php		
 					if(isset($_SESSION['e_haslo'])) // błąd z nickiem użytkownika ...
 					{
@@ -688,13 +650,7 @@
 						unset($_SESSION['e_haslo']);
 					}		
 				?>
-				Powtórz hasło: <br> <input type="password" name="haslo2" value="<?php 		
-					if(isset($_SESSION['fr_haslo2']))
-					{
-						echo $_SESSION['fr_haslo2'];
-						unset($_SESSION['fr_haslo2']);
-					}		
-				?>"> <br>
+				Powtórz hasło: <br> <input type="password" name="haslo2"><br>
 
 				<br><hr>
 

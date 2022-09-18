@@ -371,7 +371,7 @@
 				if(isset($_SESSION['udanarejestracja']))
 				{
 					unset($_SESSION['udanarejestracja']);
-
+					
 					echo "<br>Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto<br>";
 
 				}	
