@@ -406,11 +406,11 @@
 						
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-						if(($_SESSION['wszystko_OK'] == true))
+						/*if(($_SESSION['wszystko_OK'] == true))
 						{
 							$_SESSION['udanarejestracja'] = true;
 							header('Location: zaloguj.php');
-						}
+						}*/
 
 
 
