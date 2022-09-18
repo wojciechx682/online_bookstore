@@ -11,6 +11,8 @@
 
 	include_once "functions.php"; // _once - sprawdzi, czy ten plik nie został zaincludowany wcześniej
 
+	query("", "", "");
+
 	//echo $_SESSION['login'] . '<br>';
 
 	/*if(isset($_SESSION['zalogowany']))
@@ -344,7 +346,8 @@
 			
 			<form action="logowanie.php" method="post">
 			
-				Login: <br> <input type="text" name="login"> <br>
+				<!-- Login: <br> <input type="text" name="login"> <br> -->
+				E-mail: <br> <input type="text" name="email" value="jason1@wp.pl"> <br>
 				Hasło: <br> <input type="password" name="haslo"> <br><br>
 				
 				<input type="submit" value="Zaloguj się">	
@@ -362,6 +365,20 @@
 					echo '<br>'.$_SESSION['blad'];
 				}			
 			?>
+
+			<?php 
+
+				if(isset($_SESSION['udanarejestracja']))
+				{
+					unset($_SESSION['udanarejestracja']);
+
+					echo "<br>Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto<br>";
+
+				}	
+
+			?>
+
+
 
 		</div>			
 

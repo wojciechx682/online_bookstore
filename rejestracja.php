@@ -12,11 +12,13 @@
 
 	// walidacja danych rejestracji z formularza : 
 	
-	if(
-	(isset($_POST['nick'])) &&
+	/* (isset($_POST['nick'])) &&
 	(isset($_POST['email'])) &&
 	(isset($_POST['haslo1'])) &&
-	(isset($_POST['haslo2']))	
+	(isset($_POST['haslo2'])) */
+
+	if( (isset($_POST['email']))
+		
 	) 
 	{
 		// zmienna $_POST['email'] istnieje ? -> Oznacza to, że nastąpił submit formularza.
@@ -39,20 +41,24 @@
 		$wszystko_OK = true;
 		
 		//Sprawdzenie poprawności nickuname'a : 		
-		$nick = $_POST['nick'];
+		//$nick = $_POST['nick'];
 
 		$imie = $_POST['imie'];
 		$nazwisko = $_POST['nazwisko'];
+		$email = $_POST['email'];
+
 		$miejscowosc = $_POST['miejscowosc'];
 		$ulica = $_POST['ulica'];
 		$numer_domu = $_POST['numer_domu'];
 		$kod_pocztowy = $_POST['kod_pocztowy'];
 		$kod_miejscowosc = $_POST['kod_miejscowosc'];
-		$wojewodztwo = $_POST['wojewodztwo'];
-		$kraj = $_POST['kraj'];
-		$PESEL = $_POST['pesel'];
-		$data_urodzenia = $_POST['data_urodzenia'];
-		$telefon = $_POST['telefon'];		
+		$telefon = $_POST['telefon'];
+
+		//$wojewodztwo = $_POST['wojewodztwo'];
+		//$kraj = $_POST['kraj'];
+		//$PESEL = $_POST['pesel'];
+		//$data_urodzenia = $_POST['data_urodzenia'];
+				
 
 		///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -65,42 +71,69 @@
 		
 		// Załóżmy, że nick posiada od 3 do 20 znaków : 
 		
-		// Sprawdzenie długości nicka : 		
-		if((strlen($nick)<3) || (strlen($nick)>20))
+		// Sprawdzenie długości nicka (loginu): 		
+		/*if((strlen($nick)<3) || (strlen($nick)>20))
 		{
 			$wszystko_OK = false;
 			$_SESSION['e_nick'] = "Nick musi posiadać od 3 do 20 znaków!";		
-		}
+		}*/
 		
 		// nick ma składać się tylko ze znaków alfanumerycznych (bez polskich znaków itp...)
 		// ctype_alnum() - check for alphanumeric characters - sprawdź, czy wszystkie znaki w łańcuchu sa alfanumeryczne
 			// zwraca: TRUE / FALSE
 				// można też wykorzystać funkcję preg_match() - porównywanie tekstu z wyrażeniem regularnym
 		
-		if(ctype_alnum($nick) == false) // znaki alfanumeryczne ?
+		/*if(ctype_alnum($nick) == false) // znaki alfanumeryczne ?
 		{
 			$wszystko_OK = false;
 			$_SESSION['e_nick'] = "Nick może składać się tylko z liter i cyfr (bez polskich znaków)";
-		}
+		}*/
 		
+		////////////////////////////////////////////////
+
+		// Walidacja imienia - czy podano poprawne imię	
+		
+		$name_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}+[a-ząćęłńóśźż]+\s?+$/';	// imię -> "Jakub"
+
+		if(!(preg_match($name_regex, $imie))) 
+		{		
+			$wszystko_OK = false;
+			$_SESSION['e_imie'] = "Imię może składać się tylko z liter alfabetu";
+		}
+
+		if(!(preg_match($name_regex, $nazwisko))) 
+		{		
+			$wszystko_OK = false;
+			$_SESSION['e_nazwisko'] = "Nazwisko może składać się tylko z liter alfabetu";
+		}
+		// preg_match() sprawdza dopasowanie wzorca do ciągu
+		// zwraca true jeżeli tekst pasuje do wyrażenia
+
+		////////////////////////////////////////////////
+
 		// Sprawdzenie poprawności adresu email :
 		
-		$email = $_POST['email'];
+		//$email = $_POST['email'];
 		// istnieje gotowa funkcja walidująca email -> filter_var(zmienna, filtr)
 		// - przefiltruj zmienną w sposób określony przez rodzaj filtru (drugi parametr funkcji)
 		
 		// sanityzacja kodu - wyczyszczenie źródła z potencjalnie groźnych zapisów
 		
-		$emailB = filter_var($email, FILTER_SANITIZE_EMAIL); // email - po procesie sanityzacji
+		$email_s = str_replace(' ', '', $email);
+
+		$email_s = filter_var($email, FILTER_SANITIZE_EMAIL); // email - po procesie sanityzacji. usunięcie znaków kodu źródłowego.
 		// FILTER_SANITIZE_EMAIL - filtr do adresów mailowych
 		
 		//if((filter_var($emailB, FILTER_VALIDATE_EMAIL)==false) || ($emailB!=$email))
-		if((filter_var($emailB, FILTER_VALIDATE_EMAIL)==false))
+		
+		if((filter_var($email_s, FILTER_VALIDATE_EMAIL) == false) || ($email_s != $email))
 		{
 			// błąd - związany z email
 			$wszystko_OK = false;
 			$_SESSION['e_email'] = "Podaj poprawny adres e-mail!";
 		}
+
+		////////////////////////////////////////////////
 		
 		// Sprawdzenie poprawności hasła : 
 		$haslo1 = $_POST['haslo1'];
@@ -123,6 +156,72 @@
 		$haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 			// adam // qwerty123
 			//echo $haslo_hash; exit();	
+
+
+		////////////////////////////////////////////////
+
+		// Miejscowosc
+
+		$address_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}+[a-ząćęłńóśźż]+\s?[-]?\s?+[A-ZĄĆĘŁŃÓŚŹŻ]?+[a-ząćęłńóśźż]+\s?[-]?\s?+[A-ZĄĆĘŁŃÓŚŹŻ]?+[a-ząćęłńóśźż]+$/'; // miejscowosc, ulica ...
+
+		if(!(preg_match($address_regex, $miejscowosc))) 
+		{		
+			$wszystko_OK = false;
+			$_SESSION['e_miejscowosc'] = "Podaj poprawną nazwę miejscowości";
+		}
+
+		////////////////////////////////////////////////
+
+		// Ulica
+
+		if(!(preg_match($address_regex, $ulica))) 
+		{		
+			$wszystko_OK = false;
+			$_SESSION['e_ulica'] = "Podaj poprawną nazwę ulicy";
+		}
+
+		////////////////////////////////////////////////
+
+		// Numer domu   		
+
+		$house_number_regex = '/^[0-9]{1,3}+\s?[\/-]?+\s?+[A-Za-z0-9]{0,3}$/'; // numer domu // 18     18A 18a   18 a   19/7   17/a   19/A      
+
+		if(!(preg_match($house_number_regex, $numer_domu))) 
+		{		
+			$wszystko_OK = false;
+			$_SESSION['e_numer_domu'] = "Podaj poprawny numer domu";
+		}
+
+		////////////////////////////////////////////////
+		// kod pocztowy
+
+		$zip_regex = "/^[0-9]{2}(?:-[0-9]{3})?$/";
+
+		if(!(preg_match($zip_regex, $kod_pocztowy))) 
+		{		
+			$wszystko_OK = false;
+			$_SESSION['e_kod_pocztowy'] = "Podaj poprawny kod pocztowy";
+		}
+
+		////////////////////////////////////////////////
+		// kod - miejscowosc 
+
+		if(!(preg_match($address_regex, $kod_miejscowosc))) 
+		{		
+			$wszystko_OK = false;
+			$_SESSION['e_kod_miejscowosc'] = "Podaj poprawną miejscowość";
+		}
+
+		////////////////////////////////////////////////
+		// telefon
+
+		$phone_regex = "/^[+]?[0-9]{5,12}+$/";
+
+		if(!(preg_match($phone_regex, $telefon))) 
+		{		
+			$wszystko_OK = false;
+			$_SESSION['e_telefon'] = "Podaj poprawny numer telefonu";
+		}
 			
 		// Checkbox - ZAZNACZONY ? Niezaznaczony 		
 			//echo $_POST['regulamin']; exit();
@@ -166,22 +265,22 @@
 		
 		// Zapamiętaj wprowadzone dane :
 		
-		$_SESSION['fr_nick'] = $nick; // fr - formularz rejestracji
+		//$_SESSION['fr_nick'] = $nick; // fr - formularz rejestracji
+		$_SESSION['fr_imie'] = $imie; 
+		$_SESSION['fr_nazwisko'] = $nazwisko;
 		$_SESSION['fr_email'] = $email; 
 		$_SESSION['fr_haslo1'] = $haslo1; 
-		$_SESSION['fr_haslo2'] = $haslo2; 
+		$_SESSION['fr_haslo2'] = $haslo2; 		
 
-		$_SESSION['fr_imie'] = $imie; 
-		$_SESSION['fr_nazwisko'] = $nazwisko; 
 		$_SESSION['fr_miejscowosc'] = $miejscowosc; 
 		$_SESSION['fr_ulica'] = $ulica; 
 		$_SESSION['fr_numer_domu'] = $numer_domu; 
 		$_SESSION['fr_kod_pocztowy'] = $kod_pocztowy; 
 		$_SESSION['fr_kod_miejscowosc'] = $kod_miejscowosc; 
-		$_SESSION['fr_wojewodztwo'] = $wojewodztwo; 
-		$_SESSION['fr_kraj'] = $kraj; 
-		$_SESSION['fr_PESEL'] = $PESEL; 
-		$_SESSION['fr_data_urodzenia'] = $data_urodzenia; 
+		//$_SESSION['fr_wojewodztwo'] = $wojewodztwo; 
+		//$_SESSION['fr_kraj'] = $kraj; 
+		//$_SESSION['fr_PESEL'] = $PESEL; 
+		//$_SESSION['fr_data_urodzenia'] = $data_urodzenia; 
 		$_SESSION['fr_telefon'] = $telefon; 
 
 		
@@ -233,7 +332,10 @@
 					$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
 				}		
 				
-				// Sprawdzenie, czy istnieje już taki login (czy jest zarezerwowany) ?									
+													
+				
+				/*
+				// Sprawdzenie, czy istnieje już taki login (czy jest zarezerwowany) ?
 				$rezultat = $polaczenie->query("SELECT id_klienta FROM klienci WHERE login='$nick'");
 				
 				if(!$rezultat) 
@@ -247,7 +349,7 @@
 				{
 					$wszystko_OK = false;
 					$_SESSION['e_nick'] = "Istnieje już gracz o takim nicku! Wybierz inny.";
-				}	
+				}	*/
 
 				if($wszystko_OK == true) // poprawna walidacja ? 
 				{
@@ -260,14 +362,16 @@
 					
 					//if($polaczenie->query("INSERT INTO klienci VALUES (NULL, '$nick', '$haslo_hash', '$email', 100, 100, 100, 14)")) // NULL - dla id 
 
-					if($polaczenie->query("INSERT INTO klienci (id_klienta, imie, nazwisko, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, wojewodztwo, kraj, PESEL, data_urodzenia, telefon, email, login, haslo) VALUES (NULL, '$imie', '$nazwisko', '$miejscowosc', '$ulica', '$numer_domu', '$kod_pocztowy', '$kod_miejscowosc', '$wojewodztwo', '$kraj', '$PESEL', '$data_urodzenia', '$telefon', '$email', '$nick', '$haslo_hash')"))					
+					//if($polaczenie->query("INSERT INTO klienci (id_klienta, imie, nazwisko, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, wojewodztwo, kraj, PESEL, data_urodzenia, telefon, email, login, haslo) VALUES (NULL, '$imie', '$nazwisko', '$miejscowosc', '$ulica', '$numer_domu', '$kod_pocztowy', '$kod_miejscowosc', '$wojewodztwo', '$kraj', '$PESEL', '$data_urodzenia', '$telefon', '$email', '$nick', '$haslo_hash')"))	
+
+					if($polaczenie->query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '$imie', '$nazwisko', '$email','$miejscowosc', '$ulica', '$numer_domu', '$kod_pocztowy', '$kod_miejscowosc', '$telefon', ' ', ' ', ' ', ' ', ' ', '$haslo_hash')"))					
 					{
 						// zapytanie się udało ✓
 						$_SESSION['udanarejestracja'] = true;
 						
-						header('Location: index.php');
+						header('Location: zaloguj.php');
 					}
-					else // zapytanie zwróciło wartośc false
+					else // nie udało się wykonać zapytania INSERT
 					{						
 						throw new Exception($polaczenie->error); // rzucamy wyjątek
 					}
@@ -504,6 +608,8 @@
 				bez atrybutu action, domyślnie - ten sam plik otrzyma post'em przesłane dane 
 								WALIZACJA DANYCH W W TYM SAMYM PLIKU ! (rejestracja.php) -->
 
+				Stwórz nowe konto klienta<br><hr>
+
 				Imię: <br> <input type="text" name="imie" value="<?php 		
 					if(isset($_SESSION['fr_imie']))
 					{
@@ -536,7 +642,65 @@
 					}		
 				?>
 
-				Miejscowosc: <br> <input type="text" name="miejscowosc" value="<?php 		
+				E-mail: <br> <input type="text" name="email" value="<?php 		
+					if(isset($_SESSION['fr_email']))
+					{
+						echo $_SESSION['fr_email'];
+						unset($_SESSION['fr_email']);
+					}		
+				?>"> <br>
+				<?php		
+					if(isset($_SESSION['e_email'])) // błąd z nickiem użytkownika ...
+					{
+						echo '<div class="error">'.$_SESSION['e_email'].'</div>';
+						unset($_SESSION['e_email']);
+					}		
+				?>
+
+				<!-- Nickname: <br> <input type="text" name="nick" value="<?php /* 		
+					if(isset($_SESSION['fr_nick']))
+					{
+						echo $_SESSION['fr_nick'];
+						unset($_SESSION['fr_nick']);
+					}		
+				 */ ?>"> <br> -->	
+				
+				<?php		
+					/*if(isset($_SESSION['e_nick'])) // błąd z nickiem użytkownika ...
+					{
+						echo '<div class="error">'.$_SESSION['e_nick'].'</div>';
+						unset($_SESSION['e_nick']);
+					} */
+				?>
+
+				
+				Hasło: <br> <input type="password" name="haslo1" value="<?php 		
+					if(isset($_SESSION['fr_haslo1']))
+					{
+						echo $_SESSION['fr_haslo1'];
+						unset($_SESSION['fr_haslo1']);
+					}		
+				?>"> <br>
+				<?php		
+					if(isset($_SESSION['e_haslo'])) // błąd z nickiem użytkownika ...
+					{
+						echo '<div class="error">'.$_SESSION['e_haslo'].'</div>';
+						unset($_SESSION['e_haslo']);
+					}		
+				?>
+				Powtórz hasło: <br> <input type="password" name="haslo2" value="<?php 		
+					if(isset($_SESSION['fr_haslo2']))
+					{
+						echo $_SESSION['fr_haslo2'];
+						unset($_SESSION['fr_haslo2']);
+					}		
+				?>"> <br>
+
+				<br><hr>
+
+				Dane adresowe <br><br>
+
+				Miasto: <br> <input type="text" name="miejscowosc" value="<?php 		
 					if(isset($_SESSION['fr_miejscowosc']))
 					{
 						echo $_SESSION['fr_miejscowosc'];
@@ -585,6 +749,8 @@
 					}		
 				?>
 
+				<br><hr><br>
+
 				Kod pocztowy: <br> <input type="text" name="kod_pocztowy" value="<?php 		
 					if(isset($_SESSION['fr_kod_pocztowy']))
 					{
@@ -601,7 +767,7 @@
 					}		
 				?>
 
-				Kod miejscowość: <br> <input type="text" name="kod_miejscowosc" value="<?php 		
+				Miejscowość: <br> <input type="text" name="kod_miejscowosc" value="<?php 		
 					if(isset($_SESSION['fr_kod_miejscowosc']))
 					{
 						echo $_SESSION['fr_kod_miejscowosc'];
@@ -617,69 +783,69 @@
 					}		
 				?>
 
-				Województwo: <br> <input type="text" name="wojewodztwo" value="<?php 		
+				<!-- Województwo: <br> <input type="text" name="wojewodztwo" value="<?php /* 		
 					if(isset($_SESSION['fr_kod_wojewodztwo']))
 					{
 						echo $_SESSION['fr_kod_wojewodztwo'];
 						unset($_SESSION['fr_kod_wojewodztwo']);
 					}		
-				?>"> <br>		
+				*/ ?>"> <br>		
 				
-				<?php		
+				<?php /*		
 					if(isset($_SESSION['e_kod_wojewodztwo'])) 
 					{
 						echo '<div class="error">'.$_SESSION['e_kod_wojewodztwo'].'</div>';
 						unset($_SESSION['e_kod_wojewodztwo']);
-					}		
+					} */		
 				?>
 
-				Kraj: <br> <input type="text" name="kraj" value="<?php 		
+				Kraj: <br> <input type="text" name="kraj" value="<?php /*		
 					if(isset($_SESSION['fr_kraj']))
 					{
 						echo $_SESSION['fr_kraj'];
 						unset($_SESSION['fr_kraj']);
-					}		
+					}	*/	
 				?>"> <br>		
 				
-				<?php		
+				<?php	/*	
 					if(isset($_SESSION['e_kraj'])) 
 					{
 						echo '<div class="error">'.$_SESSION['e_kraj'].'</div>';
 						unset($_SESSION['e_kraj']);
-					}		
-				?>
+					}	*/	
+				?> -->
 
-				Pesel: <br> <input type="text" name="pesel" value="<?php 		
+				<!-- Pesel: <br> <input type="text" name="pesel" value="<?php /* 		
 					if(isset($_SESSION['fr_pesel']))
 					{
 						echo $_SESSION['fr_pesel'];
 						unset($_SESSION['fr_pesel']);
 					}		
-				?>"> <br>		
+				*/ ?>"> <br>	-->	
 				
-				<?php		
+				<?php /*		
 					if(isset($_SESSION['e_pesel'])) 
 					{
 						echo '<div class="error">'.$_SESSION['e_pesel'].'</div>';
 						unset($_SESSION['e_pesel']);
 					}		
-				?>
+				*/ ?>
 
-				Data urodzenia: <br> <input type="text" name="data_urodzenia" value="<?php 		
+				<!-- Data urodzenia: <br> <input type="text" name="data_urodzenia" value="<?php /*		
 					if(isset($_SESSION['fr_data_urodzenia']))
 					{
 						echo $_SESSION['fr_data_urodzenia'];
 						unset($_SESSION['fr_data_urodzenia']);
 					}		
-				?>"> <br>		
+				*/ ?>"> <br>		
 				
-				<?php		
+				<?php /*		
 					if(isset($_SESSION['e_data_urodzenia'])) 
 					{
 						echo '<div class="error">'.$_SESSION['e_data_urodzenia'].'</div>';
 						unset($_SESSION['e_data_urodzenia']);
-					}		
-				?>
+					}	*/	
+				?> -->
 
 				Telefon: <br> <input type="text" name="telefon" value="<?php 		
 					if(isset($_SESSION['fr_telefon']))
@@ -699,57 +865,7 @@
 
 				<hr>
 
-				Nickname: <br> <input type="text" name="nick" value="<?php 		
-					if(isset($_SESSION['fr_nick']))
-					{
-						echo $_SESSION['fr_nick'];
-						unset($_SESSION['fr_nick']);
-					}		
-				?>"> <br>		
 				
-				<?php		
-					if(isset($_SESSION['e_nick'])) // błąd z nickiem użytkownika ...
-					{
-						echo '<div class="error">'.$_SESSION['e_nick'].'</div>';
-						unset($_SESSION['e_nick']);
-					}		
-				?>
-
-				E-mail: <br> <input type="text" name="email" value="<?php 		
-					if(isset($_SESSION['fr_email']))
-					{
-						echo $_SESSION['fr_email'];
-						unset($_SESSION['fr_email']);
-					}		
-				?>"> <br>
-				<?php		
-					if(isset($_SESSION['e_email'])) // błąd z nickiem użytkownika ...
-					{
-						echo '<div class="error">'.$_SESSION['e_email'].'</div>';
-						unset($_SESSION['e_email']);
-					}		
-				?>
-				Hasło: <br> <input type="password" name="haslo1" value="<?php 		
-					if(isset($_SESSION['fr_haslo1']))
-					{
-						echo $_SESSION['fr_haslo1'];
-						unset($_SESSION['fr_haslo1']);
-					}		
-				?>"> <br>
-				<?php		
-					if(isset($_SESSION['e_haslo'])) // błąd z nickiem użytkownika ...
-					{
-						echo '<div class="error">'.$_SESSION['e_haslo'].'</div>';
-						unset($_SESSION['e_haslo']);
-					}		
-				?>
-				Powtórz hasło: <br> <input type="password" name="haslo2" value="<?php 		
-					if(isset($_SESSION['fr_haslo2']))
-					{
-						echo $_SESSION['fr_haslo2'];
-						unset($_SESSION['fr_haslo2']);
-					}		
-				?>"> <br>
 			
 				<label>
 					<input type="checkbox" name="regulamin" <?php

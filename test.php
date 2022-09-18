@@ -125,7 +125,7 @@
 
 		//$v = '<script>document.write("abcde!");</script>';
 		
-	$haslo = 'qwerty';
+	$haslo = 'jason2';
 	
 	$haslo_hash = password_hash($haslo, PASSWORD_DEFAULT);
 	
@@ -148,6 +148,78 @@
 	echo "<br> 148 haslo hash  = $haslo_hash";	
 	
 	//echo "<br> ms = $ms";
+
+
+	///////////////////////////////////////////////////////////////////////////
+
+
+	
+	
+
+	// konstrukcja wyrażenia regularnego
+	// poprawność imienia oraz nazwiska
+
+			//$sprawdz = '/(*UTF8)^[A-ZŁŚ]{1}+[a-ząęółśżźćń]+$/';
+			//$sprawdz = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}+[a-ząćęłńóśźż]+$/';
+			//$sprawdz = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}+[a-ząćęłńóśźż]+ ?+[a-ząćęłńóśźż]*+ ?+[a-ząćęłńóśźż]*+ *$/';
+	//$sprawdz = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}+[a-ząćęłńóśźż]+\s?[-]?\s?+[A-ZĄĆĘŁŃÓŚŹŻ]?+[a-ząćęłńóśźż]+\s?[-]?\s?+[A-ZĄĆĘŁŃÓŚŹŻ]?+[a-ząćęłńóśźż]+$/';
+    //                                                  |             |            | | 
+
+	// numer domu : 
+
+	//$address_regex = '/^[0-9]{1,3}+\s?[-]?[/]?\s?[A-Za-z0-9]{1,3}+$/'; // miejscowosc, ulica ...
+	//$address_regex = '/^[0-9]{1,3}+\s?+[-]?+$/'; // miejscowosc, ulica ...
+
+
+	$phone = "48515350960";
+	// 18     18A 18a   18 a   19/7   17/a   19/A 
+
+	/* 18
+	   18/
+	   18-
+
+	   18a
+	   18 a
+	   18 A
+	   67/4
+
+
+
+	*/
+
+	//$zip_regex = '/^[0-9]{1,3}+\s?[\/-]?+\s?+[A-Za-z0-9]{0,3}$/'; // miejscowosc, ulica ...
+	//$zip_regex = '/\b\d{2}\s*-\s*\d{3}\b/'; // zip code
+	//$zip_regex = "/^[0-9]{2}(?:-[0-9]{3})?$/"; // zip code
+
+	$phone_regex = "/^[+]?[0-9]{5,12}+$/";
+
+
+	// preg_match() sprawdza dopasowanie wzorca do ciągu
+	// zwraca true jeżeli tekst pasuje do wyrażenia
+	if(preg_match($phone_regex, $phone)) 
+	{		
+		echo "<br><br>Podano poprawny polski wyraz";	
+		exit();	
+	}
+	else  
+	{
+		echo "<br><br>Błędny wyraz.";
+		exit();
+	}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	///////////////////////////////////////////////////////////////////////////
 	
@@ -163,6 +235,29 @@
 			echo "<br> login = $login";	
 		}	
 	}	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	
 

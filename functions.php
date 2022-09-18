@@ -221,7 +221,7 @@
 	// skrypt logowania (logowanie.php) - logowanie, weryfikacja hasła :
 	function log_in($result)
 	{
-		$row = $result->fetch_assoc();
+		$row = $result->fetch_assoc(); // wiersz (BD) - pola tabeli = tablica asocjacyjne
 
 		//echo '$_POST[login] = ' . $_POST['login'] . "<br>";
 		//echo '$_POST[haslo] = ' . $_POST['haslo'] . "<br>";		
@@ -263,7 +263,7 @@
 		else  // dobry login, złe hasło
 		{		
 			// błędne dane logowanie -> przekierowanie do index.php + komunikat
-			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy login lub hasło!</span>';
+			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>';
 			header('Location: zaloguj.php');	
 			exit();					  
 		}
@@ -326,12 +326,12 @@
 						
 							$num_of_rows = $result->num_rows; // ilość zwróconych wierszy	
 
-							if($num_of_rows>0) // znaleziono rekordy ...
+							if($num_of_rows>0) // znaleziono rekordy ...  // == 1
 							{							
 
 								$fun($result); // wywołanie zewnętrznej funkcji		
 
-								// wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
+								// np. wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
 							}
 							else  // brak zwróconych rekordów
 							{				
@@ -340,9 +340,9 @@
 											//header('Location: index.php');
 											//echo '<script>alert("functions - 436");</script>';	
 								
-								if (get_var_name($value) == "login") // jeśli to było logowanie - (wywołanie funkcji query() z logowanie.php)
+								if (get_var_name($value) == "email") // jeśli to było logowanie - (wywołanie funkcji query() z logowanie.php)
 								{
-									$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy login lub hasło!</span>';
+									$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>';
 									header('Location: zaloguj.php');	
 									exit();		
 								}
@@ -362,7 +362,8 @@
 
 					$polaczenie->close(); // Czy przenieść to poniżej aby nie pisać tego dwa razy ?
 				}
-				else  // INSERT, UPDATE ...
+				//else  // INSERT, UPDATE ...
+				elseif(($type == "INSERT") || ($type == "UPDATE"))  // INSERT, UPDATE ...
 				{
 
 					//echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";						
@@ -393,15 +394,19 @@
 
 					//exit();
 				}
+				else // test połączenia z bazą danych - wyświetlanie wyjątku w przypadku błędu
+				{
+
+				}
 			}
 		}
 		catch(Exception $e) // Exception - wyjątek
 		{
-			echo '<script>alert("functions - 486");</script>';
+			//echo '<script>alert("functions - 486");</script>';
 
 			//echo '<span style="color: red;"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o rejestrację w innym terminie! ]</span>'; 
 			
-			echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o rejestrację w innym terminie! ]</div>';
+			echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności]</div>';
 
 			echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW
 			exit(); // (?)
