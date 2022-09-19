@@ -26,13 +26,8 @@
 	{
 		header('Location: index.php');	
 	}
-	
-
 
 	session_unset(); // niszczy sesje, oraz wszystkie zmienne sesyjne
-
-
-
-
+	
 ?>
 

@@ -25,7 +25,7 @@
 		$haslo2 = $_POST['haslo2'];
 
 
-		$imie = htmlentities($imie, ENT_QUOTES, "UTF-8"); 
+		/*$imie = htmlentities($imie, ENT_QUOTES, "UTF-8"); 
 		$nazwisko = htmlentities($nazwisko, ENT_QUOTES, "UTF-8"); 
 		$email = htmlentities($email, ENT_QUOTES, "UTF-8");
 		$miejscowosc = htmlentities($miejscowosc, ENT_QUOTES, "UTF-8");
@@ -35,7 +35,7 @@
 		$kod_miejscowosc = htmlentities($kod_miejscowosc, ENT_QUOTES, "UTF-8");
 		$telefon = htmlentities($telefon, ENT_QUOTES, "UTF-8");
 		$haslo1 = htmlentities($haslo1, ENT_QUOTES, "UTF-8");
-		$haslo2 = htmlentities($haslo2, ENT_QUOTES, "UTF-8");
+		$haslo2 = htmlentities($haslo2, ENT_QUOTES, "UTF-8");*/
 		
 		// nick ma składać się tylko ze znaków alfanumerycznych [A-Za-z0-9]
 		// (bez polskich znaków)

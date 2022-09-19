@@ -359,7 +359,7 @@
 	<link rel="stylesheet" href="style.css">
 
 
-	<!-- <script src="https://www.google.com/recaptcha/api.js"></script> -->
+	<script src="https://www.google.com/recaptcha/api.js"></script>
 	
 	
 </head>
@@ -876,14 +876,14 @@
 				?>	
 				<br>	
 						
-				<!-- <div class="g-recaptcha" data-sitekey="6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1"></div> -->		
+				<div class="g-recaptcha" data-sitekey="6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1"></div>	
 				
 				<?php		
-					/*if(isset($_SESSION['e_bot'])) // błąd z re'captcha ...
+					if(isset($_SESSION['e_bot'])) // błąd z re'captcha ...
 					{
 						echo '<div class="error">'.$_SESSION['e_bot'].'</div>';
 						unset($_SESSION['e_bot']);
-					}	*/	
+					}	
 				?>			
 				
 				<br>		

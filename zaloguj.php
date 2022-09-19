@@ -381,7 +381,7 @@
 				{
 					unset($_SESSION['udanarejestracja']);
 					
-					echo "<br>Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto<br>";
+					echo '<br><span style="color: blue;">Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto</span><br>';
 
 
 
