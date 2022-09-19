@@ -2,9 +2,15 @@
 
 	session_start();
 	
-	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) 
+	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (!(isset($_SESSION['udanarejestracja'])))) 
 	{
 		header("Location: index.php");
+		exit();
+	}
+
+	elseif((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (isset($_SESSION['udanarejestracja'])) && ($_SESSION['udanarejestracja'] == "true")) // jeśli po pomyślnym utworzeniu nowego konta, nadal jesteśmy zalogowani na stare konto
+	{
+		header("Location: logout.php");
 		exit();
 	}
 
@@ -12,6 +18,9 @@
 	include_once "functions.php"; // _once - sprawdzi, czy ten plik nie został zaincludowany wcześniej
 
 	query("", "", "");
+
+
+
 
 	//echo $_SESSION['login'] . '<br>';
 
@@ -373,6 +382,8 @@
 					unset($_SESSION['udanarejestracja']);
 					
 					echo "<br>Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto<br>";
+
+
 
 				}	
 

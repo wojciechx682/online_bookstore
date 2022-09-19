@@ -171,7 +171,7 @@
 	//$address_regex = '/^[0-9]{1,3}+\s?+[-]?+$/'; // miejscowosc, ulica ...
 
 
-	$phone = "48515350960";
+	
 	// 18     18A 18a   18 a   19/7   17/a   19/A 
 
 	/* 18
@@ -191,21 +191,119 @@
 	//$zip_regex = '/\b\d{2}\s*-\s*\d{3}\b/'; // zip code
 	//$zip_regex = "/^[0-9]{2}(?:-[0-9]{3})?$/"; // zip code
 
-	$phone_regex = "/^[+]?[0-9]{5,12}+$/";
+	
 
+	//$name_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}+[a-ząćęłńóśźż]+\s?+$/';	// imię -> "Jakub"
 
-	// preg_match() sprawdza dopasowanie wzorca do ciągu
-	// zwraca true jeżeli tekst pasuje do wyrażenia
-	if(preg_match($phone_regex, $phone)) 
+   
+
+	//$pass_regex_big_L = '/(*UTF8)^[A-ZŁŚŻ]{1}+[a-ząęółśżźćń]+$/';
+	//$pass_regex_big_L = '/[A-Z]+/';
+	//$pass_regex_small_L = '/[A-Z]?/';
+
+	///////////////////////////////////////////////////////
+	// hasło - musi zawierać (przynajmniej) : 
+	// Jedną dużą literę, 
+	// jedną małą, 
+	// znak specjalny 	 !# /? 	!@#$%^&*-
+	// jedną cyfra
+
+	$pass = "PassJacob33";
+
+	//$pattern = '/^(?=.*[!@#$%^&*-\/\?])(?=.*[0-9])(?=.*[A-Z]).{8,25}$/';
+	$pattern = '/^((?=.*[!@#$%^&*-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{8,25}$/';
+
+	//$pass_regex_big_L = '/[A-Za-z]/';
+
+	echo "<br><br> haslo =  $pass <br>";
+
+	if(!(preg_match($pattern, $pass))) 
 	{		
-		echo "<br><br>Podano poprawny polski wyraz";	
+		echo "<br>Hasło musi posiadać od 8 do 25 znaków<br>";	
+		echo "<br>Hasło musi zawierać przynajmniej jedną wielką literę<br>";	
+		echo "<br>Hasło musi zawierać przynajmniej jedną małą literę<br>"; 	
+		echo "<br>Hasło musi zawierać przynajmniej jedną cyfrę<br>"; 	
+		echo "<br>Hasło musi zawierać przynajmniej jeden znak specjalny cyfrę<br>"; 	
+		//exit();	
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////
+
+	echo "<br><hr><br>";
+	echo "Miejscowosc regex :";
+
+	
+
+	//$pattern = '/^(?=.*[!@#$%^&*-\/\?])(?=.*[0-9])(?=.*[A-Z]).{8,25}$/';
+
+	$pass_regex = '/^( (?=.*[!@#$%^&*-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]) ).{8,25}$/';
+
+	//$pattern = '/(*UTF8)^( (?=.*[!@#$%^&*-\/\?]) (?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{8,25}$/';
+
+	//$pattern = '/(*UTF8)^( (?=.*[!@#$%^&*-\/\?]) (?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{8,25}$/';
+
+	//$pattern = '/(*UTF8)^([A-Z]{1}+)$/';
+
+	$pattern = '/(*UTF8)^([A-Z]{1})  $/';
+
+	$pattern = '/(*UTF8)^([A-Z]{1})  $/';
+
+	//'/^((?=.*[!@#$%^&*-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{8,25}$/';
+
+	//$address_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}+[a-ząćęłńóśźż]+\s?[-]?\s?+[A-ZĄĆĘŁŃÓŚŹŻ]?+[a-ząćęłńóśźż]+\s?[-]?\s?+[A-ZĄĆĘŁŃÓŚŹŻ]?+[a-ząćęłńóśźż]+$/'; // miejscowosc, ulica ...
+
+	//$address_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}  $/';
+
+	/////////////////////////////////////////////////////////////
+	//$name_regex = '/(*UTF8)^[A-ZŁŚŻ]{1}[a-ząęółśżźćń]+$/';
+
+	//$address_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]+([\s|\-]?[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+){4}$/'; 
+
+	//Ą ą Ć ć Ę ę Ł ł Ń ń Ó ó Ś ś Ź ź Ż ż.
+
+	//$address_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}+[a-ząćęłńóśźż]+\s?[-]?\s?+[A-ZĄĆĘŁŃÓŚŹŻ]?+[a-ząćęłńóśźż]+\s?[-]?\s?+[A-ZĄĆĘŁŃÓŚŹŻ]?+[a-ząćęłńóśźż]+$/'; // miejscowosc, ulica ...
+
+	//$pass_regex_big_L = '/[A-Za-z]/';
+
+	$city = "Dębno-w-odrze";
+
+	//$phone = str_replace(['!', '@', '#', '$', '%', '^', '&', , , , , '-', '[', ']', '.', ',' ], '', $phone);
+
+	//$phone = str_replace(str_split('!"#$%&\'()*\'-./:;<>?@[\\]^_{}|~ '), '', $phone);
+
+
+	//$phone_regex = "/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{3,6}$/";
+		//$zip_regex = "/^[0-9]{2}(?:-[0-9]{3})?$/";
+	$address_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]+([\s|\-]?[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+){0,4}$/';	
+
+	echo "<br><br> Miasto =  $city <br>";
+
+	if(!(preg_match($address_regex, $city))) 
+	{		
+		echo "<br> Podaj poprawną miejscowość <br>"; 	
 		exit();	
 	}
-	else  
-	{
-		echo "<br><br>Błędny wyraz.";
-		exit();
-	}
+
+	exit();
+	
+	/*
+	
+		Nazwa miasta :
+
+		Pierwsza litera duża, A a + polskie znaki
+	
+		L m+  [dowolna ilosc spacji]    myślnik
+
+
+	*/
+
+
+
+
+	
+
+	exit();
 	
 
 

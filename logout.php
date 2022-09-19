@@ -15,7 +15,24 @@
 	//exit();	  
 	// 86400 = 1 day
 	// Wylogowanie użytkownika, niszczenie sesji :
-	session_unset(); // niszczy sesje, oraz wszystkie zmienne sesyjne	
-	header('Location: index.php');	
+		
+
+	if(isset($_SESSION['udanarejestracja']))
+	{
+		header('Location: zaloguj.php');	
+		//exit();
+	}	
+	else
+	{
+		header('Location: index.php');	
+	}
+	
+
+
+	session_unset(); // niszczy sesje, oraz wszystkie zmienne sesyjne
+
+
+
+
 ?>
 

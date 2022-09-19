@@ -360,12 +360,12 @@
 									exit();		
 
 								}
-								/*elseif(($fun == "register_verify_email"))  // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php)
+								elseif((get_var_name($value) == "email") && ($fun == "register_verify_email"))  // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php)
 								{
 
-									// ... 
+									// ...  nic nie rób
 
-								}	*/
+								}	
 								else 
 								{ 
 									echo '<h3>Brak wyników</h3>';
@@ -406,16 +406,17 @@
 						
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-						/*if(($_SESSION['wszystko_OK'] == true))
+						if(($_SESSION['wszystko_OK'] == true))   // rejestracja.php ...
 						{
 							$_SESSION['udanarejestracja'] = true;
 							header('Location: zaloguj.php');
-						}*/
+
+						}
 
 
 
 					}
-					else 
+					else // nie udało się zrealizować zapytania
 					{
 						throw new Exception($polaczenie->error);
 
@@ -427,7 +428,7 @@
 				}
 				else // test połączenia z bazą danych - wyświetlanie wyjątku w przypadku błędu
 				{
-
+					// ?
 				}
 			}
 		}
