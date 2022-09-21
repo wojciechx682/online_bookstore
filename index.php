@@ -4,6 +4,12 @@
 	
 	include_once "functions.php"; // _once - sprawdzi, czy ten plik nie został zaincludowany wcześniej
 
+	// sprawdź połączenie z BD :
+
+	query("", "", ""); // w przypadku błędu połączenia z BD, wyświetli komunikat rzuconego wyjątku.	
+	// należy dodać to do każdej podstrony, która korzysta z połączenia z bd
+
+
 	//echo $_SESSION['login'] . '<br>';
 
 	/*if(isset($_SESSION['zalogowany']))
@@ -12,7 +18,14 @@
 		unset($_SESSION['account_error']);
 		//exit();
 	}	*/	
+
+	/*if(isset($_SESSION['blad'])) {
+		echo $_SESSION['blad'];
+		exit();
+	}*/
 ?>
+
+
 
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -50,7 +63,7 @@
 					
 					<!-- <div id="div_register">
 						
-						<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+						<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 						
 					</div> -->
 
@@ -63,7 +76,7 @@
 					<ol>	
 
 						<li>
-							<a href="rejestracja.php">Zarejestruj</a>
+							<a href="zarejestruj.php">Zarejestruj</a>
 						</li>
 
 						<li>									
@@ -111,7 +124,7 @@
 					<!--
 						<div id="div_register">
 							
-							<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+							<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 							
 						</div>
 					-->

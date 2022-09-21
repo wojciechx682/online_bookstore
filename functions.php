@@ -221,7 +221,7 @@
 	// skrypt logowania (logowanie.php) - logowanie, weryfikacja hasła :
 	function log_in($result)
 	{
-		$row = $result->fetch_assoc();
+		$row = $result->fetch_assoc(); // wiersz (BD) - pola tabeli = tablica asocjacyjne
 
 		//echo '$_POST[login] = ' . $_POST['login'] . "<br>";
 		//echo '$_POST[haslo] = ' . $_POST['haslo'] . "<br>";		
@@ -263,12 +263,18 @@
 		else  // dobry login, złe hasło
 		{		
 			// błędne dane logowanie -> przekierowanie do index.php + komunikat
-			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy login lub hasło!</span>';
+			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>';
 			header('Location: zaloguj.php');	
 			exit();					  
 		}
 
 	}
+
+	function register_verify_email($result) // rejestracja (rejestracja_skrypt.php) - weryfikacja czy istnieje taki email
+	{
+		$_SESSION['wszystko_OK'] = false;
+		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
+	}	
 
 	function get_var_name($var) {
 
@@ -302,7 +308,6 @@
 		//echo "<br> query = " . $query . "<br>" ; 
 
 		require "connect.php";
-
 		mysqli_report(MYSQLI_REPORT_STRICT);  // sposób raportowania błędów -> MYSLQI_REPORT_STRICT - zamiast warningów, chcemy rzucać exception
 
 		try 
@@ -326,12 +331,12 @@
 						
 							$num_of_rows = $result->num_rows; // ilość zwróconych wierszy	
 
-							if($num_of_rows>0) // znaleziono rekordy ...
+							if($num_of_rows>0) // znaleziono rekordy ...  // == 1
 							{							
 
 								$fun($result); // wywołanie zewnętrznej funkcji		
 
-								// wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
+								// np. wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
 							}
 							else  // brak zwróconych rekordów
 							{				
@@ -340,15 +345,26 @@
 											//header('Location: index.php');
 											//echo '<script>alert("functions - 436");</script>';	
 								
-								if (get_var_name($value) == "login") // jeśli to było logowanie - (wywołanie funkcji query() z logowanie.php)
+								if ((get_var_name($value) == "email") && ($fun != "register_verify_email")) // jeśli to było logowanie - (wywołanie funkcji query() z logowanie.php)
 								{
-									$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy login lub hasło!</span>';
+									// to sie wykona tylko dla skryptu logowania (logowanie.php)
+
+									$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>';
 									header('Location: zaloguj.php');	
 									exit();		
+
 								}
-								else {
-									echo '<h3>Brak wyników</h3>';
+								elseif((get_var_name($value) == "email") && ($fun == "register_verify_email"))  // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php)
+								{
+
+									// ...  nic nie rób
+
 								}	
+								else 
+								{ 
+									echo '<h3>Brak wyników</h3>';
+								}
+
 								  
 							}			
 											
@@ -362,7 +378,8 @@
 
 					$polaczenie->close(); // Czy przenieść to poniżej aby nie pisać tego dwa razy ?
 				}
-				else  // INSERT, UPDATE ...
+				//else  // INSERT, UPDATE ...
+				elseif(($type == "INSERT") || ($type == "UPDATE"))  // INSERT, UPDATE ...
 				{
 
 					//echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";						
@@ -373,7 +390,11 @@
 					{					 
 						//$value_i = $value[$i];						
 						$value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
+
+						//echo "<br> -> $value[$i]";
+						
 					}
+					//exit();
 
 					if($result = $polaczenie->query(vsprintf($query, $value))) //$query - zapytanie, $value - tablica parametrów do vsprintf
 					{
@@ -382,8 +403,20 @@
 						//echo '<script>alert("udało się zmienić dane :)")</script>';
 						
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+						if((isset($_SESSION['wszystko_OK'])))   // rejestracja.php ...
+						{
+							unset($_SESSION['wszystko_OK']);
+							$_SESSION['udanarejestracja'] = true;
+							//unset($_SESSION['wszystko_OK']);
+							header('Location: zaloguj.php');
+
+						}
+
+
+
 					}
-					else 
+					else // nie udało się zrealizować zapytania
 					{
 						throw new Exception($polaczenie->error);
 
@@ -393,15 +426,19 @@
 
 					//exit();
 				}
+				else // test połączenia z bazą danych - wyświetlanie wyjątku w przypadku błędu
+				{
+					// ?
+				}
 			}
 		}
 		catch(Exception $e) // Exception - wyjątek
 		{
-			echo '<script>alert("functions - 486");</script>';
+			//echo '<script>alert("functions - 486");</script>';
 
 			//echo '<span style="color: red;"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o rejestrację w innym terminie! ]</span>'; 
 			
-			echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o rejestrację w innym terminie! ]</div>';
+			echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności]</div>';
 
 			echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW
 			exit(); // (?)

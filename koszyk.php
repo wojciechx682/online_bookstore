@@ -875,7 +875,7 @@
 					
 					<!--<div id="div_register">
 						
-						<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+						<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 						
 					</div> -->
 
@@ -888,7 +888,7 @@
 					<ol>	
 
 						<li>
-							<a href="rejestracja.php">Zarejestruj</a>
+							<a href="zarejestruj.php">Zarejestruj</a>
 						</li>
 
 						<li>									
@@ -936,7 +936,7 @@
 					<!--
 						<div id="div_register">
 							
-							<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+							<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 							
 						</div>
 					-->
@@ -1198,6 +1198,8 @@
 					array_push($values, $ilosc);
 
 					echo query("INSERT INTO koszyk (id_klienta, id_ksiazki, ilosc) VALUES ('%s', '%s', '%s')", "", $values);  
+
+					echo query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id_klienta); // dodałem to wstępnie, nie wiem czy to ma tutaj pozostać
 				}
 				else
 				{

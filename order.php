@@ -869,7 +869,7 @@
 					
 					<!--<div id="div_register">
 						
-						<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+						<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 						
 					</div> -->
 
@@ -882,7 +882,7 @@
 					<ol>	
 
 						<li>
-							<a href="rejestracja.php">Zarejestruj</a>
+							<a href="zarejestruj.php">Zarejestruj</a>
 						</li>
 
 						<li>									
@@ -930,7 +930,7 @@
 					<!--
 						<div id="div_register">
 							
-							<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+							<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 							
 						</div>
 					-->

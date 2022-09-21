@@ -26,11 +26,11 @@ Lista przekierowań / Struktura witryny/podstron (drzewo)
 
 Dodawanie / Usuwanie / Edytowanie ... danych (?)
 
-Możliwość zakupu (koszyk) bez zakładania konta
+(-) Możliwość zakupu (koszyk) bez zakładania konta
 
-Logowanie za pomocą e-mail, telefonu ?
+Logowanie za pomocą e-mail ✓, telefonu ?
 
--> Kategorie - funkcja pobierająca i wyświetlająca dane na podstawie wybranej kategori,
+-> Kategorie - funkcja pobierająca i wyświetlająca dane na podstawie wybranej kategori ✓  
    Filtrowanie danych - JS zamiast PHP ! Filtrowanie aktualnie wyświetlonych wyników (po kliknięciu kategorii, lub po wyszukaniu z wyszukiwarki).
 
 -> (Ewentualnie!) Wysyłanie na email kodu weryfikacyjnego po rejestracji (utworzeniu konta) w celu potwierdzenia
@@ -52,7 +52,7 @@ Dodanie opcji o "sile hasła" przy rejestracji. (JS ?)
 
 Książki -> Komentarze (?) / Lub dodanie opinii w skali oceny (5/5).
 
-Walidacja wyszukiwarki - danych wprowadzonych od usera. Przycisk Enter = wyszukiwanie, ESC, usuwanie ?
+Walidacja wyszukiwarki - danych wprowadzonych od usera.      (✓) Przycisk Enter = wyszukiwanie, ESC, usuwanie ?
 
 Cena -> Suwak ? 
 ------------------------------------------------------------------
@@ -66,7 +66,7 @@ TO DO (funkcjonalności):
 
 ­	Zarządzanie kontami użytkowników <-- 
 (panel profilu / konfiguracyjny)
-Użytkownik będzie mógł zmienić tam dane swojego konta.
+Użytkownik będzie mógł zmienić tam dane swojego konta. ✓
 
 ------------------------------------------------------
 

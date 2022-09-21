@@ -1,6 +1,6 @@
 <?php
 
-	session_start();
+	session_start();	
 
 	include_once "functions.php";	
 	
@@ -52,7 +52,7 @@
 					
 					<!--<div id="div_register">
 						
-						<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+						<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 						
 					</div> -->
 
@@ -65,7 +65,7 @@
 					<ol>	
 
 						<li>
-							<a href="rejestracja.php">Zarejestruj</a>
+							<a href="zarejestruj.php">Zarejestruj</a>
 						</li>
 
 						<li>									
@@ -113,7 +113,7 @@
 					<!--
 						<div id="div_register">
 							
-							<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+							<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 							
 						</div>
 					-->
@@ -206,7 +206,9 @@
 
 			<a href="edit_data.php">Edytuj dane użytkownika</a><br><br>
 
-			<a href="my_orders.php">Zamówienia</a>
+			<a href="my_orders.php">Zamówienia</a><br><br>
+
+			<a href="logout.php"> [ Wyloguj ]</a>
 
 		</div>
 

@@ -1,5 +1,6 @@
 <?php
-	session_start();	
+	session_start();
+		
 	if (isset($_COOKIE['PHPSESSID'])) 
 	{
 		$cookie_name = "PHPSESSID";
@@ -14,7 +15,21 @@
 	//exit();	  
 	// 86400 = 1 day
 	// Wylogowanie użytkownika, niszczenie sesji :
-	session_unset(); // niszczy sesje, oraz wszystkie zmienne sesyjne	
-	header('Location: index.php');	
+		
+
+	if(isset($_SESSION['udanarejestracja']))
+	{
+		session_unset();
+		header('Location: zaloguj.php');	
+		//exit();
+	}	
+	else
+	{
+		session_unset();
+		header('Location: index.php');	
+	}
+
+	//session_unset(); // niszczy sesje, oraz wszystkie zmienne sesyjne
+	
 ?>
 
