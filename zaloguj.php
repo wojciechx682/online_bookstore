@@ -8,11 +8,46 @@
 		exit();
 	}
 
-	elseif((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (isset($_SESSION['udanarejestracja'])) && ($_SESSION['udanarejestracja'] == "true")) // jeśli po pomyślnym utworzeniu nowego konta, nadal jesteśmy zalogowani na stare konto
+	elseif((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (isset($_SESSION['udanarejestracja'])) && ($_SESSION['udanarejestracja'] == "true")) // jeśli po pomyślnym utworzeniu nowego konta, nadal jesteśmy zalogowani na stare konto // jeśli stworzyliśmy konto, będąc zalogowanym na inne
 	{
 		header("Location: logout.php");
 		exit();
 	}
+	elseif(isset($_SESSION['udanarejestracja'])) // jeśli stworzyliśmy konto (normalnie - nie będąc zalogowanym w tym czasie na inne)
+	{
+		//unset($_SESSION['udanarejestracja']);
+
+		// Usuwanie zmiennych pamiętających wartości wpisane do formularza
+		if (isset($_SESSION['fr_imie'])) unset($_SESSION['fr_imie']);
+		if (isset($_SESSION['fr_nazwisko'])) unset($_SESSION['fr_nazwisko']);
+		if (isset($_SESSION['fr_email'])) unset($_SESSION['fr_email']);
+		if (isset($_SESSION['fr_haslo1'])) unset($_SESSION['fr_haslo1']);
+		if (isset($_SESSION['fr_haslo2'])) unset($_SESSION['fr_haslo2']);
+		if (isset($_SESSION['fr_miejscowosc'])) unset($_SESSION['fr_miejscowosc']);
+		if (isset($_SESSION['fr_ulica'])) unset($_SESSION['fr_ulica']);
+		if (isset($_SESSION['fr_numer_domu'])) unset($_SESSION['fr_numer_domu']);
+		if (isset($_SESSION['fr_kod_pocztowy'])) unset($_SESSION['fr_kod_pocztowy']);
+		if (isset($_SESSION['fr_kod_miejscowosc'])) unset($_SESSION['fr_kod_miejscowosc']);
+		if (isset($_SESSION['fr_telefon'])) unset($_SESSION['fr_telefon']);		
+		if (isset($_SESSION['fr_regulamin'])) unset($_SESSION['fr_regulamin']);
+		
+		// Usuwanie błędów rejestracji
+		if (isset($_SESSION['e_imie'])) unset($_SESSION['e_imie']);
+		if (isset($_SESSION['e_nazwisko'])) unset($_SESSION['e_nazwisko']);
+		if (isset($_SESSION['e_email'])) unset($_SESSION['e_email']);
+		if (isset($_SESSION['e_haslo'])) unset($_SESSION['e_haslo']);
+		if (isset($_SESSION['e_miejscowosc'])) unset($_SESSION['e_miejscowosc']);
+		if (isset($_SESSION['e_ulica'])) unset($_SESSION['e_ulica']);
+		if (isset($_SESSION['e_numer_domu'])) unset($_SESSION['e_numer_domu']);
+		if (isset($_SESSION['e_kod_pocztowy'])) unset($_SESSION['e_kod_pocztowy']);
+		if (isset($_SESSION['e_kod_miejscowosc'])) unset($_SESSION['e_kod_miejscowosc']);
+		if (isset($_SESSION['e_telefon'])) unset($_SESSION['e_telefon']);
+		if (isset($_SESSION['e_kod_miejscowosc'])) unset($_SESSION['e_kod_miejscowosc']);		
+		if (isset($_SESSION['e_regulamin'])) unset($_SESSION['e_regulamin']);
+		if (isset($_SESSION['e_bot'])) unset($_SESSION['e_bot']);
+	}
+
+
 
 
 	include_once "functions.php"; // _once - sprawdzi, czy ten plik nie został zaincludowany wcześniej
@@ -64,7 +99,7 @@
 					
 					<!--<div id="div_register">
 						
-						<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+						<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 						
 					</div> -->
 
@@ -77,7 +112,7 @@
 					<ol>	
 
 						<li>
-							<a href="rejestracja.php">Zarejestruj</a>
+							<a href="zarejestruj.php">Zarejestruj</a>
 						</li>
 
 						<li>									
@@ -125,7 +160,7 @@
 					<!--
 						<div id="div_register">
 							
-							<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+							<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 							
 						</div>
 					-->
@@ -363,7 +398,7 @@
 					
 			</form>
 			
-			<br><a href="rejestracja.php">Rejestracja - załóż darmowe konto!</a><br>
+			<br><a href="zarejestruj.php">Rejestracja - załóż darmowe konto!</a><br>
 
 			<?php	
 				// pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło ! 

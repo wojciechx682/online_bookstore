@@ -19,15 +19,17 @@
 
 	if(isset($_SESSION['udanarejestracja']))
 	{
+		session_unset();
 		header('Location: zaloguj.php');	
 		//exit();
 	}	
 	else
 	{
+		session_unset();
 		header('Location: index.php');	
 	}
 
-	session_unset(); // niszczy sesje, oraz wszystkie zmienne sesyjne
+	//session_unset(); // niszczy sesje, oraz wszystkie zmienne sesyjne
 	
 ?>
 

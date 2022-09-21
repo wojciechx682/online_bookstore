@@ -274,12 +274,7 @@
 	{
 		$_SESSION['wszystko_OK'] = false;
 		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
-	}
-
-	function register($result)
-	{
-
-	}
+	}	
 
 	function get_var_name($var) {
 
@@ -313,7 +308,6 @@
 		//echo "<br> query = " . $query . "<br>" ; 
 
 		require "connect.php";
-
 		mysqli_report(MYSQLI_REPORT_STRICT);  // sposób raportowania błędów -> MYSLQI_REPORT_STRICT - zamiast warningów, chcemy rzucać exception
 
 		try 
@@ -396,7 +390,11 @@
 					{					 
 						//$value_i = $value[$i];						
 						$value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
+
+						//echo "<br> -> $value[$i]";
+						
 					}
+					//exit();
 
 					if($result = $polaczenie->query(vsprintf($query, $value))) //$query - zapytanie, $value - tablica parametrów do vsprintf
 					{
@@ -406,9 +404,11 @@
 						
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-						if(($_SESSION['wszystko_OK'] == true))   // rejestracja.php ...
+						if((isset($_SESSION['wszystko_OK'])))   // rejestracja.php ...
 						{
+							unset($_SESSION['wszystko_OK']);
 							$_SESSION['udanarejestracja'] = true;
+							//unset($_SESSION['wszystko_OK']);
 							header('Location: zaloguj.php');
 
 						}

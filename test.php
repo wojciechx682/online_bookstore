@@ -71,7 +71,9 @@
 		echo "<br> Checkbox jest zaznaczony <br>";		
 	}
 	
-	$email = "jak;ub.wojciechowski.682@gm;ail.com";
+	$email = '<script>alert("asd");</script>gus@wp.pl';
+
+	//$email = htmlentities($email, ENT_QUOTES, "UTF-8");
 	
 	echo "<br> e-mail = $email";
 	
@@ -85,13 +87,13 @@
 	
 	echo "<br>";
 	
-	if(filter_var($email_sanitaze, FILTER_VALIDATE_EMAIL) == true)
+	if((filter_var($email_sanitaze, FILTER_VALIDATE_EMAIL)==false) || ($email_sanitaze != $email))
 	{
-		echo "<br>TRUE<br>";
+		echo "<br> -> false<br>";
 	}
 	else
 	{
-		echo "<br>FALSE<br>";
+		echo "<br>true<br>";
 	}
 	
 	///////////////////////////////////////////////////////////////////////////

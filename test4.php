@@ -134,17 +134,7 @@
 					result = ratings.includes(6); 
 					console.log("result -> " + result); // false
 
-
-
 				}
-
-
-
-				
-
-
-
-
 
 			</script>
 
