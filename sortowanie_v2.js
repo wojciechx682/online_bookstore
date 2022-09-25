@@ -2,6 +2,14 @@ $('#sortuj_wg').on('change', function() {
 	sortuj();    
 });
 
+function testuj() 
+{	
+	/*var el = document.getElementById("add_quan");
+	el.innerHTML = "123";*/
+}
+
+
+
 function sortuj() 
 {	
     var s = document.getElementById("sortuj_wg");

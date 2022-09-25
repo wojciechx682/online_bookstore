@@ -18,6 +18,7 @@
 		document.getElementById("demo").innerHTML = "<?php echo $var; ?>";
 	}
 
+	
 </script>
 
 
@@ -61,6 +62,36 @@
 	<input type="submit" value="Wyślij dane do skryptu">	
 
 </form>
+
+
+---------------------------------------------------------------------<br><br>
+
+
+<script src="jquery.js"></script>
+<script src="sortowanie_v2.js"></script>
+
+
+<input type="text" id="add_quan">
+
+<button id="add" onclick="sortuj()">+</button>
+<button id="remove">-</button>
+
+
+
+
+<br>---------------------------------------------------------------------<br><br>
+
+
+
+
+
+
+
+
+
+
+
+
 	
 <?php
 	
@@ -71,7 +102,7 @@
 		echo "<br> Checkbox jest zaznaczony <br>";		
 	}
 	
-	$email = '<script>alert("asd");</script>gus@wp.pl';
+	$email = 'asd@wp.pl';
 
 	//$email = htmlentities($email, ENT_QUOTES, "UTF-8");
 	
@@ -284,8 +315,50 @@
 	if(!(preg_match($address_regex, $city))) 
 	{		
 		echo "<br> Podaj poprawną miejscowość <br>"; 	
-		exit();	
+		//exit();	
 	}
+
+	echo "<br>------------------------------------------------------------------<br>";
+
+
+	$values = array();
+
+	$value = "abc";
+
+	array_push($values, "1");
+	array_push($values, "2");
+	array_push($values, "3");
+
+	echo "<br> values = <br>";
+	print_r($values);
+
+	echo "<br> is array ? --> <br>";
+
+	if(!is_array($values))
+	{
+		echo "yes";
+	}
+	else 
+	{
+		echo "no";
+	}
+
+	echo "<br> values = <br>";
+	print_r($values[0]);
+
+
+	echo "<br>------------------------------------------------------------------<br>";
+
+
+
+
+
+		
+
+
+
+
+
 
 	exit();
 	
@@ -378,6 +451,7 @@
 	exit();
 		
 ?>
+
 
 
 

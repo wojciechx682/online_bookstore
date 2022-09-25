@@ -849,11 +849,21 @@
 
 		}
 
+		
+
 
 
 
 
 	</script>
+
+	<?php
+		function php_func()
+		{
+			echo "Stay Safe";
+			exit();
+		}
+	?>
 
 </head>
 
@@ -1151,7 +1161,7 @@
 
 			<?php
 
-				if(isset($_GET['kategoria'])) 
+				if(isset($_GET['kategoria']))  // DO USUNIĘCIA
 				{
 					$kategoria = $_GET['kategoria']; // <- przyczyna błędu. (już naprawionego ...)		
 					
@@ -1178,7 +1188,10 @@
 
 			<?php 
 
-				if((isset($_POST['id_ksiazki'])) and (isset($_POST['koszyk_ilosc']))) // dane pochodzące z koszyk_dodaj.php
+				// DO WYRZUCENIA - zamiast tego jest add_to_cart.php
+				if((isset($_POST['id_ksiazki'])) && (isset($_POST['koszyk_ilosc'])) && !(empty($_POST['id_ksiazki'])) && !(empty($_POST['koszyk_ilosc']))
+                    
+				) // dane pochodzące z koszyk_dodaj.php
 				{	// && not empty		!empty
 
 					$id_ksiazki = $_POST['id_ksiazki'];
@@ -1201,9 +1214,20 @@
 					array_push($values, $id_ksiazki);
 					array_push($values, $ilosc);
 
-					echo query("INSERT INTO koszyk (id_klienta, id_ksiazki, ilosc) VALUES ('%s', '%s', '%s')", "", $values);  
+					query("INSERT INTO koszyk (id_klienta, id_ksiazki, ilosc) VALUES ('%s', '%s', '%s')", "", $values);  
 
-					echo query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id_klienta); // dodałem to wstępnie, nie wiem czy to ma tutaj pozostać
+					//echo query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id_klienta); // dodałem to wstępnie, nie wiem czy to ma tutaj pozostać
+
+					unset($_POST['id_ksiazki']);
+					unset($_POST['koszyk_ilosc']);
+
+					//header('Location: koszyk.php');
+					
+					//header("Refresh:0");
+
+					//exit();
+
+					//exit();
 				}
 				else
 				{
@@ -1213,7 +1237,7 @@
 
 					// Książki które zamówił klient o danym ID : 
 
-					echo query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id_klienta);
+					query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id_klienta);
 
 				}
 			?>

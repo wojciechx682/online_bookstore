@@ -45,6 +45,8 @@
 		if (isset($_SESSION['e_kod_miejscowosc'])) unset($_SESSION['e_kod_miejscowosc']);		
 		if (isset($_SESSION['e_regulamin'])) unset($_SESSION['e_regulamin']);
 		if (isset($_SESSION['e_bot'])) unset($_SESSION['e_bot']);
+
+		if (isset($_SESSION['blad'])) unset($_SESSION['blad']);
 	}
 
 
@@ -52,7 +54,7 @@
 
 	include_once "functions.php"; // _once - sprawdzi, czy ten plik nie został zaincludowany wcześniej
 
-	query("", "", "");
+	//query("", "", "");
 
 
 

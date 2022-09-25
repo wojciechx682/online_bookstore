@@ -17,7 +17,6 @@
 	              the code inside the file before redirecting. */
 	}
 
-
 	function get_categories($result) // wypisuje elementy listy <li> - wewnątrz kategorii (top_nav)
 	{
 		$cat = "Wszystkie";
@@ -40,7 +39,6 @@
 		while ($row = $result->fetch_assoc()) 
 		{		
 			$_SESSION['id_ksiazki'] = $row["id_ksiazki"];	 
-
 		  	$_SESSION['tytul'] = $row["tytul"];
 		  	$_SESSION['cena'] = $row["cena"];
 		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];			  		
@@ -85,14 +83,51 @@
 	{
 		$_SESSION['suma_zamowienia'] = 0;
 
+		$i = 0;
+
 		while ($row = $result->fetch_assoc()) 
 		{			        
-		  	echo $row['tytul'].", || ".$row['cena'].", || ".$row['rok_wydania']." || <b> Ilość : </b> ".$row['ilosc']. "<br>"; 	
+		  	/*echo $row['tytul'].", || ".$row['cena'].", || ".$row['rok_wydania']." || <b> Ilość : </b> ".$row['ilosc'] ;
+
+		  	echo '<button class="cart_remove_book" type="button">Usuń</button>';*/
+
+		  	echo '<div id="book'.$i.'">';
+		  	echo '<div class="title">'.$row['tytul'].'</div>';
+		  	echo '<div class="price">'.$row['cena'].'</div>';
+		  	echo '<div class="year">'.$row['rok_wydania'].'</div>';	
+		  	echo '<div class="quantity"><b>Ilość = </b>'.$row['ilosc'].'</div>';
+
+		  	echo '<form method="post" action="remove_book.php">';
+		  		
+		  		echo '<input type="hidden" name="id_klienta" value="'.$row['id_klienta'].'">';
+		  		echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
+		  		echo '<input type="hidden" name="ilosc" value="'.$row['ilosc'].'">';
+
+		  		echo '<input type="submit" value="Usuń">';
+
+		  	echo '</form>';
+
+		  		
+		  	echo '</div>';
+
+
+
+			//echo "<br>"; 	
+
+			$i++;
 
 		  	$_SESSION['suma_zamowienia'] += $row['ilosc'] * $row['cena'];	  
 		}
 
 		$result->free_result(); 	
+	}
+
+	function remove_product_from_cart($result)
+	{
+
+
+
+
 	}
 
 	function add_product_to_cart($id_ksiazki, $quantity)	
@@ -276,6 +311,14 @@
 		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
 	}	
 
+	function cart_verify_book($result) // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
+	{ 
+		$_SESSION['book_exists'] = true;
+
+		$result->free_result();
+	}
+
+
 	function get_var_name($var) {
 
 	    foreach($GLOBALS as $var_name => $value) 
@@ -320,10 +363,13 @@
 			}
 			else // udane polaczenie
 			{	
-				if(($type == "SELECT"))
+				//if(($type == "SELECT"))
+				//if(($type == "SELECT"))
+				if(!is_array($value))
 				{	
 					//echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";
 
+					//echo "<br> query = $query <br>"; exit();
 					//if($result = $polaczenie->query($query)) // udane zapytanie
 					if($result = $polaczenie->query(sprintf($query, mysqli_real_escape_string($polaczenie, $value)))) 
 					{
@@ -334,7 +380,9 @@
 							if($num_of_rows>0) // znaleziono rekordy ...  // == 1
 							{							
 
-								$fun($result); // wywołanie zewnętrznej funkcji		
+								$fun($result); // wywołanie zewnętrznej funkcji	
+
+
 
 								// np. wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
 							}
@@ -379,7 +427,8 @@
 					$polaczenie->close(); // Czy przenieść to poniżej aby nie pisać tego dwa razy ?
 				}
 				//else  // INSERT, UPDATE ...
-				elseif(($type == "INSERT") || ($type == "UPDATE"))  // INSERT, UPDATE ...
+				//elseif(($type == "INSERT") || ($type == "UPDATE"))  // INSERT, UPDATE ...
+				elseif(is_array($value))  // INSERT, UPDATE ...
 				{
 
 					//echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";						
@@ -398,20 +447,38 @@
 
 					if($result = $polaczenie->query(vsprintf($query, $value))) //$query - zapytanie, $value - tablica parametrów do vsprintf
 					{
-						//////////////////////////////////////////////////////////////////////////////////////////////////////
-						
-						//echo '<script>alert("udało się zmienić dane :)")</script>';
-						
-						//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-						if((isset($_SESSION['wszystko_OK'])))   // rejestracja.php ...
+						if($type != "DELETE") // koszyk.php - usuwanie książek 
 						{
-							unset($_SESSION['wszystko_OK']);
-							$_SESSION['udanarejestracja'] = true;
-							//unset($_SESSION['wszystko_OK']);
-							header('Location: zaloguj.php');
+							//////////////////////////////////////////////////////////////////////////////////////////////////////
+							
+							//echo '<script>alert("udało się zmienić dane :)")</script>';
+							
+							//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+							// DLA ZAPYTANIA SELECT (z wykorzystaniem WIĘCEJ NIŻ JEDNEJ zmiennej w WHERE condition - zastosowanie - przy koszykach.php) :
+							$num_of_rows = $result->num_rows; // ilość zwróconych wierszy
+							if($num_of_rows>0) // znaleziono rekordy ...  // == 1
+							{					
+								$fun($result); // wywołanie zewnętrznej funkcji	
+								// wywołanie funkcji cart_verify_book -> przestawi zmienną $_SESSION['book_exists'] na TRUE (co oznacza że książka ta istnieje w koszyku tego usera)
+									// np. wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
+							}
+							else 
+							{
+								if((isset($_SESSION['wszystko_OK'])))   // rejestracja.php ...
+								{
+									unset($_SESSION['wszystko_OK']);
+									$_SESSION['udanarejestracja'] = true;
+									//unset($_SESSION['wszystko_OK']);
+									header('Location: zaloguj.php');
+
+								}
+							}
 
 						}
+						
+
+						
 
 
 
