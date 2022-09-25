@@ -17,95 +17,7 @@
 		//exit();
 	}*/	
 
-	function get_books_by_id_($id) 
-	{
-		require "connect.php";		
-
-		mysqli_report(MYSQLI_REPORT_STRICT);	
-
-		try // spróbuj połączyć się z bazą danych
-		{
-			
-			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);		
-				// @ - operator kontroli błędów - w przypadku blędu, php nie wyświetla informacji o błędzie
-			
-			// sprawdzamy, czy udało się połaczyć z bazą danych
-			 
-			if($polaczenie->connect_errno!=0) // błąd połączenia
-			{
-				// 0  = false           = udane połączenie
-				// !0 = true (1,2, ...) = błąd połączenia
-				
-					//echo "[ Błąd połączenia ] (".$conn->connect_errno."), Opis: ".$conn->connect_error;		
-				//echo "[ Błąd połączenia ] (".$polaczenie->connect_errno.") <br>";	
-				throw new Exception(mysqli_connect_errno()); // rzuć nowy wyjątek			
-			}
-			else // udane polaczenie
-			{		
-				//echo "<hr> -> kategoria = ".$kategoria."<br>";
-					//$kategorie = $polaczenie->query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC");
-
-				if($ksiazki = $polaczenie->query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_ksiazki=$id"))
-				{
-					//echo "<br> udane połączenie <br>";
-
-					$ilosc_ksiazek = $ksiazki->num_rows;
-
-					//echo "<br> ilosc_ksiazek -> $ilosc_ksiazek <br><br>";
-
-					if($ilosc_ksiazek>0)
-					{
-						while ($row = $ksiazki->fetch_assoc()) 
-						{
-							    
-						    //echo 'alert("nie");';
-						  	//echo "console.log(".$row["id_autora"].");";	
-						  	
-
-						  	$_SESSION['tytul'] = $row["tytul"];
-						  	$_SESSION['cena'] = $row["cena"];
-						  	$_SESSION['rok_wydania'] = $row["rok_wydania"];
-
-						  	echo $_SESSION['tytul'].", || ".$_SESSION['cena'].", || ".$_SESSION['rok_wydania']." ";
-
-						  	//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a><br><br>';				  	
-						  	
-						  	//echo '<a href="main.php?kategoria='.$kategoria.' ">asdsd</a>';
-
-						  	//echo '<a href="main.php?kategoria='.$_SESSION['kategoria'].' ">'.$_SESSION['kategoria'].'</a><br><br>';	
-						}
-
-						$ksiazki->free_result(); // free() // close();				
-						//$ksiazki->close(); // free() // close();				
-					}
-					else  // brak zwróconych rekordów
-					{				
-						// błędne dane logowanie -> przekierowanie do index.php + komunikat
-						$_SESSION['blad'] = '<span style="color: red">Nie udało się pobrać danych z bazy danych !</span>';
-						header('Location: index.php');		
-						exit();		  
-					}						
-					
-				}
-				else 
-				{
-					throw new Exception($polaczenie->error);
-				}
-
-				$polaczenie->close();
-			}
-		}
-		catch(Exception $e) // Exception - wyjątek
-		{
-			//echo '<span style="color: red;"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o rejestrację w innym terminie! ]</span>'; 
-			
-			echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o sprawdzenie serwisu w innym terminie! ]</div>';
-
-			echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW
-
-			exit(); // (?)
-		}
-	}
+	
 
 ?>
 
@@ -116,7 +28,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>Księgarnia online</title>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="style2.css">
+
+	<script src="change_quantity.js"></script> 
+
 </head>
 
 <body>
@@ -394,7 +309,7 @@
 
 		<div id="content">
 
-			<h3>Koszyk</h3>
+			<h3>Dodaj do koszyka</h3>
 
 			<?php			
 
@@ -423,25 +338,46 @@
 
 					$id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8"); 
 
-					echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_ksiazki='%s'", "get_books_by_id", "$id_ksiazki");		
+					echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_ksiazki='%s'", "get_books_by_id", "$id_ksiazki");	// wyświetla produkt (tyul, cena, rok_wydania	
 
 					///////////////////////////////////////////////////////
 
-					echo '<form action="koszyk.php" method="post">';
+					echo '<form action="add_to_cart.php" method="post">';
 
 							echo '<input type="hidden" name="id_ksiazki" value="'.$id_ksiazki.'">';
 
 							echo "<b>Ilosc: </b> ";
 
-							echo '<select name="koszyk_ilosc">';
+							/*echo '<select name="koszyk_ilosc">';
 							    echo '<option value="1">1</option>';
 							    echo '<option value="2">2</option>';
 							    echo '<option value="3">3</option>';
 							    echo '<option value="4">4</option>';
 							    echo '<option value="5">5</option>';
-							echo '</select>';
+							echo '</select>';*/
 
-					echo '<br><br><input type="submit" value="Zapisz koszyk">';
+							echo '<input type="text" id="koszyk_ilosc" name="koszyk_ilosc" value="1">';
+
+							echo '<button type="button" onclick="increase()">+</button>';
+							echo '<button type="button" onclick="decrease()">-</button>';
+
+
+							echo '<br><br><input type="submit" value="Zapisz koszyk">';
+
+					echo '</form>';
+
+
+
+
+
+
+
+
+
+
+
+
+
 				}
 			?>	
 

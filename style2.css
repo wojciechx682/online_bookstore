@@ -353,6 +353,12 @@ a:hover
 	opacity: 0.6;
 }
 
+.cart_remove_book  /* get_product_from_cart -> remove book (przycisk usuwania książki z koszyka) */
+{
+	margin-left:  10px;
+	
+} 
+
 #div_my_account
 {
 	float:  right;
@@ -556,7 +562,7 @@ a:hover
 	margin: 10px 0px 10px 0px;
 }
 
-.title, .price, .year
+.title, .price, .year, .quantity
 {
 	float:  left;
 	margin-right: 5px;

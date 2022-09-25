@@ -6,7 +6,10 @@
 
 	// sprawdź połączenie z BD :
 
-	query("", "", ""); // w przypadku błędu połączenia z BD, wyświetli komunikat rzuconego wyjątku.	
+	/*$value = array();
+	array_push($value, "1");*/
+
+	//query("", "", ""); // w przypadku błędu połączenia z BD, wyświetli komunikat rzuconego wyjątku.	
 	// należy dodać to do każdej podstrony, która korzysta z połączenia z bd
 
 
@@ -41,6 +44,8 @@
 	<!-- <script src="sortowanie_v1.js"></script>	-->
 	
 	<script src="display_nav.js"></script> <!-- skrypt - wyświetla nav -->
+
+	<script src="change_quantity.js"></script> 
 
 </head>
 
@@ -252,7 +257,7 @@
 
 				<br><br><button id="sort_button" onclick="sortuj()">Sortuj</button>				
 
-				<br><br>
+				<br><br>				
 
 				<!-- 
 					<input id="title_radio" type="radio" name="sortuj_wg" value="tytul">
