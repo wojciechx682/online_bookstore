@@ -77,7 +77,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Księgarnia online</title>
-	<link rel="stylesheet" href="style.css">		
+	<link rel="stylesheet" href="style2.css">		
 
 </head>
 
@@ -87,99 +87,103 @@
 		
 		<!-- <div id="header_content"> -->
 
-			<div id="top_header">
+			<div id="sticky">
 
-				<div id="top_header_content">
+				<div id="top_header">
 
-					<div id="header_title">
-						
-						Księgarnia internetowa
+					<div id="top_header_content">
 
-					</div>		
-					
-					<!--<div id="div_register">
-						
-						<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
-						
-					</div> -->
-
-					<!-- <div id="div_log_in">
-						
-						<a class="top-nav-right" href="zaloguj.php">Zaloguj</a>
-
-					</div> -->
-
-					<ol>	
-
-						<li>
-							<a href="zarejestruj.php">Zarejestruj</a>
-						</li>
-
-						<li>									
-							<?php if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) { echo '<a href="account.php">Moje konto</a>';} else { echo '<a href="zaloguj.php">Zaloguj</a>';} ?>
-						</li>
-
-					</ol>
-
-				</div>
-
-			</div>
-
-			<div id="header">
-
-				<div id="header_content">
-
-					<!-- <a href="index.php">Strona główna</a> -->
-
-					 <div id="div_search">				
-
-						<form action="index.php" method="get">
+						<div id="header_title">
 							
-							<input type="search" name="input_search">
+							Księgarnia internetowa
 
-							<input type="submit" value="Szukaj">
-
-						</form>	
-
-					</div>
-
-					<div id="div_logo">				
+						</div>		
 						
-						<img src="logo.png" width="100px">
-
-					</div>
-
-					<!-- 
-						<div id="div_log_in">
-							
-							<a class="top-nav-right" href="zaloguj.php">Zaloguj</a>
-
-						</div> 
-					-->
-					
-					<!--
-						<div id="div_register">
+						<!--<div id="div_register">
 							
 							<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
 							
-						</div>
-					-->
+						</div> -->
 
-					<div id="div_cart">
-						
-						<a class="top-nav-right" href="koszyk.php">Koszyk</a>
-						
+						<!-- <div id="div_log_in">
+							
+							<a class="top-nav-right" href="zaloguj.php">Zaloguj</a>
+
+						</div> -->
+
+						<ol>	
+
+							<li>
+								<a href="zarejestruj.php">Zarejestruj</a>
+							</li>
+
+							<li>									
+								<?php if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) { echo '<a href="account.php">Moje konto</a>';} else { echo '<a href="zaloguj.php">Zaloguj</a>';} ?>
+							</li>
+
+						</ol>
+
 					</div>
 
-					<!--
-						<div id="div_my_account">
+				</div>
+
+				<div id="header">
+
+					<div id="header_content">
+
+						<!-- <a href="index.php">Strona główna</a> -->
+
+						 <div id="div_search">				
+
+							<form action="index.php" method="get">
+								
+								<input type="search" name="input_search">
+
+								<input type="submit" value="Szukaj">
+
+							</form>	
+
+						</div>
+
+						<div id="div_logo">				
 							
-							<a class="top-nav-right" href="account.php">Moje konto</a>
+							<img src="logo.png" width="100px">
+
+						</div>
+
+						<!-- 
+							<div id="div_log_in">
+								
+								<a class="top-nav-right" href="zaloguj.php">Zaloguj</a>
+
+							</div> 
+						-->
+						
+						<!--
+							<div id="div_register">
+								
+								<a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
+								
+							</div>
+						-->
+
+						<div id="div_cart">
 							
-						</div> 
-					-->
-					
-					<div style="clear: both;"></div>
+							<a class="top-nav-right" href="koszyk.php">Koszyk</a>
+							
+						</div>
+
+						<!--
+							<div id="div_my_account">
+								
+								<a class="top-nav-right" href="account.php">Moje konto</a>
+								
+							</div> 
+						-->
+						
+						<div style="clear: both;"></div>
+
+					</div>
 
 				</div>
 
