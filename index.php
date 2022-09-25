@@ -39,9 +39,8 @@
 	<link rel="stylesheet" href="style.css">	
 
 	<!-- <script src="sortowanie_v1.js"></script>	-->
-
 	
-	<script src="display_nav.js"></script>
+	<script src="display_nav.js"></script> <!-- skrypt - wyświetla nav -->
 
 </head>
 
@@ -281,9 +280,9 @@
 
 				echo "<hr>";				
 
-				if(isset($_GET['kategoria'])) // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>
+				if((isset($_GET['kategoria'])) && !(empty($_GET['kategoria']))) // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>
 				{									
-					echo '<script> display_nav(); </script>';
+					echo '<script> display_nav(); </script>'; // Wywołanie funkcji w skrypcie display_nav.js - wyświetla nav (nawigację) po lewej stroenie -->
 
 					$kategoria = $_GET['kategoria']; 					
 					
@@ -320,12 +319,16 @@
 						$search_value = htmlentities($search_value, ENT_QUOTES, "UTF-8"); // html entities = encje html'a // Sanityzacja danych wprowadzonych od użytkownika :  	<script>alert("yey");</script>	
 						
 						echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);						
+						echo '</div>';
+
 					}
 					else if((isset($_GET['input_search'])) && (empty($_GET['input_search'])))
 					{	
 						echo '<script> display_nav(); </script>'; 
 						echo '<div id="content_books">';
-						echo '<h3>Brak wyników</h3>';						
+						echo '<h3>Brak wyników</h3>';
+
+						echo '</div>';
 					}	
 					else
 					{
@@ -335,12 +338,18 @@
 
 						//echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_all_books", "");
 						//echo $_SESSION['blad'];
+
 					}					
-					
-					echo '</div>';
+
 				}
 
 			?>	
+
+			<!-- Storna główna -->
+
+			<!-- //////////////////////////////////////////////////////////////////////////////////////////////////
+				 // STRONA GŁÓWNA //
+				 ////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 		</div>		
 
