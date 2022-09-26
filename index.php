@@ -302,17 +302,20 @@
 				{									
 					echo '<script> display_nav(); </script>'; // Wywołanie funkcji w skrypcie display_nav.js - wyświetla nav (nawigację) po lewej stroenie -->
 
-					$kategoria = $_GET['kategoria']; 					
-					
-					$kategoria = htmlentities($kategoria, ENT_QUOTES, "UTF-8"); // html entities = encje html'a	// Sanityzacja danych wprowadzonych od użytkownika :  				
-										
+					$kategoria = $_GET['kategoria']; 	
+
+					$kategoria = htmlentities($kategoria, ENT_QUOTES, "UTF-8"); // html entities = encje html'a	// Sanityzacja danych wprowadzonych od użytkownika 
+
+					$_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)			
+					 														
 					echo '<div id="content_books">';					
 					
 					if($kategoria == "Wszystkie") 	// ($_GET kategoria) -> Kategoria = "Wszystkie"
 					{							
-						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", ""); // get_all_books();							
+						// get_books() - wyświetla książki (divy -> book0, ...)	
+						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", ""); 					
 					}
-					else    								// ($_GET kategoria) -> Kategoria = "Dla dzieci" , :Fantastyka", "Informatyka", ...
+					else // ($_GET kategoria) -> Kategoria = "Dla dzieci" , :Fantastyka", "Informatyka", ...
 					{
 						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);							
 
@@ -334,13 +337,13 @@
 
 						$search_value = $_GET['input_search'];				
 						
-						$search_value = htmlentities($search_value, ENT_QUOTES, "UTF-8"); // html entities = encje html'a // Sanityzacja danych wprowadzonych od użytkownika :  	<script>alert("yey");</script>	
+						$search_value = htmlentities($search_value, ENT_QUOTES, "UTF-8"); // html entities = encje html'a // Sanityzacja danych wprowadzonych od użytkownika : <script>alert("yey");</script>	
 						
 						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);						
 						echo '</div>';
 
 					}
-					else if((isset($_GET['input_search'])) && (empty($_GET['input_search'])))
+					else if((isset($_GET['input_search'])) && (empty($_GET['input_search']))) // puste pole wyszukiwania
 					{	
 						echo '<script> display_nav(); </script>'; 
 						echo '<div id="content_books">';

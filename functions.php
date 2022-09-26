@@ -46,10 +46,10 @@
 		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];			  		
 
 		  	echo '<div id="book'.$i.'" class="book">';
-		  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
-		  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
-		  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';	
-		  	echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';	
+			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
+			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
+			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';	
+			  	echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';	
 		  	echo '</div>';			  	 		
 
 		  	$i++;

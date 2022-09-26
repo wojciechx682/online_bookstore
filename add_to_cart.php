@@ -47,9 +47,10 @@
 		print_r($values);
 		echo "<br><br>";*/		
 
-		$_SESSION['book_exists'] = false; // książka istnieje w koszyku;		
+		$_SESSION['book_exists'] = false; // czy książka istnieje w koszyku ? (zakładamy, że nie...);		
 
-		query("SELECT * FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "cart_verify_book", $values);	// sprawdzenie, czy ta książka jest już w koszyku (tego klienta)  -> num_rows > 0 ?
+		query("SELECT * FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "cart_verify_book", $values); // sprawdzenie, czy ta książka jest już w koszyku (tego klienta)  
+		// -> jeśli num_rows > 0 -> przestawi $_SESSION['book_exists'] -> na true
 
 		if($_SESSION['book_exists'] == true) // boox exists -> update book quantity
 		{

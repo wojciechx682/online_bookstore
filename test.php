@@ -14,10 +14,9 @@
 
 	//query("SELECT * FROM ksiazki", "get_books", "");
 
-	$search_value ="c++";
+	$id_ksiazki ="2";
 
-	query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);	
-
+	query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_ksiazki='%s'", "get_books_by_id", "$id_ksiazki");
 
 
 	echo "<hr>";
