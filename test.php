@@ -2,7 +2,33 @@
 	
 	session_start();
 
-	$var = "You've clicked me !";
+	//$var = "You've clicked me !";
+
+
+
+	include_once "functions.php";
+
+	echo "<br> wynik zapytania : <br><hr>";
+
+
+
+	//query("SELECT * FROM ksiazki", "get_books", "");
+
+	$search_value ="c++";
+
+	query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);	
+
+
+
+	echo "<hr>";
+	exit();
+
+
+
+
+
+
+
 ?>
 
 

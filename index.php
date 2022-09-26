@@ -190,7 +190,7 @@
 								-->
 
 								<?php 
-									echo query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); // top_nav - wypis kategorii - wewnątrz listy rozwijanej ul
+									query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); // top_nav - wypis kategorii - wewnątrz listy rozwijanej ul
 								?>
 
 							</ul> 
@@ -240,8 +240,8 @@
 
 				if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria']))) 
 				{
-					$kategoria = $_GET['kategoria']; // <- przyczyna błędu. (już naprawionego ...)		
-					
+					$kategoria = $_GET['kategoria']; 
+
 					// Sanityzacja danych wprowadzonych od użytkownika :  	
 					$kategoria = htmlentities($kategoria, ENT_QUOTES, "UTF-8"); // html entities = encje html'a;    // $kategoria = '<script>alert("hahaha");</script>;					
 										
@@ -310,11 +310,11 @@
 					
 					if($kategoria == "Wszystkie") 	// ($_GET kategoria) -> Kategoria = "Wszystkie"
 					{							
-						echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", ""); // get_all_books();							
+						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", ""); // get_all_books();							
 					}
 					else    								// ($_GET kategoria) -> Kategoria = "Dla dzieci" , :Fantastyka", "Informatyka", ...
 					{
-						echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);							
+						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);							
 
 						/*
 
@@ -336,7 +336,7 @@
 						
 						$search_value = htmlentities($search_value, ENT_QUOTES, "UTF-8"); // html entities = encje html'a // Sanityzacja danych wprowadzonych od użytkownika :  	<script>alert("yey");</script>	
 						
-						echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);						
+						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);						
 						echo '</div>';
 
 					}

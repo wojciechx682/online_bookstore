@@ -32,13 +32,15 @@
 		$result->free_result(); 		
 	}
 
-	function get_books($result) 
+	function get_books($result) // content -> wyświetla wszystkie książki
 	{		
 		$i = 0;
 
 		while ($row = $result->fetch_assoc()) 
-		{		
-			$_SESSION['id_ksiazki'] = $row["id_ksiazki"];	 
+		{	
+			// zapisywanie danych książek do zmiennych sesyjnych
+
+			$_SESSION['id_ksiazki'] = $row["id_ksiazki"];	
 		  	$_SESSION['tytul'] = $row["tytul"];
 		  	$_SESSION['cena'] = $row["cena"];
 		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];			  		
