@@ -33,11 +33,14 @@
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">  <!-- Kodowanie znaków - UTF-8 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- renderowanie strony w najwyższej wersji IE, pomoże wyświetlić stronę w przeglądarkach IE -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="online bookstore - opis ..." /> 
+	<meta name="keywords" content="Słowa kluczowe, online bookstore, bookstore, ..." /> 
 
-	<title>Księgarnia online</title>
+
+	<title>Księgarnia online</title> <!-- Tytuł strony -->
 
 	<link rel="stylesheet" href="style2.css">	
 
@@ -46,6 +49,12 @@
 	<script src="display_nav.js"></script> <!-- skrypt - wyświetla nav -->
 
 	<script src="change_quantity.js"></script> 
+
+	<!-- Google fonts - Czcionki google -->
+	<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lato&display=swap" rel="stylesheet">
+	<link href="css/fontello.css" rel="stylesheet"> -->
 
 </head>
 
