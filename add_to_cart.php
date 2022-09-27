@@ -1,3 +1,7 @@
+
+
+
+
 <?php
 
 	session_start();
@@ -47,9 +51,10 @@
 		print_r($values);
 		echo "<br><br>";*/		
 
-		$_SESSION['book_exists'] = false; // książka istnieje w koszyku;		
+		$_SESSION['book_exists'] = false; // czy książka istnieje w koszyku ? (zakładamy, że nie...);		
 
-		query("SELECT * FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "cart_verify_book", $values);	// sprawdzenie, czy ta książka jest już w koszyku (tego klienta)  -> num_rows > 0 ?
+		query("SELECT * FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "cart_verify_book", $values); // sprawdzenie, czy ta książka jest już w koszyku (tego klienta)  
+		// -> jeśli num_rows > 0 -> przestawi $_SESSION['book_exists'] -> na true
 
 		if($_SESSION['book_exists'] == true) // boox exists -> update book quantity
 		{
@@ -66,7 +71,7 @@
 			query("INSERT INTO koszyk (id_klienta, id_ksiazki, ilosc) VALUES ('%s', '%s', '%s')", "", $values);  
 		}
 
-		
+		query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczbie książek)
 
 		//echo query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id_klienta); // dodałem to wstępnie, nie wiem czy to ma tutaj pozostać
 
@@ -76,7 +81,11 @@
 		
 	}
 
-	header('Location: koszyk.php');
+	
+		//echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">Wróć</a>';
+	
+	//header('Location: koszyk.php');
+	header('Location: index.php?kategoria='.$_SESSION['kategoria'].'');
 	exit();
 
 ?>

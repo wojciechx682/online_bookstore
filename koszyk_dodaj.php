@@ -316,31 +316,29 @@
 				echo "<hr>";
 
 				if(isset($_GET['id'])) // id_książki
-				{
-					//echo '<script>alert("660")</script>';
-
+				{	
 					$id_ksiazki = $_GET['id']; // <- przyczyna błędu. (już naprawionego ...)
+
+					$id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8"); 
 
 					//$_SESSION['kategoria'] = "Horror";
 					//$kategoria = $_SESSION['kategoria'];
 
-					echo "<br> id_ksiazki -> ".$id_ksiazki."<br>";
+					if(!is_numeric($id_ksiazki) || ($id_ksiazki < 1)) // jeśli $_GET['id'] nie jest liczbą
+					{
+						echo "Niepoprawny produkt<br>";						
+						echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">Wróć</a>';
+						exit();
+					}						
 
-					echo "<hr>";
-
-					////////////////////////////////////////////////////////////////////////////////
-					////////////////////////////////////////////////////////////////////////////////
+					echo "id_ksiazki -> ".$id_ksiazki."<br>";									
 					
 					echo "<br>lp." . " 1 <br><br>"; 
+
 					echo "<b>Produkt: </b> ";
+					echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_ksiazki='%s'", "get_books_by_id", "$id_ksiazki");	// wyświetla produkt (tyul, cena, rok_wydania)
 
-					//get_books_by_id($id_ksiazki);		
-
-					$id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8"); 
-
-					echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_ksiazki='%s'", "get_books_by_id", "$id_ksiazki");	// wyświetla produkt (tyul, cena, rok_wydania	
-
-					///////////////////////////////////////////////////////
+					///////////////////////////////////////////////////////////////////////////
 
 					echo '<form action="add_to_cart.php" method="post">';
 

@@ -27,6 +27,8 @@
 		else
 		{
 			query("SELECT * FROM klienci WHERE email='%s'", "log_in", $email); // funkcja log_in (odpowiedzialna za logowanie) uzyska hasło z tablicy $_POST[];
+
+			//query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); // ustawienie zmienej sesyjnej $_SESSION['koszyk_ilosc_ksiazek']
 		}	
 
 	}		

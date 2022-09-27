@@ -32,22 +32,45 @@
 		$result->free_result(); 		
 	}
 
-	function get_books($result) 
+	function get_books($result) // content -> wyświetla wszystkie książki
 	{		
 		$i = 0;
 
 		while ($row = $result->fetch_assoc()) 
-		{		
-			$_SESSION['id_ksiazki'] = $row["id_ksiazki"];	 
+		{	
+			// zapisywanie danych książek do zmiennych sesyjnych
+
+			$_SESSION['id_ksiazki'] = $row["id_ksiazki"];	
 		  	$_SESSION['tytul'] = $row["tytul"];
 		  	$_SESSION['cena'] = $row["cena"];
 		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];			  		
 
 		  	echo '<div id="book'.$i.'" class="book">';
-		  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
-		  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
-		  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';	
-		  	echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';	
+			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
+			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
+			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';	
+			  	//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';	
+
+			  	echo '<form action="add_to_cart.php" method="post">';
+
+			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
+
+			  		echo '<input type="hidden" id="koszyk_ilosc" name="koszyk_ilosc" value="1">';
+
+			  		//echo '<br><br><input type="submit" value="Dodaj do koszyka">';
+
+			  		//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';	
+
+			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
+
+			  	echo '</form>';
+
+
+			  
+			  		
+
+
+
 		  	echo '</div>';			  	 		
 
 		  	$i++;
@@ -79,6 +102,33 @@
 		$result->free_result();
 	}
 
+	function count_cart_quantity($result) // zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku
+	{
+		//SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta=1;
+
+		$row = $result->fetch_assoc();
+
+		//$_SESSION['koszyk_ilosc_ksiazek'] = $row['suma'];
+		//$_SESSION['koszyk_ilosc_ksiazek'] = "123";
+
+		if($row['suma'] == NULL)
+		{
+				//echo "0";
+			//return "0";
+			$_SESSION['koszyk_ilosc_ksiazek'] = 0;
+		}
+		else {
+				//return $row['suma'];
+				//return "1";
+			//echo $row['suma'];
+			$_SESSION['koszyk_ilosc_ksiazek'] = $row['suma'];
+		}
+
+		
+
+		$result->free_result();		
+	}
+
 	function get_product_from_cart($result)	// order.php
 	{
 		$_SESSION['suma_zamowienia'] = 0;
@@ -95,9 +145,45 @@
 		  	echo '<div class="title">'.$row['tytul'].'</div>';
 		  	echo '<div class="price">'.$row['cena'].'</div>';
 		  	echo '<div class="year">'.$row['rok_wydania'].'</div>';	
-		  	echo '<div class="quantity"><b>Ilość = </b>'.$row['ilosc'].'</div>';
 
-		  	echo '<form method="post" action="remove_book.php">';
+		  		/*echo '<div class="quantity'.'">
+
+			  			 <b>Ilość = </b>'.$row['ilosc'];
+
+			  			 echo '<button type="button" onclick="increase()">+</button>';
+						 echo '<button type="button" onclick="decrease()">-</button>';
+
+
+	  			echo '</div>';*/
+
+	  			echo '<form class="change_quantity_form" id="change_quantity_form'.$row['id_ksiazki'].'" action="change_cart_quantity.php" method="post">';
+
+					echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
+
+					echo "<b>Ilosc: </b> ";
+
+						/*echo '<select name="koszyk_ilosc">';
+						    echo '<option value="1">1</option>';
+						    echo '<option value="2">2</option>';
+						    echo '<option value="3">3</option>';
+						    echo '<option value="4">4</option>';
+						    echo '<option value="5">5</option>';
+						echo '</select>';*/
+
+					//echo '<input type="text" id="koszyk_ilosc" name="koszyk_ilosc" value="'.$row['ilosc'].'">';
+					echo '<input type="text" id="koszyk_ilosc'.$row['id_ksiazki'].'" name="koszyk_ilosc" value="'.$row['ilosc'].'">';
+
+					echo '<button type="button" onclick="increase('.$row['id_ksiazki'].')">+</button>';
+					echo '<button type="button" onclick="decrease('.$row['id_ksiazki'].')">-</button>';
+
+
+					//echo '<br><br><input type="submit" value="Zapisz koszyk">';
+
+				echo '</form>';
+
+
+
+		  	echo '<form id="remove_book_form" action="remove_book.php" method="post">';
 		  		
 		  		echo '<input type="hidden" name="id_klienta" value="'.$row['id_klienta'].'">';
 		  		echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
@@ -106,6 +192,29 @@
 		  		echo '<input type="submit" value="Usuń">';
 
 		  	echo '</form>';
+
+		  	////////////////////////////////////////////////////////////////////////////////////
+
+		  	echo "<br><hr><br>";
+		  	
+		  	/*echo '<form action="change_cart_quantity.php" method="post">';
+
+					echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
+
+					echo "<b>Ilosc: </b> ";
+
+					
+
+					echo '<input type="text" id="koszyk_ilosc" name="koszyk_ilosc" value="1">';
+
+					echo '<button type="button" onclick="increase()">+</button>';
+					echo '<button type="button" onclick="decrease()">-</button>';
+
+
+					echo '<br><br><input type="submit" value="Zapisz koszyk">';
+
+			echo '</form>';*/
+
 
 		  		
 		  	echo '</div>';
@@ -119,10 +228,16 @@
 		  	$_SESSION['suma_zamowienia'] += $row['ilosc'] * $row['cena'];	  
 		}
 
+		echo "<br> $ _SESSION suma_zamowienia = " ;
+		echo $_SESSION['suma_zamowienia'] . "<br>";
+
+		echo "<br> $ _SESSION koszyk_ilosc_ksiazek = " ;
+		echo $_SESSION['koszyk_ilosc_ksiazek'] . "<br>";
+
 		$result->free_result(); 	
 	}
 
-	function remove_product_from_cart($result)
+	function remove_product_from_cart($result) //remove_book.php
 	{
 
 
@@ -204,7 +319,7 @@
 
 	function validate_form()
 	{
-		echo '<script> alert("test123"); </script>'; 
+		//echo '<script> alert("test123"); </script>'; 
 	}
 
 	function get_order_details($result)
@@ -253,6 +368,11 @@
 		$result->free_result();
 	}
 
+	function test_fun()
+	{
+		return "123";
+	}
+
 	// skrypt logowania (logowanie.php) - logowanie, weryfikacja hasła :
 	function log_in($result)
 	{
@@ -285,6 +405,15 @@
 			$_SESSION['telefon'] = $row['telefon'];
 			$_SESSION['email'] = $row['email'];
 			$_SESSION['login'] = $row['login'];			
+
+			//$_SESSION['koszyk_ilosc_ksiazek'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); 
+
+			//$_SESSION['test123'] = test_fun();
+
+			//$id_klienta = $_SESSION['id'];
+			//$_SESSION['test123'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
+
+			query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
 			
 			unset($_SESSION['blad']);
 			
@@ -365,7 +494,7 @@
 			{	
 				//if(($type == "SELECT"))
 				//if(($type == "SELECT"))
-				if(!is_array($value))
+				if(!is_array($value)) // jeśli value to pojedyncza zmienna (nie tablica)
 				{	
 					//echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";
 
@@ -377,6 +506,8 @@
 						
 							$num_of_rows = $result->num_rows; // ilość zwróconych wierszy	
 
+							//echo '<script>console.log('.$num_of_rows.');</script>';
+
 							if($num_of_rows>0) // znaleziono rekordy ...  // == 1
 							{							
 
@@ -387,7 +518,8 @@
 								// np. wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
 							}
 							else  // brak zwróconych rekordów
-							{				
+							{			
+
 											//$_SESSION['blad'] = '<span style="color: red">Nie udało się pobrać danych z bazy danych !</span>';
 											//$_SESSION['blad'] = '<span style="color: red">Brak wyników</span>';
 											//header('Location: index.php');
@@ -408,6 +540,14 @@
 									// ...  nic nie rób
 
 								}	
+								/*elseif((get_var_name($value) == "asdasd") && ($fun == "count_cart_quantity"))  // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php)
+								{
+
+									// ...  nic nie rób
+									//echo "var name = " . get_var_name($value) . "<br>";
+									echo "00";
+
+								}	*/
 								else 
 								{ 
 									echo '<h3>Brak wyników</h3>';

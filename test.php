@@ -2,7 +2,53 @@
 	
 	session_start();
 
-	$var = "You've clicked me !";
+	//$var = "You've clicked me !";
+
+
+
+	include_once "functions.php";
+
+	echo "<br> wynik zapytania : <br><hr>";
+
+
+
+	//query("SELECT * FROM ksiazki", "get_books", "");
+
+	$id_klienta = 1;
+
+	//query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_ksiazki='%s'", "get_books_by_id", "$id_ksiazki");
+
+	echo " koszyk ilosc ksiazek = ";
+
+	//$res = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
+	//echo "<br>res = " . $res;
+
+	query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
+
+	
+	echo "<br> $ _SESSION koszyk_ilosc_ksiazek = " ;
+	echo $_SESSION['koszyk_ilosc_ksiazek'] . "<br>";
+
+
+	
+
+	
+	//echo $_SESSION['koszyk_ilosc_ksiazek'];
+
+	
+
+
+
+
+	echo "<hr>";
+	exit();
+
+
+
+
+
+
+
 ?>
 
 

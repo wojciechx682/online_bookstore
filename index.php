@@ -33,11 +33,14 @@
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">  <!-- Kodowanie znaków - UTF-8 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- renderowanie strony w najwyższej wersji IE, pomoże wyświetlić stronę w przeglądarkach IE -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="online bookstore - opis ..." /> 
+	<meta name="keywords" content="Słowa kluczowe, online bookstore, bookstore, ..." /> 
 
-	<title>Księgarnia online</title>
+
+	<title>Księgarnia online</title> <!-- Tytuł strony -->
 
 	<link rel="stylesheet" href="style2.css">	
 
@@ -46,6 +49,12 @@
 	<script src="display_nav.js"></script> <!-- skrypt - wyświetla nav -->
 
 	<script src="change_quantity.js"></script> 
+
+	<!-- Google fonts - Czcionki google -->
+	<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lato&display=swap" rel="stylesheet">
+	<link href="css/fontello.css" rel="stylesheet"> -->
 
 </head>
 
@@ -135,9 +144,17 @@
 							</div>
 						-->
 
-						<div id="div_cart">
-							
-							<a class="top-nav-right" href="koszyk.php">Koszyk</a>
+						<div id="div_cart">							
+
+							<a class="top-nav-right" href="koszyk.php">Koszyk
+
+								<?php 
+									if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) 
+									{												
+										echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";										
+									}
+								?>
+							</a>
 							
 						</div>
 
@@ -181,7 +198,7 @@
 								-->
 
 								<?php 
-									echo query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); // top_nav - wypis kategorii - wewnątrz listy rozwijanej ul
+									query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); // top_nav - wypis kategorii - wewnątrz listy rozwijanej ul
 								?>
 
 							</ul> 
@@ -231,8 +248,8 @@
 
 				if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria']))) 
 				{
-					$kategoria = $_GET['kategoria']; // <- przyczyna błędu. (już naprawionego ...)		
-					
+					$kategoria = $_GET['kategoria']; 
+
 					// Sanityzacja danych wprowadzonych od użytkownika :  	
 					$kategoria = htmlentities($kategoria, ENT_QUOTES, "UTF-8"); // html entities = encje html'a;    // $kategoria = '<script>alert("hahaha");</script>;					
 										
@@ -256,6 +273,11 @@
 				</select>				
 
 				<br><br><button id="sort_button" onclick="sortuj()">Sortuj</button>				
+
+				<?php
+
+
+				?>
 
 				<br><br>				
 
@@ -293,19 +315,22 @@
 				{									
 					echo '<script> display_nav(); </script>'; // Wywołanie funkcji w skrypcie display_nav.js - wyświetla nav (nawigację) po lewej stroenie -->
 
-					$kategoria = $_GET['kategoria']; 					
-					
-					$kategoria = htmlentities($kategoria, ENT_QUOTES, "UTF-8"); // html entities = encje html'a	// Sanityzacja danych wprowadzonych od użytkownika :  				
-										
+					$kategoria = $_GET['kategoria']; 	
+
+					$kategoria = htmlentities($kategoria, ENT_QUOTES, "UTF-8"); // html entities = encje html'a	// Sanityzacja danych wprowadzonych od użytkownika 
+
+					$_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)			
+					 														
 					echo '<div id="content_books">';					
 					
 					if($kategoria == "Wszystkie") 	// ($_GET kategoria) -> Kategoria = "Wszystkie"
 					{							
-						echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", ""); // get_all_books();							
+						// get_books() - wyświetla książki (divy -> book0, ...)	
+						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", ""); 					
 					}
-					else    								// ($_GET kategoria) -> Kategoria = "Dla dzieci" , :Fantastyka", "Informatyka", ...
+					else // ($_GET kategoria) -> Kategoria = "Dla dzieci" , :Fantastyka", "Informatyka", ...
 					{
-						echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);							
+						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);							
 
 						/*
 
@@ -325,13 +350,13 @@
 
 						$search_value = $_GET['input_search'];				
 						
-						$search_value = htmlentities($search_value, ENT_QUOTES, "UTF-8"); // html entities = encje html'a // Sanityzacja danych wprowadzonych od użytkownika :  	<script>alert("yey");</script>	
+						$search_value = htmlentities($search_value, ENT_QUOTES, "UTF-8"); // html entities = encje html'a // Sanityzacja danych wprowadzonych od użytkownika : <script>alert("yey");</script>	
 						
-						echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);						
+						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);						
 						echo '</div>';
 
 					}
-					else if((isset($_GET['input_search'])) && (empty($_GET['input_search'])))
+					else if((isset($_GET['input_search'])) && (empty($_GET['input_search']))) // puste pole wyszukiwania
 					{	
 						echo '<script> display_nav(); </script>'; 
 						echo '<div id="content_books">';

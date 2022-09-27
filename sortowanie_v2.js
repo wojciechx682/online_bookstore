@@ -8,12 +8,10 @@ function testuj()
 	el.innerHTML = "123";*/
 }
 
-
-
 function sortuj() 
 {	
     var s = document.getElementById("sortuj_wg");
-    var selected_value = s.options[s.selectedIndex].text;    
+    var selected_value = s.options[s.selectedIndex].text;        
 
     number_of_child = document.getElementById("content_books").childElementCount; 
 
@@ -29,14 +27,14 @@ function sortuj()
 	var titles_org = new Array(number_of_child); // oryginały
 	var prices_org = new Array(number_of_child); 
 	var years_org = new Array(number_of_child);  
-
+	
 	for(var i=0; i<number_of_child; i++)
 	{
 		var book_id = "book";
 		var book_id = book_id.concat(i);                     //      id -> book0, book1 ...		
 
 		var book_element = document.getElementById(book_id); // element -> book0, book1, ...		
-		
+	
 		switch(selected_value)
 		{
 			case "nazwy A-Z":
