@@ -228,6 +228,12 @@
 		  	$_SESSION['suma_zamowienia'] += $row['ilosc'] * $row['cena'];	  
 		}
 
+		echo "<br> $ _SESSION suma_zamowienia = " ;
+		echo $_SESSION['suma_zamowienia'] . "<br>";
+
+		echo "<br> $ _SESSION koszyk_ilosc_ksiazek = " ;
+		echo $_SESSION['koszyk_ilosc_ksiazek'] . "<br>";
+
 		$result->free_result(); 	
 	}
 

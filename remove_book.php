@@ -1,5 +1,7 @@
 <?php
 
+	// koszyk - usunięcie książki
+	
 	session_start();	
 
 	include_once "functions.php";			

@@ -1,6 +1,5 @@
 
-<script></script>
-
+// koszyk - zmiana liczby egzemplarzy
 
 <?php
 
@@ -64,6 +63,8 @@
 		unset($_POST['id_ksiazki']);
 		unset($_POST['koszyk_ilosc']);
 		unset($values);
+
+		query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczbie książek)
 		
 	}
 

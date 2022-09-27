@@ -274,6 +274,11 @@
 
 				<br><br><button id="sort_button" onclick="sortuj()">Sortuj</button>				
 
+				<?php
+
+
+				?>
+
 				<br><br>				
 
 				<!-- 
