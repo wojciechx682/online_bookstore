@@ -144,9 +144,17 @@
 							</div>
 						-->
 
-						<div id="div_cart">
-							
-							<a class="top-nav-right" href="koszyk.php">Koszyk</a>
+						<div id="div_cart">							
+
+							<a class="top-nav-right" href="koszyk.php">Koszyk
+
+								<?php 
+									if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) 
+									{												
+										echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";										
+									}
+								?>
+							</a>
 							
 						</div>
 

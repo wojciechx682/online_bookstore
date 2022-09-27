@@ -654,3 +654,32 @@ a:hover
 	padding-top: 15px;
 }
 
+
+
+.btn-link {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #0000EE;
+    padding: 0;
+    text-decoration: underline;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+#koszyk_ilosc
+{
+	width: 100px;
+}
+
+#book0 .quantity 
+{
+	background-color: green;
+}
+
+.change_quantity_form, #remove_book_form /* koszyk.php -> functions -> get_product_from_cart() */
+{
+	float: left;
+	margin-right: 10px;
+}

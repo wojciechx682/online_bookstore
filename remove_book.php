@@ -25,6 +25,8 @@
 
 		query("DELETE FROM koszyk WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $values);
 
+		query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po usunięciu książki)
+
 		header('Location: koszyk.php');
 		exit();
 	}
