@@ -55,16 +55,6 @@
 			}
 		}
 
-
-		
-
-
-		
-
-
-
-
-
 	</script>
 
 
@@ -251,11 +241,7 @@
 	</div>
 	
 
-	<div id="container">
-		
-		
-
-		
+	<div id="container">		
 
 		<div id="nav">		
 
@@ -387,8 +373,6 @@
 					echo "<hr>";					
 				}
 				
-
-
 			?>
 
 		</div>
