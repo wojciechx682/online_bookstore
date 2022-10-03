@@ -131,6 +131,13 @@
 
 	function get_product_from_cart($result)	// order.php
 	{
+		// $row[] -> kl.id_klienta, 		klient
+		//		     ko.id_ksiazki,        	 	     koszyk
+		//		     ko.ilosc, 						 koszyk
+		//		     ks.tytul, 			    ksiazki
+		//		     ks.cena,               ksiazki
+		//		     ks.rok_wydania         ksiazki
+
 		$_SESSION['suma_zamowienia'] = 0;
 
 		$i = 0;
