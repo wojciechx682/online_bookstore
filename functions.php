@@ -129,8 +129,15 @@
 		$result->free_result();		
 	}
 
-	function get_product_from_cart($result)	// order.php
+	function get_product_from_cart($result)	// koszyk.php, order.php
 	{
+		// $row[] -> kl.id_klienta, 		klient
+		//		     ko.id_ksiazki,        	 	     koszyk
+		//		     ko.ilosc, 						 koszyk
+		//		     ks.tytul, 			    ksiazki
+		//		     ks.cena,               ksiazki
+		//		     ks.rok_wydania         ksiazki
+
 		$_SESSION['suma_zamowienia'] = 0;
 
 		$i = 0;
@@ -299,6 +306,51 @@
 		}
 	}
 
+
+	// order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza
+	function get_last_order_id($polaczenie) // DO WYRZUCZENIA
+	{
+		//$_SESSION['last_order_id'] = $polaczenie->insert_id;
+		// mysqli::$insert_id -- mysqli_insert_id — Returns the value generated for an AUTO_INCREMENT column by the last query	
+
+		//$result->free_result();	
+	}
+
+	// insert do tabeli szczegoly_zamowienia - na podstawie tabeli koszyk :
+	function insert_order_details($result)
+	{		
+
+		$id_zamowienia = $_SESSION['last_order_id']; // id_zamowienia
+
+		while ($row = $result->fetch_assoc()) // wiersze z tabeli koszyk
+		{
+		  	echo $row['id_klienta'] . ", " .$row['id_ksiazki'] . ", " . $row['ilosc'] . "<br>";  
+
+
+		  	//$id_klienta = $row['id_klienta'];
+		  	$id_ksiazki = $row['id_ksiazki'];
+		  	$ilosc = $row['ilosc'];
+		  			  	
+			$values = array();
+			array_push($values, $id_zamowienia); // id_zamowienia
+			array_push($values, $id_ksiazki); // id_ksiazki
+			array_push($values, $ilosc); // id_ksiazki
+
+
+		  	query("INSERT INTO szczegoly_zamowienia (id_zamowienia, id_ksiazki, ilosc) VALUES ('%s', '%s', '%s')", "", $values);
+
+
+		  	//echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
+
+
+		  		
+		}
+
+		$result->free_result();
+
+
+	}
+
 	function get_orders($result)
 	{
 		while ($row = $result->fetch_assoc()) 
@@ -413,7 +465,7 @@
 			//$id_klienta = $_SESSION['id'];
 			//$_SESSION['test123'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
 
-			query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
+			query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);
 			
 			unset($_SESSION['blad']);
 			
@@ -587,7 +639,7 @@
 
 					if($result = $polaczenie->query(vsprintf($query, $value))) //$query - zapytanie, $value - tablica parametrów do vsprintf
 					{
-						if($type != "DELETE") // koszyk.php - usuwanie książek 
+						if($type != "DELETE") // koszyk.php - usuwanie książek - WARUNEK TYLKO DLA SELECT (?), NIE - WCHODZI TU TEŻ INSERT Z rejestracja.php
 						{
 							//////////////////////////////////////////////////////////////////////////////////////////////////////
 							
@@ -595,15 +647,21 @@
 							
 							//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-							// DLA ZAPYTANIA SELECT (z wykorzystaniem WIĘCEJ NIŻ JEDNEJ zmiennej w WHERE condition - zastosowanie - przy koszykach.php) :
-							$num_of_rows = $result->num_rows; // ilość zwróconych wierszy
-							if($num_of_rows>0) // znaleziono rekordy ...  // == 1
-							{					
-								$fun($result); // wywołanie zewnętrznej funkcji	
-								// wywołanie funkcji cart_verify_book -> przestawi zmienną $_SESSION['book_exists'] na TRUE (co oznacza że książka ta istnieje w koszyku tego usera)
+							if($type == "SELECT") // Nie wiem czy tak powinno być (?) - TYLKO DLA SELECT - ewentualnie ZMIENIĆ
+							{
+								// DLA ZAPYTANIA SELECT (z wykorzystaniem WIĘCEJ NIŻ JEDNEJ zmiennej w WHERE condition - zastosowanie - przy koszykach.php) :
+								$num_of_rows = $result->num_rows; // ilość zwróconych wierszy
+
+								//echo "num_rows = " . $num_of_rows . "<br>";
+								//exit();
+								if($num_of_rows>0) // znaleziono rekordy ...  // == 1
+								{					
+									$fun($result); // wywołanie zewnętrznej funkcji	
+									// wywołanie funkcji cart_verify_book -> przestawi zmienną $_SESSION['book_exists'] na TRUE (co oznacza że książka ta istnieje w koszyku tego usera)
 									// np. wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
+								}
 							}
-							else 
+							else // INSERT, .. UPDATE
 							{
 								if((isset($_SESSION['wszystko_OK'])))   // rejestracja.php ...
 								{
@@ -612,6 +670,15 @@
 									//unset($_SESSION['wszystko_OK']);
 									header('Location: zaloguj.php');
 
+								}
+
+								// order.php - dodawanie zamówień (tabela zamówienia) :
+								if($fun == "get_last_order_id")
+								{
+										// $fun($polaczenie); 
+									$_SESSION['last_order_id'] = $polaczenie->insert_id;
+									// order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza
+									// mysqli::$insert_id -- mysqli_insert_id — Returns the value generated for an AUTO_INCREMENT column by the last query	
 								}
 							}
 

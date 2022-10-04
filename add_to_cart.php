@@ -1,7 +1,3 @@
-
-//
-
-
 <?php
 
 	session_start();
@@ -20,6 +16,7 @@
 	if(!(isset($_SESSION['zalogowany'])))
 	{
 		header('Location: index.php');
+		
 		exit();
 	}
 ?>
@@ -33,7 +30,7 @@
 
 		$id_klienta = $_SESSION['id'];		
 		$id_ksiazki = $_POST['id_ksiazki'];
-		$ilosc = $_POST['koszyk_ilosc'];					
+		$ilosc = $_POST['koszyk_ilosc']; // == 1				
 
 			// Walidacja i sanityzacja danych wprowadzonych od użytkownika : <script>alert("yey");</script>
 		$id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8");

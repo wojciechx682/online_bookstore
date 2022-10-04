@@ -849,8 +849,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>Księgarnia online</title>
-	<link rel="stylesheet" href="style2.css">
-	
+	<link rel="stylesheet" href="style2.css">	
 
 </head>
 
@@ -1030,17 +1029,19 @@
 
 		<div id="nav">
 
-			<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-			molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-			numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-			optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
-			obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
-			nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
-			tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-			quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
-			sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
-			recusandae alias error harum maxime adipisci amet laborum. Perspiciatis 
-			minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit  -->
+			<!-- 
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+				molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+				numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+				optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
+				obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
+				nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
+				tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
+				quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
+				sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
+				recusandae alias error harum maxime adipisci amet laborum. Perspiciatis 
+				minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit  
+			-->
 
 			<h3> Kategorie </h3>
 			<hr>
@@ -1142,32 +1143,37 @@
 
 			<hr>
 
-
-
-
 			<?php 
+				
+				/*
+					// WYRZUCIĆ TO ! 
+					if((isset($_POST['id_ksiazki'])) and (isset($_POST['koszyk_ilosc']))) 
+					{
+						$id_ksiazki = $_POST['id_ksiazki'];
+						$ilosc = $_POST['koszyk_ilosc'];
 
+						echo '<hr>';
 
-				// WYRZUCIĆ TO ! 
-				if((isset($_POST['id_ksiazki'])) and (isset($_POST['koszyk_ilosc']))) 
-				{
-					$id_ksiazki = $_POST['id_ksiazki'];
-					$ilosc = $_POST['koszyk_ilosc'];
+						add_product_to_cart($id_ksiazki, $ilosc);
+					}
+					else
+					{
+						//get_product_from_cart($_SESSION['id']);
 
-					echo '<hr>';
+						$id_klienta = $_SESSION['id'];
 
-					add_product_to_cart($id_ksiazki, $ilosc);
-				}
-				else
-				{
-					//get_product_from_cart($_SESSION['id']);
+						// (Koszyk) - // Książki które zamówił klient o danym ID :
+						echo query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='$id_klienta'", "get_product_from_cart", $_SESSION['id']);
 
-					$id_klienta = $_SESSION['id'];
+					}
+				*/
 
-					echo query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='$id_klienta'", "get_product_from_cart", $_SESSION['id']);
+				//get_product_from_cart($_SESSION['id']);
 
-				}
+				$id_klienta = $_SESSION['id'];
 
+				// (Koszyk) - // Książki które zamówił klient o danym ID :
+				echo query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='$id_klienta'", "get_product_from_cart", $_SESSION['id']);
 			?>
 
 			<form action="order.php" method="post">
@@ -1176,29 +1182,26 @@
 					Wybierz formę dostawy :
 				<br>
 
-				<input id="dostawa_kurier_dpd" type="radio" name="zamowienie_typ_dostawy" value="kurier_dpd">
+				<input type="radio" id="dostawa_kurier_dpd" name="zamowienie_typ_dostawy" value="Kurier DPD"> <!-- value="kurier_dpd" -->
 					Kurier DPD<br>
-
-				<input id="dostawa_kurier_inpost" type="radio" name="zamowienie_typ_dostawy" value="kurier_inpost">
-					Kurier Inpost<br>
-
-				<input id="odbior_paczkomaty_inpost" type="radio" name="zamowienie_typ_dostawy" value="odbior_inpost">
+				<input type="radio" id="dostawa_kurier_inpost"  name="zamowienie_typ_dostawy" value="Kurier Inpost"> <!-- value="kurier_inpost" -->
+					Kurier Inpost<br> 
+				<input type="radio" id="odbior_paczkomaty_inpost" name="zamowienie_typ_dostawy" value="Paczkomaty 24/7 (Inpost)"> <!-- value="odbior_inpost" -->
 					Paczkomaty 24/7 (Inpost)<br>	
-
-				<input id="odbior_poczta_polska" type="radio" name="zamowienie_typ_dostawy" value="odbior_poczta">
+				<input type="radio" id="odbior_poczta_polska" name="zamowienie_typ_dostawy" value="Odbiór w punkcie (Poczta polska)"> <!-- value="odbior_poczta" -->
 					Odbiór w punkcie (Poczta polska)<br>
 
 				<br>
 					Wybierz typ płatności :
 				<br>
 
-				<input type="radio" name="zamowienie_typ_platnosci" value="blik">
+				<input type="radio" name="zamowienie_typ_platnosci" value="Blik"> <!-- value="blik" -->
 					Blik<br>
 
-				<input type="radio" name="zamowienie_typ_platnosci" value="pobranie">
+				<input type="radio" name="zamowienie_typ_platnosci" value="Pobranie"> <!-- value="pobranie" --> 
 					Pobranie<br>
 
-				<input type="radio" name="zamowienie_typ_platnosci" value="karta_platnicza">
+				<input type="radio" name="zamowienie_typ_platnosci" value="Karta płatnicza (online)"> <!-- value="karta_platnicza" -->
 					Karta płatnicza (online)<br>	
 
 				<br><input type="submit" value="Zamawiam">
@@ -1207,20 +1210,6 @@
 
 			<!-- <button onclick="test_order()">Wyswietl wartosci formularza</button> -->
 
-			<script>
-
-				
-
-
-
-
-
-
-			</script>
-
-
-
-
 		</div>		
 
 		<div id="footer">
@@ -1228,9 +1217,6 @@
 		</div>
 
 	</div>
-
-
-	
 	
 </body>
 </html>
