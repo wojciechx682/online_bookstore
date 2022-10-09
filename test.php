@@ -12,6 +12,12 @@
 
 	$email_s = "jason12@wp.pl";
 
+	echo "get var name ->";
+
+	echo get_var_name($email_s);
+
+	exit();
+
 
 	//query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_s);
 	query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_s); 

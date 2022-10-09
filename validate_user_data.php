@@ -48,10 +48,14 @@
 		{
 			if($email_s != $_SESSION['email']) // czy jest różny od tego co było w polu formularza
 			{
-				$_SESSION['email_exists'] = false;	
-				
+				$_SESSION['email_exists'] = false;				
+
+
 				//query("SELECT * FROM klienci WHERE email='$email_s'", "check_email", $email_s); // to przełączy zmienną $_SESSION['email_exists'], jeśli taki email będzie istnieć
 				query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_s); // to przełączy zmienną $_SESSION['email_exists'], jeśli taki email będzie istnieć
+
+				//echo "53 email_s = " . $email_s;
+				//exit();
 
 
 				if($_SESSION['email_exists'] == true)
