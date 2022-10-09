@@ -10,6 +10,26 @@
 
 	echo "<br> wynik zapytania : <br><hr>";
 
+	$email_s = "jason12@wp.pl";
+
+
+	//query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_s);
+	query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_s); 
+	// to przełączy zmienną $_SESSION['email_exists'], jeśli taki email będzie istnieć
+
+
+	echo "<br><hr><br>";
+
+	echo " _SESSION[email_exists] = " . $_SESSION['email_exists'];
+
+	exit();
+
+
+
+
+
+
+
 
 
 	//query("SELECT * FROM ksiazki", "get_books", "");

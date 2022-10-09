@@ -50,7 +50,9 @@
 			{
 				$_SESSION['email_exists'] = false;	
 				
-				query("SELECT * FROM klienci WHERE email='$email_s'", "check_email", $email_s); // to przełączy zmienną $_SESSION['email_exists'], jeśli taki email będzie istnieć
+				//query("SELECT * FROM klienci WHERE email='$email_s'", "check_email", $email_s); // to przełączy zmienną $_SESSION['email_exists'], jeśli taki email będzie istnieć
+				query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_s); // to przełączy zmienną $_SESSION['email_exists'], jeśli taki email będzie istnieć
+
 
 				if($_SESSION['email_exists'] == true)
 				{
