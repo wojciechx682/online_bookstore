@@ -224,6 +224,8 @@
 
 				//echo query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia WHERE id_klienta = '$id_klienta'", "get_orders", "$id_klienta");	
 
+				// Książki, które zamówił klient o danym ID :
+
 
 				if((isset($_GET['order_id']))&&(!empty($_GET['order_id'])))
 				{

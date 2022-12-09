@@ -577,7 +577,7 @@
 											//header('Location: index.php');
 											//echo '<script>alert("functions - 436");</script>';	
 								
-								if ((get_var_name($value) == "email") && ($fun != "register_verify_email")) // jeśli to było logowanie - (wywołanie funkcji query() z logowanie.php)
+								if ((get_var_name($value) == "email") && ($fun != "register_verify_email") && ($fun != "check_email")) // jeśli to było logowanie - (wywołanie funkcji query() z logowanie.php)
 								{
 									// to sie wykona tylko dla skryptu logowania (logowanie.php)
 

@@ -250,6 +250,7 @@
 					}		
 				?>
 
+				<!-- type="email" -->
 				E-mail: <br> <input type="text" name="email" value="<?php 		
 					if(isset($_SESSION['fr_email']))
 					{
