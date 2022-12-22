@@ -1,4 +1,4 @@
-input[type=text], select, input[type=password] {
+/*input[type=text], select, input[type=password] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -21,7 +21,7 @@ input[type=submit] {
 
 input[type=submit]:hover {
   background-color: #45a049;
-} 
+} */
 
 body
 {
