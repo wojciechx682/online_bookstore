@@ -437,7 +437,7 @@
 		// WERYFIKACJA HASZA : (czy hasze hasła sa identyczne)
 		// porównanie hasha podanego przy logowaniu, z hashem zapisanym w bazie danych : 		
 
-		$haslo = $_POST['haslo'];			
+		$haslo = $_POST['haslo']; // "zmienne tworzone poza funkcjami są globalne (więcej o funkcjach w manualu), a zmienne tworzone w funkcjach mają zasięg lokalny" - http://www.php.pl/Wortal/Artykuly/PHP/Podstawy/Zmienne-i-stale/Zasieg-zmiennych
 
 		if(password_verify($haslo, $row['haslo'])) // true -> hasze sa takie same (podano poprawne hasło do konta)
 		{	
