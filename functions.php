@@ -552,7 +552,7 @@
 
 					//echo "<br> query = $query <br>"; exit();
 					//if($result = $polaczenie->query($query)) // udane zapytanie
-					if($result = $polaczenie->query(sprintf($query, mysqli_real_escape_string($polaczenie, $value)))) 
+					if($result = $polaczenie->query(sprintf($query, mysqli_real_escape_string($polaczenie, $value)))) // czy udało się zrealizować Zapytanie ($result) do Bazy ?	--> TRUE/FALSE
 					{
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
 						
@@ -610,7 +610,7 @@
 											
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
 					}
-					else 
+					else // Nie udało się zrealizować Zapytania ($result)
 					{
 						throw new Exception($polaczenie->error);
 						//echo $_SESSION['blad'];
