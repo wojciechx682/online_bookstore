@@ -554,6 +554,10 @@
 					//if($result = $polaczenie->query($query)) // udane zapytanie
 					if($result = $polaczenie->query(sprintf($query, mysqli_real_escape_string($polaczenie, $value)))) // czy udało się zrealizować Zapytanie ($result) do Bazy ?	--> TRUE/FALSE
 					{
+						// Czy udało się zrealizować zapytanie (query) do BD ?
+			            // --> pusty rezultat zapytania (czyli 0 zwr. rekordów) - to jest też poprawny rezultat zapytania (!)
+			            // W tym ifie MÓWIMY O SYTUACJI, GDY W ZAPYTANIU WYSTĄPIŁ BŁĄD (?), tzn MYSQL NIE BYŁ W STANIE GO WYKONAĆ (wtedy zmienna $result przyjmie wartość FALSE)
+						
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
 						
 							$num_of_rows = $result->num_rows; // ilość zwróconych wierszy	
