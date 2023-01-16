@@ -55,6 +55,12 @@
 			$_SESSION['e_imie'] = "Imię może składać się tylko z liter alfabetu, pierwsza litera powinna być wielka";
 		}
 
+		if ((strlen($imie)<3) || (strlen($imie)>20))
+        {
+            $_SESSION['wszystko_OK'] = false;
+            $_SESSION['e_imie']="Podaj poprawne imię";
+        }
+
 		//$nazwisko = str_replace(str_split(' '), '', $nazwisko);
 		$nazwisko = trim($nazwisko, " ");
 		$nazwisko = ucfirst($nazwisko); 
