@@ -491,7 +491,7 @@
 					}	*/	
 				?> -->
 
-				Telefon: <br> <input type="text" name="telefon" value="<?php 		
+				Telefon (PL +48): <br> <input type="text" name="telefon" value="<?php 		
 					if(isset($_SESSION['fr_telefon']))
 					{
 						echo $_SESSION['fr_telefon'];

@@ -44,7 +44,8 @@
 
 		//$imie = str_replace(str_split(' '), '', $imie);
 		$imie = trim($imie, " "); // usunięcie spacji na ostatniej pozycji
-		$imie = ucfirst($imie);   		
+		$imie = ucfirst(strtolower($imie));	
+
 
 		$name_regex = '/(*UTF8)^[A-ZŁŚŻ]{1}[a-ząęółśżźćń]+$/'; // imię -> "Jakub" ✓✓✓	 	
 		// preg_match() sprawdza dopasowanie wzorca do ciągu, TRUE/FALSE
@@ -63,7 +64,7 @@
 
 		//$nazwisko = str_replace(str_split(' '), '', $nazwisko);
 		$nazwisko = trim($nazwisko, " ");
-		$nazwisko = ucfirst($nazwisko); 
+		$nazwisko = ucfirst(strtolower($nazwisko));	
 
 		if(!(preg_match($name_regex, $nazwisko))) 
 		{		
@@ -85,9 +86,17 @@
 		//$email = htmlentities($email, ENT_QUOTES, "UTF-8");
 
 		$email_s = filter_var($email, FILTER_SANITIZE_EMAIL); 
-		// email - po procesie sanityzacji. usunięcie znaków kodu źródłowego. 
-		// FILTER_SANITIZE_EMAIL - filtr do adresów mailowych	
+		// email - po procesie sanityzacji. usunięcie znaków kodu źródłowego.			
 		
+		/*
+			istnieje gotowa funkcja walidująca email -> filter_var(zmienna, filtr)
+			- przefiltruj zmienną w sposób określony przez rodzaj filtru (drugi parametr funkcji)
+
+			sanityzacja kodu - wyczyszczenie źródła z potencjalnie groźnych zapisów
+
+			// $email_s - po procesie sanityzacji, // FILTER_SANITIZE_EMAIL - filtr do adresów mailowych
+		*/
+
 		if((filter_var($email_s, FILTER_VALIDATE_EMAIL) == false) || ($email_s != $email))
 		{			
 			$_SESSION['wszystko_OK'] = false;
@@ -152,7 +161,7 @@
 		//////////////////////////////////////////////////////////////////
 		// Ulica
 
-		$ulica = ucfirst($ulica); 		
+		$ulica = ucfirst(strtolower($ulica));				
 		$ulica = trim($ulica, " ");		
 
 		if(!(preg_match($address_regex, $ulica))) 
@@ -241,7 +250,7 @@
 		//	$_SESSION['e_bot'] = "Potwierdź, że nie jesteś botem!";
 		//}
 		
-		if ($odpowiedz->success==false)
+		if ($odpowiedz->success==false)  /*  if(!($odpowiedz->succes))  */
 		{
 			$_SESSION['wszystko_OK'] = false;
 			$_SESSION['e_bot'] = "Potwierdź, że nie jesteś botem!";
@@ -279,7 +288,7 @@
 		
 		//sprawdzenie czy taki user (email i hasło) istnieje już w bazie :
 
-		echo query("SELECT id_klienta FROM klienci WHERE email='$email'", "register_verify_email", $email);  // przestawi mi zmienną $_SESSION['wszystko_OK'] na false, jeśli istnieje już taki email
+		echo query("SELECT id_klienta FROM klienci WHERE email='$email'", "register_verify_email", $email);  // przestawi mi zmienną $_SESSION['wszystko_OK'] na false, jeśli istnieje już taki email // ✓
 
 		if($_SESSION['wszystko_OK'] == true) // udana walidacja ?
 		{
@@ -305,6 +314,8 @@
 			array_push($values, $haslo_hash);			
 
 			echo query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "", $values);  // sanityzacja danych -> mysqli_real_escape_string
+
+			// NULL - (dla id autoincrement)
 
 			exit();
 

@@ -19,7 +19,7 @@
 
 	if(isset($_SESSION['udanarejestracja']))
 	{
-		session_unset();
+		session_unset();	
 		header('Location: zaloguj.php');	
 		//exit();
 	}	

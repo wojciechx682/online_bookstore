@@ -266,7 +266,7 @@
 		try // spróbuj połączyć się z bazą danych
 		{
 			
-			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);		
+			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);	// A CO Z "UNIWERSALNĄ" funkcją query(...) !?!?!	
 				// @ - operator kontroli błędów - w przypadku blędu, php nie wyświetla informacji o błędzie
 			
 			// sprawdzamy, czy udało się połaczyć z bazą danych
@@ -464,19 +464,15 @@
 			$_SESSION['login'] = $row['login'];			
 
 			//$_SESSION['koszyk_ilosc_ksiazek'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); 
-
 			//$_SESSION['test123'] = test_fun();
-
 			//$id_klienta = $_SESSION['id'];
 			//$_SESSION['test123'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
 
-			query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);
-			
+			query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);			
 			unset($_SESSION['blad']);
 			
 			// pozbywamy się z pamięci rezultatu zapytania
 			$result->free_result(); // free() // close();				
-			
 			// przekierowanie do strony index.php :
 			header('Location: index.php');	
 			exit();		
@@ -537,7 +533,7 @@
 		//echo "<br> query = " . $query . "<br>" ; 
 
 		require "connect.php";
-		mysqli_report(MYSQLI_REPORT_STRICT);  // sposób raportowania błędów -> MYSLQI_REPORT_STRICT - zamiast warningów, chcemy rzucać exception
+		mysqli_report(MYSQLI_REPORT_STRICT);  // sposób raportowania błędów -> MYSLQI_REPORT_STRICT - zamiast warningów, chcemy rzucać exception (w celu uniknięcia wyświetlania tych warningów - dla użytkowników ... w sekcji Catch ... )
 
 		try 
 		{			
@@ -545,7 +541,7 @@
 			 
 			if($polaczenie->connect_errno!=0) // błąd połączenia
 			{			
-				throw new Exception(mysqli_connect_errno()); // rzuć nowy wyjątek			
+				throw new Exception(mysqli_connect_errno()); // rzuć nowy wyjątek - po to aby sekcja Catch go złapała, i wyświetliła na ekranie (!) przy uzyciu echo. 		
 			}
 			else // udane polaczenie
 			{	
@@ -557,7 +553,8 @@
 
 					//echo "<br> query = $query <br>"; exit();
 					//if($result = $polaczenie->query($query)) // udane zapytanie
-					if($result = $polaczenie->query(sprintf($query, mysqli_real_escape_string($polaczenie, $value)))) // czy udało się zrealizować Zapytanie ($result) do Bazy ?	--> TRUE/FALSE
+					if($result = $polaczenie->query(sprintf($query, mysqli_real_escape_string($polaczenie, $value)))) // czy udało się zrealizować Zapytanie ($result) do Bazy ?	--> TRUE/FALSE || (!!!) pojedynczy zapis mysqli_real_ ... - ponieważ jest to JEDNA ZMIENNA ! A NIE TABLICA ! 
+					// $rezultat = $polaczenie->query("SELECT id FROM uzytkownicy WHERE email='$email'");  // <--- tak to wygląda BEZ funkcji sprintf !
 					{
 						// Czy udało się zrealizować zapytanie (query) do BD ?
 			            // --> pusty rezultat zapytania (czyli 0 zwr. rekordów) - to jest też poprawny rezultat zapytania (!)
@@ -574,11 +571,11 @@
 
 								$fun($result); // wywołanie zewnętrznej funkcji	
 
-
+								// $result->free_result();  // (!?) czy jeśli zostawię tutaj "$result->free_result();" to nie BĘDĘ MUSIAŁ wpisywać tej linii w KAŻDEJ FUNKCJI (?!!?)
 
 								// np. wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
 							}
-							else  // brak zwróconych rekordów
+							else  // brak zwróconych rekordów (np 0 zwróconych wierszy / rekordów)
 							{			
 
 											//$_SESSION['blad'] = '<span style="color: red">Nie udało się pobrać danych z bazy danych !</span>';
@@ -595,10 +592,10 @@
 									exit();		
 
 								}
-								elseif((get_var_name($value) == "email") && ($fun == "register_verify_email"))  // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php)
+								elseif((get_var_name($value) == "email") && ($fun == "register_verify_email"))  // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php) - ??? NIE ?! Przecież funkcja register_verify_email zmienia wartość zmiennej sesyjnej ! 
 								{
 
-									// ...  nic nie rób
+									// ...  nic nie rób ... (?)
 
 								}	
 								/*elseif((get_var_name($value) == "asdasd") && ($fun == "count_cart_quantity"))  // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php)
@@ -619,9 +616,9 @@
 											
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
 					}
-					else // Nie udało się zrealizować Zapytania ($result)
+					else // Nie udało się zrealizować Zapytania ! ($result)
 					{
-						throw new Exception($polaczenie->error);
+						throw new Exception($polaczenie->error); // √√√
 						//echo $_SESSION['blad'];
 					}
 
@@ -713,6 +710,8 @@
 				{
 					// ?
 				}
+
+				// $polaczenie->close();  <--- dodać tutaj !?! (wtedy zapisać tylko raz - w tym miejscu !)
 			}
 		}
 		catch(Exception $e) // Exception - wyjątek
@@ -723,7 +722,8 @@
 			
 			echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności]</div>';
 
-			echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW
+			echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW (!)
+			// zamiast tego użyć klasy error ...
 			exit(); // (?)
 		}
 
