@@ -17,6 +17,11 @@
 	              the code inside the file before redirecting. */
 	}
 
+	function advanced_search($result)
+	{
+		get_books($result);
+	}
+
 	function get_categories($result) // wypisuje elementy listy <li> - wewnątrz kategorii (top_nav)
 	{
 		$cat = "Wszystkie";

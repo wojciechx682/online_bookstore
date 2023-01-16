@@ -373,6 +373,7 @@
 						//echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_all_books", "");
 						//echo $_SESSION['blad'];
 
+
 					}					
 
 				}
@@ -385,6 +386,66 @@
 				 // STRONA GŁÓWNA //
 				 ////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
+			<div id="div_advanced_search">				
+
+				<form action="index.php" method="get">
+
+					<input type="search" name="wyrazenie"> <!-- np tytuł książki, lub imie autora --> <!-- "Jerzy", "Tomasz", "Symfonia C++", "Podstawy PHP" -->
+
+					<select id="metoda" name="metoda">
+						<option value="autor">autor</option>
+						<option value="tytul">tytul</option>						
+					</select>
+
+					<input type="submit" value="Szukaj">
+
+				</form>	
+
+			</div>
+
+			<hr>
+
+			<?php				
+
+				if(isset($_GET['wyrazenie']) && !empty($_GET['wyrazenie']) && isset($_GET['metoda']) && !empty($_GET['metoda']))   	
+				{		
+
+					$wyrazenie = $_GET['wyrazenie'];				
+					$metoda = $_GET['metoda'];		
+
+					echo " <br>Wyrażenie = $wyrazenie <br>";		
+					echo " <br>Metoda = $metoda <br>";		
+
+					if($metoda == "autor")
+					{
+						//$query = "SELECT * FROM ksiazki, autor WHERE ksiazki.id_autora = autor.id_autora AND autor.imie == "
+						//		 "SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC"
+
+						$values = array();
+						array_push($values, $wyrazenie);
+						array_push($values, $wyrazenie);
+
+						 query("SELECT id_ksiazki, autor.id_autora, tytul, cena, rok_wydania, kategoria FROM ksiazki, autor WHERE ksiazki.id_autora = autor.id_autora AND (autor.imie = '%s' OR autor.nazwisko = '%s')", "advanced_search", $values);
+						 // dalej -> stworzyć funckję advanced_search ...
+
+						//query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); //
+					}
+					else if ($metoda == "tytul")
+					{
+						echo "<hr> ";
+						echo " <br>Wyrażenie = $wyrazenie <br>";		
+						echo " <br>Metoda = $metoda <br>";	
+						
+						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $wyrazenie);
+					}
+
+							
+
+
+
+				}
+
+			?>
 				 
 
 		</div>		
