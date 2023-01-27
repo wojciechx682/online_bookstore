@@ -22,6 +22,26 @@
 		get_books($result);
 	}
 
+    function get_authors($result) // tworzy linki - w których kazdy wyświetli książki danego autora
+    {
+
+        echo '<ul>'; // Zamiana na jQuery ? event listener ?
+        while ($row = $result->fetch_assoc())
+        {
+            //echo '<a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a><br><br>';
+
+            $id_autora = $row['id_autora'];
+            echo $id_autora;
+            //echo '<li><a href="index.php?kategoria='.$_SESSION['kategoria'].'&autor='.$id_autora.'">'.$row['imie']." ".$row['nazwisko'].'</a></li>';
+            echo '<li><a href="index.php?autor='.$id_autora.'">'.$row['imie']." ".$row['nazwisko'].'</a></li>';
+
+            //echo '<li><a href="index.php?kategoria=">Informatyka</a></li>';
+        }
+        echo '/<ul>'; //
+        $result->free_result();
+    }
+
+
 	function get_categories($result) // wypisuje elementy listy <li> - wewnątrz kategorii (top_nav)
 	{
 		$cat = "Wszystkie";

@@ -5,8 +5,8 @@ function display_nav()
 
 	nav.style.display = "block";
 
-	nav.style.width = "15%";
-	content.style.width = "85%";
+	nav.style.width = "25%";
+	content.style.width = "75%";
 }
 
 /*function test()
