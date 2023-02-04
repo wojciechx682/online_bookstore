@@ -18,6 +18,8 @@ function sortuj()
 	var content_books = document.getElementById("content_books");
 	
 	var books = new Array(number_of_child);      // przechowuje divy -> book0, book1, ...
+	// Tablice, z użyciem konstruktora (niezalecane) 
+	// lepiej: var colors = ["white", "green", "yellow"];
 	var new_books = new Array(number_of_child);  // nowe divy - po podmianie
 
 	var titles = new Array(number_of_child);     // tytuły książek
