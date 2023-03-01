@@ -281,6 +281,15 @@
 
 				<br><br>				
 
+
+                <hr>
+
+
+                <?php
+                    query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", "");
+
+                ?>
+
 				<!-- 
 					<input id="title_radio" type="radio" name="sortuj_wg" value="tytul">
 					<label for="title_radio">Alfabetycznie<br></label>
@@ -311,7 +320,7 @@
 
 				echo "<hr>";				
 
-				if((isset($_GET['kategoria'])) && !(empty($_GET['kategoria']))) // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>
+				if((isset($_GET['kategoria'])) && !(empty($_GET['kategoria'])) && (!(isset($_GET['autor'])) || (empty($_GET['autor']))) ) // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>
 				{									
 					echo '<script> display_nav(); </script>'; // Wywołanie funkcji w skrypcie display_nav.js - wyświetla nav (nawigację) po lewej stroenie -->
 
@@ -321,12 +330,12 @@
 
 					$_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)			
 					 														
-					echo '<div id="content_books">';					
+					echo '<div id="content_books">';
 					
 					if($kategoria == "Wszystkie") 	// ($_GET kategoria) -> Kategoria = "Wszystkie"
 					{							
 						// get_books() - wyświetla książki (divy -> book0, ...)	
-						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", ""); 					
+						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
 					}
 					else // ($_GET kategoria) -> Kategoria = "Dla dzieci" , :Fantastyka", "Informatyka", ...
 					{
@@ -341,6 +350,22 @@
 
 					echo '</div>';					
 				}
+                elseif ((!(isset($_GET['kategoria'])) || (empty($_GET['kategoria']))) && (isset($_GET['autor'])) && !(empty($_GET['autor']))   )
+                {
+                    //echo "<br> autor = ".$_GET['autor'];
+                    //echo "<br> kat = ".$_GET['kategoria'];
+
+                    //query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor WHERE kategoria LIKE '%s'", "get_authors", $_GET['kategoria']);
+
+                    $values = array();
+                    array_push($values, $_GET['autor']);
+                    //array_push($values, $_GET['kategoria']);
+
+                    //$_SESSION['kategoria'] = $_GET['kategoria'];
+
+                    query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $values);
+
+                }
 				else // jeśli nie ustawiono kategorii ... nie ustawiono! ($_GET kategoria) -> $Kategoria  
 				{				
 					if((isset($_GET['input_search'])) && (!empty($_GET['input_search']))) // pole wyszukiwania
@@ -373,6 +398,7 @@
 						//echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_all_books", "");
 						//echo $_SESSION['blad'];
 
+
 					}					
 
 				}
@@ -385,6 +411,66 @@
 				 // STRONA GŁÓWNA //
 				 ////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
+			<div id="div_advanced_search">				
+
+				<form action="index.php" method="get">
+
+					<input type="search" name="wyrazenie"> <!-- np tytuł książki, lub imie autora --> <!-- "Jerzy", "Tomasz", "Symfonia C++", "Podstawy PHP" -->
+
+					<select id="metoda" name="metoda">
+						<option value="autor">autor</option>
+						<option value="tytul">tytul</option>						
+					</select>
+
+					<input type="submit" value="Szukaj">
+
+				</form>	
+
+			</div>
+
+			<hr>
+
+			<?php				
+
+				if(isset($_GET['wyrazenie']) && !empty($_GET['wyrazenie']) && isset($_GET['metoda']) && !empty($_GET['metoda']))   	
+				{		
+
+					$wyrazenie = $_GET['wyrazenie'];				
+					$metoda = $_GET['metoda'];		
+
+					echo " <br>Wyrażenie = $wyrazenie <br>";		
+					echo " <br>Metoda = $metoda <br>";		
+
+					if($metoda == "autor")
+					{
+						//$query = "SELECT * FROM ksiazki, autor WHERE ksiazki.id_autora = autor.id_autora AND autor.imie == "
+						//		 "SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC"
+
+						$values = array();
+						array_push($values, $wyrazenie);
+						array_push($values, $wyrazenie);
+
+						 query("SELECT id_ksiazki, autor.id_autora, tytul, cena, rok_wydania, kategoria FROM ksiazki, autor WHERE ksiazki.id_autora = autor.id_autora AND (autor.imie = '%s' OR autor.nazwisko = '%s')", "advanced_search", $values);
+						 // dalej -> stworzyć funckję advanced_search ...
+
+						//query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); //
+					}
+					else if ($metoda == "tytul")
+					{
+						echo "<hr> ";
+						echo " <br>Wyrażenie = $wyrazenie <br>";		
+						echo " <br>Metoda = $metoda <br>";	
+						
+						query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $wyrazenie);
+					}
+
+							
+
+
+
+				}
+
+			?>
 				 
 
 		</div>		

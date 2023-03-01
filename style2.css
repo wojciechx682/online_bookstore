@@ -27,10 +27,11 @@ input[type=submit]:hover {
 body
 {
 	background-color: #d4d4d4;
-	//color: white;	
+	//color: white;
 
 	/*margin-top: 0px;*/
 	margin: 0px;
+	font-family: Arial;
 }
 
 a:visited
@@ -61,7 +62,7 @@ a:hover
 }
 
 #test_div
-{	
+{
 	width:  225px;
 	height:  145px;
 
@@ -82,17 +83,17 @@ a:hover
 
 
 #container
-{	
-	width: 1000px;	
+{
+	width: 1000px;
 	height: 4500px;
 	border: 1px dashed black;
 	border-top:  none;
 	border-left:  none;
 	border-right:  none;
-	border-radius: 5px;	
-		//position: relative;	
+	border-radius: 5px;
+		//position: relative;
 	margin-left: auto;
-	margin-right: auto;	
+	margin-right: auto;
 
 	position: relative;
 	top: 102px;
@@ -100,8 +101,8 @@ a:hover
 	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
-#sticky 
-{	
+#sticky
+{
 	width: 100%;
 	/*height: 30px;*/  /* 100px ? */
 
@@ -120,11 +121,11 @@ a:hover
 }
 
 #top_header
-{	
+{
 	width: 100%;
 	/*height: 30px;*/
 
-	border-bottom: 1px dashed black;	
+	border-bottom: 1px dashed black;
 	background-color: #575757;
 
 	/*padding: 5px 15px 5px 15px;*/
@@ -181,8 +182,8 @@ a:hover
 	//font-size: 18px;
 	height: 30px;
 	//line-height: 200%;
-		//display: inline-block;  
-  
+		//display: inline-block;
+
   //position: relative;
 	//left:  15px;
 
@@ -192,7 +193,7 @@ a:hover
 }
 
 
-#top_header ol > li /* bezpośrednie dzieci */ 
+#top_header ol > li /* bezpośrednie dzieci */
 {
 	float: left;
 	//width: 125px;
@@ -208,12 +209,12 @@ a:hover
 
 #top_header ol > li:first-child
 {
-	border-left: 1px dashed #1a1919;	
+	border-left: 1px dashed #1a1919;
 }
 
 #top_header ol > li:last-child
 {
-	border-right: none;	
+	border-right: none;
 }
 
 #top_header ol > li:hover
@@ -230,18 +231,18 @@ a:hover
 {
 	width: 350px;
   //height: 500px;
-  margin-bottom:20px;  
+  margin-bottom:20px;
   border-top: 1px solid #ccc;
 	list-style-type: none;
 	padding: 0;
-	margin: 0;	
-	
+	margin: 0;
+
 	visibility: hidden;
 }*/
 
 /*#top_header ol > li:hover > #double
-{	
-	visibility:  visible;	
+{
+	visibility:  visible;
 	//height: 500px;
 }*/
 
@@ -270,8 +271,8 @@ a:hover
 	width: 100%;
 	/*height: 70px;	*/
 
-	border-bottom: 1px dashed black;	
-	background-color: #dedede;	
+	border-bottom: 1px dashed black;
+	background-color: #dedede;
 
 	/*padding: 15px;*/
 	/*position: relative;
@@ -305,24 +306,24 @@ a:hover
 
 #div_logo
 {
-  float: left;  
+  float: left;
 	width: 33.3333%;
 	text-align: center;
 	//line-height: 710px;
 
 	padding-top: 15px;
 
-} 
+}
 
 #div_logo img
 {
-	width: 185px; 
+	width: 185px;
 	height: auto;
 }
 
 #header_title
 {
-	float: left;  
+	float: left;
 		//width: 75%;
 	width:  250px;
 
@@ -336,7 +337,7 @@ a:hover
 }
 
 /*#div_log_in
-{  
+{
 	float:  right;
 	width:  100px;
 
@@ -347,7 +348,7 @@ a:hover
 } */
 
 /*#div_register
-{  
+{
 	float:  left;
 	width:  12.5%;
 	text-align: center;
@@ -356,7 +357,7 @@ a:hover
 
 #div_cart
 {
-	float:  left;	
+	float:  left;
 	width: 33.3333%;
 	text-align: right;
 	//padding-left: 10px;
@@ -382,8 +383,8 @@ a:hover
 .cart_remove_book  /* get_product_from_cart -> remove book (przycisk usuwania książki z koszyka) */
 {
 	margin-left:  10px;
-	
-} 
+
+}
 
 #div_my_account
 {
@@ -392,16 +393,16 @@ a:hover
 
 	padding-left: 10px;
 	padding-right: 10px;
-} 
+}
 
 #top_nav
-{ 
+{
 	width: 100%;
 		/*width: 100%;
 		  height: 60px;
 	    padding: 10px 0; */
 	background-color: #676a6b;
-	
+
 	border-bottom:  1px dashed black;
 	/*overflow: hidden;*/
 
@@ -418,7 +419,7 @@ a:hover
 	margin-left:  auto;
 	margin-right:  auto;
 
-	text-align: center;		
+	text-align: center;
 
 	//padding-left: 15px;
 	padding-right: 15px;
@@ -448,14 +449,14 @@ a:hover
   display: inline;
 }
 
-#double li  { width:50%;} 
-#triple li  { width:33.333%; } 
-#quad li    { width:25%; } 
+#double li  { width:50%;}
+#triple li  { width:33.333%; }
+#quad li    { width:25%; }
 #six li     { width:16.666%; }
 
 /* //////////////////////////////////////////////////////////////////////////////////////////// */
 
-/*#top_nav ol 
+/*#top_nav ol
 {
 	padding: 0;
 	margin: 0;
@@ -463,7 +464,7 @@ a:hover
 	font-size: 18px;
 	height: 35px;
 	//line-height: 200%;
-		//display: inline-block;  
+		//display: inline-block;
   position: relative;
 		//left:  15px;
 } */
@@ -550,13 +551,13 @@ a:hover
 
 #nav
 {
-	float:left;	
-	width: 20%;	
+	float:left;
+	width: 25%;
 	border-right:  1px dashed black;
 	border-bottom:  1px dashed black;
 	background-color: #7caabf;
 	padding:  15px;
-	height: 1980px; 
+	height: 1980px;
 	display:  none;
 }
 
@@ -566,18 +567,18 @@ a:hover
 	width:  1000px;
 	height: 4500px;
 	background-color: #e6e6e6;
-	//border-bottom:  1px dashed black;	
+	//border-bottom:  1px dashed black;
 	padding:  15px;
 	//overflow: scroll;
 }
 
 #footer
-{	
-	float:left;	
+{
+	float:left;
 	width: 100%;
 	height: 50px;
 	border-right:  1px dashed black;
-	border-bottom:  1px dashed black;	
+	border-bottom:  1px dashed black;
 	background-color: #6d6fb3;
 	padding:  15px;
 }
@@ -588,7 +589,7 @@ a:hover
 	margin: 10px 0px 10px 0px;
 }
 
-.title, .price, .year, .quantity   
+.title, .price, .year, .quantity
 {
 	float:  left;
 	margin-right: 5px;
@@ -599,14 +600,14 @@ a:hover
 /* //////////////////////////////////////////////////////////////////////////////////////////// */
 /* sticky navbar */
 
-.sticky 
+.sticky
 {
   position: fixed;
   top: 0;
   width: 100%;
 }
 
-.sticky + #content 
+.sticky + #content
 {
   padding-top: 60px;
 }
@@ -630,7 +631,7 @@ a:hover
 	margin: 10px;
 
 	padding: 10px;
-	
+
 }
 
 /* //////////////////////////////////////////////////////////////////////////////////////////// */
@@ -699,7 +700,7 @@ a:hover
 	width: 100px;
 }
 
-#book0 .quantity 
+#book0 .quantity
 {
 	background-color: green;
 }

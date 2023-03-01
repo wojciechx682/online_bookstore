@@ -1371,7 +1371,7 @@
 
 					
 
-					$status_array = array("W trakcie realizacji", "Wysłano", "Dostarczono");
+					$status_array = array("W trakcie realizacji", "Wysłano", "Dostarczono", "Zrealizowano/Zakończono");
 
 					$status = $status_array[array_rand($status_array)];
 

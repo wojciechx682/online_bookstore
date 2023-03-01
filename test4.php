@@ -149,7 +149,23 @@
 	</div>
 
 
+		<?php
+
+			$r['select']="7891";
+
+			echo '<td><center><img src="www.xxxxx.pl/img/'.($r['select']).'.gif"></center></td>';
+			echo "<br><br>";	
+			echo "<td><center><img src=\"www.xxxxx.pl/img/".($r['select']).".gif\"></td>";
+
+		?>
 	
-	
+
+		<?php			
+
+			echo '<img src="www.xxxxx.pl/img/'.($r['select']).'.gif">';
+			echo "<br><br>";	
+			echo "<img src=\"www.xxxxx.pl/img/".($r['select']).".gif\">";
+
+		?>
 </body>
 </html>
