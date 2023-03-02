@@ -623,7 +623,7 @@ a:hover
 {
 	background-color: lightblue;
 
-	//display: inline-block;
+	/*display: inline-block;*/
 	float: left;
 
 	width: 180px;
