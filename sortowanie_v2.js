@@ -1,3 +1,24 @@
+/*
+Funkcja JavaScript, która jest wyzwalana przez zdarzenie zmiany (change) w elemencie "select". Kod odpowiada za sortowanie zawartości div na podstawie wyboru użytkownika w elemencie "select".
+
+Kod wykorzystuje metodę querySelector do znajdowania elementów w DOM oraz metodę sort do sortowania tablic. Istnieją instrukcje switch obsługująca różne opcje sortowania dostępne dla użytkownika.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Kod sortuje listę książek na podstawie wybranych kryteriów sortowania. Gdy użytkownik wybierze kryterium sortowania z listy rozwijanej , wywoływana jest funkcja sort(), która następnie sortuje książki na podstawie tych kryteriów.
+
+Funkcja zaczyna się od pobrania wybranej opcji sortowania z listy rozwijanej za pomocą document.getElementById("sort_by") i zapisania jej w zmiennej selected_value. Następnie pobiera liczbę książek na liście za pomocą document.getElementById("content_books").childElementCount
+
+Następnie funkcja inicjuje kilka tablic do przechowywania informacji o książkach, takich jak tytuły książek, ceny i lata wydania. Następnie przechodzi przez każdy element książki na liście i pobiera odpowiednie informacje (tytuł, cenę lub rok) na podstawie wybranych kryteriów sortowania. Informacje te są przechowywane w odpowiednich tablicach.
+
+Po pobraniu i zapisaniu wszystkich informacji funkcja sortuje tablice na podstawie wybranych kryteriów sortowania. Na przykład, jeśli użytkownik wybrał sortowanie „nazwa A-Z”, tablica tytułów zostanie posortowana w kolejności rosnącej za pomocą funkcji sort().
+
+Po posortowaniu tablic funkcja tworzy nowe tablice do przechowywania posortowanych elementów książki. Następnie przechodzi przez każdy element książki i przypisuje go do odpowiedniej posortowanej tablicy na podstawie wybranych kryteriów sortowania. Na przykład, jeśli użytkownik wybrał sortowanie „nazwa A-Z”, element książki, którego tytuł pojawia się jako pierwszy w tablicy tytułów, zostanie przypisany do pierwszego indeksu tablicy nowe_książki.
+
+Na koniec funkcja przechodzi przez tablicę new_books i dołącza każdy element książki do modelu DOM w posortowanej kolejności.
+
+ */
+
 $('#sortuj_wg').on('change', function() {
 	sortuj();
 });
@@ -50,11 +71,15 @@ function sortuj()
 				titles_org[i] = book_element_title;
 				titles[i] = book_element_title;
 
+				break;
+
 			case "nazwy Z-A":
 
 				var book_element_title = book_element.querySelector('.title').innerHTML; // tytuł
 				titles_org[i] = book_element_title;
 				titles[i] = book_element_title;
+
+				break;
 
 			case "ceny rosnąco":
 
@@ -62,11 +87,15 @@ function sortuj()
 				prices_org[i] = book_element_price;
 				prices[i] = book_element_price;
 
+				break;
+
 			case "ceny malejąco":
 
 				var book_element_price = book_element.querySelector('.price').innerHTML; // cena
 				prices_org[i] = book_element_price;
 				prices[i] = book_element_price;
+
+				break;
 
 			case "Najstarszych":
 
@@ -74,11 +103,15 @@ function sortuj()
 				years_org[i] = book_element_year;
 				years[i] = book_element_year;
 
+				break;
+
 			case "Najnowszych":
 
 				var book_element_year = book_element.querySelector('.year').innerHTML;   // rok
 				years_org[i] = book_element_year;
 				years[i] = book_element_year;
+
+				break;
 		}
 
 		books[i] = book_element; // divy -> book0, book1, ...
