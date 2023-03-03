@@ -5,9 +5,9 @@ Kod wykorzystuje metodę querySelector do znajdowania elementów w DOM oraz meto
 
 -----------------------------------------------------------------------------------------------------------------------
 
-Kod sortuje listę książek na podstawie wybranych kryteriów sortowania. Gdy użytkownik wybierze kryterium sortowania z listy rozwijanej , wywoływana jest funkcja sort(), która następnie sortuje książki na podstawie tych kryteriów.
+Kod sortuje listę książek na podstawie wybranych kryteriów sortowania. Gdy użytkownik wybierze kryterium sortowania z listy rozwijanej , wywoływana jest funkcja sort(), która następnie sortuje książki na podstawie wybranych kryteriów.
 
-Funkcja zaczyna się od pobrania wybranej opcji sortowania z listy rozwijanej za pomocą document.getElementById("sort_by") i zapisania jej w zmiennej selected_value. Następnie pobiera liczbę książek na liście za pomocą document.getElementById("content_books").childElementCount
+Funkcja zaczyna się od pobrania wybranej opcji sortowania z listy rozwijanej za pomocą document.getElementById("sort_by") i zapisania jej w zmiennej wybrana_wartość. Następnie pobiera liczbę książek na liście za pomocą document.getElementById("content_books").childElementCount.
 
 Następnie funkcja inicjuje kilka tablic do przechowywania informacji o książkach, takich jak tytuły książek, ceny i lata wydania. Następnie przechodzi przez każdy element książki na liście i pobiera odpowiednie informacje (tytuł, cenę lub rok) na podstawie wybranych kryteriów sortowania. Informacje te są przechowywane w odpowiednich tablicach.
 
@@ -34,15 +34,9 @@ function sortuj()
 	var s = document.getElementById("sortuj_wg");
 	var selected_value = s.options[s.selectedIndex].text;
 
-	console.log("selected_value->", selected_value);
-
 	number_of_child = document.getElementById("content_books").childElementCount;
 
-	console.log("number_of_child->", number_of_child);
-
 	var content_books = document.getElementById("content_books");
-
-	console.log("content_books ->", content_books);
 
 	var books = new Array(number_of_child);      // przechowuje divy -> book0, book1, ...
 	var new_books = new Array(number_of_child);  // nowe divy - po podmianie
@@ -58,7 +52,7 @@ function sortuj()
 	for(var i=0; i<number_of_child; i++)
 	{
 		var book_id = "book";
-		var book_id = book_id.concat(i);                     //      id -> book0, book1 ...
+		book_id = book_id.concat(i);                     //      id -> book0, book1 ...
 
 		var book_element = document.getElementById(book_id); // element -> book0, book1, ...
 
@@ -110,61 +104,70 @@ function sortuj()
 				var book_element_year = book_element.querySelector('.year').innerHTML;   // rok
 				years_org[i] = book_element_year;
 				years[i] = book_element_year;
-
+				
 				break;
 		}
 
 		books[i] = book_element; // divy -> book0, book1, ...
 	}
 
-	if(selected_value == "nazwy A-Z")
+	switch(selected_value)
 	{
-		//titles_sorted = titles.sort(); // ERROR ! --> A, B, D, Ą - to nie jest poprawne sortowanie ...
-		//titles_sorted = titles.sort((a, b) => a.localeCompare(b)); // ✓ ponieważ tytuły zawierają polskie znaki
-		titles_sorted = titles.sort(function(a,b) {
-			return a.localeCompare(b);
-		});
-		//console.log("titles_sorted->", titles_sorted);
-	}
+		case "nazwy A-Z":
 
-	else if(selected_value == "ceny rosnąco")
-	{
-		prices_sorted = prices.sort(function(a, b) {
-			return a - b;
-		});
-	}
+			//titles_sorted = titles.sort(); // ERROR ! --> A, B, D, Ą - to nie jest poprawne sortowanie ...
+			//titles_sorted = titles.sort((a, b) => a.localeCompare(b)); // ✓ ponieważ tytuły zawierają polskie znaki
+			titles_sorted = titles.sort(function(a,b) {
+				return a.localeCompare(b);
+			});
+			//console.log("titles_sorted->", titles_sorted);
 
-	else if(selected_value == "Najstarszych")
-	{
-		years_sorted = years.sort(function(a, b) {
-			return a - b;
-		});
-	}
+			break;
 
-	else if(selected_value == "nazwy Z-A")
-	{
-		//titles_sorted = titles.sort();
-		titles_sorted = titles.sort(function(a,b) {
-			return a.localeCompare(b);
-		});
-		titles_sorted.reverse();
-	}
+		case "nazwy Z-A":
 
-	else if(selected_value == "ceny malejąco")
-	{
-		//prices_sorted = prices.sort();
+			//titles_sorted = titles.sort();
+			titles_sorted = titles.sort(function(a,b) {
+				return a.localeCompare(b);
+			});
+			titles_sorted.reverse();
 
-		prices_sorted = prices.sort(function(a, b) {
-			return a - b;
-		});
+			break;
 
-		prices_sorted.reverse();
-	}
+		case "ceny rosnąco":
 
-	else if(selected_value == "Najnowszych")
-	{
-		years_sorted = years.sort();
-		years_sorted.reverse();
+			prices_sorted = prices.sort(function(a, b) {
+				return a - b;
+			});
+
+			break;
+
+		case "ceny malejąco":
+
+			//prices_sorted = prices.sort();
+
+			prices_sorted = prices.sort(function(a, b) {
+				return a - b;
+			});
+
+			prices_sorted.reverse();
+
+			break;
+
+		case "Najstarszych":
+
+			years_sorted = years.sort(function(a, b) {
+				return a - b;
+			});
+
+			break;
+
+		case "Najnowszych":
+
+			years_sorted = years.sort();
+			years_sorted.reverse();
+
+			break;
 	}
 
 	if((selected_value == "nazwy A-Z") || (selected_value == "nazwy Z-A"))
