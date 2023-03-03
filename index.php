@@ -272,7 +272,8 @@
 					<option value="6">Najstarszych</option>
 				</select>
 
-				<br><br><button id="sort_button" onclick="sortuj()">Sortuj</button>
+<!--				<br><br><button id="sort_button" onclick="sortuj()">Sortuj</button>-->
+				<br><br><button id="sort_button" onclick="sortBooks()">Sortuj</button>
 
 				<?php
 
@@ -481,7 +482,31 @@
 
 	</div>
 
+    <script>
+
+        // save selected sorting option after page reload ->
+
+        var selectElement = document.getElementById("sortuj_wg");
+
+        selectElement.addEventListener("change", function() {
+            var selectedValue = selectElement.value;
+            localStorage.setItem("selectedValue", selectedValue);
+        });
+
+        window.addEventListener("load", function() {
+            var selectedValue = localStorage.getItem("selectedValue");
+
+            if (selectedValue) {
+                selectElement.value = selectedValue;
+                sortBooks();
+            }
+        });
+
+
+
+    </script>
+
 	<script src="jquery.js"></script>
-	<script src="sortowanie_v2.js"></script>
+	<script src="sortowanie_v3_2.js"></script>
 </body>
 </html>
