@@ -1,13 +1,16 @@
-$('#sortuj_wg').on('change', function() {
+$('#sortuj_wg').on('change', () => {
 	sortBooks();
 });
 
+// Define a function to sort books
 const sortBooks = () => {
+	// Get the select element, selected option value, and book content element
 	const selectElement = document.getElementById("sortuj_wg"); // <select>
 	const selectedValue = selectElement.options[selectElement.selectedIndex].text;
 	const contentBooks = document.getElementById("content_books");
-	const books = [...contentBooks.children];
+	const books = [...contentBooks.children]; // Get an array of book elements
 
+	// Define sorting functions
 	const sortByTitleAscending = (a, b) => a.querySelector(".title").textContent.localeCompare(b.querySelector(".title").textContent);
 	const sortByTitleDescending = (a, b) =>	b.querySelector(".title").textContent.localeCompare(a.querySelector(".title").textContent);
 	const sortByPriceAscending = (a, b) => Number(a.querySelector(".price").textContent) - Number(b.querySelector(".price").textContent);
@@ -15,6 +18,7 @@ const sortBooks = () => {
 	const sortByYearAscending = (a, b) => Number(a.querySelector(".year").textContent) - Number(b.querySelector(".year").textContent);
 	const sortByYearDescending = (a, b) => Number(b.querySelector(".year").textContent) - Number(a.querySelector(".year").textContent);
 
+	// Sort the books array based on the selected option
 	switch (selectedValue) {
 		case "nazwy A-Z":
 			books.sort(sortByTitleAscending);
@@ -38,6 +42,7 @@ const sortBooks = () => {
 			return;
 	}
 
+	// Append the sorted book elements to the book content element
 	books.forEach((book) => contentBooks.appendChild(book));
 };
 

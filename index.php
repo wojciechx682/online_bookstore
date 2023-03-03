@@ -496,9 +496,13 @@
         window.addEventListener("load", function() {
             var selectedValue = localStorage.getItem("selectedValue");
 
-            if (selectedValue) {
+            if (selectedValue && selectElement) {
                 selectElement.value = selectedValue;
-                sortBooks();
+                <?php
+                    if(isset($_GET['kategoria'])) {
+                        echo 'sortBooks();';
+                    }
+                ?>
             }
         });
 
