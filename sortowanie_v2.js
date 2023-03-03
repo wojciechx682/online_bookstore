@@ -81,15 +81,11 @@ function sortuj()
 				prices_org[i] = book_element_price;
 				prices[i] = book_element_price;
 
-				break;
-
 			case "ceny malejąco":
 
 				var book_element_price = book_element.querySelector('.price').innerHTML; // cena
 				prices_org[i] = book_element_price;
 				prices[i] = book_element_price;
-
-				break;
 
 			case "Najstarszych":
 
@@ -97,15 +93,11 @@ function sortuj()
 				years_org[i] = book_element_year;
 				years[i] = book_element_year;
 
-				break;
-
 			case "Najnowszych":
 
 				var book_element_year = book_element.querySelector('.year').innerHTML;   // rok
 				years_org[i] = book_element_year;
 				years[i] = book_element_year;
-				
-				break;
 		}
 
 		books[i] = book_element; // divy -> book0, book1, ...
@@ -170,17 +162,17 @@ function sortuj()
 			break;
 	}
 
-	if((selected_value == "nazwy A-Z") || (selected_value == "nazwy Z-A"))
+	if((selected_value === "nazwy A-Z") || (selected_value === "nazwy Z-A"))
 	{
 		var sorted_titles_id = new Array(number_of_child);
 	}
 
-	if((selected_value == "ceny rosnąco") || (selected_value == "ceny malejąco"))
+	if((selected_value === "ceny rosnąco") || (selected_value === "ceny malejąco"))
 	{
 		var sorted_prices_id = new Array(number_of_child);
 	}
 
-	if((selected_value == "Najstarszych") || (selected_value == "Najnowszych"))
+	if((selected_value === "Najstarszych") || (selected_value === "Najnowszych"))
 	{
 		var sorted_years_id = new Array(number_of_child);
 	}
@@ -191,25 +183,25 @@ function sortuj()
 	{
 		for(var j=0; j<number_of_child; j++)
 		{
-			if((selected_value == "nazwy A-Z") || (selected_value == "nazwy Z-A"))
+			if((selected_value === "nazwy A-Z") || (selected_value === "nazwy Z-A"))
 			{
-				if((titles_sorted[i] == titles_org[j]) && (sorted_titles_id.includes(j) == false))
+				if((titles_sorted[i] === titles_org[j]) && (sorted_titles_id.includes(j) === false))
 				{
 					sorted_titles_id[i] = j;
 				}
 			}
 
-			if((selected_value == "ceny rosnąco") || (selected_value == "ceny malejąco"))
+			if((selected_value === "ceny rosnąco") || (selected_value === "ceny malejąco"))
 			{
-				if((prices_sorted[i] == prices_org[j]) && (sorted_prices_id.includes(j) == false))
+				if((prices_sorted[i] === prices_org[j]) && (sorted_prices_id.includes(j) === false))
 				{
 					sorted_prices_id[i] = j;
 				}
 			}
 
-			if((selected_value == "Najstarszych") || (selected_value == "Najnowszych"))
+			if((selected_value === "Najstarszych") || (selected_value === "Najnowszych"))
 			{
-				if((years_sorted[i] == years_org[j]) && (sorted_years_id.includes(j) == false))
+				if((years_sorted[i] === years_org[j]) && (sorted_years_id.includes(j) === false))
 				{
 					sorted_years_id[i] = j;
 				}
@@ -222,7 +214,7 @@ function sortuj()
 		for(j=0; j<number_of_child; j++)
 		{
 
-			if((selected_value == "nazwy A-Z") || (selected_value == "nazwy Z-A"))
+			if((selected_value === "nazwy A-Z") || (selected_value === "nazwy Z-A"))
 			{
 				if(sorted_titles_id[i] == books[j].id.substr(4))
 				{
@@ -230,7 +222,7 @@ function sortuj()
 				}
 			}
 
-			if((selected_value == "ceny rosnąco") || (selected_value == "ceny malejąco"))
+			if((selected_value === "ceny rosnąco") || (selected_value === "ceny malejąco"))
 			{
 				if(sorted_prices_id[i] == books[j].id.substr(4))
 				{
@@ -238,7 +230,7 @@ function sortuj()
 				}
 			}
 
-			if((selected_value == "Najstarszych") || (selected_value == "Najnowszych"))
+			if((selected_value === "Najstarszych") || (selected_value === "Najnowszych"))
 			{
 				if(sorted_years_id[i] == books[j].id.substr(4))
 				{
