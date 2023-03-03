@@ -1190,6 +1190,8 @@
 					Paczkomaty 24/7 (Inpost)<br>	
 				<input type="radio" id="odbior_poczta_polska" name="zamowienie_typ_dostawy" value="Odbiór w punkcie (Poczta polska)"> <!-- value="odbior_poczta" -->
 					Odbiór w punkcie (Poczta polska)<br>
+                <input type="radio" id="odbior_w_ksiegarni" name="zamowienie_typ_dostawy" value="Odbiór w sklepie (Księgarnia)"> <!-- value="odbior_sklep" -->
+                Odbiór w sklepie (Księgarnia)<br>
 
 				<br>
 					Wybierz typ płatności :
