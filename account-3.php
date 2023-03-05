@@ -1,16 +1,19 @@
+
+<!-- ten plik nie jest nigdzie używany ! -->
+
 <?php
 
-	/*session_start();	
+	/*session_start();
 
-	include_once "functions.php";	
-	
+	include_once "functions.php";
+
 	if(!(isset($_SESSION['zalogowany'])))
 	{
 		header('Location: index.php');
 		exit();
 	}*/
 ?>
-<div id="nav">			
+<div id="nav">
 
 	<a href="edit_data.php">Edytuj dane użytkownika</a><br><br>
 
@@ -25,22 +28,22 @@
 	<h2 style="margin-top: 0px; margin-bottom: 0px;">Moje konto</h2><hr>
 
 	<div class="dane_konta">
-		
+
 		Dane konta <hr>
 
 		<div class="edit_data_container">
 
 			<div id="edit_data_left">
 
-				<div class="edit_data_left"> Imię </div> 
-				<div class="edit_data_left"> Nazwisko </div> 
-				<div class="edit_data_left"> E-mail </div> 
-				<div class="edit_data_left"> Telefon </div> 			
+				<div class="edit_data_left"> Imię </div>
+				<div class="edit_data_left"> Nazwisko </div>
+				<div class="edit_data_left"> E-mail </div>
+				<div class="edit_data_left"> Telefon </div>
 
 			</div>
 
 			<div id="edit_data_right">
-				
+
 				<form id="edit_data_form" action="validate_user_data.php" method="post">
 
 					<?php
@@ -56,10 +59,10 @@
 
 			</div>
 
-			<div style="clear: both;"></div>					
+			<div style="clear: both;"></div>
 
 			<div id="edit_data_button">
-				
+
 				<button type="submit" form="edit_data_form">Edytuj dane</button>
 
 			</div>
@@ -85,10 +88,10 @@
 		</div>
 
 		<div id="edit_content">
-		
-			
 
-		</div>				
+
+
+		</div>
 
 	</div>
 
@@ -98,25 +101,25 @@
 
 		Hasło <hr>
 
-		<div class="edit_data_container">					
+		<div class="edit_data_container">
 
 			<div id="edit_data_left">
 
-					<div class="edit_data_left"> Stare hasło </div> 	
-					<div class="edit_data_left"> Nowe hasło </div> 	
-					<div class="edit_data_left"> Powtorz hasło </div> 	
+					<div class="edit_data_left"> Stare hasło </div>
+					<div class="edit_data_left"> Nowe hasło </div>
+					<div class="edit_data_left"> Powtorz hasło </div>
 
 			</div>
 
 			<div id="edit_data_right">
-					
+
 					<form id="edit_password_form" action="validate_password.php" method="post">
 
 						<?php
 
 							echo '<div class="edit_data_right"><input type="password" id="stare_haslo_edit" name="stare_haslo_edit" "></div>';
 							echo '<div class="edit_data_right"><input type="password" id="nowe_haslo_edit" name="nowe_haslo_edit" "></div>';
-							echo '<div class="edit_data_right"><input type="password" id="powtorz_haslo_edit" name="powtorz_haslo_edit" "></div>';						
+							echo '<div class="edit_data_right"><input type="password" id="powtorz_haslo_edit" name="powtorz_haslo_edit" "></div>';
 
 						?>
 
@@ -124,10 +127,10 @@
 
 			</div>
 
-			<div style="clear: both;"></div>					
+			<div style="clear: both;"></div>
 
 			<div id="edit_data_button">
-				
+
 				<button type="submit" form="edit_password_form">Edytuj dane</button>
 
 			</div>
@@ -154,7 +157,6 @@
 
 	</div>
 
-	
 
 
 
@@ -171,12 +173,13 @@
 
 
 
-	<?php		
 
-		echo '<script> display_nav(); </script>'; 
+	<?php
 
-		/*echo "<p>Witaj ".$_SESSION['login'].'!' ;				
-		
+		echo '<script> displayNav(); </script>';
+
+		/*echo "<p>Witaj ".$_SESSION['login'].'!' ;
+
 		echo "<p><b>Imię</b>: ".$_SESSION['imie'];
 		echo "<p><b>Nazwisko</b>: ".$_SESSION['nazwisko'];
 		echo "<p><b>Miejscowosc</b>: ".$_SESSION['miejscowosc'];
@@ -194,7 +197,7 @@
 
 	<!-- <br><br><a href="logout.php">[ Wyloguj ]</a> -->
 
-</div>		
+</div>
 
 <div id="footer">
 

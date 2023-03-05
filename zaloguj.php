@@ -85,17 +85,17 @@
 
 <body>
 
-	<div id="header_container">
+	<div id="header-container">
 		
 		<!-- <div id="header_content"> -->
 
 			<div id="sticky">
 
-				<div id="top_header">
+				<div id="top-header">
 
-					<div id="top_header_content">
+					<div id="top-header-content">
 
-						<div id="header_title">
+						<div id="header-title">
 							
 							Księgarnia internetowa
 
@@ -131,11 +131,11 @@
 
 				<div id="header">
 
-					<div id="header_content">
+					<div id="header-content">
 
 						<!-- <a href="index.php">Strona główna</a> -->
 
-						 <div id="div_search">				
+						 <div id="div-search">
 
 							<form action="index.php" method="get">
 								
@@ -147,7 +147,7 @@
 
 						</div>
 
-						<div id="div_logo">				
+						<div id="div-logo">
 							
 							<img src="logo.png" width="100px">
 
@@ -169,7 +169,7 @@
 							</div>
 						-->
 
-						<div id="div_cart">
+						<div id="div-cart">
 							
 							<a class="top-nav-right" href="koszyk.php">Koszyk</a>
 							
@@ -191,9 +191,9 @@
 
 			</div>
 
-			<div id="top_nav">
+			<div id="top-nav">
 				
-				<div id="top_nav_content">
+				<div id="top-nav-content">
 
 					<ol>
 						

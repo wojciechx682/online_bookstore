@@ -30,12 +30,12 @@ a:hover
 	margin-right: auto;
 }*/
 
-#header_container
+#header-container
 {
 	margin-top: 0px;
 }
 
-#test_div
+#test-div
 {	
 	width:  225px;
 	height:  145px;
@@ -48,7 +48,7 @@ a:hover
 	z-index:  20;
 }
 
-#top_nav ol > li:first-child:hover > #test_div
+#top-nav ol > li:first-child:hover > #test-div
 {
 	display: block;
 }
@@ -75,7 +75,7 @@ a:hover
 	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
-#top_header
+#top-header
 {	
 	width: 100%;
 	height: 30px;
@@ -95,7 +95,7 @@ a:hover
 	top: 0;
 }
 
-#top_header_content
+#top-header-content
 {
 	width:  1000px;
 	height:  30px;
@@ -114,7 +114,7 @@ a:hover
 
 }
 
-#top_header a
+#top-header a
 {
 	color: white;
 	text-decoration: none;
@@ -123,14 +123,14 @@ a:hover
 
 }
 
-#top_header a:hover
+#top-header a:hover
 {
 	color: #d2ecf7;
 }
 
 /* //////////////////////////////////////////////////////////////////////////////////////////// */
 
-#top_header ol
+#top-header ol
 {
 	padding: 0;
 	margin: 0;
@@ -149,7 +149,7 @@ a:hover
 }
 
 
-#top_header ol > li /* bezpośrednie dzieci */ 
+#top-header ol > li /* bezpośrednie dzieci */
 {
 	float: left;
 	//width: 125px;
@@ -163,22 +163,22 @@ a:hover
 	position: relative;
 }
 
-#top_header ol > li:first-child
+#top-header ol > li:first-child
 {
 	border-left: 1px dashed #1a1919;	
 }
 
-#top_header ol > li:last-child
+#top-header ol > li:last-child
 {
 	border-right: none;	
 }
 
-#top_header ol > li:hover
+#top-header ol > li:hover
 {
 	background-color: #7e7f80;
 }
 
-#top_header ol > li:hover > a
+#top-header ol > li:hover > a
 {
 	color: #454444;
 }
@@ -202,7 +202,7 @@ a:hover
 	//height: 500px;
 }*/
 
-#top_header ol > li > ul > li
+#top-header ol > li > ul > li
 {
 	background-color: #7e7f80;
 	position: relative;
@@ -210,12 +210,12 @@ a:hover
 	border-top: 1px dashed #404040;
 }
 
-#top_header ol > li > ul > li:hover
+#top-header ol > li > ul > li:hover
 {
 	background-color: #686869;
 }
 
-#top_header ol > li > ul > li:hover > a
+#top-header ol > li > ul > li:hover > a
 {
 	color: #474747;
 }
@@ -238,7 +238,7 @@ a:hover
 
 }
 
-#header_content
+#header-content
 {
 	width:  1000px;
 	height:  70px;
@@ -252,7 +252,7 @@ a:hover
 
 }
 
-#div_search
+#div-search
 {
 	float: left;
 	width: 33.3333%;
@@ -260,7 +260,7 @@ a:hover
 	line-height: 70px;
 }
 
-#div_logo
+#div-logo
 {
   float: left;  
 	width: 33.3333%;
@@ -271,13 +271,13 @@ a:hover
 
 } 
 
-#div_logo img
+#div-logo img
 {
 	width: 185px; 
 	height: auto;
 }
 
-#header_title
+#header-title
 {
 	float: left;  
 		//width: 75%;
@@ -311,7 +311,7 @@ a:hover
 } */
 
 
-#div_cart
+#div-cart
 {
 	float:  left;	
 	width: 33.3333%;
@@ -324,13 +324,13 @@ a:hover
 
 }
 
-#div_cart a
+#div-cart a
 {
 	color: #575757;
 	text-decoration: none;
 }
 
-#div_cart a:hover
+#div-cart a:hover
 {
 	//color: #d2ecf7;
 	opacity: 0.6;
@@ -345,7 +345,7 @@ a:hover
 	padding-right: 10px;
 } 
 
-#top_nav
+#top-nav
 { 
 		/*width: 100%;
 		  height: 60px;
@@ -361,7 +361,7 @@ a:hover
 	/*z-index: 0;*/
 }
 
-#top_nav_content
+#top-nav-content
 {
 	width:  1000px;
 	height: 35px;
@@ -418,7 +418,7 @@ a:hover
 		//left:  15px;
 } */
 
-#top_nav ol
+#top-nav ol
 {
 	padding: 0;
 	margin: 0;
@@ -432,7 +432,7 @@ a:hover
 	text-align: center;
 }
 
-#top_nav ol a
+#top-nav ol a
 {
 	color: #ffffff;
 	text-decoration: none;
@@ -441,7 +441,7 @@ a:hover
 	height: 36px;
 }
 
-#top_nav ol > li
+#top-nav ol > li
 {
 	float: left;
 	width: 125px;
@@ -449,22 +449,22 @@ a:hover
 	border-right: 1px dashed black;
 }
 
-#top_nav ol > li:first-child
+#top-nav ol > li:first-child
 {
 	//border-left: 1px dashed black;
 }
 
-#top_nav ol > li:hover
+#top-nav ol > li:hover
 {
 	background-color: #959a9c;
 }
 
-#top_nav ol > li:hover > a
+#top-nav ol > li:hover > a
 {
 	color: black;
 }
 
-#top_nav ol > li > ul
+#top-nav ol > li > ul
 {
 	list-style-type: none;
 	padding: 0;
@@ -473,12 +473,12 @@ a:hover
 	display: none;
 }
 
-#top_nav ol > li:hover > ul
+#top-nav ol > li:hover > ul
 {
 	display: block;
 }
 
-#top_nav ol > li > ul > li
+#top-nav ol > li > ul > li
 {
 	background-color: #7caabf;
 	position: relative;
@@ -487,12 +487,12 @@ a:hover
 	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
-#top_nav ol > li > ul > li:hover
+#top-nav ol > li > ul > li:hover
 {
 	background-color: #5d7f8f;
 }
 
-#top_nav ol > li > ul > li:hover > a
+#top-nav ol > li > ul > li:hover > a
 {
 	color: black;
 }

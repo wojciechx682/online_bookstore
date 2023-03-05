@@ -1632,7 +1632,7 @@
 
 			<!-- <a href="index.php">Strona główna</a> -->
 
-			<div id="div_search">				
+			<div id="div-search">
 
 				<form action="index.php" method="get">
 					<!-- Wyszukaj : -->
@@ -1655,7 +1655,7 @@
 				
 			</div>
 
-			<div id="div_cart">
+			<div id="div-cart">
 				
 				<a class="top-nav-right" href="koszyk.php">Koszyk</a>
 				

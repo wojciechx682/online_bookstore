@@ -30,8 +30,11 @@ body
 	/*color: white;*/
 
 	/*margin-top: 0px;*/
-	margin: 0px;
-	font-family: Arial;
+	margin: 0;
+	font-family: cursive;
+	/*font-family: "Arial Narrow", sans-serif;*/
+
+
 }
 
 a:visited
@@ -47,6 +50,7 @@ a:hover
 *
 {
 	box-sizing: border-box;
+
 }
 
 /*#header_content
@@ -56,12 +60,12 @@ a:hover
 	margin-right: auto;
 }*/
 
-#header_container
+#header-container
 {
 	margin-top: 0px;
 }
 
-#test_div
+#test-div
 {
 	width:  225px;
 	height:  145px;
@@ -74,7 +78,7 @@ a:hover
 	z-index:  20;
 }
 
-#top_nav ol > li:first-child:hover > #test_div
+#top-nav ol > li:first-child:hover > #test-div
 {
 	display: block;
 }
@@ -85,7 +89,7 @@ a:hover
 #container
 {
 	width: 1000px;
-	height: 4500px;
+	height: 1000px;
 	border: 1px dashed black;
 	border-top:  none;
 	border-left:  none;
@@ -120,7 +124,7 @@ a:hover
 	top: 0;
 }
 
-#top_header
+#top-header
 {
 	width: 100%;
 	/*height: 30px;*/
@@ -139,7 +143,7 @@ a:hover
 	top: 0;*/
 }
 
-#top_header_content
+#top-header-content
 {
 	width:  1000px;
 	height:  30px;
@@ -158,7 +162,7 @@ a:hover
 
 }
 
-#top_header a
+#top-header a
 {
 	color: white;
 	text-decoration: none;
@@ -167,14 +171,14 @@ a:hover
 
 }
 
-#top_header a:hover
+#top-header a:hover
 {
 	color: #d2ecf7;
 }
 
 /* //////////////////////////////////////////////////////////////////////////////////////////// */
 
-#top_header ol
+#top-header ol
 {
 	padding: 0;
 	margin: 0;
@@ -190,7 +194,7 @@ a:hover
 }
 
 
-#top_header ol > li /* bezpośrednie dzieci */
+#top-header ol > li /* bezpośrednie dzieci */
 {
 	float: left;
 	/*width: 125px;*/
@@ -204,22 +208,22 @@ a:hover
 	position: relative;
 }
 
-#top_header ol > li:first-child
+#top-header ol > li:first-child
 {
 	border-left: 1px dashed #1a1919;
 }
 
-#top_header ol > li:last-child
+#top-header ol > li:last-child
 {
 	border-right: none;
 }
 
-#top_header ol > li:hover
+#top-header ol > li:hover
 {
 	background-color: #7e7f80;
 }
 
-#top_header ol > li:hover > a
+#top-header ol > li:hover > a
 {
 	color: #454444;
 }
@@ -243,7 +247,7 @@ a:hover
 	//height: 500px;
 }*/
 
-#top_header ol > li > ul > li
+#top-header ol > li > ul > li
 {
 	background-color: #7e7f80;
 	position: relative;
@@ -251,12 +255,12 @@ a:hover
 	border-top: 1px dashed #404040;
 }
 
-#top_header ol > li > ul > li:hover
+#top-header ol > li > ul > li:hover
 {
 	background-color: #686869;
 }
 
-#top_header ol > li > ul > li:hover > a
+#top-header ol > li > ul > li:hover > a
 {
 	color: #474747;
 }
@@ -265,8 +269,8 @@ a:hover
 
 #header
 {
-	width: 100%;
-	/*height: 70px;	*/
+	width: 1000px;
+	margin: 0 auto;
 
 	border-bottom: 1px dashed black;
 	background-color: #dedede;
@@ -275,11 +279,13 @@ a:hover
 	/*position: relative;
 	top: 30px;*/
 
+	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
 	z-index: 100;
 
 }
 
-#header_content
+#header-content
 {
 	width:  1000px;
 	height:  70px;
@@ -293,7 +299,7 @@ a:hover
 
 }
 
-#div_search
+#div-search
 {
 	float: left;
 	width: 33.3333%;
@@ -301,7 +307,7 @@ a:hover
 	line-height: 70px;
 }
 
-#div_logo
+#div-logo
 {
   float: left;
 	width: 33.3333%;
@@ -312,13 +318,13 @@ a:hover
 
 }
 
-#div_logo img
+#div-logo img
 {
 	width: 185px;
 	height: auto;
 }
 
-#header_title
+#header-title
 {
 	float: left;
 		/*width: 75%;*/
@@ -351,8 +357,20 @@ a:hover
 	text-align: center;
 } */
 
+.book-details {
+	display: block;
+	float: left;
 
-#div_cart
+
+}
+
+input[id^="koszyk_ilosc"] {
+	width: 45px;
+	text-align: center;
+	margin-right: 10px;
+}
+
+#div-cart
 {
 	float:  left;
 	width: 33.3333%;
@@ -365,13 +383,13 @@ a:hover
 
 }
 
-#div_cart a
+#div-cart a
 {
 	color: #575757;
 	text-decoration: none;
 }
 
-#div_cart a:hover
+#div-cart a:hover
 {
 	/*color: #d2ecf7;*/
 	opacity: 0.6;
@@ -392,9 +410,10 @@ a:hover
 	padding-right: 10px;
 }
 
-#top_nav
+#top-nav
 {
-	width: 100%;
+	margin: 0 auto;
+	width: 1000px;
 		/*width: 100%;
 		  height: 60px;
 	    padding: 10px 0; */
@@ -406,10 +425,11 @@ a:hover
 	position: relative;
 	top: 102px;
 
+
 	z-index: 50;
 }
 
-#top_nav_content
+#top-nav-content
 {
 	width:  1000px;
 	height: 35px;
@@ -466,7 +486,7 @@ a:hover
 		//left:  15px;
 } */
 
-#top_nav ol
+#top-nav ol
 {
 	padding: 0;
 	margin: 0;
@@ -481,7 +501,7 @@ a:hover
 	text-align: center;
 }
 
-#top_nav ol a
+#top-nav ol a
 {
 	color: #ffffff;
 	text-decoration: none;
@@ -490,7 +510,7 @@ a:hover
 	height: 36px;
 }
 
-#top_nav ol > li
+#top-nav ol > li
 {
 	float: left;
 	width: 125px;
@@ -498,22 +518,22 @@ a:hover
 	border-right: 1px dashed black;
 }
 
-#top_nav ol > li:first-child
+#top-nav ol > li:first-child
 {
 	/*border-left: 1px dashed black;*/
 }
 
-#top_nav ol > li:hover
+#top-nav ol > li:hover
 {
 	background-color: #959a9c;
 }
 
-#top_nav ol > li:hover > a
+#top-nav ol > li:hover > a
 {
 	color: black;
 }
 
-#top_nav ol > li > ul
+#top-nav ol > li > ul
 {
 	list-style-type: none;
 	padding: 0;
@@ -522,12 +542,12 @@ a:hover
 	display: none;
 }
 
-#top_nav ol > li:hover > ul
+#top-nav ol > li:hover > ul
 {
 	display: block;
 }
 
-#top_nav ol > li > ul > li
+#top-nav ol > li > ul > li
 {
 	background-color: #7caabf;
 	position: relative;
@@ -536,12 +556,12 @@ a:hover
 	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
-#top_nav ol > li > ul > li:hover
+#top-nav ol > li > ul > li:hover
 {
 	background-color: #5d7f8f;
 }
 
-#top_nav ol > li > ul > li:hover > a
+#top-nav ol > li > ul > li:hover > a
 {
 	color: black;
 }
@@ -555,19 +575,45 @@ a:hover
 	border-bottom:  1px dashed black;
 	background-color: #7caabf;
 	padding:  15px;
-	height: 1980px;
+	height: 1000px;
 	display:  none;
+}
+
+#container > #nav #sort_button {
+	display: block;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#nav #ul-authors {
+	padding-left: 30px;
+	list-style-type: square;
+}
+
+#nav #ul-authors > li {
+	margin-top: 5px;
+	font-size: 15px;
+}
+
+#nav > h3:first-child {
+	margin: 0;
+	padding: 0;
+}
+
+#nav > h3:last-of-type {
+	margin-top: 15px;
+	margin-bottom: 0;
 }
 
 #content
 {
 	float:left;
 	width:  1000px;
-	height: 4500px;
+	height: 1000px;
 	background-color: #e6e6e6;
 	padding:  15px;
 	/*border-bottom:  1px dashed black;*/
-	/*overflow: scroll;*/
+	overflow: auto;
 }
 
 #footer
@@ -577,8 +623,13 @@ a:hover
 	height: 50px;
 	border-right:  1px dashed black;
 	border-bottom:  1px dashed black;
-	background-color: #6d6fb3;
+	background-color: #575757;
 	padding:  15px;
+
+	color: white;
+
+	margin-bottom: 150px;
+	text-align: center;
 }
 
 .error
@@ -612,9 +663,13 @@ a:hover
 
 /* //////////////////////////////////////////////////////////////////////////////////////////// */
 
-#content_books
+#content-books
 {
 	/*padding-top: 15px;*/
+	background-color: #676767;
+
+	/*height: 475px; !* do wyjebania w przyszłości *!*/
+	/*overflow: auto;*/
 }
 
 .book
@@ -625,12 +680,17 @@ a:hover
 	float: left;
 
 	width: 180px;
+
 	height: 220px;
+
+
 	margin: 10px;
 
 	padding: 10px;
 
 	border-radius: 10px;
+
+	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 
 }
 

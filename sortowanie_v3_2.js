@@ -7,8 +7,16 @@ const sortBooks = () => {
 	// Get the select element, selected option value, and book content element
 	const selectElement = document.getElementById("sortuj_wg"); // <select>
 	const selectedValue = selectElement.options[selectElement.selectedIndex].text;
-	const contentBooks = document.getElementById("content_books");
+	const contentBooks = document.getElementById("content-books");
 	const books = [...contentBooks.children]; // Get an array of book elements
+
+	console.log("books -> ", books);
+	console.log("books.length -> ", books.length);
+	console.log("typeof(books) -> ", typeof(books));
+
+	if(books.length < 2) { // If there is only one book, don't sort and return
+		return;
+	}
 
 	// Define sorting functions
 	const sortByTitleAscending = (a, b) => a.querySelector(".title").textContent.localeCompare(b.querySelector(".title").textContent);

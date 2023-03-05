@@ -24,20 +24,22 @@
 
     function get_authors($result) // tworzy linki - w których kazdy wyświetli książki danego autora
     {
+        echo "<h3>Autorzy </h3><hr>";
 
-        echo '<ul>'; // Zamiana na jQuery ? event listener ?
+        echo '<ul id="ul-authors">';
+
         while ($row = $result->fetch_assoc())
         {
             //echo '<a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a><br><br>';
 
             $id_autora = $row['id_autora'];
-            echo $id_autora;
+            //echo $id_autora;
             //echo '<li><a href="index.php?kategoria='.$_SESSION['kategoria'].'&autor='.$id_autora.'">'.$row['imie']." ".$row['nazwisko'].'</a></li>';
             echo '<li><a href="index.php?autor='.$id_autora.'">'.$row['imie']." ".$row['nazwisko'].'</a></li>';
 
             //echo '<li><a href="index.php?kategoria=">Informatyka</a></li>';
         }
-        echo '/<ul>'; //
+        echo '</ul>'; //
         $result->free_result();
     }
 
@@ -173,10 +175,10 @@
 
 		  	echo '<button class="cart_remove_book" type="button">Usuń</button>';*/
 
-		  	echo '<div id="book'.$i.'">';
+		  	echo '<div id="book'.$i.'"> <span class="book-details">';
 		  	echo '<div class="title">'.$row['tytul'].'</div>';
 		  	echo '<div class="price">'.$row['cena'].'</div>';
-		  	echo '<div class="year">'.$row['rok_wydania'].'</div>';	
+		  	echo '<div class="year">'.$row['rok_wydania'].'</div></span>';
 
 		  		/*echo '<div class="quantity'.'">
 
@@ -536,9 +538,25 @@
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Funkcja ustanawiająca połączenie z bazą danych i realizująca zapytanie sql
+    // "służy do uzyskania wyników z bazy danych i przekazania ich do zewnętrznej funkcji w celu dalszej obróbki"
+
 	// $query - zapytanie sql
     // $fun - funkcja wyświetlająca dane
+    //        nazwa funkcji, która zostanie wywołana, gdy zapytanie zostanie wykonane pomyślnie.
+    //        całość
     // $value - wartość będąca parametrem funkcji sprintf / vsprintf (pojedyncza zmienna lub TABLICA)
+
+    function displayBooks($kategoria)
+    {
+        if($kategoria == "Wszystkie")
+        {
+            query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
+        }
+        else
+        {
+            query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);
+        }
+    }
 
 	function query($query, $fun, $value)
 	{	

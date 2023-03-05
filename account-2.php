@@ -1,3 +1,6 @@
+
+<!-- ten plik nie jest nigdzie używany ! -->
+
 <?php
 
 	session_start();	
@@ -17,36 +20,44 @@
 	
 ?>
 
-<!DOCTYPE HTML>
+<!DOCTYPE HTML> <!-- HTML5 template consistent with the latest W3C standards -->
 <html lang="pl">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Księgarnia online</title>
-	<link rel="stylesheet" href="style2.css">
+    <meta charset="UTF-8"> <!-- Character encoding - UTF-8 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- rendering the page in the highest version of IE, will help to display the page in IE browsers; https://stackoverflow.com/questions/6771258/what-does-meta-http-equiv-x-ua-compatible-content-ie-edge-do -->
 
-	<script src="display_nav.js"></script>		
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag -->
+    <meta name="description" content="Online bookstore Web Application">
+    <meta name="keywords" content="Online bookstore, Web Application, Księgarnia internetowa, Zamówienia online, Rejestracja, Zakup książek, E-commerce, Handel elektroniczny">
 
-	<script>
+    <title>Online bookstore</title>
 
+    <link rel="stylesheet" href="style2.css">
 
-	</script>
+    <!-- Google fonts -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lato&display=swap" rel="stylesheet">
+    <link href="css/fontello.css" rel="stylesheet"> -->
+
+    <script src="display-nav.js"></script>
+    <script src="change-quantity.js"></script>
 
 </head>
 
 <body>
 
-	<div id="header_container">
+	<div id="header-container">
 		
 		<!-- <div id="header_content"> -->
 
 			<div id="sticky">
 
-				<div id="top_header">
+				<div id="top-header">
 
-					<div id="top_header_content">
+					<div id="top-header-content">
 
-						<div id="header_title">
+						<div id="header-title">
 							
 							Księgarnia internetowa
 
@@ -82,11 +93,11 @@
 
 				<div id="header">
 
-					<div id="header_content">
+					<div id="header-content">
 
 						<!-- <a href="index.php">Strona główna</a> -->
 
-						 <div id="div_search">				
+						 <div id="div-search">
 
 							<form action="index.php" method="get">
 								
@@ -98,7 +109,7 @@
 
 						</div>
 
-						<div id="div_logo">				
+						<div id="div-logo">
 							
 							<img src="logo.png" width="100px">
 
@@ -120,7 +131,7 @@
 							</div>
 						-->
 
-						<div id="div_cart">
+						<div id="div-cart">
 							
 							<a class="top-nav-right" href="koszyk.php">Koszyk</a>
 							
@@ -142,9 +153,9 @@
 
 			</div>
 
-			<div id="top_nav">
+			<div id="top-nav">
 				
-				<div id="top_nav_content">
+				<div id="top-nav-content">
 
 					<ol>
 						
@@ -206,7 +217,7 @@
 
 	<div id="container">	
 
-		<?php include 'account3.php'; ?>
+		<?php include 'account-3.php'; ?>
 
 		
 

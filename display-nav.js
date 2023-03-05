@@ -1,4 +1,4 @@
-function display_nav()
+function displayNav()
 {
 	var nav = document.getElementById("nav");
 	var content = document.getElementById("content");
