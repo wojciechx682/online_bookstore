@@ -9,6 +9,7 @@
     <title>Online bookstore</title>
 
     <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="slider.css">
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,5 +19,11 @@
 
     <script src="display-nav.js"></script>
     <script src="change-quantity.js"></script>
+
+
+
+
+    <link rel="stylesheet" href="jquery-outsider.css">
+
 
 </head>

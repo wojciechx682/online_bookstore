@@ -72,7 +72,20 @@
             <!-- <br><br><button id="sort_button" onclick="sortuj()">Sortuj</button> -->
             <button id="sort_button" onclick="sortBooks()">Sortuj</button>
 
-            <hr>
+            <hr><br>
+
+<!--            <div id="slider"></div>-->
+
+            <div id="price-range">
+                Min: <input type="number" id="value-min" />
+                Max: <input type="number" id="value-max" />
+                <div id="slider">
+
+                </div>
+
+            </div>
+
+            <br><hr>
 
             <?php
                 query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", "");
@@ -251,7 +264,12 @@
     </script>
 
 	<script src="jquery.js"></script>
+	<script src="jquery-3.6.3.js"></script>
 	<script src="sortowanie_v3_2.js"></script>
+
+    <script src="jquery.nouislider.js"></script>
+    <script src="Filtrowanie,%20Wyszukiwanie,%20Sortowanie/filtrowanie.js"></script>
+
 
 </body>
 </html>
