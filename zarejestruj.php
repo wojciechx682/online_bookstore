@@ -7,14 +7,14 @@
 <html lang="pl">
 
 <?php
-    require ("template/head.php");
+    require "template/head.php";
 ?>
 
 <script src="https://www.google.com/recaptcha/api.js"></script>
 
 <body>
 
-<?php require ("template/header-container.php"); ?>
+<?php require "template/header-container.php"; ?>
 
 	<div id="container">
 
