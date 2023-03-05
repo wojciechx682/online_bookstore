@@ -126,7 +126,8 @@ a:hover
 
 #top-header
 {
-	width: 100%;
+	width: 1000px;
+	margin: 0 auto;
 	/*height: 30px;*/
 
 	border-bottom: 1px dashed black;
@@ -141,6 +142,8 @@ a:hover
 	left: 0;
 	right: 0;
 	top: 0;*/
+
+	border-radius: 20px 20px 0 0 ;
 }
 
 #top-header-content
@@ -150,8 +153,8 @@ a:hover
 	margin-left: auto;
 	margin-right: auto;
 
-	border-left:  1px dashed black;
-	border-right:  1px dashed black;
+	/*border-left:  1px dashed black;*/
+	/*border-right:  1px dashed black;*/
 
 	padding-left: 15px;
 
@@ -216,6 +219,12 @@ a:hover
 #top-header ol > li:last-child
 {
 	border-right: none;
+	border-top-right-radius: 20px;
+}
+
+#top-header ol > li:last-child:hover > a
+{
+	color: red;
 }
 
 #top-header ol > li:hover
@@ -630,6 +639,7 @@ input[id^="koszyk_ilosc"] {
 
 	margin-bottom: 150px;
 	text-align: center;
+	border-radius: 0 0 20px 20px;
 }
 
 .error
