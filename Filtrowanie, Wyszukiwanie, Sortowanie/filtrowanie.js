@@ -156,7 +156,7 @@ result = (people.filter(filterthree)); // filtrowanie tablicy people, dopasowane
 
     function initFun() {                     // Tasks when script first runs
         $('#slider').noUiSlider({           // Set up the slide control
-            range: [0, 150], start: [65, 90], handles: 2, margin: 20, connect: true,
+            range: [0, 150], start: [45, 112], handles: 2, margin: 20, connect: true,
             serialization: {to: [$min, $max],resolution: 1}
         }).change(function() { update($min.val(), $max.val()); });
         makeRows();                           // Create table rows and rows array
