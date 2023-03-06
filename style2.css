@@ -34,10 +34,9 @@ body
 
 	font-family: "Arial Narrow", sans-serif;
 
-	background-color: rgba(89, 131, 252, 1);
-	background-image: linear-gradient(225deg, rgba(89, 131, 252, 1) 18%, rgba(41, 53, 86, 1) 100%);
-	background-repeat: no-repeat;
-
+	background-color: rgba(212, 212, 212, 1);
+	background-image: url("abstract-smooth-empty-grey-studio-well-use-as-background-business-report-digital-website-template-backdrop.jpg");
+	background-attachment: fixed;
 }
 
 a:visited
