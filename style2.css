@@ -34,7 +34,9 @@ body
 
 	font-family: "Arial Narrow", sans-serif;
 
-
+	background-color: rgba(89, 131, 252, 1);
+	background-image: linear-gradient(225deg, rgba(89, 131, 252, 1) 18%, rgba(41, 53, 86, 1) 100%);
+	background-repeat: no-repeat;
 
 }
 
@@ -103,7 +105,7 @@ a:hover
 	position: relative;
 	top: 102px;
 
-	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+	box-shadow: 0 30px 30px rgb(0 0 0 / 0.2);
 }
 
 #sticky
@@ -718,6 +720,18 @@ input[id^="koszyk_ilosc"] {
 	border-radius: 10px;
 
 	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
+
+	transition: all 0.05s ease-in-out;
+
+}
+
+.book:hover
+{
+	background-color: #a0c9d7;
+
+
+
 
 }
 
