@@ -11,62 +11,58 @@
 	}
 ?>
 
-<?php 
+<?php
 
-	if( (isset($_POST['id_ksiazki'])) &&      // dane pochodzące z koszyk_dodaj.php
+    // Insert book into shopping cart
+
+	if(
+        (isset($_POST['id_ksiazki'])) &&      // dane pochodzące z koszyk_dodaj.php
         (isset($_POST['koszyk_ilosc'])) &&
-        !(empty($_POST['id_ksiazki'])) &&
-        !(empty($_POST['koszyk_ilosc']))
+
+        !(empty($_POST['id_ksiazki'])) &&    // 23
+        !(empty($_POST['koszyk_ilosc']))     //  1
       )
 	{
+		$id_klienta = $_SESSION['id'];
 
-		$id_klienta = $_SESSION['id'];		
-		$id_ksiazki = $_POST['id_ksiazki'];
-		$ilosc = $_POST['koszyk_ilosc']; // == 1
+		$id_ksiazki = $_POST['id_ksiazki']; // user może wpr. dowolną wartość zmieniając atrybut "value" w <input> ...
+		$ilosc = $_POST['koszyk_ilosc'];    // == 1
 
-			// Walidacja i sanityzacja danych wprowadzonych od użytkownika : <script>alert("yey");</script>
-		$id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8");
-		$ilosc = htmlentities($ilosc, ENT_QUOTES, "UTF-8");		
+		$id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8"); // Walidacja i sanityzacja danych wprowadzonych od użytkownika
+		$ilosc = htmlentities($ilosc, ENT_QUOTES, "UTF-8");		   // <script>alert("yey");</script>
 
-			//add_product_to_cart($id_ksiazki, $ilosc);
-			//echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_all_books_search", $search_value);
+			// add_product_to_cart($id_ksiazki, $ilosc);
 
-		$values = array();
-		array_push($values, $id_klienta);
-		array_push($values, $id_ksiazki);
+        $book = [$id_klienta, $id_ksiazki]; // Array ( [0] => 1 [1] => 16 )
 
-		//array_push($values, $ilosc);
-		/*echo "<br> values = <br>";
-		print_r($values);
-		echo "<br><br>";*/		
+//        print_r( $book); echo "<br>";
+//        print_r($_SESSION);
 
-		$_SESSION['book_exists'] = false; // czy książka istnieje w koszyku ? (zakładamy, że nie...);		
+		$_SESSION['book_exists'] = false;              // book already in shopping cart ? let's assume that it isn't ...
 
-		query("SELECT * FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "cart_verify_book", $values); // sprawdzenie, czy ta książka jest już w koszyku (tego klienta)  
+		query("SELECT * FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "cart_verify_book", $book); // sprawdzenie, czy ta książka jest już w koszyku tego klienta
 		// -> jeśli num_rows > 0 -> przestawi $_SESSION['book_exists'] -> na true
+
+        $book[0] = $ilosc;
+        $book[1] = $id_klienta;
+        $book[2] = $id_ksiazki;
 
 		if($_SESSION['book_exists'] == true) // boox exists -> update book quantity
 		{
-			//$update_values = array();
-			//array_push($update_values, $ilosc);			
-
-			query("UPDATE koszyk SET ilosc=ilosc+'%s' WHERE id_klienta='$id_klienta' AND id_ksiazki='$id_ksiazki'
-				", "", $ilosc);
+			query("UPDATE koszyk SET ilosc=ilosc+'%s' WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $book);
 		}
 		else  // insert book to shopping cart
 		{
-			array_push($values, $ilosc);
-
-			query("INSERT INTO koszyk (id_klienta, id_ksiazki, ilosc) VALUES ('%s', '%s', '%s')", "", $values);  
+			query("INSERT INTO koszyk (ilosc, id_klienta, id_ksiazki) VALUES ('%s', '%s', '%s')", "", $book);
 		}
 
-		query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczbie książek)
-
-		//echo query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id_klienta); // dodałem to wstępnie, nie wiem czy to ma tutaj pozostać
+		query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
+        // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczbie książek)
 
 		unset($_POST['id_ksiazki']);
 		unset($_POST['koszyk_ilosc']);
-		unset($values);
+		unset($book);
+		unset($_SESSION['book_exists']);
 	}
 		//echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">Wróć</a>';
 	

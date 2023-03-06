@@ -64,29 +64,29 @@
 		$i = 0;
 
 		while ($row = $result->fetch_assoc()) 
-		{	
+		{
 			// zapisywanie danych książek do zmiennych sesyjnych
 
-			$_SESSION['id_ksiazki'] = $row["id_ksiazki"];	
+			$_SESSION['id_ksiazki'] = $row["id_ksiazki"];
 		  	$_SESSION['tytul'] = $row["tytul"];
 		  	$_SESSION['cena'] = $row["cena"];
-		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];			  		
+		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];
 
 		  	echo '<div id="book'.$i.'" class="book">';
 			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
 			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
-			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';	
-			  	//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';	
+			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';
+			  	//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';
 
 			  	echo '<form action="add_to_cart.php" method="post">';
 
 			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
 
-			  		echo '<input type="hidden" id="koszyk_ilosc" name="koszyk_ilosc" value="1">';
+			  		echo '<input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">';
 
 			  		//echo '<br><br><input type="submit" value="Dodaj do koszyka">';
 
-			  		//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';	
+			  		//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';
 
 			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
 
@@ -170,7 +170,7 @@
 		$i = 0;
 
 		while ($row = $result->fetch_assoc()) 
-		{			        
+		{
 		  	/*echo $row['tytul'].", || ".$row['cena'].", || ".$row['rok_wydania']." || <b> Ilość : </b> ".$row['ilosc'] ;
 
 		  	echo '<button class="cart_remove_book" type="button">Usuń</button>';*/
@@ -218,7 +218,7 @@
 
 
 		  	echo '<form id="remove_book_form" action="remove_book.php" method="post">';
-		  		
+
 		  		echo '<input type="hidden" name="id_klienta" value="'.$row['id_klienta'].'">';
 		  		echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
 		  		echo '<input type="hidden" name="ilosc" value="'.$row['ilosc'].'">';
@@ -230,14 +230,14 @@
 		  	////////////////////////////////////////////////////////////////////////////////////
 
 		  	echo "<br><hr><br>";
-		  	
+
 		  	/*echo '<form action="change_cart_quantity.php" method="post">';
 
 					echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
 
 					echo "<b>Ilosc: </b> ";
 
-					
+
 
 					echo '<input type="text" id="koszyk_ilosc" name="koszyk_ilosc" value="1">';
 
@@ -250,16 +250,16 @@
 			echo '</form>';*/
 
 
-		  		
+
 		  	echo '</div>';
 
 
 
-			//echo "<br>"; 	
+			//echo "<br>";
 
 			$i++;
 
-		  	$_SESSION['suma_zamowienia'] += $row['ilosc'] * $row['cena'];	  
+		  	$_SESSION['suma_zamowienia'] += $row['ilosc'] * $row['cena'];
 		}
 
 		echo "<br> $ _SESSION suma_zamowienia = " ;
@@ -279,8 +279,10 @@
 
 	}
 
-	function add_product_to_cart($id_ksiazki, $quantity)	
+	function add_product_to_cart($id_ksiazki, $quantity) // old (unused) function for adding products to shopping cart
 	{
+        // delete that fucking thing !
+
 		require "connect.php";		
 
 		mysqli_report(MYSQLI_REPORT_STRICT);	
@@ -515,9 +517,9 @@
 		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
 	}	
 
-	function cart_verify_book($result) // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
+	function cart_verify_book($result) // ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
 	{ 
-		$_SESSION['book_exists'] = true;
+		$_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
 
 		$result->free_result();
 	}

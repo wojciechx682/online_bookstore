@@ -38,29 +38,29 @@
 					Wybierz formę dostawy :
 				<br>
 
-				<input type="radio" id="dostawa_kurier_dpd" name="zamowienie_typ_dostawy" value="Kurier DPD"> <!-- value="kurier_dpd" -->
-					Kurier DPD<br>
-				<input type="radio" id="dostawa_kurier_inpost"  name="zamowienie_typ_dostawy" value="Kurier Inpost"> <!-- value="kurier_inpost" -->
-					Kurier Inpost<br> 
-				<input type="radio" id="odbior_paczkomaty_inpost" name="zamowienie_typ_dostawy" value="Paczkomaty 24/7 (Inpost)"> <!-- value="odbior_inpost" -->
-					Paczkomaty 24/7 (Inpost)<br>	
-				<input type="radio" id="odbior_poczta_polska" name="zamowienie_typ_dostawy" value="Odbiór w punkcie (Poczta polska)"> <!-- value="odbior_poczta" -->
-					Odbiór w punkcie (Poczta polska)<br>
-                <input type="radio" id="odbior_w_ksiegarni" name="zamowienie_typ_dostawy" value="Odbiór w sklepie (Księgarnia)"> <!-- value="odbior_sklep" -->
-                Odbiór w sklepie (Księgarnia)<br>
+				<input type="radio" id="dostawa_kurier_dpd" name="zamowienie-typ-dostawy" value="Kurier DPD">
+					Kurier DPD<br> <!-- value="kurier_dpd" -->
+				<input type="radio" id="dostawa_kurier_inpost" name="zamowienie-typ-dostawy" value="Kurier Inpost">
+					Kurier Inpost<br> <!-- value="kurier_inpost" -->
+				<input type="radio" id="odbior_paczkomaty_inpost" name="zamowienie-typ-dostawy" value="Paczkomaty 24/7 (Inpost)">
+					Paczkomaty 24/7 (Inpost)<br> <!-- value="odbior_inpost" -->
+				<input type="radio" id="odbior_poczta_polska" name="zamowienie-typ-dostawy" value="Odbiór w punkcie (Poczta polska)">
+					Odbiór w punkcie (Poczta polska)<br>  <!-- value="odbior_poczta" -->
+                <input type="radio" id="odbior_w_ksiegarni" name="zamowienie-typ-dostawy" value="Odbiór w sklepie (Księgarnia)">
+                    Odbiór w sklepie (Księgarnia)<br> <!-- value="odbior_sklep" -->
 
 				<br>
 					Wybierz typ płatności :
 				<br>
 
-				<input type="radio" name="zamowienie_typ_platnosci" value="Blik"> <!-- value="blik" -->
-					Blik<br>
+				<input type="radio" name="zamowienie_typ_platnosci" value="Blik">
+					Blik<br> <!-- value="blik" -->
 
-				<input type="radio" name="zamowienie_typ_platnosci" value="Pobranie"> <!-- value="pobranie" --> 
-					Pobranie<br>
+				<input type="radio" name="zamowienie_typ_platnosci" value="Pobranie">
+					Pobranie<br> <!-- value="pobranie" -->
 
-				<input type="radio" name="zamowienie_typ_platnosci" value="Karta płatnicza (online)"> <!-- value="karta_platnicza" -->
-					Karta płatnicza (online)<br>	
+                <input type="radio" name="zamowienie_typ_platnosci" value="Karta płatnicza (online)">
+					Karta płatnicza (online)<br> <!-- value="karta_platnicza" -->
 
 				<br><input type="submit" value="Zamawiam">
 

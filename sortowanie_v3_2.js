@@ -8,11 +8,21 @@ const sortBooks = () => {
 	const selectElement = document.getElementById("sortuj_wg"); // <select>
 	const selectedValue = selectElement.options[selectElement.selectedIndex].text;
 	const contentBooks = document.getElementById("content-books");
-	const books = [...contentBooks.children]; // Get an array of book elements
+
+	//const books = [...contentBooks.children]; // Get an array of book elements
+
+	let books = Array.from(document.querySelectorAll('#content-books .book:not([style*="display: none"])')); // all books, that don't have style="display: none;"
+
+
+
+	console.log("books ->", books);
+	// console.log("books2 ->", books2);
+	// console.log("books3 ->", books3);
 
 	console.log("books -> ", books);
 	console.log("books.length -> ", books.length);
 	console.log("typeof(books) -> ", typeof(books));
+	// 4
 
 	if(books.length < 2) { // If there is only one book, don't sort and return
 		return;
@@ -52,9 +62,15 @@ const sortBooks = () => {
 
 	// Append the sorted book elements to the book content element
 	books.forEach((book) => contentBooks.appendChild(book));
+
+
+
+
 };
 
 document.getElementById("sortuj_wg").addEventListener("load", sortBooks);
+
+
 
 
 /*

@@ -1,6 +1,8 @@
 
 function increase(id_ksiazki) {
 
+	// increase input form value by 1, and then send <form> --> change_cart_quantity.php
+
 		// let el = document.getElementById("koszyk_ilosc" + id_ksiazki);
 		// `${variable}`   <--- template literals. // document.querySelector(`#my-element-${id}`);
 

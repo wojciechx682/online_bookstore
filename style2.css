@@ -32,11 +32,11 @@ body
 	/*margin-top: 0px;*/
 	margin: 0;
 
-	font-family: "Arial Narrow", sans-serif;
+	font-family: cursive;
 
-	background-color: rgba(212, 212, 212, 1);
-	background-image: url("abstract-smooth-empty-grey-studio-well-use-as-background-business-report-digital-website-template-backdrop.jpg");
-	background-attachment: fixed;
+	/*background-color: rgba(212, 212, 212, 1);*/
+	/*background-image: url("abstract-smooth-empty-grey-studio-well-use-as-background-business-report-digital-website-template-backdrop.jpg");*/
+	/*background-attachment: fixed;*/
 }
 
 a:visited
@@ -384,7 +384,7 @@ input[id^="koszyk_ilosc"] {
 #div-search input[type=search] {
 
 	/*background-color: rgba(255, 255, 255, 0.34);*/
-	color: white;
+
 	/*padding: 14px 20px;*/
 	/*margin: 8px 0;*/
 	/*border: none;*/

@@ -1,3 +1,5 @@
+
+
 let people = [
     {
         name: "Adam",
@@ -142,26 +144,47 @@ result = (people.filter(filterthree)); // filtrowanie tablicy people, dopasowane
         $table.append($tbody);              // Add the rows to the table
     }
 
-    function update(min, max) {           // Update the table content
-        rows.forEach(function(row) {        // For each row in the rows array
-            if (row.person.age >= min && row.person.age <= max) { // If in range
-                row.$element.show();            // Show the row
-            } else {                          // Otherwise
-                row.$element.hide();            // Hide the row
+    let divs = document.querySelectorAll("#content-books .book");
+
+    function update(min, max) {             // Update the table content
+        for(let i=0; i<divs.length; i++) {
+            //console.log(divs[i].querySelector(".price").innerHTML);
+            console.log("min ->", min);
+            console.log("max ->", max);
+
+
+            let price = divs[i].querySelector(".price").innerHTML;
+
+            console.log("price ->", price);
+
+            min = parseFloat(min);
+            max = parseFloat(max);
+            price = parseFloat(price);
+
+            console.log("tp min ->", typeof(min));
+            console.log("tp max ->", typeof(max));
+            console.log("tp price ->", typeof(price));
+
+
+            if((price >= min) && (price <= max)) {
+                divs[i].style.display = "block"; // można zmienić na addClass (dodanie klasy CSS z display: block;)
+                console.log("show");
+            } else {
+                divs[i].style.display = "none";  // można zmienić na addD (dodanie klasy CSS z display: none;)
+                console.log("hide");
             }
-        });
 
-
+        }
     }
 
     function initFun() {                     // Tasks when script first runs
         $('#slider').noUiSlider({           // Set up the slide control
-            range: [0, 150], start: [45, 112], handles: 2, margin: 20, connect: true,
+            range: [0, 150], start: [45, 112], handles: 2, margin: 1, connect: true,
             serialization: {to: [$min, $max],resolution: 1}
         }).change(function() { update($min.val(), $max.val()); });
-        makeRows();                           // Create table rows and rows array
-        appendRows();                         // Add the rows to the table
-        update($min.val(), $max.val());     // Update table to show matches
+        //makeRows();                           // Create table rows and rows array
+        //appendRows();                         // Add the rows to the table
+        //update($min.val(), $max.val());     // Update table to show matches
     }
 
    $(initFun);                              // Call init() when DOM is ready
@@ -175,9 +198,15 @@ result = (people.filter(filterthree)); // filtrowanie tablicy people, dopasowane
 //     update($min.val(), $max.val());
 // });
 
+
+
 $("#value-min, #value-max").change(function() {
     update($min.val(), $max.val());
 })
+
+
+
+
 
 
 

@@ -25,10 +25,16 @@
 
 <?php
 
-	if((isset($_POST['id_ksiazki'])) && (isset($_POST['koszyk_ilosc'])) && !(empty($_POST['id_ksiazki'])) && !(empty($_POST['koszyk_ilosc']))
+    // przejście tutaj następuje po wysłaniu formularza (np. przyciskiem ENTER), w którym jest <input> z ilością książek w koszyku !
 
-	) // dane pochodzące z koszyk_dodaj.php
-	{	// && not empty		!empty
+	if(
+        (isset($_POST['id_ksiazki'])) &&     // dane pochodzące z koszyk_dodaj.php
+        (isset($_POST['koszyk_ilosc'])) &&
+
+        !(empty($_POST['id_ksiazki'])) &&    // && not empty  !empty
+        !(empty($_POST['koszyk_ilosc']))
+      )
+	{
 
 		$id_klienta = $_SESSION['id'];
 		$id_ksiazki = $_POST['id_ksiazki'];
@@ -46,21 +52,16 @@
 			//add_product_to_cart($id_ksiazki, $ilosc);
 			//echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_all_books_search", $search_value);
 
-		$values = array();
-		array_push($values, $ilosc);
-		array_push($values, $id_klienta);
-		array_push($values, $id_ksiazki);
+//		$values = array();
+//		array_push($values, $ilosc);
+//		array_push($values, $id_klienta);
+//		array_push($values, $id_ksiazki);
 
+        $book = [$ilosc, $id_klienta, $id_ksiazki];
 
-		query("UPDATE koszyk SET ilosc='%s' WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $values);
+		query("UPDATE koszyk SET ilosc='%s' WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $book);
 
-			/*echo "<br> values = <br>";
-			print_r($values);
-			echo "<br><br>";*/
-
-
-
-		unset($_POST['id_ksiazki']);
+        unset($_POST['id_ksiazki']);
 		unset($_POST['koszyk_ilosc']);
 		unset($values);
 

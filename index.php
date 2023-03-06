@@ -134,7 +134,8 @@
                 }
 				else // jeśli (nie ustawiono kategorii i autora), lub (ustawiono kategorie ORAZ autora)
 				{
-                    print_r($_GET['input-search']);
+                    print_r($_GET['input-search']); echo "<br>";
+                    print_r($_SESSION);
 
 					if((isset($_GET['input-search'])) && (!empty($_GET['input-search']))) // pole wyszukiwania
 					{
@@ -236,41 +237,51 @@
         <?php require "template/footer.php"; ?>
 
 	</div>
+<script>
 
-    <script>
 
-        // save selected sorting option after page reload ->
+</script>
 
-        var selectElement = document.getElementById("sortuj_wg");
 
-        selectElement.addEventListener("change", function() {
-            var selectedValue = selectElement.value;
-            localStorage.setItem("selectedValue", selectedValue);
-        });
 
-        window.addEventListener("load", function() {
-            var selectedValue = localStorage.getItem("selectedValue");
-
-            if (selectedValue && selectElement) {
-                selectElement.value = selectedValue;
-                <?php
-                    if(isset($_GET['kategoria'])) {
-                        echo 'sortBooks();';
-                    }
-                ?>
-            }
-        });
-
-    </script>
 
     <!-- <script src="jquery.js"></script> -->
     <!-- <script src="jquery-3.6.3.js"></script> -->
 
-	<script src="sortowanie_v3_2.js"></script>
+
 
     <script src="jquery.nouislider.js"></script>
-    <script src="Filtrowanie,%20Wyszukiwanie,%20Sortowanie/filtrowanie.js"></script>
 
+    <script src="filtrowanie.js"></script>
+
+    <script src="sortowanie_v3_2.js"></script>
+
+<script>
+
+    //save selected sorting option after page reload ->
+
+    var selectElement = document.getElementById("sortuj_wg");
+
+    selectElement.addEventListener("change", function() {
+        var selectedValue = selectElement.value;
+        localStorage.setItem("selectedValue", selectedValue);
+    });
+
+    window.addEventListener("load", function() {
+        var selectedValue = localStorage.getItem("selectedValue");
+
+        if (selectedValue && selectElement) {
+            selectElement.value = selectedValue;
+            <?php
+                if(isset($_GET['kategoria'])) {
+                    echo 'sortBooks();';
+                }
+            ?>
+
+        }
+    });
+
+</script>
 
 </body>
 </html>

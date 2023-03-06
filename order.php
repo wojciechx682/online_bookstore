@@ -1,5 +1,6 @@
 <?php
     // dodać zabezpieczenie przed ponownym przesłaniem formularza (patrz /learn_php );
+
 	session_start();
 	include_once "functions.php";
     if(!(isset($_SESSION['zalogowany'])))
@@ -34,16 +35,19 @@
 
                 $id_klienta = $_SESSION["id"];
 
-				//echo query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $_SESSION['id']); // // Książki które zamówił klient o danym ID;
+				// query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $_SESSION['id']); // // Książki które zamówił klient o danym ID;
 
+                if( (isset($_POST['zamowienie_typ_dostawy'])) &&
+                    (isset($_POST['zamowienie_typ_platnosci'])) &&
 
-                if((isset($_POST['zamowienie_typ_dostawy'])) && (isset($_POST['zamowienie_typ_platnosci']))
-					&& (!empty($_POST['zamowienie_typ_dostawy'])) && (!empty($_POST['zamowienie_typ_platnosci'])))
+                    (!empty($_POST['zamowienie_typ_dostawy'])) &&
+                    (!empty($_POST['zamowienie_typ_platnosci']))
+                  )
 				{
-					//echo "<h2>METODA POST - obie zmienne są ustawione i nie są puste</h2>";	
-					/*echo "<br> zamowienie_typ_dostawy = " . $_POST['zamowienie_typ_dostawy'] . "<br>";
-					echo "<br> zamowienie_typ_platnosci = " . $_POST['zamowienie_typ_platnosci'] . "<br>";
-					exit();*/
+//					echo "<h2>METODA POST - obie zmienne są ustawione i nie są puste</h2>";
+//					echo "<br> zamowienie_typ_dostawy = " . $_POST['zamowienie_typ_dostawy'] . "<br>";
+//					echo "<br> zamowienie_typ_platnosci = " . $_POST['zamowienie_typ_platnosci'] . "<br>";
+//					exit();
 
 					// wyświetli wartość atrybutu "value" - (input type radio)
 					$forma_dostawy = $_POST['zamowienie_typ_dostawy']; // atrybut "value"	 
