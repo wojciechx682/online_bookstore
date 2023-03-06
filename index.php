@@ -263,8 +263,9 @@
 
     </script>
 
-	<script src="jquery.js"></script>
-	<script src="jquery-3.6.3.js"></script>
+    <!-- <script src="jquery.js"></script> -->
+    <!-- <script src="jquery-3.6.3.js"></script> -->
+
 	<script src="sortowanie_v3_2.js"></script>
 
     <script src="jquery.nouislider.js"></script>

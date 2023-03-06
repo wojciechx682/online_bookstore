@@ -215,8 +215,7 @@ function sortuj()
 	{
 		books[i] = new_books[i];
 		console.log(books[i]);				
-	}	
-
+	}
 
 	/*for(i=0; i<number_of_child; i++) 
 	{

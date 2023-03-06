@@ -1,10 +1,6 @@
 <?php
-
 	session_start();
-
 	include_once "functions.php";
-	
-
 	if(!isset($_SESSION['zalogowany']))
 	{
 		header('Location: index.php');
@@ -64,14 +60,7 @@
 						
 						echo query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '$book_id'", "order_details_get_book", "$book_id");
 					}
-
-					
-					
-
 				}
-
-
-				
 			?>
 
 			<br><br><a href="logout.php">[ Wyloguj ]</a>

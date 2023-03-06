@@ -2,12 +2,14 @@
 
 	// koszyk - usunięcie książki
 	
-	session_start();	
+	session_start();
 
 	include_once "functions.php";			
 
-	if( (isset($_POST['id_klienta'])) && (isset($_POST['id_ksiazki'])) && (isset($_POST['ilosc']))
-
+	if(
+		(isset($_POST['id_klienta'])) &&
+		(isset($_POST['id_ksiazki'])) &&
+		(isset($_POST['ilosc']))
 	)
 	{
 		$id_klienta = $_POST['id_klienta'];

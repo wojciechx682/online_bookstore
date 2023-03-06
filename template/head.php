@@ -11,19 +11,29 @@
     <link rel="stylesheet" href="style2.css">
     <link rel="stylesheet" href="slider.css">
 
+
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lato&display=swap" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lato&display=swap" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
     <!--<link href="css/fontello.css" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+
+
+
+        <!--<script src="jquery-3.6.3.js"></script>-->
+
+    <!-- Include latest jQuery from a CDN -->
+    <script
+            src="https://code.jquery.com/jquery-3.6.3.min.js"
+            integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+            crossorigin="anonymous"></script>
 
     <script src="display-nav.js"></script>
+
     <script src="change-quantity.js"></script>
 
-
-
-
     <link rel="stylesheet" href="jquery-outsider.css">
-
 
 </head>

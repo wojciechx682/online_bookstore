@@ -82,7 +82,7 @@
 							</li>
 
 							<li>									
-								<?php if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) { echo '<a href="account.php">Moje konto</a>';} else { echo '<a href="zaloguj.php">Zaloguj</a>';} ?>
+								<?php if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) { echo '<a href="../account.php">Moje konto</a>';} else { echo '<a href="../zaloguj.php">Zaloguj</a>';} ?>
 							</li>
 
 						</ol>

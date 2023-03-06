@@ -15,11 +15,11 @@
 ?>
 <div id="nav">
 
-	<a href="edit_data.php">Edytuj dane użytkownika</a><br><br>
+	<a href="../edit_data.php">Edytuj dane użytkownika</a><br><br>
 
-	<a href="my_orders.php">Zamówienia</a><br><br>
+	<a href="../my_orders.php">Zamówienia</a><br><br>
 
-	<a href="logout.php"> [ Wyloguj ]</a>
+	<a href="../logout.php"> [ Wyloguj ]</a>
 
 </div>
 
@@ -44,7 +44,7 @@
 
 			<div id="edit_data_right">
 
-				<form id="edit_data_form" action="validate_user_data.php" method="post">
+				<form id="edit_data_form" action="../validate_user_data.php" method="post">
 
 					<?php
 
@@ -113,7 +113,7 @@
 
 			<div id="edit_data_right">
 
-					<form id="edit_password_form" action="validate_password.php" method="post">
+					<form id="edit_password_form" action="../validate_password.php" method="post">
 
 						<?php
 

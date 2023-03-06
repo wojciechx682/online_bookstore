@@ -38,7 +38,6 @@ Logowanie za pomocą e-mail ✓, telefonu ?
 Użycie Date (php) - w jakiś sposób - przy zamówieniach ? 
 
 ------------------------------------------------------------------
-
 ! Uzupełnienie bazy danych danymi.
   - Zamiana typów danych
 

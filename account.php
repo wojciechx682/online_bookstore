@@ -98,8 +98,6 @@
 				</div>
 
 				<div id="edit_content">
-				
-					
 
 				</div>				
 
@@ -145,7 +143,6 @@
 
 					</div>
 
-
 					<?php
 
 						if((isset($_SESSION['validation_password'])) && ($_SESSION['validation_password'] == false) && (isset($_SESSION['error_form_password'])))
@@ -167,24 +164,7 @@
 
 			</div>
 
-			
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			<?php		
+			<?php
 		
 				echo '<script> displayNav(); </script>';
 

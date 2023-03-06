@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
@@ -8,31 +6,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>Księgarnia online</title>
 	<link rel="stylesheet" href="style.css">
-
-	<script>
-
-
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	</script>
-
-
-
 
 </head>
 
@@ -50,7 +23,7 @@
 
 			<div id="div_search">				
 
-				<form action="index.php" method="get">
+				<form action="../index.php" method="get">
 					<!-- Wyszukaj : -->
 					<input type="text" name="input_search">
 
@@ -61,26 +34,26 @@
 
 			<div id="div_log_in">
 				
-				<a class="top-nav-right" href="zaloguj.php">Zaloguj</a>
+				<a class="top-nav-right" href="../zaloguj.php">Zaloguj</a>
 
 			</div>
 
 			<div id="div_register">
 				
-				<a class="top-nav-right" href="rejestracja.php">Zarejestruj</a>
+				<a class="top-nav-right" href="../rejestracja.php">Zarejestruj</a>
 				
 			</div>
 
 			<div id="div_cart">
 				
-				<a class="top-nav-right" href="koszyk.php">Koszyk</a>
+				<a class="top-nav-right" href="../koszyk.php">Koszyk</a>
 				
 			</div>
 
 
 			<div id="div_my_account">
 				
-				<a class="top-nav-right" href="account.php">Moje konto</a>
+				<a class="top-nav-right" href="../account.php">Moje konto</a>
 				
 			</div>
 
@@ -148,7 +121,6 @@
 
 	</div>
 
-
 		<?php
 
 			$r['select']="7891";
@@ -158,7 +130,6 @@
 			echo "<td><center><img src=\"www.xxxxx.pl/img/".($r['select']).".gif\"></td>";
 
 		?>
-	
 
 		<?php			
 

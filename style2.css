@@ -31,8 +31,9 @@ body
 
 	/*margin-top: 0px;*/
 	margin: 0;
-	font-family: "Arial Narrow";
-	/*font-family: "Arial Narrow", sans-serif;*/
+
+	font-family: "Arial Narrow", sans-serif;
+
 
 
 }
@@ -224,7 +225,7 @@ a:hover
 
 #top-header ol > li:last-child:hover > a
 {
-	color: red;
+	color: #00ff20;
 }
 
 #top-header ol > li:hover
@@ -377,6 +378,22 @@ input[id^="koszyk_ilosc"] {
 	width: 45px;
 	text-align: center;
 	margin-right: 10px;
+}
+
+#div-search input[type=search] {
+
+	/*background-color: rgba(255, 255, 255, 0.34);*/
+	color: white;
+	/*padding: 14px 20px;*/
+	/*margin: 8px 0;*/
+	/*border: none;*/
+
+	border-radius: 8px;
+	border: 1px solid  rgb(133, 133, 133);
+
+
+
+	cursor: pointer;
 }
 
 #div-cart

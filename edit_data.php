@@ -6,24 +6,19 @@
 
 	if(!isset($_SESSION['zalogowany'])) // takiego ifa, należy dodać do każdej podstrony do której ma dostęp zalogowany użytkownik
 	{
-        //$_SESSION['account_error'] = true;
-
 		header('Location: index.php');
 		exit();
 	}
 ?>
 
-
-<!DOCTYPE HTML> <!-- HTML5 template consistent with the latest W3C standards -->
+<!DOCTYPE HTML>
 <html lang="pl">
 
 <?php require "template/head.php"; ?>
 
 <body>
 
-<?php
-    require "template/header-container.php"; // header template
-?>
+<?php require "template/header-container.php"; ?>
 
 	<div id="container">
 
@@ -39,7 +34,7 @@
 
 				echo '<script> displayNav(); </script>';
 
-				echo "<p>Witaj ".$_SESSION['login'].'!' ;				
+				echo "<p>Witaj ".$_SESSION['login'].' !' ;
 				
 				echo "<p><b>Imię</b>: ".$_SESSION['imie'];
 				echo "<p><b>Nazwisko</b>: ".$_SESSION['nazwisko'];
@@ -53,7 +48,9 @@
 				echo "<p><b>PESEL</b>: ".$_SESSION['PESEL'];
 				echo "<p><b>data_urodzenia</b>: ".$_SESSION['data_urodzenia'];
 				echo "<p><b>telefon</b>: ".$_SESSION['telefon'];
-				echo "<p><b>email</b>: ".$_SESSION['email'];
+				echo "<p><b>email</b>: ".$_SESSION['email']."<br><br>";
+
+                var_dump($_SESSION);
 
 			?>				
 
@@ -117,16 +114,11 @@
 					$login = $_POST['login'];
 					$id = $_SESSION['id'];
 
-						//echo "<br> Imie = ".$imie;
-
-					echo "<br>id = ".$_SESSION['id'];
-					echo "<br>";
-
-					////////////////////////////////////////////////////////////////////////////////
+					////////////////////////////////////////////////////////////////////////////////////////////////////
 
 					// WALIDACJA I SANITYZACJA DANYCH
 
-					$imie = htmlentities($imie, ENT_QUOTES, "UTF-8"); // html entities = encje html'a
+					$imie = htmlentities($imie, ENT_QUOTES, "UTF-8");       // html entities = encje html'a
 					$nazwisko = htmlentities($nazwisko, ENT_QUOTES, "UTF-8"); 
 					$miasto = htmlentities($miasto, ENT_QUOTES, "UTF-8"); 
 					$ulica = htmlentities($ulica, ENT_QUOTES, "UTF-8"); 
@@ -142,7 +134,7 @@
 					$login = htmlentities($login, ENT_QUOTES, "UTF-8"); 					
 
 					echo "<br><br>";
-					echo "<br> Imie = ".$imie; 				// <script>alert('imie!')</script>
+					echo "<br> Imie = ".$imie; // <script>alert('imie!')</script>
 					echo "<br> nazwisko = ".$nazwisko; // <script>alert('nazwisko!')</script>
 					echo "<br> miasto = ".$miasto; // <script>alert('miasto!')</script>
 					echo "<br> ulica = ".$ulica; // <script>alert('ulica!')</script>
@@ -156,46 +148,26 @@
 					echo "<br> telefon = ".$telefon; // <script>alert('telefon!')</script>
 					echo "<br> email = ".$email; // <script>alert('email!')</script>
 					echo "<br> login = ".$login; // <script>alert('login!')</script>
-						
-					//exit();
 
-					/*$result = $polaczenie->query(
-								sprintf("SELECT * FROM klienci WHERE login='%s'", mysqli_real_escape_string($result,$imie))
-							)*/
-
-
-					/*UPDATE klienci SET imie='$imie', nazwisko='$nazwisko', miejscowosc='$miasto', ulica='$ulica', numer_domu='$numer_domu', kod_pocztowy='$kod_pocztowy', kod_miejscowosc='$kod_miejscowosc', wojewodztwo='$wojewodztwo', kraj='$kraj', PESEL='$pesel', data_urodzenia='$data_urodzenia', telefon='$telefon', email='$email', login='$login' WHERE id_klienta='$id'*/
-
+                    //UPDATE klienci SET imie='$imie', nazwisko='$nazwisko', miejscowosc='$miasto', ulica='$ulica', numer_domu='$numer_domu', kod_pocztowy='$kod_pocztowy', kod_miejscowosc='$kod_miejscowosc', wojewodztwo='$wojewodztwo', kraj='$kraj', PESEL='$pesel', data_urodzenia='$data_urodzenia', telefon='$telefon', email='$email', login='$login' WHERE id_klienta='$id';
 					//echo query(sprintf("SELECT * FROM klienci WHERE login='%s'", mysqli_real_escape_string($polaczenie,$login)), " ");
-
-					//$query = "UPDATE klienci SET imie='%s' WHERE id_klienta='$id'";						
-
+					//$query = "UPDATE klienci SET imie='%s' WHERE id_klienta='$id'";
 					//$query = sprintf("UPDATE klienci SET imie='%s' WHERE id_klienta='$id'", mysqli_real_escape_string($polaczenie, $imie));
-					
 					//$result = $polaczenie->query($query);
-
 					//echo "<br> query = ".$query."<br>";
 					//exit();
-
 					//echo query($query, " ");
-
 					//echo '<script>alert("Udało się zaktualizować dane :)")</script>';
-
 					//exit();
-
-					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 					//echo query("INSERT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_all_books", "");
-
 					//echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books_by_categories", $kategoria);
-
 					//$values = "12345";
-					
-					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 					$values = array();					
 
-					$imie = htmlentities($imie, ENT_QUOTES, "UTF-8"); // html entities = encje html'a
+					$imie = htmlentities($imie, ENT_QUOTES, "UTF-8");
 					$nazwisko = htmlentities($nazwisko, ENT_QUOTES, "UTF-8"); 
 					$miasto = htmlentities($miasto, ENT_QUOTES, "UTF-8"); 
 					$ulica = htmlentities($ulica, ENT_QUOTES, "UTF-8"); 
@@ -208,9 +180,9 @@
 					$data_urodzenia = htmlentities($data_urodzenia, ENT_QUOTES, "UTF-8"); 
 					$telefon = htmlentities($telefon, ENT_QUOTES, "UTF-8");
 					$email = htmlentities($email, ENT_QUOTES, "UTF-8"); 
-					$login = htmlentities($login, ENT_QUOTES, "UTF-8"); 
+					$login = htmlentities($login, ENT_QUOTES, "UTF-8");
 
-					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 					
 					array_push($values, $imie);
 					array_push($values, $nazwisko);
@@ -227,18 +199,16 @@
 					array_push($values, $email);
 					array_push($values, $login);
 
-					/*echo "<br> values -> <br>";
-					print_r($values);
-					echo "<br> values size -> <br>";
-					echo count($values);*/
-
-					//exit();
-
-					//echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books_by_categories", $kategoria);				
+                    //echo "<br> values -> <br>";
+                    //print_r($values);
+                    //echo "<br> values size -> <br>";
+                    //echo count($values);
+                    //exit();
+                    //echo query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books_by_categories", $kategoria);
 
 					echo query("UPDATE klienci SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", "", $values);
 
-					////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 					// Aktualizacja zmiennych sesyjnych :
 					$_SESSION['imie'] = $imie;		
 					$_SESSION['nazwisko'] = $nazwisko;		
@@ -254,17 +224,12 @@
 					$_SESSION['telefon'] = $telefon;		
 					$_SESSION['email'] = $email;		
 					$_SESSION['login'] = $login;
-					////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+					echo "<br> ---------------------------------------------------------------------------------- <br>";
 
-					//exit();
-					echo "<br> -------------------------------------------------------------------------------------------------------- <br>";
-
-					// $values - powinna być to tablica 
-					//exit();
-
-					//"UPDATE klienci SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", mysqli_real_escape_string($polaczenie, $imie), mysqli_real_escape_string($polaczenie, $nazwisko), mysqli_real_escape_string($polaczenie, $miasto), mysqli_real_escape_string($polaczenie, $ulica), mysqli_real_escape_string($polaczenie, $numer_domu), mysqli_real_escape_string($polaczenie, $kod_pocztowy), mysqli_real_escape_string($polaczenie, $kod_miejscowosc), mysqli_real_escape_string($polaczenie, $wojewodztwo), mysqli_real_escape_string($polaczenie, $kraj), mysqli_real_escape_string($polaczenie, $pesel), mysqli_real_escape_string($polaczenie, $data_urodzenia), mysqli_real_escape_string($polaczenie, $telefon), mysqli_real_escape_string($polaczenie, $email), mysqli_real_escape_string($polaczenie, $login) 
-
+					// $values - powinna być to tablica
+					//"UPDATE klienci SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", mysqli_real_escape_string($polaczenie, $imie), mysqli_real_escape_string($polaczenie, $nazwisko), mysqli_real_escape_string($polaczenie, $miasto), mysqli_real_escape_string($polaczenie, $ulica), mysqli_real_escape_string($polaczenie, $numer_domu), mysqli_real_escape_string($polaczenie, $kod_pocztowy), mysqli_real_escape_string($polaczenie, $kod_miejscowosc), mysqli_real_escape_string($polaczenie, $wojewodztwo), mysqli_real_escape_string($polaczenie, $kraj), mysqli_real_escape_string($polaczenie, $pesel), mysqli_real_escape_string($polaczenie, $data_urodzenia), mysqli_real_escape_string($polaczenie, $telefon), mysqli_real_escape_string($polaczenie, $email), mysqli_real_escape_string($polaczenie, $login)
 					/*require "connect.php";
 					mysqli_report(MYSQLI_REPORT_STRICT); // ?
 					try 
@@ -298,7 +263,6 @@
 						echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW
 						exit(); // (?)
 					}*/
-
 				}
 				else
 				{
@@ -307,13 +271,8 @@
 						//header('Location: edit_data.php');
 					//exit();
 				}
-
-				
-
 				//exit();
-
 			?>
-
 		</div>
 
 <?php require "template/footer.php"; ?>

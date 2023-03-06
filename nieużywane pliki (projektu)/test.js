@@ -3,7 +3,6 @@ function testuj()
 {
 	console.log("test js");
 
-
 	var el = document.getElementById("quantity");
 	el.value = parseInt(el.value) + 1;
 }
@@ -12,20 +11,12 @@ function testuj1()
 {
 	console.log("test js");
 
-
 	var el = document.getElementById("quantity");
 	if(el.value > 0)
 	{
 		el.value = parseInt(el.value) - 1;
 	}
-	
 }
-
-
-
-
-
-
 
 function testuj2() 
 {

@@ -1,17 +1,13 @@
 <?php
-
 	session_start();
-
 	include_once "functions.php";
-
     if(!(isset($_SESSION['zalogowany'])))
     {
-        //header('Location: index.php');
         header("Location: index.php?login-error");
         exit();
     }
-
 ?>
+
 <!DOCTYPE HTML>
 <html lang="pl">
 
@@ -22,10 +18,8 @@
 <?php require "template\header-container.php"; ?>
 
 	<div id="container">
-		
 
 		<div id="nav">
-
 		</div>
 
 		<div id="content">

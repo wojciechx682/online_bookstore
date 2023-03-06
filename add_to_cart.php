@@ -2,35 +2,27 @@
 
 	session_start();
 	
-	include_once "functions.php"; // _once - sprawdzi, czy ten plik nie został zaincludowany wcześniej
-
-	//echo $_SESSION['login'] . '<br>';
-
-	/*if(isset($_SESSION['zalogowany']))
-	{
-		//echo '<br>'.$_SESSION['account_error'];
-		unset($_SESSION['account_error']);
-		//exit();
-	}	*/
+	include_once "functions.php";
 
 	if(!(isset($_SESSION['zalogowany'])))
 	{
-		header('Location: index.php');
-		
+        header("Location: index.php?login-error");
 		exit();
 	}
 ?>
 
 <?php 
 
-	if((isset($_POST['id_ksiazki'])) && (isset($_POST['koszyk_ilosc'])) && !(empty($_POST['id_ksiazki'])) && !(empty($_POST['koszyk_ilosc']))
-	    
-	) // dane pochodzące z koszyk_dodaj.php
-	{	// && not empty		!empty
+	if( (isset($_POST['id_ksiazki'])) &&      // dane pochodzące z koszyk_dodaj.php
+        (isset($_POST['koszyk_ilosc'])) &&
+        !(empty($_POST['id_ksiazki'])) &&
+        !(empty($_POST['koszyk_ilosc']))
+      )
+	{
 
 		$id_klienta = $_SESSION['id'];		
 		$id_ksiazki = $_POST['id_ksiazki'];
-		$ilosc = $_POST['koszyk_ilosc']; // == 1				
+		$ilosc = $_POST['koszyk_ilosc']; // == 1
 
 			// Walidacja i sanityzacja danych wprowadzonych od użytkownika : <script>alert("yey");</script>
 		$id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8");
@@ -42,8 +34,8 @@
 		$values = array();
 		array_push($values, $id_klienta);
 		array_push($values, $id_ksiazki);
-		//array_push($values, $ilosc);
 
+		//array_push($values, $ilosc);
 		/*echo "<br> values = <br>";
 		print_r($values);
 		echo "<br><br>";*/		
@@ -61,7 +53,7 @@
 			query("UPDATE koszyk SET ilosc=ilosc+'%s' WHERE id_klienta='$id_klienta' AND id_ksiazki='$id_ksiazki'
 				", "", $ilosc);
 		}
-		else  // insert book to cart
+		else  // insert book to shopping cart
 		{
 			array_push($values, $ilosc);
 
@@ -75,10 +67,7 @@
 		unset($_POST['id_ksiazki']);
 		unset($_POST['koszyk_ilosc']);
 		unset($values);
-		
 	}
-
-	
 		//echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">Wróć</a>';
 	
 	//header('Location: koszyk.php');
@@ -87,5 +76,5 @@
 
 ?>
 
-<script src="jquery.js"></script>
-<script src="sortowanie_v2.js"></script>
+<!--<script src="jquery.js"></script>-->
+<script src="nieużywane pliki (projektu)/sortowanie_v2.js"></script>
