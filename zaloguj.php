@@ -78,8 +78,8 @@
 			<form action="logowanie.php" method="post">
 			
 				<!-- Login: <br> <input type="text" name="login"> <br> -->
-				E-mail: <br> <input type="text" name="email" value="jason1@wp.pl"> <br>
-				Hasło: <br> <input type="password" name="haslo"> <br><br>
+				E-mail: <br> <input type="text" name="email" value="jason2@wp.pl"> <br>
+				Hasło: <br> <input type="password" name="haslo" value="jason2"> <br><br>
 				
 				<input type="submit" value="Zaloguj się">	
 					

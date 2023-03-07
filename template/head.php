@@ -1,3 +1,8 @@
+<?
+    // meets the Separation of Concerns principle
+    // https://en.wikipedia.org/wiki/Separation_of_concerns
+?>
+
 <head>
     <meta charset="UTF-8"> <!-- Character encoding - UTF-8 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- rendering the page in the highest version of IE, will help to display the page in IE browsers; https://stackoverflow.com/questions/6771258/what-does-meta-http-equiv-x-ua-compatible-content-ie-edge-do -->

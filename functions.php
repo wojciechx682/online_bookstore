@@ -262,11 +262,15 @@
 		  	$_SESSION['suma_zamowienia'] += $row['ilosc'] * $row['cena'];
 		}
 
-		echo "<br> $ _SESSION suma_zamowienia = " ;
+        echo '<span style="color: #c7c7c7;">';
+
+		echo "$ _SESSION suma_zamowienia = " ;
 		echo $_SESSION['suma_zamowienia'] . "<br>";
 
 		echo "<br> $ _SESSION koszyk_ilosc_ksiazek = " ;
 		echo $_SESSION['koszyk_ilosc_ksiazek'] . "<br>";
+
+        echo '</span><br>';
 
 		$result->free_result(); 	
 	}
@@ -428,6 +432,30 @@
 		$result->free_result();
 	}
 
+    function get_order_details2($result) // order.php - tymczasowe (do testów) - usunąć w przyszłości
+    {
+        $_SESSION['order_details_books_id'] = array();
+        $_SESSION['order_details_books_quantity'] = array();
+
+        while ($row = $result->fetch_assoc())
+        {
+            //echo "<br>id_szczegoly_zamowienia  =" . $row['id_szczegoly_zamowienia']. " || id_zamowienia  = " .$row['id_zamowienia']." || id_ksiazki  = ".$row['id_ksiazki']." ilosc =  " .$row['ilosc']. "<br>";
+            echo "<br>order_id  &rarr; " .$row['id_zamowienia'].", book_id  &rarr; ".$row['id_ksiazki'].", quantity &rarr; " .$row['ilosc']. "<br>";
+
+
+            array_push($_SESSION['order_details_books_id'], $row['id_ksiazki']); // przechowuje id książek (tablica)
+
+            array_push($_SESSION['order_details_books_quantity'], $row['ilosc']); // przechowuje ilosc (tablica) ! DO ZROBIENIA W PRZYSZŁOŚCI TAK JAK FUNKCJA order_details_get_book
+
+            //echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a>';
+            //echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a><br><br>';
+            //echo '<a href="main.php?kategoria='.$kategoria.' ">asdsd</a>';
+            //echo '<a href="main.php?kategoria='.$_SESSION['kategoria'].' ">'.$_SESSION['kategoria'].'</a><br><br>';
+        }
+
+        $result->free_result();
+    }
+
 	function order_details_get_book($result)
 	{
 		while ($row = $result->fetch_assoc()) 
@@ -437,6 +465,16 @@
 
 		$result->free_result();
 	}
+
+    function order_details_get_book2($result) // order.php - tymczasowe (do testów) - usunąć w przyszłości
+    {
+        while ($row = $result->fetch_assoc())
+        {
+            echo "<br> tytul &rarr; " . $row['tytul']. ", cena &rarr; " .$row['cena'].", rok_wydania &rarr; ".$row['rok_wydania']."<br>";
+        }
+
+        $result->free_result();
+    }
 
 	function verify_password($result)
 	{
