@@ -50,7 +50,7 @@
 			<?php
 				if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
 				{
-                    // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = '<script>alert("hahaha");</script>;
+                    // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
 					$kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
 
 					echo "<h3>".$kategoria."</h3><hr>";
@@ -134,11 +134,49 @@
 
                         echo '<div id="content-books">';
 
-                            $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
+//                            $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
+//                            $search_value = htmlentities($_GET['input-search'], ENT_QUOTES, "UTF-8");
+//                            query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);
 
-                            $search_value = htmlentities($_GET['input-search'], ENT_QUOTES, "UTF-8");
+//                            echo '<script>
+//
+//                            const searchInput = document.getElementById("input-search");
+//                            const searchResults = document.getElementById("search-results");
+//
+//                            searchInput.addEventListener("input", () => {
+//                            const query = searchInput.value;
+//
+//                            if (query.trim() !== "") {
+//                            fetch(`index.php?q=${encodeURIComponent(query)}`)
+//                            .then(response => response.json())
+//                            .then(results => {
+//                            let html = "";
+//
+//                            if (results.length > 0) {
+//                            results.forEach(result => {
+//                            html += `<div class="search-result">${result}</div>`;
+//                            });
+//                            } else {
+//                            html += `<div class="search-result">No results found</div>`;
+//                            }
+//
+//                            searchResults.innerHTML = html;
+//                            })
+//                            .catch(error => {
+//                            console.error(error);
+//                            });
+//                            } else {
+//                            searchResults.innerHTML = "";
+//                            }
+//                            });
+//
+//
+//
+//                            </script>';
 
-                            query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);
+
+
+
 
 						echo '</div>';
 					}
@@ -238,6 +276,7 @@
     <script src="jquery.nouislider.js"></script>
     <script src="filtrowanie.js"></script>
     <script src="sortowanie_v3_2.js"></script>
+    <script src="input-seach.js"></script>
 <script>
 
     //save selected sorting option after page reload ->

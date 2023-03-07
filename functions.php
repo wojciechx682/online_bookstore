@@ -35,7 +35,10 @@
             $id_autora = $row['id_autora'];
             //echo $id_autora;
             //echo '<li><a href="index.php?kategoria='.$_SESSION['kategoria'].'&autor='.$id_autora.'">'.$row['imie']." ".$row['nazwisko'].'</a></li>';
-            echo '<li><a href="index.php?autor='.$id_autora.'">'.$row['imie']." ".$row['nazwisko'].'</a></li>';
+            echo '            
+            <li>
+            <input type="checkbox">
+            <a href="index.php?autor='.$id_autora.'">'.$row['imie']." ".$row['nazwisko'].'</a></li>';
 
             //echo '<li><a href="index.php?kategoria=">Informatyka</a></li>';
         }

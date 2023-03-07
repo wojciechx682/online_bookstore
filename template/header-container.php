@@ -53,7 +53,7 @@
 
                         <form action="index.php" method="get">
 
-                            <input type="search" name="input-search">
+                            <input type="search" name="input-search" id="input-search">
 
                             <input type="submit" value="Szukaj">
 
