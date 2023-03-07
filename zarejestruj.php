@@ -6,9 +6,7 @@
 <!DOCTYPE HTML>
 <html lang="pl">
 
-<?php
-    require "template/head.php";
-?>
+<?php require "template/head.php"; ?>
 
 <script src="https://www.google.com/recaptcha/api.js"></script>
 

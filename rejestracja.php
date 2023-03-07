@@ -326,37 +326,13 @@
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			// Zrealizowanie zapytania INSERT : 
 
-			$values = array();
+            $user = [$imie, $nazwisko, $email, $miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
 
-			array_push($values, $imie);
-			array_push($values, $nazwisko);
-			array_push($values, $email);
-			array_push($values, $miejscowosc);
-			array_push($values, $ulica);
-			array_push($values, $numer_domu);
-			array_push($values, $kod_pocztowy);
-			array_push($values, $kod_miejscowosc);
-			array_push($values, $telefon);
-			array_push($values, " ");
-			array_push($values, " ");
-			array_push($values, " ");
-			array_push($values, " ");
-			array_push($values, " ");
-			array_push($values, $haslo_hash);			
-
-			query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "", $values);  // sanityzacja danych -> mysqli_real_escape_string
-
-			// NULL - (dla id autoincrement)
-
-			//exit();
-
+			query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);  // add new user to database
+            exit();
 		}
 		else    // nieudana walidacja
 		{
-			//echo "<br> Istnieje już takie konto w BD<br>";
-			//echo "<br> wszystko_OK == false <br>";
-			//exit();
-
 			/*if(($_SESSION['wszystko_OK'] == true))   // rejestracja.php ...
 			{
 				$_SESSION['udanarejestracja'] = false;
@@ -364,11 +340,9 @@
 			}*/
 
 			header('Location: zarejestruj.php');
-			//exit();
+			exit();
 		}
-
-		//exit();
-
+        exit();
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	}	
 ?>

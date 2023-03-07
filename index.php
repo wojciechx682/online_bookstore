@@ -48,14 +48,13 @@
 		<div id="nav">
 
 			<?php
-
 				if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
 				{
-					$kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8"); // Sanityzacja danych wprowadzonych od użytkownika : // html entities = encje html'a;// $kategoria = '<script>alert("hahaha");</script>;
+                    // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = '<script>alert("hahaha");</script>;
+					$kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
 
 					echo "<h3>".$kategoria."</h3><hr>";
 				}
-
 			?>
 
 			<h3> Sortowanie </h3>
@@ -69,20 +68,14 @@
                 <option value="6">Najstarszych</option>
             </select>
 
-            <!-- <br><br><button id="sort_button" onclick="sortuj()">Sortuj</button> -->
             <button id="sort_button" onclick="sortBooks()">Sortuj</button>
 
             <hr><br>
 
-<!--            <div id="slider"></div>-->
-
             <div id="price-range">
-                Min: <input type="number" id="value-min" />
-                Max: <input type="number" id="value-max" />
-                <div id="slider">
-
-                </div>
-
+                Min: <input type="number" id="value-min">
+                Max: <input type="number" id="value-max">
+                <div id="slider"></div>
             </div>
 
             <br><hr>
@@ -103,7 +96,7 @@
 				{
 					echo '<script> displayNav(); </script>';
 
-					$kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8"); // html entities = encje html'a	// Sanityzacja danych wprowadzonych od użytkownika; <script>alert("yey");</script>
+					$kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8"); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; <script>alert("hahaha");</script>;
 
                     $_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)
 
@@ -113,11 +106,9 @@
 
                         if($_SESSION['kategoria'] == "Wszystkie")
                         {
-                            //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", ""); // get_books() - wyświetla książki (divy -> book0, ...)
-
                             displayBooks($_SESSION['kategoria']);
                         }
-                        else // Kategoria -> "Dla dzieci" , "Fantastyka", "Informatyka", ...
+                        else // --> "Dla dzieci" , "Fantastyka", "Informatyka", ...
                         {
                             query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books",  $_SESSION['kategoria']);
 
@@ -126,16 +117,16 @@
 
 					echo '</div>';
 				}
-                elseif ((!(isset($_GET['kategoria'])) || (empty($_GET['kategoria']))) && (isset($_GET['autor'])) && !(empty($_GET['autor']))) // TYMCZASOWE wyświetlanie książek autora, po wpisanio go w wyszukiwarce
+                elseif ((!(isset($_GET['kategoria'])) || (empty($_GET['kategoria']))) && (isset($_GET['autor'])) && !(empty($_GET['autor']))) // TYMCZASOWE wyświetlanie książek autora, po wpisaniu go w wyszukiwarce
                 {
-                     $values = array();
-                     array_push($values, $_GET['autor']);
-                     query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $values);
+                     $autor = [$_GET['autor']];
+
+                     query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor);
                 }
 				else // jeśli (nie ustawiono kategorii i autora), lub (ustawiono kategorie ORAZ autora)
 				{
                     print_r($_GET['input-search']); echo "<br>";
-                    print_r($_SESSION);
+                    //print_r($_SESSION);
 
 					if((isset($_GET['input-search'])) && (!empty($_GET['input-search']))) // pole wyszukiwania
 					{
@@ -143,12 +134,13 @@
 
                         echo '<div id="content-books">';
 
+                            $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
+
                             $search_value = htmlentities($_GET['input-search'], ENT_QUOTES, "UTF-8");
 
                             query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);
 
 						echo '</div>';
-
 					}
 					else if((isset($_GET['input-search'])) && (empty($_GET['input-search']))) // puste pole wyszukiwania
 					{
@@ -237,25 +229,15 @@
         <?php require "template/footer.php"; ?>
 
 	</div>
-<script>
-
-
-</script>
-
-
 
 
     <!-- <script src="jquery.js"></script> -->
     <!-- <script src="jquery-3.6.3.js"></script> -->
 
 
-
     <script src="jquery.nouislider.js"></script>
-
     <script src="filtrowanie.js"></script>
-
     <script src="sortowanie_v3_2.js"></script>
-
 <script>
 
     //save selected sorting option after page reload ->
