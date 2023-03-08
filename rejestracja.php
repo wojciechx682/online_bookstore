@@ -113,7 +113,7 @@
 
 		$email_s = filter_var($email, FILTER_SANITIZE_EMAIL); // email - after the sanitization process. removes source code characters to avoid XSS attacks
 
-		if((filter_var($email_s, FILTER_VALIDATE_EMAIL) == false) || ($email_s != $email))
+		if(!filter_var($email_s, FILTER_VALIDATE_EMAIL) || ($email_s != $email))
 		{
             // ensures that the email input is sanitized and valid
             // to avoid any potential XSS attacks and other vulnerabilities.
@@ -364,13 +364,12 @@
 			exit();
 		}
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        exit();
 
-	}
+    }
     else {
 
         $_SESSION['e_fields'] = "Uzupełnij wszystkie pola";
         header('Location: zarejestruj.php');
-        exit();
     }
+exit();
 ?>
