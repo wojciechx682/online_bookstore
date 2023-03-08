@@ -2,20 +2,8 @@
 <!-- koszyk - zmiana liczby egzemplarzy -->
 
 <?php
-
 	session_start();
-
-	include_once "functions.php"; // _once - sprawdzi, czy ten plik nie został zaincludowany wcześniej
-
-	//echo $_SESSION['login'] . '<br>';
-
-	/*if(isset($_SESSION['zalogowany']))
-	{
-		//echo '<br>'.$_SESSION['account_error'];
-		unset($_SESSION['account_error']);
-		//exit();
-	}	*/
-
+	include_once "functions.php";
 	if(!(isset($_SESSION['zalogowany'])))
 	{
 		header('Location: index.php');
@@ -25,7 +13,7 @@
 
 <?php
 
-    // przejście tutaj następuje po wysłaniu formularza (np. przyciskiem ENTER), w którym jest <input> z ilością książek w koszyku !
+    // przejście tutaj następuje po wysłaniu formularza (np. przyciskiem ENTER), w którym jest <input> z ilością książek w koszyku.
 
 	if(
         (isset($_POST['id_ksiazki'])) &&     // dane pochodzące z koszyk_dodaj.php

@@ -35,7 +35,7 @@ body
 	/*margin-top: 0px;*/
 	margin: 0;
 
-	font-family: "Arial Narrow", sans-serif;
+	font-family: cursive;
 
 	background-color: rgba(212, 212, 212, 1);
 	background-image: url("2.png");
@@ -425,6 +425,8 @@ a:hover
 
 	border-bottom: 1px dashed black;
 	background-color: #dedede;
+
+
 
 	/*padding: 15px;*/
 	/*position: relative;
@@ -949,4 +951,11 @@ input[id^="koszyk_ilosc"] {
 {
 	float: left;
 	margin-right: 10px;
+}
+
+.form-section {
+
+	width: 225px;
+	float: left;
+	margin: 4px;
 }

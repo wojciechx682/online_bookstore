@@ -99,8 +99,7 @@
             // load the content from the external template file into string
             $book = file_get_contents("template/content-books.php");
 
-            // replace fields in $book string to book data from $result
-            //sprintf(require("template/content-books.php"), $i);
+            // replace fields in $book string to book data from $result, display result content as HTML
             echo sprintf($book, $i, $row["tytul"], $row["cena"], $row["rok_wydania"], $row["id_ksiazki"]);
 
 		  	$i++;
@@ -109,7 +108,7 @@
 		$result->free_result();		
 	}		
 
-	function check_email($result) // validate_user_data.php - sprawdza, czy istnieje juz taki email
+	function check_email($result) // validate_user_data.php - sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną
 	{
 		$_SESSION['email_exists'] = true; 
 	}
@@ -132,7 +131,7 @@
 		$result->free_result();
 	}
 
-	function count_cart_quantity($result) // zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku
+	function count_cart_quantity($result) // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku
 	{
 		// SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta=1;
 
@@ -147,7 +146,7 @@
 
         $_SESSION['koszyk_ilosc_ksiazek'] = ($row['suma'] == NULL) ? 0 : $row['suma'];
 
-        echo $_SESSION['koszyk_ilosc_ksiazek'];
+        //echo $_SESSION['koszyk_ilosc_ksiazek']; // ?
 
 		$result->free_result();
 	}
@@ -228,74 +227,73 @@
 		    echo "<br> $ _SESSION koszyk_ilosc_ksiazek = ".$_SESSION['koszyk_ilosc_ksiazek']."<br>";
         echo '</span></br>';
 
-
 		$result->free_result(); 	
 	}
 
-	function remove_product_from_cart($result) //remove_book.php
+	function remove_product_from_cart($result) // remove_book.php
 	{
 
 	}
 
-	function add_product_to_cart($id_ksiazki, $quantity) // old (unused) function for adding products to shopping cart
-	{
-        // delete that fucking thing !
-
-		require "connect.php";		
-
-		mysqli_report(MYSQLI_REPORT_STRICT);	
-
-		try // spróbuj połączyć się z bazą danych
-		{
-			
-			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);	// A CO Z "UNIWERSALNĄ" funkcją query(...) !?!?!	
-				// @ - operator kontroli błędów - w przypadku blędu, php nie wyświetla informacji o błędzie
-			
-			// sprawdzamy, czy udało się połaczyć z bazą danych
-			 
-			if($polaczenie->connect_errno!=0) // błąd połączenia
-			{
-				// 0  = false           = udane połączenie
-				// !0 = true (1,2, ...) = błąd połączenia
-				
-					//echo "[ Błąd połączenia ] (".$conn->connect_errno."), Opis: ".$conn->connect_error;		
-				//echo "[ Błąd połączenia ] (".$polaczenie->connect_errno.") <br>";	
-				throw new Exception(mysqli_connect_errno()); // rzuć nowy wyjątek			
-			}
-			else // udane polaczenie
-			{		
-				//echo "<hr> -> kategoria = ".$kategoria."<br>";
-					//$kategorie = $polaczenie->query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC");
-                
-                $id_klienta = $_SESSION['id'];
-
-				if($ksiazki = $polaczenie->query(" INSERT INTO koszyk (id_klienta, id_ksiazki, ilosc) VALUES ('$id_klienta', '$id_ksiazki', '$quantity')           ")   )  
-				{
-					//$ksiazki->free_result();												
-				}
-				else 
-				{
-					throw new Exception($polaczenie->error);
-				}
-
-				$polaczenie->close();
-			}
-		}
-		catch(Exception $e) // Exception - wyjątek
-		{
-			//echo '<span style="color: red;"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o rejestrację w innym terminie! ]</span>'; 
-			
-			echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o sprawdzenie serwisu w innym terminie! ]</div>';
-
-			echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW
-
-			exit(); // (?)
-		}
-	}
+//	function add_product_to_cart($id_ksiazki, $quantity) // old (unused) function for adding products to shopping cart
+//	{
+//        // delete that fucking thing !
+//
+//		require "connect.php";
+//
+//		mysqli_report(MYSQLI_REPORT_STRICT);
+//
+//		try // spróbuj połączyć się z bazą danych
+//		{
+//
+//			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);	// A CO Z "UNIWERSALNĄ" funkcją query(...) !?!?!
+//				// @ - operator kontroli błędów - w przypadku blędu, php nie wyświetla informacji o błędzie
+//
+//			// sprawdzamy, czy udało się połaczyć z bazą danych
+//
+//			if($polaczenie->connect_errno!=0) // błąd połączenia
+//			{
+//				// 0  = false           = udane połączenie
+//				// !0 = true (1,2, ...) = błąd połączenia
+//
+//					//echo "[ Błąd połączenia ] (".$conn->connect_errno."), Opis: ".$conn->connect_error;
+//				//echo "[ Błąd połączenia ] (".$polaczenie->connect_errno.") <br>";
+//				throw new Exception(mysqli_connect_errno()); // rzuć nowy wyjątek
+//			}
+//			else // udane polaczenie
+//			{
+//				//echo "<hr> -> kategoria = ".$kategoria."<br>";
+//					//$kategorie = $polaczenie->query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC");
+//
+//                $id_klienta = $_SESSION['id'];
+//
+//				if($ksiazki = $polaczenie->query(" INSERT INTO koszyk (id_klienta, id_ksiazki, ilosc) VALUES ('$id_klienta', '$id_ksiazki', '$quantity')           ")   )
+//				{
+//					//$ksiazki->free_result();
+//				}
+//				else
+//				{
+//					throw new Exception($polaczenie->error);
+//				}
+//
+//				$polaczenie->close();
+//			}
+//		}
+//		catch(Exception $e) // Exception - wyjątek
+//		{
+//			//echo '<span style="color: red;"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o rejestrację w innym terminie! ]</span>';
+//
+//			echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o sprawdzenie serwisu w innym terminie! ]</div>';
+//
+//			echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW
+//
+//			exit(); // (?)
+//		}
+//	}
 
 
 	// order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza
-	function get_last_order_id($polaczenie) // DO WYRZUCZENIA
+	function get_last_order_id($polaczenie) // DO WYRZUCZENIA (albo nie, patrz co jest we wnętrzu funkcji query() ...)
 	{
 		//$_SESSION['last_order_id'] = $polaczenie->insert_id;
 		// mysqli::$insert_id -- mysqli_insert_id — Returns the value generated for an AUTO_INCREMENT column by the last query	
@@ -303,10 +301,9 @@
 		//$result->free_result();	
 	}
 
-	// insert do tabeli szczegoly_zamowienia - na podstawie tabeli koszyk :
+	// order.php - insert do tabeli szczegoly_zamowienia - na podstawie tabeli koszyk
 	function insert_order_details($result)
-	{		
-
+	{
 		$id_zamowienia = $_SESSION['last_order_id']; // id_zamowienia
 
 		while ($row = $result->fetch_assoc()) // wiersze z tabeli koszyk
@@ -326,27 +323,19 @@
 
 		  	query("INSERT INTO szczegoly_zamowienia (id_zamowienia, id_ksiazki, ilosc) VALUES ('%s', '%s', '%s')", "", $values);
 
-
 		  	//echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
-
-
-		  		
 		}
 
 		$result->free_result();
-
-
 	}
 
-	function get_orders($result)
+	function get_orders($result) // my_orders.php
 	{
 		while ($row = $result->fetch_assoc()) 
 		{
 		  	echo "id =" . $row['id_zamowienia']." || data = " .$row['data_zlozenia_zamowienia']." || status = ".$row['status']." ";
-
 		  	
 		  	echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
-
 
 		  	//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a><br><br>';		  	
 		  	//echo '<a href="main.php?kategoria='.$kategoria.' ">asdsd</a>';
@@ -358,35 +347,10 @@
 
 	function validate_form()
 	{
-		//echo '<script> alert("test123"); </script>'; 
+		// echo '<script> alert("test123"); </script>';
 	}
 
-	function get_order_details($result)
-	{
-
-		$_SESSION['order_details_books_id'] = array();
-		$_SESSION['order_details_books_quantity'] = array();
-
-		while ($row = $result->fetch_assoc()) 
-		{
-		  	//echo "<br>id_szczegoly_zamowienia  =" . $row['id_szczegoly_zamowienia']. " || id_zamowienia  = " .$row['id_zamowienia']." || id_ksiazki  = ".$row['id_ksiazki']." ilosc =  " .$row['ilosc']. "<br>";
-		  	echo "<br>id_szczegoly_zamowienia  = || id_zamowienia  = " .$row['id_zamowienia']." || id_ksiazki  = ".$row['id_ksiazki']." ilosc =  " .$row['ilosc']. "<br>";
-
-	  		
-	  		array_push($_SESSION['order_details_books_id'], $row['id_ksiazki']); // przechowuje id książek (tablica)
-
-	  		array_push($_SESSION['order_details_books_quantity'], $row['ilosc']); // przechowuje ilosc (tablica) ! DO ZROBIENIA W PRZYSZŁOŚCI TAK JAK FUNKCJA order_details_get_book
-
-		  	//echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a>';
-		  	//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a><br><br>';		  	
-		  	//echo '<a href="main.php?kategoria='.$kategoria.' ">asdsd</a>';
-		  	//echo '<a href="main.php?kategoria='.$_SESSION['kategoria'].' ">'.$_SESSION['kategoria'].'</a><br><br>';	
-		}
-
-		$result->free_result();
-	}
-
-    function get_order_details2($result) // order.php - tymczasowe (do testów) - usunąć w przyszłości
+    function get_order_details($result) // order_details.php
     {
         $_SESSION['order_details_books_id'] = array();
         $_SESSION['order_details_books_quantity'] = array();
@@ -394,8 +358,7 @@
         while ($row = $result->fetch_assoc())
         {
             //echo "<br>id_szczegoly_zamowienia  =" . $row['id_szczegoly_zamowienia']. " || id_zamowienia  = " .$row['id_zamowienia']." || id_ksiazki  = ".$row['id_ksiazki']." ilosc =  " .$row['ilosc']. "<br>";
-            echo "<br>order_id  &rarr; " .$row['id_zamowienia'].", book_id  &rarr; ".$row['id_ksiazki'].", quantity &rarr; " .$row['ilosc']. "<br>";
-
+            echo "<br><strong>order_id  &rarr;</strong> " .$row['id_zamowienia'].", <strong>book_id  &rarr;</strong> ".$row['id_ksiazki'].", <strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";
 
             array_push($_SESSION['order_details_books_id'], $row['id_ksiazki']); // przechowuje id książek (tablica)
 
@@ -414,21 +377,11 @@
 	{
 		while ($row = $result->fetch_assoc()) 
 		{
-		  	echo "<br> tytul  =" . $row['tytul']. " || cena  = " .$row['cena']." || rok_wydania  = ".$row['rok_wydania']."<br>";
+		  	echo "<br><strong>tytul &rarr;</strong> " . $row['tytul']. ", <strong>cena &rarr;</strong> " .$row['cena'].", <strong>rok_wydania &rarr;</strong> ".$row['rok_wydania']."<br>";
 		}
 
 		$result->free_result();
 	}
-
-    function order_details_get_book2($result) // order.php - tymczasowe (do testów) - usunąć w przyszłości
-    {
-        while ($row = $result->fetch_assoc())
-        {
-            echo "<br> tytul &rarr; " . $row['tytul']. ", cena &rarr; " .$row['cena'].", rok_wydania &rarr; ".$row['rok_wydania']."<br>";
-        }
-
-        $result->free_result();
-    }
 
 	function verify_password($result)
 	{
@@ -446,7 +399,7 @@
 		return "123";
 	}
 
-	// skrypt logowania (logowanie.php) - logowanie, weryfikacja hasła :
+	// logowanie.php - skrypt logowania, logowanie -> weryfikacja hasła
 	function log_in($result)
 	{
 		$row = $result->fetch_assoc(); // wiersz (BD) - pola tabeli = tablica asocjacyjne
@@ -500,10 +453,9 @@
 			header('Location: zaloguj.php');	
 			exit();					  
 		}
-
 	}
 
-	function register_verify_email($result) // rejestracja (rejestracja_skrypt.php) - weryfikacja czy istnieje taki email
+	function register_verify_email($result) // rejestracja (rejestracja.php) - weryfikacja czy istnieje taki email
 	{
 		$_SESSION['wszystko_OK'] = false;
 		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
@@ -719,13 +671,7 @@
 									// mysqli::$insert_id -- mysqli_insert_id — Returns the value generated for an AUTO_INCREMENT column by the last query	
 								}
 							}
-
 						}
-						
-
-						
-
-
 
 					}
 					else // nie udało się zrealizować zapytania

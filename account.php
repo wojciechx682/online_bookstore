@@ -55,14 +55,10 @@
 
 						<form id="edit_data_form" action="validate_user_data.php" method="post">
 
-							<?php
-
-								echo '<div class="edit_data_right"><input type="text" id="imie_edit" name="imie_edit" value="'.$_SESSION['imie'].'"></div>';
-								echo '<div class="edit_data_right"><input type="text" id="nazwisko_edit" name="nazwisko_edit" value="'.$_SESSION['nazwisko'].'"></div>';
-								echo '<div class="edit_data_right"><input type="text" id="email_edit" name="email_edit" value="'.$_SESSION['email'].'"></div>';
-								echo '<div class="edit_data_right"><input type="text" id="telefon_edit" name="telefon_edit" value="'.$_SESSION['telefon'].'"></div>';
-
-							?>
+                            <div class="edit_data_right"><input type="text" id="imie_edit" name="imie_edit" value="<?=$_SESSION['imie']?>"></div>
+                            <div class="edit_data_right"><input type="text" id="nazwisko_edit" name="nazwisko_edit" value="<?=$_SESSION['nazwisko']?>"></div>
+                            <div class="edit_data_right"><input type="text" id="email_edit" name="email_edit" value="<?=$_SESSION['email']?>"></div>
+                            <div class="edit_data_right"><input type="text" id="telefon_edit" name="telefon_edit" value="<?=$_SESSION['telefon']?>"></div>
 
 						</form>
 
@@ -120,13 +116,15 @@
 
 							<form id="edit_password_form" action="validate_password.php" method="post">
 
-								<?php
+<!--								--><?php
+//									echo '<div class="edit_data_right"><input type="password" id="stare_haslo_edit" name="stare_haslo_edit" "></div>';
+//									echo '<div class="edit_data_right"><input type="password" id="nowe_haslo_edit" name="nowe_haslo_edit" "></div>';
+//									echo '<div class="edit_data_right"><input type="password" id="powtorz_haslo_edit" name="powtorz_haslo_edit" "></div>';
+//								?>
 
-									echo '<div class="edit_data_right"><input type="password" id="stare_haslo_edit" name="stare_haslo_edit" "></div>';
-									echo '<div class="edit_data_right"><input type="password" id="nowe_haslo_edit" name="nowe_haslo_edit" "></div>';
-									echo '<div class="edit_data_right"><input type="password" id="powtorz_haslo_edit" name="powtorz_haslo_edit" "></div>';
-
-								?>
+                                <div class="edit_data_right"><input type="password" id="stare_haslo_edit" name="stare_haslo_edit"></div>
+                                <div class="edit_data_right"><input type="password" id="nowe_haslo_edit" name="nowe_haslo_edit"></div>
+                                <div class="edit_data_right"><input type="password" id="powtorz_haslo_edit" name="powtorz_haslo_edit"></div>
 
 							</form>
 

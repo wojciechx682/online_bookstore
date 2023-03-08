@@ -134,9 +134,9 @@
 
                         echo '<div id="content-books">';
 
-//                            $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
-//                            $search_value = htmlentities($_GET['input-search'], ENT_QUOTES, "UTF-8");
-//                            query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);
+                            $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
+                            $search_value = htmlentities($_GET['input-search'], ENT_QUOTES, "UTF-8");
+                            query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);
 
 //                            echo '<script>
 //
@@ -276,7 +276,7 @@
     <script src="jquery.nouislider.js"></script>
     <script src="filtrowanie.js"></script>
     <script src="sortowanie_v3_2.js"></script>
-    <script src="input-seach.js"></script>
+<!--    <script src="input-seach.js"></script>-->
 <script>
 
     //save selected sorting option after page reload ->

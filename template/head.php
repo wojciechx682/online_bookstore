@@ -39,6 +39,22 @@
 
     <script src="change-quantity.js"></script>
 
+
     <link rel="stylesheet" href="jquery-outsider.css">
+
+    <script>
+        window.addEventListener("load", function() {
+            var selectedValue = localStorage.getItem("theme");
+
+            console.log("selectedValue -> ", selectedValue)
+            if (selectedValue == "white") {
+
+                setWhiteTheme();
+
+            } else {
+                setBlackTheme();
+            }
+        });
+    </script>
 
 </head>

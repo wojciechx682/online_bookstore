@@ -88,7 +88,7 @@
 			<br><a href="zarejestruj.php">Rejestracja - załóż darmowe konto!</a><br>
 
 			<?php	
-				// pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło ! 
+				// pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło
 				// czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI
 				
 				if(isset($_SESSION['blad']))

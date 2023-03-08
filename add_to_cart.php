@@ -1,9 +1,6 @@
 <?php
-
 	session_start();
-	
 	include_once "functions.php";
-
 	if(!(isset($_SESSION['zalogowany'])))
 	{
         header("Location: index.php?login-error");
@@ -24,7 +21,6 @@
       )
 	{
 		$id_klienta = $_SESSION['id'];
-
 		$id_ksiazki = $_POST['id_ksiazki']; // user może wpr. dowolną wartość zmieniając atrybut "value" w <input> ...
 		$ilosc = $_POST['koszyk_ilosc'];    // == 1
 
@@ -35,8 +31,8 @@
 
         $book = [$id_klienta, $id_ksiazki]; // Array ( [0] => 1 [1] => 16 )
 
-//        print_r( $book); echo "<br>";
-//        print_r($_SESSION);
+        // print_r( $book); echo "<br>";
+        // print_r($_SESSION);
 
 		$_SESSION['book_exists'] = false;              // book already in shopping cart ? let's assume that it isn't ...
 
@@ -73,4 +69,4 @@
 ?>
 
 <!--<script src="jquery.js"></script>-->
-<script src="nieużywane pliki (projektu)/sortowanie_v2.js"></script>
+<!--<script src="nieużywane pliki (projektu)/sortowanie_v2.js"></script>-->
