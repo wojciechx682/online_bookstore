@@ -1,28 +1,27 @@
 <?php
 
-	// Funkcje php - połączenie z bazą danych, 
-	//			     wysyłanie zapytań (query) do bazy danych	
-	
+                        // Funkcje php - połączenie z bazą danych,
+                        //			     wysyłanie zapytań (query) do bazy danych
 
-	// Blokada dostępu do adresu "localhost/../functions.php" przez URL
-	$currentPage = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                        // Blokada dostępu do adresu "localhost/../functions.php" przez URL
+                        $currentPage = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-	if ($_SERVER['REQUEST_METHOD'] == "GET" && strcmp(basename($currentPage), basename(__FILE__)) == 0)
-	{
-	    http_response_code(404);
-	    //include('index.php'); // provide your own 404 error page
-	    header('Location: index.php');
+                        if ($_SERVER['REQUEST_METHOD'] == "GET" && strcmp(basename($currentPage), basename(__FILE__)) == 0)
+                        {
+                            http_response_code(404);
+                            //include('index.php'); // provide your own 404 error page
+                            header('Location: index.php');
 
-	    die(); /* remove this if you want to execute the rest of
-	              the code inside the file before redirecting. */
-	}
+                            die(); /* remove this if you want to execute the rest of
+                                      the code inside the file before redirecting. */
+                        }
 
 	function advanced_search($result)
 	{
 		get_books($result);
 	}
 
-    function get_authors($result) // tworzy linki - w których kazdy wyświetli książki danego autora
+    function get_authors($result) // tworzy linki - w których kazdy wyświetli imie i nazwisko autora.
     {
         echo "<h3>Autorzy </h3><hr>";
 
@@ -47,17 +46,16 @@
     }
 
 
-	function get_categories($result) // wypisuje elementy listy <li> - wewnątrz kategorii (top_nav)
+	function get_categories($result)
 	{
-		$cat = "Wszystkie";
-		echo '<li><a href="index.php?kategoria='.$cat.'">'.$cat.'</a></li>'; // Zamiana na jQuery ? event listener ? 
+        // wypisuje elementy listy <li> - wewnątrz kategorii (top_nav);
+
+		$category_name = "Wszystkie";
+		echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>'; // Zamiana na jQuery ? event listener ?
 		while ($row = $result->fetch_assoc()) 
-		{ 		  	
-		  	//echo '<a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a><br><br>';
-
-		  	echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
-
-		  	//echo '<li><a href="index.php?kategoria=">Informatyka</a></li>';
+		{
+		  	//echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
+            echo "\n".'<li><a href="index.php?kategoria='.$row['kategoria'].'">'.$row['kategoria'].'</a></li>';
 		}
 		$result->free_result(); 		
 	}
@@ -69,39 +67,41 @@
 		while ($row = $result->fetch_assoc()) 
 		{
 			// zapisywanie danych książek do zmiennych sesyjnych
+//			$_SESSION['id_ksiazki'] = $row["id_ksiazki"];
+//		  	$_SESSION['tytul'] = $row["tytul"];
+//		  	$_SESSION['cena'] = $row["cena"];
+//		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];
 
-			$_SESSION['id_ksiazki'] = $row["id_ksiazki"];
-		  	$_SESSION['tytul'] = $row["tytul"];
-		  	$_SESSION['cena'] = $row["cena"];
-		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];
+//		  	echo '<div id="book'.$i.'" class="book">';
+//			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
+//			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
+//			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';
+//			  	echo '<form action="add_to_cart.php" method="post">';
+//			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
+//			  		echo '<input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">';
+//			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
+//			  	echo '</form>';
+//		  	echo '</div>';
 
-		  	echo '<div id="book'.$i.'" class="book">';
-			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
-			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
-			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';
-			  	//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';
+//            $book = '
+//                <div id="book%s" class="book">
+//                    <div class="title">%s</div><br>
+//                    <div class="price">%s</div><br>
+//                    <div class="year">%s</div><br>
+//                    <form action="add_to_cart.php" method="post">
+//                        <input type="hidden" name="id_ksiazki" value="%s">
+//                        <input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">
+//                        <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>
+//                    </form>
+//                </div>
+//            ';
 
-			  	echo '<form action="add_to_cart.php" method="post">';
+            // load the content from the external template file into string
+            $book = file_get_contents("template/content-books.php");
 
-			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
-
-			  		echo '<input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">';
-
-			  		//echo '<br><br><input type="submit" value="Dodaj do koszyka">';
-
-			  		//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a>';
-
-			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
-
-			  	echo '</form>';
-
-
-			  
-			  		
-
-
-
-		  	echo '</div>';			  	 		
+            // replace fields in $book string to book data from $result
+            //sprintf(require("template/content-books.php"), $i);
+            echo sprintf($book, $i, $row["tytul"], $row["cena"], $row["rok_wydania"], $row["id_ksiazki"]);
 
 		  	$i++;
 		}
@@ -134,29 +134,22 @@
 
 	function count_cart_quantity($result) // zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku
 	{
-		//SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta=1;
+		// SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta=1;
 
 		$row = $result->fetch_assoc();
 
-		//$_SESSION['koszyk_ilosc_ksiazek'] = $row['suma'];
-		//$_SESSION['koszyk_ilosc_ksiazek'] = "123";
+//		if($row['suma'] == NULL) {
+//			$_SESSION['koszyk_ilosc_ksiazek'] = 0;
+//		}
+//		else {
+//			$_SESSION['koszyk_ilosc_ksiazek'] = $row['suma'];
+//		}
 
-		if($row['suma'] == NULL)
-		{
-				//echo "0";
-			//return "0";
-			$_SESSION['koszyk_ilosc_ksiazek'] = 0;
-		}
-		else {
-				//return $row['suma'];
-				//return "1";
-			//echo $row['suma'];
-			$_SESSION['koszyk_ilosc_ksiazek'] = $row['suma'];
-		}
+        $_SESSION['koszyk_ilosc_ksiazek'] = ($row['suma'] == NULL) ? 0 : $row['suma'];
 
-		
+        echo $_SESSION['koszyk_ilosc_ksiazek'];
 
-		$result->free_result();		
+		$result->free_result();
 	}
 
 	function get_product_from_cart($result)	// koszyk.php, order.php
@@ -174,115 +167,73 @@
 
 		while ($row = $result->fetch_assoc()) 
 		{
-		  	/*echo $row['tytul'].", || ".$row['cena'].", || ".$row['rok_wydania']." || <b> Ilość : </b> ".$row['ilosc'] ;
+//		  	echo '<div id="book'.$i.'"> <span class="book-details">';
+//                echo '<div class="title">'.$row['tytul'].'</div>';
+//                echo '<div class="price">'.$row['cena'].'</div>';
+//                echo '<div class="year">'.$row['rok_wydania'].'</div></span>';
+//
+//		  		/*echo '<div class="quantity'.'">
+//			  			 <b>Ilość = </b>'.$row['ilosc'];
+//			  			 echo '<button type="button" onclick="increase()">+</button>';
+//						 echo '<button type="button" onclick="decrease()">-</button>';
+//	  			echo '</div>';*/
+//
+//	  			echo '<form class="change_quantity_form" id="change_quantity_form'.$row['id_ksiazki'].'" action="change_cart_quantity.php" method="post">';
+//					echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
+//					echo "<b>Ilosc: </b> ";
+//						/*echo '<select name="koszyk_ilosc">';
+//						    echo '<option value="1">1</option>';
+//						    echo '<option value="2">2</option>';
+//						    echo '<option value="3">3</option>';
+//						    echo '<option value="4">4</option>';
+//						    echo '<option value="5">5</option>';
+//						echo '</select>';*/
+//					//echo '<input type="text" id="koszyk_ilosc" name="koszyk_ilosc" value="'.$row['ilosc'].'">';
+//					echo '<input type="text" id="koszyk_ilosc'.$row['id_ksiazki'].'" name="koszyk_ilosc" value="'.$row['ilosc'].'">';
+//					echo '<button type="button" onclick="increase('.$row['id_ksiazki'].')">+</button>';
+//					echo '<button type="button" onclick="decrease('.$row['id_ksiazki'].')">-</button>';
+//					//echo '<br><br><input type="submit" value="Zapisz koszyk">';
+//				echo '</form>';
+//
+//		  	echo '<form id="remove_book_form" action="remove_book.php" method="post">';
+//		  		echo '<input type="hidden" name="id_klienta" value="'.$row['id_klienta'].'">';
+//		  		echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
+//		  		echo '<input type="hidden" name="ilosc" value="'.$row['ilosc'].'">';
+//		  		echo '<input type="submit" value="Usuń">';
+//		  	echo '</form>';
+//		  	echo "<br><hr><br>";
+//		  	/*echo '<form action="change_cart_quantity.php" method="post">';
+//					echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
+//					echo "<b>Ilosc: </b> ";
+//					echo '<input type="text" id="koszyk_ilosc" name="koszyk_ilosc" value="1">';
+//					echo '<button type="button" onclick="increase()">+</button>';
+//					echo '<button type="button" onclick="decrease()">-</button>';
+//					echo '<br><br><input type="submit" value="Zapisz koszyk">';
+//			echo '</form>';*/
+//		  	echo '</div>';
 
-		  	echo '<button class="cart_remove_book" type="button">Usuń</button>';*/
+            // load the content from the external template file into string
+            $book = file_get_contents("template/cart-products.php");
 
-		  	echo '<div id="book'.$i.'"> <span class="book-details">';
-		  	echo '<div class="title">'.$row['tytul'].'</div>';
-		  	echo '<div class="price">'.$row['cena'].'</div>';
-		  	echo '<div class="year">'.$row['rok_wydania'].'</div></span>';
+            // replace fields in $book string to book data from $result
+            echo sprintf($book, $i, $row["tytul"], $row["cena"], $row["rok_wydania"], $row["id_ksiazki"], $row["id_ksiazki"], $row['id_ksiazki'], $row['ilosc'], $row['id_ksiazki'], $row['id_ksiazki'], $row['id_klienta'], $row['id_ksiazki'], $row['ilosc']);
 
-		  		/*echo '<div class="quantity'.'">
-
-			  			 <b>Ilość = </b>'.$row['ilosc'];
-
-			  			 echo '<button type="button" onclick="increase()">+</button>';
-						 echo '<button type="button" onclick="decrease()">-</button>';
-
-
-	  			echo '</div>';*/
-
-	  			echo '<form class="change_quantity_form" id="change_quantity_form'.$row['id_ksiazki'].'" action="change_cart_quantity.php" method="post">';
-
-					echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
-
-					echo "<b>Ilosc: </b> ";
-
-						/*echo '<select name="koszyk_ilosc">';
-						    echo '<option value="1">1</option>';
-						    echo '<option value="2">2</option>';
-						    echo '<option value="3">3</option>';
-						    echo '<option value="4">4</option>';
-						    echo '<option value="5">5</option>';
-						echo '</select>';*/
-
-					//echo '<input type="text" id="koszyk_ilosc" name="koszyk_ilosc" value="'.$row['ilosc'].'">';
-					echo '<input type="text" id="koszyk_ilosc'.$row['id_ksiazki'].'" name="koszyk_ilosc" value="'.$row['ilosc'].'">';
-
-					echo '<button type="button" onclick="increase('.$row['id_ksiazki'].')">+</button>';
-					echo '<button type="button" onclick="decrease('.$row['id_ksiazki'].')">-</button>';
-
-
-					//echo '<br><br><input type="submit" value="Zapisz koszyk">';
-
-				echo '</form>';
-
-
-
-		  	echo '<form id="remove_book_form" action="remove_book.php" method="post">';
-
-		  		echo '<input type="hidden" name="id_klienta" value="'.$row['id_klienta'].'">';
-		  		echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
-		  		echo '<input type="hidden" name="ilosc" value="'.$row['ilosc'].'">';
-
-		  		echo '<input type="submit" value="Usuń">';
-
-		  	echo '</form>';
-
-		  	////////////////////////////////////////////////////////////////////////////////////
-
-		  	echo "<br><hr><br>";
-
-		  	/*echo '<form action="change_cart_quantity.php" method="post">';
-
-					echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
-
-					echo "<b>Ilosc: </b> ";
-
-
-
-					echo '<input type="text" id="koszyk_ilosc" name="koszyk_ilosc" value="1">';
-
-					echo '<button type="button" onclick="increase()">+</button>';
-					echo '<button type="button" onclick="decrease()">-</button>';
-
-
-					echo '<br><br><input type="submit" value="Zapisz koszyk">';
-
-			echo '</form>';*/
-
-
-
-		  	echo '</div>';
-
-
-
-			//echo "<br>";
-
-			$i++;
+            $i++;
 
 		  	$_SESSION['suma_zamowienia'] += $row['ilosc'] * $row['cena'];
 		}
 
         echo '<span style="color: #c7c7c7;">';
+		    echo "$ _SESSION suma_zamowienia = ".$_SESSION['suma_zamowienia']."<br>";
+		    echo "<br> $ _SESSION koszyk_ilosc_ksiazek = ".$_SESSION['koszyk_ilosc_ksiazek']."<br>";
+        echo '</span></br>';
 
-		echo "$ _SESSION suma_zamowienia = " ;
-		echo $_SESSION['suma_zamowienia'] . "<br>";
-
-		echo "<br> $ _SESSION koszyk_ilosc_ksiazek = " ;
-		echo $_SESSION['koszyk_ilosc_ksiazek'] . "<br>";
-
-        echo '</span><br>';
 
 		$result->free_result(); 	
 	}
 
 	function remove_product_from_cart($result) //remove_book.php
 	{
-
-
-
 
 	}
 
