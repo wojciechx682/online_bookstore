@@ -21,16 +21,4 @@
 	<br><hr><br>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <? // template used on the cart page (cart.php) to display the products currently in the cart of a given customer ?>
