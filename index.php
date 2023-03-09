@@ -276,6 +276,7 @@
     <script src="jquery.nouislider.js"></script>
     <script src="filtrowanie.js"></script>
     <script src="sortowanie_v3_2.js"></script>
+
 <!--    <script src="input-seach.js"></script>-->
 <script>
 

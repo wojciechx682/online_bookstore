@@ -41,6 +41,7 @@
                         <a class="top-nav-right" href="koszyk.php">Koszyk
                             <?php
                                 if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) {
+                                    query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
                                     echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
                                 }
                             ?>

@@ -143,14 +143,23 @@
 						if((isset($_SESSION['validation_password'])) && ($_SESSION['validation_password'] == false) && (isset($_SESSION['error_form_password'])))
 						{
 							echo $_SESSION['error_form_password'];
-							unset($_SESSION['error_form_password']);
+
+                            unset($_SESSION['stare_haslo']);
+                            unset($_SESSION['validation_password']);
+                            unset($_SESSION['error_form_password']);
+                            unset($_SESSION['validation_passed_p']);
+
 						}
 						else
 						{
 							if((isset($_SESSION['validation_passed_p'])) && ($_SESSION['validation_passed_p'] == true))
 							{
 								echo "Hasło zostało zmienione";
-								unset($_SESSION['validation_passed_p']);
+
+                                unset($_SESSION['stare_haslo']);
+                                unset($_SESSION['validation_password']);
+                                unset($_SESSION['error_form_password']);
+                                unset($_SESSION['validation_passed_p']);
 							}
 						}
 					?>

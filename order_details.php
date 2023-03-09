@@ -46,7 +46,7 @@
 
                     $order_id = htmlentities($_GET['order_id'], ENT_QUOTES, "UTF-8");
 
-                    query("SELECT id_zamowienia , id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "get_order_details", "$order_id");
+                    query("SELECT id_zamowienia , id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "get_order_details", $order_id);
 
 					echo "<hr>";
 					
@@ -58,7 +58,7 @@
 					{					 
 						$book_id = $order_details_books_id[$i];
 						
-						echo query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '$book_id'", "order_details_get_book", "$book_id");
+						query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '$book_id'", "order_details_get_book", $book_id);
 					}
                     unset($_SESSION['last_order_id']);
                     unset($_SESSION['order_details_books_id']);

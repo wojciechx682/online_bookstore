@@ -21,34 +21,29 @@
 		get_books($result);
 	}
 
-    function get_authors($result) // tworzy linki - w których kazdy wyświetli imie i nazwisko autora.
+    function get_authors($result)
     {
-        echo "<h3>Autorzy </h3><hr>";
-
+        // tworzy linki - w których kazdy wyświetli imie i nazwisko autora.
+        //
+        echo '<h3>Autorzy </h3><hr>';
         echo '<ul id="ul-authors">';
 
-        while ($row = $result->fetch_assoc())
-        {
-            //echo '<a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a><br><br>';
+            while ($row = $result->fetch_assoc())
+            {
+                // load the content from the external template file into string
+                $author = file_get_contents("template/content-authors.php");
 
-            $id_autora = $row['id_autora'];
-            //echo $id_autora;
-            //echo '<li><a href="index.php?kategoria='.$_SESSION['kategoria'].'&autor='.$id_autora.'">'.$row['imie']." ".$row['nazwisko'].'</a></li>';
-            echo '            
-            <li>
-            <input type="checkbox">
-            <a href="index.php?autor='.$id_autora.'">'.$row['imie']." ".$row['nazwisko'].'</a></li>';
+                // replace fields in $author string to author data from $result, display result content as HTML
+                echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
+            }
 
-            //echo '<li><a href="index.php?kategoria=">Informatyka</a></li>';
-        }
-        echo '</ul>'; //
+        echo '</ul>';
         $result->free_result();
     }
 
-
 	function get_categories($result)
 	{
-        // wypisuje elementy listy <li> - wewnątrz kategorii (top_nav);
+        // header -> top-nav-content - wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav);
 
 		$category_name = "Wszystkie";
 		echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>'; // Zamiana na jQuery ? event listener ?
@@ -60,17 +55,14 @@
 		$result->free_result(); 		
 	}
 
-	function get_books($result) // content -> wyświetla wszystkie książki
-	{		
+	function get_books($result)
+	{
+        // content -> wyświetla wszystkie książki
+
 		$i = 0;
 
 		while ($row = $result->fetch_assoc()) 
 		{
-			// zapisywanie danych książek do zmiennych sesyjnych
-//			$_SESSION['id_ksiazki'] = $row["id_ksiazki"];
-//		  	$_SESSION['tytul'] = $row["tytul"];
-//		  	$_SESSION['cena'] = $row["cena"];
-//		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];
 
 //		  	echo '<div id="book'.$i.'" class="book">';
 //			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
@@ -108,28 +100,23 @@
 		$result->free_result();		
 	}		
 
-	function check_email($result) // validate_user_data.php - sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną
+	function check_email($result)
 	{
+        // validate_user_data.php - sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną
 		$_SESSION['email_exists'] = true; 
 	}
 
-	function get_books_by_id($result) // koszyk_dodaj.php
-	{
-		while ($row = $result->fetch_assoc()) 
-		{
-		  	$_SESSION['tytul'] = $row["tytul"];
-		  	$_SESSION['cena'] = $row["cena"];
-		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];
-
-		  	echo $_SESSION['tytul'].", || ".$_SESSION['cena'].", || ".$_SESSION['rok_wydania']." ";
-
-		  	//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a><br><br>';		  	
-		  	//echo '<a href="main.php?kategoria='.$kategoria.' ">asdsd</a>';
-		  	//echo '<a href="main.php?kategoria='.$_SESSION['kategoria'].' ">'.$_SESSION['kategoria'].'</a><br><br>';	
-		}
-
-		$result->free_result();
-	}
+//	function get_books_by_id($result) // koszyk_dodaj.php - nieużywane - do wyrzuczenia
+//	{
+//		while ($row = $result->fetch_assoc())
+//		{
+//		  	$_SESSION['tytul'] = $row["tytul"];
+//		  	$_SESSION['cena'] = $row["cena"];
+//		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];
+//		  	echo $_SESSION['tytul'].", || ".$_SESSION['cena'].", || ".$_SESSION['rok_wydania']." ";
+//		}
+//		$result->free_result();
+//	}
 
 	function count_cart_quantity($result) // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku
 	{
@@ -143,8 +130,6 @@
 //		}
 
         $_SESSION['koszyk_ilosc_ksiazek'] = ($row['suma'] == NULL) ? 0 : $row['suma']; // SUM(ilosc) AS suma -> $row["suma"];
-
-        //echo $_SESSION['koszyk_ilosc_ksiazek']; // ?
 
 		$result->free_result();
 	}
@@ -228,10 +213,10 @@
 		$result->free_result(); 	
 	}
 
-	function remove_product_from_cart($result) // remove_book.php
-	{
-
-	}
+//	function remove_product_from_cart($result) // remove_book.php
+//	{
+//
+//	}
 
 //	function add_product_to_cart($id_ksiazki, $quantity) // old (unused) function for adding products to shopping cart
 //	{
@@ -289,33 +274,30 @@
 //		}
 //	}
 
-
-
-
-
-
-	// order.php - insert do tabeli szczegoly_zamowienia - na podstawie tabeli koszyk
 	function insert_order_details($result)
 	{
-		$id_zamowienia = $_SESSION['last_order_id']; // id_zamowienia
+        // order.php -> insert do tabeli szczegoly_zamowienia - na podstawie tabeli koszyk
 
-		while ($row = $result->fetch_assoc()) // wiersze z tabeli koszyk
+		$id_zamowienia = $_SESSION['last_order_id']; // id_zamowienia -> get_last_order_id()
+
+		while ($row = $result->fetch_assoc())        // wiersze z tabeli koszyk
 		{
-		  	echo $row['id_klienta'] . ", " .$row['id_ksiazki'] . ", " . $row['ilosc'] . "<br>";
 
-		  	//$id_klienta = $row['id_klienta'];
+		  	echo $row['id_klienta'] . ", " .$row['id_ksiazki'] . ", " . $row['ilosc'] . "<br>"; // remove in the future
+
 		  	$id_ksiazki = $row['id_ksiazki'];
 		  	$ilosc = $row['ilosc'];
-		  			  	
-			$values = array();
-			array_push($values, $id_zamowienia); // id_zamowienia
-			array_push($values, $id_ksiazki); // id_ksiazki
-			array_push($values, $ilosc); // id_ksiazki
 
+//			$values = array();
+//			array_push($values, $id_zamowienia); // id_zamowienia
+//			array_push($values, $id_ksiazki); // id_ksiazki
+//			array_push($values, $ilosc); // id_ksiazki
 
-		  	query("INSERT INTO szczegoly_zamowienia (id_zamowienia, id_ksiazki, ilosc) VALUES ('%s', '%s', '%s')", "", $values);
+            $cart = [$id_zamowienia, $id_ksiazki, $ilosc];
 
-		  	//echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
+		  	query("INSERT INTO szczegoly_zamowienia (id_zamowienia, id_ksiazki, ilosc) VALUES ('%s', '%s', '%s')", "", $cart);
+
+		  	// echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
 		}
 
 		$result->free_result();
@@ -328,38 +310,37 @@
 		  	echo "id =" . $row['id_zamowienia']." || data = " .$row['data_zlozenia_zamowienia']." || status = ".$row['status']." ";
 		  	
 		  	echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
-
-		  	//echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a><br><br>';		  	
-		  	//echo '<a href="main.php?kategoria='.$kategoria.' ">asdsd</a>';
-		  	//echo '<a href="main.php?kategoria='.$_SESSION['kategoria'].' ">'.$_SESSION['kategoria'].'</a><br><br>';	
 		}
 
 		$result->free_result();
 	}
 
-	function validate_form()
-	{
-		// echo '<script> alert("test123"); </script>';
-	}
+//	function validate_form()
+//	{
+//		// echo '<script> alert("test123"); </script>';
+//	}
 
     function get_order_details($result) // order_details.php
     {
-        $_SESSION['order_details_books_id'] = array();
-        $_SESSION['order_details_books_quantity'] = array();
+//        $_SESSION['order_details_books_id'] = array();
+//        $_SESSION['order_details_books_quantity'] = array();
+
+        $_SESSION['order_details_books_id'] = []; // można zamienić na pojedynczą zmienną, bo każda przechowywana wartosć jest taka sama
+        $_SESSION['order_details_books_quantity'] = []; // tutaj niekoniecznie
+
+        $i = 0;
 
         while ($row = $result->fetch_assoc())
         {
-            //echo "<br>id_szczegoly_zamowienia  =" . $row['id_szczegoly_zamowienia']. " || id_zamowienia  = " .$row['id_zamowienia']." || id_ksiazki  = ".$row['id_ksiazki']." ilosc =  " .$row['ilosc']. "<br>";
             echo "<br><strong>order_id  &rarr;</strong> " .$row['id_zamowienia'].", <strong>book_id  &rarr;</strong> ".$row['id_ksiazki'].", <strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";
 
-            array_push($_SESSION['order_details_books_id'], $row['id_ksiazki']); // przechowuje id książek (tablica)
+            $_SESSION['order_details_books_id'][$i] =  $row['id_ksiazki']; // przechowuje id książek (tablica)
+            //array_push($_SESSION['order_details_books_id'], $row['id_ksiazki']);
 
-            array_push($_SESSION['order_details_books_quantity'], $row['ilosc']); // przechowuje ilosc (tablica) ! DO ZROBIENIA W PRZYSZŁOŚCI TAK JAK FUNKCJA order_details_get_book
+            $_SESSION['order_details_books_quantity'][$i] =  $row['ilosc']; // przechowuje ilosc (tablica) ! DO ZROBIENIA W PRZYSZŁOŚCI TAK JAK FUNKCJA order_details_get_book
+            //array_push($_SESSION['order_details_books_quantity'], $row['ilosc']);
 
-            //echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a>';
-            //echo '<a href="koszyk_dodaj.php?id='.$row['id_ksiazki'].'">Dodaj do koszyka</a><br><br>';
-            //echo '<a href="main.php?kategoria='.$kategoria.' ">asdsd</a>';
-            //echo '<a href="main.php?kategoria='.$_SESSION['kategoria'].' ">'.$_SESSION['kategoria'].'</a><br><br>';
+            $i++;
         }
 
         $result->free_result();
@@ -367,6 +348,8 @@
 
 	function order_details_get_book($result)
 	{
+        // order_details.php?order_id=518
+
 		while ($row = $result->fetch_assoc()) 
 		{
 		  	echo "<br><strong>tytul &rarr;</strong> " . $row['tytul']. ", <strong>cena &rarr;</strong> " .$row['cena'].", <strong>rok_wydania &rarr;</strong> ".$row['rok_wydania']."<br>";
@@ -384,22 +367,23 @@
 		$result->free_result();
 	}
 
-	function test_fun()
-	{
-		return "123";
-	}
+//	function test_fun()
+//	{
+//		return "123";
+//	}
 
-	// logowanie.php - skrypt logowania, logowanie -> weryfikacja hasła
+
 	function log_in($result)
 	{
-		$row = $result->fetch_assoc(); // wiersz (BD) - pola tabeli = tablica asocjacyjne
+        // logowanie.php - skrypt logowania, logowanie -> weryfikacja hasła
+
+		$row = $result->fetch_assoc(); // wiersz - pola tabeli = tablica asocjacyjne
 
 		//echo '$_POST[login] = ' . $_POST['login'] . "<br>";
-		//echo '$_POST[haslo] = ' . $_POST['haslo'] . "<br>";		
-		//exit();
+		//echo '$_POST[haslo] = ' . $_POST['haslo'] . "<br>";
 
 		// WERYFIKACJA HASZA : (czy hasze hasła sa identyczne)
-		// porównanie hasha podanego przy logowaniu, z hashem zapisanym w bazie danych : 		
+		// porównanie hasha podanego przy logowaniu, z hashem zapisanym w bazie danych
 
 		$haslo = $_POST['haslo']; // "zmienne tworzone poza funkcjami są globalne (więcej o funkcjach w manualu), a zmienne tworzone w funkcjach mają zasięg lokalny" - http://www.php.pl/Wortal/Artykuly/PHP/Podstawy/Zmienne-i-stale/Zasieg-zmiennych
 
@@ -427,46 +411,48 @@
 			//$id_klienta = $_SESSION['id'];
 			//$_SESSION['test123'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
 
-			query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);			
-			unset($_SESSION['blad']);
-			
-			// pozbywamy się z pamięci rezultatu zapytania
-			$result->free_result(); // free() // close();				
-			// przekierowanie do strony index.php :
-			header('Location: index.php');	
-			exit();		
+			query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);	// pobranie liczby książek znajdujących się w kosztku
+
+			unset($_SESSION['blad']); // usuwa komunikat o błędzie logowania
+
+			$result->free_result();   // pozbywamy się z pamięci rezultatu zapytania; free(); close();
+
+			header('Location: index.php'); // przekierowanie do strony index.php
+			exit();
 		}
 		else  // dobry login, złe hasło
-		{		
-			// błędne dane logowanie -> przekierowanie do index.php + komunikat
-			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>';
-			header('Location: zaloguj.php');	
-			exit();					  
+		{
+			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowanie -> przekierowanie do index.php + komunikat
+			header('Location: zaloguj.php');
+			exit();
 		}
 	}
 
-	function register_verify_email($result) // rejestracja (rejestracja.php) - weryfikacja czy istnieje taki email
+	function register_verify_email($result)
 	{
+        // rejestracja (rejestracja.php) - weryfikacja, czy istnieje taki email (czy jest zajęty)
 		$_SESSION['wszystko_OK'] = false;
 		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
 	}
 
-    function register($result) {           // dodanie nowego użytkownika - rejestracja.php
-
+    function register($result)
+    {
+        // dodanie nowego użytkownika - rejestracja.php
         $_SESSION['udanarejestracja'] = true;
-        //unset($_SESSION['wszystko_OK']);
+            //unset($_SESSION['wszystko_OK']);
         header('Location: zaloguj.php');
     }
 
-	function cart_verify_book($result) // ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
-	{ 
+	function cart_verify_book($result)
+	{
+        // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
 		$_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
-
 		$result->free_result();
 	}
 
-
-	function get_var_name($var) {
+	function get_var_name($var)
+    {
+        // do usunięcia
 
 	    foreach($GLOBALS as $var_name => $value) 
 	    {
@@ -478,21 +464,22 @@
 	    return false;
 	}
 
-    function get_id($result) // order.php -> get_last_order_id($result) -> ustawia id ostatniego zamówienia w zmiennej sesyjnej
+    function get_id($result)
     {
+        // order.php -> get_last_order_id($result) -> ustawia id ostatniego zamówienia w zmiennej sesyjnej
         $row = $result->fetch_assoc();
         $_SESSION['last_order_id'] = $row["id_zamowienia"];
         $result->free_result();
     }
 
-    // order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
     function get_last_order_id($result)
     {
+        // order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
         query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
     }
 
 
-	/////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Funkcja ustanawiająca połączenie z bazą danych i realizująca zapytanie sql
     // "służy do uzyskania wyników z bazy danych i przekazania ich do zewnętrznej funkcji w celu dalszej obróbki"
