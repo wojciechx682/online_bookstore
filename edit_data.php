@@ -50,7 +50,7 @@
 				echo "<p><b>telefon</b>: ".$_SESSION['telefon'];
 				echo "<p><b>email</b>: ".$_SESSION['email']."<br><br>";
 
-                var_dump($_SESSION);
+                print_r($_SESSION);
 
 			?>				
 

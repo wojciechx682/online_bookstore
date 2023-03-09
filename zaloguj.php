@@ -2,18 +2,19 @@
 
 	session_start();
 	
-	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (!(isset($_SESSION['udanarejestracja'])))) 
+	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (!(isset($_SESSION['udanarejestracja'])))) // jeśli weszliśmy na zaloguj.php będąc zalogowanym
 	{
 		header("Location: index.php");
 		exit();
 	}
-
-	elseif((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (isset($_SESSION['udanarejestracja'])) && ($_SESSION['udanarejestracja'] == "true")) // jeśli po pomyślnym utworzeniu nowego konta, nadal jesteśmy zalogowani na stare konto // jeśli stworzyliśmy konto, będąc zalogowanym na inne
+	elseif((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (isset($_SESSION['udanarejestracja'])) && ($_SESSION['udanarejestracja'] == "true")) // jeśli stworzyliśmy konto, będąc zalogowanym na inne
 	{
 		header("Location: logout.php");
 		exit();
 	}
-	elseif(isset($_SESSION['udanarejestracja'])) // jeśli stworzyliśmy konto (normalnie - nie będąc zalogowanym w tym czasie na inne)
+	elseif( !isset($_SESSION['zalogowany']) &&
+            isset($_SESSION['udanarejestracja'])
+    ) // jeśli stworzyliśmy konto (normalnie - nie będąc zalogowanym w tym czasie na inne)
 	{
 		//unset($_SESSION['udanarejestracja']);
 
@@ -21,8 +22,8 @@
 		if (isset($_SESSION['fr_imie'])) unset($_SESSION['fr_imie']);
 		if (isset($_SESSION['fr_nazwisko'])) unset($_SESSION['fr_nazwisko']);
 		if (isset($_SESSION['fr_email'])) unset($_SESSION['fr_email']);
-		if (isset($_SESSION['fr_haslo1'])) unset($_SESSION['fr_haslo1']);
-		if (isset($_SESSION['fr_haslo2'])) unset($_SESSION['fr_haslo2']);
+//		if (isset($_SESSION['fr_haslo1'])) unset($_SESSION['fr_haslo1']);
+//		if (isset($_SESSION['fr_haslo2'])) unset($_SESSION['fr_haslo2']);
 		if (isset($_SESSION['fr_miejscowosc'])) unset($_SESSION['fr_miejscowosc']);
 		if (isset($_SESSION['fr_ulica'])) unset($_SESSION['fr_ulica']);
 		if (isset($_SESSION['fr_numer_domu'])) unset($_SESSION['fr_numer_domu']);
@@ -31,20 +32,20 @@
 		if (isset($_SESSION['fr_telefon'])) unset($_SESSION['fr_telefon']);		
 		if (isset($_SESSION['fr_regulamin'])) unset($_SESSION['fr_regulamin']);
 		
-		// Usuwanie błędów rejestracji
-		if (isset($_SESSION['e_imie'])) unset($_SESSION['e_imie']);
-		if (isset($_SESSION['e_nazwisko'])) unset($_SESSION['e_nazwisko']);
-		if (isset($_SESSION['e_email'])) unset($_SESSION['e_email']);
-		if (isset($_SESSION['e_haslo'])) unset($_SESSION['e_haslo']);
-		if (isset($_SESSION['e_miejscowosc'])) unset($_SESSION['e_miejscowosc']);
-		if (isset($_SESSION['e_ulica'])) unset($_SESSION['e_ulica']);
-		if (isset($_SESSION['e_numer_domu'])) unset($_SESSION['e_numer_domu']);
-		if (isset($_SESSION['e_kod_pocztowy'])) unset($_SESSION['e_kod_pocztowy']);
-		if (isset($_SESSION['e_kod_miejscowosc'])) unset($_SESSION['e_kod_miejscowosc']);
-		if (isset($_SESSION['e_telefon'])) unset($_SESSION['e_telefon']);
-		if (isset($_SESSION['e_kod_miejscowosc'])) unset($_SESSION['e_kod_miejscowosc']);		
-		if (isset($_SESSION['e_regulamin'])) unset($_SESSION['e_regulamin']);
-		if (isset($_SESSION['e_bot'])) unset($_SESSION['e_bot']);
+		// Usuwanie błędów rejestracji - Te zmienne nie istnieją jeśli udało się stworzyć konto !
+//		if (isset($_SESSION['e_imie'])) unset($_SESSION['e_imie']);
+//		if (isset($_SESSION['e_nazwisko'])) unset($_SESSION['e_nazwisko']);
+//		if (isset($_SESSION['e_email'])) unset($_SESSION['e_email']);
+//		if (isset($_SESSION['e_haslo'])) unset($_SESSION['e_haslo']);
+//		if (isset($_SESSION['e_miejscowosc'])) unset($_SESSION['e_miejscowosc']);
+//		if (isset($_SESSION['e_ulica'])) unset($_SESSION['e_ulica']);
+//		if (isset($_SESSION['e_numer_domu'])) unset($_SESSION['e_numer_domu']);
+//		if (isset($_SESSION['e_kod_pocztowy'])) unset($_SESSION['e_kod_pocztowy']);
+//		if (isset($_SESSION['e_kod_miejscowosc'])) unset($_SESSION['e_kod_miejscowosc']);
+//		if (isset($_SESSION['e_telefon'])) unset($_SESSION['e_telefon']);
+//		if (isset($_SESSION['e_kod_miejscowosc'])) unset($_SESSION['e_kod_miejscowosc']);
+//		if (isset($_SESSION['e_regulamin'])) unset($_SESSION['e_regulamin']);
+//		if (isset($_SESSION['e_bot'])) unset($_SESSION['e_bot']);
 
 		if (isset($_SESSION['blad'])) unset($_SESSION['blad']);
 	}
@@ -71,6 +72,8 @@
 
 		<div id="content">
 
+            <?php var_dump($_SESSION); ?>
+
 			<!-- Formularz Logowania -->
 
 			Księgarnia online<br><br>
@@ -90,7 +93,8 @@
 			<?php	
 				// pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło
 				// czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI
-				
+
+                // normalne logowanie, podany złe hasło
 				if(isset($_SESSION['blad']))
 				{
 					echo '<br>'.$_SESSION['blad'];

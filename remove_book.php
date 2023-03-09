@@ -1,6 +1,6 @@
 <?php
 
-	// koszyk - usunięcie książki
+	// koszyk.php - usunięcie książki
 	
 	session_start();
 
@@ -20,14 +20,9 @@
 		$id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8");
 		$ilosc = htmlentities($ilosc, ENT_QUOTES, "UTF-8");
 
-		//query("UPDATE koszyk SET ilosc=ilosc+'%s' WHERE id_klienta='$id_klienta' AND id_ksiazki='$id_ksiazki'", "", $ilosc);
+		$cart = [$id_klienta, $id_ksiazki, $ilosc];
 
-		$values = array();
-		array_push($values, $id_klienta);
-		array_push($values, $id_ksiazki);
-		array_push($values, $ilosc);		
-
-		query("DELETE FROM koszyk WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $values);
+		query("DELETE FROM koszyk WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $cart);
 
 		query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po usunięciu książki)
 

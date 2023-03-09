@@ -107,15 +107,7 @@
 
                     Hasło: <br> <input type="password" name="haslo1"
 
-                                       value="<?php
-                                       /*					if(isset($_SESSION['fr_haslo1']))
-                                                           {
-                                                               echo $_SESSION['fr_haslo1'];
-                                                               unset($_SESSION['fr_haslo1']);
-                                                           }
-
-                                                           // do usunięcia w przyszłości - nie przechowujemy haseł w zmiennych sesyjnych !
-                                                       */?>" ><br>
+                                       value="PassJacob33#" ><br>
 
                     <?php
                     if(isset($_SESSION['e_haslo']))
@@ -126,15 +118,7 @@
                     ?>
                     Powtórz hasło: <br> <input type="password" name="haslo2"
 
-                                               value="<?php
-                                               //					if(isset($_SESSION['fr_haslo2']))
-                                               //					{
-                                               //						echo $_SESSION['fr_haslo2'];
-                                               //						unset($_SESSION['fr_haslo2']);
-                                               //					}
-
-                                               // do usunięcia w przyszłości - nie przechowujemy haseł w zmiennych sesyjnych !
-                                               ?>" ><br>
+                                               value="PassJacob33#" ><br>
 
                     <!-- <br> <hr> -->
                 </div>

@@ -197,6 +197,7 @@ if(!(isset($_SESSION['zalogowany'])))
 
             unset($payment);
 
+
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Aktualizacja tabeli --> Szczegóły zamówienia  ✓ (na podstawie tabeli KOSZYK)
 
@@ -204,13 +205,13 @@ if(!(isset($_SESSION['zalogowany'])))
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            if((isset($_SESSION['last_order_id'] ))&&(!empty( $_SESSION['last_order_id'] )))
+            if(isset($_SESSION['last_order_id']) && !empty( $_SESSION['last_order_id']))
             {
                 echo "<br><strong>zamówienie -></strong><br>";
 
                 $order_id = htmlentities($_SESSION['last_order_id'], ENT_QUOTES, "UTF-8");
 
-                query("SELECT id_zamowienia , id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "get_order_details2", $_SESSION['last_order_id']);
+                query("SELECT id_zamowienia, id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "get_order_details", $_SESSION['last_order_id']);
 
                 $order_details_books_id = $_SESSION['order_details_books_id'];
 
@@ -220,8 +221,13 @@ if(!(isset($_SESSION['zalogowany'])))
                 {
                     $book_id = $order_details_books_id[$i];
 
-                    query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '$book_id'", "order_details_get_book2", "$book_id");
+                    query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '$book_id'", "order_details_get_book", "$book_id");
                 }
+
+                unset($_SESSION['last_order_id']);
+                unset($_SESSION['order_details_books_id']);
+                unset($_SESSION['order_details_books_quantity']);
+                unset($_SESSION['suma_zamowienia']);
             }
         }
         else
@@ -231,6 +237,8 @@ if(!(isset($_SESSION['zalogowany'])))
             echo '<script>window.location.href="submit_order.php";</script>';
             exit();
         }
+
+
         ?>
 
     </div>

@@ -52,7 +52,7 @@
 					
 					$order_details_books_id = $_SESSION['order_details_books_id'];
 
-					echo "id książek dla danego zamówienia -> <br><br>";
+					echo "książki dla tego zamówienia -> <br><br>";
 
 					for($i = 0; $i < count($order_details_books_id); $i++)
 					{					 
@@ -60,16 +60,18 @@
 						
 						echo query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '$book_id'", "order_details_get_book", "$book_id");
 					}
+                    unset($_SESSION['last_order_id']);
+                    unset($_SESSION['order_details_books_id']);
+                    unset($_SESSION['order_details_books_quantity']);
+                    unset($_SESSION['suma_zamowienia']);
 				}
 			?>
 
 			<br><br><a href="logout.php">[ Wyloguj ]</a>
 
-		</div>		
-
-		<div id="footer">
-
 		</div>
+
+        <?php require "template/footer.php"; ?>
 
 	</div>
 		

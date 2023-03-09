@@ -17,15 +17,19 @@
 	// Wylogowanie użytkownika, niszczenie sesji :
 		
 
-	if(isset($_SESSION['udanarejestracja']))
+	if(isset($_SESSION['zalogowany']) && isset($_SESSION['udanarejestracja'])) /// jeśli stworzyliśmy konto, będąc zalogowanym na inne
 	{
-		session_unset();	
-		header('Location: zaloguj.php');	
-		//exit();
+
+		session_unset();   // unset all session variables
+		session_destroy(); // destroy the session
+		session_start();
+		$_SESSION['udanarejestracja'] = true;
+		header('Location: zaloguj.php');
 	}	
-	else
+	else // wylogowanie z konta poprzez naciśnięcie "wyloguj" przez użytkowika
 	{
 		session_unset();
+		session_destroy();
 		header('Location: zaloguj.php');
 	}
 

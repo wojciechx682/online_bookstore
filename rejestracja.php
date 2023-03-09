@@ -345,24 +345,28 @@
 		
 		// Sprawdzenie czy taki user (email i hasło) istnieje już w bazie
 
+        //var_dump($_SESSION); exit();
+
 		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_s);  // przestawi mi zmienną $_SESSION['wszystko_OK'] na false, jeśli istnieje już taki email
 
-		if($_SESSION['wszystko_OK'] == true) // udana walidacja
+		if($_SESSION['wszystko_OK']) // udana walidacja
 		{
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			// Zrealizowanie zapytania INSERT : 
 
             $user = [$imie, $nazwisko, $email, $miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
 
-			query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);  // add new user to database
+			query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database
 
-            exit();
-		}
+            unset($_SESSION['wszystko_OK']);
+
+        }
 		else // nieudana walidacja
 		{
 			header('Location: zarejestruj.php');
-			exit();
-		}
+        }
+
+        exit();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     }
@@ -371,5 +375,6 @@
         $_SESSION['e_fields'] = "Uzupełnij wszystkie pola";
         header('Location: zarejestruj.php');
     }
-exit();
+
+    exit();
 ?>

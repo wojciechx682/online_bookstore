@@ -133,8 +133,6 @@
 
 	function count_cart_quantity($result) // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku
 	{
-		// SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta=1;
-
 		$row = $result->fetch_assoc();
 
 //		if($row['suma'] == NULL) {
@@ -144,7 +142,7 @@
 //			$_SESSION['koszyk_ilosc_ksiazek'] = $row['suma'];
 //		}
 
-        $_SESSION['koszyk_ilosc_ksiazek'] = ($row['suma'] == NULL) ? 0 : $row['suma'];
+        $_SESSION['koszyk_ilosc_ksiazek'] = ($row['suma'] == NULL) ? 0 : $row['suma']; // SUM(ilosc) AS suma -> $row["suma"];
 
         //echo $_SESSION['koszyk_ilosc_ksiazek']; // ?
 
@@ -292,14 +290,9 @@
 //	}
 
 
-	// order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza
-	function get_last_order_id($polaczenie) // DO WYRZUCZENIA (albo nie, patrz co jest we wnętrzu funkcji query() ...)
-	{
-		//$_SESSION['last_order_id'] = $polaczenie->insert_id;
-		// mysqli::$insert_id -- mysqli_insert_id — Returns the value generated for an AUTO_INCREMENT column by the last query	
 
-		//$result->free_result();	
-	}
+
+
 
 	// order.php - insert do tabeli szczegoly_zamowienia - na podstawie tabeli koszyk
 	function insert_order_details($result)
@@ -308,8 +301,7 @@
 
 		while ($row = $result->fetch_assoc()) // wiersze z tabeli koszyk
 		{
-		  	echo $row['id_klienta'] . ", " .$row['id_ksiazki'] . ", " . $row['ilosc'] . "<br>";  
-
+		  	echo $row['id_klienta'] . ", " .$row['id_ksiazki'] . ", " . $row['ilosc'] . "<br>";
 
 		  	//$id_klienta = $row['id_klienta'];
 		  	$id_ksiazki = $row['id_ksiazki'];
@@ -383,14 +375,12 @@
 		$result->free_result();
 	}
 
-	function verify_password($result)
+	function verify_password($result) // validate_password.php
 	{
 		while ($row = $result->fetch_assoc()) 
 		{
-		  	//echo "<br> haslo  =" . $row['haslo']. " <br>";
 		  	$_SESSION['stare_haslo'] = $row['haslo'];
 		}
-
 		$result->free_result();
 	}
 
@@ -459,7 +449,14 @@
 	{
 		$_SESSION['wszystko_OK'] = false;
 		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
-	}	
+	}
+
+    function register($result) {           // dodanie nowego użytkownika - rejestracja.php
+
+        $_SESSION['udanarejestracja'] = true;
+        //unset($_SESSION['wszystko_OK']);
+        header('Location: zaloguj.php');
+    }
 
 	function cart_verify_book($result) // ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
 	{ 
@@ -480,6 +477,20 @@
 	    }
 	    return false;
 	}
+
+    function get_id($result) // order.php -> get_last_order_id($result) -> ustawia id ostatniego zamówienia w zmiennej sesyjnej
+    {
+        $row = $result->fetch_assoc();
+        $_SESSION['last_order_id'] = $row["id_zamowienia"];
+        $result->free_result();
+    }
+
+    // order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
+    function get_last_order_id($result)
+    {
+        query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
+    }
+
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -522,7 +533,9 @@
 		try 
 		{			
 			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);			
-			 
+
+            //$_SESSION["polaczenie"] = $polaczenie;
+
 			if($polaczenie->connect_errno!=0) // błąd połączenia
 			{			
 				throw new Exception(mysqli_connect_errno()); // rzuć nowy wyjątek - po to aby sekcja Catch go złapała, i wyświetliła na ekranie (!) przy uzyciu echo. 		
@@ -545,7 +558,7 @@
 			            // W tym ifie MÓWIMY O SYTUACJI, GDY W ZAPYTANIU WYSTĄPIŁ BŁĄD (?), tzn MYSQL NIE BYŁ W STANIE GO WYKONAĆ (wtedy zmienna $result przyjmie wartość FALSE)
 						
 						//////////////////////////////////////////////////////////////////////////////////////////////////////
-						
+
 							$num_of_rows = $result->num_rows; // ilość zwróconych wierszy	
 
 							//echo '<script>console.log('.$num_of_rows.');</script>';
@@ -576,12 +589,12 @@
 									exit();		
 
 								}
-								elseif((get_var_name($value) == "email") && ($fun == "register_verify_email"))  // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php) - ??? NIE ?! Przecież funkcja register_verify_email zmienia wartość zmiennej sesyjnej ! 
-								{
-
-									// ...  nic nie rób ... (?)
-
-								}	
+//								elseif((get_var_name($value) == "email") && ($fun == "register_verify_email")) // DO WYJEBANIA TEN KOD !!!!!!
+//								{
+//                                   // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php) - ??? NIE ?! Przecież funkcja register_verify_email zmienia wartość zmiennej sesyjnej !
+//									 // ...  nic nie rób ... (?)
+//
+//								}
 								/*elseif((get_var_name($value) == "asdasd") && ($fun == "count_cart_quantity"))  // to sie wykona tylko dla skryptu rejestracji (register_verify_email.php)
 								{
 
@@ -612,8 +625,7 @@
 				//elseif(($type == "INSERT") || ($type == "UPDATE"))  // INSERT, UPDATE ...
 				elseif(is_array($value))  // INSERT, UPDATE ...
 				{
-
-					//echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";						
+					// echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";
 					
 					// Użycie funkcji mysqli_real_escape_string na tablicy parametrów (wartosci tj. imie, nazwisko, hasło ...)
 
@@ -627,7 +639,7 @@
 					}
 					//exit();
 
-					if($result = $polaczenie->query(vsprintf($query, $value))) //$query - zapytanie, $value - tablica parametrów do vsprintf
+					if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie, $value - tablica parametrów do vsprintf
 					{
 						if($type != "DELETE") // koszyk.php - usuwanie książek - WARUNEK TYLKO DLA SELECT (?), NIE - WCHODZI TU TEŻ INSERT Z rejestracja.php
 						{
@@ -653,23 +665,29 @@
 							}
 							else // INSERT, .. UPDATE
 							{
-								if((isset($_SESSION['wszystko_OK'])))   // rejestracja.php ...
-								{
-									unset($_SESSION['wszystko_OK']);
-									$_SESSION['udanarejestracja'] = true;
-									//unset($_SESSION['wszystko_OK']);
-									header('Location: zaloguj.php');
+                                if($fun != "") { // niektóre zapytania nie używają żadnej funkcji
 
-								}
+                                    //if((isset($_SESSION['wszystko_OK'])))   // rejestracja.php
+                                    //{
+                                    $fun($result);  // rejestracja.php -> wywołanie zewnętrznej funkcji "register" ->  ustawia $_SESSION['udanarejestracja'] na "true", przekierowuje do "zaloguj.php"
+                                    //}
 
-								// order.php - dodawanie zamówień (tabela zamówienia) :
-								if($fun == "get_last_order_id")
-								{
-										// $fun($polaczenie); 
-									$_SESSION['last_order_id'] = $polaczenie->insert_id;
-									// order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza
-									// mysqli::$insert_id -- mysqli_insert_id — Returns the value generated for an AUTO_INCREMENT column by the last query	
-								}
+                                    // order.php -> dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza
+
+
+//                                    if($fun == "get_last_order_id")
+//                                    {
+//                                        $_SESSION['last_order_id'] = $polaczenie->insert_id;
+//
+//                                        // mysqli::$insert_id -- mysqli_insert_id — returns the value generated for an AUTO_INCREMENT column by the last query
+//
+//                                        //$result->free_result();
+//
+//                                    }
+
+                                }
+
+
 							}
 						}
 
