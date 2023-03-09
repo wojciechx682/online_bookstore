@@ -34,14 +34,19 @@
 
 ?>
 
-<!DOCTYPE HTML> <!-- HTML5 template consistent with the latest W3C standards -->
+<!DOCTYPE HTML>                    <!-- HTML5 template consistent with the latest W3C standards -->
 <html lang="pl">
 
-<?php require "template/head.php"; // <head> tag ?>
+<?php require "template/head.php"; ?>
 
 <body>
 
-<?php require "template/header-container.php"; // header template ?>
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require "template/header-container.php"; // header template ?>
 
 	<div id="container">
 
@@ -110,6 +115,7 @@
                         }
                         else // --> "Dla dzieci" , "Fantastyka", "Informatyka", ...
                         {
+                            //print_r($_SESSION);
                             query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books",  $_SESSION['kategoria']);
 
                             //($result = $polaczenie->query(sprintf("UPDATE klienci SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", mysqli_real_escape_string($polaczenie, $imie), mysqli_real_escape_string($polaczenie, $nazwisko), mysqli_real_escape_string($polaczenie, $miasto), mysqli_real_escape_string($polaczenie, $ulica), mysqli_real_escape_string($polaczenie, $numer_domu), mysqli_real_escape_string($polaczenie, $kod_pocztowy), mysqli_real_escape_string($polaczenie, $kod_miejscowosc), mysqli_real_escape_string($polaczenie, $wojewodztwo), mysqli_real_escape_string($polaczenie, $kraj), mysqli_real_escape_string($polaczenie, $pesel), mysqli_real_escape_string($polaczenie, $data_urodzenia), mysqli_real_escape_string($polaczenie, $telefon), mysqli_real_escape_string($polaczenie, $email), mysqli_real_escape_string($polaczenie, $login))))
@@ -134,7 +140,7 @@
 
                         echo '<div id="content-books">';
 
-                            $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
+                            //$search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
                             $search_value = htmlentities($_GET['input-search'], ENT_QUOTES, "UTF-8");
                             query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);
 

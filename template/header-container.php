@@ -62,7 +62,7 @@
                     <li><a href="#">Kategorie</a>
                         <ul>
                             <?php
-                                query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); // top_nav - wypis kategorii - wewnątrz listy rozwijanej ul
+                                query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", "");
                             ?>
                         </ul>
                     </li>

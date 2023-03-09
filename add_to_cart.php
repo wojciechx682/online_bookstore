@@ -10,7 +10,7 @@
 
 <?php
 
-    // Insert book into shopping cart
+    // insert book into shopping cart
 
 	if(
         (isset($_POST['id_ksiazki'])) &&      // dane pochodzące z formularza (index.php) po kliknięciu "Dodaj do koszyka"
@@ -24,8 +24,11 @@
 		$id_ksiazki = $_POST['id_ksiazki']; // user może wpr. dowolną wartość zmieniając atrybut "value" w <input> ...
 		$ilosc = $_POST['koszyk_ilosc'];    // 1
 
-		$id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8"); // Walidacja i sanityzacja danych wprowadzonych od użytkownika
-		$ilosc = htmlentities($ilosc, ENT_QUOTES, "UTF-8");		   // <script>alert("yey");</script>
+        // echo "<br>id_klienta -> ".$id_klienta."<br>";
+        // echo "<br>id_ksiazki -> ".$id_ksiazki."<br>";
+
+        $id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8"); // walidacja i sanityzacja danych wprowadzonych od użytkownika
+        $ilosc = htmlentities($ilosc, ENT_QUOTES, "UTF-8");           // <script>alert("yey");</script>
 
         $book = [$id_klienta, $id_ksiazki]; // Array ( [0] => 1 [1] => 16 )
 
@@ -54,7 +57,6 @@
 		unset($book);
 		unset($_SESSION['book_exists']);
 	}
-
 	
 	//header('Location: koszyk.php');
 	header('Location: index.php?kategoria='.$_SESSION['kategoria'].'');

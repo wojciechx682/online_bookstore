@@ -505,8 +505,13 @@
 
     function query($query, $fun, $value)
     {
+        $type = get_first_word($query); // type = SELECT, INSERT, ...
+
+        // $query -> "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%$search_value%'"
+
         require "connect.php";
         mysqli_report(MYSQLI_REPORT_STRICT);
+        // sposób raportowania błędów -> MYSLQI_REPORT_STRICT - zamiast warningów, chcemy rzucać exception (w celu uniknięcia wyświetlania tych warningów - dla użytkowników ... w sekcji catch {} ... )
 
         try
         {
@@ -515,66 +520,151 @@
             if($polaczenie->connect_errno)
             {
                 throw new Exception(mysqli_connect_errno());
+
             }
-            else                                  // udane polaczenie
+            else // udane polaczenie
             {
-                if(gettype($value) !== "array") { // jeśli to nie jest tablica
-
-                    $value = [$value];            // zrób z niej tablicę
-                }
-
-                //if (!is_array($value)) {
-                //	$values = [$values];
-                //}
-
-                for($i = 0; $i < count($value); $i++)
+                if(!is_array($value))
                 {
-                    $value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
-                }
+                    // czy udało się zrealizować zapytanie ($result) do bazy ?	--> true/false;
+                    if($result = $polaczenie->query(sprintf($query, mysqli_real_escape_string($polaczenie, $value))))
+                    {
+                        $num_of_rows = $result->num_rows;  // ilość zwróconych wierszy (rekordów);
 
-                if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie, $value - tablica parametrów do vsprintf
-                {
-                    //print_r($result); echo "<br><br>";
-
-                    // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
-                    if(gettype($result) != "object") {
-                        // INSERT, UPDATE ...
-
-                        if($fun != "") {
-                            $fun($result);
-                        }
-
-                    } else {  // $result jest obiektem
-                        // SELECT
-                        $num_of_rows = $result->num_rows; // ilość zwróconych wierszy
-
-                        if($num_of_rows>0) // znaleziono rekordy
+                        if($num_of_rows>0) 				   // znaleziono rekordy
                         {
                             $fun($result);
                         }
-                        else {
+                        else
+                        {
                             echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy)
                         }
                     }
+                    else  // nie udało się zrealizować zapytania ($polaczenie->query)
+                    {
+                        throw new Exception($polaczenie->error);
+
+                    }
+
+                    $polaczenie->close(); // czy przenieść to poniżej aby nie pisać tego dwa razy ?
                 }
-                else // nie udało się zrealizować zapytania
+                elseif(is_array($value))  // INSERT, UPDATE ...
                 {
-                    throw new Exception($polaczenie->error);
+                    // echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";
+                    // użycie funkcji mysqli_real_escape_string na tablicy parametrów (wartosci tj. imie, nazwisko, hasło ...)
+
+                    for($i = 0; $i < count($value); $i++)
+                    {
+                        $value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
+                    }
+
+                    if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie, $value - tablica parametrów do vsprintf
+                    {
+                        //if($type != "DELETE") // koszyk.php - usuwanie książek - WARUNEK TYLKO DLA SELECT (?), NIE - WCHODZI TU TEŻ INSERT Z rejestracja.php
+                        //{
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////
+                        //echo '<script>alert("udało się zmienić dane :)")</script>';
+                        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                        // SELECT       INSERT      UPDATE
+
+                        //if($type == "SELECT") // Nie wiem czy tak powinno być (?) - TYLKO DLA SELECT - ewentualnie ZMIENIĆ
+                        //{
+                        // dla zapytania select (z wykorzystaniem więcej niż jednej zmiennej w WHERE condition - zastosowanie - przy koszykach.php)
+
+                        echo "<br>result -><br>";
+                        print_r($result);
+
+                        //if($type == "SELECT") // SELECT
+                        //{
+
+                        if($result == 1) {
+                            // INSERT, UPDATE ...
+                            echo "result == 1";
+
+                            if($fun != "") {
+
+                                $fun($result);
+                            }
+
+                        } else {  // $result jest obiektem
+                            // SELECT
+                            $num_of_rows = $result->num_rows; // ilość zwróconych wierszy
+
+                            if($num_of_rows>0) // znaleziono rekordy
+                            {
+                                $fun($result);
+                            }
+
+                        }
+
+
+
+                        //else
+                        //{
+//                            echo '<h3>Brak wyników</h3>';
+//
+//                            echo "<br>587<br>";
+//                            if($fun != "") {
+//
+//                                echo "<br>590<br>";
+//
+//                                $fun($result);
+//
+//                            }
+//                            else {
+//                                //$fun($result);
+//                            }
+
+                        //}
+                        //}
+                        //else // INSERT, .. UPDATE
+                        //{
+                        //if($fun != "") {
+
+
+                        //$fun($result);
+
+
+
+                        //}
+
+
+                        //}
+                        //}
+
+                    }
+                    else // nie udało się zrealizować zapytania
+                    {
+                        throw new Exception($polaczenie->error);
+
+                    }
+
+                    $polaczenie->close();
+
+                    //exit();
+                }
+                else // test połączenia z bazą danych - wyświetlanie wyjątku w przypadku błędu
+                {
+                    // ?
                 }
 
-                $polaczenie->close();
+                // $polaczenie->close();  <--- dodać tutaj !?! (wtedy zapisać tylko raz - w tym miejscu !)
             }
         }
         catch(Exception $e) // exception - wyjątek; przechwycenie i obsługa wyjątku;
         {
             echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności]</div>';
-            echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - dla deweloperów
+            echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW (!)
+            // zamiast tego użyć klasy error ...
             exit(); // (?)
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         //return "<br> query = ".$query.", type = ".$type."<br>";
     }
+
 
 	function get_first_word($string)
     {

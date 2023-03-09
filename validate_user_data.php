@@ -86,10 +86,11 @@
 			array_push($values, $nazwisko);
 			array_push($values, $email);
 			array_push($values, $telefon);
+			array_push($values, $_SESSION["id"]);
 
 			$id = $_SESSION['id']; 
 
-			echo query("UPDATE klienci SET imie='%s', nazwisko='%s', email='%s', telefon='%s' WHERE id_klienta='$id'", "", $values);			
+			echo query("UPDATE klienci SET imie='%s', nazwisko='%s', email='%s', telefon='%s' WHERE id_klienta='%s'", "", $values);
 
 			$_SESSION['validation_passed'] = true;
 

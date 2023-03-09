@@ -58,7 +58,7 @@
 					{					 
 						$book_id = $order_details_books_id[$i];
 						
-						query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '$book_id'", "order_details_get_book", $book_id);
+						query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '%s'", "order_details_get_book", $book_id);
 					}
                     unset($_SESSION['last_order_id']);
                     unset($_SESSION['order_details_books_id']);

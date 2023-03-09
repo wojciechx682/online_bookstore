@@ -1,3 +1,4 @@
+<? // template used on main page (index.php) to display books ?>
 <div id="book%s" class="book">
     <div class="title">%s</div><br>
     <div class="price">%s</div><br>
@@ -8,5 +9,3 @@
         <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>
     </form>
 </div>
-
-<? // template used on main page (index.php) to display books ?>

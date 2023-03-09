@@ -47,12 +47,12 @@
 
 		$category_name = "Wszystkie";
 		echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>'; // Zamiana na jQuery ? event listener ?
-		while ($row = $result->fetch_assoc())
+		while ($row = $result->fetch_assoc()) 
 		{
 		  	//echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
             echo "\n".'<li><a href="index.php?kategoria='.$row['kategoria'].'">'.$row['kategoria'].'</a></li>';
 		}
-		$result->free_result();
+		$result->free_result(); 		
 	}
 
 	function get_books($result)
@@ -61,7 +61,7 @@
 
 		$i = 0;
 
-		while ($row = $result->fetch_assoc())
+		while ($row = $result->fetch_assoc()) 
 		{
 
 //		  	echo '<div id="book'.$i.'" class="book">';
@@ -97,13 +97,13 @@
 		  	$i++;
 		}
 
-		$result->free_result();
-	}
+		$result->free_result();		
+	}		
 
 	function check_email($result)
 	{
         // validate_user_data.php - sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną
-		$_SESSION['email_exists'] = true;
+		$_SESSION['email_exists'] = true; 
 	}
 
 //	function get_books_by_id($result) // koszyk_dodaj.php - nieużywane - do wyrzuczenia
@@ -147,7 +147,7 @@
 
 		$i = 0;
 
-		while ($row = $result->fetch_assoc())
+		while ($row = $result->fetch_assoc()) 
 		{
 //		  	echo '<div id="book'.$i.'"> <span class="book-details">';
 //                echo '<div class="title">'.$row['tytul'].'</div>';
@@ -210,7 +210,7 @@
 		    echo "<br> $ _SESSION koszyk_ilosc_ksiazek = ".$_SESSION['koszyk_ilosc_ksiazek']."<br>";
         echo '</span></br>';
 
-		$result->free_result();
+		$result->free_result(); 	
 	}
 
 //	function remove_product_from_cart($result) // remove_book.php
@@ -282,6 +282,7 @@
 
 		while ($row = $result->fetch_assoc())        // wiersze z tabeli koszyk
 		{
+
 		  	echo $row['id_klienta'] . ", " .$row['id_ksiazki'] . ", " . $row['ilosc'] . "<br>"; // remove in the future
 
 		  	$id_ksiazki = $row['id_ksiazki'];
@@ -304,10 +305,10 @@
 
 	function get_orders($result) // my_orders.php
 	{
-		while ($row = $result->fetch_assoc())
+		while ($row = $result->fetch_assoc()) 
 		{
 		  	echo "id =" . $row['id_zamowienia']." || data = " .$row['data_zlozenia_zamowienia']." || status = ".$row['status']." ";
-
+		  	
 		  	echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
 		}
 
@@ -349,7 +350,7 @@
 	{
         // order_details.php?order_id=518
 
-		while ($row = $result->fetch_assoc())
+		while ($row = $result->fetch_assoc()) 
 		{
 		  	echo "<br><strong>tytul &rarr;</strong> " . $row['tytul']. ", <strong>cena &rarr;</strong> " .$row['cena'].", <strong>rok_wydania &rarr;</strong> ".$row['rok_wydania']."<br>";
 		}
@@ -359,7 +360,7 @@
 
 	function verify_password($result) // validate_password.php
 	{
-		while ($row = $result->fetch_assoc())
+		while ($row = $result->fetch_assoc()) 
 		{
 		  	$_SESSION['stare_haslo'] = $row['haslo'];
 		}
@@ -387,8 +388,8 @@
 		$haslo = $_POST['haslo']; // "zmienne tworzone poza funkcjami są globalne (więcej o funkcjach w manualu), a zmienne tworzone w funkcjach mają zasięg lokalny" - http://www.php.pl/Wortal/Artykuly/PHP/Podstawy/Zmienne-i-stale/Zasieg-zmiennych
 
 		if(password_verify($haslo, $row['haslo'])) // true -> hasze sa takie same (podano poprawne hasło do konta)
-		{
-			$_SESSION['zalogowany'] = true;
+		{	
+			$_SESSION['zalogowany'] = true;			
 			$_SESSION['id'] = $row['id_klienta'];
 			$_SESSION['imie'] = $row['imie'];
 			$_SESSION['nazwisko'] = $row['nazwisko'];
@@ -403,9 +404,9 @@
 			$_SESSION['data_urodzenia'] = $row['data_urodzenia'];
 			$_SESSION['telefon'] = $row['telefon'];
 			$_SESSION['email'] = $row['email'];
-			$_SESSION['login'] = $row['login'];
+			$_SESSION['login'] = $row['login'];			
 
-			//$_SESSION['koszyk_ilosc_ksiazek'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
+			//$_SESSION['koszyk_ilosc_ksiazek'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); 
 			//$_SESSION['test123'] = test_fun();
 			//$id_klienta = $_SESSION['id'];
 			//$_SESSION['test123'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
@@ -444,11 +445,8 @@
 
 	function cart_verify_book($result)
 	{
-
         // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
 		$_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
-        echo "<br>448<br>";
-        //echo $_SESSION['book_exists']; exit();
 		$result->free_result();
 	}
 
@@ -456,9 +454,9 @@
     {
         // do usunięcia
 
-	    foreach($GLOBALS as $var_name => $value)
+	    foreach($GLOBALS as $var_name => $value) 
 	    {
-	        if ($value === $var)
+	        if ($value === $var) 
 	        {
 	            return $var_name;
 	        }
@@ -503,82 +501,191 @@
         }
     }
 
-    function query($query, $fun, $value)
-    {
-        require "connect.php";
-        mysqli_report(MYSQLI_REPORT_STRICT);
+	function query($query, $fun, $value)
+	{	
+		$type = get_first_word($query); // type = SELECT, INSERT, ... etc
 
-        try
-        {
-            $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		// $query -> "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%$search_value%'"
 
-            if($polaczenie->connect_errno)
-            {
-                throw new Exception(mysqli_connect_errno());
-            }
-            else                                  // udane polaczenie
-            {
-                if(gettype($value) !== "array") { // jeśli to nie jest tablica
+		require "connect.php";
+		mysqli_report(MYSQLI_REPORT_STRICT);
+        // sposób raportowania błędów -> MYSLQI_REPORT_STRICT - zamiast warningów, chcemy rzucać exception (w celu uniknięcia wyświetlania tych warningów - dla użytkowników ... w sekcji Catch ... )
 
-                    $value = [$value];            // zrób z niej tablicę
-                }
+		try 
+		{			
+			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);			
 
-                //if (!is_array($value)) {
-                //	$values = [$values];
-                //}
+            //$_SESSION["polaczenie"] = $polaczenie;
 
-                for($i = 0; $i < count($value); $i++)
-                {
-                    $value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
-                }
+			if($polaczenie->connect_errno!=0) // błąd połączenia
+			{			
+				throw new Exception(mysqli_connect_errno()); // rzuć nowy wyjątek - po to aby sekcja Catch go złapała, i wyświetliła na ekranie - przy uzyciu echo.
+			}
+			else // udane polaczenie
+			{	
+				//if(($type == "SELECT"))
+				//if(($type == "SELECT"))
+				if(!is_array($value)) // jeśli value to pojedyncza zmienna (nie tablica)
+				{	
+					//echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";
 
-                if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie, $value - tablica parametrów do vsprintf
-                {
-                    //print_r($result); echo "<br><br>";
+					//echo "<br> query = $query <br>"; exit();
+					//if($result = $polaczenie->query($query)) // udane zapytanie
+					if($result = $polaczenie->query(sprintf($query, mysqli_real_escape_string($polaczenie, $value))))
+                    // czy udało się zrealizować Zapytanie ($result) do Bazy ?	--> TRUE/FALSE; pojedynczy zapis mysqli_real_ ... - ponieważ jest to jedna zmienna; a nie tablica
+					// $rezultat = $polaczenie->query("SELECT id FROM uzytkownicy WHERE email='$email'");  // <--- tak to wygląda BEZ funkcji sprintf
+					{
+						// Czy udało się zrealizować zapytanie (query) do BD ?
+			            // --> pusty rezultat zapytania (czyli 0 zwr. rekordów) - to jest też poprawny rezultat zapytania.
+			            // W tym ifie MÓWIMY O SYTUACJI, GDY W ZAPYTANIU WYSTĄPIŁ BŁĄD (?), tzn MYSQL NIE BYŁ W STANIE GO WYKONAĆ (wtedy zmienna $result przyjmie wartość FALSE)
+						
+						//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                    // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
-                    if(gettype($result) != "object") {
-                        // INSERT, UPDATE ...
+							$num_of_rows = $result->num_rows; // ilość zwróconych wierszy	
 
-                        if($fun != "") {
-                            $fun($result);
-                        }
+							//echo '<script>console.log('.$num_of_rows.');</script>';
 
-                    } else {  // $result jest obiektem
-                        // SELECT
-                        $num_of_rows = $result->num_rows; // ilość zwróconych wierszy
+							if($num_of_rows>0) // znaleziono rekordy ...  // == 1
+							{							
 
-                        if($num_of_rows>0) // znaleziono rekordy
-                        {
-                            $fun($result);
-                        }
-                        else {
-                            echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy)
-                        }
-                    }
-                }
-                else // nie udało się zrealizować zapytania
-                {
-                    throw new Exception($polaczenie->error);
-                }
+								$fun($result); // wywołanie zewnętrznej funkcji	
 
-                $polaczenie->close();
-            }
-        }
-        catch(Exception $e) // exception - wyjątek; przechwycenie i obsługa wyjątku;
-        {
-            echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności]</div>';
-            echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - dla deweloperów
-            exit(); // (?)
-        }
+								// $result->free_result();  //  czy jeśli zostawię tutaj "$result->free_result();" to nie BĘDĘ MUSIAŁ wpisywać tej linii w KAŻDEJ FUNKCJI (?!!?)
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //return "<br> query = ".$query.", type = ".$type."<br>";
-    }
+								// np. wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php, itp ...
+							}
+							else  // brak zwróconych rekordów (np 0 zwróconych wierszy / rekordów)
+							{
+											//$_SESSION['blad'] = '<span style="color: red">Nie udało się pobrać danych z bazy danych !</span>';
+											//$_SESSION['blad'] = '<span style="color: red">Brak wyników</span>';
+											//header('Location: index.php');
+											//echo '<script>alert("functions - 436");</script>';
+									echo '<h3>Brak wyników</h3>';
+							}			
+											
+						//////////////////////////////////////////////////////////////////////////////////////////////////////
+					}
+					else // Nie udało się zrealizować Zapytania ! ($result)
+					{
+						throw new Exception($polaczenie->error); // √√√
+						//echo $_SESSION['blad'];
+					}
+
+					$polaczenie->close(); // Czy przenieść to poniżej aby nie pisać tego dwa razy ?
+				}
+				//else  // INSERT, UPDATE ...
+				//elseif(($type == "INSERT") || ($type == "UPDATE"))  // INSERT, UPDATE ...
+				elseif(is_array($value))  // INSERT, UPDATE ...
+				{
+					// echo "<br><br> -> " . sprintf($query, mysqli_real_escape_string($polaczenie, $value)) . "<br><br>";
+					
+					// Użycie funkcji mysqli_real_escape_string na tablicy parametrów (wartosci tj. imie, nazwisko, hasło ...)
+
+					for($i = 0; $i < count($value); $i++)
+					{					 
+						//$value_i = $value[$i];						
+						$value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
+
+						//echo "<br> -> $value[$i]";
+						
+					}
+					//exit();
+
+					if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie, $value - tablica parametrów do vsprintf
+					{
+						if($type != "DELETE") // koszyk.php - usuwanie książek - WARUNEK TYLKO DLA SELECT (?), NIE - WCHODZI TU TEŻ INSERT Z rejestracja.php
+						{
+							//////////////////////////////////////////////////////////////////////////////////////////////////////
+							
+							//echo '<script>alert("udało się zmienić dane :)")</script>';
+							
+							//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+							if($type == "SELECT") // Nie wiem czy tak powinno być (?) - TYLKO DLA SELECT - ewentualnie ZMIENIĆ
+							{
+								// DLA ZAPYTANIA SELECT (z wykorzystaniem WIĘCEJ NIŻ JEDNEJ zmiennej w WHERE condition - zastosowanie - przy koszykach.php) :
+								$num_of_rows = $result->num_rows; // ilość zwróconych wierszy
+
+								//echo "num_rows = " . $num_of_rows . "<br>";
+								//exit();
+								if($num_of_rows>0) // znaleziono rekordy ...  // == 1
+								{					
+									$fun($result); // wywołanie zewnętrznej funkcji	
+									// wywołanie funkcji cart_verify_book -> przestawi zmienną $_SESSION['book_exists'] na TRUE (co oznacza że książka ta istnieje w koszyku tego usera)
+									// np. wywołanie funkcji, która zweryfikuje hasło, ... i wykona dalsze instrukcje tj. skrypt logowanie.php			
+								}
+							}
+							else // INSERT, .. UPDATE
+							{
+                                if($fun != "") { // niektóre zapytania nie używają żadnej funkcji
+
+                                    //if((isset($_SESSION['wszystko_OK'])))   // rejestracja.php
+                                    //{
+                                    $fun($result);  // rejestracja.php -> wywołanie zewnętrznej funkcji "register" ->  ustawia $_SESSION['udanarejestracja'] na "true", przekierowuje do "zaloguj.php"
+                                    //}
+
+                                    // order.php -> dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza
+
+
+//                                    if($fun == "get_last_order_id")
+//                                    {
+//                                        $_SESSION['last_order_id'] = $polaczenie->insert_id;
+//
+//                                        // mysqli::$insert_id -- mysqli_insert_id — returns the value generated for an AUTO_INCREMENT column by the last query
+//
+//                                        //$result->free_result();
+//
+//                                    }
+
+                                }
+
+
+							}
+						}
+
+					}
+					else // nie udało się zrealizować zapytania
+					{
+						throw new Exception($polaczenie->error);
+
+					}
+
+					$polaczenie->close();
+
+					//exit();
+				}
+				else // test połączenia z bazą danych - wyświetlanie wyjątku w przypadku błędu
+				{
+					// ?
+				}
+
+				// $polaczenie->close();  <--- dodać tutaj !?! (wtedy zapisać tylko raz - w tym miejscu !)
+			}
+		}
+		catch(Exception $e) // Exception - wyjątek; przechwycenie i obsługa wyjątku
+		{
+			//echo '<script>alert("functions - 486");</script>';
+
+			//echo '<span style="color: red;"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o rejestrację w innym terminie! ]</span>'; 
+			
+			echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności]</div>';
+
+			echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW (!)
+			// zamiast tego użyć klasy error ...
+			exit(); // (?)
+		}
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//return "<br> query = ".$query.", type = ".$type."<br>";
+	}
+
 
 	function get_first_word($string)
     {
-    	// ta funkcja zwraca pierwsze słowo ze stringa
+    	// ta funkcja zwraca pierwsze słowo ze stringa 
         $arr = explode(' ', trim($string));
         return isset($arr[0]) ? $arr[0] : $string;
     }

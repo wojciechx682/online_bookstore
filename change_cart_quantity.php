@@ -59,11 +59,9 @@
 
 	header('Location: koszyk.php');
 	//echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">Wróć</a>';
-
 	//header('Location: index.php?kategoria='.$_SESSION['kategoria'].'');
 	exit();
-
 ?>
 
 <!--<script src="jquery.js"></script>-->
-<script src="nieużywane pliki (projektu)/sortowanie_v2.js"></script>
+<!--<script src="nieużywane pliki (projektu)/sortowanie_v2.js"></script>-->

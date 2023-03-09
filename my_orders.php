@@ -36,7 +36,7 @@
 
 				$id_klienta = $_SESSION['id'];
 
-				echo query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia WHERE id_klienta = '%s'", "get_orders", "$id_klienta");
+				query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia WHERE id_klienta = '%s'", "get_orders", $id_klienta);
 
 			?>
 
