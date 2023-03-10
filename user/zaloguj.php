@@ -4,8 +4,8 @@
 	
 	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (!(isset($_SESSION['udanarejestracja'])))) // jeśli weszliśmy na zaloguj.php będąc zalogowanym
 	{
-		header("Location: index.php");
-		exit();
+		/*header("Location: index.php");
+		exit();*/
 	}
 	elseif((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (isset($_SESSION['udanarejestracja'])) && ($_SESSION['udanarejestracja'] == "true")) // jeśli stworzyliśmy konto, będąc zalogowanym na inne
 	{
@@ -58,11 +58,11 @@
 <!DOCTYPE HTML>
 <html lang="pl">
 
-<?php require "../template/head.php" ?>
+<?php require "../view/head.php" ?>
 
 <body>
 
-<?php require "../template/header-container.php" ?>
+<?php require "../view/header-container.php" ?>
 
 	<div id="container">	
 
@@ -87,6 +87,13 @@
 				<input type="submit" value="Zaloguj się">	
 					
 			</form>
+
+            <form action="reset_password.php" method="post">
+                <!-- <input type="hidden" name="id_ksiazki" value="%s">
+                 <input type="hidden" name="koszyk_ilosc" class="koszyk_ilosc"  value="1">-->
+
+                <br><a href="reset_password.php">Przypomnij hasło</a><br>
+            </form>
 			
 			<br><a href="zarejestruj.php">Rejestracja - załóż darmowe konto!</a><br>
 
@@ -113,7 +120,7 @@
 
 		</div>
 
-        <?php require "../template/footer.php" ?>
+        <?php require "../view/footer.php" ?>
 
 	</div>
 	

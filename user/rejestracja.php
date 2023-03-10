@@ -121,6 +121,8 @@
 			$_SESSION['e_email'] = "Podaj poprawny adres e-mail";
 		}
 
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                         // Sprawdzenie poprawności hasła :
                                         // if((strlen($haslo1)<8) || (strlen($haslo1)>20)) // sprawdzenie długości hasła

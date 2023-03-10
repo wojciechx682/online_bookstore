@@ -10,11 +10,11 @@
 <!DOCTYPE HTML>
 <html lang="pl">
 
-<?php require "../template/head.php"; ?>
+<?php require "../view/head.php"; ?>
 
 <body>
 
-<?php require "../template/header-container.php"; ?>
+<?php require "../view/header-container.php"; ?>
 
 	<div id="container">
 
@@ -156,13 +156,22 @@
                 </p>
             </div>
 
-            <input type="submit" value="Zamawiam">
+            <br><input type="submit" value="Zamawiam">
 
             </form>
 
+            <?php
+
+                if(isset($_SESSION["order-error"])) {
+                    unset($_SESSION["order-error"]);
+                    echo "<p>Aby złożyć zamówienie, dodaj książki do koszyka !</p>";
+                }
+
+            ?>
+
 		</div>
 
-        <?php require "../template/footer.php"; ?>
+        <?php require "../view/footer.php"; ?>
 
         <script src="../scripts/set-span-width.js"></script>
 

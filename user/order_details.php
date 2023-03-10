@@ -10,11 +10,11 @@
 <!DOCTYPE HTML>
 <html lang="pl">
 
-<?php require "../template/head.php"; ?>
+<?php require "../view/head.php"; ?>
 
 <body>
 
-<?php require "../template/header-container.php"; ?>
+<?php require "../view/header-container.php"; ?>
 
 	<div id="container">		
 

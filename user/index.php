@@ -34,16 +34,16 @@
 
 ?>
 
-<!DOCTYPE HTML>                    <!-- HTML5 template consistent with the latest W3C standards -->
+<!DOCTYPE HTML>
 <html lang="pl">
 
-<?php require "../template/head.php"; ?>
+<?php require "../view/head.php"; ?>
 
 <body>
 
 <?php
 
-require "../template/header-container.php"; // header template ?>
+require "../view/header-container.php"; ?>
 
 	<div id="container">
 
@@ -261,7 +261,7 @@ require "../template/header-container.php"; // header template ?>
 
 		</div>
 
-        <?php require "../template/footer.php"; ?>
+        <?php require "../view/footer.php"; ?>
 
 	</div>
 

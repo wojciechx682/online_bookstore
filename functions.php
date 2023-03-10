@@ -16,6 +16,8 @@
                                       the code inside the file before redirecting. */
                         }
 
+
+
 	function advanced_search($result)
 	{
 		get_books($result);
@@ -505,6 +507,8 @@
 
     // Model - odpowiedzialny za reprezentację danych biznesowych, logikę aplikacji oraz dostęp do bazy danych.
     // W kontekście kodu, który podałeś, funkcja query() odpowiada za wykonanie zapytań do bazy danych, co oznacza, że pełni rolę modelu.
+
+    // $fun - nazwa funkcji, która będzie obsługiwać wynik zapytania.
 
     function query($query, $fun, $value)
     {

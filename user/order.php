@@ -11,11 +11,11 @@ if(!(isset($_SESSION['zalogowany']))) {
 <!DOCTYPE HTML>
 <html lang="pl">
 
-<?php require "../template/head.php"; ?>
+<?php require "../view/head.php"; ?>
 
 <body>
 
-<?php require "../template/header-container.php"; ?>
+<?php require "../view/header-container.php"; ?>
 
 <div id="container">
 
@@ -94,7 +94,15 @@ if(!(isset($_SESSION['zalogowany']))) {
             echo "<br> forma_platnosci = " .$forma_platnosci;
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            if(!$_SESSION["koszyk_ilosc_ksiazek"] ||
+                $_SESSION["koszyk_ilosc_ksiazek"] == 0) {
 
+                $_SESSION["order-error"] = true;
+                //header('location: submit_order');
+                echo '<script>window.location.href="submit_order.php";</script>';
+                exit();
+            }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // $datetime = new DateTime();   // object of DateTime class
 
             $datetime = new DateTimeImmutable(); // object of DateTimeImmutable class;
@@ -242,7 +250,7 @@ if(!(isset($_SESSION['zalogowany']))) {
 
     </div>
 
-    <?php require "../template/footer.php"; ?>
+    <?php require "../view/footer.php"; ?>
 
 </div>
 
