@@ -1,6 +1,5 @@
-    <div id="header-container">
 
-        <!-- <div id="header_content"> -->
+    <div id="header-container">
 
         <div id="sticky">
             <div id="top-header">
@@ -8,12 +7,6 @@
                     <div id="header-title">
                         Księgarnia internetowa
                     </div>
-                    <!-- <div id="div_register">
-                        <a class="top-nav-right" href="zarejestruj.php">Zarejestruj</a>
-                    </div> -->
-                    <!-- <div id="div_log_in">
-                        <a class="top-nav-right" href="zaloguj.php">Zaloguj</a>
-                    </div> -->
                     <ol>
                         <li>
                             <a href="zarejestruj.php">Zarejestruj</a>
@@ -27,7 +20,6 @@
 
             <div id="header">
                 <div id="header-content">
-                    <!-- <a href="index.php">Strona główna</a> -->
                     <div id="div-search">
                         <form action="index.php" method="get">
                             <input type="search" name="input-search" id="input-search">
@@ -35,7 +27,7 @@
                         </form>
                     </div>
                     <div id="div-logo">
-                        <img src="logo.png" width="100px">
+                        <img src="../assets/logo.png" alt="logo">
                     </div>
                     <div id="div-cart">
                         <a class="top-nav-right" href="koszyk.php">Koszyk
@@ -47,7 +39,6 @@
                             ?>
                         </a>
                     </div>
-                    <div style="clear: both;"></div>
                 </div>
             </div>
         </div>

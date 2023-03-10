@@ -1,3 +1,6 @@
+
+<? // template used on the cart page (cart.php) to display the products currently in the cart of a given customer ?>
+
 <div id="book%s"> <span class="book-details">
 	<div class="title">%s</div>
 	<div class="price">%s</div>
@@ -20,5 +23,3 @@
 
 	<br><hr><br>
 </div>
-
-<? // template used on the cart page (cart.php) to display the products currently in the cart of a given customer ?>

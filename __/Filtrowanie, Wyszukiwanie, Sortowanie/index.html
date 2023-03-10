@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filtrowanie, Wyszukiwanie, Sortowanie</title>
+    <link rel="stylesheet" href="../nieużywane%20pliki%20(projektu)/style.css">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="jquery.nouislider.css">
+
+</head>
+<body>
+
+    <pre>Suwak - aktualizacja zawartości tabeli</pre>
+
+    <pre>SUWAK -> Wtyczka jQ "noUiSlider" </pre>
+
+    <!-- https://refreshless.com/nouislider/ -->
+
+    <!-- Działanie tego skryptu :
+
+         - iteracja przez wszysktie obiekty TABLICY (JS) + utworzenie WIERSZA dla KAŻDEGO z nich
+         - nowy wiersz dodawany jest do tabeli (HTML)
+         - każdy wiersz jest ukryty/wyświetlony zależnie od FILTRU (suwaka) - (to zmienia się po każdym przesunięciu suwaka)
+
+          tablica rows - "tablica odwołań" - (przechowuje obiekty) ->
+              -> sprawdzenie danych w obiekcie "person",
+              -> sprawdzenie odpowiadającego mu wiersza w tabeli - WYŚW / UKRYJ
+
+          każdy obiekt tablicy "rows" ma właściwości ->
+              -> "person" - ODNIESIENIE do obiektu danej osoby w tablicy people !
+              -> $element - KOLEKCJA jQuery zawierająca odpowieadający WIERSZ (tabeli)
+          --------------------------------------------------------------------
+          makeRows() - tworzy wiersz w tabeli dla każdej osoby (na podst. tablicy "people") + umieszcza obiekt w tablicy "rows"
+
+          appendRows() - iteracja przez tablicę "rows", dodaje WIERSZE DO TABELI
+
+          update() - określa, które wiersze maja byc wyświetlone/ukryte ... (na podst. danych pobr. z suwaka)
+
+          init() - tworzy suwak (za pomocą wtyczki jQ)
+          --------------------------------------------------------------------
+     -->
+
+    <header>
+        <h1>CreativeFolk</h1>
+    </header>
+    <div id="price-range">
+        Min: <input type="number" id="value-min" />
+        Max: <input type="number" id="value-max" />
+        <div id="slider"></div>
+        <table id="rates"><thead><th>Name</th><th>Hourly rate ($)</th></thead></table>
+    </div>
+    <script src="jquery-3.6.3.js"></script>
+
+    <script src="jquery.nouislider.js"></script>
+
+    <script src="../scripts/filtrowanie.js"></script>
+
+
+
+
+    <!--<script src="../jquery-3.6.3.js"></script>
+    <script src="jquery.nouislider.js"></script>
+    <script src="filtrowanie.js"></script> -->
+</body>
+</html>

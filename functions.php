@@ -31,7 +31,7 @@
             while ($row = $result->fetch_assoc())
             {
                 // load the content from the external template file into string
-                $author = file_get_contents("template/content-authors.php");
+                $author = file_get_contents("../template/content-authors.php");
 
                 // replace fields in $author string to author data from $result, display result content as HTML
                 echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
@@ -89,10 +89,10 @@
 //            ';
 
             // load the content from the external template file into string
-            $book = file_get_contents("template/content-books.php");
+            $book = file_get_contents("../template/content-books.php");
 
             // replace fields in $book string to book data from $result, display result content as HTML
-            echo sprintf($book, $i, $row["tytul"], $row["cena"], $row["rok_wydania"], $row["id_ksiazki"]);
+            echo sprintf($book, $i, $row["tytul"], $row["cena"], $row["rok_wydania"], $row["id_ksiazki"]); // return zamiast echo ?
 
 		  	$i++;
 		}
@@ -195,7 +195,7 @@
 //		  	echo '</div>';
 
             // load the content from the external template file into string
-            $book = file_get_contents("template/cart-products.php");
+            $book = file_get_contents("../template/cart-products.php");
 
             // replace fields in $book string to book data from $result
             echo sprintf($book, $i, $row["tytul"], $row["cena"], $row["rok_wydania"], $row["id_ksiazki"], $row["id_ksiazki"], $row['id_ksiazki'], $row['ilosc'], $row['id_ksiazki'], $row['id_ksiazki'], $row['id_klienta'], $row['id_ksiazki'], $row['ilosc']);
@@ -503,6 +503,9 @@
         }
     }
 
+    // Model - odpowiedzialny za reprezentację danych biznesowych, logikę aplikacji oraz dostęp do bazy danych.
+    // W kontekście kodu, który podałeś, funkcja query() odpowiada za wykonanie zapytań do bazy danych, co oznacza, że pełni rolę modelu.
+
     function query($query, $fun, $value)
     {
         require "connect.php";
@@ -550,10 +553,10 @@
 
                         if($num_of_rows>0) // znaleziono rekordy
                         {
-                            $fun($result);
+                            $fun($result); //
                         }
                         else {
-                            echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy)
+                            echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
                         }
                     }
                 }
@@ -567,7 +570,7 @@
         }
         catch(Exception $e) // exception - wyjątek; przechwycenie i obsługa wyjątku;
         {
-            echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności]</div>';
+            echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności]</div>'; // użycie "return" zamisat echo
             echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - dla deweloperów
             exit(); // (?)
         }
