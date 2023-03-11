@@ -69,6 +69,8 @@ if (isset($_POST['email'])) {
                 </body>
             </html>';*/
 
+            // https://stackoverflow.com/questions/15890627/phpmailer-body-with-variables
+
             $mail->Body = '
             <html>
                 <head>

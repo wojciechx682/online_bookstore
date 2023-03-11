@@ -4,8 +4,8 @@
 	
 	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (!(isset($_SESSION['udanarejestracja'])))) // jeśli weszliśmy na zaloguj.php będąc zalogowanym
 	{
-		/*header("Location: index.php");
-		exit();*/
+		header("Location: index.php");
+		exit();
 	}
 	elseif((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (isset($_SESSION['udanarejestracja'])) && ($_SESSION['udanarejestracja'] == "true")) // jeśli stworzyliśmy konto, będąc zalogowanym na inne
 	{
@@ -81,21 +81,24 @@
 			<form action="logowanie.php" method="post">
 			
 				<!-- Login: <br> <input type="text" name="login"> <br> -->
-				E-mail: <br> <input type="text" name="email" value="jason2@wp.pl"> <br>
+				E-mail: <br> <input type="text" name="email" value="jakub.wojciechowski.682@gmail.com"> <br>
 				Hasło: <br> <input type="password" name="haslo" value="PassJacob33#"> <br><br>
 				
 				<input type="submit" value="Zaloguj się">	
 					
 			</form>
 
-            <form action="reset_password.php" method="post">
-                <!-- <input type="hidden" name="id_ksiazki" value="%s">
-                 <input type="hidden" name="koszyk_ilosc" class="koszyk_ilosc"  value="1">-->
-
-                <br><a href="reset_password.php">Przypomnij hasło</a><br>
-            </form>
+            <br><a href="reset_password.php">Przypomnij hasło</a><br>
 			
 			<br><a href="zarejestruj.php">Rejestracja - załóż darmowe konto!</a><br>
+
+            <?php
+                if(isset($_SESSION["password-changed"]) && $_SESSION["password-changed"]) {
+                    echo "<br>udało się zmienić hasło<br>";
+                    session_unset();
+                    session_destroy();
+                }
+            ?>
 
 			<?php	
 				// pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło

@@ -1,178 +1,182 @@
 <?php
 
-	session_start();
+session_start();
 
-	include_once "../functions.php";
+include_once "../functions.php";
 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-    use PHPMailer\PHPMailer\SMTP;
-    
-    require 'PHPMailer/src/Exception.php';
-    require 'PHPMailer/src/PHPMailer.php';
-    require 'PHPMailer/src/SMTP.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 
-	//query("", "", "");
-	
-	if (isset($_POST["email"]) && !empty($_POST["email"])) {
-	    
-	        echo "<br> email -> " . $_POST["email"] . "<br><br>";
-	    
-	    //$email = $_POST["email"];
-		
-		$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-		
-	    
-	    //$email_s = filter_var($email, FILTER_SANITIZE_EMAIL); // email - after the sanitization process. removes source code characters to avoid XSS attacks
-	    
-	    //echo "<br> email_s -> " . $email_s . "<br><br>";
+if (isset($_POST["email"]) && !empty($_POST["email"])) {
 
-	    if (empty($email)) 
-		{
-            // ensures that the email input is sanitized and valid
-            // to avoid any potential XSS attacks and other vulnerabilities.
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['e_reset'] = "Podaj poprawny adres e-mail";
-		}
-		else {
-		    
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            
-            // Sprawdzenie czy taki user (email) istnieje już w bazie, jeśli tak, to można zresetowac dla niego hasło
-            
-            var_dump($_SESSION); 
-            
-            query("SELECT id_klienta FROM klienci WHERE email='%s'", "check_email", $email);  
-                                                                   // ustawi zmienną $_SESSION['email_exists'] na "true";
-                
-            if($_SESSION['email_exists'] == true) {
-                
-                // istnieje taki klient (email), można zresetować mu hasło ->
-                
-                $token = bin2hex(random_bytes(32));
-                
-                echo "<br> token --> " . $token . "<br>";
-                
-                $id = $_SESSION["id"];
-                
-                $data = [$id, $token];
-                
-                query("INSERT INTO password_reset_tokens (token_id, client_id, token) VALUES (NULL, '%s', '%s')", "", $data);  // ✓ 
-                
-                // jeśli nie wyjebało błędu przy INSERCIE, to jedziemy dalej -->
-                
-                //////////////////////////
-                // wyślij do klienta email z linkiem ->
-                
-				echo "<br><br> 68 <br>";
-				
-                try {                           // try to send e-amil
-                    
-					
-                    $mail = new PHPMailer();
-        
-                    $mail->isSMTP();
-                        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-        
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->Port = 465; 
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-                    $mail->SMTPAuth = true;
-        
-                    $mail->Username = 'webapp.bookstore@gmail.com'; // Adres nadawcy; Podaj swój login gmail
-                    $mail->Password = 'qhdptsplvclqyyhi'; // Podaj swoje hasło do aplikacji
-        
-                    // Konfiguracja wiadomości ->
-                    $mail->CharSet = 'UTF-8';
-                    $mail->setFrom('no-reply-online-bookstore@domena.pl', 'Przypomnienie hasła');
-                    $mail->addAddress($email); // email ODBIORCY
-                    $mail->addReplyTo('biuro@domena.pl', 'Biuro');
-        
-                    $mail->isHTML(true);
-                    $mail->Subject = 'Księgarnia internetowa - Przypomnij hasło';
-                    //$mail->Body = 'Hello World!';
-                    
-                    /*$mail->Body = '<html>
-                        <body>
-                            <h1></h1>
-                            ...
-                            ...
-                        </body>
-                    </html>';*/
-                    
-                    $url = 'https://apint000.000webhostapp.com/user/reset_password.php?email='.$email.'&token='.$token;
-                    //$url = 'https://apint000.000webhostapp.com/user/reset_password.php?email='.urlencode($email).'&token='.urlencode($token);
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL); // return false if email failed validation
 
-                    $test = "123";
+    if ($email === false) 	{
+        // ensures that the email input is sanitized and valid
+        // to avoid any potential XSS attacks and other vulnerabilities.
 
-                    
-                    $mail->Body = '
-                    <html>
-                        <head>
-                            <title>Przypomnij hasło</title>
-                        </head>
-                        <body>
-                            <p>Witaj,</p>
-                            <p>Poprosiłeś o zresetowanie hasła. Aby zresetować hasło, kliknij poniższy link </p>
-                                <a href="https://apint000.000webhostapp.com/user/reset_password.php?email=">reset_password</a>
-                            <p>Jeśli nie prosiłeś o zresetowanie hasła, możesz zignorować tę wiadomość.</p>
-                            <br>
-                            <p>© 2023 Online Bookstore. All rights reserved.</p>
-                        </body>
-                    
-                    </html>
-                    
-                    
+        $_SESSION['e_reset'] = "Podaj poprawny adres e-mail";
+    }
+    else {
+
+        // Sprawdzenie czy taki user (email) istnieje już w bazie, jeśli tak, to można zresetowac dla niego hasło
+
+        query("SELECT id_klienta, imie FROM klienci WHERE email='%s'", "check_email", $email);
+        // ustawi zmienną       $_SESSION['email_exists']   -> na "true", jeśli jest taki user (email) - (jeśli zwrócono rekordy z BD - result);
+        //                      $_SESSION["imie"];
+
+        if(isset($_SESSION['email_exists']) && $_SESSION["email_exists"]) {
+
+            // istnieje taki klient (email), można zresetować mu hasło ->
+
+            $token = bin2hex(random_bytes(32));
+            $datetime = new DateTimeImmutable();
+            $exp_time = $datetime->add(new DateInterval('PT15M'))->format('Y-m-d H:i:s');
+            $data = [$token, $email, $exp_time];
+
+            query("INSERT INTO password_reset_tokens (token_id, token, email, exp_time) VALUES (NULL, '%s', '%s', '%s')", "", $data);  // wstawienie wpisu do tabeli z tokenami (token + emaiL)
+
+            // jeśli nie wyjebało błędu przy INSERCIE, to jedziemy dalej -->
+
+            // wyślij do klienta email z tokenem ->
+
+            try {
+
+                $mail = new PHPMailer(); // create a new PHPMailer instance
+
+                $mail->isSMTP();
+                //$mail->SMTPDebug = SMTP::DEBUG_SERVER; // aby widzieć komunikaty przebiegu wysyłania wiadomośći
+
+                $mail->Host = 'smtp.gmail.com';
+                $mail->Port = 465;
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                $mail->SMTPAuth = true;
+
+                $mail->Username = 'jakub.wojciechowski.683@gmail.com'; // Adres NADAWCY; Podaj swój login gmail
+                $mail->Password = 'ubkdmiyqcquifysy'; // Podaj swoje hasło do aplikacji
+
+                $mail->CharSet = 'UTF-8';  // Konfiguracja wiadomości
+                $mail->setFrom('jakub.wojciechowski.683@gmail.com', 'Przypomnienie hasła'); // nazwa odbiorcy (name)
+                $mail->addAddress($email); // email ODBIORCY
+                //$mail->addReplyTo('biuro@domena.pl', 'Biuro');
+
+                $mail->isHTML(true);
+                $mail->Subject = 'Księgarnia internetowa - Przypomnij hasło';
+
+                $user = $_SESSION["imie"];
+
+                $mail->Body = '
+                        <html>
+                            <head>
+                                <title>Przypomnij hasło</title>
+                            </head>
+                            <body>
+                                <p>Witaj '.$user.', </p>                            
+                                <p>Poprosiłeś o zresetowanie hasła do swojego konta w księgarni. Aby zresetować hasło, wprowadź poniższy token na <strong><i>stronie resetowania</i></strong> hasła w aplikacji</p>                               
+                                <strong><i>'.$token.'</i></strong>                                
+                                <p>Jeśli nie prosiłeś o zresetowanie hasła, możesz zignorować tę wiadomość.</p>
+                                <p>Powyższy token będzie aktywny tylko przez 15 minut</p>
+                                <br>
+                                <p>© 2023 Online Bookstore. All rights reserved.</p>
+                            </body>                  
+                        </html>
                     ';
-                    
-                    // $mail->Body = '
-                    // <html>
-                    //     <head>
-                    //         <title>Przypomnij hasło</title>
-                    //     </head>
-                    //     <body>
-                    //         <p>Witaj,</p>
-                    //         <p>Poprosiłeś o zresetowanie hasła. Aby zresetować hasło, kliknij poniższy link </p>
-                    //             <a href=" https://apint000.000webhostapp.com/user/reset_password.php?email='.$email.'&token='.$token.'
-                                
-                    //             ">reset_password</a>
-                    //         <p>Jeśli nie prosiłeś o zresetowanie hasła, możesz zignorować tę wiadomość.</p>
-                    //         <br>
-                    //         <p>© 2023 Online Bookstore. All rights reserved.</p>
-                    //     </body>
-                    
-                    // </html>
-                    
-                    
-                    // ';
-        
-                    //$mail->addAttachment('img/html-ebook.jpg'); // dodanie załącznika
-        
-                    $mail->send(); // wysłanie wiadomości
-        
-        
-                } catch(Exception $e) {
-                    echo "Błąd wysyłania maila: {$mail->ErrorInfo}";
+
+                //$mail->addAttachment('img/html-ebook.jpg'); // załącznik
+                //
+                if($mail->send()) {
+                    $_SESSION["email-sent"] = true;  // email wysłany pomyślnie
+                } else {
+                    $_SESSION["email-sent"] = false; // email niewysłany
                 }
-                
-                
-                
-                
-                
-                
-                //unset($_SESSION['email_exists']); 
-                
-                //exit();
-            }    
-                
-            
+
+            } catch(Exception $e) {
+                //echo "Błąd wysyłania maila: {$mail->ErrorInfo}";
+
+                $_SESSION["sent-error"] = "Błąd wysyłania maila: {$mail->ErrorInfo}";
+                unset($_SESSION["email-sent"]);
+            }
+            //unset($_SESSION['email_exists']);
             //exit();
-		    
-		    
-		}
-	    
-	}
+        }
+        //exit();
+    }
+}
+//    elseif ( isset($_SESSION["email_exists"]) &&   // jeśli udało się wysłać maila do klienta, i klient przesłał token który otrzymał na maila
+//            $_SESSION["email_exists"] &&
+//            isset($_SESSION["email-sent"]) &&
+//            $_SESSION["email-sent"] &&
+//            isset($_POST["token"]) &&
+//            !empty($_POST["token"])
+//    ) {
+//
+//        //echo '<script>hideField();</script>';
+//
+//        $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING); // sanityzacja danych wejściowych (tokenu);
+//
+//        if($token === false || $token === null) {
+//
+//            // $token nie przeszedł walidacji/sanityzacji ...
+//
+//        } else {
+//
+//            // musimy pobrać maila na podstawie tokenu ✓
+//
+//            //exit();
+//
+//            query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE token='%s'", "verify_token", $token); // $_SESSION["token verified"] --> true jeśli podany token jest poprawny, $_SESSION["token verified"] = email_klienta_zgodny_z_tokenem
+//
+//            print_r($_SESSION);
+//            // Array ( [email_exists] => 1 [email-sent] => 1 [token_verified] => 1 [email] => jakub.wojciechowski.682@gmail.com [exp_time] => 2023-03-11 19:12:17 )
+//            //exit();
+//
+//            $exp_time = $_SESSION["exp_time"]; // data wygaśnięcia tokenu;
+//
+//            $datetime = new DateTimeImmutable();
+//            $cur_date = $datetime->format('Y-m-d H:i:s'); // aktualna data
+//
+//            // Compare the two datetime values
+//            if ($cur_date < $exp_time) {
+//                // The expiration time has passed
+//                echo 'Token is still valid';
+//
+//                // token nadal aktualny ...
+//
+//                // echo '<script>hideResetForm();</script>';/
+//            } else {
+//                // The token is still valid
+//                echo 'Token has expired';
+//            }//
+//            echo "<br> ----> <br>";
+//            print_r($_SESSION);
+//
+//            // Wszystkie się zgadza, ... ->
+//            // Formularz resetowania hasła  +   Update tabeli klienci -->
+//
+//            //$data = [$token, $_SESSION["id"]];
+//
+//            //print_r($data);
+//
+//            //eixt();
+//
+//            // sprawdzenie czy user podał poprawny token (który otrzymał na maila) ->
+//
+//            //query("SELECT token, email, exp_time FROM password_reset_tokens WHERE token='%s' AND email='%s'", "verify_token", $data);
+//
+////            if($_SESSION["token verified"] == true) {
+////
+////                echo "<br><br><br><br><br><br><br> poprawny token !";
+////
+////            } else {
+////                echo "<br><br><br><br><br><br><br> NIEpoprawny token !";
+////            }
+//        }
+//    }
 ?>
 
 <!DOCTYPE HTML>
@@ -182,60 +186,195 @@
 
 <body>
 
+<script src="../scripts/hide-field.js"></script>
+
 <?php require "../view/header-container.php" ?>
 
-	<div id="container">	
+<div id="container">
 
-		<div id="nav">
+    <div id="nav">
 
-		</div>
+    </div>
 
-		<div id="content">
+    <div id="content">
 
-            <?php var_dump($_SESSION); ?>
+        <?php //var_dump($_SESSION); echo "<br><br>"; ?>
 
-			<!-- Formularz      Resetowania hasła -->
+        <!-- Formularz      Resetowania hasła -->
 
-			Przypomnij hasło<br><br>
-			
-			<form method="post">
-			
-				<!-- Login: <br> <input type="text" name="login"> <br> -->
-				podaj e-mail: <input type="email" name="email" value=""> <br>
-				
-				<br><input type="submit" value="Przypomnij hasło">	
-					
-			</form>
-			
-			<?php
-			
-			    if(isset($_SESSION['e_reset'])) {
-			        
-			        echo "->". $_SESSION['e_reset'] . "<br>";
-			        unset($_SESSION['e_reset']);
-			        
-			        
-			    }
-		    ?>
-			
-            <!--<form action="reset_password.php" method="post">-->
-            <!--    <input type="hidden" name="id_ksiazki" value="%s">-->
-            <!--    <input type="hidden" name="koszyk_ilosc" class="koszyk_ilosc"  value="1">-->
-            <!--</form>-->
-            
-            <!--<br><button type="submit" name="reset-password-btn" id="reset-pass-btn" value="value" class="btn-link">Przypomnij hasło</button><br>-->
-            
-            
+        <form method="post" id="reset-form">
 
-			
-			
-			
+            Przypomnij hasło<br><br>
 
-		</div>
+            <!-- Login: <br> <input type="text" name="login"> <br> -->
+            <div id="get-email">podaj e-mail: <input type="email" name="email" value=""><br></div>
 
-        <?php require "../view/footer.php" ?>
+            <br><input type="submit" value="Przypomnij hasło">
 
-	</div>
-	
+        </form>
+
+        <?php
+        if(isset($_SESSION["email-sent"]) && $_SESSION["email-sent"] && !isset($_SESSION["token_verified"])) {
+            // udało się przesłać email klientowi
+
+            $toekn_form = file_get_contents("../view/email-sent.php");
+            echo $toekn_form;
+            echo '<script>hideResetForm();</script>';
+        } else {
+            if(isset($_SESSION["sent-error"]) || (isset($_SESSION["email-sent"]) && ($_SESSION["email-sent"] == false))) {
+                echo "<div>nie udało się wysłać wiadomości na podany adres e-mail</div>";
+                //echo $_SESSION["sent-error"];
+            }
+        }
+        ?>
+
+        <?php
+        if(isset($_SESSION['e_reset'])) {   // niepoprany email
+
+            echo "->". $_SESSION['e_reset'] . "<br>";
+            unset($_SESSION['e_reset']);
+        }
+
+        if(isset($_SESSION["sent-error"])) { // błąd z wysłaniem maila
+
+            echo "->". $_SESSION["sent-error"] . "<br>";
+            unset($_SESSION["sent-error"]);
+        }
+        ?>
+
+        <!--<form action="reset_password.php" method="post">-->
+        <!--    <input type="hidden" name="id_ksiazki" value="%s">-->
+        <!--    <input type="hidden" name="koszyk_ilosc" class="koszyk_ilosc"  value="1">-->
+        <!--</form>-->
+
+        <!--<br><button type="submit" name="reset-password-btn" id="reset-pass-btn" value="value" class="btn-link">Przypomnij hasło</button><br>-->
+
+<!--        <br><br>-->
+
+        <?php
+
+        //print_r($_SESSION);
+        //echo "<br><br>";
+
+        if ( isset($_SESSION["email_exists"]) &&
+            $_SESSION["email_exists"] &&
+            isset($_SESSION["email-sent"]) &&
+            $_SESSION["email-sent"] &&
+            isset($_POST["token"]) &&
+            !empty($_POST["token"])
+        ) {
+
+            // jeśli udało się wysłać maila do klienta, i klient przesłał (odesłał) token który otrzymał na maila -->
+
+            $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING); // sanityzacja danych wejściowych (tokenu);
+
+            if($token === false || $token === null) {
+
+                // $token nie przeszedł walidacji/sanityzacji ...
+
+            } else {
+
+                // musimy pobrać maila na podstawie tokenu ✓
+
+                query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE token='%s'", "verify_token", $token); // $_SESSION["token_verified"] --> true jeśli podany token jest poprawny, $_SESSION["token verified"] = email_klienta_zgodny_z_tokenem;
+                //   $_SESSION["email"] = $row["email"];
+                //   $_SESSION["exp_time"] = $row["exp_time"];
+                            // $_SESSION["token_verified"] = true;
+                            // $_SESSION["email"] = $row["email"];
+                            // $_SESSION["exp_time"] = $row["exp_time"];
+
+                //print_r($_SESSION);
+                // Array ( [email_exists] => 1 [email-sent] => 1 [token_verified] => 1 [email] => jakub.wojciechowski.682@gmail.com [exp_time] => 2023-03-11 19:12:17 )
+
+                if(isset($_SESSION["token_verified"]) && isset($_SESSION["email"]) && isset($_SESSION["exp_time"]) && $_SESSION["token_verified"] && !empty($_SESSION["email"]) && !empty($_SESSION["exp_time"])) {
+
+                    // użytkownik podał poprawny token
+
+                    $exp_time = $_SESSION["exp_time"];   // data wygaśnięcia tokenu;
+                    $datetime = new DateTimeImmutable();
+                    $cur_date = $datetime->format('Y-m-d H:i:s'); // aktualna data
+
+                    // Czy token był nadal ważny ?
+                    if ($cur_date < $exp_time) {
+
+                        // token nadal aktualny ...
+
+                        echo '<script>hideResetForm();</script>';
+
+
+                        echo '<script>hideTokenForm();</script>';
+
+                        $reset_form = file_get_contents("../view/reset-password-form.php");
+                        echo $reset_form;
+
+                    } else {
+                        // the token not valid
+                        echo "<br>Podany token nie jest juz aktualny<br>";
+                    }
+                }
+            }
+        }
+
+        // wysłanie nowego hasła (POST) -->
+
+        if ( isset($_POST["new-password"]) &&
+             isset($_POST["confirm-password"]) &&
+             !empty($_POST["new-password"]) &&
+             !empty($_POST["confirm-password"])
+        ) {
+            $new_password = $_POST["new-password"];
+            $confirm_password = $_POST["confirm-password"];
+
+            if($new_password === $confirm_password) {
+
+                $pass_regex = '/^((?=.*[!@#$%^&*-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
+
+                if(!(preg_match($pass_regex, $new_password))) {
+                    $_SESSION['e_haslo'] = "
+                    Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&*-\/\?)";
+                } else {
+                    $haslo = password_hash($new_password, PASSWORD_DEFAULT);
+                    $data = [$haslo, $_SESSION["email"]];
+                    query("UPDATE klienci SET haslo = '%s' WHERE email = '%s'", "", $data);
+                    //echo "<br>udało się zaktualizować dane<br>";
+
+                    $_SESSION["password-changed"] = true;
+
+                    query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["email"]);
+
+                    //header('Location: zaloguj.php');
+                    echo '<script>window.location.href="zaloguj.php";</script>';
+                    exit();
+                }
+            } else {
+
+
+                session_unset();
+                session_destroy();
+
+                print_r($_SESSION);
+
+                echo "<br>Nie udało się zaktualizować danych<br>";
+
+                echo '<a href ="http://localhost:8080/online_bookstore/user/reset_password.php">Spróbuj jeszcze raz</a>';
+
+            }
+        } else {
+
+        }
+
+
+        ?>
+
+
+
+
+    </div>
+
+    <?php require "../view/footer.php" ?>
+
+</div>
+
+
 </body>
 </html>

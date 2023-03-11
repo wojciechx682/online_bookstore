@@ -106,8 +106,19 @@
 	{
         // validate_user_data.php - sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną
 		$_SESSION['email_exists'] = true;
+
+            $row = $result->fetch_assoc();    // reset_password.php - resetowanie hasła
+            $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
 	}
 
+    function verify_token($result)
+    {
+        // reset-password-form.php
+            $row = $result->fetch_assoc();
+        $_SESSION["token_verified"] = true;
+        $_SESSION["email"] = $row["email"];
+        $_SESSION["exp_time"] = $row["exp_time"];
+    }
 //	function get_books_by_id($result) // koszyk_dodaj.php - nieużywane - do wyrzuczenia
 //	{
 //		while ($row = $result->fetch_assoc())
@@ -560,7 +571,7 @@
                             $fun($result); //
                         }
                         else {
-                            echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
+                            //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
                         }
                     }
                 }
