@@ -103,6 +103,8 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
             }
             //unset($_SESSION['email_exists']);
             //exit();
+        } else {
+            $_SESSION["email-not-exists"] = true;
         }
         //exit();
     }
@@ -211,6 +213,14 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
 
             <br><input type="submit" value="Przypomnij hasło">
 
+            <?php
+                if(isset($_SESSION["email-not-exists"]) && $_SESSION["email-not-exists"]) {
+
+                    echo "<br><br>Nie istnieje konto przypisane do tego adresu<br>";
+
+                }
+            ?>
+
         </form>
 
         <?php
@@ -224,6 +234,7 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
             if(isset($_SESSION["sent-error"]) || (isset($_SESSION["email-sent"]) && ($_SESSION["email-sent"] == false))) {
                 echo "<div>nie udało się wysłać wiadomości na podany adres e-mail</div>";
                 //echo $_SESSION["sent-error"];
+                // unset ?
             }
         }
         ?>
@@ -286,7 +297,11 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
                 //print_r($_SESSION);
                 // Array ( [email_exists] => 1 [email-sent] => 1 [token_verified] => 1 [email] => jakub.wojciechowski.682@gmail.com [exp_time] => 2023-03-11 19:12:17 )
 
+
+
                 if(isset($_SESSION["token_verified"]) && isset($_SESSION["email"]) && isset($_SESSION["exp_time"]) && $_SESSION["token_verified"] && !empty($_SESSION["email"]) && !empty($_SESSION["exp_time"])) {
+
+                    unset($_SESSION["bad-token"]);
 
                     // użytkownik podał poprawny token
 
@@ -311,7 +326,13 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
                         // the token not valid
                         echo "<br>Podany token nie jest juz aktualny<br>";
                     }
+                } elseif ( empty($_SESSION["token_verified"]) ) {
+                    // ...
+                    $_SESSION["bad-token"] = "zły token";
+                    echo "<br>". $_SESSION["bad-token"];
+                    unset($_SESSION["bad-token"]);
                 }
+
             }
         }
 

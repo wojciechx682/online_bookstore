@@ -4,12 +4,12 @@
     <form method="post">
         <label>
             Nowe hasło:
-            <input type="text" name="new-password">
+            <input type="password" name="new-password">
         </label>
             <br>
         <label>
             Powtórz hasło:
-            <input type="text" name="confirm-password">
+            <input type="password" name="confirm-password">
         </label>
         <input type="submit" value="Zmień hasło">
     </form>
