@@ -1,6 +1,4 @@
 
-
-
 <div>
     <form method="post" id="send-token">
         <p>Wprowadź token który otrzymałeś na adres e-mail, aby zresetować hasło : </p>
