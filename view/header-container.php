@@ -1,48 +1,50 @@
-
-    <div id="header-container">
-
-        <div id="sticky">
-            <div id="top-header">
-                <div id="top-header-content">
-                    <div id="header-title">
-                        Księgarnia internetowa
+    <header>
+        <div id="header-container">
+            <div id="sticky">
+                <div id="top-header">
+                    <div id="top-header-content">
+                        <div id="header-title">
+                            Księgarnia internetowa
+                        </div>
+                        <ol>
+                            <li>
+                                <a href="zarejestruj.php">Zarejestruj</a>
+                            </li>
+                            <li>
+                                <?php if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) { echo '<a href="account.php">Moje konto</a>';} else { echo '<a href="zaloguj.php">Zaloguj</a>';} ?>
+                            </li>
+                        </ol>
                     </div>
-                    <ol>
-                        <li>
-                            <a href="zarejestruj.php">Zarejestruj</a>
-                        </li>
-                        <li>
-                            <?php if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) { echo '<a href="account.php">Moje konto</a>';} else { echo '<a href="zaloguj.php">Zaloguj</a>';} ?>
-                        </li>
-                    </ol>
                 </div>
-            </div>
 
-            <div id="header">
-                <div id="header-content">
-                    <div id="div-search">
-                        <form action="index.php" method="get">
-                            <input type="search" name="input-search" id="input-search">
-                            <input type="submit" value="Szukaj">
-                        </form>
-                    </div>
-                    <div id="div-logo">
-                        <img src="../assets/logo.png" alt="logo">
-                    </div>
-                    <div id="div-cart">
-                        <a class="top-nav-right" href="koszyk.php">Koszyk
-                            <?php
+                <div id="header">
+                    <div id="header-content">
+                        <div id="div-search">
+                            <form action="index.php" method="get">
+                                <input type="search" name="input-search" id="input-search">
+                                <input type="submit" value="Szukaj">
+                            </form>
+                        </div>
+                        <div id="div-logo">
+                            <img src="../assets/logo.png" alt="logo">
+                        </div>
+                        <div id="div-cart">
+                            <a class="top-nav-right" href="koszyk.php">Koszyk
+                                <?php
                                 if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) {
                                     query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
                                     echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
                                 }
-                            ?>
-                        </a>
+                                ?>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </header>
 
+    <nav id="main-nav">
         <div id="top-nav">
             <div id="top-nav-content">
                 <ol>
@@ -85,4 +87,4 @@
                 </ol>
             </div>
         </div>
-    </div>
+    </nav>

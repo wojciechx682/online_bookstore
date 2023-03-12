@@ -47,6 +47,72 @@ require "../view/header-container.php"; ?>
 
 	<div id="container">
 
+        <div id="main-content">
+
+            <nav id="category-nav">
+                <ul>
+                    <?php
+                        query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", "");
+                    ?>
+                </ul>
+            </nav>
+
+<!--            <div style="float: left; height: 45px; width: 200px; border: 1px solid black;">asdasdsds</div>-->
+
+            <section id="main-gallery">
+                <div class="slideshow-container">
+
+                    <div class="mySlides fade">
+                        <div class="numbertext">1 / 3</div>
+                        <img src="../assets/gallery/1.png" style="width:100%">
+                        <div class="text">Caption Text</div>
+                    </div>
+
+                    <div class="mySlides fade">
+                        <div class="numbertext">2 / 3</div>
+                        <img src="../assets/gallery/2.png" style="width:100%">
+                        <div class="text">Caption Two</div>
+                    </div>
+
+                    <div class="mySlides fade">
+                        <div class="numbertext">3 / 3</div>
+                        <img src="../assets/gallery/3.png" style="width:100%">
+                        <div class="text">Caption Three</div>
+                    </div>
+
+                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                    <a class="next" onclick="plusSlides(1)">❯</a>
+
+
+                    <div style="text-align:center">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                    </div>
+
+                </div>
+            </section>
+
+            <br><br><br><br><br><br>
+            <br><br><br><br><br><br>
+            <br><br><br><br><br><br>
+
+
+            <section id="latest-books-section">&lt;section&gt; for "Nowości"</section>
+            <section id="books-promotion-section">&lt;section&gt; for "Promocje"</section>
+
+
+
+
+
+            <br>
+
+
+
+
+        </div>
+
+
 		<div id="nav">
 
 			<?php
@@ -88,14 +154,18 @@ require "../view/header-container.php"; ?>
 
 		</div>
 
-		<div id="content">
+
 
 			<?php
 
-				echo "<hr>";
+
+
+				/*echo "<hr>";*/
 
 				if((isset($_GET['kategoria'])) && !(empty($_GET['kategoria'])) && (!(isset($_GET['autor'])) || (empty($_GET['autor']))) ) // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>
 				{
+                    echo '<div id="content">';
+
 					echo '<script> displayNav(); </script>';
 
                         // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; <script>alert("hahaha");</script>;
@@ -120,12 +190,15 @@ require "../view/header-container.php"; ?>
                         }
 
 					echo '</div>';
+					echo '</div>';
 				}
                 elseif ((!(isset($_GET['kategoria'])) || (empty($_GET['kategoria']))) && (isset($_GET['autor'])) && !(empty($_GET['autor']))) // TYMCZASOWE wyświetlanie książek autora, po wpisaniu go w wyszukiwarce
                 {
+                    echo '<div id="content"></div>';
                     $autor = [$_GET['autor']];
                     echo '<div id="content-books">';
                         query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor);
+                    echo '</div>';
                     echo '</div>';
                 }
 				else // jeśli (nie ustawiono kategorii i autora), lub (ustawiono kategorie ORAZ autora)
@@ -134,6 +207,7 @@ require "../view/header-container.php"; ?>
 
 					if((isset($_GET['input-search'])) && (!empty($_GET['input-search']))) // pole wyszukiwania
 					{
+                        echo '<div id="content"></div>';
 						echo '<script> displayNav(); </script>';
 
                         echo '<div id="content-books">';
@@ -182,16 +256,21 @@ require "../view/header-container.php"; ?>
 //                            </script>';
 
 						echo '</div>';
+						echo '</div>';
 					}
 					else if((isset($_GET['input-search'])) && (empty($_GET['input-search']))) // puste pole wyszukiwania
 					{
+                        echo '<div id="content"></div>';
 						    echo '<script> displayNav(); </script>';
 						echo '<div id="content-books">';
 						    echo '<h3>Brak wyników</h3>';
 						echo '</div>';
+						echo '</div>';
 					}
 					else
 					{
+
+
 						//////////////////////////////////////////////////////////////////////////////////////////////////
 						// STRONA GŁÓWNA //
 						//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -204,6 +283,9 @@ require "../view/header-container.php"; ?>
 			<!-- //////////////////////////////////////////////////////////////////////////////////////////////////
 				 // STRONA GŁÓWNA //
 				 ////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
 
             <!-- np tytuł książki, lub imie autora --> <!-- "Jerzy", "Tomasz", "Symfonia C++", "Podstawy PHP" -->
 <!--			<div id="div_advanced_search">-->
@@ -259,7 +341,21 @@ require "../view/header-container.php"; ?>
 				}
 			?>
 
-		</div>
+            <!-- strona główna-->
+
+
+
+
+
+
+
+        <!-- </div> <-- content -->
+
+
+
+
+
+
 
         <?php require "../view/footer.php"; ?>
 
@@ -268,6 +364,10 @@ require "../view/header-container.php"; ?>
     <script src="../scripts/jquery.nouislider.js"></script>
     <script src="../scripts/filtrowanie.js"></script>
     <script src="../scripts/sortowanie_v3_2.js"></script>
+
+    <script src="../scripts/display-slider.js"></script>
+
+
 
 <script>
 
