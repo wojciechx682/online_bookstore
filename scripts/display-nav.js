@@ -19,11 +19,13 @@ function displayNav() {
 
 	console.log("nav -> ", nav);
 	console.log("content -> ", content);
-	console.log("main content -> ", mcontent);
+	//console.log("main content -> ", mcontent);
 
 	nav.classList.add("nav-visible");
 	content.classList.add("content-short");
-	mcontent.classList.add("content-invisible");
+	if(mcontent) {
+		mcontent.classList.add("content-invisible");
+	}
 
 	// main_content.style.display = "none";
 }

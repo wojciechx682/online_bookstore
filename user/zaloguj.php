@@ -64,68 +64,70 @@
 
 <?php require "../view/header-container.php" ?>
 
-	<div id="container">	
+	<div id="container">
 
-		<div id="nav">
+        <main>
 
-		</div>
+            <div id="nav"></div>
 
-		<div id="content">
+            <div id="content">
 
-            <?php var_dump($_SESSION); ?>
+                <?php var_dump($_SESSION); ?>
 
-			<!-- Formularz Logowania -->
+                <!-- Formularz Logowania -->
 
-			Księgarnia online<br><br>
-			
-			<form action="logowanie.php" method="post">
-			
-				<!-- Login: <br> <input type="text" name="login"> <br> -->
-				E-mail: <br> <input type="text" name="email" value="jakub.wojciechowski.682@gmail.com"> <br>
-				Hasło: <br> <input type="password" name="haslo" value="PassJacob33#"> <br><br>
-				
-				<input type="submit" value="Zaloguj się">	
-					
-			</form>
+                Księgarnia online<br><br>
 
-            <br><a href="reset_password.php">Przypomnij hasło</a><br>
-			
-			<br><a href="zarejestruj.php">Rejestracja - załóż darmowe konto!</a><br>
+                <form action="logowanie.php" method="post">
 
-            <?php
-                if(isset($_SESSION["password-changed"]) && $_SESSION["password-changed"]) {
-                    echo "<br>udało się zmienić hasło<br>";
-                    session_unset();
-                    session_destroy();
-                }
-            ?>
+                    <!-- Login: <br> <input type="text" name="login"> <br> -->
+                    E-mail: <br> <input type="text" name="email" value="jakub.wojciechowski.682@gmail.com"> <br>
+                    Hasło: <br> <input type="password" name="haslo" value="PassJacob33#"> <br><br>
 
-			<?php	
-				// pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło
-				// czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI
+                    <input type="submit" value="Zaloguj się">
 
-                // normalne logowanie, podany złe hasło
-				if(isset($_SESSION['blad']))
-				{
-					echo '<br>'.$_SESSION['blad'];
-				}			
-			?>
+                </form>
 
-			<?php 
+                <br><a href="reset_password.php">Przypomnij hasło</a><br>
 
-				if(isset($_SESSION['udanarejestracja']))
-				{
-					unset($_SESSION['udanarejestracja']);
-					
-					echo '<br><span style="color: blue;">Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto</span><br>';
-				}
-			?>
+                <br><a href="zarejestruj.php">Rejestracja - załóż darmowe konto!</a><br>
 
-		</div>
+                <?php
+                    if(isset($_SESSION["password-changed"]) && $_SESSION["password-changed"]) {
+                        echo "<br>udało się zmienić hasło<br>";
+                        session_unset();
+                        session_destroy();
+                    }
+                ?>
 
-        <?php require "../view/footer.php" ?>
+                <?php
+                    // pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło
+                    // czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI
+
+                    // normalne logowanie, podany złe hasło
+                    if(isset($_SESSION['blad']))
+                    {
+                        echo '<br>'.$_SESSION['blad'];
+                    }
+                ?>
+
+                <?php
+
+                    if(isset($_SESSION['udanarejestracja']))
+                    {
+                        unset($_SESSION['udanarejestracja']);
+
+                        echo '<br><span style="color: blue;">Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto</span><br>';
+                    }
+                ?>
+
+            </div>
+
+        </main>
 
 	</div>
+
+    <?php require "../view/footer.php" ?>
 	
 </body>
 </html>

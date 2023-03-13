@@ -877,27 +877,101 @@ input[id^="koszyk_ilosc"] {
 .book
 {
 	background-color: lightblue;
-
 	/*display: inline-block;*/
 	float: left;
-
 	width: 180px;
-
-	height: 220px;
-
-
+	height: 420px;
 	margin: 10px;
-
 	padding: 10px;
-
 	border-radius: 10px;
-
 	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-
-
 	transition: all 0.05s ease-in-out;
-
 }
+
+
+
+.book-image {
+	background-color: lightblue;
+	/*display: inline-block;*/
+	float: left;
+	width: 180px;
+	height: 350px;
+	margin: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+	transition: all 0.05s ease-in-out;
+}
+
+/* ///////////////////////////////////////////////////////// */
+.book {
+	display: flex;
+	flex-direction: column;
+	background-color: #cbcbcb;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	margin: 1rem;
+	transition: transform 0.2s ease-in-out;
+}
+
+.book:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.book-cover {
+	position: relative;
+	height: 0;
+	padding-bottom: 150%;
+	overflow: hidden;
+
+	float:left;
+}
+
+.book-cover img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.book-info {
+	/*padding: 1rem;*/
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+}
+
+.book-title {
+	margin: 8px 0 0 0;
+	font-size: 0.9rem;
+}
+
+.book-author {
+	color: #666;
+}
+
+.book-price {
+	font-weight: bold;
+	font-size: 0.9rem;
+}
+
+.book-rating {
+	display: flex;
+	align-items: center;
+}
+
+.book-rating svg {
+	fill: #f9a825;
+	margin-right: 0.5rem;
+}
+
+/* ///////////////////////////////////////////////////////// */
+
 
 .hidden {
 	display: none;
@@ -986,7 +1060,7 @@ input[id^="koszyk_ilosc"] {
 	background-color: green;
 }
 
-.change_quantity_form, #remove_book_form /* koszyk.php -> functions -> get_product_from_cart() */
+.change_quantity_form, .remove_book_form /* koszyk.php -> functions -> get_product_from_cart() */
 {
 	float: left;
 	margin-right: 10px;
@@ -1264,6 +1338,16 @@ section#books-promotion-section {
 	border: 1px dashed black;
 	margin: 30px 0 30px 0;
 }
+
+/* <footer> --> ----------------------------------------------------------------------------- */
+
+footer {
+	position: relative;
+	top: 102px;
+	width: 1000px;
+	margin: 0 auto;
+}
+
 
 
 

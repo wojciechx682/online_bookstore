@@ -1,5 +1,7 @@
 <?php
-	
+
+    // plik nieużywany !
+
 	session_start(); // a function that allows a document to use a session ; every document that uses a session must have this entry at the beginning.
 
 	include_once "../functions.php";

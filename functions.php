@@ -94,7 +94,7 @@
             $book = file_get_contents("../template/content-books.php");
 
             // replace fields in $book string to book data from $result, display result content as HTML
-            echo sprintf($book, $i, $row["tytul"], $row["cena"], $row["rok_wydania"], $row["id_ksiazki"]); // return zamiast echo ?
+            echo sprintf($book, $i, $row["image_url"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["id_ksiazki"]); // return zamiast echo ?
 
 		  	$i++;
 		}

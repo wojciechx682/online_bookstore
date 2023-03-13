@@ -45,7 +45,7 @@
 		if(password_verify($stare_haslo, $_SESSION['stare_haslo'])) // czy haslo z inputa (bez hasha) jest równe haśle w bazie danych (zahashowane)
 		{
 
-            $pass_regex = '/^((?=.*[!@#$%^&*-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
+            $pass_regex = '/^((?=.*[!@#$%^_&*-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
 
             if(!(preg_match($pass_regex, $nowe_haslo)))
             {

@@ -33,12 +33,12 @@ const sortBooks = () => {
 	}
 
 	// Define sorting functions
-	const sortByTitleAscending = (a, b) => a.querySelector(".title").textContent.localeCompare(b.querySelector(".title").textContent);
-	const sortByTitleDescending = (a, b) =>	b.querySelector(".title").textContent.localeCompare(a.querySelector(".title").textContent);
-	const sortByPriceAscending = (a, b) => Number(a.querySelector(".price").textContent) - Number(b.querySelector(".price").textContent);
-	const sortByPriceDescending = (a, b) => Number(b.querySelector(".price").textContent) - Number(a.querySelector(".price").textContent);
-	const sortByYearAscending = (a, b) => Number(a.querySelector(".year").textContent) - Number(b.querySelector(".year").textContent);
-	const sortByYearDescending = (a, b) => Number(b.querySelector(".year").textContent) - Number(a.querySelector(".year").textContent);
+	const sortByTitleAscending = (a, b) => a.querySelector(".book-title").textContent.localeCompare(b.querySelector(".book-title").textContent);
+	const sortByTitleDescending = (a, b) =>	b.querySelector(".book-title").textContent.localeCompare(a.querySelector(".book-title").textContent);
+	const sortByPriceAscending = (a, b) => Number(a.querySelector(".book-price").textContent) - Number(b.querySelector(".book-price").textContent);
+	const sortByPriceDescending = (a, b) => Number(b.querySelector(".book-price").textContent) - Number(a.querySelector(".book-price").textContent);
+	const sortByYearAscending = (a, b) => Number(a.querySelector(".book-year").textContent) - Number(b.querySelector(".book-year").textContent);
+	const sortByYearDescending = (a, b) => Number(b.querySelector(".book-year").textContent) - Number(a.querySelector(".book-year").textContent);
 
 	// Sort the books array based on the selected option
 	switch (selectedValue) {

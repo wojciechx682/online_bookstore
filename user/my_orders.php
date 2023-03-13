@@ -18,13 +18,16 @@
 
 <?php require "../view/header-container.php"; ?>
 
-	<div id="container">		
+	<div id="container">
 
-		<div id="nav">
-			<!-- <a href="edit_data.php">Edytuj dane użytkownika</a><br><br> -->
-			<a href="account.php"> ← </a><br><br>
-			<a href="my_orders.php">Zamówienia</a>
-		</div>
+        <main>
+        <aside class="account-data">
+            <div id="nav">
+                <!-- <a href="edit_data.php">Edytuj dane użytkownika</a><br><br> -->
+                <a href="account.php"> ← </a><br><br>
+                <a href="my_orders.php">Zamówienia</a>
+            </div>
+        </aside>
 
 		<div id="content">
 
@@ -40,9 +43,11 @@
 
 		</div>
 
+        </main>
+
+    </div>
+
     <?php require "../view/footer.php"; ?>
 
-	</div>
-		
 </body>
 </html>

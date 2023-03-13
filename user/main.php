@@ -1,4 +1,7 @@
 <?php
+
+    // plik nieużywany !
+
     session_start();
     include_once "../functions.php";
 ?>

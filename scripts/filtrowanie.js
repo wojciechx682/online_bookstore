@@ -7,7 +7,7 @@ let books = document.querySelectorAll("#content-books .book");
 function update(min, max) {                     // update content-books
     for(let i=0; i<books.length; i++) {
 
-        let price = books[i].querySelector(".price").innerHTML;
+        let price = books[i].querySelector(".book-price").innerHTML;
 
         min = parseInt(min);
         max = parseInt(max);

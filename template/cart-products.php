@@ -14,7 +14,7 @@
 		<button type="button" onclick="decrease(%s)">-</button>
 	</form>
 
-	<form id="remove_book_form" action="remove_book.php" method="post">
+	<form class="remove_book_form" action="remove_book.php" method="post">
 		<input type="hidden" name="id_klienta" value="%s">
 		<input type="hidden" name="id_ksiazki" value="%s">
 		<input type="hidden" name="ilosc" value="%s">
