@@ -65,7 +65,7 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
                 $mail->Password = 'ubkdmiyqcquifysy'; // podaj swoje hasło do aplikacji
 
                 $mail->CharSet = 'UTF-8';  // konfiguracja wiadomości
-                $mail->setFrom('jakub.wojciechowski.683@gmail.com', 'Księgarnia internetowa - Przypomnij hasło'); // nazwa odbiorcy (name)
+                $mail->setFrom('app.bookstore@gmail.com', 'Księgarnia internetowa - Przypomnij hasło'); // nazwa odbiorcy (name)
                 $mail->addAddress($email); // email ODBIORCY
                 //$mail->addReplyTo('biuro@domena.pl', 'Biuro');
 
