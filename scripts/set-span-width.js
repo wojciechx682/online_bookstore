@@ -14,6 +14,8 @@ function setSpanWidth() {
     // let elements = document.querySelectorAll("#book0 .title, #book0 .price, #book0 .year");
     let bookDivs = document.querySelectorAll('[id^="book"]'); // collection of divs --> "book0", "book1", ...
 
+    console.log("book divs --> ", bookDivs);
+
     max_width = 0;
 
     bookDivs.forEach(function(bookDiv) {   // loop through each bookDiv --> "book0", "book1", ...

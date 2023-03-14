@@ -8,6 +8,7 @@
     content = document.getElementById("content");
     mcontent = document.getElementById("main-content");
     books = Array.from(document.querySelectorAll(".book"));
+    sticky = document.getElementById("sticky");
 
     if(content) {
         console.log("content -> ", content);
@@ -26,6 +27,7 @@ function setBlackTheme() {
     }
 
     body.style.backgroundImage = "url('../assets/3.png')";
+    sticky.style.color = "#ffffff";
 
     for (let i = 0; i < books.length; i++) {
         books[i].style.color = '#000000';
@@ -49,6 +51,8 @@ function setWhiteTheme() {
     }
 
     body.style.backgroundImage = "url('../assets/2.png')";
+
+    sticky.style.color = "#000";
 
     for (let i = 0; i < books.length; i++) {
         books[i].style.color = '#000000';

@@ -31,7 +31,8 @@
 
 		<div id="content">
 
-			<h3>Zamówienia</h3><hr>
+			<!-- <h3>Zamówienia</h3><hr> -->
+            <h3>Historia zamówień</h3><hr>
 
 			<?php
 				echo '<script> displayNav(); </script>';

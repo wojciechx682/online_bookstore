@@ -349,7 +349,7 @@
 
         //var_dump($_SESSION); exit();
 
-		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_s);  // przestawi mi zmienną $_SESSION['wszystko_OK'] na false, jeśli istnieje już taki email
+		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_s);  // przestawi mi zmienną $_SESSION['wszystko_OK'] na false, jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);
 
 		if($_SESSION['wszystko_OK']) // udana walidacja
 		{

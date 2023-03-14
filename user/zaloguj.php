@@ -1,5 +1,7 @@
 <?php
 
+
+
 	session_start();
 	
 	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (!(isset($_SESSION['udanarejestracja'])))) // jeśli weszliśmy na zaloguj.php będąc zalogowanym
@@ -108,6 +110,7 @@
                     if(isset($_SESSION['blad']))
                     {
                         echo '<br>'.$_SESSION['blad'];
+                        unset($_SESSION["blad"]);
                     }
                 ?>
 
@@ -118,6 +121,13 @@
                         unset($_SESSION['udanarejestracja']);
 
                         echo '<br><span style="color: blue;">Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto</span><br>';
+                    }
+
+                    if(isset($_SESSION['deleted-successfully']) && $_SESSION['deleted-successfully'])
+                    {
+                        unset($_SESSION['deleted-successfully']);
+
+                        echo '<br><span style="color: blue;">Twoje konto zostało usunięte</span><br>';
                     }
                 ?>
 

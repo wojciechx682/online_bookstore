@@ -25,7 +25,15 @@
 		$_SESSION['udanarejestracja'] = true;
 		header('Location: zaloguj.php');
 		exit();
-	}	
+	}
+	elseif(isset($_SESSION["password_confirmed"])) {
+		session_unset();
+		session_destroy();
+		session_start();
+		$_SESSION["deleted-successfully"] = true;
+		header('Location: zaloguj.php');
+		exit();
+	}
 	else // wylogowanie z konta poprzez naciśnięcie "wyloguj" przez użytkowika
 	{
 		session_unset();

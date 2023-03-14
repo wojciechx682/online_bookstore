@@ -15,14 +15,17 @@
         !(empty($_POST['koszyk_ilosc']))     //  1
       )
 	{
-		$id_klienta = $_SESSION['id'];
-		$id_ksiazki = $_POST['id_ksiazki']; // user może wpr. dowolną wartość zmieniając atrybut "value" w <input> ...
-		$ilosc = $_POST['koszyk_ilosc'];    // 1
+		$id_klienta = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT);
 
+		/*$id_ksiazki = $_POST['id_ksiazki']; // user może wpr. dowolną wartość zmieniając atrybut "value" w <input> ...
+		$ilosc = $_POST['ko szyk_ilosc'];    // 1
 			$id_ksiazki = htmlentities($id_ksiazki, ENT_QUOTES, "UTF-8"); // walidacja i sanityzacja danych wprowadzonych od użytkownika
 			$ilosc = htmlentities($ilosc, ENT_QUOTES, "UTF-8");           // <script>alert("yey");</script>
 			$id_ksiazki = strip_tags($id_ksiazki);
-			$ilosc = strip_tags($ilosc);
+			$ilosc = strip_tags($ilosc);*/
+
+		$id_ksiazki = filter_input(INPUT_POST, "id_ksiazki", FILTER_SANITIZE_NUMBER_INT); // to remove any non-numeric characters. This filter will leave only the numeric characters.
+		$ilosc = filter_input(INPUT_POST, "koszyk_ilosc", FILTER_SANITIZE_NUMBER_INT);
 
         $book = [$id_klienta, $id_ksiazki];
 
@@ -36,6 +39,7 @@
         $book[2] = $id_ksiazki;
 
 		if($_SESSION['book_exists'] == true) {                         // boox exists ? update book quantity
+			//print_r($book); exit();
 			query("UPDATE koszyk SET ilosc=ilosc+'%s' WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $book);
 		} else {               										   // insert book to shopping cart
 			query("INSERT INTO koszyk (ilosc, id_klienta, id_ksiazki) VALUES ('%s', '%s', '%s')", "", $book);

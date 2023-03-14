@@ -206,6 +206,8 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
 
         <div id="content">
 
+            <?php print_r($_SESSION); ?>
+
             <!-- Formularz      Resetowania hasła -->
 
             <form method="post" id="reset-form">
@@ -221,6 +223,7 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
                     if(isset($_SESSION["email-not-exists"]) && $_SESSION["email-not-exists"])
                     {
                         echo "<br><br>Nie istnieje konto przypisane do tego adresu<br>";
+                        unset($_SESSION["email-not-exists"]);
                     }
                 ?>
 

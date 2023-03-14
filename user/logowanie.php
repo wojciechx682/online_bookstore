@@ -1,6 +1,9 @@
 <?php
-	
+
 	session_start(); // a function that allows a document to use a session ; every document that uses a session must have this entry at the beginning.
+
+    print_r($_SESSION); echo "<br>";
+    print_r($_POST);
 
 	include_once "../functions.php";
 
@@ -10,36 +13,51 @@
 	{
         // ✓ spełni się jeśli wejdziemy bezpośrednio w link /logowanie.php (jeśli będziemy zalogowani, ORAZ jeśli nie będziemy zalogowani)
 
-		header('Location: index.php');  
+        echo "15<br>";
+
+		header('Location: index.php');
 		exit();
 	}
 	else {   //   zmienne  $_POST['login'], $_POST['haslo']  - istnieją (mogą być puste),   ORAZ (AND)  NIE jesteśmy zalogowani
 
-		$email = $_POST['email'];
+        echo "<br>22<br>";
+
+        //$email = $_POST['email']; // " jason1@wp.pl "
 
 		// $email = htmlentities($email, ENT_QUOTES, "UTF-8"); // zamiana na encje - zamiana znaków kodów źródłowych na encje
 
-		$email_sanitized = filter_var($email, FILTER_SANITIZE_EMAIL); // email - po procesie sanityzacji, // FILTER_SANITIZE_EMAIL - filtr do adresów mailowych
+		$email_sanitized = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL); // email - po procesie sanityzacji, // FILTER_SANITIZE_EMAIL - filtr do adresów mailowych
 
-        //echo "<br> email &rarr; " . $email;
-        //echo "<br> email_sanitized &rarr; " . $email_sanitized;
+        echo "<br> email &rarr; " . $_POST["email"];
+        echo "<br> email_sanitized &rarr; " . $email_sanitized;
         //exit();
 
 		//if((filter_var($emailB, FILTER_VALIDATE_EMAIL)==false) || ($emailB!=$email))
-		if((filter_var($email_sanitized, FILTER_VALIDATE_EMAIL)==false) || ($email_sanitized != $email))
-		{					
+		if((filter_var($email_sanitized, FILTER_VALIDATE_EMAIL)==false) || ($email_sanitized != $_POST["email"]))
+		{
+            echo "37<br>";
+
 			$_SESSION['blad'] = '<span style="color: red">Podaj poprawny adres e-mail</span>';
-			header('Location: zaloguj.php');	
+			header('Location: zaloguj.php');
 			exit();
 		}
 		else // email is correct
 		{
+            echo "<br><br>45<br>";
+
 			query("SELECT * FROM klienci WHERE email='%s'", "log_in", $email_sanitized); // funkcja log_in (odpowiedzialna za logowanie) uzyska hasło z tablicy $_POST[];
 
-			//query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); // ustawienie zmienej sesyjnej $_SESSION['koszyk_ilosc_ksiazek']
-		}	
+            echo "48<br>";
 
-	}		
+            print_r($_SESSION); echo "<br>";
+            print_r($_POST);
+
+
+
+			//query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); // ustawienie zmienej sesyjnej $_SESSION['koszyk_ilosc_ksiazek']
+		}
+
+	}
 
 ?>
 

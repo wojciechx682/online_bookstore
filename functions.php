@@ -1,3 +1,5 @@
+
+
 <?php
 
                         // Funkcje php - połączenie z bazą danych,
@@ -43,6 +45,37 @@
         $result->free_result();
     }
 
+
+
+    function get_authors_adv_search($result)
+    {
+        // header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
+
+        /*echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';*/
+        while ($row = $result->fetch_assoc()) {
+            //echo "\n".'<option value="'.$row['id_autora'].'">'.$row['imie']." ".$row['nazwisko'].'</option>';
+
+            // load the content from the external template file into string
+            $author = file_get_contents("../template/adv-search-authors.php");
+
+            // replace fields in $author string to author data from $result, display result content as HTML
+            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
+        }
+        $result->free_result();
+
+//        while ($row = $result->fetch_assoc())
+//        {
+//            // load the content from the external template file into string
+//            $author = file_get_contents("../template/adv-search-authors.php");
+//
+//            // replace fields in $author string to author data from $result, display result content as HTML
+//            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
+//        }
+//
+//        echo '</ul>';
+//        $result->free_result();
+    }
+
 	function get_categories($result)
 	{
         // header -> top-nav-content - wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav);
@@ -56,6 +89,19 @@
 		}
 		$result->free_result();
 	}
+
+            function get_categories_adv_search($result)
+            {
+                // header -> advanced_search -> <select> - lista kategorii
+                $category_name = "Wszystkie";
+                echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';
+                while ($row = $result->fetch_assoc()) {
+                    echo "\n".'<option value="'.$row['kategoria'].'">'.$row['kategoria'].'</option>';
+                }
+                $result->free_result();
+            }
+
+
 
 	function get_books($result)
 	{
@@ -387,6 +433,8 @@
 
 	function log_in($result)
 	{
+        echo "<br>477";
+        //exit();
         // logowanie.php - skrypt logowania, logowanie -> weryfikacja hasła
 
 		$row = $result->fetch_assoc(); // wiersz - pola tabeli = tablica asocjacyjne
@@ -430,10 +478,12 @@
 			$result->free_result();   // pozbywamy się z pamięci rezultatu zapytania; free(); close();
 
 			header('Location: index.php'); // przekierowanie do strony index.php
+            //echo "<br>477";
 			exit();
 		}
 		else  // dobry login, złe hasło
 		{
+            echo "<br>477";
 			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowanie -> przekierowanie do index.php + komunikat
 			header('Location: zaloguj.php');
 			exit();
@@ -460,7 +510,7 @@
 
         // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
 		$_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
-        echo "<br>448<br>";
+        /*echo "<br>448<br>";*/
         //echo $_SESSION['book_exists']; exit();
 		$result->free_result();
 	}
@@ -508,11 +558,16 @@
         // alias dla funkcji query() -> index.php
         if($kategoria == "Wszystkie")
         {
-            query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
+            //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
+            query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora", "get_books", "");
+            //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);
+
+
         }
         else
         {
-            query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);
+            //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);
+            query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);
         }
     }
 
@@ -553,9 +608,13 @@
                 if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie, $value - tablica parametrów do vsprintf
                 {
                     //print_r($result); echo "<br><br>";
+                    //echo "<br><hr><br> query ( ) -> " . $query . "<br><hr>";
 
                     // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
                     if(gettype($result) != "object") {
+
+                        //echo "<br>613<br>"; exit();
+
                         // INSERT, UPDATE ...
 
                         if($fun != "") {
@@ -563,15 +622,41 @@
                         }
 
                     } else {  // $result jest obiektem
+
+                        //echo "<br>623<br>"; //exit();
                         // SELECT
                         $num_of_rows = $result->num_rows; // ilość zwróconych wierszy
 
+                        //echo "<br>num_of_rows --> " . $num_of_rows . "<br>";
+
                         if($num_of_rows>0) // znaleziono rekordy
                         {
+
+                            //echo "<br>625<br>"; //exit();
+
+//                            if ( isset($_POST["year-min"]) && !empty($_POST["year-min"]) && isset($_POST["year-max"]) && !empty($_POST["year-max"])
+//                            ) {
+//                                echo "<br><hr><br> query ( ) -> " . $query . "<br><hr>"; // testowanie wyszukiwania zaawansowanego
+//                                //exit();
+//                            }
+//
+//                            echo "<br><hr><br> num_of_rows -> " . $num_of_rows . "<br><hr>";
+
+
                             $fun($result); //
                         }
-                        else {
+                        else { // brak zwróconych rekordów
+
                             //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
+
+                            if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
+                                $fun($result);
+                            } // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
+
+                             // dla register_verify_email (rejestracja) nie powinna wykonać się funkcja $fun !
+
+                            // Kiedy jest potrzeba aby wywołać funkcję $fun gdy nie zwrócono żadnych rekordw ?
+                            // -> dla logowanie.php (patrz wyżej)
                         }
                     }
                 }
@@ -601,3 +686,5 @@
         return isset($arr[0]) ? $arr[0] : $string;
     }
 ?>
+
+

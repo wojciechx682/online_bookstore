@@ -18,7 +18,7 @@
 
         <div>
             <p>
-                <span>
+                <span class="reset-password-form">
                     <label for="new-password">
                        Nowe hasło:
                     </label>
@@ -29,7 +29,7 @@
 
         <div>
             <p>
-                <span>
+                <span class="reset-password-form">
                     <label for="confirm-password">
                        Powtórz hasło:
                     </label>

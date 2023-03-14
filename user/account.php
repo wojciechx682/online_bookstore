@@ -19,8 +19,9 @@
 
             <aside class="account-data">
                 <div id="nav">
-                    <a href="edit_data.php">[ Edytuj dane użytkownika ]</a><br><br>
                     <a href="my_orders.php">[ Zamówienia ]</a><br><br>
+                    <a href="edit_data.php">[ Edytuj dane użytkownika ]</a><br><br>
+                    <a href="remove_account.php">[ Usuń konto ]</a><br><br>
                     <a href="logout.php"> [ Wyloguj ]</a>
                 </div>
             </aside>

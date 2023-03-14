@@ -24,10 +24,13 @@
                             <form action="index.php" method="get">
                                 <input type="search" name="input-search" id="input-search">
                                 <input type="submit" value="Szukaj">
+
+                                <img id="search-arrow" src="../assets/arrow.png" alt="advanced filtering"> <!-- advanced search -->
+
                             </form>
                         </div>
                         <div id="div-logo">
-                            <img src="../assets/logo.png" alt="logo">
+                            <img id="main-logo" src="../assets/logo.png" alt="logo">
                         </div>
                         <div id="div-cart">
                             <a class="top-nav-right" href="koszyk.php">Koszyk
@@ -39,7 +42,111 @@
                                 ?>
                             </a>
                         </div>
+
+
+
                     </div>
+
+                    <div id="advanced-search" class="advanced-search-invisible">
+
+                        <!-- animacja płynnego przejścia menu
+                             https://www.kirupa.com/html5/creating_a_smooth_sliding_menu.htm# -->
+
+                        <form method="post" action="index.php" id="advanced-search-form">
+                            <div>
+                                <p>
+                                    <span class="adv-search">
+                                        <label for="adv-search-title">
+                                            Tytuł
+                                        </label>
+                                    </span>
+                                    <input type="text" name="adv-search-title" id="adv-search-title"> <!-- id="dostawa_kurier_dpd" value="Kurier DPD" -->
+                                </p>
+                            </div>
+
+                            <div>
+                                <p>
+                                    <span class="adv-search">
+                                        <label for="adv-search-category">
+                                            Kategoria
+                                        </label>
+                                    </span>
+
+
+                                    <select id="adv-search-category" name="adv-search-category">
+                                        <?php
+                                            query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories_adv_search", ""); // <option value="...">...</option>-->
+                                        ?>
+                                    </select>
+                                </p>
+                            </div>
+
+                            <div>
+                                <p>
+                                    <span class="adv-search">
+                                        <label for="adv-search-author">
+                                            Autor
+                                        </label>
+                                    </span>
+                                    <select id="adv-search-author" name="adv-search-author">
+                                        <option value=""></option>
+                                            <?php
+                                                query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY nazwisko ASC", "get_authors_adv_search", "");
+                                            ?>
+                                    </select>
+                                </p>
+                            </div>
+
+                            <div>
+                                <p>
+                                    <span class="adv-search">
+                                        <label for="adv-search-year">
+                                            Rok wydania
+                                        </label>
+                                    </span>
+                                    <div id="year-range">
+                                        <label>
+                                            od: <input type="number" id="year-min" name="year-min">
+                                        </label>
+                                        <label>
+                                            do: <input type="number" id="year-max" name="year-max">
+                                        </label>
+                                        <div id="adv-search-year-slider"></div>
+                                    </div>
+                                </p>
+                            </div>
+
+                            <br><input type="submit" value="Szukaj">
+
+                            <span id="advanced-search-error">
+
+                                <!-- display error message from JS HERE -> -->
+
+                            </span>
+
+                            <script>
+                                const form = document.getElementById("advanced-search-form");
+                                const input = document.getElementById("adv-search-author");
+                                const errorMessage = document.getElementById("advanced-search-error");
+
+                                form.addEventListener("submit", function (event) {
+                                    if (!isNumeric(input.value) && input.value) {
+                                        event.preventDefault();
+                                        errorMessage.innerText = "Podaj poprawne dane";
+                                    }
+                                });
+
+                                function isNumeric(value) {
+                                    return /^\d+$/.test(value);
+                                }
+                            </script>
+
+                        </form>
+
+
+
+                    </div>
+
                 </div>
             </div>
         </div>
