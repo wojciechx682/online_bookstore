@@ -26,4 +26,5 @@
     <script src="../scripts/display-nav.js"></script>
     <script src="../scripts/change-quantity.js"></script>
     <script src="../scripts/load-theme.js"></script>
+
 </head>

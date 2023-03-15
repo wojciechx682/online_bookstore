@@ -28,20 +28,29 @@
     function get_authors($result)
     {
         // tworzy linki - w których kazdy wyświetli imie i nazwisko autora.
-        //
+        echo "<br>31";
         echo '<h3>Autorzy </h3><hr>';
         echo '<ul id="ul-authors">';
 
+            echo '<li id="all-authors">
+                  <label>
+                     <input type="checkbox" name="author-checkbox" class="author-checkbox" id="all-authors">wszyscy
+                  </labeL>';
+
+            echo "<br>40<br>";
             while ($row = $result->fetch_assoc())
             {
                 // load the content from the external template file into string
                 $author = file_get_contents("../template/content-authors.php");
 
                 // replace fields in $author string to author data from $result, display result content as HTML
-                echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
-            }
+                echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"]);
 
+            }
         echo '</ul>';
+
+        echo "<br>51<br>";
+
         $result->free_result();
     }
 
@@ -59,7 +68,7 @@
             $author = file_get_contents("../template/adv-search-authors.php");
 
             // replace fields in $author string to author data from $result, display result content as HTML
-            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
+            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"]);
         }
         $result->free_result();
 
@@ -416,13 +425,17 @@
 		$result->free_result();
 	}
 
-	function verify_password($result) // validate_password.php
+	function verify_password($result) // validate_password.php;     confirm_password.php;
 	{
-		while ($row = $result->fetch_assoc())
+		/*while ($row = $result->fetch_assoc())
 		{
 		  	$_SESSION['stare_haslo'] = $row['haslo'];
 		}
-		$result->free_result();
+		$result->free_result();*/
+
+        $row = $result->fetch_assoc();
+        $_SESSION['stare_haslo'] = $row['haslo'];
+        $result->free_result();
 	}
 
 //	function test_fun()
@@ -561,8 +574,6 @@
             //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
             query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora", "get_books", "");
             //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);
-
-
         }
         else
         {
@@ -651,12 +662,16 @@
 
                             if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
                                 $fun($result);
-                            } // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
+                            }
+
+                            // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
 
                              // dla register_verify_email (rejestracja) nie powinna wykonać się funkcja $fun !
 
                             // Kiedy jest potrzeba aby wywołać funkcję $fun gdy nie zwrócono żadnych rekordw ?
                             // -> dla logowanie.php (patrz wyżej)
+
+                            // (!) dla dodawania książek NIE DZIAŁA !
                         }
                     }
                 }

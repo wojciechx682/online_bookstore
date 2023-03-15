@@ -22,3 +22,5 @@
     <script src="../scripts/advanced-search.js"></script>
 
 
+    <script src="../scripts/filter-authors.js"></script>
+

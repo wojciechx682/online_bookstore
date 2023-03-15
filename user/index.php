@@ -1,36 +1,74 @@
 <?php
 
-	session_start();
+session_start();
 
-	include_once "../functions.php";
+include_once "../functions.php";
 
-    //	sprawdź połączenie z BD :
-    //	$value = array();
-    //	array_push($value, "1");
-    //	query("", "", ""); // w przypadku błędu połączenia z BD, wyświetli komunikat rzuconego wyjątku.
-    //	należy dodać to do każdej podstrony, która korzysta z połączenia z BD
-    //	echo $_SESSION['login'] . '<br>';
-    //	if(isset($_SESSION['zalogowany']))
-    //	{
-    //		    //echo '<br>'.$_SESSION['account_error'];
-    //		unset($_SESSION['account_error']);
-    //		    //exit();
-    //	}
-    //	if(isset($_SESSION['blad'])) {
-    //		echo $_SESSION['blad'];
-    //		exit();
-    //	}
+//	sprawdź połączenie z BD :
+//	$value = array();
+//	array_push($value, "1");
+//	query("", "", ""); // w przypadku błędu połączenia z BD, wyświetli komunikat rzuconego wyjątku.
+//	należy dodać to do każdej podstrony, która korzysta z połączenia z BD
+//	echo $_SESSION['login'] . '<br>';
+//	if(isset($_SESSION['zalogowany']))
+//	{
+//		    //echo '<br>'.$_SESSION['account_error'];
+//		unset($_SESSION['account_error']);
+//		    //exit();
+//	}
+//	if(isset($_SESSION['blad'])) {
+//		echo $_SESSION['blad'];
+//		exit();
+//	}
 
-    if(isset($_GET["login-error"])) {
-        echo '
-                <script>
-                    alert("Musisz być zaloowany !")
-                    let url = new URL(window.location.href);
-                    url.searchParams.delete("login-error");
-                    window.location.href = url.toString();
-                </script>
-             ';
-    }
+if(isset($_GET["login-error"])) {
+    echo '
+            <script>
+                alert("Musisz być zaloowany !")
+                let url = new URL(window.location.href);
+                url.searchParams.delete("login-error");
+                window.location.href = url.toString();
+            </script>
+         ';
+}
+
+
+
+if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
+{
+    /*echo "<br> 123"; exit();*/
+    $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
+    $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
+    //echo "<h3>".$kategoria."</h3><hr>";
+    //echo $_SESSION["kategoria"]; exit();
+}
+elseif((isset($_SESSION['kategoria'])) && (!empty($_SESSION['kategoria'])) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
+{
+    //echo "<br> 130"; exit();
+    $_SESSION["kategoria"] = htmlentities($_SESSION['kategoria'], ENT_QUOTES, "UTF-8");
+    $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
+ /*   echo "<h3>".$_SESSION["kategoria"]."</h3><hr>"; exit();*/
+}
+if((isset($_POST["adv-search-category"])))
+{
+    /*echo "<br>135<br>"; exit();*/
+    $_SESSION["kategoria"] = htmlentities($_POST['adv-search-category'], ENT_QUOTES, "UTF-8");
+    $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
+    /* echo "<h3>".$_SESSION["kategoria"]."</h3><hr>"; exit();*/
+}
+
+//else {
+
+  /*  echo "<br>62"; exit();*/
+                /*echo "<h3>Wszystkie</h3>";*/
+    /*$_SESSION["kategoria"] = "Wszystkie";*/
+//}
+
+
+/*if(isset($_POST["adv-search-category"]) && !empty($_POST["adv-search-category"])) {
+    $_SESSION["kategoria"] = $_POST["adv-search-category"];
+    echo "<br> kat -> " . $_SESSION["kategoria"] . "<br>"; exit();
+}*/
 
 ?>
 
@@ -46,335 +84,364 @@
 require "../view/header-container.php"; ?>
 
 
-        <div id="container">
+<div id="container">
 
-            <main>
+    <main>
 
-            <div id="main-content">
+        <div id="main-content">
 
-                <nav id="category-nav">
-                    <ul>
-                        <?php
-                            query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", "");
-                        ?>
-                    </ul>
-                </nav>
+            <nav id="category-nav">
+                <ul>
+                    <?php
+                        query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", "");
+                    ?>
+                </ul>
+            </nav>
 
-                <!-- div style="float: left; height: 45px; width: 200px; border: 1px solid black;">asdasdsds</div>-->
+            <!-- div style="float: left; height: 45px; width: 200px; border: 1px solid black;">asdasdsds</div>-->
 
-                <section id="main-gallery">
-                    <div class="slideshow-container">
+            <section id="main-gallery">
+                <div class="slideshow-container">
 
-                        <div class="mySlides fade">
-                            <div class="numbertext">1 / 3</div>
-                            <img src="../assets/gallery/1.png" alt="gallery" style="width:100%">
-                            <div class="text">Caption Text</div>
-                        </div>
-
-                        <div class="mySlides fade">
-                            <div class="numbertext">2 / 3</div>
-                            <img src="../assets/gallery/2.png" alt="gallery" style="width:100%">
-                            <div class="text">Caption Two</div>
-                        </div>
-
-                        <div class="mySlides fade">
-                            <div class="numbertext">3 / 3</div>
-                            <img src="../assets/gallery/3.png" alt="gallery" style="width:100%">
-                            <div class="text">Caption Three</div>
-                        </div>
-
-                        <a class="prev" onclick="plusSlides(-1)">❮</a>
-                        <a class="next" onclick="plusSlides(1)">❯</a>
-
-
-                        <div style="text-align:center">
-                            <span class="dot" onclick="currentSlide(1)"></span>
-                            <span class="dot" onclick="currentSlide(2)"></span>
-                            <span class="dot" onclick="currentSlide(3)"></span>
-                        </div>
-
+                    <div class="mySlides fade">
+                        <div class="numbertext">1 / 3</div>
+                        <img src="../assets/gallery/1.png" alt="gallery" style="width:100%">
+                        <div class="text">Caption Text</div>
                     </div>
-                </section>
 
-                <br><br><br><br><br><br>
-                <br><br><br><br><br><br>
-                <br><br><br><br><br><br>
+                    <div class="mySlides fade">
+                        <div class="numbertext">2 / 3</div>
+                        <img src="../assets/gallery/2.png" alt="gallery" style="width:100%">
+                        <div class="text">Caption Two</div>
+                    </div>
+
+                    <div class="mySlides fade">
+                        <div class="numbertext">3 / 3</div>
+                        <img src="../assets/gallery/3.png" alt="gallery" style="width:100%">
+                        <div class="text">Caption Three</div>
+                    </div>
+
+                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                    <a class="next" onclick="plusSlides(1)">❯</a>
 
 
-                <section id="latest-books-section">&lt;section&gt; for "Nowości"</section>
-                <section id="books-promotion-section">&lt;section&gt; for "Promocje"</section>
+                    <div style="text-align:center">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                    </div>
 
-                <br>
+                </div>
+            </section>
+
+            <br><br><br><br><br><br>
+            <br><br><br><br><br><br>
+            <br><br><br><br><br><br>
+
+
+            <section id="latest-books-section">&lt;section&gt; for "Nowości"</section>
+            <section id="books-promotion-section">&lt;section&gt; for "Promocje"</section>
+
+            <br>
+
+        </div>
+
+        <aside id="book-filters">
+
+            <div id="nav" style="overflow: auto;">
+
+                <?php
+
+                    echo "<h3>".$_SESSION["kategoria"]."</h3>";
+
+                ?>
+
+                <h3>Sortowanie</h3>
+
+                <select id="sortuj_wg">
+                    <option value="1">ceny rosnąco</option>
+                    <option value="2">ceny malejąco</option>
+                    <option value="3">nazwy A-Z</option>
+                    <option value="4">nazwy Z-A</option>
+                    <option value="5">Najnowszych</option>
+                    <option value="6">Najstarszych</option>
+                </select>
+
+                <button id="sort_button" onclick="sortBooks()">Sortuj</button>
+
+                <hr><br>
+
+                <div id="price-range">
+                    <label>
+                        Min: <input type="number" id="value-min">
+                    </label>
+                    <label>
+                        Max: <input type="number" id="value-max">
+                    </label>
+                    <div id="slider"></div>
+                </div>
+
+                <br><hr>
+
+                <!-- search by title in that category -->
+
+                <div id="input-search-nav">
+                    <h3>Tytyuł</h3><hr>
+                    <pre>(szukaj tytułu w tej kategorii)</pre>
+                    <!-- <div id="div-search">-->
+                    <form action="index.php" method="get">
+                        <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki"><br>
+                        <input type="submit" value="Szukaj">
+                    </form>
+                </div>
+                <!--</div>-->
+
+                <?php
+                    query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // lista <ul> autorów
+                ?>
+
+                <button id="filter-authors">Zastosuj</button>
 
             </div>
 
-            <aside id="book-filters">
+        </aside> <!-- "book filters" -->
 
-                <div id="nav">
+        <?php
 
-                    <?php
-                        if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
-                        {
-                            $kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
-                            $kategoria = strip_tags($kategoria); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
+        if((isset($_GET['kategoria'])) &&
+            !(empty($_GET['kategoria'])) &&
+            (!(isset($_GET['autor'])) ||
+                (empty($_GET['autor']))) ) // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>
+        {
+            echo '<div id="content">';
 
-                            echo "<h3>".$kategoria."</h3><hr>";
-                        }
-                    ?>
+            echo '<script> displayNav(); </script>';
 
-                    <h3>Sortowanie</h3>
+            // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; <script>alert("hahaha");</script>;
+            $kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
+            $kategoria = strip_tags($kategoria);
 
-                    <select id="sortuj_wg">
-                        <option value="1">ceny rosnąco</option>
-                        <option value="2">ceny malejąco</option>
-                        <option value="3">nazwy A-Z</option>
-                        <option value="4">nazwy Z-A</option>
-                        <option value="5">Najnowszych</option>
-                        <option value="6">Najstarszych</option>
-                    </select>
+            $_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)
 
-                    <button id="sort_button" onclick="sortBooks()">Sortuj</button>
+            var_dump($_SESSION);
+            print_r($_SESSION);
+            print_r($_POST);
 
-                    <hr><br>
-
-                    <div id="price-range">
-                            <label>
-                                Min: <input type="number" id="value-min">
-                            </label>
-                            <label>
-                                Max: <input type="number" id="value-max">
-                            </label>
-                        <div id="slider"></div>
-                    </div>
-
-                    <br><hr>
-
-                    <?php
-                        query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // lista autorów
-                    ?>
-
-                </div>
-
-            </aside> <!-- "book filters" -->
-
-            <?php
-
-                if((isset($_GET['kategoria'])) &&
-                  !(empty($_GET['kategoria'])) &&
-                 (!(isset($_GET['autor'])) ||
-                   (empty($_GET['autor']))) ) // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>
-                {
-                    echo '<div id="content">';
-
-                        echo '<script> displayNav(); </script>';
-
-                        // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; <script>alert("hahaha");</script>;
-                        $kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
-                        $kategoria = strip_tags($kategoria);
-                        $_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)
-
-                        //var_dump($_SESSION["kategoria"]);
-
-                        echo '<div id="content-books">';
+            echo '<div id="content-books">';
 
 
-                        displayBooks($_SESSION['kategoria']);
+            displayBooks($_SESSION['kategoria']);
 //                            if($_SESSION['kategoria'] == "Wszystkie")
 //                            {
 //                                displayBooks($_SESSION['kategoria']);
 //                            }
-                           /* else // --> "Dla dzieci" , "Fantastyka", "Informatyka", ...
-                            {
-                                //print_r($_SESSION);
-                                //query("SELECT id_ksiazki, image_url, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books",  $_SESSION['kategoria']);
-                                query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);
+            /* else // --> "Dla dzieci" , "Fantastyka", "Informatyka", ...
+             {
+                 //print_r($_SESSION);
+                 //query("SELECT id_ksiazki, image_url, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books",  $_SESSION['kategoria']);
+                 query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);
 
-                                //($result = $polaczenie->query(sprintf("UPDATE klienci SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", mysqli_real_escape_string($polaczenie, $imie), mysqli_real_escape_string($polaczenie, $nazwisko), mysqli_real_escape_string($polaczenie, $miasto), mysqli_real_escape_string($polaczenie, $ulica), mysqli_real_escape_string($polaczenie, $numer_domu), mysqli_real_escape_string($polaczenie, $kod_pocztowy), mysqli_real_escape_string($polaczenie, $kod_miejscowosc), mysqli_real_escape_string($polaczenie, $wojewodztwo), mysqli_real_escape_string($polaczenie, $kraj), mysqli_real_escape_string($polaczenie, $pesel), mysqli_real_escape_string($polaczenie, $data_urodzenia), mysqli_real_escape_string($polaczenie, $telefon), mysqli_real_escape_string($polaczenie, $email), mysqli_real_escape_string($polaczenie, $login))))
-                            }*/
+                 //($result = $polaczenie->query(sprintf("UPDATE klienci SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", mysqli_real_escape_string($polaczenie, $imie), mysqli_real_escape_string($polaczenie, $nazwisko), mysqli_real_escape_string($polaczenie, $miasto), mysqli_real_escape_string($polaczenie, $ulica), mysqli_real_escape_string($polaczenie, $numer_domu), mysqli_real_escape_string($polaczenie, $kod_pocztowy), mysqli_real_escape_string($polaczenie, $kod_miejscowosc), mysqli_real_escape_string($polaczenie, $wojewodztwo), mysqli_real_escape_string($polaczenie, $kraj), mysqli_real_escape_string($polaczenie, $pesel), mysqli_real_escape_string($polaczenie, $data_urodzenia), mysqli_real_escape_string($polaczenie, $telefon), mysqli_real_escape_string($polaczenie, $email), mysqli_real_escape_string($polaczenie, $login))))
+             }*/
 
-                        echo '</div>';
-                    echo '</div>';
-                }
-                elseif ((!(isset($_GET['kategoria'])) || (empty($_GET['kategoria']))) && (isset($_GET['autor'])) && !(empty($_GET['autor']))) // TYMCZASOWE wyświetlanie książek autora, po wpisaniu go w wyszukiwarce
-                {
-                    echo '<div id="content"></div>';
-                        $autor = [$_GET['autor']];
-                        echo '<div id="content-books">';
-                            query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor);
-                        echo '</div>';
-                    echo '</div>';
-                }
-                else // jeśli (nie ustawiono kategorii i autora), lub (ustawiono kategorie ORAZ autora)
-                {
-                    //print_r($_SESSION);
+            echo '</div>';
+            echo '</div>';
+        }
+        elseif ((!(isset($_GET['kategoria'])) || (empty($_GET['kategoria']))) && (isset($_GET['autor'])) && !(empty($_GET['autor']))) // TYMCZASOWE wyświetlanie książek autora, po wpisaniu go w wyszukiwarce
+        {
+            echo '<div id="content"></div>';
+                $autor = [$_GET['autor']];
+                echo '<div id="content-books">';
+                    query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor);
+                echo '</div>';
+            echo '</div>';
+        }
+        else // jeśli (nie ustawiono kategorii i autora), lub (ustawiono kategorie ORAZ autora)
+        {
+            //print_r($_SESSION);
 
-                    if((isset($_GET['input-search'])) && (!empty($_GET['input-search']))) // pole wyszukiwania
-                    {
-                        echo '<div id="content">';
-                            echo '<script> displayNav(); </script>';
-
-                            echo '<div id="content-books">';
-
-                                //$search_value = $_GET['input-search'];
-                                //      <script>alert("hahaha");</script>
-                                $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
-                               /* $search_value = htmlentities($_GET['input-search'], ENT_QUOTES, "UTF-8");
-                                $search_value = strip_tags($search_value);*/
-
-                                print_r($search_value); echo "<br>";
-
-                                //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $search_value);
-                                query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);
-
-            //                            echo '<script>
-            //
-            //                            const searchInput = document.getElementById("input-search");
-            //                            const searchResults = document.getElementById("search-results");
-            //
-            //                            searchInput.addEventListener("input", () => {
-            //                            const query = searchInput.value;
-            //
-            //                            if (query.trim() !== "") {
-            //                            fetch(`index.php?q=${encodeURIComponent(query)}`)
-            //                            .then(response => response.json())
-            //                            .then(results => {
-            //                            let html = "";
-            //
-            //                            if (results.length > 0) {
-            //                            results.forEach(result => {
-            //                            html += `<div class="search-result">${result}</div>`;
-            //                            });
-            //                            } else {
-            //                            html += `<div class="search-result">No results found</div>`;
-            //                            }
-            //
-            //                            searchResults.innerHTML = html;
-            //                            })
-            //                            .catch(error => {
-            //                            console.error(error);
-            //                            });
-            //                            } else {
-            //                            searchResults.innerHTML = "";
-            //                            }
-            //                            });
-            //                            </script>';
-
-                            echo '</div>';
-                        echo '</div>';
-                    }
-                    else if((isset($_GET['input-search'])) && (empty($_GET['input-search']))) // puste pole wyszukiwania
-                    {
-                        echo '<div id="content"></div>';
-                                echo '<script> displayNav(); </script>';
-                            echo '<div id="content-books">';
-                                echo '<h3>Brak wyników</h3>';
-                            echo '</div>';
-                        echo '</div>';
-                    }
-                    else
-                    {
-                        //////////////////////////////////////////////////////////////////////////////////////////////////
-                        // STRONA GŁÓWNA //
-                        //////////////////////////////////////////////////////////////////////////////////////////////////
-
-                        // query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
-                    }
-                }
-            ?>
-
-            <!-- //////////////////////////////////////////////////////////////////////////////////////////////////
-                 // STRONA GŁÓWNA //
-                 ////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
-            <!-- np tytuł książki, lub imie autora --> <!-- "Jerzy", "Tomasz", "Symfonia C++", "Podstawy PHP" -->
-            <!--			<div id="div_advanced_search">-->
-            <!---->
-            <!--				<form action="index.php" method="get">-->
-            <!---->
-            <!--					<input type="search" name="wyrazenie"> -->
-            <!---->
-            <!--					<select id="metoda" name="metoda">-->
-            <!--						<option value="autor">autor</option>-->
-            <!--						<option value="tytul">tytul</option>-->
-            <!--					</select>-->
-            <!---->
-            <!--					<input type="submit" value="Szukaj">-->
-            <!---->
-            <!--				</form>-->
-            <!---->
-            <!--			</div>-->
-
-            <!--			<hr>-->
-
-            <?php
-            if(isset($_GET['wyrazenie']) && !empty($_GET['wyrazenie']) && isset($_GET['metoda']) && !empty($_GET['metoda']))
+            if((isset($_GET['input-search'])) && (!empty($_GET['input-search']))) // pole wyszukiwania
             {
-                $wyrazenie = $_GET['wyrazenie'];
-                $metoda = $_GET['metoda'];
+                echo '<div id="content">';
+                    echo '<script> displayNav(); </script>';
+                        echo '<div id="content-books">';
 
+                        $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
+
+                        print_r($search_value); echo "<br>";
+
+                        unset($_SESSION["kategoria"]);
+
+                        query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);
+
+                    echo '</div>';
+                echo '</div>';
+            }
+            else if(isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"])) {
+                // wyszukiwanie tytuły z panelu <nav> (tytuł książki z danej kategorii - $_SESSION["kategoria"]);
+
+                if(isset($_SESSION["kategoria"]) && !empty($_SESSION["kategoria"])) {
+
+                    print_r($_SESSION);
+
+                    $title = filter_input(INPUT_GET, "input-search-nav", FILTER_SANITIZE_STRING);
+                    $values = [$title];
+
+                    echo '<div id="content">';
+                        echo '<script> displayNav(); </script>';
+                            echo '<div id="content-books">';
+
+                                echo "<br>266<br>";
+
+                                $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND ks.tytul LIKE '%%%s%%'";
+
+                                if($_SESSION["kategoria"] != "Wszystkie") {
+                                    $where = array();
+
+                                    $where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
+                                    $values[] = $_SESSION['kategoria'];
+
+                                    echo "<br>276<br>";
+                                }
+
+                                if (!empty($where)) {
+                                    // Combine the conditions into a single WHERE clause
+                                    $query .= implode("", $where);
+
+                                    echo "<br>283<br>";
+                                }
+
+                                echo "<br> query -> ".$query . "<br>";
+                                echo "<br> values -> ".var_dump($values) . "<br>";
+
+
+
+                                query($query, "get_books", $values);
+                        echo '</div>';
+                    echo '</div>';
+                }
+            }
+
+            else if((isset($_GET['input-search'])) && (empty($_GET['input-search']))) // puste pole wyszukiwania
+            {
+                echo '<div id="content"></div>';
+                echo '<script> displayNav(); </script>';
+                echo '<div id="content-books">';
+                echo '<h3>Brak wyników</h3>';
+                echo '</div>';
+                echo '</div>';
+            }
+            else
+            {
+                //////////////////////////////////////////////////////////////////////////////////////////////////
+                // STRONA GŁÓWNA //
+                //////////////////////////////////////////////////////////////////////////////////////////////////
+
+                // query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
+            }
+        }
+        ?>
+
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////
+             // STRONA GŁÓWNA //
+             ////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+        <!-- np tytuł książki, lub imie autora --> <!-- "Jerzy", "Tomasz", "Symfonia C++", "Podstawy PHP" -->
+        <!--			<div id="div_advanced_search">-->
+        <!---->
+        <!--				<form action="index.php" method="get">-->
+        <!---->
+        <!--					<input type="search" name="wyrazenie"> -->
+        <!---->
+        <!--					<select id="metoda" name="metoda">-->
+        <!--						<option value="autor">autor</option>-->
+        <!--						<option value="tytul">tytul</option>-->
+        <!--					</select>-->
+        <!---->
+        <!--					<input type="submit" value="Szukaj">-->
+        <!---->
+        <!--				</form>-->
+        <!---->
+        <!--			</div>-->
+
+        <!--			<hr>-->
+
+        <?php
+        if(isset($_GET['wyrazenie']) && !empty($_GET['wyrazenie']) && isset($_GET['metoda']) && !empty($_GET['metoda']))
+        {
+            $wyrazenie = $_GET['wyrazenie'];
+            $metoda = $_GET['metoda'];
+
+            echo " <br>Wyrażenie = $wyrazenie <br>";
+            echo " <br>Metoda = $metoda <br>";
+
+            if($metoda == "autor")
+            {
+                //$query = "SELECT * FROM ksiazki, autor WHERE ksiazki.id_autora = autor.id_autora AND autor.imie == "
+                //		 "SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC"
+
+                $values = array();
+                array_push($values, $wyrazenie);
+                array_push($values, $wyrazenie);
+
+                query("SELECT id_ksiazki, autor.id_autora, tytul, cena, rok_wydania, kategoria FROM ksiazki, autor WHERE ksiazki.id_autora = autor.id_autora AND (autor.imie = '%s' OR autor.nazwisko = '%s')", "advanced_search", $values);
+                // dalej -> stworzyć funckję advanced_search ...
+
+                //query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); //
+            }
+            else if ($metoda == "tytul")
+            {
+                echo "<hr> ";
                 echo " <br>Wyrażenie = $wyrazenie <br>";
                 echo " <br>Metoda = $metoda <br>";
 
-                if($metoda == "autor")
-                {
-                    //$query = "SELECT * FROM ksiazki, autor WHERE ksiazki.id_autora = autor.id_autora AND autor.imie == "
-                    //		 "SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC"
+                // $wyrazenie = filter_input(INPUT_GET, 'wyrazenie', FILTER_SANITIZE_STRING); // ✓
 
-                    $values = array();
-                    array_push($values, $wyrazenie);
-                    array_push($values, $wyrazenie);
-
-                    query("SELECT id_ksiazki, autor.id_autora, tytul, cena, rok_wydania, kategoria FROM ksiazki, autor WHERE ksiazki.id_autora = autor.id_autora AND (autor.imie = '%s' OR autor.nazwisko = '%s')", "advanced_search", $values);
-                    // dalej -> stworzyć funckję advanced_search ...
-
-                    //query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); //
-                }
-                else if ($metoda == "tytul")
-                {
-                    echo "<hr> ";
-                    echo " <br>Wyrażenie = $wyrazenie <br>";
-                    echo " <br>Metoda = $metoda <br>";
-
-                    // $wyrazenie = filter_input(INPUT_GET, 'wyrazenie', FILTER_SANITIZE_STRING); // ✓
-
-                    query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $wyrazenie);
-                }
+                query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $wyrazenie);
             }
-            ?>
+        }
+        ?>
 
-            <!-- strona główna-->
+        <!-- strona główna-->
 
-            <!-- </div> koniec - content -->
+        <!-- </div> koniec - content -->
 
-                <?php
+        <?php
 
-                    // advanced search result -->
+        // advanced search result -->
 
-//                    if ( isset($_POST["adv-search-title"]) && !empty($_POST["adv-search-title"]) && isset($_POST["adv-search-category"]) && !empty($_POST["adv-search-category"]) && isset($_POST["adv-search-author"]) && !empty($_POST["adv-search-author"]) && isset($_POST["year-min"]) && !empty($_POST["year-max"])
-//                    ) {
-//                        echo '<script>alert("yes !")</script>';
-//                        print_r($_POST);
-//                    }
+        //                    if ( isset($_POST["adv-search-title"]) && !empty($_POST["adv-search-title"]) && isset($_POST["adv-search-category"]) && !empty($_POST["adv-search-category"]) && isset($_POST["adv-search-author"]) && !empty($_POST["adv-search-author"]) && isset($_POST["year-min"]) && !empty($_POST["year-max"])
+        //                    ) {
+        //                        echo '<script>alert("yes !")</script>';
+        //                        print_r($_POST);
+        //                    }
 
-//                    if ( isset($_POST["adv-search-category"]) && !empty($_POST["adv-search-category"]))
-//                    {
-//                        echo '<script>alert("yes !")</script>';
-//                        print_r($_POST);
-//                    }
+        //                    if ( isset($_POST["adv-search-category"]) && !empty($_POST["adv-search-category"]))
+        //                    {
+        //                        echo '<script>alert("yes !")</script>';
+        //                        print_r($_POST);
+        //                    }
 
-                if ( isset($_POST["year-min"]) && !empty($_POST["year-min"]) && isset($_POST["year-max"]) && !empty($_POST["year-max"]) && !isset($_GET["kategoria"])
-                ) {
+        if ( isset($_POST["year-min"]) && !empty($_POST["year-min"]) && isset($_POST["year-max"]) && !empty($_POST["year-max"]) && !isset($_GET["kategoria"])
+        ) {
 
-                    echo '<div id="content">';
+            echo '<div id="content">';
 
-                        echo '<script> displayNav(); </script>';
+            echo '<script> displayNav(); </script>';
 
-                            echo '<div id="content-books">';
+            echo '<div id="content-books">';
 
 //                                                            echo '<script>alert("yes !")</script>';
 //                                                            echo "<br><br><br>";
-                                                            print_r($_SESSION);
-                                                            print_r($_POST);
+
+            echo "<br><hr> SESSION --> <br><br><br>";
+            print_r($_SESSION);
+             echo "<br><br><hr><br><br>";
+
+            echo "<br><hr> POST --> <br><br><br>";
+            print_r($_POST);
+            echo "<br><br><hr><br><br>";
+
 //                                                            echo "<br><br><br>";
 //
 //                                                            echo "<br> title -> " . $_POST["adv-search-title"] . ";<br>";
@@ -385,31 +452,29 @@ require "../view/header-container.php"; ?>
 //
 //                                echo "<hr><br><hr>";
 
-                                ////////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////
 
-                                // Set up the initial query string
-                                //$query = "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki";
-                                $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au";
+            // Set up the initial query string
+            //$query = "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki";
+            $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au";
 
-                                // Validate and sanitize input data
+            // Validate and sanitize input data
 
 //                                $_POST =>
 //                                (
 //                                    [       adv-search-title       ] => "bbb"
 //                                    [       adv-search-category       ] => Komiks
-    //                                    [       adv-search-author       ] => 13   // id_autora
-    //                                    [       year-min       ] => 2005
-    //                                    [       year-max       ] => 2018
+            //                                    [       adv-search-author       ] => 13   // id_autora
+            //                                    [       year-min       ] => 2005
+            //                                    [       year-max       ] => 2018
 //                                )
 
-
-
-                                if (isset($_POST["adv-search-title"]) && !empty($_POST["adv-search-title"])) {
-                                    $title = filter_input(INPUT_POST, "adv-search-title", FILTER_SANITIZE_STRING);
-                                }
-                                if (isset($_POST["adv-search-category"]) && !empty($_POST["adv-search-category"])) {
-                                    $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING);
-                                }
+            if (isset($_POST["adv-search-title"]) && !empty($_POST["adv-search-title"])) {
+                $title = filter_input(INPUT_POST, "adv-search-title", FILTER_SANITIZE_STRING);
+            }
+            if (isset($_POST["adv-search-category"]) && !empty($_POST["adv-search-category"])) {
+                $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING);
+            }
 
 //                                if((!is_numeric($_POST["adv-search-author"]))) {
 //                                    //echo '<script>displaySearchError();</script>';
@@ -419,113 +484,104 @@ require "../view/header-container.php"; ?>
 //                                if (!is_numeric($_POST["adv-search-author"])) {
 //                                    $_SESSION["advanced-search-error"] = "Podaj poprawne dane";
 //                                    //header('Location: index.php');
-////                                    echo '<script>window.location.href="index.php";</script>';
-//
-//
-//                                    //exit();
-//
+////                                    echo '<script>window.location.href="index.php";</script>';/
+//                                    //exit();//
 //                                }
-
-
-
-                                if (isset($_POST["adv-search-author"]) && !empty($_POST["adv-search-author"])) {
-
-                                    $author = filter_input(INPUT_POST, "adv-search-author", FILTER_VALIDATE_INT);
-                                    /*if (!$author || !is_numeric($_POST["adv-search-author"])) {
-                                        // Handle invalid input (e.g. display an error message)
-
-                                        $_SESSION["advanced-search-error"] = "Podaj poprawne dane";
-
-                                    }*/
-                                }
-
-                                //echo "<br> autor 438 --> ".$author; exit();
-
-
-
-
+            if (isset($_POST["adv-search-author"]) && !empty($_POST["adv-search-author"])) {
+                $author = filter_input(INPUT_POST, "adv-search-author", FILTER_VALIDATE_INT);
+                /*if (!$author || !is_numeric($_POST["adv-search-author"])) {
+                    // Handle invalid input (e.g. display an error message)
+                    $_SESSION["advanced-search-error"] = "Podaj poprawne dane";
+                }*/
+            }
+            //echo "<br> autor 438 --> ".$author; exit();
 //                                if(isset($_SESSION["advanced-search-error"]) && !empty($_SESSION["advanced-search-error"])) {
 //                                    echo "<br><br><span id='advanced-search-error'>" . $_SESSION["advanced-search-error"] . "</span>";
 //                                    $_SESSION["advanced-search-error"] = null;
 //                                }
+            // Initialize an array to store the conditions for the WHERE clause
+            $where = array();
 
+            $values = array();
 
+            // Check if the user provided a book title
+            if (!empty($_POST['adv-search-title'])) {
+                // Add a condition for the book title
+                //$where[] = "ks.tytul LIKE '%" . $_POST['adv-search-title'] . "%'";
+                $where[] = "ks.tytul LIKE '%%%s%%'"; //%%%s%%
+                $values[] = $_POST['adv-search-title'];
 
+            }
 
-                    // Initialize an array to store the conditions for the WHERE clause
-                                $where = array();
+            // Check if the user selected a category
+            if ($_POST['adv-search-category'] != 'Wszystkie') {
+                // Add a condition for the category
+                //$where[] = "ks.kategoria = '" . $_POST['adv-search-category'] . "'";
+                $where[] = "ks.kategoria = '%s'";
+                $values[] = $_POST['adv-search-category'];
 
-                                $values = array();
+                $_SESSION["kategoria"] = $_POST["adv-search-category"];
+            }
 
-                                // Check if the user provided a book title
-                                if (!empty($_POST['adv-search-title'])) {
-                                    // Add a condition for the book title
-                                    //$where[] = "ks.tytul LIKE '%" . $_POST['adv-search-title'] . "%'";
-                                    $where[] = "ks.tytul LIKE '%%%s%%'"; //%%%s%%
-                                    $values[] = $_POST['adv-search-title'];
+            // Check if the user selected an author
+            if (!empty($_POST['adv-search-author'])) {
+                // Add a condition for the author
+                //$where[] = "ks.id_autora = " . $_POST['adv-search-author'];
+                $where[] = "ks.id_autora = '%s'";
+                $values[] = $_POST['adv-search-author'];
+            }
 
-                                }
+            // Check if the user provided a minimum year
+            if (!empty($_POST['year-min'])) {
+                // Add a condition for the minimum year
+                //$where[] = "ks.rok_wydania >= " . $_POST['year-min'];
+                $where[] = "ks.rok_wydania >= '%s'";
+                $values[] = $_POST['year-min'];
+            }
 
-                                // Check if the user selected a category
-                                if ($_POST['adv-search-category'] != 'Wszystkie') {
-                                    // Add a condition for the category
-                                    //$where[] = "ks.kategoria = '" . $_POST['adv-search-category'] . "'";
-                                    $where[] = "ks.kategoria = '%s'";
-                                    $values[] = $_POST['adv-search-category'];
-                                }
+            // Check if the user provided a maximum year
+            if (!empty($_POST['year-max'])) {
+                // Add a condition for the maximum year
+                //$where[] = "ks.rok_wydania <= " . $_POST['year-max'];
+                $where[] = "ks.rok_wydania <= '%s'";
+                $values[] = $_POST['year-max'];
+            }
 
-                                // Check if the user selected an author
-                                if (!empty($_POST['adv-search-author'])) {
-                                    // Add a condition for the author
-                                    //$where[] = "ks.id_autora = " . $_POST['adv-search-author'];
-                                    $where[] = "ks.id_autora = '%s'";
-                                    $values[] = $_POST['adv-search-author'];
-                                }
-
-                                // Check if the user provided a minimum year
-                                if (!empty($_POST['year-min'])) {
-                                    // Add a condition for the minimum year
-                                    //$where[] = "ks.rok_wydania >= " . $_POST['year-min'];
-                                    $where[] = "ks.rok_wydania >= '%s'";
-                                    $values[] = $_POST['year-min'];
-                                }
-
-                                // Check if the user provided a maximum year
-                                if (!empty($_POST['year-max'])) {
-                                    // Add a condition for the maximum year
-                                    //$where[] = "ks.rok_wydania <= " . $_POST['year-max'];
-                                    $where[] = "ks.rok_wydania <= '%s'";
-                                    $values[] = $_POST['year-max'];
-                                }
-
-                                // Check if any conditions were added to the WHERE clause
-                                if (!empty($where)) {
-                                    // Combine the conditions into a single WHERE clause
-                                    $query .= " WHERE ks.id_autora = au.id_autora AND " . implode(" AND ", $where);
-                                }
+            // Check if any conditions were added to the WHERE clause
+            if (!empty($where)) {
+                // Combine the conditions into a single WHERE clause
+                $query .= " WHERE ks.id_autora = au.id_autora AND " . implode(" AND ", $where);
+            }
 
 //                                echo '<br><hr><br> <span style="color: blue;"> query ( ) &rarr; ' . $query . '</span><br><br>';
 
-                                // Execute the query
-                                query($query, "get_books", $values);
+            // Execute the query
+            query($query, "get_books", $values);
 
-                                // echo '<div style="height: 300px; border: 1px dashed black;"></div>';
+            // echo '<div style="height: 300px; border: 1px dashed black;"></div>';
 
-                            echo '</div>';
+            echo '</div>';
 
-                    echo '</div>';
-
-
-                }
-
-                ?>
-
-            </main>
-        </div>
-
-    <?php require "../view/footer.php"; ?>
+            echo '</div>';
 
 
+        }
+
+        ?>
+
+    </main>
+</div>
+
+<?php require "../view/footer.php"; ?>
+
+<?php
+    if(!isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"])) {
+        echo '<script src="../scripts/hide-search-nav.js"></script>';
+    }
+    else {
+        echo '<script src="../scripts/show-search-nav.js"></script>';
+    }
+?>
 
 <script>
 
@@ -544,12 +600,13 @@ require "../view/header-container.php"; ?>
         if (selectedValue && selectElement) {
             selectElement.value = selectedValue;
             <?php
-                if(isset($_GET['kategoria'])) {
-                    echo 'sortBooks();';
-                }
+            if(isset($_GET['kategoria'])) {
+                echo 'sortBooks();';
+            }
             ?>
         }
     });
+
 
 </script>
 

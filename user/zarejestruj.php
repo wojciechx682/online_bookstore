@@ -105,7 +105,7 @@
                         ?>
 
 
-                        Hasło: <br> <input type="password" name="haslo1"
+                        Hasło: <br> <input type="password" maxlength="30" name="haslo1"
 
                                            value="PassJacob33#" ><br>
 
@@ -116,7 +116,7 @@
                             unset($_SESSION['e_haslo']);
                         }
                         ?>
-                        Powtórz hasło: <br> <input type="password" name="haslo2"
+                        Powtórz hasło: <br> <input type="password" maxlength="30" name="haslo2"
 
                                                    value="PassJacob33#" ><br>
 

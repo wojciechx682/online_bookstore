@@ -22,7 +22,7 @@
                     <div id="header-content">
                         <div id="div-search">
                             <form action="index.php" method="get">
-                                <input type="search" name="input-search" id="input-search">
+                                <input type="search" name="input-search" id="input-search" placeholder="tytuł książki">
                                 <input type="submit" value="Szukaj">
 
                                 <img id="search-arrow" src="../assets/arrow.png" alt="advanced filtering"> <!-- advanced search -->

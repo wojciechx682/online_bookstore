@@ -1483,9 +1483,24 @@ footer {
 
 
 
+/* filtrowanie książek - lista autorów --> ----------------------------------------------------------------------------- */
 
+input[type="checkbox"].author-checkbox {
+	position: relative;
+	top: 1.3px;
+}
 
+ul#ul-authors label {
+	/*background-color: #dedede;*/
+}
 
+/* filtrowanie książek - wyszukiwanie tytyłu (dla aktualnej kategorii)--> ---------------------------------------------- */
+
+input#input-search-nav {
+	margin-bottom: 10px;
+	border-radius: 8px;
+	border-width: 1px;
+}
 
 
 

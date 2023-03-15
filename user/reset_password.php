@@ -1,5 +1,7 @@
 <?php
 
+// podział kodu ma moduły / funkcje;    generowanie tokenu,     wysyłanie maila;
+
 session_start();
 
 include_once "../functions.php";
@@ -241,9 +243,9 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
 
                     if(isset($_SESSION["sent-error"]) || (isset($_SESSION["email-sent"]) && ($_SESSION["email-sent"] == false))) {
 
-                        echo "<br>244<br>";
-
                         echo "<div>nie udało się wysłać wiadomości na podany adres e-mail</div>";
+                        unset($_SESSION["sent-error"]);
+                        unset($_SESSION["email-sent"]);
                         //echo $_SESSION["sent-error"];
                         // unset ?
                     }

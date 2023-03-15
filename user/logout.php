@@ -26,7 +26,7 @@
 		header('Location: zaloguj.php');
 		exit();
 	}
-	elseif(isset($_SESSION["password_confirmed"])) {
+	elseif(isset($_SESSION["password_confirmed"])) { // redirect from remove_password.php
 		session_unset();
 		session_destroy();
 		session_start();

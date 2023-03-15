@@ -10,7 +10,7 @@
         isset($_POST['haslo1']) && !empty($_POST['haslo1']) &&
         isset($_POST['haslo2']) && !empty($_POST['haslo2']) &&
         isset($_POST['miejscowosc']) && !empty($_POST['miejscowosc']) &&
-        isset($_POST['ulica']) && !empty($_POST['ulica']) &&
+       /* isset($_POST['ulica']) && !empty($_POST['ulica']) &&*/
         isset($_POST['numer_domu']) && !empty($_POST['numer_domu']) &&
         isset($_POST['kod_pocztowy']) && !empty($_POST['kod_pocztowy']) &&
         isset($_POST['kod_miejscowosc']) && !empty($_POST['kod_miejscowosc']) &&
@@ -30,12 +30,14 @@
         $haslo2 = $_POST['haslo2'];
 
 		$miejscowosc = $_POST['miejscowosc']; 
-		$ulica = $_POST['ulica'];
+		if(isset($_POST["ulica"]) && !empty($_POST["ulica"])) {$ulica = $_POST['ulica'];}
 		$numer_domu = $_POST['numer_domu'];
 
 		$kod_pocztowy = $_POST['kod_pocztowy'];
 		$kod_miejscowosc = $_POST['kod_miejscowosc'];
-		$telefon = $_POST['telefon'];		
+		$telefon = $_POST['telefon'];
+
+
             //$wojewodztwo = $_POST['wojewodztwo'];
             //$kraj = $_POST['kraj'];
             //$PESEL = $_POST['pesel'];
@@ -195,15 +197,18 @@
         //$ulica = ucfirst(strtolower($ulica));
 
         //$street_regex = '/^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]*(\s[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+){0,2}$/';
-        $street_regex = '/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s.-]{3,35}$/';
-        //    Passing:
-        //          "ul. Warszawska"  "al. Jana Pawła II"  "Plac Grunwaldzki"
 
-        if(!(preg_match($street_regex, $ulica)))
-		{		
-			$_SESSION['wszystko_OK'] = false;
-			$_SESSION['e_ulica'] = "Podaj poprawną nazwę ulicy";
-		}
+        if(isset($ulica)) {
+            $street_regex = '/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s.-]{3,35}$/';
+            //    Passing:
+            //          "ul. Warszawska"  "al. Jana Pawła II"  "Plac Grunwaldzki"
+
+            if(!(preg_match($street_regex, $ulica)))
+            {
+                $_SESSION['wszystko_OK'] = false;
+                $_SESSION['e_ulica'] = "Podaj poprawną nazwę ulicy";
+            }
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Numer domu   		
@@ -329,7 +334,9 @@
 		//$_SESSION['fr_haslo2'] = $haslo2;
 
 		$_SESSION['fr_miejscowosc'] = $miejscowosc; 
-		$_SESSION['fr_ulica'] = $ulica; 
+		if(isset($ulica)) {
+            $_SESSION['fr_ulica'] = $ulica;
+        }
 		$_SESSION['fr_numer_domu'] = $numer_domu; 
 		$_SESSION['fr_kod_pocztowy'] = $kod_pocztowy; 
 		$_SESSION['fr_kod_miejscowosc'] = $kod_miejscowosc; 
