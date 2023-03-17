@@ -1,7 +1,5 @@
 <?php
 
-
-
 	session_start();
 	
 	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (!(isset($_SESSION['udanarejestracja'])))) // jeśli weszliśmy na zaloguj.php będąc zalogowanym
@@ -14,7 +12,7 @@
 		header("Location: logout.php");
 		exit();
 	}
-	elseif( !isset($_SESSION['zalogowany']) &&
+	elseif(!isset($_SESSION['zalogowany']) &&
             isset($_SESSION['udanarejestracja'])
     ) // jeśli stworzyliśmy konto (normalnie - nie będąc zalogowanym w tym czasie na inne)
 	{
@@ -34,7 +32,7 @@
 		if (isset($_SESSION['fr_telefon'])) unset($_SESSION['fr_telefon']);		
 		if (isset($_SESSION['fr_regulamin'])) unset($_SESSION['fr_regulamin']);
 		
-		// Usuwanie błędów rejestracji - Te zmienne nie istnieją jeśli udało się stworzyć konto !
+		// Usuwanie błędów rejestracji - Te zmienne nie istnieją jeśli udało się stworzyć konto !;  A co jeśli udało się stworzyć konto, ale wcześniej ktoś wywołałe te błędy ... ?
 //		if (isset($_SESSION['e_imie'])) unset($_SESSION['e_imie']);
 //		if (isset($_SESSION['e_nazwisko'])) unset($_SESSION['e_nazwisko']);
 //		if (isset($_SESSION['e_email'])) unset($_SESSION['e_email']);
@@ -83,8 +81,9 @@
                 <form action="logowanie.php" method="post">
 
                     <!-- Login: <br> <input type="text" name="login"> <br> -->
-                    E-mail: <br> <input type="text" name="email" value="jakub.wojciechowski.682@gmail.com"> <br>
-                    Hasło: <br> <input type="password" name="haslo" value="PassJacob33#"> <br><br>
+                    E-mail: <br> <input type="email" name="email" required value="jakub.wojciechowski.682@gmail.com"> <br>
+                    Hasło: <br> <input type="password" name="haslo" required value="PassJacob33#"
+                                       autocomplete="off"> <br><br>
 
                     <input type="submit" value="Zaloguj się">
 

@@ -61,8 +61,7 @@
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		//$imie = str_replace(str_split(' '), '', $imie); // remove all white spaces
-		$imie = trim($imie, " "); // remove space in the last position
-		$imie = ucfirst(strtolower($imie));	// change all to lowercase, keep first letter uppercase
+		$imie = ucfirst(strtolower(trim($imie, " ")));	// remove space in the first and last position; // change all to lowercase, keep first letter uppercase
 
         $name_regex = '/^[A-ZŁŚŻ]{1}[a-ząęółśżźćń]+$/u';
 
@@ -91,8 +90,7 @@
             $_SESSION['e_imie']="Podaj poprawne imię";
         }
 
-		$nazwisko = trim($nazwisko, " ");
-		$nazwisko = ucfirst(strtolower($nazwisko));	
+		$nazwisko = ucfirst(strtolower(trim($nazwisko, " ")));
 
 		if(!(preg_match($name_regex, $nazwisko))) 
 		{		
@@ -113,17 +111,15 @@
 
 		//$email = htmlentities($email, ENT_QUOTES, "UTF-8");
 
-		$email_s = filter_var($email, FILTER_SANITIZE_EMAIL); // email - after the sanitization process. removes source code characters to avoid XSS attacks
+		$email_sanitized = filter_var($email, FILTER_SANITIZE_EMAIL); // email - after the sanitization process. removes source code characters to avoid XSS attacks
 
-		if(!filter_var($email_s, FILTER_VALIDATE_EMAIL) || ($email_s != $email))
+		if(!filter_var($email_sanitized, FILTER_VALIDATE_EMAIL) || ($email_sanitized != $email))
 		{
             // ensures that the email input is sanitized and valid
             // to avoid any potential XSS attacks and other vulnerabilities.
 			$_SESSION['wszystko_OK'] = false;
 			$_SESSION['e_email'] = "Podaj poprawny adres e-mail";
 		}
-
-
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                         // Sprawdzenie poprawności hasła :
@@ -168,10 +164,8 @@
 		// Miejscowosc		
 
 		//$address_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]+([\s|\-]?[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+){4}$/';
-		
 
-		$miejscowosc = trim($miejscowosc, " ");
-        $miejscowosc = ucfirst($miejscowosc);
+        $miejscowosc = ucfirst(trim($miejscowosc, " "));
 
         $address_regex = '/^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]+([\s|\-]?[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+){0,4}$/';
 
@@ -248,8 +242,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// kod-miejscowosc 
 
-        $kod_miejscowosc = trim($kod_miejscowosc, " ");
-        $kod_miejscowosc = ucfirst($kod_miejscowosc);
+        $kod_miejscowosc = ucfirst(trim($kod_miejscowosc, " "));
 
 		if(!(preg_match($address_regex, $kod_miejscowosc))) 
 		{		
@@ -356,7 +349,7 @@
 
         //var_dump($_SESSION); exit();
 
-		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_s);  // przestawi mi zmienną $_SESSION['wszystko_OK'] na false, jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);
+		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_sanitized);  // przestawi mi zmienną $_SESSION['wszystko_OK'] na false, jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);
 
 		if($_SESSION['wszystko_OK']) // udana walidacja
 		{
@@ -368,7 +361,6 @@
 			query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database
 
             unset($_SESSION['wszystko_OK']);
-
         }
 		else // nieudana walidacja
 		{

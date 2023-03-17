@@ -446,7 +446,7 @@
 
 	function log_in($result)
 	{
-        echo "<br>477";
+        //echo "<br>477";
         //exit();
         // logowanie.php - skrypt logowania, logowanie -> weryfikacja hasła
 
@@ -494,10 +494,10 @@
             //echo "<br>477";
 			exit();
 		}
-		else  // dobry login, złe hasło
+		else  // dobry e-mail, złe hasło
 		{
-            echo "<br>477";
-			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowanie -> przekierowanie do index.php + komunikat
+            //echo "<br>477";
+			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowanie -> przekierowanie do zaloguj.php + komunikat
 			header('Location: zaloguj.php');
 			exit();
 		}
@@ -660,9 +660,9 @@
 
                             //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
 
-                            if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
+                           /* if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
                                 $fun($result);
-                            }
+                            }*/
 
                             // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
 

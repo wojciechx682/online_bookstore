@@ -9,8 +9,11 @@
 
 <!DOCTYPE HTML>
 <html lang="pl">
+
 <?php require "../view/head.php"; ?>
+
 <body>
+
 <?php require "../view/header-container.php"; ?>
 
 	<div id="container">
@@ -55,7 +58,7 @@
                                 echo $_SESSION['error_form'];
                                 unset($_SESSION['error_form']);
                             } else {
-                                if((isset($_SESSION['validation_passed'])) && ($_SESSION['validation_passed'] == true))	{
+                                if((isset($_SESSION['validation_passed'])) && $_SESSION['validation_passed'])	{
                                     echo "Dane zostały zmienione";
                                     unset($_SESSION['validation_passed']);
                                 }
@@ -65,6 +68,45 @@
                 </div>
 
                 <!-- <div style="clear: both;"></div> -->
+
+                <div class="dane_konta">
+                    Dane adresowe <hr>
+
+                    <div class="edit_data_container">
+                        <div class="edit_data_left-container">
+                            <div class="edit_data_left">Miejscowość</div>
+                            <div class="edit_data_left">Ulica</div>
+                            <div class="edit_data_left">Numer domu</div><hr>
+                            <div class="edit_data_left">Kod pocztowy</div>
+                            <div class="edit_data_left">Miasto</div>
+                        </div>
+                        <div class="edit_data_right-container">
+                            <form id="edit_address_form" action="validate_address_data.php" method="post">
+                                <div class="edit_data_right"><input type="text" id="miejscowosc_edit" name="miejscowosc_edit" value="<?=$_SESSION['miejscowosc']?>"></div>
+                                <div class="edit_data_right"><input type="text" id="ulica_edit" name="ulica_edit" value="<?=$_SESSION['ulica']?>"></div>
+                                <div class="edit_data_right"><input type="text" id="numer_domu_edit" name="numer_domu_edit" value="<?=$_SESSION['numer_domu']?>"></div><hr>
+                                <div class="edit_data_right"><input type="text" id="kod_poczt_edit" name="kod_poczt_edit" value="<?=$_SESSION['kod_pocztowy']?>"></div>
+                                <div class="edit_data_right"><input type="text" id="miasto_edit" name="miasto_edit" value="<?=$_SESSION['kod_miejscowosc']?>"></div>
+                            </form>
+                        </div>
+                        <!-- <div style="clear: both;"></div> -->
+                        <div class="edit_data_button">
+                            <button type="submit" form="edit_address_form">Edytuj dane</button>
+                        </div>
+
+                        <?php
+                        if((isset($_SESSION['a_error']))) {
+                            echo $_SESSION['a_error'];
+                            unset($_SESSION['a_error']);
+                        } else {
+                            if((isset($_SESSION['validation_passed_a'])) && $_SESSION['validation_passed_a'])	{
+                                echo "Dane zostały zmienione";
+                                unset($_SESSION['validation_passed_a']);
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
 
                 <div class="dane_konta">
                     Hasło <hr>
@@ -91,14 +133,14 @@
 
                 </div>
                     <?php
-                        if((isset($_SESSION['validation_password'])) && ($_SESSION['validation_password'] == false) && (isset($_SESSION['error_form_password']))) {
+                        if((isset($_SESSION['validation_password'])) && (!$_SESSION['validation_password']) && (isset($_SESSION['error_form_password']))) {
                             echo $_SESSION['error_form_password'];
                             unset($_SESSION['stare_haslo']);
                             unset($_SESSION['validation_password']);
                             unset($_SESSION['error_form_password']);
                             unset($_SESSION['validation_passed_p']);
                         } else {
-                            if((isset($_SESSION['validation_passed_p'])) && ($_SESSION['validation_passed_p'] == true)) {
+                            if((isset($_SESSION['validation_passed_p'])) && $_SESSION['validation_passed_p']) {
                                 echo "Hasło zostało zmienione";
                                 unset($_SESSION['stare_haslo']);
                                 unset($_SESSION['validation_password']);

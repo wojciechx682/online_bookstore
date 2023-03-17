@@ -1,6 +1,8 @@
 <?php
 	session_start();
 	include_once "../functions.php";
+
+    // reCaptcha - sitekey -> linia 337
 ?>
 
 <!DOCTYPE HTML>
@@ -22,107 +24,96 @@
 
                 <!-- Formularz rejestracji -->
 
-                <form method="post" action="rejestracja.php">  <!-- brak atrybutu action - ten sam plik rejestracja.php przetwarza formularz
-                                                                bez atrybutu action, domyślnie - ten sam plik otrzyma post'em przesłane dane
-                                                                                WALIZACJA DANYCH W W TYM SAMYM PLIKU ! (rejestracja.php) -->
+                <form method="post" action="rejestracja.php">
+
                     Stwórz nowe konto klienta<br><hr>
 
                     <div class="form-section">
-                        Imię: <br> <input type="text" name="imie" value="<?php
+                        Imię: <br> <input type="text" name="imie" required value="<?php
                         if(isset($_SESSION['fr_imie']))
                         {
                             echo $_SESSION['fr_imie'];
                             unset($_SESSION['fr_imie']);
                         }
-                        else
-                        {
-                            echo "Paweł";
-                        }
-                        ?>"> <br>
+                        else {
+                            echo "Adam";
+                        } ?>"> <br>
 
                         <?php
-                        if(isset($_SESSION['e_imie']))
-                        {
-                            echo '<div class="error">'.$_SESSION['e_imie'].'</div>';
-                            unset($_SESSION['e_imie']);
-                        }
+                            if(isset($_SESSION['e_imie'])) {
+                                echo '<div class="error">'.$_SESSION['e_imie'].'</div>';
+                                unset($_SESSION['e_imie']);
+                            }
                         ?>
 
-                        Nazwisko: <br> <input type="text" name="nazwisko" value="<?php
+                        Nazwisko: <br> <input type="text" name="nazwisko" required value="<?php
                         if(isset($_SESSION['fr_nazwisko']))
                         {
                             echo $_SESSION['fr_nazwisko'];
                             unset($_SESSION['fr_nazwisko']);
                         }
-                        else
-                        {
-                            echo "Michalczyk";
-                        }
-                        ?>"> <br>
+                        else {
+                            echo "Nowak";
+                        } ?>"> <br>
 
                         <?php
-                        if(isset($_SESSION['e_nazwisko'])) // błąd z naziwskiem użytkownika
-                        {
-                            echo '<div class="error">'.$_SESSION['e_nazwisko'].'</div>';
-                            unset($_SESSION['e_nazwisko']);
-                        }
+                            if(isset($_SESSION['e_nazwisko'])) // błąd z naziwskiem użytkownika
+                            {
+                                echo '<div class="error">'.$_SESSION['e_nazwisko'].'</div>';
+                                unset($_SESSION['e_nazwisko']);
+                            }
                         ?>
 
                         <!-- type="email" -->
-                        E-mail: <br> <input type="email" name="email" value="<?php
+                        E-mail: <br> <input type="email" name="email" required value="<?php
                         if(isset($_SESSION['fr_email']))
                         {
                             echo $_SESSION['fr_email'];
                             unset($_SESSION['fr_email']);
                         }
-                        else
-                        {
-                            echo "pawel12@wp.pl";
-                        }
-                        ?>"> <br>
+                        else {
+                            echo "adam.nowak@wp.pl";
+                        } ?>"> <br>
+
                         <?php
-                        if(isset($_SESSION['e_email']))
-                        {
-                            echo '<div class="error">'.$_SESSION['e_email'].'</div>';
-                            unset($_SESSION['e_email']);
-                        }
+                            if(isset($_SESSION['e_email']))
+                            {
+                                echo '<div class="error">'.$_SESSION['e_email'].'</div>';
+                                unset($_SESSION['e_email']);
+                            }
                         ?>
 
                         <!-- Nickname: <br> <input type="text" name="nick" value="<?php /*
-                        if(isset($_SESSION['fr_nick']))
-                        {
-                            echo $_SESSION['fr_nick'];
-                            unset($_SESSION['fr_nick']);
-                        }
-                     */ ?>"> <br> -->
+                            if(isset($_SESSION['fr_nick']))
+                            {
+                                echo $_SESSION['fr_nick'];
+                                unset($_SESSION['fr_nick']);
+                            }
+                        */ ?>"> <br> -->
 
                         <?php
-                        /*if(isset($_SESSION['e_nick'])) // błąd z nickiem użytkownika ...
-                        {
-                            echo '<div class="error">'.$_SESSION['e_nick'].'</div>';
-                            unset($_SESSION['e_nick']);
-                        } */
+                            /*if(isset($_SESSION['e_nick'])) // błąd z nickiem użytkownika ...
+                            {
+                                echo '<div class="error">'.$_SESSION['e_nick'].'</div>';
+                                unset($_SESSION['e_nick']);
+                            } */
                         ?>
-
 
                         Hasło: <br> <input type="password" maxlength="30" name="haslo1"
-
-                                           value="PassJacob33#" ><br>
+                                           required value="PassJacob33#" ><br>
 
                         <?php
-                        if(isset($_SESSION['e_haslo']))
-                        {
-                            echo '<div class="error">'.$_SESSION['e_haslo'].'</div>';
-                            unset($_SESSION['e_haslo']);
-                        }
+                            if(isset($_SESSION['e_haslo']))
+                            {
+                                echo '<div class="error">'.$_SESSION['e_haslo'].'</div>';
+                                unset($_SESSION['e_haslo']);
+                            }
                         ?>
                         Powtórz hasło: <br> <input type="password" maxlength="30" name="haslo2"
-
-                                                   value="PassJacob33#" ><br>
+                                                   required value="PassJacob33#" ><br>
 
                         <!-- <br> <hr> -->
                     </div>
-
 
                     <div class="form-section">
                         <!--Dane adresowe <br><br>-->
@@ -133,8 +124,7 @@
                                 echo $_SESSION['fr_miejscowosc'];
                                 unset($_SESSION['fr_miejscowosc']);
                             }
-                            else
-                            {
+                            else {
                                 echo "Dolna odra";
                             }
                         ?>"> <br>
@@ -153,8 +143,7 @@
                                 echo $_SESSION['fr_ulica'];
                                 unset($_SESSION['fr_ulica']);
                             }
-                            else
-                            {
+                            else {
                                 echo "Słoneczna";
                             }
                         ?>"> <br>
@@ -200,8 +189,7 @@
                                 echo $_SESSION['fr_kod_pocztowy'];
                                 unset($_SESSION['fr_kod_pocztowy']);
                             }
-                            else
-                            {
+                            else {
                                 echo "64-600";
                             }
                         ?>"> <br>
@@ -220,8 +208,7 @@
                                 echo $_SESSION['fr_kod_miejscowosc'];
                                 unset($_SESSION['fr_kod_miejscowosc']);
                             }
-                            else
-                            {
+                            else {
                                 echo "Dębno";
                             }
                         ?>"> <br>
@@ -298,7 +285,7 @@
                             }	*/
                         ?> -->
 
-                        Telefon (PL +48): <br> <input type="text" name="telefon" value="<?php
+                        Telefon (PL +48): <br> <input type="tel" name="telefon" value="<?php
                             if(isset($_SESSION['fr_telefon']))
                             {
                                 echo $_SESSION['fr_telefon'];
