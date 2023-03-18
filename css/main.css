@@ -996,6 +996,8 @@ input[id^="koszyk_ilosc"] {
 	transition: all 0.05s ease-in-out;
 }
 
+
+
 /* ///////////////////////////////////////////////////////// */
 .book {
 	display: flex;
@@ -1502,6 +1504,72 @@ input#input-search-nav {
 	margin-bottom: 10px;
 	border-radius: 8px;
 	border-width: 1px;
+}
+
+/* order.php --> ------------------------------------------------------------------------------------------------------ */
+
+table#first-table tr, table#first-table th, table#first-table td {
+
+	margin: 0;
+	padding: 8px;
+	border-collapse: collapse;
+	/*border-radius: 8px;*/
+
+
+}
+
+table#first-table {
+	/*border-radius: 8px;*/
+
+	border-collapse: collapse;
+	border-radius: 8px;
+	border-style: hidden;
+	box-shadow: 0 0 0 1px #ffffff;
+	background-color: rgba(127, 165, 232, 0.31);
+	text-align: center;
+
+
+}
+
+table#first-table tr, table#first-table td, table#first-table th {
+	border: 1px solid #fff;
+	/* można ustawić width / height, podając właściwości do odpowiednich elementów tablei */
+}
+
+table#first-table tr:first-child th:first-child {
+	/*border-radius: 5px;*/
+
+	border-radius: 8px 0 0 0;
+
+
+}
+
+table#first-table tr:first-child th:last-child {
+	/*border-radius: 5px;*/
+	border-radius: 0 8px 0 0;
+}
+
+table#first-table tr:last-child td:first-child {
+	border-radius: 0 0 0 8px;
+}
+
+table#first-table tr:last-child td:last-child {
+	border-radius: 0 0 8px 0;
+}
+
+/* Cell padding --> */
+
+/*th, td {*/
+/*    padding: 2px;*/
+/*}*/
+
+table#first-table tr:nth-child(even) {
+	color: #000000;
+}
+
+table#first-table th:hover, table#first-table td:hover {
+	background-color: #2261b6;
+	cursor: pointer;
 }
 
 

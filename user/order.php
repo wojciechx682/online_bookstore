@@ -152,7 +152,9 @@ if(!(isset($_SESSION['zalogowany']))) {
                 $data_dostarczenia_zamowienia = $datetime->add(new DateInterval('P5D'))->format('Y-m-d');
                 echo "<br><br>Data dostarczenia zamówienia : " . $data_dostarczenia_zamowienia;
 
-                $status_array = ["W trakcie realizacji", "Wysłano", "Dostarczono", "Zrealizowano/Zakończono"];
+                // $status_array = ["W trakcie realizacji", "Wysłano", "Dostarczono", "Zrealizowano/Zakończono"];
+
+                $status_array = ["W trakcie realizacji"]; // working on (testing)
                 $status = $status_array[array_rand($status_array)]; // random status
 
                 echo "<br><br>Forma dostawy = ". $forma_dostawy;

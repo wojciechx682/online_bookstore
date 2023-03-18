@@ -5,10 +5,14 @@
 
 <div class="book" id="book%s">
     <div class="book-cover">
-        <img src="../assets/books/%s" alt="book">
+        <a href="../user/book.php?book=%s">
+            <img src="../assets/books/%s" alt="%s" title="%s">
+        </a>
     </div>
     <div class="book-info">
-        <h3 class="book-title">%s</h3>
+        <a href="../user/book.php?book=%s">
+            <h3 class="book-title">%s</h3>
+        </a>
         <div class="book-price">%s</div>
         <div class="book-year">%s</div>
 

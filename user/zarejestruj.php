@@ -99,8 +99,9 @@
                             } */
                         ?>
 
-                        Hasło: <br> <input type="password" maxlength="30" name="haslo1"
-                                           required value="PassJacob33#" ><br>
+                        Hasło: <br> <input type="password" maxlength="30" id="haslo1" name="haslo1"
+                                           required value="PassJacob33#" >
+                        <div id="feedback"></div>
 
                         <?php
                             if(isset($_SESSION['e_haslo']))
@@ -408,6 +409,55 @@
             </div>
 
         </main>
+
+        <script>
+
+            // validate password length (JS) -->
+
+            function checkUsername(e, minLength) {
+                let elMsg = document.getElementById("feedback");
+                let elUsernmae = document.getElementById("haslo1"); // nazwa użytkownika
+
+                let eventElement = e.target;
+                console.log("eventElement = ", eventElement);
+                let elementParent = eventElement.parentElement; // (!)      rodzic elementu -> <p>
+                //                  eventElement.parentNode;    // ✓
+                console.log("elementParent = ", elementParent);
+                let elementGrandParent = eventElement.parentNode.parentNode; // (!) dziadek -> <div>
+                console.log("elementGrandParent = ", elementGrandParent);
+                // elementGrandParent.removeChild(elementParent); // usunięcie <p> // ✓
+
+                if(elUsernmae.value.length < minLength) {
+                    elMsg.textContent = "Hasło musi mieć conajmniej " + minLength + " znaków ";
+
+                } else {
+                    elMsg.textContent = ""; // usunięcie komunikatu
+                }
+            }
+            function removeMsg(e) {
+                let elMsg = document.getElementById("feedback");
+
+                let eventElement = e.target;
+                console.log("eventElement = ", eventElement);
+
+                if(elMsg.textContent !== "") {
+                    elMsg.textContent = "";
+                }
+            }
+
+            var el = document.getElementById("haslo1");
+
+
+
+            el.addEventListener("blur", function(e) {
+                checkUsername(e, 10);
+            }, false);
+
+            el.addEventListener("focus", function(e) {
+                removeMsg(e);
+            }, false);
+
+        </script>
 
 	</div>
 

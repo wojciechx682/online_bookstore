@@ -1,6 +1,13 @@
 
-
 <?php
+
+//  ______  ___   __   __       ________ ___   __   ______        _______  ______  ______  ___   ___  ______  _________ ______  ______   ______
+// /_____/\/__/\ /__/\/_/\     /_______/Y__/\ /__/\/_____/\     /_______/\/_____/\/_____/\/___/\/__/\/_____/\/________/Y_____/\/_____/\ /_____/\
+// \:::_ \ \::\_\\  \ \:\ \    \__.::._\|::\_\\  \ \::::_\/_    \::: _  \ \:::_ \ \:::_ \ \::.\ \\ \ \::::_\/\__.::.__\|:::_ \ \:::_ \ \\::::_\/_
+//  \:\ \ \ \:. `-\  \ \:\ \      \::\ \ \:. `-\  \ \:\/___/\    \::(_)  \/\:\ \ \ \:\ \ \ \:: \/_) \ \:\/___/\ \::\ \  \:\ \ \ \:(_) ) )\:\/___/\
+//   \:\ \ \ \:. _    \ \:\ \____ _\::\ \_\:. _    \ \::___\/_    \::  _  \ \:\ \ \ \:\ \ \ \:. __  ( (\_::._\:\ \::\ \  \:\ \ \ \: __ `\ \::___\/_
+//    \:\_\ \ \. \`-\  \ \:\/___/Y__\::\__/\. \`-\  \ \:\____/\    \::(_)  \ \:\_\ \ \:\_\ \ \: \ )  \ \ /____\:\ \::\ \  \:\_\ \ \ \ `\ \ \:\____/\
+//     \_____\/\__\/ \__\/\_____\|________\/\__\/ \__\/\_____\/     \_______\/\_____\/\_____\/\__\/\__\/ \_____\/  \__\/   \_____\/\_\/ \_\/\_____\/
 
                         // Funkcje php - połączenie z bazą danych,
                         //			     wysyłanie zapytań (query) do bazy danych
@@ -149,13 +156,63 @@
             $book = file_get_contents("../template/content-books.php");
 
             // replace fields in $book string to book data from $result, display result content as HTML
-            echo sprintf($book, $i, $row["image_url"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["id_ksiazki"]); // return zamiast echo ?
+            echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["id_ksiazki"]); // return zamiast echo ?
 
 		  	$i++;
 		}
 
 		$result->free_result();
 	}
+
+    function get_book($result) {
+
+        // get book details on book.php paeg
+
+
+        $row = $result->fetch_assoc();
+
+        echo "<br><br> row --> <br><br>";
+        print_r($row);
+
+
+        /*while($row = $result->fetch_assoc()) {
+
+        }*/
+
+        // load the content from the external template file into string
+         $book = file_get_contents("../template/book-page.php");
+
+         $_SESSION["avg_rating"] = $row["rating"];
+         $_SESSION["liczba_ocen"] = $row["liczba_ocen"];
+         $_SESSION["rating"] = $row["rating"];
+
+
+
+
+        // replace fields in $book string to book data from $result, display result content as HTML
+        echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], $row["oprawa"], $row["stan"], $row["id_ksiazki"], $row["rating"]); // return zamiast echo ?
+
+
+
+    }
+
+
+    function get_ratings($result) {
+        // wstawia do tablicy sesyjnej ilości poszczególnych ocen dla książki ->   5 -> 4,   4 -> 26, 3 -> 15, ....
+
+        $_SESSION["ratings"] = [];
+
+        while($row = $result->fetch_assoc()) {
+            $book_rating = $row['ocena'];
+            $num_of_ratings = $row['liczba_ocen'];
+
+
+            $_SESSION['ratings'][$book_rating] = $num_of_ratings;
+        }
+
+
+        $result->free_result();
+    }
 
 	function check_email($result)
 	{
@@ -174,6 +231,7 @@
         $_SESSION["email"] = $row["email"];
         $_SESSION["exp_time"] = $row["exp_time"];
     }
+
 //	function get_books_by_id($result) // koszyk_dodaj.php - nieużywane - do wyrzuczenia
 //	{
 //		while ($row = $result->fetch_assoc())
@@ -372,12 +430,87 @@
 
 	function get_orders($result) // my_orders.php
 	{
+        $i = 0;
+
 		while ($row = $result->fetch_assoc())
 		{
-		  	echo "id =" . $row['id_zamowienia']." || data = " .$row['data_zlozenia_zamowienia']." || status = ".$row['status']." ";
+
+		  	/*echo "numer zamówienia " . $row['id_zamowienia']." || data = " .$row['data_zlozenia_zamowienia']." || status = ".$row['status']." ";
 
 		  	echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
+
+            echo "<br><hr>";
+
+                echo "Szczegóły zamówienia<br><br>";
+
+            query("SELECT id_zamowienia , id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "get_order_details", $row['id_zamowienia']); // --> $_SESSION['order_details_books_id'];
+
+            for($i = 0; $i < count($_SESSION['order_details_books_id']); $i++) {
+                $book_id = $_SESSION['order_details_books_id'][$i];
+                query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '%s'", "order_details_get_book", $book_id);
+            }
+
+            echo <<<EOT
+                <br><table id="first-table">
+                    <tr>
+                        <th>Company</th>
+                        <th>Contact</th>
+                        <th>Country</th>
+                    </tr>
+                    <tr>
+                        <td>Alfreds Futterkiste</td>
+                        <td rowspan="2">Maria Anders</td>
+                        <td>Germany</td>
+                    </tr>
+                    <tr>
+                        <td>Centro comercial Moctezuma</td>
+                        <!--        <td>Francisco Chang</td>-->
+                        <td>Mexico</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">San Francisco</td>
+                        <td>Los Angeles</td>
+                    </tr>
+                </table><br>
+EOT;
+
+
+
+            unset($_SESSION['last_order_id']);
+            unset($_SESSION['order_details_books_id']);
+            unset($_SESSION['order_details_books_quantity']);
+            unset($_SESSION['suma_zamowienia']);
+
+
+
+            echo "<br><hr>";*/
+
+            get_order_sum("", $row["id_zamowienia"]);
+            echo "suma zam ---> <br><br>"  . $_SESSION["order_sum"];
+
+            // load the content from the external template file into string
+            $order = file_get_contents("../template/order-details.php");
+
+            // replace fields in $order string to author data from $result, display result content as HTML
+            echo sprintf($order, $row['data_zlozenia_zamowienia'], $row["status"], $row["id_zamowienia"], $_SESSION["order_sum"]);
+
+
+
+            query("SELECT id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "get_order_details", $row['id_zamowienia']); // --> $_SESSION['order_details_books_id'];
+
+            /*for($i = 0; $i < count($_SESSION['order_details_books_id']); $i++) {
+                $book_id = $_SESSION['order_details_books_id'][$i];
+                query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '%s'", "order_details_get_book", $book_id);
+            }*/
+
+
+
+            echo "</div>";
+
+
+
 		}
+
 
 		$result->free_result();
 	}
@@ -392,14 +525,15 @@
 //        $_SESSION['order_details_books_id'] = array();
 //        $_SESSION['order_details_books_quantity'] = array();
 
-        $_SESSION['order_details_books_id'] = []; // można zamienić na pojedynczą zmienną, bo każda przechowywana wartosć jest taka sama
-        $_SESSION['order_details_books_quantity'] = []; // tutaj niekoniecznie
+        $_SESSION['order_details_books_id'] = []; //
+        $_SESSION['order_details_books_quantity'] = []; // \
 
         $i = 0;
 
         while ($row = $result->fetch_assoc())
         {
-            echo "<br><strong>order_id  &rarr;</strong> " .$row['id_zamowienia'].", <strong>book_id  &rarr;</strong> ".$row['id_ksiazki'].", <strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";
+            /*echo "<br><strong>order_id  &rarr;</strong> " .$row['id_zamowienia'].", <strong>book_id  &rarr;</strong> ".$row['id_ksiazki'].", <strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";*/
+            //echo "<strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";
 
             $_SESSION['order_details_books_id'][$i] =  $row['id_ksiazki']; // przechowuje id książek (tablica)
             //array_push($_SESSION['order_details_books_id'], $row['id_ksiazki']);
@@ -407,8 +541,25 @@
             $_SESSION['order_details_books_quantity'][$i] =  $row['ilosc']; // przechowuje ilosc (tablica) ! DO ZROBIENIA W PRZYSZŁOŚCI TAK JAK FUNKCJA order_details_get_book
             //array_push($_SESSION['order_details_books_quantity'], $row['ilosc']);
 
+
+
+
+            // load the content from the external template file into string
+            /*$order = file_get_contents("../template/order-details-book.php");
+
+            // replace fields in $order string to author data from $result, display result content as HTML
+            echo sprintf($order, $row['ilosc']);*/
+
+            query("SELECT tytul, cena, au.imie, au.nazwisko, rok_wydania, image_url FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = '%s'", "order_details_get_book", $_SESSION['order_details_books_id'][$i]);
+
             $i++;
         }
+
+        // load the content from the external template file into string
+        $order = file_get_contents("../template/order-sum.php");
+
+        // replace fields in $order string to author data from $result, display result content as HTML
+        echo sprintf($order, $_SESSION["order_sum"]);
 
         $result->free_result();
     }
@@ -417,13 +568,60 @@
 	{
         // order_details.php?order_id=518
 
+        //$j =  0;
+
+       /* print_r($result->fetch_assoc()); echo "<br>";
+        print_r($_SESSION["order_details_books_quantity"]); echo "<br><br><br>";
+        echo count($_SESSION["order_details_books_quantity"]); echo "<br><br><br>";*/
+        //print_r($_SESSION["order_details_books_quantity"]); echo "<br><br><br>";
+
+
+
 		while ($row = $result->fetch_assoc())
 		{
-		  	echo "<br><strong>tytul &rarr;</strong> " . $row['tytul']. ", <strong>cena &rarr;</strong> " .$row['cena'].", <strong>rok_wydania &rarr;</strong> ".$row['rok_wydania']."<br>";
-		}
+		  	//echo "<br><strong>tytul &rarr;</strong> " . $row['tytul']. ", <strong>cena &rarr;</strong> " .$row['cena'].", <strong>rok_wydania &rarr;</strong> ".$row['rok_wydania']."<br>";
 
+            // load the content from the external template file into string
+            $order = file_get_contents("../template/order-details-book.php");
+
+            //echo "<br> j --> " . $_SESSION['order_details_books_quantity'][$j] . "<br>";
+            //echo "<br> j --> " . $j .  "<br>";
+
+            // replace fields in $order string to author data from $result, display result content as HTML
+            echo sprintf($order, count($_SESSION['order_details_books_quantity']), $row["image_url"], $row['tytul'], $row['imie'], $row['nazwisko'], $row['rok_wydania'], $_SESSION["order_details_books_quantity"][count($_SESSION['order_details_books_quantity'])-1], $row["cena"]);
+		}
 		$result->free_result();
 	}
+
+
+    /*function get_order_sum($result = NULL, $order_id) {
+
+
+        if($result !== NULL && !($result instanceof mysqli_result)) {
+
+            // error
+        } else if ($result !== NULL) {
+
+            $row = $result->fetch_assoc();
+            return $row["kwota"];
+        } else {
+             query("SELECT kwota FROM platnosci WHERE id_zamowienia='%s'", "get_order_sum", $order_id);
+        }
+    }*/
+function get_order_sum($result = null, $order_id = null) {
+    if (!($result instanceof mysqli_result)) {
+        // $result was not passed, do something else
+        query("SELECT kwota FROM platnosci WHERE id_zamowienia='%s'", "get_order_sum", $order_id);
+    } else  {
+        // $result was passed, do something with it
+        $row = $result->fetch_assoc();
+        $_SESSION["order_sum"] = $row["kwota"];
+    }
+}
+
+
+
+
 
 	function verify_password($result) // validate_password.php;     confirm_password.php;
 	{
@@ -660,9 +858,9 @@
 
                             //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
 
-                           /* if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
+                            if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "cart_verify_book") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
                                 $fun($result);
-                            }*/
+                            }
 
                             // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
 

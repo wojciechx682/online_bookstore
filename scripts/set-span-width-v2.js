@@ -16,8 +16,10 @@
 
         //let spans = document.getElementsByTagName("span"); // you can change it to querySelectorAll
 
-        let spans = document.querySelectorAll("span.adv-search"); // spany w wyszukiwaniu zaawansowanym
+        let spans = document.querySelectorAll("span.adv-search, span.book-details-tab"); // spany w wyszukiwaniu zaawansowanym
         console.log("spans ->", spans);
+
+
 
 
         // for( let i=0; i<spans.length; i++){
