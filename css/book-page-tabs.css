@@ -5,11 +5,13 @@
     background-color: #979797;
     color: #fff;
     margin: 0;
-    padding: 0;}*/
+    padding: 0;
+}*/
 
 .page {
     max-width: 640px;
-    margin: 0 auto 30px auto;}
+    margin: 0 auto 30px auto;
+}
 
 .panel {
     background-color: #fff;
@@ -19,7 +21,8 @@
 }
 
 /*button {
-    border: none;}*/
+    border: none;
+}*/
 
 /********** LOGO **********/
 /*h1 {
@@ -31,36 +34,42 @@
     background-repeat: no-repeat;
     text-indent: 100%;
     white-space: nowrap;
-    overflow: hidden;}*/
+    overflow: hidden;
+}*/
 
 /********** TYPOGRAPHY **********/
 /*body, button {
-    font-family: 'Jacques Francois', serif;}*/
+    font-family: 'Jacques Francois', serif;
+}*/
 
 /*h2, h3 {
     font-weight: normal;
-    margin: 0;}*/
+    margin: 0;
+}*/
+
 /*h2 {
     color: #666;
     text-transform: uppercase;
     letter-spacing: 0.14em;
     font-size: 230%;
     line-height: 1em;
-    padding: 20px 0 0 20px;}*/
+    padding: 20px 0 0 20px;
+}*/
+
 .tab-list > li > a > h3 {
     /*font-size: 90%;*/
-/*    letter-spacing: 0.2em;*/
+    /*letter-spacing: 0.2em;*/
     margin: 0;
 }
 
 section.book-page {
     margin-top: 25px;
-    padding: 20px;
+    /*padding: 20px;*/
     /*width: 450px;*/
 }
 
 .book-page .book-tabs .tab-panel p {
-   /* font-family: 'Quattrocento Sans', sans-serif;*/
+    /*font-family: 'Quattrocento Sans', sans-serif;*/
     line-height: 1.4em;
 }
 
@@ -83,8 +92,8 @@ section.book-page {
     text-align: center;
     background-color: #fff;
     color: #db5391;
-    padding: 10px;}*/
-
+    padding: 10px;
+}*/
 /* ------------------------------------------------------------------------------------------------------------------ */
 
 span.book-details-tab {
@@ -93,7 +102,6 @@ span.book-details-tab {
 
     text-align: right !important;
     padding-right: 10px;
-
 }
 
 /********** TABS **********/
@@ -107,9 +115,9 @@ span.book-details-tab {
     list-style-type: none;
     background-color: #303030;
     border-bottom: 3px solid #858585;
-   /* font-family: 'Jacques Francois', serif;*/
-/*    text-transform: uppercase;*/
-/*    letter-spacing: 0.2em;*/
+    /*font-family: 'Jacques Francois', serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;*/
 }
 
 .book-page .book-tabs ul.tab-list li a {
@@ -117,7 +125,6 @@ span.book-details-tab {
     display: block;
     padding: 3px 10px 3px 10px;
 }
-
 
 /********** HOVER STATES **********/
 .book-page .book-tabs ul.tab-list li.active, .tab-list li.hover {
@@ -129,7 +136,6 @@ span.book-details-tab {
     color: #666;
     background-color: #e5e5e5;
 }
-
 
 /********** PANELS **********/
 .book-page .book-tabs div.tab-panel {

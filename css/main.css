@@ -1482,11 +1482,6 @@ footer {
 	margin: 0 auto;
 }
 
-
-
-
-
-
 /* filtrowanie książek - lista autorów --> ----------------------------------------------------------------------------- */
 
 input[type="checkbox"].author-checkbox {
@@ -1514,8 +1509,6 @@ table#first-table tr, table#first-table th, table#first-table td {
 	padding: 8px;
 	border-collapse: collapse;
 	/*border-radius: 8px;*/
-
-
 }
 
 table#first-table {
@@ -1527,8 +1520,6 @@ table#first-table {
 	box-shadow: 0 0 0 1px #ffffff;
 	background-color: rgba(127, 165, 232, 0.31);
 	text-align: center;
-
-
 }
 
 table#first-table tr, table#first-table td, table#first-table th {
@@ -1540,8 +1531,6 @@ table#first-table tr:first-child th:first-child {
 	/*border-radius: 5px;*/
 
 	border-radius: 8px 0 0 0;
-
-
 }
 
 table#first-table tr:first-child th:last-child {

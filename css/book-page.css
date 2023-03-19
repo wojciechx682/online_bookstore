@@ -1,0 +1,417 @@
+#book-page {
+    /*border: 1px dashed black;*/
+    /*padding: 20px;*/
+}
+
+#book-page-image {
+    /*border: 1px dashed black;*/
+    float: left;
+    width: 25%;
+    padding: 15px;
+}
+
+#book-page-image img {
+    width: 100%;
+}
+
+#book-page-details {
+    /*border: 1px dashed black;*/
+    float:left;
+    width: 50%;
+    position: relative;
+    top: 15px;
+}
+
+#book-page-title,
+#book-page-author,
+#book-page-year,
+#book-page-rate,
+#book-page-publ,
+#book-page-nopg {
+    /*border: 1px dashed black;*/
+}
+
+#book-page-rate {
+    min-height: 25px;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+
+.rate-inner {
+    overflow: hidden;
+    width: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/*..rate-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font-family: FontAwesome;
+    font-size: 120%;
+    color: rgba(248, 209, 11, 0.96);
+}*/
+
+.rate-inner-base {
+    overflow: hidden;
+        /* background: linear-gradient(90deg, #f8d10b, #c3c3c3);*/
+        /* background-size: 500% 100%;*/
+    transition: background-position 0.4s ease-out;
+    /*position: fixed;*/
+    max-width: 100%;
+    text-align: right;
+    opacity: .3;
+        /*transform: rotate(180deg);*/
+    transform: scaleX(-1);
+}
+
+.rate-inner-base::before {
+
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font-family: FontAwesome;
+    font-size: 120%;
+    color: silver; /* set the color of the stars to silver/gray */
+    -webkit-background-clip: text;
+    /*background-size: 500% 100%;*/
+}
+
+.rate-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font-family: FontAwesome;
+    font-size: 120%;
+    color: rgba(248, 209, 11, 0.96);
+}
+
+.rating-num {
+    display: block;
+    float: left;
+    padding: 0 12px 0 0;
+    line-height: 22px;
+}
+
+#rating-num {
+    margin-left: 12px;
+}
+
+#rate-container {
+    float: left;
+    position: relative;
+}
+
+/* circle rates --> ------------------------------------------------------------------------------------------------- */
+
+#book-page-rate-circle {
+    height: 200px;
+    width: 200px;
+    position: relative;
+    margin: auto;
+}
+
+.rating-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, gold 50%, gray 50%);
+    transform: rotate(-90deg);
+    transform-origin: center;
+}
+
+.rating-circle::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, gray 50%, transparent 50%);
+    transform: rotate(30deg);
+    transform-origin: center;
+}
+
+/* circle rates --> ------------------------------------------------------------------------------------------------- */
+#rating-circle {
+    stroke-dasharray: 62.8; /* circumference of the circle */
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s ease;
+
+    width: 50px;
+    height: 50px;
+    position: relative;
+    overflow: auto;
+    /* margin-top: 25px;*/
+}
+
+#circle-plot svg {
+    width: 750px;
+    height: 750px;
+    position: relative;
+}
+
+#circle-plot {
+    /*border: 1px dashed black;*/
+    overflow: hidden;
+    width: 225px;
+    height: 225px;
+    float: left;
+}
+
+#book-rating-details {
+    /*border: 1px dashed black;*/
+
+    float: left;
+    height: 225px;
+    width: 225px;
+    margin-top: 10px;
+}
+
+.book-rating-details {
+    /*border: 1px dashed black;*/
+
+    float: left;
+    width: 225px;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+}
+
+.rate {
+    /*border: 1px dashed black;*/
+    float: left;
+    width: 25px;
+}
+
+.line {
+    /*border: 1px dashed black;*/
+
+    float: left;
+    width: 150px;
+    height: 45px;
+}
+
+.no-rates {
+    /*border: 1px dashed #ff0000;*/
+    float: left;
+    width: 25px;
+}
+
+.rated, .unrated {
+    /*float: left;*/
+    /*border: 1px solid red;*/
+
+    border-radius: 10px;
+    width: 125px;
+    position: relative;
+    top: 16px;
+    /*height: 5px;*/
+    height: 10px;
+    background-color: #FFD700FF;
+}
+
+.rated {
+    z-index: 10;
+}
+
+.unrated {
+    /*height: 10px;*/
+    background-color: #bebebe;
+    position: relative;
+    top: 6px;
+    z-index: 1;
+}
+
+/*.book-rating-line {
+    border: 1px dashed black;
+    float: left;
+    width: 55px;
+    height: 25px;
+    text-align: center;
+    line-height: 45px;
+}*/
+
+/* dodawanie recenzji -->  ------------------------------------------------------------------------------------------ */
+
+#add-review {
+    /*width: 100%;*/
+    margin: 15px;
+    /*border: 1px solid black;*/
+    border-radius: 15px;
+    padding: 0 15px 15px 15px;
+    overflow: auto;
+}
+
+#textarea-comment {
+    width: 425px;
+    height: 145px;
+    resize: none;
+    margin: 10px 0 10px 0;
+}
+
+#textarea-label {
+    cursor: pointer;
+}
+
+#add-rate {
+    /*border: 1px dashed black;*/
+    /*height: 250px;*/
+    overflow: auto;
+    display: inline-block;
+}
+
+.add-rate-outer {
+    /* border: 1px dashed black;*/
+}
+
+.add-rate-inner {
+    /*border: 1px dashed black;*/
+}
+
+/*.rate-outer {
+
+}*/
+
+span.star {
+    /* border: 1px dashed black;*/
+
+    display: block;
+    float: left;
+    text-align: center;
+    width: 45px;
+    cursor: pointer;
+}
+
+span.star::before {
+    content: "\f005";
+    font-family: FontAwesome;
+    /*font-size: 120%;*/
+    color: silver; /* set the color of the stars to silver/gray */
+    -webkit-background-clip: text;
+    /*background-size: 500% 100%;*/
+}
+
+/*span.star:hover::before {
+    content: "\f005";
+    font-family: FontAwesome;
+    !*font-size: 120%;*!
+    !*color: silver; !* set the color of the stars to silver/gray *!*!
+    -webkit-background-clip: text;
+    color: rgba(248, 209, 11, 0.96);
+}*/
+
+span.star.gold::before {
+    content: "\f005";
+    font-family: FontAwesome;
+    /*font-size: 120%;*/
+    /*color: silver; !* set the color of the stars to silver/gray *!*/
+    -webkit-background-clip: text;
+    color: rgba(248, 209, 11, 0.96);
+}
+
+#error-message {
+    margin: 5px 0 5px 0;
+}
+
+#add-rate-button {
+    position: relative;
+    top: -5px;
+}
+
+
+/*.rate-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font-family: FontAwesome;
+    font-size: 120%;
+    color: rgba(248, 209, 11, 0.96);
+}*/
+
+.stars {
+    display: inline-block;
+}
+
+.stars input[type="radio"] {
+    display: none;
+}
+
+.stars label {
+    /*font-size: 50px;*/
+    color: grey;
+    cursor: pointer;
+}
+
+.stars label:before {
+    content: "\2605";
+}
+
+.stars input[type="radio"]:checked + label {
+    color: #FFD700FF;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+
+.comment-rate {
+    float: left;
+    position: relative;
+}
+
+.comment-date {
+    float: left;
+    margin-right: 10px;
+    line-height: 20px;
+}
+
+.comment-rate > span {
+    visibility: hidden;
+    width: 0 !important;
+    height: 0 !important;
+    display: none;
+}
+
+.comment-rate-inner {
+    overflow: hidden;
+    /*width: 100%;*/
+    /* position: absolute;
+     top: 0;
+     left: 0;*/
+    /*display: inline-block;*/
+}
+
+.comment-rate-inner {
+    float: left;
+}
+
+.comment-rate-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font-family: FontAwesome;
+    color: rgba(248, 209, 11, 0.96);
+}
+
+.comment-author {
+    float: left;
+    margin-right: 10px;
+    line-height: 20px;
+}
+
+.comment-content {
+    width: 100%;
+    text-align: justify;
+    padding: 15px 0 15px 0;
+}
+/* ------------------------------------------------------------------------------------------------------------------ */
+#book-comments {
+    border: 1px dashed black;
+    padding: 15px;
+}
+
+section.comment {
+    /*border: 1px dashed black;*/
+    border-radius: 10px;
+    min-height: 45px;
+    margin: 15px 0 15px 0;
+    overflow: auto;
+    padding: 10px;
+    background-color: #d7d7d7;
+}

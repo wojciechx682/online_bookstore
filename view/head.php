@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/slider.css">
         <link rel="stylesheet" href="../css/book-page-tabs.css"> <!-- book-page-tabs -->
+        <link rel="stylesheet" href="../css/book-page.css"> <!-- book-page -->
 
     <link rel="stylesheet" href="../css/jquery-outsider.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +29,12 @@
     <script src="../scripts/display-nav.js"></script>
     <script src="../scripts/change-quantity.js"></script>
     <script src="../scripts/load-theme.js"></script>
+
+    <style>
+        #rating-circle.filled {
+            stroke-dashoffset: calc(62.8 - (62.8 * <?= $_SESSION["avg_rating"] ?> / 5));
+        }
+    </style>
 
 
 </head>

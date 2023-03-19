@@ -168,34 +168,37 @@
 
         // get book details on book.php paeg
 
-
         $row = $result->fetch_assoc();
 
-        echo "<br><br> row --> <br><br>";
-        print_r($row);
-
-
-        /*while($row = $result->fetch_assoc()) {
-
-        }*/
-
         // load the content from the external template file into string
-         $book = file_get_contents("../template/book-page.php");
+        $book = file_get_contents("../template/book-page.php");
 
-         $_SESSION["avg_rating"] = $row["rating"];
-         $_SESSION["liczba_ocen"] = $row["liczba_ocen"];
-         $_SESSION["rating"] = $row["rating"];
+                $_SESSION["avg_rating"] = $row["rating"];
+                $_SESSION["liczba_ocen"] = $row["liczba_ocen"];
+                $_SESSION["rating"] = $row["rating"];
+                $_SESSION["id_ksiazki"] = $row["id_ksiazki"];
 
-
-
+                if (isset($_SESSION["rate-error"])) {
+                    $message = $_SESSION["rate-error"];
+                    unset($_SESSION["rate-error"]);
+                } else if (isset($_SESSION["rate-success"])) {
+                    $message = $_SESSION["rate-success"];
+                    unset($_SESSION["rate-success"]);
+                } else {
+                    $message = "";
+                }
 
         // replace fields in $book string to book data from $result, display result content as HTML
-        echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], $row["oprawa"], $row["stan"], $row["id_ksiazki"], $row["rating"]); // return zamiast echo ?
+        echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"]); // return instead echo ?
 
+        query("SELECT km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]); //$_SESSION["comments"]; <-- ta zmienna zawiera wykorzystany szablon HTML;  sql - możliwość wystąpienia błędów w wyniku złych relacji.
 
+        $book_page_tabs = file_get_contents("../template/book-page-tabs.php");
 
+        echo sprintf($book_page_tabs, $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], $row["oprawa"], $row["stan"], $row["id_ksiazki"], $row["rating"], $message, implode($_SESSION["comments"]));
+
+        //file_put_contents("../template/book-page-tabs-modified.php", $modified);
     }
-
 
     function get_ratings($result) {
         // wstawia do tablicy sesyjnej ilości poszczególnych ocen dla książki ->   5 -> 4,   4 -> 26, 3 -> 15, ....
@@ -206,10 +209,36 @@
             $book_rating = $row['ocena'];
             $num_of_ratings = $row['liczba_ocen'];
 
-
             $_SESSION['ratings'][$book_rating] = $num_of_ratings;
         }
 
+        $result->free_result();
+    }
+
+    function verify_rate_exists($result) {
+
+        // function for cheking if comment / or rate already exists for that book made by that clinet
+            //$row = $result->fetch_assoc();
+
+        $_SESSION["rate_exists"] = true;
+    }
+
+    function get_comments($result) {
+
+        $i = 0;
+
+        $_SESSION["comments"] = [];
+
+        while ($row = $result->fetch_assoc())
+        {
+            // load the content from the external template file into string
+            $comment = file_get_contents("../template/book-comment.php");
+
+            // replace fields in $book string to book data from $result, display result content as HTML
+            $_SESSION["comments"][] = sprintf($comment, $row["imie"], $row["data"], $row["ocena"], $row["tresc"]); // return zamiast echo ?
+
+            $i++;
+        }
 
         $result->free_result();
     }
@@ -858,7 +887,7 @@ function get_order_sum($result = null, $order_id = null) {
 
                             //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
 
-                            if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "cart_verify_book") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
+                            if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "cart_verify_book" && $fun != "verify_rate_exists") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
                                 $fun($result);
                             }
 

@@ -18,18 +18,11 @@
     <script src="../scripts/filtrowanie-year.js"></script>
     <script src="../scripts/set-span-width.js"></script>
     <script src="../scripts/set-span-width-v2.js"></script>
-
     <script src="../scripts/advanced-search.js"></script>
-
-
-
     <script src="../scripts/filter-authors.js"></script>
-
     <script src="../scripts/book-page-tabs.js"></script>
 
     <script>
-
-
        /* const tab2 = document.getElementById("tab-2-li");
         tab2.addEventListener("click", setSpanWidthv2);*/
     </script>
