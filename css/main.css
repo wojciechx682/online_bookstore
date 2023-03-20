@@ -1156,6 +1156,11 @@ input[id^="koszyk_ilosc"] {
     font-size: inherit;
 }
 
+.btn-link:disabled {
+	color: #888888;
+	text-decoration: line-through;
+}
+
 input.confirm-delete { /* potwierdzenie usunięcia konta */
 
 	margin-right: 18px;

@@ -32,8 +32,6 @@ if(isset($_GET["login-error"])) {
          ';
 }
 
-
-
 if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
 {
     /*echo "<br> 123"; exit();*/
@@ -57,12 +55,13 @@ if((isset($_POST["adv-search-category"])))
     /* echo "<h3>".$_SESSION["kategoria"]."</h3><hr>"; exit();*/
 }
 
-//else {
-
-  /*  echo "<br>62"; exit();*/
+if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
+{
+    $_SESSION["kategoria"] = "Wszystkie";
+    //echo "<br>62"; exit();
                 /*echo "<h3>Wszystkie</h3>";*/
-    /*$_SESSION["kategoria"] = "Wszystkie";*/
-//}
+    //$_SESSION["kategoria"] = "Wszystkie";
+}
 
 
 /*if(isset($_POST["adv-search-category"]) && !empty($_POST["adv-search-category"])) {
@@ -93,7 +92,7 @@ require "../view/header-container.php"; ?>
             <nav id="category-nav">
                 <ul>
                     <?php
-                        query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", "");
+                        query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories", "");
                     ?>
                 </ul>
             </nav>
@@ -223,9 +222,9 @@ require "../view/header-container.php"; ?>
 
             $_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)
 
-            var_dump($_SESSION);
+            /*var_dump($_SESSION);
             print_r($_SESSION);
-            print_r($_POST);
+            print_r($_POST);*/
 
             echo '<div id="content-books">';
 
@@ -252,7 +251,7 @@ require "../view/header-container.php"; ?>
             echo '<div id="content"></div>';
                 $autor = [$_GET['autor']];
                 echo '<div id="content-books">';
-                    query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor);
+                    query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor); // do zmiany -> id subkategoii
                 echo '</div>';
             echo '</div>';
         }
@@ -268,11 +267,20 @@ require "../view/header-container.php"; ?>
 
                         $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
 
-                        print_r($search_value); echo "<br>";
+                        //print_r($search_value); echo "<br>";
 
                         unset($_SESSION["kategoria"]);
+                        $_SESSION["kategoria"] = "Wszystkie"; // ew. do zmiany w przyszłości
 
-                        query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);
+                                            //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);
+                        /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, kt.nazwa, sb.id_kategorii
+                                    ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);*/
+                        query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+                                     kt.nazwa, sb.id_kategorii, 
+                                        au.imie, au.nazwisko 
+                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
+                                     WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
+                                     AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii
 
                     echo '</div>';
                 echo '</div>';
@@ -282,7 +290,7 @@ require "../view/header-container.php"; ?>
 
                 if(isset($_SESSION["kategoria"]) && !empty($_SESSION["kategoria"])) {
 
-                    print_r($_SESSION);
+                    /*print_r($_SESSION);*/
 
                     $title = filter_input(INPUT_GET, "input-search-nav", FILTER_SANITIZE_STRING);
                     $values = [$title];
@@ -291,14 +299,50 @@ require "../view/header-container.php"; ?>
                         echo '<script> displayNav(); </script>';
                             echo '<div id="content-books">';
 
-                                echo "<br>266<br>";
+                                //echo "<br>266<br>";
 
-                                $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND ks.tytul LIKE '%%%s%%'";
+                                /*$query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
+                                         ks.kategoria,
+                                         ks.rating, au.imie, au.nazwisko
+                                         FROM ksiazki AS ks, autor AS au
+                                         WHERE ks.id_autora = au.id_autora
+                                         AND ks.tytul LIKE '%%%s%%'";*/
+
+                    /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
+                                        ks.rating,
+                                     kt.nazwa, sb.id_kategorii,
+                                        au.imie, au.nazwisko
+                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb
+                                     WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
+                                     AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii*/
+
+                                $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, 
+                                         ks.rating,
+                                         kt.nazwa, sb.id_kategorii, 
+                                          au.imie, au.nazwisko 
+                                         FROM ksiazki AS ks, 
+                                              autor AS au, 
+                                              kategorie AS kt, 
+                                              subkategorie AS sb 
+                                         WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
+                                           
+                                         AND ks.tytul LIKE '%%%s%%'";
+
+                                                                /*$query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
+                                                                                     ks.rating,
+                                                                                     ks.kategoria,
+                                                                                      au.imie, au.nazwisko
+                                                                                     FROM ksiazki AS ks,
+                                                                                          autor AS au
+                                                                                     WHERE ks.id_autora = au.id_autora
+
+                                                                                     AND ks.tytul LIKE '%%%s%%'";*/
 
                                 if($_SESSION["kategoria"] != "Wszystkie") {
                                     $where = array();
 
-                                    $where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
+                                    //$where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
+                                    $where[] = " AND kt.nazwa LIKE '%%%s%%'"; //%%%s%%
                                     $values[] = $_SESSION['kategoria'];
 
                                     echo "<br>276<br>";
@@ -324,6 +368,7 @@ require "../view/header-container.php"; ?>
 
             else if((isset($_GET['input-search'])) && (empty($_GET['input-search']))) // puste pole wyszukiwania
             {
+
                 echo '<div id="content"></div>';
                 echo '<script> displayNav(); </script>';
                 echo '<div id="content-books">';
@@ -435,11 +480,11 @@ require "../view/header-container.php"; ?>
 //                                                            echo "<br><br><br>";
 
             echo "<br><hr> SESSION --> <br><br><br>";
-            print_r($_SESSION);
+            /*print_r($_SESSION);*/
              echo "<br><br><hr><br><br>";
 
             echo "<br><hr> POST --> <br><br><br>";
-            print_r($_POST);
+            /*print_r($_POST);*/
             echo "<br><br><hr><br><br>";
 
 //                                                            echo "<br><br><br>";
@@ -454,9 +499,24 @@ require "../view/header-container.php"; ?>
 
             ////////////////////////////////////////////////////////////////////////////////////////
 
+           /* query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
+                                     kt.nazwa, sb.id_kategorii, 
+                                        au.imie, au.nazwisko 
+                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
+                                     WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
+                                     AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii*/
+
+
+
+
+
             // Set up the initial query string
             //$query = "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki";
-            $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au";
+            $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, 
+                      ks.rating,
+                      kt.nazwa, sb.id_kategorii,  
+                       au.imie, au.nazwisko 
+                      FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb";
 
             // Validate and sanitize input data
 
@@ -517,7 +577,7 @@ require "../view/header-container.php"; ?>
             if ($_POST['adv-search-category'] != 'Wszystkie') {
                 // Add a condition for the category
                 //$where[] = "ks.kategoria = '" . $_POST['adv-search-category'] . "'";
-                $where[] = "ks.kategoria = '%s'";
+                $where[] = "kt.nazwa = '%s'";
                 $values[] = $_POST['adv-search-category'];
 
                 $_SESSION["kategoria"] = $_POST["adv-search-category"];
@@ -550,10 +610,12 @@ require "../view/header-container.php"; ?>
             // Check if any conditions were added to the WHERE clause
             if (!empty($where)) {
                 // Combine the conditions into a single WHERE clause
-                $query .= " WHERE ks.id_autora = au.id_autora AND " . implode(" AND ", $where);
+                $query .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where);
             }
 
 //                                echo '<br><hr><br> <span style="color: blue;"> query ( ) &rarr; ' . $query . '</span><br><br>';
+
+            echo "<hr><br> query ( ) -- > " . $query . "<br><br>"; //exit();
 
             // Execute the query
             query($query, "get_books", $values);

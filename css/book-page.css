@@ -15,9 +15,9 @@
 }
 
 #book-page-details {
-    /*border: 1px dashed black;*/
+    border: 1px dashed black;
     float:left;
-    width: 50%;
+   /* width: 45%;*/
     position: relative;
     top: 15px;
 }
@@ -415,3 +415,33 @@ section.comment {
     padding: 10px;
     background-color: #d7d7d7;
 }
+/* sekcja dodaj-do-koszyka --> -------------------------------------------------------------------------------------- */
+
+#add-to-cart {
+    border: 1px dashed black;
+
+    float: left;
+    position: relative;
+    top: 15px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

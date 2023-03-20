@@ -26,7 +26,41 @@
         <div id="book-page-publ">Wydawnictwo - %s</div>
         <div id="book-page-nopg">ilość stron - %s</div>
 
+
+
     </div>
+
+    <div id="add-to-cart">
+
+        Cena %s <br>
+
+
+
+        <form action="add_to_cart.php" method="post">
+            <input type="hidden" name="id_ksiazki" value="%s"> <!-- id książki -->
+
+            <b>Ilosc: </b>
+            <input type="text" id="koszyk_ilosc%s" name="koszyk_ilosc" value="1">
+            <button type="button" onclick="increase(%s)">+</button>
+            <button type="button" onclick="decrease(%s)">-</button>
+            <div id="book-status">
+                %s
+            </div>
+
+            <br><button type="submit" name="your_name" value="your_value" class="btn-link" %s>Dodaj ko koszyka</button>
+        </form>
+
+
+
+
+
+
+
+
+
+
+    </div>
+
     <div style="clear: both;"></div>
     <!--<header><h1>Lorem ipsum</h1></header>-->
     <!--<script src="js/tabs.js"></script>-->

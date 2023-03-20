@@ -45,6 +45,9 @@ include_once "../functions.php";
                         //FROM ksiazki AS ks, autor AS au, komentarze AS km, ratings AS rt, magazyn_ksiazki AS mg, wydawcy AS wd
                         //WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = km.id_ksiazki AND ks.id_ksiazki = rt.id_ksiazki AND ks.id_wydawcy wd.id_wydawcy AND ks.id_ksiazki = mg.id_ksiazki AND ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);
 
+
+
+
                     $book = filter_var(filter_input(INPUT_GET, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
                     // validate book's id
                                             /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating,
@@ -74,7 +77,7 @@ include_once "../functions.php";
                         unset($_SESSION["rate-success"]);
                     }*/
 
-                    query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,   
+                    /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
                                 (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
                                 (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
                                     au.imie, au.nazwisko,
@@ -85,7 +88,40 @@ include_once "../functions.php";
                                     LEFT JOIN magazyn_ksiazki AS mg ON ks.id_ksiazki = mg.id_ksiazki
                                     LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
                                 WHERE ks.id_ksiazki = '%s';
-                                ", "get_book", $book); // foregins key => id_autora, id_ksiazki, id_wydawcy
+                                ", "get_book", $book);*/ // foregins key => id_autora, id_ksiazki, id_wydawcy
+
+                /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
+                                (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
+                                (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
+								
+								(SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
+								
+                                    au.imie, au.nazwisko,
+                                    ks.id_wydawcy, wd.nazwa_wydawcy
+                                    
+                                FROM ksiazki AS ks
+                                    LEFT JOIN autor AS au ON ks.id_autora = au.id_autora                                    
+                                    LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                                WHERE ks.id_ksiazki = '%s';
+                                ", "get_book", $book);*/
+
+                // zmiana kwerendy po dodaniu subkategorii ->
+
+                query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,   
+                            kt.nazwa, sb.id_kategorii,                                
+                                (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
+                                (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
+                                (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
+                                au.imie, au.nazwisko, au.id_autora,
+                                ks.id_wydawcy, wd.nazwa_wydawcy
+                            FROM ksiazki AS ks
+                            JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                            JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                            LEFT JOIN autor AS au ON ks.id_autora = au.id_autora                                    
+                            LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                            WHERE ks.id_ksiazki = '%s'
+
+                                ", "get_book", $book);
 
                             // retrieves column =>
                                 // id_ksiazki: The ID of the book.
@@ -115,6 +151,14 @@ include_once "../functions.php";
                     // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen
 
                     $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]); // to pass that array to JS
+
+                echo "<hr><br> $ _ SESSION --> <br><br>";
+                    print_r($_SESSION);
+                echo "<hr><br>";
+
+                /*echo "<hr><br> $ _ POST --> <br><br>";
+                    print_r($_POST);
+                echo "<hr><br>";*/
                 ?>
 
             </div>

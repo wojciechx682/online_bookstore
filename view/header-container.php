@@ -75,7 +75,7 @@
 
                                     <select id="adv-search-category" name="adv-search-category">
                                         <?php
-                                            query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories_adv_search", ""); // <option value="...">...</option>-->
+                                            query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories_adv_search", ""); // <option value="...">...</option>-->
                                         ?>
                                     </select>
                                 </p>
@@ -163,7 +163,7 @@
                     <li><a href="#">Kategorie</a>
                         <ul>
                             <?php
-                                query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", "");
+                                query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories", "");
                             ?>
                         </ul>
                     </li>

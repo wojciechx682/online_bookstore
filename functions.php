@@ -101,7 +101,7 @@
 		while ($row = $result->fetch_assoc())
 		{
 		  	//echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
-            echo "\n".'<li><a href="index.php?kategoria='.$row['kategoria'].'">'.$row['kategoria'].'</a></li>';
+            echo "\n".'<li><a href="index.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
 		}
 		$result->free_result();
 	}
@@ -112,7 +112,7 @@
                 $category_name = "Wszystkie";
                 echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';
                 while ($row = $result->fetch_assoc()) {
-                    echo "\n".'<option value="'.$row['kategoria'].'">'.$row['kategoria'].'</option>';
+                    echo "\n".'<option value="'.$row['nazwa'].'">'.$row['nazwa'].'</option>';
                 }
                 $result->free_result();
             }
@@ -170,6 +170,9 @@
 
         $row = $result->fetch_assoc();
 
+        echo "<br><br> row --> <br><br>";
+        print_r($row);
+
         // load the content from the external template file into string
         $book = file_get_contents("../template/book-page.php");
 
@@ -188,8 +191,29 @@
                     $message = "";
                 }
 
+                if(isset($row["liczba_egzemplarzy"]) && !empty($row["liczba_egzemplarzy"])) {
+                    if($row["liczba_egzemplarzy"]>0) {
+                        $status = "dostępna";
+                        $submit = "enabled";
+                    } else {
+                        $status = "niedostępna";
+                        $submit = "disabled";
+                    }
+                } else {
+                    $status = "niedostępna";
+                    $submit = "disabled";
+                }
+
         // replace fields in $book string to book data from $result, display result content as HTML
-        echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"]); // return instead echo ?
+        echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["cena"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $status, $submit);
+
+
+
+
+
+
+
+
 
         query("SELECT km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]); //$_SESSION["comments"]; <-- ta zmienna zawiera wykorzystany szablon HTML;  sql - możliwość wystąpienia błędów w wyniku złych relacji.
 
@@ -798,14 +822,26 @@ function get_order_sum($result = null, $order_id = null) {
         // alias dla funkcji query() -> index.php
         if($kategoria == "Wszystkie")
         {
-            //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
-            query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora", "get_books", "");
-            //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);
+                                                                    //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
+            /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
+                    ks.kategoria,
+                    ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora", "get_books", "");/*
+                                                                    //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);*/
+
+            query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+                                     kt.nazwa, sb.id_kategorii, 
+                                        au.imie, au.nazwisko 
+                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
+                                     WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
+                                     ", "get_books", "");
         }
         else
         {
             //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);
-            query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);
+            query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, kt.nazwa, sb.id_kategorii, au.imie, au.nazwisko 
+                         FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
+                         WHERE kt.nazwa LIKE '%s' AND ks.id_autora = au.id_autora 
+                         AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii", "get_books",  $_SESSION['kategoria']);
         }
     }
 

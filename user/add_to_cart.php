@@ -27,6 +27,11 @@
 		$id_ksiazki = filter_input(INPUT_POST, "id_ksiazki", FILTER_SANITIZE_NUMBER_INT); // to remove any non-numeric characters. This filter will leave only the numeric characters.
 		$ilosc = filter_input(INPUT_POST, "koszyk_ilosc", FILTER_SANITIZE_NUMBER_INT);
 
+			if($ilosc < 0 || !is_numeric ($ilosc))
+			{
+				$ilosc = 0;
+			}
+
         $book = [$id_klienta, $id_ksiazki];
 
 		$_SESSION['book_exists'] = false;   // book already in shopping cart ? let's assume that it isn't ...
@@ -54,8 +59,8 @@
 		unset($_SESSION['book_exists']);
 	}
 
-	//header('Location: koszyk.php');
-	header('Location: index.php?kategoria='.$_SESSION['kategoria'].'');
+	header('Location: koszyk.php');
+	//header('Location: index.php?kategoria='.$_SESSION['kategoria'].'');
 	exit();
 ?>
 
