@@ -10,7 +10,7 @@
         isset($_POST['haslo1']) && !empty($_POST['haslo1']) &&
         isset($_POST['haslo2']) && !empty($_POST['haslo2']) &&
         isset($_POST['miejscowosc']) && !empty($_POST['miejscowosc']) &&
-       /* isset($_POST['ulica']) && !empty($_POST['ulica']) &&*/
+        /*isset($_POST['ulica']) && !empty($_POST['ulica']) &&*/
         isset($_POST['numer_domu']) && !empty($_POST['numer_domu']) &&
         isset($_POST['kod_pocztowy']) && !empty($_POST['kod_pocztowy']) &&
         isset($_POST['kod_miejscowosc']) && !empty($_POST['kod_miejscowosc']) &&
