@@ -47,7 +47,12 @@
 		{
             /*echo "<br><br>45<br>";*/
 
-			query("SELECT * FROM klienci WHERE email='%s'", "log_in", $email_sanitized); // funkcja log_in (odpowiedzialna za logowanie) uzyska hasło z tablicy $_POST[];
+			//query("SELECT * FROM klienci WHERE email='%s'", "log_in", $email_sanitized); // funkcja log_in (odpowiedzialna za logowanie) uzyska hasło z tablicy $_POST[];
+			query("SELECT kl.id_klienta, kl.haslo, kl.imie, kl.nazwisko, kl.telefon, kl.email,
+                                ad.miejscowosc, ad.ulica, ad.numer_domu, ad.kod_pocztowy, ad.kod_miejscowosc
+                         FROM klienci AS kl, adres AS ad 
+                         WHERE kl.id_klienta = ad.id_klienta
+                         AND kl.email='%s'", "log_in", $email_sanitized); // funkcja log_in (odpowiedzialna za logowanie) uzyska hasło z tablicy $_POST[];
 
             //echo "48<br>";
 

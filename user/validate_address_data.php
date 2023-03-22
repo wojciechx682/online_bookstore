@@ -108,7 +108,8 @@ if(((isset($_POST['miejscowosc_edit'])) && (isset($_POST['ulica_edit'])) && (iss
         {
             $user_data = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $miasto, $id];
 
-            query("UPDATE klienci SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE id_klienta='%s'", "", $user_data);
+            //query("UPDATE klienci SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE id_klienta='%s'", "", $user_data);
+            query("UPDATE adres SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE id_klienta='%s'", "", $user_data);
 
             $_SESSION['validation_passed_a'] = true;
 
