@@ -12,7 +12,7 @@ include_once "../functions.php";
 
     <link rel="stylesheet" href="../css/new.css">
 
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,7 +75,7 @@ include_once "../functions.php";
         <form id="search-form" action="index.php" method="get" >
             <input type="search" name="input-search" id="input-search" > <!-- placeholder="tytuł książki" -->
 
-            <input type="submit" value="Szukaj">
+            <input type="submit" value=" ">
 
             <!--<img id="search-arrow" src="../assets/arrow.png" alt="advanced filtering">--> <!-- advanced search -->
         </form>

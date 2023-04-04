@@ -75,9 +75,9 @@ body {
     border: 1px ridge rgba(166, 166, 166, 0.38); /* https://www.w3schools.com/cssref/playdemo.php?filename=playcss_border-style&preval=groove */
 
     width: 1200px;
-    height: 255px;
+    /*height: 255px;*/
 
-        /*overflow: auto;*/
+        overflow: auto;
 
     margin: 10px auto 0 auto;
 
@@ -480,8 +480,39 @@ body {
 }
 
 #div-search > form#search-form > input[type="submit"] {
-    padding: 8px 0 8px 0;
+    padding: 8px 32px 8px 2px;
     margin-left: 8px;
+
+    border: 1px solid #a9a9a9;
+    border-radius: 2px;
+
+    /* Add search icon as background image */
+    background-image: url('../assets/search-icon.png');
+    background-repeat: no-repeat;
+    background-position: right 10px top 8px;
+    background-size: 16px;
+   /* padding-right: 32px;*/
+
+
+
+
+}
+
+#div-search > form#search-form > input[type="submit"]:hover {
+
+    border-color: #4b4b4b;
+    background-color: #f3f3f3;
+    cursor: pointer;
+    /* Add search icon as background image */
+    /* background-image: url('../assets/search-icon.png');*/
+    /*    background-repeat: no-repeat;
+        background-position: right 8px center;
+        background-size: 16px;*/
+    /*padding-right: 32px;*/
+
+
+
+
 }
 
 #div-search > form#search-form > input#input-search {
@@ -542,6 +573,10 @@ body {
     line-height: 29px;
 
     padding-right: 30px;
+}
+
+.div-cart {
+    margin-top: 22px;
 }
 
 #div-cart-header {
