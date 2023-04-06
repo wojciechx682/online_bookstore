@@ -35,16 +35,16 @@
     function get_authors($result)
     {
         // tworzy linki - w których kazdy wyświetli imie i nazwisko autora.
-        echo "<br>31";
-        echo '<h3>Autorzy </h3><hr>';
+       /* echo "<br>31";*/
+        echo '<h3>Autorzy </h3>';
         echo '<ul id="ul-authors">';
 
             echo '<li id="all-authors">
                   <label>
-                     <input type="checkbox" name="author-checkbox" class="author-checkbox" id="all-authors">wszyscy
+                     <input type="checkbox" name="author-checkbox" class="author-checkbox" id="all-authors">Wszyscy
                   </labeL>';
 
-            echo "<br>40<br>";
+            /*echo "<br>40<br>";*/
             while ($row = $result->fetch_assoc())
             {
                 // load the content from the external template file into string
@@ -56,7 +56,7 @@
             }
         echo '</ul>';
 
-        echo "<br>51<br>";
+        /*echo "<br>51<br>";*/
 
         $result->free_result();
     }
