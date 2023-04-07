@@ -59,7 +59,7 @@ body header * {
 body {
     background-image: url("../assets/2_2.png");
 
-    margin: 0 10px 0 10px;
+    margin: 0;
     /*margin: 0;*/
     padding: 0;
 
@@ -81,7 +81,7 @@ body {
 #n-header {
     border: 1px ridge rgba(166, 166, 166, 0.38); /* https://www.w3schools.com/cssref/playdemo.php?filename=playcss_border-style&preval=groove */
 
-    width: 1200px;
+    width: 1375px;
     /*height: 255px;*/
 
         /*overflow: auto;*/
@@ -111,7 +111,7 @@ body {
 
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1400px) {
 
     /* dla szerokości < 1000px; */
 
@@ -171,7 +171,210 @@ body {
 
     }*/
 
+
+
 }
+
+
+@media only screen and (max-width: 1400px) {
+
+    .book {
+        /* margin: 10px 118px 15px 118px !important;*/
+
+        width: 22% !important;
+
+        margin: 1% !important;
+        padding: 1% !important;
+    }
+
+}
+
+@media only screen and (max-width: 1250px) {
+
+    /* "dodaj do koszyka" - button */
+
+
+    .btn-link {
+        /* margin: 10px 118px 15px 118px !important;*/
+
+        font-size: 75%;
+
+    }
+
+}
+
+@media only screen and (max-width: 1164px) {
+
+    /* "dodaj do koszyka" - button */
+
+    .btn-link {
+        /* margin: 10px 118px 15px 118px !important;*/
+
+        font-size: 70%;
+       /* color: red !important;*/
+        padding: 10px 10% 10px 10% !important;
+
+    }
+
+    .book-author {
+        font-size: 90% !important;
+    }
+
+}
+
+
+
+
+@media only screen and (max-width: 1020px) {
+
+    .btn-link {
+        font-size: 65% !important;
+    }
+
+}
+
+
+
+
+
+@media only screen and (max-width: 950px) {
+
+
+
+
+
+    .book {
+
+        display: block !important;
+
+
+       /* width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 22% !important;
+        width: 100% !important;*/
+
+        width: initial !important;
+        /*width: 100% ;*/
+        margin-right: 45% !important;
+
+        min-width: 345px;
+
+        /*margin: 10px 15px 10px 15px !important;
+        padding: 10px !important;
+
+        overflow: auto !important;*/
+
+        background-color: transparent !important;
+        box-shadow: unset !important;
+
+
+    }
+
+    .book-cover img {
+        width: 88% !important;
+    }
+
+
+    .book-info {
+        min-width: 165px !important;
+
+    }
+
+    .outer-book {
+        background-color: #f3f3f3;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        overflow: hidden;
+
+        margin-bottom: 10px !important;
+    }
+
+    /*.book-cover {
+        float: left !important;
+
+    }
+
+    div#content {
+        padding-right: 15px !important;
+    }*/
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*!*@media only screen and (max-width: 1050px) {*!
+@media only screen and (max-width: 1110px) {
+
+    !* "dodaj do koszyka" - button *!
+
+
+    .book {
+        !* margin: 10px 118px 15px 118px !important;*!
+
+        width: 145px !important;
+        !*width: 20% !important;*!
+        margin: 10px 15px 15px 10px !important;
+        padding: 10px !important;
+
+        !*padding: 25px !important;*!
+
+    }
+
+    .btn-link {
+        !* margin: 10px 118px 15px 118px !important;*!
+
+
+
+    }
+
+}*/
+
+
+/*@media only screen and (max-width: 1275px) {
+
+    .book {
+        !* margin: 10px 118px 15px 118px !important;*!
+
+        width: 221px !important;
+    }
+
+}*/
 
 
 /*#div-search {
@@ -235,9 +438,7 @@ body {
 
 /* top header buttons  ----------------------------------------------------------------- */
 
-/*div {
-    border: 1px dashed #7e7f80;
-}*/
+
 
 #btn-parent {
     overflow: auto;
@@ -650,7 +851,7 @@ body {
    /* min-height: 125px;*/
 
     margin: 0 auto 0 auto;
-    width: 1200px;
+    width: 1375px;
 
 
         background-color: #ffffff;
@@ -725,6 +926,15 @@ body {
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
+#n-top-nav-content ol > li:nth-child(3),
+#n-top-nav-content ol > li:nth-child(3) a {
+
+    width: 250px !important;
+}
+
+
+
+
 #n-top-nav-content ol li a {
     color: #333333;
     text-decoration: none;
@@ -797,6 +1007,15 @@ body {
 
 }
 
+#n-top-nav ol > li:nth-child(3):hover > ul
+{
+    display: none !important;
+
+
+
+}
+
+
 #n-top-nav ol > li > ul > li:hover
 {
     background-color: #e0ebff;
@@ -815,7 +1034,7 @@ body {
 
 #container {
 
-    height: 750px;
+    height: 1200px;
                /* border: 1px dashed black;
                 border-top: none;
                 border-left: none;
@@ -879,8 +1098,9 @@ footer {
 
 
 #all-container {
-    /*overflow: auto;*/
-    width: 1200px;
+                /*overflow: auto;*/
+    /*width: 1200px;*/
+    width: 1375px;
     margin: 10px auto 0 auto;
 
     border-bottom-left-radius: 15px;
@@ -1084,7 +1304,7 @@ div#input-search-nav form > input[type="search"] {
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
     /*font-size: 20px;*/
-    /*font-weight: bold;*/
+    /*font-weight: 700;*/
     padding: 1px 8px;
     box-sizing: border-box;
 
@@ -1164,7 +1384,7 @@ div#nav > h3:nth-of-type(4) { /* "Autorzy" */
     margin-top: 15px;
 
     border-top: 1px ridge rgba(166, 166, 166, 0.38);
-    color: blue;
+    /*color: blue;*/
 
 }
 
@@ -1201,9 +1421,10 @@ div#content {
     width: 1000px;
     height: 1000px;
     /* background-color: #e6e6e6; */
-    background-color: #cecece;
-    color: #ffffff;
-    padding: 15px;
+    /*background-color: #cecece;*/
+    background-color: #fafafa;
+    /*color: #ffffff;*/
+    padding: 15px 0 15px 15px;
     /* border-bottom: 1px dashed black; */
    /* overflow: auto;*/
 
@@ -1211,37 +1432,121 @@ div#content {
     /* class="content-short" */
 }
 
+div#content-books {
+    position: relative;
+}
+
 .book {
     display: flex;
     flex-direction: column;
-    background-color: #cbcbcb;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 1rem;
+    /*background-color: #cbcbcb;*/
+    /*border-radius: 5px;*/
+   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+    /*margin: 1rem;*/
     transition: transform 0.2s ease-in-out;
 }
 
 .book {
-    background-color: lightblue;
+    background-color: #f3f3f3;
     /* display: inline-block; */
     float: left;
     /* width: 180px; */
     width: 221px;
-    /* height: 420px; */
-    height: 432px;
-    margin: 10px;
+
+    margin: 10px 15px 75px 10px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     transition: all 0.05s ease-in-out;
+
+   /* position: relative;*/
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.book:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background-color: rgb(199, 216, 227);
+}
+
+
+
+
+
+
 .book-cover {
-    position: relative;
+    /*position: relative;
     height: 0;
-    padding-bottom: 150%;
+    padding-bottom: 150%;*/
     overflow: hidden;
     float: left;
+}
+
+.book-cover img {
+    /*position: absolute;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    object-fit: cover;
+
+    border-radius: 5px;*/
+
+
+    /*position: absolute;
+    top: 0;
+    left: 0;*/
+
+    /*margin: 0 auto;*/
+
+    width: 88%;
+
+    margin-top: 2px;
+
+}
+
+.book-cover > a {
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+
+    text-align: center;
 }
 
 .book-info {
@@ -1251,20 +1556,70 @@ div#content {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+
+    /*position: relative;
+    top: -40px;*/
 }
 
 .book-title {
     margin: 8px 0 0 0;
     font-size: 0.9rem;
+
+    overflow: hidden;
+    max-height: 17px;
+
+
+
+
+   /* position: relative;
+    top: 0;
+    left: 0;*/
 }
+
+/*.book:hover .book-title {
+
+
+
+    max-height: 34px;
+
+
+
+
+    position: relative;
+    top: 0;
+    left: 0;
+
+    z-index: 200 !important;
+}*/
+
 
 .book-price {
     font-weight: bold;
     font-size: 0.9rem;
+
+    margin-top: 2px;
+
+    /*z-index: 1 !important;*/
 }
+
+/*.book:hover .book-price,
+.book:hover .book-year,
+.book:hover .book-author,
+.book:hover .btn-link
+{
+    position: relative;
+    top: -17px;
+}*/
+
 
 .book-author {
     color: #666;
+    margin-bottom: 10px;
+    margin-top: 2px;
+}
+
+.book-year {
+    margin-top: 2px;
 }
 
 .book-rating {
@@ -1272,8 +1627,13 @@ div#content {
     align-items: center;
 }
 
+
+/*<!-- HTML !-->
+<button class="button-22" role="button">Button 22</button>*/
+
 .btn-link { /* form acion "dodaj do koszyka" - button */
-    border: none;
+
+    /*border: none;
     outline: none;
     background: none;
     cursor: pointer;
@@ -1281,14 +1641,65 @@ div#content {
     padding: 0;
     text-decoration: underline;
     font-family: inherit;
-    font-size: inherit;
+    font-size: inherit;*/
+
+    align-items: center;
+    /*appearance: button;*/
+    background-color: #5478c0;
+    border-radius: 8px;
+    border-style: none;
+    box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    font-family: "RM Neue",sans-serif;
+    /*font-size: 100%;*/
+    line-height: 1.15;
+    margin: 0 0 5px 0;
+    padding: 10px 21px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: color .13s ease-in-out,background .13s ease-in-out,opacity .13s ease-in-out,box-shadow .13s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
+
+
+
+
+
+
 }
 
+/* CSS */
 
-/*div, * {
-    border: 1px dashed rgba(0, 0, 0, 0.07);
+
+.btn-link:active {
+    /*background-color: #006AE8;*/
+
+    background-color: #698bbb;
+
+
+
+
+}
+
+.btn-link:hover {
+    /*background-color: #1C84FF;*/
+
+    background-color: #698bbb;
+}
+
+/*div {
+    border: 1px dashed rgba(122, 122, 122, 0.2);
     box-sizing: border-box;
 }*/
+
+
 
 
 

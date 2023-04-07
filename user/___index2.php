@@ -105,7 +105,7 @@ include_once "../functions.php";
                     ?>
                 </ul>
             </li>
-            <li class="btn from-center"><a href="#">...</a>
+            <li class="btn from-center"><a href="#">Wyszukiwanie zaawansowane</a>
                 <ul>
                     <li><a href="#">...</a></li>
                     <li><a href="#">...</a></li>
