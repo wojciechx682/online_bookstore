@@ -233,7 +233,13 @@ body {
 
 }
 
+@media only screen and (max-width: 1010px) {
 
+    ul#ul-authors > li > label {
+        font-size: 90% !important;
+    }
+
+}
 
 
 
@@ -297,6 +303,15 @@ body {
         margin-bottom: 10px !important;
     }
 
+    .outer-book {
+        background-color: #f3f3f3;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        overflow: hidden;
+
+        margin-bottom: 10px !important;
+    }
+
     /*.book-cover {
         float: left !important;
 
@@ -308,6 +323,14 @@ body {
 
 
 
+
+}
+
+@media only screen and (max-width: 1010px) {
+
+    ul#ul-authors > li > label {
+        font-size: 90% !important;
+    }
 
 }
 
@@ -362,6 +385,17 @@ body {
 
     button#sort_button {
         display: none !important;
+    }
+
+}
+
+
+
+
+@media only screen and (max-width: 850px) {
+
+    ul#ul-authors > li > label {
+        font-size: 80% !important;
     }
 
 }
@@ -1231,6 +1265,7 @@ div#nav > h3:nth-of-type(3) { /* "Cena" */
     padding-bottom: 15px;
     padding-top: 15px;
     border-top: 1px ridge rgba(166, 166, 166, 0.38);
+
 }
 
 div#nav > select:hover,
@@ -1272,6 +1307,8 @@ button#sort_button {
     border-radius: 2px;
 
     margin-left: 8px;
+
+    color: #424242;
 
 
 }
@@ -1368,6 +1405,8 @@ div#price-range > label input[type="number"]:focus {
     /*border-top: 1px ridge rgba(166, 166, 166, 0.38);*/
 
 
+
+
 }
 
 div#input-search-nav form > input[type="search"] {
@@ -1421,6 +1460,8 @@ div#input-search-nav form > input[type="submit"] {
     margin-left: 8px;
     border: 1px solid #a9a9a9;
     border-radius: 2px;
+
+    color: #424242;
 
    /* background-image: url('../assets/search-icon.png');
     background-repeat: no-repeat;
@@ -1482,16 +1523,42 @@ div#input-search-nav form > input[type="submit"]:hover {
 div#nav > h3:nth-of-type(4) { /* "Autorzy" */
 
     padding-top: 15px;
+    padding-bottom: 15px;
     margin-top: 15px;
 
     border-top: 1px ridge rgba(166, 166, 166, 0.38);
+
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
+
     /*color: blue;*/
+
+
 
 }
 
 ul#ul-authors  {
     list-style-type: none;
     padding-left: 0;
+
+    height: 125px;
+    overflow-y: scroll;
+
+    /*border-top: 1px ridge rgba(166, 166, 166, 0.38);*/
+}
+
+ul#ul-authors::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+}
+
+ul#ul-authors::-webkit-scrollbar-track {
+    background: #c9c9c9;        /* color of the tracking area */
+    border-radius: 10px;
+}
+
+ul#ul-authors::-webkit-scrollbar-thumb {
+    background: #727272;     /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    /*border: 3px solid orange;*/  /* creates padding around scroll thumb */
 }
 
 ul#ul-authors > li > label > input {
@@ -1508,6 +1575,9 @@ ul#ul-authors > li > label > input {
 ul#ul-authors > li > label  {
 
    line-height: 125%;
+
+    cursor: pointer;
+
 }
 
 
@@ -1802,6 +1872,8 @@ div#content-books {
     border: 1px dashed rgba(122, 122, 122, 0.2);
     box-sizing: border-box;
 }
+
+
 
 
 

@@ -177,7 +177,7 @@ include_once "../functions.php";
                     <!-- <div id="div-search">-->
                     <form action="index.php" method="get">
                         <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
-                        <input type="submit" value="szukaj">
+                        <input type="submit" value="Szukaj">
                     </form>
                 </div>
 
