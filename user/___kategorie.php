@@ -152,10 +152,17 @@ include_once "../functions.php";
 
                 <div id="price-range">
                     <label>
-                        Min: <input type="number" id="value-min">
+
+                        <span>
+                            Min:
+                        </span>
+                        <input type="number" id="value-min">
                     </label>
                     <label>
-                        Max: <input type="number" id="value-max">
+                        <span>
+                            Max:
+                        </span>
+                        <input type="number" id="value-max">
                     </label>
                     <div id="slider"></div>
                 </div>

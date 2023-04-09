@@ -239,10 +239,6 @@ body {
 
 @media only screen and (max-width: 950px) {
 
-
-
-
-
     .book {
 
         display: block !important;
@@ -316,8 +312,59 @@ body {
 }
 
 
+@media only screen and (max-width: 685px) {
+
+    div#nav > select {
+        /*margin-top: 15px;
+        margin-bottom: 15px;
+        color: #707070;
+        border: 1px ridge #b7b7b7;
+        border-radius: 5px;
+        padding: 0 5px 0 5px;
+        box-sizing: border-box;        */
+
+        width: 100% !important;
+    }
+
+    button#sort_button {
+        display: none !important;
+    }
+
+    input#input-search-nav {
+        width: 100% !important;
+    }
+
+    #input-search-nav form input[type="submit"] {
+        display: none !important;;
+    }
 
 
+}
+
+@media only screen and (max-width: 600px) {
+
+    div#price-range > label input[type="number"] {
+        /*margin-top: 15px;
+        margin-bottom: 15px;
+        color: #707070;
+        border: 1px ridge #b7b7b7;
+        border-radius: 5px;
+        padding: 0 5px 0 5px;
+        box-sizing: border-box;        */
+
+        margin-left: 8.5% !important;
+
+        max-width: 50% !important;
+        widtH: 50% !important;
+        min-width: 20% !important;
+        /*min-width: 35px !important;*/
+    }
+
+    button#sort_button {
+        display: none !important;
+    }
+
+}
 
 
 
@@ -401,10 +448,14 @@ body {
 
     #div-search > form#search-form > input#input-search {
 
-        /*min-width: 165px;*/
+                    /*min-width: 165px;*/
         width: calc(100% * 0.87) !important;
 
     }
+
+    /*div#div-search > form#search-form > input[type="submit"] {
+        display: none;
+    }*/
 
     #div-cart-header {
         display: block !important;
@@ -419,6 +470,8 @@ body {
         padding-left: 5% !important;
         padding-right: 5% !important;
     }
+
+
 
 }
 
@@ -773,7 +826,7 @@ body {
     outline: none;
     margin-top: 10px;
 
-    transition: all 0.125s ease-in-out;
+    /*transition: all 0.125s ease-in-out;*/
 
 }
 
@@ -1207,6 +1260,9 @@ div#nav > select {
     /*outline: none;*/
     /*margin-top: 10px;*/
    /* transition: all 0.125s ease-in-out;*/
+
+    width: 50%;
+
 }
 
 button#sort_button {
@@ -1240,17 +1296,27 @@ div#price-range {
     overflow: auto;
 }
 
-div#price-range > label{
+div#price-range > label {
     width: 100% !important;
     float: left;
     margin-bottom: 8px;
 }
 
+div#price-range > label > span {
+    display: block;
+    float: left;
+    width: 35px;
+}
+
 
 div#price-range > label input[type="number"] {
+
     max-width: 60px;
-    float: right;
-    margin-right: 160px;
+    /*float: right;*/
+
+    /*margin-right: 190px;*/
+
+    margin-left: 10px;
 
     padding-top: 0;
     padding-bottom: 0;
@@ -1258,8 +1324,41 @@ div#price-range > label input[type="number"] {
     margin-top: 1px;
 
 
+    position: relative;
+    top: -1px;
+
     color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+
+    box-sizing: border-box;
 }
+
+div#price-range > label input[type="number"]:hover,
+div#price-range > label input[type="number"]:focus {
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+
+    color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+    /* padding: 8px;*/
+    box-sizing: border-box;
+    outline: none;
+    /* margin-top: 10px;*/
+    /*transition: all 0.125s ease-in-out;*/
+    width: 50%;
+}
+
+
+
+
+
+
+
+
 
 #input-search-nav h3 { /* "Tytuł" */
     margin-top: 0;
@@ -1281,8 +1380,10 @@ div#input-search-nav form > input[type="search"] {
    /* padding: 8px;*/
     box-sizing: border-box;
     outline: none;
-   /* margin-top: 10px;*/
-    transition: all 0.125s ease-in-out;
+    /* margin-top: 10px;*/
+    /*transition: all 0.125s ease-in-out;*/
+
+    width: 50%;
 }
 
 div#input-search-nav form > input[type="search"]:hover,
@@ -1438,6 +1539,8 @@ div#content-books {
 
 .book {
     display: flex;
+    /*display: inline-block;*/
+
     flex-direction: column;
     /*background-color: #cbcbcb;*/
     /*border-radius: 5px;*/
@@ -1448,9 +1551,9 @@ div#content-books {
 
 .book {
     background-color: #f3f3f3;
-    /* display: inline-block; */
+
     float: left;
-    /* width: 180px; */
+                /* width: 180px; */
     width: 221px;
 
     margin: 10px 15px 75px 10px;
@@ -1694,11 +1797,11 @@ div#content-books {
     background-color: #698bbb;
 }
 
-/*div {
+
+#nav * {
     border: 1px dashed rgba(122, 122, 122, 0.2);
     box-sizing: border-box;
-}*/
-
+}
 
 
 
