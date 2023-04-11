@@ -1567,6 +1567,11 @@ table#first-table th:hover, table#first-table td:hover {
 }
 
 
+div {
+	border: 1px dashed rgba(122, 122, 122, 0.2);
+	box-sizing: border-box;
+}
+
 
 
 

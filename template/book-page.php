@@ -32,7 +32,7 @@
 
     <div id="add-to-cart">
 
-        Cena %s <br>
+        Cena %s
 
 
 
@@ -47,7 +47,7 @@
                 %s
             </div>
 
-            <br><button type="submit" name="your_name" value="your_value" class="btn-link" %s>Dodaj ko koszyka</button>
+            <button type="submit" name="your_name" value="your_value" class="btn-link" %s>Dodaj ko koszyka</button>
         </form>
 
 

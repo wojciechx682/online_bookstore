@@ -170,8 +170,8 @@
 
         $row = $result->fetch_assoc();
 
-        echo "<br><br> row --> <br><br>";
-        print_r($row);
+       /* echo "<br><br> row --> <br><br>";
+        print_r($row);*/
 
         // load the content from the external template file into string
         $book = file_get_contents("../template/book-page.php");
@@ -377,17 +377,17 @@
             $book = file_get_contents("../template/cart-products.php");
 
             // replace fields in $book string to book data from $result
-            echo sprintf($book, $i, $row["tytul"], $row["cena"], $row["rok_wydania"], $row["id_ksiazki"], $row["id_ksiazki"], $row['id_ksiazki'], $row['ilosc'], $row['id_ksiazki'], $row['id_ksiazki'], $row['id_klienta'], $row['id_ksiazki'], $row['ilosc']);
+            echo sprintf($book, $i, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["id_ksiazki"], $row["id_ksiazki"], $row['id_ksiazki'], $row['ilosc'], $row['id_ksiazki'], $row['id_ksiazki'], $row['id_klienta'], $row['id_ksiazki'], $row['ilosc']);
 
             $i++;
 
 		  	$_SESSION['suma_zamowienia'] += $row['ilosc'] * $row['cena'];
 		}
 
-        echo '<span style="color: #c7c7c7;">';
+        /*echo '<span style="color: #c7c7c7;">';
 		    echo "$ _SESSION suma_zamowienia = ".$_SESSION['suma_zamowienia']."<br>";
 		    echo "<br> $ _SESSION koszyk_ilosc_ksiazek = ".$_SESSION['koszyk_ilosc_ksiazek']."<br>";
-        echo '</span></br>';
+        echo '</span></br>';*/
 
 		$result->free_result();
 	}
