@@ -461,7 +461,7 @@
 
 		while ($row = $result->fetch_assoc())        // wiersze z tabeli koszyk
 		{
-		  	echo $row['id_klienta'] . ", " .$row['id_ksiazki'] . ", " . $row['ilosc'] . "<br>"; // remove in the future
+		  	//echo $row['id_klienta'] . ", " .$row['id_ksiazki'] . ", " . $row['ilosc'] . "<br>"; // remove in the future
 
 		  	$id_ksiazki = $row['id_ksiazki'];
 		  	$ilosc = $row['ilosc'];
@@ -539,7 +539,7 @@ EOT;
             echo "<br><hr>";*/
 
             get_order_sum("", $row["id_zamowienia"]);
-            echo "suma zam ---> <br><br>"  . $_SESSION["order_sum"];
+            /*echo "suma zam ---> <br><br>"  . $_SESSION["order_sum"];*/
 
             // load the content from the external template file into string
             $order = file_get_contents("../template/order-details.php");
@@ -806,6 +806,18 @@ function get_order_sum($result = null, $order_id = null) {
         // order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
         query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
     }
+
+    /*function display_order_details($result) {
+
+        // get book details on book.php paeg
+        $row = $result->fetch_assoc();
+        // echo "<br><br> row --> <br><br>";
+        // print_r($row);
+        // load the content from the external template file into string
+        $orderDetails = file_get_contents("../template/book-page.php");
+        // replace fields in $book string to book data from $result, display result content as HTML
+        echo sprintf($orderDetails, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["cena"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $status, $submit);
+    }*/
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
