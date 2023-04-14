@@ -33,8 +33,8 @@
         <aside class="account-data">
             <div id="nav">
                 <!-- <a href="edit_data.php">Edytuj dane użytkownika</a><br><br> -->
-                <a href="account.php"> ← </a><br><br>
-                <a href="my_orders.php">Zamówienia</a>
+                <a href="___account.php"> ← </a><br><br>
+                <a href="___my_orders.php">Zamówienia</a>
             </div>
         </aside>
 

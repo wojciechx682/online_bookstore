@@ -9,12 +9,12 @@
 <div class="outer-book">
     <div class="book" id="book%s">
         <div class="book-cover">
-            <a href="../user/book.php?book=%s">
+            <a href="../user/___book.php?book=%s">
                 <img src="../assets/books/%s" alt="%s" title="%s">
             </a>
         </div>
         <div class="book-info">
-            <a href="../user/book.php?book=%s">
+            <a href="../user/___book.php?book=%s">
                 <h3 class="book-title">%s</h3>
             </a>
             <div class="book-price">%s</div>

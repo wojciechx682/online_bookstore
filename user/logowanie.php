@@ -18,7 +18,7 @@
         // ✓ spełni się jeśli wejdziemy bezpośrednio w link /logowanie.php (jeśli będziemy zalogowani, ORAZ jeśli nie będziemy zalogowani)
 
        /* echo "15<br>";*/
-		header('Location: index.php');
+		header('Location: ___index2.php');
 		exit();
 	}
 	else {   //   zmienne  $_POST['login'], $_POST['haslo']  - istnieją (mogą być puste),   ORAZ (AND)  NIE jesteśmy zalogowani
@@ -40,7 +40,7 @@
 		{
             /*echo "37<br>";*/
 			$_SESSION['blad'] = '<span class="error">Podaj poprawny adres e-mail</span>';
-			header('Location: zaloguj.php');
+			header('Location: ___zaloguj.php');
 			exit();
 		}
 		else // email is correct;   (email is valid)

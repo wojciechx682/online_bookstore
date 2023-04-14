@@ -2,7 +2,7 @@
 	session_start();
 	include_once "../functions.php";
 	if(!(isset($_SESSION['zalogowany']))) {
-        header("Location: index.php?login-error");
+        header("Location: ___index2.php?login-error");
 		exit();
 	}
 ?>
@@ -59,7 +59,7 @@
 		unset($_SESSION['book_exists']);
 	}
 
-	header('Location: koszyk.php');
+	header('Location: ___koszyk.php');
 	//header('Location: index.php?kategoria='.$_SESSION['kategoria'].'');
 	exit();
 ?>

@@ -5,7 +5,7 @@
 	session_start();
 	include_once "../functions.php";
 	if(!(isset($_SESSION['zalogowany']))) {
-		header('Location: index.php');
+		header('Location: ___index2.php');
 		exit();
 	}
 ?>
@@ -46,7 +46,7 @@
 		query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczbie książek)
 	}
 
-	header('Location: koszyk.php');
+	header('Location: ___koszyk.php');
 	//echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">Wróć</a>';
 	//header('Location: index.php?kategoria='.$_SESSION['kategoria'].'');
 	exit();

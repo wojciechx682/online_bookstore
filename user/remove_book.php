@@ -29,7 +29,7 @@
 
 		query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta); // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po usunięciu książki)
 
-		header('Location: koszyk.php');
+		header('Location: ___koszyk.php');
 		exit();
 	}
 

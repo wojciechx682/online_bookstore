@@ -125,17 +125,17 @@ if(((isset($_POST['miejscowosc_edit'])) && (isset($_POST['ulica_edit'])) && (iss
             unset($_POST['kod_poczt_edit']);
             unset($_SESSION['miasto_edit']);
 
-            header('Location: account.php');
+            header('Location: ___account.php');
         }
         else
         {
             //echo '<script> alert("Niepoprawne dane") </script>';
-            header('Location: account.php');
+            header('Location: ___account.php');
         }
 	}
 	else
 	{
 		//echo '<script> alert("Uzupełnij wszystkie pola") </script>'; 
-		header('Location: account.php');	
+		header('Location: ___account.php');
 	}
 ?>

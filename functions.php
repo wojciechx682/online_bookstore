@@ -97,11 +97,11 @@
         // header -> top-nav-content - wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav);
 
 		$category_name = "Wszystkie";
-		echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>'; // Zamiana na jQuery ? event listener ?
+		echo "\n".'<li><a href="___index2.php?kategoria='.$category_name.'">'.$category_name.'</a></li>'; // Zamiana na jQuery ? event listener ?
 		while ($row = $result->fetch_assoc())
 		{
 		  	//echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
-            echo "\n".'<li><a href="index.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
+            echo "\n".'<li><a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
 		}
 		$result->free_result();
 	}
@@ -711,6 +711,9 @@ function get_order_sum($result = null, $order_id = null) {
 
 		$haslo = $_POST['haslo']; // "zmienne tworzone poza funkcjami są globalne (więcej o funkcjach w manualu), a zmienne tworzone w funkcjach mają zasięg lokalny" - http://www.php.pl/Wortal/Artykuly/PHP/Podstawy/Zmienne-i-stale/Zasieg-zmiennych
 
+        //echo "<br> haslo = $haslo <br>"; // exit();
+        //echo "<br> row  = " . var_dump($row) . " <br>";  exit();
+
 		if(password_verify($haslo, $row['haslo'])) // true -> hasze sa takie same (podano poprawne hasło do konta)
 		{
 			$_SESSION['zalogowany'] = true;
@@ -741,7 +744,7 @@ function get_order_sum($result = null, $order_id = null) {
 
 			$result->free_result();   // pozbywamy się z pamięci rezultatu zapytania; free(); close();
 
-			header('Location: index.php'); // przekierowanie do strony index.php
+			header('Location: ___index2.php'); // przekierowanie do strony index.php
             //echo "<br>477";
 			exit();
 		}
@@ -749,7 +752,7 @@ function get_order_sum($result = null, $order_id = null) {
 		{
             //echo "<br>477";
 			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowanie -> przekierowanie do zaloguj.php + komunikat
-			header('Location: zaloguj.php');
+			header('Location: ___zaloguj.php');
 			exit();
 		}
 	}
@@ -766,7 +769,7 @@ function get_order_sum($result = null, $order_id = null) {
         // dodanie nowego użytkownika - rejestracja.php
         $_SESSION['udanarejestracja'] = true;
             //unset($_SESSION['wszystko_OK']);
-        header('Location: zaloguj.php');
+        header('Location: ___zaloguj.php');
     }
 
 	function cart_verify_book($result)
@@ -806,6 +809,8 @@ function get_order_sum($result = null, $order_id = null) {
         // order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
         query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
     }
+
+
 
     /*function display_order_details($result) {
 

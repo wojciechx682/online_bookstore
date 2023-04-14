@@ -473,6 +473,12 @@ include_once "../functions.php";
 
     <?php require "../view/___footer.php"; ?>
 
+    <script>
+        content = document.getElementById("content"); // ustawienie wid div#content na 100%
+        //console.log("content -> ", content);
+        content.style.width = "100%";
+    </script>
+
     <!--<script src="../scripts/...js"></script>-->
 
 </body>

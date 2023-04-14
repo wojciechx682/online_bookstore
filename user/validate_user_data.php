@@ -124,17 +124,17 @@
 			unset($_POST['telefon_edit']);
 			unset($_SESSION['error_form']);
 
-			header('Location: account.php');		
+			header('Location: ___account.php');
 		}
 		else
 		{
 			//echo '<script> alert("Niepoprawne dane") </script>';
-			header('Location: account.php');	
+			header('Location: ___account.php');
 		}
 	}
 	else
 	{
 		//echo '<script> alert("Uzupełnij wszystkie pola") </script>'; 
-		header('Location: account.php');	
+		header('Location: ___account.php');
 	}
 ?>

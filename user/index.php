@@ -355,8 +355,8 @@ require "../view/header-container.php"; ?>
                                     echo "<br>283<br>";
                                 }
 
-                                echo "<br> query -> ".$query . "<br>";
-                                echo "<br> values -> ".var_dump($values) . "<br>";
+                                //echo "<br> query -> ".$query . "<br>";
+                                //echo "<br> values -> ".var_dump($values) . "<br>";
 
 
 

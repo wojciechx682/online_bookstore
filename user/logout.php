@@ -23,7 +23,7 @@
 		session_destroy(); // destroy the session
 		session_start();
 		$_SESSION['udanarejestracja'] = true;
-		header('Location: zaloguj.php');
+		header('Location: ___zaloguj.php');
 		exit();
 	}
 	elseif(isset($_SESSION["password_confirmed"])) { // redirect from remove_password.php
@@ -31,14 +31,14 @@
 		session_destroy();
 		session_start();
 		$_SESSION["deleted-successfully"] = true;
-		header('Location: zaloguj.php');
+		header('Location: ___zaloguj.php');
 		exit();
 	}
 	else // wylogowanie z konta poprzez naciśnięcie "wyloguj" przez użytkowika
 	{
 		session_unset();
 		session_destroy();
-		header('Location: zaloguj.php');
+		header('Location: ___zaloguj.php');
 		exit();
 	}
 

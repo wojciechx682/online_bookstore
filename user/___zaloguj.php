@@ -89,12 +89,12 @@
                         <span class="login-row">
                                 <label>
                                     <!-- Login: <br> <input type="text" name="login"> <br> -->
-                                    E-mail <input type="email" name="email" required value="jakub.nowak.382@gmail.com">
+                                    E-mail <input type="email" name="email" required value="jakub.wojciechowski.682@gmail.com">
                                 </label>
                         </span>
                         <span class="login-row">
                                 <label>
-                                    Hasło <input type="password" name="haslo" required value="aosdasdoaidsad#"
+                                    Hasło <input type="password" name="haslo" required value="PassJacob33#"
                                                        autocomplete="off">
                                 </label>
                         </span>
@@ -107,7 +107,7 @@
 
                 <br><a href="___reset_password.php">Przypomnij hasło</a><br>
 
-                <br><a href="zarejestruj.php">Nie posiadasz konta? Zarejestruj się</a><br>
+                <br><a href="___zarejestruj.php">Nie posiadasz konta? Zarejestruj się</a><br>
 
                 <?php
                     if(isset($_SESSION["password-changed"]) && $_SESSION["password-changed"]) {

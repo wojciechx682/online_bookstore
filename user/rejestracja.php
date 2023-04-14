@@ -149,7 +149,10 @@
 		}	
 		
 		// Verifying that both passwords are the same
-		
+
+        echo "<br> haslo1 = " . $haslo1 . "<br>";
+        echo "<br> haslo2 = " . $haslo2 . "<br>";
+
 		if($haslo1 != $haslo2)
 		{
 			$_SESSION['wszystko_OK'] = false;
@@ -312,7 +315,7 @@
         if(!$response->success) //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
 		{
 			$_SESSION['wszystko_OK'] = false;
-			$_SESSION['e_bot'] = "Weryfikacja reCaptcha nie przebiegła pomyślnie";
+			$_SESSION['e_bot'] = "<h3>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>";
 		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -356,16 +359,26 @@
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			// Zrealizowanie zapytania INSERT : 
 
-            $user = [$imie, $nazwisko, $email, $miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
+            $user = [$imie, $nazwisko, $email, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
+
+            $address = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc];
+
+            print_r($user);
+            //exit();
 
 			//query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database
-			query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database
+            query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database
+
+            // because there is "address" table --->
+
+            // należy pobrać id ostatnio wstawionego wiersza w tabeli klienci !
+            query("INSERT INTO adres (adres_id, id_klienta, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s')", "", $address);
 
             unset($_SESSION['wszystko_OK']);
         }
 		else // nieudana walidacja
 		{
-			header('Location: zarejestruj.php');
+			header('Location: ___zarejestruj.php');
         }
 
         exit();
@@ -374,8 +387,8 @@
     }
     else {
 
-        $_SESSION['e_fields'] = "Uzupełnij wszystkie pola";
-        header('Location: zarejestruj.php');
+        $_SESSION['e_fields'] = "<h3>Uzupełnij wszystkie pola</h3>";
+        header('Location: ___zarejestruj.php');
     }
 
     exit();
