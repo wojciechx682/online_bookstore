@@ -1,3 +1,3 @@
 <div class="order-sum">
-    SUMA    %s
+    <span>SUMA</span>    %s
 </div>

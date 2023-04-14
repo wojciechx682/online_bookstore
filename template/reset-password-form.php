@@ -1,7 +1,7 @@
 
 <div>
     <p>Wprowadź nowe hasło dla konta <strong>%s</strong> </p>
-    <form method="post">
+    <form method="post" id="password-reset-input">
 
 <!--        <span>-->
 <!--            <label for="new-password">-->
@@ -16,7 +16,31 @@
 <!--            </label>-->
 <!--        </span>-->
 
-        <div>
+        <div class="login-form-section">
+
+                        <span class="login-row">
+                                <label>
+                                    Nowe hasło <input type="password" name="new-password" id="new-password" reqiured>
+                                </label>
+                        </span>
+
+                        <span class="login-row">
+                                <label>
+                                    Powtórz hasło <input type="password" name="confirm-password" id="confirm-password" reqiured>
+                                </label>
+                        </span>
+
+            <input type="submit" value="Zmień hasło">
+
+        </div>
+
+
+
+
+
+
+
+        <!--<div>
             <p>
                 <span class="reset-password-form">
                     <label for="new-password">
@@ -36,9 +60,9 @@
                 </span>
                 <input type="password" name="confirm-password" id="confirm-password" reqiured>
             </p>
-        </div>
+        </div>-->
 
-        <input type="submit" value="Zmień hasło">
+
 
 
     </form>

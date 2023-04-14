@@ -105,13 +105,13 @@
 
                 </form>
 
-                <br><a href="reset_password.php">Przypomnij hasło</a><br>
+                <br><a href="___reset_password.php">Przypomnij hasło</a><br>
 
                 <br><a href="zarejestruj.php">Nie posiadasz konta? Zarejestruj się</a><br>
 
                 <?php
                     if(isset($_SESSION["password-changed"]) && $_SESSION["password-changed"]) {
-                        echo "<br>udało się zmienić hasło<br>";
+                        echo "<h3>udało się zmienić hasło</h3>";
                         session_unset();
                         session_destroy();
                     }

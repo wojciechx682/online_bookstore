@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	include_once "../functions.php";
+
 	if(!isset($_SESSION['zalogowany']))
 	{
 		header('Location: index.php');
@@ -14,82 +15,7 @@
 
 <?php require "../view/___head.php"; ?>
 
-<style>
-    .order {
-        border: 1px dashed black;
-        border-radius: 15px;
-        margin: 10px auto 10px auto;
-        padding: 10px 0 10px 10px;
-        /*background-color: #606686;*/
-        overflow: auto;
-        text-align: left !important;
-    }
-    .order-date-title, .order-status-title, .order-id-title,
-    .order-date, .order-status, .order-id {
-        border: 1px dashed black;
 
-        float: left;
-        width: 33.33%;
-        text-align: left;
-    }
-    .book-no {
-        border: 1px dashed black;
-
-        float: left;
-        width: 35px;
-        height: 150px;
-
-        text-align: left;
-        padding-top: 68px;
-    }
-    .book-url {
-        border: 1px dashed black;
-
-        float: left;
-        width: 150px;
-        height: 150px;
-
-        text-align: left;
-    }
-
-    .book-url img {
-        width: 100px;
-    }
-
-    .book-desc {
-        border: 1px dashed black;
-
-        float: left;
-        width: 270px;
-        height: 150px;
-
-        text-align: left;
-
-    }
-
-    .book-quan {
-        border: 1px dashed black;
-        float: left;
-        width: 112px;
-        height: 150px;
-        text-align: left;
-    }
-    .book-price {
-        border: 1px dashed black;
-        float: left;
-        width: 112px;
-        height: 150px;
-        text-align: left;
-    }
-
-    .order-sum {
-        border: 1px dashed black;
-
-        padding: 20px 20px 20px 0px;
-        text-align: right;
-    }
-
-</style>
 
 <body>
 
@@ -115,7 +41,8 @@
 		<div id="content">
 
 			<!-- <h3>Zamówienia</h3><hr> -->
-            <h3>Historia zamówień</h3><hr>
+            <!--<h3>Historia zamówień</h3><hr>-->
+            <h3 class="account-header">Historia zamówień</h3>
 
 			<?php
 				echo '<script> displayNav(); </script>';
