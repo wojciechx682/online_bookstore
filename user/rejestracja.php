@@ -361,15 +361,15 @@
 
             $user = [$imie, $nazwisko, $email, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
 
-            $address = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc];
-
-            print_r($user);
+            //print_r($user);
             //exit();
 
 			//query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database
-            query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database
+            query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database,   $_SESSION['last_client_id'] --> id nowo wstawionego klienta
 
-            // because there is "address" table --->
+
+            $address = [$_SESSION['last_client_id'], $miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc];
+
 
             // należy pobrać id ostatnio wstawionego wiersza w tabeli klienci !
             query("INSERT INTO adres (adres_id, id_klienta, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s')", "", $address);

@@ -68,6 +68,7 @@ section.book-page {
     /*width: 450px;*/
 }
 
+
 .book-page .book-tabs .tab-panel p {
     /*font-family: 'Quattrocento Sans', sans-serif;*/
     line-height: 1.4em;
@@ -75,6 +76,12 @@ section.book-page {
 
 .book-page .book-tabs ul > li > a {
     text-decoration: none;
+}
+
+div#book-page div#book-page-image img {
+    -webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
 }
 
 /*button {
@@ -100,9 +107,52 @@ span.book-details-tab {
     display: block;
     float: left;
 
-    text-align: right !important;
+    text-align: left ;
     padding-right: 10px;
+
+    min-width: 135px;
 }
+
+div#tab-2 p {
+    margin-left: 10px;
+
+}
+
+div#tab-2 p:first-child {
+    margin-top: 10px;
+
+}
+
+
+div#tab-2 {
+    padding: 15px 15px 20px 15px;
+}
+
+
+div#tab-1 {
+    padding: 15px 20px 20px 20px;
+}
+
+div#tab-1 p:first-child {
+    margin-top: 0;
+}
+
+div#tab-3 {
+    padding-top: 5px;
+}
+
+/*div#tab-3 hr {
+    background-color: rgba(166, 166, 166, 0.38);
+
+    border: none;
+    height: 1px;
+
+    margin: 5px 0 0 0;
+
+    position: relative;
+    left: 30px;
+}*/
+
 
 /********** TABS **********/
 .book-page .book-tabs ul.tab-list {
@@ -143,7 +193,7 @@ span.book-details-tab {
     background-color: #e5e5e5;
     color: #666;
     min-height: 150px;
-    overflow: auto;
+    /*overflow: auto;*/
 }
 
 .book-page .book-tabs div.tab-panel.active {

@@ -28,8 +28,8 @@
 
 		if($_SESSION["rate_exists"]) {
 
-			$_SESSION["rate-error"] = "Dodałeś już opinię dla tej książki";
-			header('Location: book.php?book='.$_SESSION["id_ksiazki"]);
+			$_SESSION["rate-error"] = "<h3 class='data-changed'>Dodałeś już opinię dla tej książki</h3>";
+			header('Location: ___book.php?book='.$_SESSION["id_ksiazki"]);
 			exit();
 		} else {
 
@@ -50,15 +50,15 @@
 						 SET rating = x.avg_score 
 					     WHERE ksiazki.id_ksiazki = '%s'", "", $comment_data[1]);
 
-			$_SESSION["rate-success"] = "Twoja opinia została dodana";
+			$_SESSION["rate-success"] = "<h3 class='data-changed'>Twoja opinia została dodana</h3>";
 
-			header('Location: book.php?book='.$_SESSION["id_ksiazki"]);
+			header('Location: ___book.php?book='.$_SESSION["id_ksiazki"]);
 			exit();
 		}
 	}
 	else {
-		$_SESSION["rate-error"] = "Uzupełnij wszystkie pola";
-		header('Location: book.php?book='.$_SESSION["id_ksiazki"]);
+		$_SESSION["rate-error"] = "<h3 class='data-changed'>Uzupełnij wszystkie pola</h3>";
+		header('Location: ___book.php?book='.$_SESSION["id_ksiazki"]);
 		exit();
 	}
 ?>

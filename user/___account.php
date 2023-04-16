@@ -71,19 +71,21 @@
 
 
 
-                        <?php
-                            if((isset($_SESSION['error_form']))) {
-                                echo $_SESSION['error_form'];
-                                unset($_SESSION['error_form']);
-                            } else {
-                                if((isset($_SESSION['validation_passed'])) && $_SESSION['validation_passed'])	{
-                                    echo "Dane zostały zmienione";
-                                    unset($_SESSION['validation_passed']);
-                                }
-                            }
-                        ?>
+
                     </div>
                 </div>
+
+                <?php
+                if((isset($_SESSION['error_form']))) {
+                    echo "<h3 class='data-changed'>".$_SESSION['error_form']."</h3>";
+                    unset($_SESSION['error_form']);
+                } else {
+                    if((isset($_SESSION['validation_passed'])) && $_SESSION['validation_passed'])	{
+                        echo "<h3 class='data-changed'>Dane zostały zmienione</h3>";
+                        unset($_SESSION['validation_passed']);
+                    }
+                }
+                ?>
 
                 <div style="clear: both;"></div>
 
@@ -108,7 +110,7 @@
 
                                 <div class="edit_data_right">
                                     <div class="edit_data_button">
-                                        <button type="submit" form="edit_data_form">Edytuj dane</button>
+                                        <button type="submit" form="edit_address_form">Edytuj dane</button>
                                     </div>
                                 </div>
                             </form>
@@ -121,19 +123,22 @@
                             <button type="submit" form="edit_address_form">Edytuj dane</button>
                         </div>-->
 
-                        <?php
-                        if((isset($_SESSION['a_error']))) {
-                            echo $_SESSION['a_error'];
-                            unset($_SESSION['a_error']);
-                        } else {
-                            if((isset($_SESSION['validation_passed_a'])) && $_SESSION['validation_passed_a'])	{
-                                echo "Dane zostały zmienione";
-                                unset($_SESSION['validation_passed_a']);
-                            }
-                        }
-                        ?>
+
                     </div>
                 </div>
+
+                <?php
+                    if((isset($_SESSION['a_error']))) {
+                        //echo $_SESSION['a_error'];
+                        echo "<h3 class='data-changed'>".$_SESSION['a_error']."</h3>";
+                        unset($_SESSION['a_error']);
+                    } else {
+                        if((isset($_SESSION['validation_passed_a'])) && $_SESSION['validation_passed_a'])	{
+                            echo "<h3 class='data-changed'>Dane zostały zmienione</h3>";
+                            unset($_SESSION['validation_passed_a']);
+                        }
+                    }
+                ?>
 
                 <div class="dane_konta">
                     <h3 class="account-header">Hasło</h3>
@@ -151,7 +156,7 @@
 
                                     <div class="edit_data_right">
                                         <div class="edit_data_button">
-                                            <button type="submit" form="edit_data_form">Edytuj dane</button>
+                                            <button type="submit" form="edit_password_form">Edytuj dane</button>
                                         </div>
                                     </div>
                                 </form>
@@ -170,14 +175,18 @@
                 </div>
                     <?php
                         if((isset($_SESSION['validation_password'])) && (!$_SESSION['validation_password']) && (isset($_SESSION['error_form_password']))) {
-                            echo $_SESSION['error_form_password'];
+                            //echo $_SESSION['error_form_password'];
+                            echo "<h3 class='data-changed'>".$_SESSION['error_form_password']."</h3>";
+
                             unset($_SESSION['stare_haslo']);
                             unset($_SESSION['validation_password']);
                             unset($_SESSION['error_form_password']);
                             unset($_SESSION['validation_passed_p']);
                         } else {
                             if((isset($_SESSION['validation_passed_p'])) && $_SESSION['validation_passed_p']) {
-                                echo "Hasło zostało zmienione";
+                                //echo "Hasło zostało zmienione";
+                                echo "<h3 class='data-changed'>Hasło zostało zmienione</h3>";
+
                                 unset($_SESSION['stare_haslo']);
                                 unset($_SESSION['validation_password']);
                                 unset($_SESSION['error_form_password']);

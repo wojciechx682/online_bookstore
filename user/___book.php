@@ -267,7 +267,7 @@ include_once "../functions.php";
                 console.log("newWidth --> ", newWidth);
 
                 rated.style.width = newWidth + "px";
-                norates.innerHTML = numer_of_rates;
+                norates.innerHTML = "("+numer_of_rates+")";
             }
 
 
@@ -477,6 +477,100 @@ include_once "../functions.php";
         content = document.getElementById("content"); // ustawienie wid div#content na 100%
         //console.log("content -> ", content);
         content.style.width = "100%";
+
+        // get the window width -->
+
+
+
+            //let width = window.innerWidth;
+
+            /*imgContainer = document.getElementById("book-page-image");
+            imgContainer.style.marginRight = width;*/
+
+            /*console.log(width);
+            console.log(typeof(width));*/
+
+
+
+            /*window.addEventListener('resize', function() {
+
+                if(window.innerWidth <= "845" && window.innerWidth >= "825") {
+
+                    let imgContainer = document.getElementById("book-page-image");
+                    let marginRightValue = ((Math.pow(window.innerWidth-824, 2))/85)
+
+                    if(marginRightValue < 0) {
+                        marginRightValue = 0;
+                    }
+                    imgContainer.style.marginRight = marginRightValue.toString() + "%";
+
+                } else if(window.innerWidth > "845") {
+                    let imgContainer = document.getElementById("book-page-image");
+                    imgContainer.style.marginRight = "42px";
+
+                    let content = document.getElementById("content");
+                    content.style.paddingLeft = "15px";
+                }
+                if(window.innerWidth < "845" && window.innerWidth > "800") {
+
+                    let content = document.getElementById("content");
+                    let paddingLeftValue = ((Math.pow(window.innerWidth-800, 2))/1000)
+
+                    if(paddingLeftValue < 0) {
+                        paddingLeftValue = 0;
+                    }
+                    content.style.paddingLeft = paddingLeftValue.toString() + "%";
+                }
+            });
+
+        window.addEventListener('load', function() {
+
+            if(window.innerWidth <= "845" && window.innerWidth >= "820") {
+
+                let imgContainer = document.getElementById("book-page-image");
+                let marginRightValue = ((Math.pow(window.innerWidth-824, 2))/85)
+
+                if(marginRightValue < 0) {
+                    marginRightValue = 0;
+                }
+                imgContainer.style.marginRight = marginRightValue.toString() + "%";
+
+            } else if(window.innerWidth > "845") {
+                let imgContainer = document.getElementById("book-page-image");
+                imgContainer.style.marginRight = "42px";
+
+                let content = document.getElementById("content");
+                content.style.paddingLeft = "15px";
+            }
+            if(window.innerWidth < "845" && window.innerWidth > "800") {
+
+                let content = document.getElementById("content");
+                let paddingLeftValue = ((Math.pow(window.innerWidth-800, 2))/1000)
+
+                if(paddingLeftValue < 0) {
+                    paddingLeftValue = 0;
+                }
+                content.style.paddingLeft = paddingLeftValue.toString() + "%";
+            }
+            if(window.innerWidth <= "820") {
+
+                let imgContainer = document.getElementById("book-page-image");
+                imgContainer.style.marginRight = "0";
+
+                let content = document.getElementById("content");
+                content.style.paddingLeft = "0";
+            }
+        });*/
+
+
+
+
+
+
+
+
+
+
     </script>
 
     <!--<script src="../scripts/...js"></script>-->

@@ -7,9 +7,11 @@
         <img src="../assets/books/%s" alt="%s" title="%s">
     </div>
     <div id="book-page-details">
-        <div id="book-page-title">Tytuł - %s</div>
-        <div id="book-page-author">Autor - %s %s</div>
-        <div id="book-page-year">Rok wydania - %s</div>
+        <div id="book-page-title">
+            <span class="book-page-details">Tytuł</span>%s</div>
+        <div id="book-page-author">
+            <span class="book-page-details">Autor</span>%s %s</div>
+        <div id="book-page-year"><span class="book-page-details">Rok wydania</span>%s</div>
         <div id="book-page-rate">
             <span id="book-rate" style="display:   none;">%s</span>
 
@@ -23,8 +25,8 @@
             <span class="rating-num">%s ocen, %s komentarzy</span>
         </div>
 
-        <div id="book-page-publ">Wydawnictwo - %s</div>
-        <div id="book-page-nopg">ilość stron - %s</div>
+        <div id="book-page-publ"><span class="book-page-details">Wydawnictwo</span>%s</div>
+        <div id="book-page-nopg"><span class="book-page-details">Ilość stron</span>%s</div>
 
 
 
@@ -32,7 +34,7 @@
 
     <div id="add-to-cart">
 
-        Cena %s
+        <span class="book-page-details">Cena</span>%s
 
 
 
@@ -42,7 +44,8 @@
             <b>Ilosc: </b>
             <input type="text" id="koszyk_ilosc%s" name="koszyk_ilosc" value="1">
             <button type="button" onclick="increase(%s)">+</button>
-            <button type="button" onclick="decrease(%s)">-</button>
+            <button type="button" onclick="decrease(%s)"><span>-</span></button>
+            <div style="clear: both;"></div>
             <div id="book-status">
                 %s
             </div>

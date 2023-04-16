@@ -10,7 +10,10 @@
             <li><a class="tab-control" href="#tab-3"><h3>Recenzje</h3></a></li>
         </ul>
 
-        <div class="tab-panel active" id="tab-1" style="padding: 10px;">
+        <div class="tab-panel active" id="tab-1">
+            <p>Java jest dojrzałym językiem programowania, który pozwala na pisanie kodu dla wielu rodzajów komputerów służących do różnych celów i działających na różnych platformach. Jest świetnym wyborem dla programistów, którym zależy na tworzeniu bezpiecznych aplikacji o wyjątkowej jakości. Wokół Javy skupia się duża społeczność, dzięki której język ten wciąż się rozwija, unowocześnia i wzbogaca o nowe elementy. Osoby, które swoje zawodowe życie wiążą z pisaniem programów w Javie, muszą poznać zaawansowane zagadnienia i mniej oczywiste funkcjonalności Javy, również te niedawno zaimplementowane. To konieczność dla każdego profesjonalnego programisty Javy.</p>
+
+            <p>Oto kolejne, przejrzane, zaktualizowane i uzupełnione wydanie znakomitego podręcznika dla zawodowych programistów Javy. Znalazł się tu dokładny opis sposobów tworzenia interfejsu użytkownika, stosowania rozwiązań korporacyjnych, sieciowych i zabezpieczeń, a także nowości wprowadzonych w JDK 11. Przedstawiono techniki programowania baz danych oraz umiędzynarodowiania aplikacji Javy. Sporo uwagi poświęcono bibliotece Swing oraz jej wykorzystaniu do tworzenia realistycznej grafiki i efektów specjalnych. Ponadto w książce zostały pokazane nowe możliwości języka - zademonstrowano, jak dzięki nim uzyskać wyjątkową jakość aplikacji, a zamieszczone przykłady opracowano pod kątem zrozumiałości i wartości praktycznej.</p>
         </div>
 
         <div class="tab-panel" id="tab-2">
@@ -96,7 +99,7 @@
 
             <div style="clear: both;"></div>
 
-            <hr>
+            <!--<hr>-->
 
             <div id="add-review">
 
@@ -109,7 +112,7 @@
                         <textarea id="textarea-comment" name="comment" rows="4" cols="80" maxlength="255" minlength="5">Super książka polecam :)</textarea>
                     </div>
 
-                    <hr>
+                    <!--<hr>-->
 
                     <div id="add-rate">
                         <div class="add-rate-outer">
@@ -139,9 +142,9 @@
             </div>
 
             <article id="book-comments">
-                <hr>
+                <!--<hr>-->
                     %s
-                <hr>
+                <!--<hr>-->
             </article>
 
         </div>

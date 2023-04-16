@@ -20,8 +20,10 @@
 
 
     <script src="../scripts/filtrowanie-year.js"></script>
-    <script src="../scripts/set-span-width.js"></script>
-    <script src="../scripts/set-span-width-v2.js"></script>
+
+    <!--<script src="../scripts/set-span-width.js"></script>
+    <script src="../scripts/set-span-width-v2.js"></script>-->
+
     <script src="../scripts/advanced-search.js"></script>
     <script src="../scripts/filter-authors.js"></script>
     <script src="../scripts/book-page-tabs.js"></script>

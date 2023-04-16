@@ -95,7 +95,7 @@
 				$_SESSION['validation_passed_p'] = true;
 			}
 
-			header('Location: account.php');
+			header('Location: ___account.php');
             exit();
 		}
 		else // hasla sa rozne (stare_haslo i haslo z BD)
@@ -103,7 +103,7 @@
 			$_SESSION['validation_password'] = false;
 			$_SESSION['error_form_password'] = "Złe hasło";		
 
-			header('Location: account.php');
+			header('Location: ___account.php');
             exit();
 		}
 	}
@@ -112,7 +112,7 @@
 		$_SESSION['validation_password'] = false;
 		$_SESSION['error_form_password'] = "Uzupełnij wszystkie pola";
 
-		header('Location: account.php');
+		header('Location: ___account.php');
         exit();
 	}
 ?>

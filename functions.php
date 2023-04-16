@@ -725,13 +725,13 @@ function get_order_sum($result = null, $order_id = null) {
                 $_SESSION['numer_domu'] = $row['numer_domu'];
                 $_SESSION['kod_pocztowy'] = $row['kod_pocztowy'];
                 $_SESSION['kod_miejscowosc'] = $row['kod_miejscowosc'];
-                                    $_SESSION['wojewodztwo'] = $row['wojewodztwo'];
+                                    /*$_SESSION['wojewodztwo'] = $row['wojewodztwo'];
                                     $_SESSION['kraj'] = $row['kraj'];
 			                        $_SESSION['PESEL'] = $row['PESEL'];
-			$_SESSION['data_urodzenia'] = $row['data_urodzenia'];
+			                        $_SESSION['data_urodzenia'] = $row['data_urodzenia'];*/
 			$_SESSION['telefon'] = $row['telefon'];
 			$_SESSION['email'] = $row['email'];
-			$_SESSION['login'] = $row['login'];
+			                        /*$_SESSION['login'] = $row['login'];*/
 
 			//$_SESSION['koszyk_ilosc_ksiazek'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
 			//$_SESSION['test123'] = test_fun();
@@ -768,7 +768,12 @@ function get_order_sum($result = null, $order_id = null) {
     {
         // dodanie nowego użytkownika - rejestracja.php
         $_SESSION['udanarejestracja'] = true;
-            //unset($_SESSION['wszystko_OK']);
+
+        // pobranie ID ostatnio wstawionego klienta ->
+
+        query("SELECT id_klienta FROM klienci ORDER BY id_klienta DESC LIMIT 1", "get_client_id", ""); // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
+
+        //unset($_SESSION['wszystko_OK']);
         header('Location: ___zaloguj.php');
     }
 
@@ -808,6 +813,13 @@ function get_order_sum($result = null, $order_id = null) {
     {
         // order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
         query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
+    }
+
+    function get_client_id($result) // wywołanie w funkcji register();
+    {
+        $row = $result->fetch_assoc();
+        $_SESSION['last_client_id'] = $row["id_klienta"];
+        $result->free_result();
     }
 
 
