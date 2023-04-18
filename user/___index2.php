@@ -146,7 +146,10 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
             <aside id="book-filters">       <!-- nav -->
 
                 <div id="nav" class="nav-visible">
-                    <h3>Wszystkie</h3>
+
+                    <?php
+                        echo "<h3>".$_SESSION["kategoria"]."</h3>";
+                    ?>
 
                     <h3>Sortowanie</h3>
 
@@ -159,7 +162,7 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                         <option value="6">Najstarszych</option>
                     </select>
 
-                    <button id="sort_button" onclick="sortBooks()">Sortuj</button>
+                    <!--<button id="sort_button" onclick="sortBooks()">Sortuj</button>-->
 
                     <h3>Cena</h3>
 

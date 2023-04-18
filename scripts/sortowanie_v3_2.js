@@ -15,7 +15,8 @@ const sortBooks = () => {
 			//let books = Array.from(document.querySelectorAll('#content-books .book:not([class*="hidden"])')); // all books, that don't have style="display: none;"
 	//let books = Array.from(document.querySelectorAll('#content-books .book:not(".hidden")')); // books that don't have class "hidden" - sorting only visible elements
 
-	let books = Array.from($('#content-books .book:not(.hidden)'));
+	/*let books = Array.from($('#content-books .book:not(.hidden)'));*/
+	let books = Array.from($('#content-books > .outer-book'));
 
 	//let books = Array.from(document.querySelectorAll('#content-books .book:not(.hidden)'));
 

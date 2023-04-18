@@ -4,6 +4,8 @@ $max = $('#value-max');                          // minimum text input
 
 let books = document.querySelectorAll("#content-books .book");
 
+console.log("\n fl books -> ", books);
+
 function update(min, max) {                     // update content-books
     for(let i=0; i<books.length; i++) {
 

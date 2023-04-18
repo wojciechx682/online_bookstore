@@ -171,26 +171,26 @@ body {
 @media only screen and (max-width: 1250px) {
 
     /* "dodaj do koszyka" - button */
-    /*.btn-link {
-        !* margin: 10px 118px 15px 118px !important;*!
+    #content-books .outer-book .btn-link {
+        /* margin: 10px 118px 15px 118px !important;*/
         font-size: 75%;
-    }*/
+    }
 }
 
 @media only screen and (max-width: 1164px) {
 
     /* "dodaj do koszyka" - button */
 
-    /*.btn-link {
-        !* margin: 10px 118px 15px 118px !important;*!
+    .btn-link {
+        /* margin: 10px 118px 15px 118px !important;*/
         font-size: 70%;
-       !* color: red !important;*!
+       /* color: red !important;*/
         padding: 10px 10% 10px 10% !important;
-    }*/
+    }
 
-    /*.book-author {
+    .book-author {
         font-size: 90% !important;
-    }*/
+    }
 }
 
 @media only screen and (max-width: 1095px) {
@@ -202,12 +202,50 @@ body {
 }
 
 
-@media only screen and (max-width: 1020px) {
+@media only screen and (max-width: 1090px) {
 
-   /* .btn-link {
+    .btn-link {
         font-size: 65% !important;
-    }*/
+    }
 }
+
+@media only screen and (max-width: 1023px) {
+
+    /* nav-bar cena */
+    div#price-range > label span {
+
+        font-size: 90% !important;
+
+        margin-top: 1.6px !important;
+
+    }
+    div#price-range > label input[type="number"] {
+        /*max-width: 60px;
+            !* float: right; *!
+            !* margin-right: 190px; *!
+        margin-left: 5px;
+        margin-right: 10px;
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: 15px;
+        margin-top: 1px;
+        color: #707070;
+        border: 1px ridge #b7b7b7;
+        border-radius: 5px;
+        box-sizing: border-box;
+        text-align: center;*/
+
+        padding-left: 5px !important;
+        padding-right: 0 !important;
+        max-width: 45px !important;
+
+        position: relative !important;
+        top: 0px !important;
+
+
+    }
+}
+
 
 @media only screen and (max-width: 1010px) {
 
@@ -258,7 +296,8 @@ body {
         width: initial !important;
         /*width: 100% ;*/
         margin-right: 45% !important;
-        min-width: 345px;
+        /*min-width: 345px;*/
+        min-width: 565px;
 
         /*margin: 10px 15px 10px 15px !important;
         padding: 10px !important;
@@ -276,22 +315,28 @@ body {
         min-width: 165px !important;
     }
 
-    .outer-book {
+    /*.outer-book {
         background-color: #f3f3f3;
         border-radius: 10px;
         box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
         overflow: hidden;
+
+        margin-bottom: 10px !important;
+    }*/
+
+    .outer-book {
+        background-color: #f3f3f3 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2) !important;
+        overflow: hidden !important;
 
         margin-bottom: 10px !important;
     }
 
-    .outer-book {
-        background-color: #f3f3f3;
-        border-radius: 10px;
-        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-        overflow: hidden;
+    .book .btn-link {
+        width: 125px !important;
 
-        margin-bottom: 10px !important;
+        padding: 10px 8px 10px 8px !important;
     }
 
     /*.book-cover {
@@ -311,6 +356,15 @@ body {
         margin-right: 1% !important;
         /*display: inline-block;*/
         /*min-width: 275px;*/
+    }
+}
+
+@media only screen and (max-width: 902.5px) {
+
+    /* nav-bar cena */
+    #slider {
+        margin-top: 60px !important;
+        /*margin-bottom: 15px;*/
     }
 }
 
@@ -510,6 +564,36 @@ body {
 
     #input-search-nav form input[type="submit"] {
         display: none !important;;
+    }
+
+    /* nav-bar cena */
+
+    div#price-range > label  {
+        width: 50% !important;
+
+
+    }
+
+    div#price-range > label > span {
+        display: none !important;
+    }
+
+    div#price-range > label > input[type="number"] {
+        width: 95% !important;
+
+        margin: 0px 0px 0px 0px !important;
+
+         padding-left: 0 !important;
+         padding-right: 0 !important;
+         max-width: unset !important;
+         position: relative !important;
+         top: 0px !important;
+    }
+
+
+    #slider {
+        margin-top: 35px !important;
+        /* margin-bottom: 15px; */
     }
 }
 
@@ -1607,7 +1691,7 @@ div#nav > select {
 
     /* background-color: rgb(255, 255, 255); */
     color: #707070;
-    border: 1px ridge #b7b7b7;
+    border: 1px ridge #cbcbcb;
         border-radius: 5px;
         /* font-size: 20px; */
     /*font-weight: bold;*/
@@ -1618,7 +1702,7 @@ div#nav > select {
     /*margin-top: 10px;*/
    /* transition: all 0.125s ease-in-out;*/
 
-    width: 50%;
+    /*width: 50%;*/
 
 }
 
@@ -1656,7 +1740,7 @@ div#price-range {
 }
 
 div#price-range > label {
-    width: 100% !important;
+    /*width: 100% !important;*/
     float: left;
     margin-bottom: 8px;
 }
@@ -1675,12 +1759,14 @@ div#price-range > label input[type="number"] {
 
     /*margin-right: 190px;*/
 
-    margin-left: 10px;
+    margin-left: 5px;
+    margin-right: 10px;
 
     padding-top: 0;
     padding-bottom: 0;
+    padding-left: 15px;
 
-    margin-top: 1px;
+    margin-top: 3px;
 
 
     position: relative;
@@ -1691,6 +1777,8 @@ div#price-range > label input[type="number"] {
     border-radius: 5px;
 
     box-sizing: border-box;
+
+    text-align: center;
 }
 
 div#price-range > label input[type="number"]:hover,
@@ -1705,10 +1793,13 @@ div#price-range > label input[type="number"]:focus {
     border-radius: 5px;
     /* padding: 8px;*/
     box-sizing: border-box;
-    outline: none;
-    /* margin-top: 10px;*/
-    /*transition: all 0.125s ease-in-out;*/
-    width: 50%;
+    /*outline: none;*/
+
+    /*margin-left: 5px;
+    margin-right: 10px;
+    margin-top: 1px;
+    !*transition: all 0.125s ease-in-out;*!
+    width: 50%;*/
 }
 
 
@@ -1952,12 +2043,14 @@ div#content-books {
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-   /* transition: all 0.05s ease-in-out;*/
+    transition: all 0.05s ease-in-out;
 
    /* position: relative;*/
 }
 
-
+.hidden {
+    display: none;
+}
 
 
 
