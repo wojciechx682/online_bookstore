@@ -191,7 +191,7 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                         <!-- <div id="div-search">-->
                         <form action="___index2.php" method="get">
                             <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
-                            <input type="submit" value="Szukaj">
+                            <input type="submit" value="">
                         </form>
                     </div>
 
