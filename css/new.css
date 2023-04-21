@@ -272,7 +272,7 @@ body {
 
 @media only screen and (max-width: 950px) {
 
-    .book {
+    .book:not(.hidden) {
 
         display: block !important;
 
@@ -1777,7 +1777,7 @@ div#price-range > label input[type="number"] {
 
     text-align: center;
 
-    z-index: 1000;
+    /*z-index: 1000;*/
 }
 
 div#price-range > label input[type="number"]:hover,
@@ -1858,6 +1858,8 @@ div#input-search-nav form > input[type="search"] {
 
     position: relative;
     top: .42px;
+
+    height: 24px !important;
 }
 
 
@@ -1871,19 +1873,24 @@ div#input-search-nav form > input[type="submit"] {
     color: #424242;
     background-image: url('../assets/search-icon.png');
     background-repeat: no-repeat;
-    background-position: right 15px top 3px;
+    background-position: right 11px top 3px;
     background-size: 16px;
     overflow: auto;
     min-width: 38px;
     position: relative;
     /* top: 7.499999799px; */
-    top: 6.5px;
-    padding: 4px 0 4px 8px;
+    top: 7px;
+    /*padding: 4px 0 4px 8px;*/
+
+    padding: 0 !important;
+
     border: none;
 
      background-color: rgba(220, 220, 220, 0.54);
 
     box-sizing: content-box;
+
+    height: 22px !important;
 }
 
 /*#div-search > form#search-form > input[type="submit"] {
