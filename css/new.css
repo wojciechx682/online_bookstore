@@ -469,14 +469,19 @@ body {
         padding: 0 !important;
         margin: 8px 95px 0 0 !important;
         float: left;
+
+        min-width: 85px !important;
     }
 
     div#add-to-cart form button[type="submit"] {
         position: relative;
-        top: -25px;
+        top: -26px;
 
-        padding-top: 7px;
+        padding-top: 10px;
         padding-bottom: 7px;
+
+        font-size: 75% !important;
+
     }
 
     div#add-to-cart form button[type="button"] {
@@ -705,7 +710,7 @@ body {
         position: relative;
         top: -25px;
 
-        padding-top: 7px;
+        padding-top: 8px;
         padding-bottom: 7px;
     }
 
@@ -1644,8 +1649,15 @@ div#nav {
 
     float: left;
     width: 25%;
-    border-right: 1px dashed black;
-    border-bottom: 1px dashed black;
+
+
+    /*border-right: 1px dashed black;
+    border-bottom: 1px dashed black;*/
+
+    border-right: 2px ridge rgba(166, 166, 166, 0.14);
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
+
+
     background-color: #f3f3f3;
     padding: 15px;
     height: 1000px;
@@ -1742,7 +1754,7 @@ div#price-range {
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
     padding-bottom: 7px;
 
-    overflow: auto;
+    overflow: hidden;
 }
 
 div#price-range > label {
@@ -2148,6 +2160,14 @@ div#content-books {
    /* position: relative;*/
 }
 
+.book img {
+    transition: all 0.1s ease-in-out;
+
+    border-radius: 3px;
+
+
+}
+
 .hidden {
     display: none;
 }
@@ -2189,14 +2209,26 @@ div#content-books {
 
 .book:hover,
 .outer-book:hover {
-    transform: translateY(-5px);
+
+    transform: translateY(-1px);
+
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    background-color: rgba(214, 221, 227, 0.66);
+
+    background-color: rgba(220, 220, 220, 0.65);
+
+}
+
+.book:hover img,
+.outer-book:hover img {
+
+    transform: scale(101%);
+
+    filter: grayscale(25%);
 
 }
 
 .outer-book:hover {
-    background-color: rgba(214, 221, 227, 0.66) !important;
+    background-color: rgba(220, 220, 220, 0.65) !important;
 }
 
 
@@ -2368,6 +2400,22 @@ div#content-books {
 
 }
 
+button.btn-link[disabled=disabled], button.btn-link:disabled { /* form acion "dodaj do koszyka" - button */
+
+
+    background-color: #b5b5b5 !important;
+
+    text-decoration: line-through;
+
+
+
+
+
+
+}
+
+
+
 /* CSS */
 
 
@@ -2380,6 +2428,10 @@ div#content-books {
 
 
 }
+
+
+
+
 
 .btn-link:hover {
     /*background-color: #1C84FF;*/
@@ -2686,6 +2738,8 @@ form.remove_book_form input[type="submit"]:hover {
     -webkit-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
+
+    color: rgba(255, 0, 0, 0.7);
 }
 
 
@@ -2731,6 +2785,16 @@ span.book-details img {
     box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
 
     margin-right: 5px;
+
+    border-radius: 2px;
+}
+
+span.book-details img:hover {
+
+    transform: scale(101%);
+
+    filter: grayscale(25%);
+
 }
 
 
@@ -2944,7 +3008,7 @@ h3#order-summary-header + p {
     border-radius: 15px;
 
     float: left;
-    padding: 0px 15px 0px 15px;
+    padding: 4px 15px 0px 24px;
     margin-top: 10px;
     width: 100%;
 
@@ -2958,15 +3022,15 @@ h3#order-summary-header + p {
 }
 
 .dane_konta:first-of-type {
-    min-height: 275px;
+    min-height: 280px;
 }
 
 #content .dane_konta:nth-of-type(3) {
-    min-height: 340px;
+    min-height: 348px;
 }
 
 #content .dane_konta:nth-of-type(4) {
-    min-height: 238px;
+    min-height: 245px;
 }
 
 
@@ -3022,6 +3086,19 @@ h3#order-summary-header + p {
 
 
 }
+
+.edit_data_right-container input[type="text"],
+.edit_data_right-container input[type="password"]
+{
+
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+
+
+
+
+}
+
 
 .edit_data_left, .edit_data_right {
     margin-top: 10px;
@@ -3137,7 +3214,7 @@ h3#order-summary-header + p {
     padding: 4px;
     box-sizing: border-box;
     outline: none;
-    /* margin-top: 10px; */
+    margin-top: 3px;
     margin-left: 15px;
 }
 

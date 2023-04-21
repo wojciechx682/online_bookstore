@@ -345,14 +345,14 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                             $where[] = " AND kt.nazwa LIKE '%%%s%%'"; //%%%s%%
                             $values[] = $_SESSION['kategoria'];
 
-                            echo "<br>276<br>";
+                            /*echo "<br>276<br>";*/
                         }
 
                         if (!empty($where)) {
                             // Combine the conditions into a single WHERE clause
                             $query .= implode("", $where);
 
-                            echo "<br>283<br>";
+                            /*echo "<br>283<br>";*/
                         }
 
                         //echo "<br> query -> ".$query . "<br>";
@@ -690,6 +690,11 @@ else {
             ?>
         }
     });
+
+    // nav-bar -->
+
+    let slider = document.querySelector(".noUi-origin");
+    console.log("\n\n slider--> ", slider);
 
 
 </script>

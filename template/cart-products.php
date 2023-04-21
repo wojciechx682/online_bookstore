@@ -4,10 +4,16 @@
 <div id="book%s" class="cart-book">
     <span class="book-details">
 
-        <img src="../assets/books/%s" alt="%s" title="%s">
+        <a href="___book.php?book=%s">
+            <img src="../assets/books/%s" alt="%s" title="%s">
+        </a>
 
         <div class="book-description">
-            <div class="title">%s</div>
+            <div class="title">
+                <a href="___book.php?book=%s">
+                    %s
+                </a>
+            </div>
             <div class="price">%s</div>
             <div class="year">%s</div>
             <div class="author">%s %s</div>
