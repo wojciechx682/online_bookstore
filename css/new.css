@@ -108,7 +108,6 @@ body {
     #header-content,
     #advanced-search {
         width: 100%;
-
         min-width: 500px;
     }
     #div-search,
@@ -181,7 +180,7 @@ body {
 
     /* "dodaj do koszyka" - button */
 
-    .btn-link {
+    .book .btn-link {
         /* margin: 10px 118px 15px 118px !important;*/
         font-size: 70%;
        /* color: red !important;*/
@@ -204,7 +203,9 @@ body {
 
 @media only screen and (max-width: 1090px) {
 
-    .btn-link {
+    /* strona główna */
+
+    .book .btn-link {
         font-size: 65% !important;
     }
 }
@@ -240,7 +241,7 @@ body {
         max-width: 45px !important;
 
         position: relative !important;
-        top: 0px !important;
+        top: 1px !important;
 
 
     }
@@ -334,9 +335,13 @@ body {
     }
 
     .book .btn-link {
-        width: 125px !important;
+        width: 135px !important;
 
-        padding: 10px 8px 10px 8px !important;
+        padding: 10px 4px 10px 10px !important;
+
+        font-size: 70% !important;
+
+        text-align: center !important;
     }
 
     /*.book-cover {
@@ -363,7 +368,7 @@ body {
 
     /* nav-bar cena */
     #slider {
-        margin-top: 60px !important;
+        margin-top: 70px !important;
         /*margin-bottom: 15px;*/
     }
 }
@@ -538,7 +543,17 @@ body {
     }*/
 }
 
+@media only screen and (max-width: 705px) {
 
+    /* koszyk --> */
+
+    div.book-description {
+
+        margin-right: 0;
+
+    }
+
+}
 
 @media only screen and (max-width: 685px) {
 
@@ -1233,7 +1248,7 @@ body {
 
 #div-search > form#search-form > input[type="submit"]:hover {
 
-    border-color: #4b4b4b;
+    border-color: #818181;
     background-color: #f3f3f3;
     cursor: pointer;
     /* Add search icon as background image */
@@ -1767,7 +1782,7 @@ div#price-range > label input[type="number"] {
 
 
     position: relative;
-    top: 0px;
+    top: 1px;
 
     color: #707070;
     border: 1px ridge #b7b7b7;
@@ -1979,7 +1994,8 @@ div#input-search-nav form > input[type="submit"]:hover {
 div#nav > h3:nth-of-type(4) { /* "Autorzy" */
 
     padding-top: 15px;
-    padding-bottom: 15px;
+    padding-bottom: 11px;
+
     margin-top: 15px;
 
     border-top: 1px ridge rgba(166, 166, 166, 0.38);
@@ -1988,7 +2004,7 @@ div#nav > h3:nth-of-type(4) { /* "Autorzy" */
 
     /*color: blue;*/
 
-
+    margin-bottom: 17px;
 
 }
 
@@ -2000,6 +2016,19 @@ ul#ul-authors  {
     overflow-y: scroll;
 
     /*border-top: 1px ridge rgba(166, 166, 166, 0.38);*/
+
+    background-color: rgba(199, 199, 199, 0.1);
+
+    border-radius: 4px;
+
+    overflow-x: hidden !important;
+
+}
+
+ul#ul-authors li {
+    min-width: 145px !important;
+
+    overflow-x: hidden !important;
 }
 
 ul#ul-authors::-webkit-scrollbar {
@@ -2036,6 +2065,34 @@ ul#ul-authors > li > label  {
 
 }
 
+/* ul - przycisk zastosuj */
+
+button#filter-authors {
+    /* margin-left: 5px; */
+    /* width: 200px; */
+    min-width: 85px;
+    /* width: calc(100% * 0.218); */
+    /*width: 235px;*/
+    /* background-color: rgb(255, 255, 255); */
+    color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+    /* font-size: 20px; */
+    font-weight: bold;
+    padding: 4px;
+    box-sizing: border-box;
+    outline: none;
+    /* margin-top: 10px; */
+    /*margin-left: 15px;*/
+}
+
+
+button#filter-authors:hover {
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
+}
 
 
 .nav-visible {
@@ -2130,12 +2187,17 @@ div#content-books {
 
 
 
-.book:hover {
+.book:hover,
+.outer-book:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    background-color: rgb(199, 216, 227);
+    background-color: rgba(214, 221, 227, 0.66);
+
 }
 
+.outer-book:hover {
+    background-color: rgba(214, 221, 227, 0.66) !important;
+}
 
 
 
@@ -2591,21 +2653,100 @@ form#login-form input[type="submit"] {
 
 /* koszyk.php --> --------------------------------------------- */
 
+h3#cart-header {
+    margin-bottom: 20px;
+
+    padding-bottom: 16px;
+
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
+}
+
+form.remove_book_form input[type="submit"] {
+    /* margin-left: 5px; */
+    /* width: 200px; */
+    min-width: 55px;
+    /* width: calc(100% * 0.218); */
+    /*width: 235px;*/
+    /* background-color: rgb(255, 255, 255); */
+    color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+    /* font-size: 20px; */
+    font-weight: bold;
+    padding: 4px;
+    box-sizing: border-box;
+    outline: none;
+    /* margin-top: 10px; */
+    /*margin-left: 15px;*/
+}
+
+
+form.remove_book_form input[type="submit"]:hover {
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
+}
+
+
+form.change_quantity_form button[type="button"] {
+    /* margin-left: 5px; */
+    /* width: 200px; */
+    min-width: 25px;
+    /* width: calc(100% * 0.218); */
+    /*width: 235px;*/
+    /* background-color: rgb(255, 255, 255); */
+    color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+    /* font-size: 20px; */
+    font-weight: bold;
+    padding: 2px;
+    box-sizing: border-box;
+
+    /* margin-top: 10px; */
+    margin-right: 2px;
+}
+
+form.change_quantity_form button[type="button"]:hover {
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+}
+
+form.change_quantity_form button[type="button"]:nth-of-type(2) span {
+    position: relative;
+    top: -1.7px;
+}
+
 
 span.book-details img {
     float: left;
 
     width: 100px;
+
+    -webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+
+    margin-right: 5px;
 }
+
+
 
 span.book-details {
     display: block;
 
-    overflow: hidden;
+    overflow: hidden !important;
 
     /*width: 300px;*/
 
-    width: 50%;
+    /*width: 50%;*/
+
+    /*background-color: #a2c3f6;*/
+
+    min-width: 600px !important;
 
 
 }
@@ -2617,6 +2758,10 @@ span.book-details {
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
     margin-bottom: 25px;
     padding-bottom: 25px;
+
+    overflow: hidden !important;
+
+
 }
 
 
@@ -2638,6 +2783,11 @@ span.book-details {
 
 
     overflow: hidden;
+}
+
+span.book-details div.book-description div.title {
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .change_quantity_form, .remove_book_form {
@@ -2691,7 +2841,7 @@ span.book-details {
 }
 
 .remove_book_form input[type="submit"] {
-    margin-top: 16px;
+    margin-top: 14.5px;
     margin-left: 15px;
 }
 

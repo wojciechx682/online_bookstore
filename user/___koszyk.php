@@ -29,7 +29,7 @@
 
             <div id="content">
 
-                <h3>Koszyk</h3><hr>
+                <h3 id="cart-header">Koszyk</h3>
 
                 <?php
                     // echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">&larr; Wróć </a>';

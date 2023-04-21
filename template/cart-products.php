@@ -19,7 +19,7 @@
             <b>Ilość</b>
             <input type="text" id="koszyk_ilosc%s" class="koszyk_ilosc" name="koszyk_ilosc" value="%s">
             <button type="button" onclick="increase(%s)">+</button>
-            <button type="button" onclick="decrease(%s)">-</button>
+            <button type="button" onclick="decrease(%s)"><span>-</span></button>
         </form>
 
         <form class="remove_book_form" action="remove_book.php" method="post">

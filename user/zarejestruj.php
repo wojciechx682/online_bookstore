@@ -100,7 +100,7 @@
                         ?>
 
                         Hasło: <br> <input type="password" maxlength="30" id="haslo1" name="haslo1"
-                                           required value="PassJacob33#" >
+                                           required value="" >
                         <div id="feedback"></div>
 
                         <?php
@@ -111,7 +111,7 @@
                             }
                         ?>
                         Powtórz hasło: <br> <input type="password" maxlength="30" name="haslo2"
-                                                   required value="PassJacob33#" ><br>
+                                                   required value="" ><br>
 
                         <!-- <br> <hr> -->
                     </div>
