@@ -13,7 +13,7 @@
 
 <?php require "../view/___head.php"; ?>
 
-<body> <!--onload="displayNav()"-->
+<body> <!-- onload="displayNav()"-->
 
 <div id="all-container">
 
@@ -23,9 +23,7 @@
 
         <main>
 
-            <!--<aside>
-                <div  id="nav"></div>
-            </aside>-->
+            <!-- <aside> <div id="nav"></div> </aside> -->
 
             <div id="content">
 
@@ -44,12 +42,8 @@
                     echo "<h3 id='order-sum'><span class='order-sum'>suma</span>" . $_SESSION["suma_zamowienia"] . " PLN </h3>";
                 ?>
 
-
-
-
-
                 <button class="btn-link btn-link-static"><a href="___submit_order.php">Złóż zamówienie</a></button>
-                <!--<br><a href="submit_order.php">Złóż zamówienie</a>-->
+                <!-- <br><a href="submit_order.php">Złóż zamówienie</a> -->
 
             </div>
 
@@ -64,7 +58,7 @@
 
     <?php require "../view/footer.php"; ?>
 
-<!--    <script src="../scripts/set-span-width.js"></script>-->
+<!-- <script src="../scripts/set-span-width.js"></script>-->
 
 </body>
 </html>

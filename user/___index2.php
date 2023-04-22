@@ -1,8 +1,7 @@
 <?php
 
-session_start();
-
-include_once "../functions.php";
+    session_start();
+    include_once "../functions.php";
 
 //	sprawdź połączenie z BD :
 //	$value = array();
@@ -21,49 +20,49 @@ include_once "../functions.php";
 //		exit();
 //	}
 
-if(isset($_GET["login-error"])) {
-    echo '
-				<script>
-					alert("Musisz być zaloowany !")
-					let url = new URL(window.location.href);
-					url.searchParams.delete("login-error");
-					window.location.href = url.toString();
-				</script>
-			 ';
-}
+    if(isset($_GET["login-error"])) {
+        echo '
+                    <script>
+                        alert("Musisz być zaloowany !")
+                        let url = new URL(window.location.href);
+                        url.searchParams.delete("login-error");
+                        window.location.href = url.toString();
+                    </script>
+                 ';
+    }
 
-// można lepiej zapisać -->
+    // można lepiej zapisać -->
 
-if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
-{
-    /*echo "<br> 123"; exit();*/
-    $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
-    $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
-    //echo "<h3>".$kategoria."</h3><hr>";
-    //echo $_SESSION["kategoria"]; exit();
-}
-elseif((isset($_SESSION['kategoria'])) && (!empty($_SESSION['kategoria'])) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
-{
-    //echo "<br> 130"; exit();
-    $_SESSION["kategoria"] = htmlentities($_SESSION['kategoria'], ENT_QUOTES, "UTF-8");
-    $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
-    /*   echo "<h3>".$_SESSION["kategoria"]."</h3><hr>"; exit();*/
-}
-if((isset($_POST["adv-search-category"])))
-{
-    /*echo "<br>135<br>"; exit();*/
-    $_SESSION["kategoria"] = htmlentities($_POST['adv-search-category'], ENT_QUOTES, "UTF-8");
-    $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
-    /* echo "<h3>".$_SESSION["kategoria"]."</h3><hr>"; exit();*/
-}
+    if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
+    {
+        /*echo "<br> 123"; exit();*/
+        $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
+        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
+        //echo "<h3>".$kategoria."</h3><hr>";
+        //echo $_SESSION["kategoria"]; exit();
+    }
+    elseif((isset($_SESSION['kategoria'])) && (!empty($_SESSION['kategoria'])) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
+    {
+        //echo "<br> 130"; exit();
+        $_SESSION["kategoria"] = htmlentities($_SESSION['kategoria'], ENT_QUOTES, "UTF-8");
+        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
+        /*   echo "<h3>".$_SESSION["kategoria"]."</h3><hr>"; exit();*/
+    }
+    if((isset($_POST["adv-search-category"])))
+    {
+        /*echo "<br>135<br>"; exit();*/
+        $_SESSION["kategoria"] = htmlentities($_POST['adv-search-category'], ENT_QUOTES, "UTF-8");
+        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
+        /* echo "<h3>".$_SESSION["kategoria"]."</h3><hr>"; exit();*/
+    }
 
-if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
-{
-    $_SESSION["kategoria"] = "Wszystkie";
-    //echo "<br>62"; exit();
-    /*echo "<h3>Wszystkie</h3>";*/
-    //$_SESSION["kategoria"] = "Wszystkie";
-}
+    if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
+    {
+        $_SESSION["kategoria"] = "Wszystkie";
+        //echo "<br>62"; exit();
+        /*echo "<h3>Wszystkie</h3>";*/
+        //$_SESSION["kategoria"] = "Wszystkie";
+    }
 ?>
 
 <!DOCTYPE HTML>
@@ -73,13 +72,9 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
 
 <body>
 
-
-
-
 <div id="all-container">
 
     <?php require "../view/___header-container.php"; ?>
-
 
     <div id="container">
 
@@ -90,7 +85,7 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                 <nav id="category-nav">
                     <ul>
                         <?php
-                        //query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories", "");
+                            //query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories", "");
                         ?>
                     </ul>
                 </nav>
@@ -99,57 +94,45 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
 
                 <section id="main-gallery">
                     <!-- <div class="slideshow-container">
-
                         <div class="mySlides fade">
                             <div class="numbertext">1 / 3</div>
                             <img src="../assets/gallery/1.png" alt="gallery" style="width:100%">
                             <div class="text">Caption Text</div>
                         </div>
-
                         <div class="mySlides fade">
                             <div class="numbertext">2 / 3</div>
                             <img src="../assets/gallery/2.png" alt="gallery" style="width:100%">
                             <div class="text">Caption Two</div>
                         </div>
-
                         <div class="mySlides fade">
                             <div class="numbertext">3 / 3</div>
                             <img src="../assets/gallery/3.png" alt="gallery" style="width:100%">
                             <div class="text">Caption Three</div>
                         </div>
-
                         <a class="prev" onclick="plusSlides(-1)">❮</a>
                         <a class="next" onclick="plusSlides(1)">❯</a>
-
-
                         <div style="text-align:center">
                             <span class="dot" onclick="currentSlide(1)"></span>
                             <span class="dot" onclick="currentSlide(2)"></span>
                             <span class="dot" onclick="currentSlide(3)"></span>
                         </div>
-
                     </div> -->
                 </section>
 
                 <!-- <br><br><br><br><br><br>
                 <br><br><br><br><br><br>
                 <br><br><br><br><br><br>
-
-
                 <section id="latest-books-section">&lt;section&gt; for "Nowości"</section>
                 <section id="books-promotion-section">&lt;section&gt; for "Promocje"</section> -->
-
                 <!-- <br> -->
 
             </div>
 
-            <aside id="book-filters">       <!-- nav -->
+            <aside id="book-filters">  <!-- nav -->
 
                 <div id="nav" class="nav-visible">
 
-                    <?php
-                        echo "<h3>".$_SESSION["kategoria"]."</h3>";
-                    ?>
+                    <?= "<h3>".$_SESSION["kategoria"]."</h3>"; ?>
 
                     <h3>Sortowanie</h3>
 
@@ -168,17 +151,16 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
 
                     <div id="price-range">
                         <label>
-
-                        <span>
-                            Min:
-                        </span>
-                            <input type="number" id="value-min">
+                            <span>
+                                Min
+                            </span>
+                                <input type="number" id="value-min">
                         </label>
                         <label>
-                        <span>
-                            Max:
-                        </span>
-                            <input type="number" id="value-max">
+                            <span>
+                                Max
+                            </span>
+                                <input type="number" id="value-max">
                         </label>
                         <div id="slider"></div>
                     </div>
@@ -196,7 +178,7 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                     </div>
 
                     <?php
-                    query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // lista <ul> autorów
+                        query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // lista <ul> autorów
                     ?>
 
                     <button id="filter-authors">Zastosuj</button>
@@ -207,13 +189,12 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
 
             <?php
 
-            if((isset($_GET['kategoria'])) &&
+            if( (isset($_GET['kategoria'])) &&
                 !(empty($_GET['kategoria'])) &&
                 (!(isset($_GET['autor'])) ||
                     (empty($_GET['autor']))) ) // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>
             {
                 echo '<div id="content">';
-
                 echo '<script> displayNav(); </script>';
 
                 // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; <script>alert("hahaha");</script>;
@@ -222,12 +203,11 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
 
                 $_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)
 
-                /*var_dump($_SESSION);
-                print_r($_SESSION);
-                print_r($_POST);*/
+                    /*var_dump($_SESSION);
+                    print_r($_SESSION);
+                    print_r($_POST);*/
 
                 echo '<div id="content-books">';
-
 
                 displayBooks($_SESSION['kategoria']);
 //                            if($_SESSION['kategoria'] == "Wszystkie")
@@ -243,15 +223,16 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                      //($result = $polaczenie->query(sprintf("UPDATE klienci SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", mysqli_real_escape_string($polaczenie, $imie), mysqli_real_escape_string($polaczenie, $nazwisko), mysqli_real_escape_string($polaczenie, $miasto), mysqli_real_escape_string($polaczenie, $ulica), mysqli_real_escape_string($polaczenie, $numer_domu), mysqli_real_escape_string($polaczenie, $kod_pocztowy), mysqli_real_escape_string($polaczenie, $kod_miejscowosc), mysqli_real_escape_string($polaczenie, $wojewodztwo), mysqli_real_escape_string($polaczenie, $kraj), mysqli_real_escape_string($polaczenie, $pesel), mysqli_real_escape_string($polaczenie, $data_urodzenia), mysqli_real_escape_string($polaczenie, $telefon), mysqli_real_escape_string($polaczenie, $email), mysqli_real_escape_string($polaczenie, $login))))
                  }*/
 
-                echo '</div>';
-                echo '</div>';
+                echo '</div>'; // content-books
+                echo '</div>'; // content
             }
-            elseif ((!(isset($_GET['kategoria'])) || (empty($_GET['kategoria']))) && (isset($_GET['autor'])) && !(empty($_GET['autor']))) // TYMCZASOWE wyświetlanie książek autora, po wpisaniu go w wyszukiwarce
+            elseif ((!(isset($_GET['kategoria'])) || (empty($_GET['kategoria']))) &&
+                    (isset($_GET['autor'])) && !(empty($_GET['autor']))) // TYMCZASOWE wyświetlanie książek autora, po wpisaniu go w wyszukiwarce
             {
                 echo '<div id="content"></div>';
                 $autor = [$_GET['autor']];
                 echo '<div id="content-books">';
-                query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor); // do zmiany -> id subkategoii
+                    query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor); // do zmiany -> id subkategoii
                 echo '</div>';
                 echo '</div>';
             }
@@ -335,12 +316,11 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                                              FROM ksiazki AS ks,
                                                   autor AS au
                                              WHERE ks.id_autora = au.id_autora
-
-                                             AND ks.tytul LIKE '%%%s%%'";*/
+                                             AND ks.tytul LIKE '%%%s%%'"; */
 
                         if($_SESSION["kategoria"] != "Wszystkie") {
-                            $where = array();
 
+                            $where = array();
                             //$where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
                             $where[] = " AND kt.nazwa LIKE '%%%s%%'"; //%%%s%%
                             $values[] = $_SESSION['kategoria'];
@@ -357,8 +337,6 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
 
                         //echo "<br> query -> ".$query . "<br>";
                         //echo "<br> values -> ".var_dump($values) . "<br>";
-
-
 
                         query($query, "get_books", $values);
                         echo '</div>';
@@ -479,13 +457,13 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
 //                                                            echo '<script>alert("yes !")</script>';
 //                                                            echo "<br><br><br>";
 
-                echo "<br><hr> SESSION --> <br><br><br>";
+                /*echo "<br><hr> SESSION --> <br><br><br>";*/
                 /*print_r($_SESSION);*/
-                echo "<br><br><hr><br><br>";
+                /*echo "<br><br><hr><br><br>";*/
 
-                echo "<br><hr> POST --> <br><br><br>";
+                /*echo "<br><hr> POST --> <br><br><br>";*/
                 /*print_r($_POST);*/
-                echo "<br><br><hr><br><br>";
+                /*echo "<br><br><hr><br><br>";*/
 
 //                                                            echo "<br><br><br>";
 //
@@ -506,10 +484,6 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                                           WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
                                           AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii*/
 
-
-
-
-
                 // Set up the initial query string
                 //$query = "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki";
                 $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, 
@@ -524,9 +498,9 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
 //                                (
 //                                    [       adv-search-title       ] => "bbb"
 //                                    [       adv-search-category       ] => Komiks
-                //                                    [       adv-search-author       ] => 13   // id_autora
-                //                                    [       year-min       ] => 2005
-                //                                    [       year-max       ] => 2018
+//                                    [       adv-search-author       ] => 13   // id_autora
+//                                    [       year-min       ] => 2005
+//                                    [       year-max       ] => 2018
 //                                )
 
                 if (isset($_POST["adv-search-title"]) && !empty($_POST["adv-search-title"])) {
@@ -560,8 +534,8 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
 //                                    $_SESSION["advanced-search-error"] = null;
 //                                }
                 // Initialize an array to store the conditions for the WHERE clause
-                $where = array();
 
+                $where = array();
                 $values = array();
 
                 // Check if the user provided a book title
@@ -570,7 +544,6 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                     //$where[] = "ks.tytul LIKE '%" . $_POST['adv-search-title'] . "%'";
                     $where[] = "ks.tytul LIKE '%%%s%%'"; //%%%s%%
                     $values[] = $_POST['adv-search-title'];
-
                 }
 
                 // Check if the user selected a category
@@ -613,7 +586,7 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                     $query .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where);
                 }
 
-//                                echo '<br><hr><br> <span style="color: blue;"> query ( ) &rarr; ' . $query . '</span><br><br>';
+                // echo '<br><hr><br> <span style="color: blue;"> query ( ) &rarr; ' . $query . '</span><br><br>';
 
                 // echo "<hr><br> query ( ) -- > " . $query . "<br><br>"; //exit();
 
@@ -623,10 +596,7 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
                 // echo '<div style="height: 300px; border: 1px dashed black;"></div>';
 
                 echo '</div>';
-
                 echo '</div>';
-
-
             }
 
             ?>
@@ -634,37 +604,27 @@ if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
         </main>
     </div>
 
-
-
     <!--<footer>
         <div id="footer">
             <script src="../scripts/set-theme.js"></script>
-
-
             <pre>
                 <button id="white" onclick="setWhiteTheme()">white</button>  <button id="black" onclick="setBlackTheme()">black</button>  © 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us
             </pre>
-
         </div>
-    </footer>-->
+    </footer> -->
 
     <?php require "../view/___footer.php"; ?>
-
-
-
-
-
 
 </div>
 
 
 <?php
-if(!isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"])) {
-    echo '<script src="../scripts/hide-search-nav.js"></script>';
-}
-else {
-    echo '<script src="../scripts/show-search-nav.js"></script>';
-}
+    if(!isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"])) {
+        echo '<script src="../scripts/hide-search-nav.js"></script>';
+    }
+    else {
+        echo '<script src="../scripts/show-search-nav.js"></script>';
+    }
 ?>
 
 <script>
@@ -692,13 +652,10 @@ else {
     });
 
     // nav-bar -->
-
-    let slider = document.querySelector(".noUi-origin");
-    console.log("\n\n slider--> ", slider);
-
+    /*let slider = document.querySelector(".noUi-origin");
+    console.log("\n\n slider--> ", slider);*/
 
 </script>
-
 
 </body>
 </html>

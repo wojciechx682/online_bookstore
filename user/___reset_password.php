@@ -3,7 +3,6 @@
 // podział kodu ma moduły / funkcje;    generowanie tokenu,     wysyłanie maila;
 
 session_start();
-
 include_once "../functions.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -415,7 +414,6 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
                 <?php
                     if(isset($_SESSION["e_haslo"])) { // hasło nie spełnia wymagań
 
-
                         echo "<br>". $_SESSION["e_haslo"] . "<br>";
                         unset($_SESSION["e_haslo"]);
                     }
@@ -430,7 +428,6 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
     </div>
 
     <?php require "../view/footer.php" ?>
-
 
 </div>
 

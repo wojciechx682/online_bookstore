@@ -516,9 +516,11 @@
 
 	</div>
 
+    <?php require "../view/footer.php"; ?>
+
 </div>
 
-    <?php require "../view/footer.php"; ?>
+
 
     <script>
         content = document.getElementById("content"); // ustawienie wid div#content na 100%

@@ -62,8 +62,6 @@
 
 <body>
 
-
-
 <div id="all-container">
 
     <?php require "../view/___header-container.php" ?>
@@ -147,11 +145,8 @@
                 ?>
 
             </div>
-
         </main>
-
 	</div>
-
 
     <script>
         content = document.getElementById("content"); // ustawienie wid div#content na 100%

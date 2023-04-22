@@ -156,9 +156,9 @@ include_once "../functions.php";
 
                 $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]); // to pass that array to JS
 
-               /* echo "<hr><br> $ _ SESSION --> <br><br>";
-                    // print_r($_SESSION);
-                echo "<hr><br>";*/
+                /* echo "<hr><br> $ _ SESSION --> <br><br>";
+                     // print_r($_SESSION);
+                 echo "<hr><br>";*/
 
                 /*echo "<hr><br> $ _ POST --> <br><br>";
                     print_r($_POST);
@@ -182,7 +182,7 @@ include_once "../functions.php";
 
             const rateOuter = document.querySelector('.rate-outer');
             const rateOuterWidth = rateOuter.offsetWidth;
-            console.log(rateOuterWidth);  // 108px; szerokosć diva w którym siedzą gwiazdki (cała szerokość - zarówno te niewidoczne)
+            //console.log(rateOuterWidth);  // 108px; szerokosć diva w którym siedzą gwiazdki (cała szerokość - zarówno te niewidoczne)
 
             document.querySelector('.rate-inner-base').style.position = "relative";
             //document.querySelector('.rate-inner-base').style.left = `${rateOuterWidth}px`;
@@ -190,9 +190,9 @@ include_once "../functions.php";
 
             document.querySelector('.rating-num').innerHTML = rating;
 
-            console.log("percentageRateRounded -> ", percentageRateRounded);
-            console.log("percentageRateBase -> ", percentageRateBase);
-            console.log("res  -> ", `${rateOuterWidth *  (Math.round(percentageRate / 10) * 10)/100}px`);
+            //console.log("percentageRateRounded -> ", percentageRateRounded);
+            //console.log("percentageRateBase -> ", percentageRateBase);
+            //console.log("res  -> ", `${rateOuterWidth *  (Math.round(percentageRate / 10) * 10)/100}px`);
 
             /*  const rateInner = document.querySelector('.rate-inner');
               const beforeElementWidth = window.getComputedStyle(rateInner, '::before').getPropertyValue('width');
@@ -226,7 +226,7 @@ include_once "../functions.php";
 
             const bookRatingDetails = document.querySelectorAll(".book-rating-details"); // 5  4  3  2  1
 
-            console.log("bookRatingDetails -> ", bookRatingDetails);
+            //console.log("bookRatingDetails -> ", bookRatingDetails);
 
             $ratings = <?= $_SESSION["raings_array"] ?>;    // tablica z ocenami (key - ocena, value - ilosc ocen)
             $no_ratings =  <?= json_encode($_SESSION["liczba_ocen"]) ?>; // liczba wszystkich ocen --> "4"
@@ -235,25 +235,25 @@ include_once "../functions.php";
             for (let i = bookRatingDetails.length, j = 0; i > 0 ; i--, j++) {
                 let line = bookRatingDetails[j].querySelector(".line"); // .rated, .unrated
 
-                console.log("i -> ", i);
-                console.log("line -> ", line);
+                //console.log("i -> ", i);
+                //console.log("line -> ", line);
 
                 // Do something with each element
 
                 let rated = line.querySelector(".rated");
                 let norates = bookRatingDetails[j].querySelector(".book-rating-details .no-rates");
 
-                console.log("rated -> ", rated);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
-                console.log("norates -> ", norates);
-                console.log("no_ratings -> ", $no_ratings);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
+                //console.log("rated -> ", rated);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
+                //console.log("norates -> ", norates);
+                //console.log("no_ratings -> ", $no_ratings);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
                 //console.log("rated -> ",  );   // złoty pasek wypełnienia - długość zgodna z ilością ocen
 
                 let style = getComputedStyle(rated);
                 let width = parseInt(style.width); // "125" (px)
 
-                console.log("width --> ", width);
-                console.log("$ratings --> ", $ratings);
-                console.log("$ratings --> ", $ratings[i]);
+                //console.log("width --> ", width);
+                //console.log("$ratings --> ", $ratings);
+                //console.log("$ratings --> ", $ratings[i]);
 
                 if($ratings[i] === undefined) {
                     newWidth = 100;
@@ -264,7 +264,7 @@ include_once "../functions.php";
                     numer_of_rates = $ratings[i];
                 }
 
-                console.log("newWidth --> ", newWidth);
+                //console.log("newWidth --> ", newWidth);
 
                 rated.style.width = newWidth + "px";
                 norates.innerHTML = "("+numer_of_rates+")";
@@ -276,7 +276,7 @@ include_once "../functions.php";
 
             const stars = document.querySelectorAll('.star');
 
-            console.log("stars -> ", stars);
+            //console.log("stars -> ", stars);
 
             //let goldStars = 0;
 
@@ -287,9 +287,9 @@ include_once "../functions.php";
                 const currentStar = event.currentTarget;
                 const currentStarId = currentStar.id; // #star-1, ... #star-5
                 const starNumber = Number(currentStarId.split('-')[1]); // 1, ... 5
-                console.log("currentStar --> ", currentStar);
-                console.log("currentStarId --> ", currentStarId);
-                console.log("starNumber --> ", starNumber);
+                //console.log("currentStar --> ", currentStar);
+                //console.log("currentStarId --> ", currentStarId);
+                //console.log("starNumber --> ", starNumber);
 
                 eventType = event.type;
 
@@ -299,7 +299,7 @@ include_once "../functions.php";
                         const starId = star.id;
                         const number = Number(starId.split('-')[1]); // 1, 2, ...
 
-                        console.log("number --> ", number);
+                        //console.log("number --> ", number);
 
                         if (number <= starNumber) {
                             star.classList.add('gold');
@@ -330,22 +330,22 @@ include_once "../functions.php";
                         const starId = star.id; // star-1, star-2 ... star-5
                         const number = Number(starId.split('-')[1]); // 1, 2, ... 5
 
-                        console.log("713 star --> ", star);
-                        console.log("starId --> ", starId);
-                        console.log("number --> ", number);
-                        console.log("stars length; --> ", stars.length);
-                        console.log("i --> ", i);
+                        //console.log("713 star --> ", star);
+                        //console.log("starId --> ", starId);
+                        //console.log("number --> ", number);
+                        //console.log("stars length; --> ", stars.length);
+                        //console.log("i --> ", i);
 
                         if (number <= starNumber) {
                             star.classList.add('gold');
 
                             if(number === starNumber) {
-                                console.log("to była ostatnia gwiazdka");
+                                //console.log("to była ostatnia gwiazdka");
 
                                 // add name attribute for input type hidden -->
 
                                 let input = star.querySelector('input[type="hidden"]');
-                                console.log("MY INPUT -----> ", input);
+                                //console.log("MY INPUT -----> ", input);
 
                                 input.setAttribute('name', 'star');
                             }
@@ -378,12 +378,12 @@ include_once "../functions.php";
             // set the "name" attribute for input type hidden, that was selected
 
             let commentRate = document.querySelector(".comment-rate").textContent.trim(); // 1, 2, ..., 5
-            console.log("commentRate -> ", commentRate);
+            //console.log("commentRate -> ", commentRate);
             let commentRateInner = document.querySelector(".comment-rate-inner"); // <div class="comment-rate-inner">
             commentRateInner.style.width = (commentRate / 5) * 100 + "%";
 
             let commentRates = document.querySelectorAll(".comment-rate") // 1, 2, ..., 5
-            console.log("commentRate -> ", commentRates);
+            //console.log("commentRate -> ", commentRates);
 
             for (let i = 0; i < commentRates.length; i++) {
                 let rate = commentRates[i].textContent.trim(); // <div class="comment-rate-inner">
@@ -401,11 +401,11 @@ include_once "../functions.php";
 
             let ul = document.querySelector('ul.tab-list'); // <ul clsas="tab-list">
             let divs = document.querySelectorAll('div.tab-panel'); // <div clsas="tab-panel">
-            console.log("divs -->", divs);
+            //console.log("divs -->", divs);
 
             let liEls = ul.querySelectorAll('li'); // NoideList(3) --> li, li, li.active
 
-            console.log("<li> elements --> ", liEls);
+            //console.log("<li> elements --> ", liEls);
 
             //let liIndex; // 0, 1, 2
 
@@ -416,10 +416,10 @@ include_once "../functions.php";
                 liEl.addEventListener('click', function(event) {
                     // Check if the class attribute has changed
                     if (!this.classList.contains('active')) { // <li>
-                        console.log('Class attribute has changed');
+                        //console.log('Class attribute has changed');
                         // Do something here
                         liIndex = index;
-                        console.log('Current li index:', liIndex);
+                        //console.log('Current li index:', liIndex);
 
                         if(window.localStorage) {
                             localStorage.setItem("liIndex", liIndex);
@@ -482,50 +482,19 @@ include_once "../functions.php";
 
 
 
-            //let width = window.innerWidth;
+        //let width = window.innerWidth;
 
-            /*imgContainer = document.getElementById("book-page-image");
-            imgContainer.style.marginRight = width;*/
+        /*imgContainer = document.getElementById("book-page-image");
+        imgContainer.style.marginRight = width;*/
 
-            /*console.log(width);
-            console.log(typeof(width));*/
+        /*console.log(width);
+        console.log(typeof(width));*/
 
 
 
-            /*window.addEventListener('resize', function() {
+        /*window.addEventListener('resize', function() {
 
-                if(window.innerWidth <= "845" && window.innerWidth >= "825") {
-
-                    let imgContainer = document.getElementById("book-page-image");
-                    let marginRightValue = ((Math.pow(window.innerWidth-824, 2))/85)
-
-                    if(marginRightValue < 0) {
-                        marginRightValue = 0;
-                    }
-                    imgContainer.style.marginRight = marginRightValue.toString() + "%";
-
-                } else if(window.innerWidth > "845") {
-                    let imgContainer = document.getElementById("book-page-image");
-                    imgContainer.style.marginRight = "42px";
-
-                    let content = document.getElementById("content");
-                    content.style.paddingLeft = "15px";
-                }
-                if(window.innerWidth < "845" && window.innerWidth > "800") {
-
-                    let content = document.getElementById("content");
-                    let paddingLeftValue = ((Math.pow(window.innerWidth-800, 2))/1000)
-
-                    if(paddingLeftValue < 0) {
-                        paddingLeftValue = 0;
-                    }
-                    content.style.paddingLeft = paddingLeftValue.toString() + "%";
-                }
-            });
-
-        window.addEventListener('load', function() {
-
-            if(window.innerWidth <= "845" && window.innerWidth >= "820") {
+            if(window.innerWidth <= "845" && window.innerWidth >= "825") {
 
                 let imgContainer = document.getElementById("book-page-image");
                 let marginRightValue = ((Math.pow(window.innerWidth-824, 2))/85)
@@ -552,24 +521,46 @@ include_once "../functions.php";
                 }
                 content.style.paddingLeft = paddingLeftValue.toString() + "%";
             }
-            if(window.innerWidth <= "820") {
+        });
 
-                let imgContainer = document.getElementById("book-page-image");
-                imgContainer.style.marginRight = "0";
+    window.addEventListener('load', function() {
 
-                let content = document.getElementById("content");
-                content.style.paddingLeft = "0";
+        if(window.innerWidth <= "845" && window.innerWidth >= "820") {
+
+            let imgContainer = document.getElementById("book-page-image");
+            let marginRightValue = ((Math.pow(window.innerWidth-824, 2))/85)
+
+            if(marginRightValue < 0) {
+                marginRightValue = 0;
             }
-        });*/
+            imgContainer.style.marginRight = marginRightValue.toString() + "%";
 
+        } else if(window.innerWidth > "845") {
+            let imgContainer = document.getElementById("book-page-image");
+            imgContainer.style.marginRight = "42px";
 
+            let content = document.getElementById("content");
+            content.style.paddingLeft = "15px";
+        }
+        if(window.innerWidth < "845" && window.innerWidth > "800") {
 
+            let content = document.getElementById("content");
+            let paddingLeftValue = ((Math.pow(window.innerWidth-800, 2))/1000)
 
+            if(paddingLeftValue < 0) {
+                paddingLeftValue = 0;
+            }
+            content.style.paddingLeft = paddingLeftValue.toString() + "%";
+        }
+        if(window.innerWidth <= "820") {
 
+            let imgContainer = document.getElementById("book-page-image");
+            imgContainer.style.marginRight = "0";
 
-
-
-
+            let content = document.getElementById("content");
+            content.style.paddingLeft = "0";
+        }
+    });*/
 
     </script>
 

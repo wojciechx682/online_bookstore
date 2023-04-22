@@ -15,22 +15,15 @@ include_once "../functions.php";
 
 <body>
 
-
-
-
 <div id="all-container">
 
-<!-- header -->
-
     <?php require "../view/___header-container.php"; ?>
-
-<!-- end header -->
 
 <div id="container">
 
     <main>
 
-        <aside id="book-filters">       <!-- nav -->
+        <aside id="book-filters">  <!-- nav -->
             <div id="nav" class="nav-visible">
                 <h3>Wszystkie</h3>
 
@@ -45,9 +38,7 @@ include_once "../functions.php";
                     <option value="6">Najstarszych</option>
                 </select>
 
-                <button id="sort_button" onclick="sortBooks()">Sortuj</button>
-
-
+                <!--<button id="sort_button" onclick="sortBooks()">Sortuj</button>-->
 
                 <h3>Cena</h3>
 
@@ -68,8 +59,6 @@ include_once "../functions.php";
                     <div id="slider"></div>
                 </div>
 
-
-
                 <!-- search by title in that category -->
 
                 <div id="input-search-nav">
@@ -78,11 +67,9 @@ include_once "../functions.php";
                     <!-- <div id="div-search">-->
                     <form action="index.php" method="get">
                         <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
-                        <input type="submit" value="Szukaj">
+                        <input type="submit" value="">
                     </form>
                 </div>
-
-
 
                 <?php
                     query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // lista <ul> autorów
@@ -91,16 +78,14 @@ include_once "../functions.php";
                 <button id="filter-authors">Zastosuj</button>
 
             </div> <!-- #nav -->
-        </aside>
 
+        </aside>
 
             <!-- if isset ( kategoria ) ... -->
 
             <div id="content">              <!-- content (books) -->
 
                 <!--  echo '<script> displayNav(); </script>'; -->
-
-
 
                 <div id="content-books">
 
@@ -134,9 +119,6 @@ include_once "../functions.php";
 
                 </div>
 
-
-
-
             </div>
 
         <!-- -->
@@ -144,8 +126,6 @@ include_once "../functions.php";
     </main>
 
 </div>
-
-
 
     <!--<footer>
         <div id="footer">
@@ -159,17 +139,7 @@ include_once "../functions.php";
 
     <?php require "../view/___footer.php"; ?>
 
-
-
-
-
-
 </div>
-
-
-
-
-
 
 </body>
 </html>

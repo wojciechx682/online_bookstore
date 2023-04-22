@@ -1,6 +1,8 @@
 <?php
+
 	session_start();
-	include_once "../functions.php";
+    include_once "../functions.php";
+
 	if(!(isset($_SESSION['zalogowany']))) {
         header("Location: index.php?login-error");
 		exit();
@@ -58,20 +60,10 @@
                                         <button type="submit" form="edit_data_form">Edytuj dane</button>
                                     </div>
                                 </div>
-
-
                             </form>
-
-
-
                         </div>
                          <div style="clear: both;"></div>
-
                         <!--<div class="edit-data-button-left"></div>-->
-
-
-
-
                     </div>
                 </div>
 
@@ -91,7 +83,6 @@
 
                 <div class="dane_konta">
                     <h3 class="account-header">Dane adresowe</h3>
-
                     <div class="edit_data_container">
                         <div class="edit_data_left-container">
                             <div class="edit_data_left">Miejscowość</div>
@@ -118,12 +109,9 @@
                          <div style="clear: both;"></div>
 
                         <!--<div class="edit-data-button-left"></div>-->
-
                         <!--<div class="edit_data_button">
                             <button type="submit" form="edit_address_form">Edytuj dane</button>
                         </div>-->
-
-
                     </div>
                 </div>
 
@@ -164,20 +152,17 @@
                          <div style="clear: both;"></div>
 
                         <!--<div class="edit-data-button-left"></div>-->
-
                         <!--<div class="edit_data_button">
                             <button type="submit" form="edit_password_form">Edytuj dane</button>
                         </div>-->
-
-
                     </div>
 
                 </div>
                     <?php
                         if((isset($_SESSION['validation_password'])) && (!$_SESSION['validation_password']) && (isset($_SESSION['error_form_password']))) {
                             //echo $_SESSION['error_form_password'];
-                            echo "<h3 class='data-changed'>".$_SESSION['error_form_password']."</h3>";
 
+                            echo "<h3 class='data-changed'>".$_SESSION['error_form_password']."</h3>";
                             unset($_SESSION['stare_haslo']);
                             unset($_SESSION['validation_password']);
                             unset($_SESSION['error_form_password']);
@@ -185,8 +170,8 @@
                         } else {
                             if((isset($_SESSION['validation_passed_p'])) && $_SESSION['validation_passed_p']) {
                                 //echo "Hasło zostało zmienione";
-                                echo "<h3 class='data-changed'>Hasło zostało zmienione</h3>";
 
+                                echo "<h3 class='data-changed'>Hasło zostało zmienione</h3>";
                                 unset($_SESSION['stare_haslo']);
                                 unset($_SESSION['validation_password']);
                                 unset($_SESSION['error_form_password']);
@@ -198,7 +183,6 @@
 		    </div>
 
         </main>
-
 	</div>
 
     <?php require "../view/footer.php"; ?>

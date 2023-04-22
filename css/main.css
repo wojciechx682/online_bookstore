@@ -246,22 +246,15 @@ a:hover
 
 #advanced-search {
 	/*display: none;*/
-
 	/*height: 350px;*/
 	border: 1px dashed black;
 	padding: 20px;
 	overflow: auto;
 	/*background-color: #5362b7;*/
-
-	/* animation -> */
-
-
-
 }
 
 .advanced-search-invisible {
 	display: none !important;
-
 }
 
 .advanced-search-visible {
@@ -269,14 +262,11 @@ a:hover
 }
 
 #advanced-search .adv-search, #advanced-search .adv-search * {
-
 	cursor: pointer;
-
 }
 
 #advanced-search .adv-search:hover {
 	cursor: pointer;
-
 }
 
 

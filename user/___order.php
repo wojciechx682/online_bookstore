@@ -1,11 +1,13 @@
 <?php
-// dodać zabezpieczenie przed ponownym przesłaniem formularza (patrz /learn_php );
-session_start();
-include_once "../functions.php";
-if(!(isset($_SESSION['zalogowany']))) {
-    header("Location: index.php?login-error");
-    exit();
-}
+
+    // dodać zabezpieczenie przed ponownym przesłaniem formularza (patrz /learn_php );
+    session_start();
+    include_once "../functions.php";
+
+    if(!(isset($_SESSION['zalogowany']))) {
+        header("Location: index.php?login-error");
+        exit();
+    }
 ?>
 
 <!DOCTYPE HTML>
@@ -17,26 +19,19 @@ if(!(isset($_SESSION['zalogowany']))) {
 
 <div id="all-container">
 
-    <!-- header -->
-
     <?php require "../view/___header-container.php"; ?>
-
-    <!-- end header -->
 
     <div id="container">
 
         <main>
 
-            <!--<aside>
-                <div id="nav"></div>
-            </aside>-->
+            <!-- <aside> <div id="nav"></div> </aside> -->
 
             <div id="content">
 
                 <h3 id="order-summary-header">Podsumowanie zamówienia</h3>
 
                 <p>Twoje zamówienie zostało przekazane do realizacji, aby śledzić postęp zamówienia przejdź do zakładki <a href="___my_orders.php"><strong>Moje konto / Zamówienia</strong></a></p>
-
 
                 <?php
 
@@ -165,13 +160,7 @@ if(!(isset($_SESSION['zalogowany']))) {
 
                     $status_array = ["W trakcie realizacji"]; // working on (testing)
                     $status = $status_array[array_rand($status_array)]; // random status
-                    ////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     // load the content from the external template file into string
                     //$orderDetails = file_get_contents("../template/order-summary.php");
@@ -179,27 +168,18 @@ if(!(isset($_SESSION['zalogowany']))) {
                     // replace fields in $book string to book data from $result, display result content as HTML
                     //echo sprintf($orderDetails, $data_zlozenia_zamowienia, $forma_platnosci, $forma_dostawy);
 
-
-
-
-
-
-
-
-
-
                     /*echo "<br><br>xxx Forma dostawy = ". $forma_dostawy;
                     echo "<br><br>Status = ". $status;
                     echo "<br><br>Forma płatności = ". $forma_platnosci;
                     echo "<br><br>Suma zamówienia = ". $_SESSION['suma_zamowienia'];*/
 
-                    ////////////////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     //$data_platnosci = $datetime->format('Y-m-d H:i:s');
                     $data_platnosci = $data_zlozenia_zamowienia; // Y-m-d H:i:s
                    /* echo "<br><br> Data płatności = " . $data_platnosci ."<br>";*/
 
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     /*echo "<br><br> <span><strong><i>id_klienta &rarr;</i></strong></span>" . $_SESSION['id'];
                     echo "<br><span><strong><i>order date &rarr;</i></strong></span>" . $data_zlozenia_zamowienia;
@@ -209,7 +189,7 @@ if(!(isset($_SESSION['zalogowany']))) {
                     echo "<br> <span><strong><i>form of delivery &rarr;</i></strong></span>" . $forma_dostawy;
                     echo "<br> <span><strong><i>status &rarr;</i></strong></span>" . $status . "<br>";*/
 
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     // Aktualizacja tabeli --> Zamowienia,  ✓
 
@@ -226,7 +206,7 @@ if(!(isset($_SESSION['zalogowany']))) {
                     // id of newly inserted row (order id) (order table) :
                     /*echo "<br> last id = " . $_SESSION['last_order_id'] . "<br>";*/
 
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     // Aktualizacja tabeli --> Płatności  ✓
 
@@ -237,12 +217,12 @@ if(!(isset($_SESSION['zalogowany']))) {
                     unset($payment);
 
 
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
                     // Aktualizacja tabeli --> Szczegóły zamówienia  ✓ (na podstawie tabeli KOSZYK)
 
                     query("SELECT id_klienta, id_ksiazki, ilosc FROM koszyk WHERE id_klienta='%s'", "insert_order_details", $_SESSION['id']); // wstawia dane do tabeli "szczegóły_zamowienia" - na podstawie tabeli koszyk - (zawartości koszyka danego klienta)
 
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     /*if(isset($_SESSION['last_order_id']) && !empty( $_SESSION['last_order_id']))
                     {
@@ -276,7 +256,6 @@ if(!(isset($_SESSION['zalogowany']))) {
                     echo '<script>window.location.href="submit_order.php";</script>';
                     exit();
                 }
-
 
                 ?>
 

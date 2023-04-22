@@ -12,9 +12,9 @@ searchArrow.addEventListener("click", () => {
     advancedSearchDiv.classList.toggle("advanced-search-invisible");
     advancedSearchDiv.classList.toggle("advanced-search-visible");
 
-    if (advancedSearchDiv.classList.contains("advanced-search-visible")) {
+    /*if (advancedSearchDiv.classList.contains("advanced-search-visible")) {
         setSpanWidthv2();
-    }
+    }*/
 });
 
 
