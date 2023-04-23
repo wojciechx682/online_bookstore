@@ -123,9 +123,7 @@ include_once "../functions.php";
                             JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
                             LEFT JOIN autor AS au ON ks.id_autora = au.id_autora                                    
                             LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                            WHERE ks.id_ksiazki = '%s'
-
-                                ", "get_book", $book);
+                            WHERE ks.id_ksiazki = '%s'", "get_book", $book);
 
                 // retrieves column =>
                 // id_ksiazki: The ID of the book.
@@ -152,6 +150,7 @@ include_once "../functions.php";
                                 GROUP BY ocena
                                 ORDER BY ocena DESC
                                 ", "get_ratings", $book);
+
                 // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen
 
                 $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]); // to pass that array to JS
@@ -461,12 +460,6 @@ include_once "../functions.php";
             //console.log("content -> ", content);
             content.style.width = "100%";
 
-
-
-
-
-
-
         </script>
 
     </div>
@@ -480,8 +473,6 @@ include_once "../functions.php";
 
         // get the window width -->
 
-
-
         //let width = window.innerWidth;
 
         /*imgContainer = document.getElementById("book-page-image");
@@ -489,8 +480,6 @@ include_once "../functions.php";
 
         /*console.log(width);
         console.log(typeof(width));*/
-
-
 
         /*window.addEventListener('resize', function() {
 

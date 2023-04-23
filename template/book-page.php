@@ -28,15 +28,11 @@
         <div id="book-page-publ"><span class="book-page-details">Wydawnictwo</span>%s</div>
         <div id="book-page-nopg"><span class="book-page-details">Ilość stron</span>%s</div>
 
-
-
     </div>
 
     <div id="add-to-cart">
 
         <span class="book-page-details">Cena</span>%s
-
-
 
         <form action="add_to_cart.php" method="post">
             <input type="hidden" name="id_ksiazki" value="%s"> <!-- id książki -->
@@ -52,15 +48,6 @@
 
             <button type="submit" name="your_name" value="your_value" class="btn-link" %s>Dodaj ko koszyka</button>
         </form>
-
-
-
-
-
-
-
-
-
 
     </div>
 

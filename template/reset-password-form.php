@@ -34,12 +34,6 @@
 
         </div>
 
-
-
-
-
-
-
         <!--<div>
             <p>
                 <span class="reset-password-form">
@@ -61,9 +55,6 @@
                 <input type="password" name="confirm-password" id="confirm-password" reqiured>
             </p>
         </div>-->
-
-
-
 
     </form>
 </div>

@@ -629,7 +629,7 @@
 
 <script>
 
-    //save selected sorting option after page reload ->
+    // save selected sorting option after page reload ->
 
     var selectElement = document.getElementById("sortuj_wg");
 

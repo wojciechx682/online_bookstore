@@ -25,8 +25,6 @@
                                       the code inside the file before redirecting. */
                         }
 
-
-
 	function advanced_search($result)
 	{
 		get_books($result);
