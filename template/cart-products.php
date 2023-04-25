@@ -19,7 +19,6 @@
             <div class="author">%s %s</div>
         </div>
 
-
         <form class="change_quantity_form" id="change_quantity_form%s" action="change_cart_quantity.php" method="post">
             <input type="hidden" name="id_ksiazki" value="%s">
             <b>Ilość</b>
