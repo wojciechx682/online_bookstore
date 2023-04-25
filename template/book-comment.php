@@ -11,3 +11,4 @@
     <div style="clear: both;"></div>
     <div class="comment-content">%s</div>
 </section>
+
