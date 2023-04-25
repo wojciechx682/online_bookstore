@@ -701,11 +701,21 @@ function get_order_sum($result = null, $order_id = null) {
 
 		$row = $result->fetch_assoc(); // wiersz - pola tabeli = tablica asocjacyjne
 
+        //echo "<br> row --> <br>";
+
+        if(empty($row)) {
+            $_SESSION["blad"] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowanie -> przekierowanie do zaloguj.php + komunikat
+            return;
+        }
+
+
 		//echo '$_POST[login] = ' . $_POST['login'] . "<br>";
 		//echo '$_POST[haslo] = ' . $_POST['haslo'] . "<br>";
 
 		// WERYFIKACJA HASZA : (czy hasze hasła sa identyczne)
 		// porównanie hasha podanego przy logowaniu, z hashem zapisanym w bazie danych
+
+        echo "<br> 717 <br>";
 
 		$haslo = $_POST['haslo']; // "zmienne tworzone poza funkcjami są globalne (więcej o funkcjach w manualu), a zmienne tworzone w funkcjach mają zasięg lokalny" - http://www.php.pl/Wortal/Artykuly/PHP/Podstawy/Zmienne-i-stale/Zasieg-zmiennych
 
@@ -715,9 +725,13 @@ function get_order_sum($result = null, $order_id = null) {
 		if(password_verify($haslo, $row['haslo'])) // true -> hasze sa takie same (podano poprawne hasło do konta)
 		{
 			$_SESSION['zalogowany'] = true;
-			$_SESSION['id'] = $row['id_klienta'];
+
+            $id = array_keys($row)[0]; // wartość zmiennej => "id_klienta" lub "id_pracownika";
+
+			$_SESSION['id'] = $row[$id]; // zamienić na wartosć liczbową ✓
 			$_SESSION['imie'] = $row['imie'];
 			$_SESSION['nazwisko'] = $row['nazwisko'];
+                $_SESSION['adres_id'] = $row['adres_id'];
                 $_SESSION['miejscowosc'] = $row['miejscowosc'];
                 $_SESSION['ulica'] = $row['ulica'];
                 $_SESSION['numer_domu'] = $row['numer_domu'];
@@ -731,18 +745,29 @@ function get_order_sum($result = null, $order_id = null) {
 			$_SESSION['email'] = $row['email'];
 			                        /*$_SESSION['login'] = $row['login'];*/
 
+            //var_dump($_SESSION); exit();
+
 			//$_SESSION['koszyk_ilosc_ksiazek'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
 			//$_SESSION['test123'] = test_fun();
 			//$id_klienta = $_SESSION['id'];
 			//$_SESSION['test123'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
 
-			query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);	// pobranie liczby książek znajdujących się w kosztku
+
+            if($id === "id_klienta") {
+                query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);	// pobranie liczby książek znajdujących się w kosztku
+            }
 
 			unset($_SESSION['blad']); // usuwa komunikat o błędzie logowania
 
 			$result->free_result();   // pozbywamy się z pamięci rezultatu zapytania; free(); close();
 
-			header('Location: ___index2.php'); // przekierowanie do strony index.php
+            if($id === "id_klienta") {
+                header('Location: ___index2.php'); // przekierowanie do strony index.php
+            } else {
+                header('Location: admin.php');     // pracownik - przekierowanie do strony admin.php
+            }
+
+
             //echo "<br>477";
 			exit();
 		}
@@ -764,15 +789,19 @@ function get_order_sum($result = null, $order_id = null) {
 
     function register($result)
     {
+                    /*// dodanie nowego użytkownika - rejestracja.php
+                    $_SESSION['udanarejestracja'] = true;
+                    // pobranie ID ostatnio wstawionego klienta ->
+                    query("SELECT id_klienta FROM klienci ORDER BY id_klienta DESC LIMIT 1", "get_client_id", ""); // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
+                    //unset($_SESSION['wszystko_OK']);
+                    header('Location: ___zaloguj.php');*/
+
         // dodanie nowego użytkownika - rejestracja.php
         $_SESSION['udanarejestracja'] = true;
-
-        // pobranie ID ostatnio wstawionego klienta ->
-
-        query("SELECT id_klienta FROM klienci ORDER BY id_klienta DESC LIMIT 1", "get_client_id", ""); // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
-
+        // pobranie ID ostatnio wstawionego adresu  ->
+        query("SELECT adres_id FROM adres ORDER BY adres_id DESC LIMIT 1", "get_address_id", ""); // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
         //unset($_SESSION['wszystko_OK']);
-        header('Location: ___zaloguj.php');
+        //header('Location: ___zaloguj.php');
     }
 
 	function cart_verify_book($result)
@@ -813,10 +842,10 @@ function get_order_sum($result = null, $order_id = null) {
         query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
     }
 
-    function get_client_id($result) // wywołanie w funkcji register();
+    function get_address_id($result) // wywołanie w funkcji register();
     {
         $row = $result->fetch_assoc();
-        $_SESSION['last_client_id'] = $row["id_klienta"];
+        $_SESSION['last_adres_id'] = $row["adres_id"];
         $result->free_result();
     }
 

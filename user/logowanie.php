@@ -48,11 +48,26 @@
             /*echo "<br><br>45<br>";*/
 
 			//query("SELECT * FROM klienci WHERE email='%s'", "log_in", $email_sanitized); // funkcja log_in (odpowiedzialna za logowanie) uzyska hasło z tablicy $_POST[];
-			query("SELECT kl.id_klienta, kl.haslo, kl.imie, kl.nazwisko, kl.telefon, kl.email,
+			query("SELECT kl.id_klienta, kl.haslo, kl.imie, kl.nazwisko, kl.telefon, kl.email, kl.adres_id,
                                 ad.miejscowosc, ad.ulica, ad.numer_domu, ad.kod_pocztowy, ad.kod_miejscowosc
                          FROM klienci AS kl, adres AS ad 
-                         WHERE kl.id_klienta = ad.id_klienta
+                         WHERE kl.adres_id = ad.adres_id
                          AND kl.email='%s'", "log_in", $email_sanitized); // funkcja log_in (odpowiedzialna za logowanie) uzyska hasło z tablicy $_POST[];
+
+            if(isset($_SESSION['blad'])) {
+                // błąd powstały w wyniku złych danych logowania klienta,
+                // może te dane logowania NALEŻĄ DO PRACOWNIKA ?
+
+                //echo "<br>61<br>"; exit();
+
+                query("SELECT pr.id_pracownika, pr.haslo, pr.imie, pr.nazwisko, pr.telefon, pr.email, pr.adres_id,
+                                ad.miejscowosc, ad.ulica, ad.numer_domu, ad.kod_pocztowy, ad.kod_miejscowosc
+                         FROM pracownicy AS pr, adres AS ad 
+                         WHERE pr.adres_id = ad.adres_id
+                         AND pr.email='%s'", "log_in", $email_sanitized); // (!) -> zmodyfikować funkcję log_in ! // dodac instrukcję warunkową (if)
+            }
+
+            header('Location: ___zaloguj.php');
 
             //echo "48<br>";
 

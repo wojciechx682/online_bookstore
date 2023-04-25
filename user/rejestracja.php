@@ -196,14 +196,16 @@
         //$street_regex = '/^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]*(\s[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+){0,2}$/';
 
         if(isset($ulica)) {
-            $street_regex = '/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s.-]{3,35}$/';
-            //    Passing:
-            //          "ul. Warszawska"  "al. Jana Pawła II"  "Plac Grunwaldzki"
+            if(!empty($ulica)){
+                $street_regex = '/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s.-]{3,35}$/';
+                //    Passing:
+                //          "ul. Warszawska"  "al. Jana Pawła II"  "Plac Grunwaldzki"
 
-            if(!(preg_match($street_regex, $ulica)))
-            {
-                $_SESSION['wszystko_OK'] = false;
-                $_SESSION['e_ulica'] = "Podaj poprawną nazwę ulicy";
+                if(!(preg_match($street_regex, $ulica)))
+                {
+                    $_SESSION['wszystko_OK'] = false;
+                    $_SESSION['e_ulica'] = "Podaj poprawną nazwę ulicy";
+                }
             }
         }
 
@@ -359,20 +361,33 @@
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			// Zrealizowanie zapytania INSERT : 
 
-            $user = [$imie, $nazwisko, $email, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
+            $address = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc];
+            // należy pobrać id ostatnio wstawionego wiersza w tabeli klienci !
+            query("INSERT INTO adres (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address);
 
+
+
+
+
+
+
+
+
+
+            $user = [$imie, $nazwisko, $email, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
             //print_r($user);
             //exit();
-
 			//query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database
-            query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database,   $_SESSION['last_client_id'] --> id nowo wstawionego klienta
+
+            $address = $_SESSION["last_adres_id"];
+
+            query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', $address)", "", $user);  // add new user to database,   $_SESSION['last_client_id'] --> id nowo wstawionego klienta
 
 
-            $address = [$_SESSION['last_client_id'], $miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc];
 
 
-            // należy pobrać id ostatnio wstawionego wiersza w tabeli klienci !
-            query("INSERT INTO adres (adres_id, id_klienta, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s')", "", $address);
+
+            header('Location: ___zaloguj.php');
 
             unset($_SESSION['wszystko_OK']);
         }

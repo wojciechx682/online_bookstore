@@ -12,7 +12,8 @@ if(((isset($_POST['miejscowosc_edit'])) && (isset($_POST['ulica_edit'])) && (iss
         $kod_pocztowy = filter_input(INPUT_POST, "kod_poczt_edit", FILTER_SANITIZE_STRING);
         $miasto = filter_input(INPUT_POST, "miasto_edit", FILTER_SANITIZE_STRING);
 
-        $id = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT);
+        //$id = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT);
+        $id = filter_var($_SESSION['adres_id'], FILTER_SANITIZE_NUMBER_INT); // id adresu (w tableli klienci)
 
         $validation = true;
 
@@ -46,14 +47,16 @@ if(((isset($_POST['miejscowosc_edit'])) && (isset($_POST['ulica_edit'])) && (iss
         //$street_regex = '/^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]*(\s[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+){0,2}$/';
 
         if(isset($ulica)) {
-            $street_regex = '/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s.-]{3,35}$/';
-            //    Passing:
-            //          "ul. Warszawska"  "al. Jana Pawła II"  "Plac Grunwaldzki"
+            if(!empty($ulica)) {
+                $street_regex = '/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s.-]{3,35}$/';
+                //    Passing:
+                //          "ul. Warszawska"  "al. Jana Pawła II"  "Plac Grunwaldzki"
 
-            if(!(preg_match($street_regex, $ulica)))
-            {
-                $validation = false;
-                $_SESSION['a_error'] = "Podaj poprawną nazwę ulicy";
+                if(!(preg_match($street_regex, $ulica)))
+                {
+                    $validation = false;
+                    $_SESSION['a_error'] = "Podaj poprawną nazwę ulicy";
+                }
             }
         }
 
@@ -109,7 +112,7 @@ if(((isset($_POST['miejscowosc_edit'])) && (isset($_POST['ulica_edit'])) && (iss
             $user_data = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $miasto, $id];
 
             //query("UPDATE klienci SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE id_klienta='%s'", "", $user_data);
-            query("UPDATE adres SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE id_klienta='%s'", "", $user_data);
+            query("UPDATE adres SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE adres_id='%s'", "", $user_data);
 
             $_SESSION['validation_passed_a'] = true;
 
@@ -117,7 +120,7 @@ if(((isset($_POST['miejscowosc_edit'])) && (isset($_POST['ulica_edit'])) && (iss
             $_SESSION['ulica'] = $ulica;
             $_SESSION['numer_domu'] = $numer_domu;
             $_SESSION['kod_pocztowy'] = $kod_pocztowy;
-            $_SESSION['kod_miejscowosc'] = $miejscowosc;
+            $_SESSION['kod_miejscowosc'] = $miasto;
 
             unset($_POST['miejscowosc_edit']);
             unset($_POST['ulica_edit']);
