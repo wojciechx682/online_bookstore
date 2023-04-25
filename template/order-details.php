@@ -12,10 +12,6 @@
     <div class="order-date">%s</div>
     <div class="order-status">%s</div>
     <div class="order-id">%s</div>
-    <!--<hr>-->
-
-
+    <!-- <hr> -->
 
     <div style="clear:both;"></div>
-
-

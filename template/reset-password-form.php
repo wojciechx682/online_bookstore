@@ -34,7 +34,7 @@
 
         </div>
 
-        <!--<div>
+        <!-- <div>
             <p>
                 <span class="reset-password-form">
                     <label for="new-password">
@@ -58,4 +58,3 @@
 
     </form>
 </div>
-

@@ -1,11 +1,6 @@
 
 <!-- template used on main page (index.php) to display books -->
 
-
-
-
-<!-- template used on main page (index.php) to display books -->
-
 <div class="outer-book">
     <div class="book" id="book%s">
         <div class="book-cover">
@@ -32,5 +27,3 @@
         </div>
     </div>
 </div>
-
-
