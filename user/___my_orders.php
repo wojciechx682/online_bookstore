@@ -1,4 +1,5 @@
 <?php
+
 	session_start();
 	include_once "../functions.php";
 
@@ -18,11 +19,7 @@
 
 <div id="all-container">
 
-<!-- header -->
-
 <?php require "../view/___header-container.php"; ?>
-
-<!-- end header -->
 
 	<div id="container">
 
@@ -43,8 +40,6 @@
 
                 <?php
                     echo '<script> displayNav(); </script>';
-
-                    /*echo "<hr>" . print_r($_SESSION) . "<hr>";*/
 
                     query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia WHERE id_klienta = '%s'", "get_orders", $_SESSION['id']);
                 ?>

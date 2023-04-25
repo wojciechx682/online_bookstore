@@ -3,22 +3,22 @@
     session_start();
     include_once "../functions.php";
 
-//	sprawdź połączenie z BD :
-//	$value = array();
-//	array_push($value, "1");
-//	query("", "", ""); // w przypadku błędu połączenia z BD, wyświetli komunikat rzuconego wyjątku.
-//	należy dodać to do każdej podstrony, która korzysta z połączenia z BD
-//	echo $_SESSION['login'] . '<br>';
-//	if(isset($_SESSION['zalogowany']))
-//	{
-//		    //echo '<br>'.$_SESSION['account_error'];
-//		unset($_SESSION['account_error']);
-//		    //exit();
-//	}
-//	if(isset($_SESSION['blad'])) {
-//		echo $_SESSION['blad'];
-//		exit();
-//	}
+        //	sprawdź połączenie z BD :
+        //	$value = array();
+        //	array_push($value, "1");
+        //	query("", "", ""); // w przypadku błędu połączenia z BD, wyświetli komunikat rzuconego wyjątku.
+        //	należy dodać to do każdej podstrony, która korzysta z połączenia z BD
+        //	echo $_SESSION['login'] . '<br>';
+        //	if(isset($_SESSION['zalogowany']))
+        //	{
+        //		    //echo '<br>'.$_SESSION['account_error'];
+        //		unset($_SESSION['account_error']);
+        //		    //exit();
+        //	}
+        //	if(isset($_SESSION['blad'])) {
+        //		echo $_SESSION['blad'];
+        //		exit();
+        //	}
 
     if(isset($_GET["login-error"])) {
         echo '
@@ -35,33 +35,22 @@
 
     if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
     {
-        /*echo "<br> 123"; exit();*/
         $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
-        //echo "<h3>".$kategoria."</h3><hr>";
-        //echo $_SESSION["kategoria"]; exit();
     }
     elseif((isset($_SESSION['kategoria'])) && (!empty($_SESSION['kategoria'])) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
     {
-        //echo "<br> 130"; exit();
         $_SESSION["kategoria"] = htmlentities($_SESSION['kategoria'], ENT_QUOTES, "UTF-8");
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
-        /*   echo "<h3>".$_SESSION["kategoria"]."</h3><hr>"; exit();*/
     }
     if((isset($_POST["adv-search-category"])))
     {
-        /*echo "<br>135<br>"; exit();*/
         $_SESSION["kategoria"] = htmlentities($_POST['adv-search-category'], ENT_QUOTES, "UTF-8");
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
-        /* echo "<h3>".$_SESSION["kategoria"]."</h3><hr>"; exit();*/
     }
-
     if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
     {
         $_SESSION["kategoria"] = "Wszystkie";
-        //echo "<br>62"; exit();
-        /*echo "<h3>Wszystkie</h3>";*/
-        //$_SESSION["kategoria"] = "Wszystkie";
     }
 ?>
 
@@ -119,10 +108,7 @@
                     </div> -->
                 </section>
 
-                <!-- <br><br><br><br><br><br>
-                <br><br><br><br><br><br>
-                <br><br><br><br><br><br>
-                <section id="latest-books-section">&lt;section&gt; for "Nowości"</section>
+                <!-- <section id="latest-books-section">&lt;section&gt; for "Nowości"</section>
                 <section id="books-promotion-section">&lt;section&gt; for "Promocje"</section> -->
                 <!-- <br> -->
 
@@ -604,7 +590,7 @@
         </main>
     </div>
 
-    <!--<footer>
+    <!-- <footer>
         <div id="footer">
             <script src="../scripts/set-theme.js"></script>
             <pre>

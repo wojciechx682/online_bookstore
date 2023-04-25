@@ -659,16 +659,17 @@ EOT;
              query("SELECT kwota FROM platnosci WHERE id_zamowienia='%s'", "get_order_sum", $order_id);
         }
     }*/
-function get_order_sum($result = null, $order_id = null) {
-    if (!($result instanceof mysqli_result)) {
-        // $result was not passed, do something else
-        query("SELECT kwota FROM platnosci WHERE id_zamowienia='%s'", "get_order_sum", $order_id);
-    } else  {
-        // $result was passed, do something with it
-        $row = $result->fetch_assoc();
-        $_SESSION["order_sum"] = $row["kwota"];
+
+    function get_order_sum($result = null, $order_id = null) {
+        if (!($result instanceof mysqli_result)) {
+            // $result was not passed, do something else
+            query("SELECT kwota FROM platnosci WHERE id_zamowienia='%s'", "get_order_sum", $order_id);
+        } else  {
+            // $result was passed, do something with it
+            $row = $result->fetch_assoc();
+            $_SESSION["order_sum"] = $row["kwota"];
+        }
     }
-}
 
 
 
@@ -864,6 +865,16 @@ function get_order_sum($result = null, $order_id = null) {
     }*/
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// admin -->
+
+    function get_all_orders() {
+
+
+
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Funkcja ustanawiająca połączenie z bazą danych i realizująca zapytanie sql
     // "służy do uzyskania wyników z bazy danych i przekazania ich do zewnętrznej funkcji w celu dalszej obróbki"

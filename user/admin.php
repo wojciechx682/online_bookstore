@@ -75,7 +75,7 @@
             <?php require "../template/admin/nav.php"; ?>
 
             <?php
-                query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia WHERE id_klienta = '%s'", "get_orders", 220);
+                query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia", "get_orders", "");
             ?>
 
 

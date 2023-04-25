@@ -70,7 +70,7 @@
 
         <main>
 
-            <!--<div id="nav"></div>-->
+            <!-- <div id="nav"></div> -->
 
             <div id="content">
 
@@ -87,12 +87,12 @@
                         <span class="login-row">
                                 <label>
                                     <!-- Login: <br> <input type="text" name="login"> <br> -->
-                                    E-mail <input type="email" name="email" required value="jakub.wojciechowski.682@gmail.com">
+                                    E-mail <input type="email" name="email" required value="jan.nowak@wp.pl">
                                 </label>
                         </span>
                         <span class="login-row">
                                 <label>
-                                    Hasło <input type="password" name="haslo" required value="PassJacob33#"
+                                    Hasło <input type="password" name="haslo" required value="jan1"
                                                        autocomplete="off">
                                 </label>
                         </span>

@@ -49,7 +49,7 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
 
             // jeśli nie wyjebało błędu przy INSERCIE, to jedziemy dalej -->
             // wyślij do klienta email z tokenem ->
-            //
+
             try {
 
                 $mail = new PHPMailer(); // create a new PHPMailer instance
@@ -197,11 +197,7 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
 
     <script src="../scripts/hide-field.js"></script>
 
-    <!-- header -->
-
     <?php require "../view/___header-container.php"; ?>
-
-    <!-- end header -->
 
     <div id="container">
 

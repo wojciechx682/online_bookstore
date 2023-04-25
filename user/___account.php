@@ -18,11 +18,7 @@
 
 <div id="all-container">
 
-    <!-- header -->
-
     <?php require "../view/___header-container.php"; ?>
-
-    <!-- end header -->
 
 	<div id="container">
 

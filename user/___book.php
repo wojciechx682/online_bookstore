@@ -1,10 +1,12 @@
 <?php
-session_start();
-include_once "../functions.php";
-/*if(!(isset($_SESSION['zalogowany']))) {
-    header("Location: index.php?login-error");
-    exit();
-}*/
+
+    session_start();
+    include_once "../functions.php";
+
+    /*if(!(isset($_SESSION['zalogowany']))) {
+        header("Location: index.php?login-error");
+        exit();
+    }*/
 ?>
 
 <!DOCTYPE HTML>
@@ -16,98 +18,88 @@ include_once "../functions.php";
 
 <div id="all-container">
 
-
     <?php require "../view/___header-container.php"; ?>
 
     <div id="container">
 
         <main>
 
-            <!-- <aside>
-                <div id="nav"></div>
-            </aside> -->
+            <!-- <aside> <div id="nav"></div> </aside> -->
 
             <div id="content">
 
-                <!--<hr>-->
-
                 <?php
-                // echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">&larr; Wróć </a>';
-                //$id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
-                //query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id); // książki które zamówił klient o danym ID;
-                //query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id);
-                ?>
+                    // echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">&larr; Wróć </a>';
+                    //$id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
+                    //query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id); // książki które zamówił klient o danym ID;
+                    //query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id);
 
-                <?php
-
-                //query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.image_url, ks.rating,
-                //km.id_klienta, km.tresc,
-                //rt.ocena, rt.id_klienta,
-                //au.imie, au.nazwisko,
-                //ks.id_wydawcy, wd.nazwa_wydawcy,
-                //mg.ilosc_dostepnych_egzemplarzy
-                //FROM ksiazki AS ks, autor AS au, komentarze AS km, ratings AS rt, magazyn_ksiazki AS mg, wydawcy AS wd
-                //WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = km.id_ksiazki AND ks.id_ksiazki = rt.id_ksiazki AND ks.id_wydawcy wd.id_wydawcy AND ks.id_ksiazki = mg.id_ksiazki AND ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);
-
-
-
+                    //query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.image_url, ks.rating,
+                    //km.id_klienta, km.tresc,
+                    //rt.ocena, rt.id_klienta,
+                    //au.imie, au.nazwisko,
+                    //ks.id_wydawcy, wd.nazwa_wydawcy,
+                    //mg.ilosc_dostepnych_egzemplarzy
+                    //FROM ksiazki AS ks, autor AS au, komentarze AS km, ratings AS rt, magazyn_ksiazki AS mg, wydawcy AS wd
+                    //WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = km.id_ksiazki AND ks.id_ksiazki = rt.id_ksiazki AND ks.id_wydawcy wd.id_wydawcy AND ks.id_ksiazki = mg.id_ksiazki AND ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);
 
                 $book = filter_var(filter_input(INPUT_GET, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
+
                 // validate book's id
-                /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating,
-                             COUNT(km.id_ksiazki) AS liczba_komentarzy,
-                             COUNT(rt.ocena) AS liczba_ocen,
-                             au.imie, au.nazwisko,
-                             ks.id_wydawcy, wd.nazwa_wydawcy,
-                             mg.ilosc_dostepnych_egzemplarzy
-                             FROM ksiazki AS ks
-                                 LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
-                                 LEFT JOIN komentarze AS km ON ks.id_ksiazki = km.id_ksiazki
-                                 LEFT JOIN ratings AS rt ON ks.id_ksiazki = rt.id_ksiazki
-                                 LEFT JOIN magazyn_ksiazki AS mg ON ks.id_ksiazki = mg.id_ksiazki
-                                 LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                             WHERE ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);*/  // ERROR - nie zwraca poprawnej ilości ocen i komentarzy !
+                    /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating,
+                                 COUNT(km.id_ksiazki) AS liczba_komentarzy,
+                                 COUNT(rt.ocena) AS liczba_ocen,
+                                 au.imie, au.nazwisko,
+                                 ks.id_wydawcy, wd.nazwa_wydawcy,
+                                 mg.ilosc_dostepnych_egzemplarzy
+                                 FROM ksiazki AS ks
+                                     LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
+                                     LEFT JOIN komentarze AS km ON ks.id_ksiazki = km.id_ksiazki
+                                     LEFT JOIN ratings AS rt ON ks.id_ksiazki = rt.id_ksiazki
+                                     LEFT JOIN magazyn_ksiazki AS mg ON ks.id_ksiazki = mg.id_ksiazki
+                                     LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                                 WHERE ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);*/  // ERROR - nie zwraca poprawnej ilości ocen i komentarzy !
 
-                // "The issue with your query is that you are using LEFT JOIN to join the ksiazki table with the komentarze and ratings tables. This means that for each row in the ksiazki table, all matching rows in the komentarze and ratings tables are returned. If there are multiple comments or ratings for a single book, each row for that book in the ksiazki table will be duplicated for each comment or rating. To fix this, you can use subqueries to count the number of comments and ratings for each book instead of joining the tables. Here's an example query that should give you the correct results"
+                    // "The issue with your query is that you are using LEFT JOIN to join the ksiazki table with the komentarze and ratings tables. This means that for each row in the ksiazki table, all matching rows in the komentarze and ratings tables are returned. If there are multiple comments or ratings for a single book, each row for that book in the ksiazki table will be duplicated for each comment or rating. To fix this, you can use subqueries to count the number of comments and ratings for each book instead of joining the tables. Here's an example query that should give you the correct results"
 
-                // Solution below - This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.
-                // This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.
+                    // Solution below - This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.
+                    // This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.
 
-                /*if (isset($_SESSION["rate-error"])) {
-                    $book[] = $_SESSION["rate-error"];
-                    unset($_SESSION["rate-error"]);
-                } else if (isset($_SESSION["rate-success"])) {
-                    $book[] = $_SESSION["rate-success"];
-                    unset($_SESSION["rate-success"]);
-                }*/
+                    /*if (isset($_SESSION["rate-error"])) {
+                        $book[] = $_SESSION["rate-error"];
+                        unset($_SESSION["rate-error"]);
+                    } else if (isset($_SESSION["rate-success"])) {
+                        $book[] = $_SESSION["rate-success"];
+                        unset($_SESSION["rate-success"]);
+                    }*/
 
-                /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
-                            (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
-                            (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
-                                au.imie, au.nazwisko,
-                                ks.id_wydawcy, wd.nazwa_wydawcy,
-                                mg.ilosc_dostepnych_egzemplarzy
-                            FROM ksiazki AS ks
-                                LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
-                                LEFT JOIN magazyn_ksiazki AS mg ON ks.id_ksiazki = mg.id_ksiazki
-                                LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                            WHERE ks.id_ksiazki = '%s';
-                            ", "get_book", $book);*/ // foregins key => id_autora, id_ksiazki, id_wydawcy
-
-                /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
+                    /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
                                 (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
                                 (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
-
-								(SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
-
                                     au.imie, au.nazwisko,
-                                    ks.id_wydawcy, wd.nazwa_wydawcy
-
+                                    ks.id_wydawcy, wd.nazwa_wydawcy,
+                                    mg.ilosc_dostepnych_egzemplarzy
                                 FROM ksiazki AS ks
                                     LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
+                                    LEFT JOIN magazyn_ksiazki AS mg ON ks.id_ksiazki = mg.id_ksiazki
                                     LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
                                 WHERE ks.id_ksiazki = '%s';
-                                ", "get_book", $book);*/
+                                ", "get_book", $book);*/ // foregins key => id_autora, id_ksiazki, id_wydawcy
+
+                    /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
+                                    (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
+                                    (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
+
+                                    (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
+
+                                        au.imie, au.nazwisko,
+                                        ks.id_wydawcy, wd.nazwa_wydawcy
+
+                                    FROM ksiazki AS ks
+                                        LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
+                                        LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                                    WHERE ks.id_ksiazki = '%s';
+                                    ", "get_book", $book);*/
 
                 // zmiana kwerendy po dodaniu subkategorii ->
 
@@ -125,23 +117,23 @@ include_once "../functions.php";
                             LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
                             WHERE ks.id_ksiazki = '%s'", "get_book", $book);
 
-                // retrieves column =>
-                // id_ksiazki: The ID of the book.
-                // tytul: The title of the book.
-                // cena: The price of the book.
-                // rok_wydania: The year the book was published.
-                // kategoria: The category of the book.
-                // oprawa: The binding type of the book.
-                // ilosc_stron: The number of pages in the book.
-                // image_url: The URL of the book's cover image.
-                // rating: The average rating of the book.
-                // liczba_komentarzy: The number of comments on the book.
-                // liczba_ocen: The number of ratings on the book.
-                // imie: The first name of the book's author.
-                // nazwisko: The last name of the book's author.
-                // id_wydawcy: The ID of the book's publisher.
-                // nazwa_wydawcy: The name of the book's publisher.
-                // ilosc_dostepnych_egzemplarzy: The number of available copies of the book in the warehouse.
+                    // retrieves column =>
+                    // id_ksiazki: The ID of the book.
+                    // tytul: The title of the book.
+                    // cena: The price of the book.
+                    // rok_wydania: The year the book was published.
+                    // kategoria: The category of the book.
+                    // oprawa: The binding type of the book.
+                    // ilosc_stron: The number of pages in the book.
+                    // image_url: The URL of the book's cover image.
+                    // rating: The average rating of the book.
+                    // liczba_komentarzy: The number of comments on the book.
+                    // liczba_ocen: The number of ratings on the book.
+                    // imie: The first name of the book's author.
+                    // nazwisko: The last name of the book's author.
+                    // id_wydawcy: The ID of the book's publisher.
+                    // nazwa_wydawcy: The name of the book's publisher.
+                    // ilosc_dostepnych_egzemplarzy: The number of available copies of the book in the warehouse.
 
                 // pobranie ilości każdej oceny (5 - ilość 3, 4 - ilość 2, itd .... ->
 
@@ -151,17 +143,17 @@ include_once "../functions.php";
                                 ORDER BY ocena DESC
                                 ", "get_ratings", $book);
 
-                // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen
+                    // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen
 
                 $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]); // to pass that array to JS
 
-                /* echo "<hr><br> $ _ SESSION --> <br><br>";
-                     // print_r($_SESSION);
-                 echo "<hr><br>";*/
+                        /* echo "<hr><br> $ _ SESSION --> <br><br>";
+                             // print_r($_SESSION);
+                         echo "<hr><br>";*/
 
-                /*echo "<hr><br> $ _ POST --> <br><br>";
-                    print_r($_POST);
-                echo "<hr><br>";*/
+                        /*echo "<hr><br> $ _ POST --> <br><br>";
+                            print_r($_POST);
+                        echo "<hr><br>";*/
                 ?>
 
             </div>
@@ -201,7 +193,7 @@ include_once "../functions.php";
              const beforeElementWidth = window.getComputedStyle(rateInner, '::before').getPropertyValue('width');
              const widthNumber = parseInt(beforeElementWidth);
              console.log(widthNumber);*/
-            // -------------------------------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------------------------------------------------
             // circle average rating -->
 
             /*const ratingCircle = parseFloat(document.getElementById("book-rate").textContent); // average rating
@@ -214,13 +206,13 @@ include_once "../functions.php";
 
             document.querySelector('.rating-num-circle').innerHTML = ratingCircle.toFixed(2); // display the rating with 2 decimal places*/
 
-            // -------------------------------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------------------------------------------------
             // circle average rating -->
 
             const ratingCircle = document.getElementById("rating-circle");
             ratingCircle.classList.add("filled");
 
-            // -------------------------------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------------------------------------------------
             // ratings from DB - JS -->
 
             const bookRatingDetails = document.querySelectorAll(".book-rating-details"); // 5  4  3  2  1
@@ -270,7 +262,7 @@ include_once "../functions.php";
             }
 
 
-            // -------------------------------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------------------------------------------------
             // add new rating (5 stars, hover effect) - JS -->
 
             const stars = document.querySelectorAll('.star');
@@ -296,7 +288,7 @@ include_once "../functions.php";
                     for (let i = 0; i < stars.length; i++) {
                         const star = stars[i];
                         const starId = star.id;
-                        const number = Number(starId.split('-')[1]); // 1, 2, ...
+                        const number = Number(starId.split('-')[1]); // 1, 2, ..
 
                         //console.log("number --> ", number);
 
@@ -373,7 +365,7 @@ include_once "../functions.php";
                 });
             }
 
-            // -------------------------------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------------------------------------------------
             // set the "name" attribute for input type hidden, that was selected
 
             let commentRate = document.querySelector(".comment-rate").textContent.trim(); // 1, 2, ..., 5
@@ -454,7 +446,7 @@ include_once "../functions.php";
                 divs[liIndex].classList.add('active');
             }
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // ---------------------------------------------------------------------------------------------------------
 
             content = document.getElementById("content"); // ustawienie wid div#content na 100%
             //console.log("content -> ", content);
