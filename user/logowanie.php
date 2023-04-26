@@ -17,7 +17,7 @@
 	{
         // ✓ spełni się jeśli wejdziemy bezpośrednio w link /logowanie.php (jeśli będziemy zalogowani, ORAZ jeśli nie będziemy zalogowani)
 
-       /* echo "15<br>";*/
+        /* echo "15<br>";*/
 		header('Location: ___index2.php');
 		exit();
 	}

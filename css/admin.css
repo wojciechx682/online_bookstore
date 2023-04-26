@@ -1,0 +1,55 @@
+
+
+
+body > div#all-container {
+    margin: initial;
+    margin-top: -8px; /* ustawić na -10px */
+
+
+    width: initial;
+
+    --content: #4d4d4d;
+
+
+}
+
+div#container {
+    border: none;
+
+    background-color: var(--content);
+
+}
+
+main {
+    margin: 0;
+}
+
+div#content {
+    background-color: var(--content);
+
+    float: initial;
+
+    width: 100%;
+
+
+
+}
+
+div#nav {
+    background-color: #003566;
+    /*color: #ebf2fa;*/ /* lekko niebieski */
+    color: #fafaff;
+
+    max-width: 375px;
+
+    min-width: 185px;
+
+}
+
+div#nav a {
+    color: #fafaff;
+    text-decoration: none;
+}
+div#nav a:hover {
+    text-decoration: underline;
+}

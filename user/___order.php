@@ -196,10 +196,20 @@
                     $suma_zamowienia = $_SESSION['suma_zamowienia'];
 
                     /*echo "<br>id_klienta = " . $_SESSION['id'] . "<br>";*/
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                    $order = [ $id_klienta, $data_zlozenia_zamowienia, $termin_dostawy, $data_wyslania_zamowienia, $data_dostarczenia_zamowienia, $forma_dostawy, $status ]; // an array that stores order data informations
+                    // wybierz pracownika z najmniejszą liczbą przypisanych do niego zamówień;
+                        //query("SELECT id_pracownika, COUNT(*) AS 'liczba_zamowien' FROM zamowienia GROUP BY id_pracownika ORDER BY liczba_zamowien ASC LIMIT 1", "get_employee_id", ""); // $_SESSION["employee_id"]; // nie działa, jeśli dany pracownik ma 0 przypisanych zamówień;
 
-                    query("INSERT INTO zamowienia (id_zamowienia, id_klienta, data_zlozenia_zamowienia, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia, status) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "get_last_order_id", $order); // adds a new order - inserts data into the "orders" table, // gets the ID of the newly added order (row) -> $_SESSION['last_order_id']
+                    query("SELECT pr.id_pracownika, COUNT(zm.id_zamowienia) as liczba_zamowien FROM pracownicy AS pr LEFT JOIN zamowienia zm ON pr.id_pracownika = zm.id_pracownika GROUP BY pr.id_pracownika ORDER BY liczba_zamowien ASC LIMIT 1", "get_employee_id", ""); // $_SESSION["employee_id"];
+
+                    $id_pracownika = $_SESSION["employee_id"];
+
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    $order = [$id_klienta, $data_zlozenia_zamowienia, $termin_dostawy, $data_wyslania_zamowienia, $data_dostarczenia_zamowienia, $forma_dostawy, $status, $id_pracownika]; // an array that stores order data informations;
+
+                    query("INSERT INTO zamowienia (id_zamowienia, id_klienta, data_zlozenia_zamowienia, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia, status, id_pracownika) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "get_last_order_id", $order); // adds a new order - inserts data into the "orders" table, // gets the ID of the newly added order (row) -> $_SESSION['last_order_id']
 
                     unset($order);
 

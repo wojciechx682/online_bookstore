@@ -2,7 +2,7 @@
     session_start();
     include_once "../functions.php";
 
-        //	sprawdź połączenie z BD :
+        //	sprawdź połączenie z BD
         //	$value = array();
         //	array_push($value, "1");
         //	query("", "", ""); // w przypadku błędu połączenia z BD, wyświetli komunikat rzuconego wyjątku.

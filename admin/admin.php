@@ -3,14 +3,12 @@
     session_start();
     include_once "../functions.php";
 
-
-
     if(!(isset($_SESSION['zalogowany']))) {
-        header("Location: index.php?login-error");
+        header("Location: index.php?login-error"); // (?)
         exit();
     }
 
-    /*if(isset($_GET["login-error"])) {
+    /* if(isset($_GET["login-error"])) {
         echo '
                     <script>
                         alert("Musisz być zaloowany !")
@@ -19,11 +17,9 @@
                         window.location.href = url.toString();
                     </script>
                  ';
-    }*/
+    } */
 
-    // można lepiej zapisać -->
-
-    if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
+    /*if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
     {
         $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; $kategoria = <script>alert("hahaha");</script>;
@@ -31,33 +27,31 @@
     elseif((isset($_SESSION['kategoria'])) && (!empty($_SESSION['kategoria'])) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
     {
         $_SESSION["kategoria"] = htmlentities($_SESSION['kategoria'], ENT_QUOTES, "UTF-8");
-        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; $kategoria = <script>alert("hahaha");</script>;
+        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
     }
     if((isset($_POST["adv-search-category"])))
     {
-
         $_SESSION["kategoria"] = htmlentities($_POST['adv-search-category'], ENT_QUOTES, "UTF-8");
-        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; $kategoria = <script>alert("hahaha");</script>;
+        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
     }
-
     if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
     {
         $_SESSION["kategoria"] = "Wszystkie";
-    }
+    }*/
 ?>
 
 <!DOCTYPE HTML>
 <html lang="pl">
 
-<?php require "../view/___head.php"; ?>
+<?php require "../view/head-admin.php"; ?>
 
 <body>
 
 <?php
-    echo "<div style='margin-left: 18px;'><br> hi admin <br></div>";
+    /*echo "<div style='margin-left: 18px;'><br> hi admin <br></div>";
     echo "<div style='margin-left: 18px !important; margin-bottom: 15px; color: #002fad; font-weight: bold;'><i>";
             echo var_dump($_SESSION);
-            echo "</i></div>";
+            echo "</i></div>";*/
 ?>
 
 <div id="all-container">
@@ -68,17 +62,15 @@
 
         <main>
 
-            <div id="main-content">
+            <?php require "../template/admin/nav.php"; ?>
+
+            <div id="content">
 
             </div>
 
-            <?php require "../template/admin/nav.php"; ?>
-
             <?php
-                query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia", "get_orders", "");
+                //query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia", "get_orders", "");
             ?>
-
-
 
         </main>
     </div>
@@ -92,7 +84,7 @@
         </div>
     </footer> -->
 
-    <?php require "../view/___footer.php"; ?>
+    <?php //require "../view/___footer.php"; ?>
 
 </div>
 

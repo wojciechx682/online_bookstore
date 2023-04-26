@@ -33,7 +33,7 @@
     function get_authors($result)
     {
         // tworzy linki - w których kazdy wyświetli imie i nazwisko autora.
-       /* echo "<br>31";*/
+
         echo '<h3>Autorzy </h3>';
         echo '<ul id="ul-authors">';
 
@@ -50,16 +50,12 @@
 
                 // replace fields in $author string to author data from $result, display result content as HTML
                 echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"]);
-
             }
-        echo '</ul>';
 
-        /*echo "<br>51<br>";*/
+        echo '</ul>';
 
         $result->free_result();
     }
-
-
 
     function get_authors_adv_search($result)
     {
@@ -94,28 +90,26 @@
 	{
         // header -> top-nav-content - wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav);
 
-		$category_name = "Wszystkie";
+		    $category_name = "Wszystkie";
 		echo "\n".'<li><a href="___index2.php?kategoria='.$category_name.'">'.$category_name.'</a></li>'; // Zamiana na jQuery ? event listener ?
 		while ($row = $result->fetch_assoc())
 		{
 		  	//echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
             echo "\n".'<li><a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
 		}
-		$result->free_result();
+		    $result->free_result();
 	}
 
-            function get_categories_adv_search($result)
-            {
-                // header -> advanced_search -> <select> - lista kategorii
-                $category_name = "Wszystkie";
-                echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';
-                while ($row = $result->fetch_assoc()) {
-                    echo "\n".'<option value="'.$row['nazwa'].'">'.$row['nazwa'].'</option>';
-                }
-                $result->free_result();
-            }
-
-
+    function get_categories_adv_search($result)
+    {
+        // header -> advanced_search -> <select> - lista kategorii
+        $category_name = "Wszystkie";
+        echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';
+        while ($row = $result->fetch_assoc()) {
+            echo "\n".'<option value="'.$row['nazwa'].'">'.$row['nazwa'].'</option>';
+        }
+        $result->free_result();
+    }
 
 	function get_books($result)
 	{
@@ -204,14 +198,6 @@
 
         // replace fields in $book string to book data from $result, display result content as HTML
         echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["cena"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $status, $submit);
-
-
-
-
-
-
-
-
 
         query("SELECT km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]); //$_SESSION["comments"]; <-- ta zmienna zawiera wykorzystany szablon HTML;  sql - możliwość wystąpienia błędów w wyniku złych relacji.
 
@@ -485,7 +471,6 @@
 
 		while ($row = $result->fetch_assoc())
 		{
-
 		  	/*echo "numer zamówienia " . $row['id_zamowienia']." || data = " .$row['data_zlozenia_zamowienia']." || status = ".$row['status']." ";
 
 		  	echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
@@ -524,15 +509,10 @@
                     </tr>
                 </table><br>
 EOT;
-
-
-
             unset($_SESSION['last_order_id']);
             unset($_SESSION['order_details_books_id']);
             unset($_SESSION['order_details_books_quantity']);
             unset($_SESSION['suma_zamowienia']);
-
-
 
             echo "<br><hr>";*/
 
@@ -545,8 +525,6 @@ EOT;
             // replace fields in $order string to author data from $result, display result content as HTML
             echo sprintf($order, $row['data_zlozenia_zamowienia'], $row["status"], $row["id_zamowienia"], $_SESSION["order_sum"]);
 
-
-
             query("SELECT id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "get_order_details", $row['id_zamowienia']); // --> $_SESSION['order_details_books_id'];
 
             /*for($i = 0; $i < count($_SESSION['order_details_books_id']); $i++) {
@@ -554,14 +532,8 @@ EOT;
                 query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '%s'", "order_details_get_book", $book_id);
             }*/
 
-
-
             echo "</div>";
-
-
-
 		}
-
 
 		$result->free_result();
 	}
@@ -592,9 +564,6 @@ EOT;
             $_SESSION['order_details_books_quantity'][$i] =  $row['ilosc']; // przechowuje ilosc (tablica) ! DO ZROBIENIA W PRZYSZŁOŚCI TAK JAK FUNKCJA order_details_get_book
             //array_push($_SESSION['order_details_books_quantity'], $row['ilosc']);
 
-
-
-
             // load the content from the external template file into string
             /*$order = file_get_contents("../template/order-details-book.php");
 
@@ -619,14 +588,12 @@ EOT;
 	{
         // order_details.php?order_id=518
 
-        //$j =  0;
+        // $j =  0;
 
        /* print_r($result->fetch_assoc()); echo "<br>";
         print_r($_SESSION["order_details_books_quantity"]); echo "<br><br><br>";
         echo count($_SESSION["order_details_books_quantity"]); echo "<br><br><br>";*/
         //print_r($_SESSION["order_details_books_quantity"]); echo "<br><br><br>";
-
-
 
 		while ($row = $result->fetch_assoc())
 		{
@@ -644,15 +611,10 @@ EOT;
 		$result->free_result();
 	}
 
-
     /*function get_order_sum($result = NULL, $order_id) {
-
-
         if($result !== NULL && !($result instanceof mysqli_result)) {
-
             // error
         } else if ($result !== NULL) {
-
             $row = $result->fetch_assoc();
             return $row["kwota"];
         } else {
@@ -671,10 +633,6 @@ EOT;
         }
     }
 
-
-
-
-
 	function verify_password($result) // validate_password.php;     confirm_password.php;
 	{
 		/*while ($row = $result->fetch_assoc())
@@ -687,12 +645,6 @@ EOT;
         $_SESSION['stare_haslo'] = $row['haslo'];
         $result->free_result();
 	}
-
-//	function test_fun()
-//	{
-//		return "123";
-//	}
-
 
 	function log_in($result)
 	{
@@ -709,14 +661,13 @@ EOT;
             return;
         }
 
-
 		//echo '$_POST[login] = ' . $_POST['login'] . "<br>";
 		//echo '$_POST[haslo] = ' . $_POST['haslo'] . "<br>";
 
 		// WERYFIKACJA HASZA : (czy hasze hasła sa identyczne)
 		// porównanie hasha podanego przy logowaniu, z hashem zapisanym w bazie danych
 
-        echo "<br> 717 <br>";
+        // echo "<br> 717 <br>";
 
 		$haslo = $_POST['haslo']; // "zmienne tworzone poza funkcjami są globalne (więcej o funkcjach w manualu), a zmienne tworzone w funkcjach mają zasięg lokalny" - http://www.php.pl/Wortal/Artykuly/PHP/Podstawy/Zmienne-i-stale/Zasieg-zmiennych
 
@@ -753,7 +704,6 @@ EOT;
 			//$id_klienta = $_SESSION['id'];
 			//$_SESSION['test123'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
 
-
             if($id === "id_klienta") {
                 query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);	// pobranie liczby książek znajdujących się w kosztku
             }
@@ -765,7 +715,7 @@ EOT;
             if($id === "id_klienta") {
                 header('Location: ___index2.php'); // przekierowanie do strony index.php
             } else {
-                header('Location: admin.php');     // pracownik - przekierowanie do strony admin.php
+                header('Location: ../admin/admin.php');     // pracownik - przekierowanie do strony admin.php
             }
 
 
@@ -850,8 +800,6 @@ EOT;
         $result->free_result();
     }
 
-
-
     /*function display_order_details($result) {
 
         // get book details on book.php paeg
@@ -868,10 +816,25 @@ EOT;
 	// admin -->
 
     function get_all_orders() {
+        // ...
+    }
 
+    function get_employee($result) {
+            $row = $result->fetch_assoc();
+        $_SESSION["employee_id"] = $row["id_pracownika"];
+            $result->free_result();
+    }
 
+    function get_employee_id($result) { // ___order.php - pobranie id pracownika z najmniejszą liczbą zamówień;
 
+        $row = $result->fetch_assoc();
 
+        if($row == NULL) { // brak zwroconych. rekordow; (żaden pracownik nie był przypisany do zamówienia);
+             query("SELECT id_pracownika FROM pracownicy ORDER BY RAND() LIMIT 1", "get_employee", ""); // wybieramy losowego pracownika; $_SESSION["employee_id"];
+        } else {
+            $_SESSION["employee_id"] = $row["id_pracownika"];
+            $result->free_result();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -952,7 +915,7 @@ EOT;
                     //echo "<br><hr><br> query ( ) -> " . $query . "<br><hr>";
 
                     // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
-                    if(gettype($result) != "object") {
+                    if(gettype($result) != "object") { // brak zwróconych wyników
 
                         //echo "<br>613<br>"; exit();
 

@@ -4,9 +4,10 @@
 
     <div id="nav" class="nav-visible admin-nav">
 
-        <i>this is admin nav</i>
+        <!-- <i>this is admin nav</i> -->
 
-        <h3>Zamówienia</h3>
+        <h3><a href="admin.php">Panel główny</a></h3>
+        <h3><a href="orders.php">Zamówienia</a></h3>
 
 
         <!--<h3>Sortowanie</h3>
