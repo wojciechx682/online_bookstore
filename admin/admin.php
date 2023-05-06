@@ -64,7 +64,11 @@
 
             <?php require "../template/admin/nav.php"; ?>
 
+            <?php require "../template/admin/top-nav.php"; ?>
+
             <div id="content">
+
+                <?php var_dump($_SESSION) ?>
 
             </div>
 

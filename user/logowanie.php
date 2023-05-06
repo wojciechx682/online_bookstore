@@ -60,7 +60,7 @@
 
                 //echo "<br>61<br>"; exit();
 
-                query("SELECT pr.id_pracownika, pr.haslo, pr.imie, pr.nazwisko, pr.telefon, pr.email, pr.adres_id,
+                query("SELECT pr.id_pracownika, pr.haslo, pr.imie, pr.nazwisko, pr.telefon, pr.email, pr.stanowisko, pr.adres_id,
                                 ad.miejscowosc, ad.ulica, ad.numer_domu, ad.kod_pocztowy, ad.kod_miejscowosc
                          FROM pracownicy AS pr, adres AS ad 
                          WHERE pr.adres_id = ad.adres_id

@@ -9,6 +9,8 @@ let all = document.querySelector('#ul-authors > li input[type="checkbox"][id="al
 let li = document.querySelectorAll('#ul-authors > li input[type="checkbox"]:not(#all-authors)');
 // NodeList of    ALL    <input checkbox> (authors);    // wszystkie checkboxy;
 
+console.log("\nli => ", li);
+
 all.addEventListener("change", updateAll);
 
 function updateAll() {
