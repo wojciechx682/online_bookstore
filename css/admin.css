@@ -307,3 +307,14 @@ div.order-option a {
 .order-det-sum {
     border-right: none;
 }
+
+.order-summary {
+    font-weight: normal;
+    border: none;
+}
+.order-summary span {
+    display: inline-block;
+    min-width: 160px;
+    margin-bottom: 8px;
+    /*font-weight: normal;*/
+}

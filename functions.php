@@ -874,6 +874,18 @@ EOT;
 
     }
 
+    function get_order_summary($result) {
+        $row = $result->fetch_assoc();
+
+        $orderSum = file_get_contents("../template/admin/order-summary.php");
+
+        echo sprintf($orderSum, $row["sposob_platnosci"], $row["data_platnosci"], $row["forma_dostarczenia"]);
+
+        $result->free_result();
+
+    }
+
+
     function get_employee($result) {
             $row = $result->fetch_assoc();
         $_SESSION["employee_id"] = $row["id_pracownika"];
