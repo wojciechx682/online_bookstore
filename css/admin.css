@@ -8,6 +8,10 @@ body > div#all-container {
     --content: #4d4d4d;
     --top-nav: #656565;
     --text-color: #fafaff;
+
+    z-index: 100;
+
+
 }
 
 div#container {
@@ -311,10 +315,138 @@ div.order-option a {
 .order-summary {
     font-weight: normal;
     border: none;
+
+    margin-top: 10px;
+
+    width: 50%;
+    margin-left: 0;
+    border: 1px ridge #3c9ce0;
+
+    /*min-width: 380px;*/   /* (!) */
+
+    float: left;
+    /*display: inline-block;*/
 }
 .order-summary span {
     display: inline-block;
-    min-width: 160px;
+    /*min-width: 160px;*/
     margin-bottom: 8px;
     /*font-weight: normal;*/
+    margin-right: 20px;
+}
+
+.order-sum {
+    font-weight: normal;
+    border: 1px ridge rgba(166, 166, 166, 0.38);
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    padding-right: 5%;
+}
+
+@media only screen and (max-width: 710px) {
+    .order-sum {
+        min-width: 475px !important;
+    }
+}
+
+.order-sum-pay-met, .order-sum-pay-date, .order-sum-del-meth {
+    /*display: inline-block;
+    width: 32%;*/
+    margin-bottom: 16px;
+}
+/*
+.order-sum-pay-date {
+    min-width: 280px;
+}*/
+
+#order-status {
+    border: 1px ridge white;
+    width: 45%;
+    /*display: inline-block;*/
+    float: left;
+    /*min-width: 315px;*/
+    margin-top: 10px;
+    font-weight: normal;
+}
+
+#order-status > span {
+    margin-right: 35px;
+}
+
+#order-det-container {
+    overflow: hidden;
+}
+
+/* button --> */
+
+.update-order-status {
+    width: 135px !important;
+}
+
+#update-status {
+    height: 300px;
+    width: 660px;
+
+    background-color: #545454;
+
+    /*position: fixed;
+    top: 25em;
+    left: 45em;*/
+
+    position: absolute;
+    top: 59%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    z-index: 2000;
+
+    border-radius: 5px;
+
+}
+#update-status > h2 {
+    margin-left: 20px;
+    color: #FAFAFFFF;
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
+    font-size: 1.2rem;
+
+    width: 605px;
+
+    display: inline-block;
+}
+
+#update-status hr {
+    background-color: rgba(166, 166, 166, 0.7);
+    border: none;
+    height: 1px;
+    margin: 5px 15px 5px 15px;
+    /*max-width: 255px;*/
+}
+
+#update-status select#status-list {
+    /*appearance: none;*/
+    outline: 0;
+
+    background-color: #2c3e50;
+}
+
+.hidden {
+    display: none;
+}
+
+.bright {
+    filter: brightness(50%);
+}
+
+.icon-cancel {
+    display: inline-block;
+    padding-bottom: 2px;
+}
+
+.icon-cancel:hover {
+    cursor: pointer;
+    user-select: none;
+
+    color: #1f1f1f;
+    background-color: rgba(49, 49, 49, 0.19);
 }

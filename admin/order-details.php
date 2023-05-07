@@ -50,15 +50,34 @@
 
                         query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'", "get_order_sum_admin", $id); // stopka (SUMA)
 
+                        echo '<div id="order-det-container">';
+
                         query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'", "get_order_summary", $id); // szczegółowe dane zamówienia
                         ?>
 
+
+                        <div id="order-status">
+
+                            <span>Status</span> <?= $_SESSION["status"] ?> <br>
+
+                            <button class="update-order-status btn-link btn-link-static">Aktualizuj</button>
+
+                        </div>
+
+                        <div style="clear: both"></div>
+
+
+
+
+                        <!--</div>-->
 
 
                     </div>
 
                 </main>
             </div>
+
+
 
             <!--<footer>
                 <div id="footer">
@@ -72,6 +91,54 @@
             <?php //require "../view/___footer.php"; ?>
 
         </div>
+
+        <div id="update-status" class="hidden">
+
+            <h2>Zmień status zamówienia</h2>
+
+            <i class="icon-cancel"></i>
+
+            <hr>
+
+            <select id="status-list">
+                <option value="oczekujace">Oczekujące na potwierdzenie</option>
+                <option value="wtrakcie">W trakcie realizacji</option>
+                <option value="wyslano">Wysłano</option>
+                <option value="dostarczono">Dostarczono</option>
+            </select>
+
+
+        </div>
+
+    <script>
+        btn = document.querySelector('.update-order-status');
+
+        let statusBox = document.getElementById("update-status");
+        let allContainer = document.getElementById("all-container");
+
+        btn.addEventListener("click", function() {
+            //alert("yey ! ");
+
+
+
+            console.log("statusBox => ", statusBox);
+
+            statusBox.classList.toggle("hidden");
+            allContainer.classList.toggle("bright");
+        });
+
+        icon = document.querySelector('.icon-cancel');
+
+        icon.addEventListener("click", function() {
+
+           /* console.log("statusBox => ", statusBox);*/
+
+            statusBox.classList.toggle("hidden");
+            allContainer.classList.toggle("bright");
+        });
+
+
+    </script>
 
     </body>
 </html>
