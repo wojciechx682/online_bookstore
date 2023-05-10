@@ -1,4 +1,8 @@
 // ✓ podczas składania zamówienia przez klienta zostaje przypisany pracownik z najmniejszą liczbą zamówień;
 
-//
+// Status => Oczekujące na potwierdzenie,
+             W trakcie realizacji,      (pakowane i przygotowywane do wysyłki)
+             Wysłano,
+             Dostarczeono.              (zrealizowane)
 
+// (!) ZMIANA STATUSU ZAMÓWIENIA - odbywa się z pomoca AJAX

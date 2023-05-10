@@ -143,7 +143,9 @@
                                                 //$termin_dostawy = date('Y-m-d ', strtotime($date. ' +5 days'));
 
                         // Termin dostawy
-                    $termin_dostawy = $datetime->add(new DateInterval('P5D'))->format('Y-m-d'); // + 5 days
+                    //$termin_dostawy = $datetime->add(new DateInterval('P5D'))->format('Y-m-d'); // + 5 days
+                    $termin_dostawy = NULL;
+
                         // $termin_dostawy = $termin_dostawy->format('Y-m-d');
                         // echo "<br> Termin dostawy = " . $termin_dostawy."<br>";    // ('Y-m-d')
 
@@ -158,7 +160,7 @@
 
                         // $status_array = ["W trakcie realizacji", "Wysłano", "Dostarczono", "Zrealizowano/Zakończono"];
 
-                    $status_array = ["W trakcie realizacji"]; // working on (testing)
+                    $status_array = ["Oczekujące na potwierdzenie"]; // working on (testing)
                     $status = $status_array[array_rand($status_array)]; // random status
                     ////////////////////////////////////////////////////////////////////////////////////////////////////
 

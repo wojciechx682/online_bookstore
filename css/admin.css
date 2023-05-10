@@ -10,8 +10,6 @@ body > div#all-container {
     --text-color: #fafaff;
 
     z-index: 100;
-
-
 }
 
 div#container {
@@ -25,24 +23,20 @@ main {
 
 div#content {
     background-color: var(--content);
-
-    /*float: initial;
-    width: 100%;*/
-
+        /*float: initial;
+        width: 100%;*/
     color: white;
     font-weight: bold;
-    /*background-color: lightblue;*/
-
+        /*background-color: lightblue;*/
     float: none;
     overflow: hidden;
     width: unset;
-
-    /*max-width: 1175px;*/
+        /*max-width: 1175px;*/
 }
 
 div#nav {
     background-color: #003566;
-    /*color: #ebf2fa;*/ /* lekko niebieski */
+        /*color: #ebf2fa;*/ /* lekko niebieski */
     color: var(--text-color);
     max-width: 375px;
     min-width: 250px;
@@ -73,14 +67,13 @@ div#nav a:hover {
 aside#admin-nav div#nav h3 {
     margin-top: 0px;
     margin-bottom: 0;
-    padding-bottom: 15px;
+
     /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
+    padding-bottom: 15px;
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 15px;
     user-select: none;
-
-
 }
 
 aside#admin-nav div#nav h3:hover {
@@ -92,11 +85,11 @@ aside#admin-nav div#nav h3 + hr {
     border: none;
     height: 1px;
     margin: 5px 15px 5px 15px;
-    /*max-width: 255px;*/
+        /*max-width: 255px;*/
 }
 
 aside#admin-nav > div#nav > div#admin-data {
-    /*width: 100%;*/
+        /*width: 100%;*/
     padding-top: 12px;
         background-color: #06437a;
     overflow: auto;
@@ -114,16 +107,16 @@ aside#admin-nav > div#nav > div#admin-data div#admin-name {
 
 aside#admin-nav > div#nav > div#admin-data div#admin-name span:first-of-type:hover {
     color: #ffffff;
-    /*text-decoration: underline;*/
+        /*text-decoration: underline;*/
     border-bottom: 1px solid white;
     cursor: pointer;
     user-select: none;
-    /*padding-left: 2px;*/
+        /*padding-left: 2px;*/
 }
 
 aside#admin-nav > div#nav > div#admin-data div#admin-name span:nth-of-type(2) {
     font-size: 12px;
-    /*padding-left: 2px;*/
+        /*padding-left: 2px;*/
     user-select: none;
 }
 
@@ -149,85 +142,65 @@ div#container main div#top-nav {
 /* content --> --------------------------------------------------------------------------------- */
 
 div#content {
-
     border: 1px solid #2d6eff;
     padding-left: 20px;
-
 }
 
 h3.section-header {
     margin-top: 5px;
-
     font-size: 1.2em;
-
     /*border: 1px solid #2d6eff;*/
-
     /*border-bottom: 1px ridge #3a3a3a;*/
     border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
-
     margin-bottom: 15px;
     padding-bottom: 15px;
+}
 
-
+.section-header {
+    color: #fafaff;
 }
 
 div.order {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-
     margin-bottom: 0;
-
     overflow-x: hidden;
 }
 
 .order-id, .order-date, .order-client,  .order-total-sum, .order-payment, .order-status, .order-action {
-
         /* border: 1px dashed black; */
-        /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
-
+        /* border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
-
     float: left;
-    /*width: 16.66%;*/
+        /*width: 16.66%;*/
     width: 14.28%;
     text-align: center;
     padding-bottom: 5px;
     padding-top: 5px;
-
     color: var(--text-color);
-
     border-bottom: none;
-
     font-weight: normal;
-
     min-height: 30px;
-
     height: 45px;
     overflow: hidden;
-
     padding-top: 12px;
-
     z-index: 0;
 }
 
 div.order-action {
     border-right: none;
-
-    /*position: relative;*/
+        /*position: relative;*/
 }
 
 div.order-content {
     margin: 0;
     padding: 0;
-
     border-radius: 0;
 }
 
 div.order div.order-action-button {
-
     position: relative;
     top: -3px;
     border: 1px ridge rgba(166, 166, 166, 0.38);
@@ -235,7 +208,6 @@ div.order div.order-action-button {
     width: 120px;
     padding: 3px 3px 4px 10px;
     margin: 0 auto 0 auto;
-
     user-select: none;
 }
 
@@ -247,25 +219,20 @@ div.order div.order-action-button:hover {
 
 div.order div.order-action-options {
         z-index: 100;
-
     position: absolute;
         /*top: 20px;*/
     margin: 0 auto 0 auto;
     border: 1px solid white;
         /*margin-left: auto;*/
     text-align: center !important;
-
     display: none;
-
     background-color: var(--content);
-
-    /*padding: 0 20px 0 20px;*/ /* (!) */
-
+        /*padding: 0 20px 0 20px;*/ /* (!) */
     width: 120px;
 }
 
 div.order-options-container {
-    /*border: 1px solid red;*/
+        /*border: 1px solid red;*/
     width: 120px;
     height: 55px;
     text-align: center !important;
@@ -275,7 +242,6 @@ div.order-options-container {
 
 div.order-option {
     border-bottom: 1px ridge rgba(210, 210, 210, 0.38);
-
     padding-bottom: 5px;
     padding-top: 5px;
 }
@@ -283,7 +249,6 @@ div.order-option {
 div.order-option:hover {
     background-color: #626262;
 }
-
 
 div.order-option a {
     text-decoration: none;
@@ -293,10 +258,10 @@ div.order-option a {
 .order-det-lp, .order-det-product, .order-det-quan, .order-det-price, .order-det-sum {
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
     float: left;
-    /*width: 16.66%;*/
+        /*width: 16.66%;*/
     text-align: center;
     padding-bottom: 5px;
-    padding-top: 5px;
+        /*padding-top: 5px;*/
     color: var(--text-color);
     border-bottom: none;
     font-weight: normal;
@@ -315,33 +280,27 @@ div.order-option a {
 .order-summary {
     font-weight: normal;
     border: none;
-
     margin-top: 10px;
-
     width: 50%;
     margin-left: 0;
-    border: 1px ridge #3c9ce0;
-
+        /*border: 1px ridge #3c9ce0;*/
     /*min-width: 380px;*/   /* (!) */
-
     float: left;
-    /*display: inline-block;*/
+        /*display: inline-block;*/
 }
 .order-summary span {
     display: inline-block;
-    /*min-width: 160px;*/
+        /*min-width: 160px;*/
     margin-bottom: 8px;
-    /*font-weight: normal;*/
+        /*font-weight: normal;*/
     margin-right: 20px;
 }
 
 .order-sum {
     font-weight: normal;
     border: 1px ridge rgba(166, 166, 166, 0.38);
-
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-
     padding-right: 5%;
 }
 
@@ -352,21 +311,21 @@ div.order-option a {
 }
 
 .order-sum-pay-met, .order-sum-pay-date, .order-sum-del-meth {
-    /*display: inline-block;
-    width: 32%;*/
+        /*display: inline-block;
+        width: 32%;*/
     margin-bottom: 16px;
 }
-/*
-.order-sum-pay-date {
-    min-width: 280px;
-}*/
+
+    /*.order-sum-pay-date {
+        min-width: 280px;
+    }*/
 
 #order-status {
-    border: 1px ridge white;
+        /*border: 1px ridge white;*/
     width: 45%;
-    /*display: inline-block;*/
+        /*display: inline-block;*/
     float: left;
-    /*min-width: 315px;*/
+        /*min-width: 315px;*/
     margin-top: 10px;
     font-weight: normal;
 }
@@ -379,39 +338,38 @@ div.order-option a {
     overflow: hidden;
 }
 
-/* button --> */
+/* button --> --------------------------------------------------------------------------------- */
 
 .update-order-status {
     width: 135px !important;
 }
 
+/*.update-order-status:nth-of-type(2) {
+    !*width: 135px !important;*!
+}*/
+
 #update-status {
     height: 300px;
     width: 660px;
-
     background-color: #545454;
-
-    /*position: fixed;
-    top: 25em;
-    left: 45em;*/
-
+        /*position: fixed;
+        top: 25em;
+        left: 45em;*/
     position: absolute;
     top: 59%;
     left: 60%;
     transform: translate(-50%, -50%);
     z-index: 2000;
-
     border-radius: 5px;
 
 }
 #update-status > h2 {
     margin-left: 20px;
+    margin-top: 25px;
     color: #FAFAFFFF;
-    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
+        /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
     font-size: 1.2rem;
-
-    width: 605px;
-
+    width: 595px;
     display: inline-block;
 }
 
@@ -420,14 +378,23 @@ div.order-option a {
     border: none;
     height: 1px;
     margin: 5px 15px 5px 15px;
-    /*max-width: 255px;*/
+        /*max-width: 255px;*/
 }
 
 #update-status select#status-list {
-    /*appearance: none;*/
+        /*appearance: none;*/
     outline: 0;
-
-    background-color: #2c3e50;
+    background-color: #dadada;
+    height: 35px;
+    width: 210px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-left: 30px;
+    float: left;
+    margin-right: 25px;
+    position: relative;
+    top: 9px;
+    padding-left: 7px;
 }
 
 .hidden {
@@ -441,12 +408,71 @@ div.order-option a {
 .icon-cancel {
     display: inline-block;
     padding-bottom: 2px;
+    position: relative;
+    top: -3px;
 }
 
 .icon-cancel:hover {
     cursor: pointer;
     user-select: none;
-
     color: #1f1f1f;
     background-color: rgba(49, 49, 49, 0.19);
+}
+
+.status-title {
+    margin-left: 20px;
+    width: 40px;
+    margin-right: 0;
+    float: left;
+}
+
+div.delivery-date {
+    display: none;
+    color: #fafaff;
+        /*border: 1px ridge darkblue;*/
+    padding: 20px;
+}
+
+div.delivery-date input[type="date"] {
+    margin-left: 25px;
+    width: 140px;
+    height: 30px;
+    outline: 0;
+    border: 0;
+    border-radius: 3px;
+    padding-left: 20px;
+    background-color: #dadada;
+    position: relative;
+    top: -1px;
+}
+
+div.delivery-date label {
+    float: left;
+}
+
+div.delivery-date button {
+    margin-top: 35px;
+    margin-right: 25px;
+    float: left;
+}
+
+/*div.delivery-date button:nth-of-type(2) {*/
+button.cancel-order {
+    background-color: #8a8a8a;
+}
+
+/*div.delivery-date button:nth-of-type(2):hover {*/
+button.cancel-order:hover {
+    background-color: #797979;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    /*display: none;*/
+    position: relative;
+    top: 1px;
+    right: 5px;
+}
+
+form#update-order-date {
+    /*border: 1px ridge lightcoral;*/
 }

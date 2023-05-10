@@ -22,7 +22,14 @@
                     </a>
 
                     <div id="div-cart-header">
-                        <a class="top-nav-right" href="___koszyk.php" >Koszyk
+                        <!--<a class="top-nav-right" href="___koszyk.php" >Koszyk</a>-->
+                        <a class="top-nav-right" href="___koszyk.php">Koszyk
+                            <?php
+                            if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) {
+                                query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
+                                echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
+                            }
+                            ?>
                         </a>
                     </div>
                     <!-- <div style="height: 25px; width: 25px; margin: 0 auto 0 auto; border: 1px dashed red;"> if you want to have content in center -->
