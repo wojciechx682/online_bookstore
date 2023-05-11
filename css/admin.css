@@ -356,7 +356,7 @@ div.order-option a {
         top: 25em;
         left: 45em;*/
     position: absolute;
-    top: 59%;
+    top: 50%;
     left: 60%;
     transform: translate(-50%, -50%);
     z-index: 2000;
@@ -434,7 +434,7 @@ div.delivery-date {
 }
 
 div.delivery-date input[type="date"] {
-    margin-left: 25px;
+    margin-left: 26px;
     width: 140px;
     height: 30px;
     outline: 0;
@@ -475,4 +475,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 form#update-order-date {
     /*border: 1px ridge lightcoral;*/
+}
+
+span.date-error {
+    display: none;
+    font-weight: bold;
+    color: red;
+        position: absolute;
+    margin-top: 15px;
+    margin-left: 129px;
 }

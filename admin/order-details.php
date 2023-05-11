@@ -120,12 +120,11 @@
 
                     <label>Termin dostawy <input type="date" name="order-date"></label><div style="clear: both;"></div>
 
+                    <span class="date-error">Podaj poprawną datę</span> <div style="clear: both;"></div>
+
                     <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
 
                 </form>
-
-
-
 
                 <!--<button class="update-order-status btn-link btn-link-static">Potwierdź</button>-->
                 <button class="update-order-status cancel-order btn-link btn-link-static">Anuluj</button>
@@ -159,7 +158,7 @@
         cancelBtn = document.querySelector('.cancel-order');
 
         cancelBtn.addEventListener("click", function() {
-            console.log("cancelBtn => ", cancelBtn);
+            //console.log("cancelBtn => ", cancelBtn);
             toggleBox();
         });
 
@@ -168,6 +167,12 @@
             allContainer.classList.toggle("bright");
         }
 
+        dateInput = document.querySelector('form#update-order-date input[type="date"]'); // kliknięcie na datę usuwa kom. o błędzie
+
+        dateInput.addEventListener("focus", function() {
+            $("span.date-error").hide();
+            $("div.delivery-date button").css('margin-top', '35px');
+        });
 
     </script>
 
@@ -182,12 +187,12 @@
 
         list.addEventListener("change", function() {
             const selectedOption = this.options[this.selectedIndex]; // get the <option> element that was selected - after "change" event;
-            console.log(selectedOption.innerHTML);
+            //console.log(selectedOption.innerHTML);
 
             const form = document.querySelector(".delivery-date");
 
             if(selectedOption.innerHTML === "W trakcie realizacji") {
-                console.log("form => ", form);
+                //console.log("form => ", form);
                 form.style.display = "block";
             } else {
                 form.style.display = "none";
@@ -197,8 +202,29 @@
 
 
     </script>
-
+        <script>
+            function finishUpdate() {
+                console.log("\n212 finishedUpdate fun");
+                const form = document.getElementById("update-order-date");
+                const btn = document.querySelector(".cancel-order");
+                form.style.display = "none";
+                btn.style.display = "none";
+            }
+        </script>
     <script src="order-date-jq.js"></script>
+
+
+
+    <!-- ukrycie formularza + buttona "Anuluj" PO POMYŚLNYM ZREALIZOWANIU ZAPYTANIA TYPU UPDATE (!) -->
+
+        <?php
+            /*if(isset($_SESSION["update-successful"]) && $_SESSION["update-successful"] === true ) {
+                unset($_SESSION["update-successful"]);
+                echo '<script>finishUpdate();</script>';
+            }*/
+        ?>
+
+
 
 
     </body>

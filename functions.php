@@ -906,6 +906,10 @@ EOT;
         }
     }
 
+    function updateOrder($result) {
+        $_SESSION["update-successful"] = true;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Funkcja ustanawiająca połączenie z bazą danych i realizująca zapytanie sql
@@ -958,12 +962,12 @@ EOT;
         {
             $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
 
-            if($polaczenie->connect_errno)
-            {
+            if($polaczenie->connect_errno) {
+
                 throw new Exception(mysqli_connect_errno());
             }
-            else                                  // udane polaczenie
-            {
+            else {
+
                 if(gettype($value) !== "array") { // jeśli to nie jest tablica
 
                     $value = [$value];            // zrób z niej tablicę
@@ -973,8 +977,7 @@ EOT;
                 //	$values = [$values];
                 //}
 
-                for($i = 0; $i < count($value); $i++)
-                {
+                for($i = 0; $i < count($value); $i++) {
                     $value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
                 }
 
@@ -985,6 +988,13 @@ EOT;
 
                     // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
                     if(gettype($result) != "object") { // brak zwróconych wyników
+
+                                    // echo "\n type of result -> <br> gettype($result) <br>";
+
+                        // (!) $result = "1";    // "boolean"
+                        echo "\n => " . gettype($result) . "\n\n <br>"; // "boolean"
+
+                        /*exit();*/
 
                         //echo "<br>613<br>"; exit();
 

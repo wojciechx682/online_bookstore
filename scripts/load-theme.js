@@ -1,5 +1,4 @@
-
-window.addEventListener("load", function() {
+/* window.addEventListener("load", function() {
 
     const selectedValue = localStorage.getItem("theme");
 
@@ -8,4 +7,4 @@ window.addEventListener("load", function() {
     } else {
         setBlackTheme();
     }
-});
+}); */

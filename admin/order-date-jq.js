@@ -6,12 +6,38 @@ $("#update-order-date").on("submit", function(e) {
 
             /*let details = $(this);*/ // obiekt zawierający dane formularza;
 
-   /* console.log("\ndetails => ", details);
-    console.log("\ntypeof details => ", typeof(details)); // String
+        //console.log("\ndetails => ", details);
+        //console.log("\ntypeof details => ", typeof(details)); // String
     let dateValue = details.slice(11);
     console.log("\ndateValue => ", dateValue);
-    console.log("\ntypeof dateValue => ", typeof(dateValue)); // String*/
+    console.log("\ntypeof dateValue => ", typeof(dateValue)); // String
 
+            // Walidacja daty
+            const date = new Date(); // obiekt Date
+
+            const year = date.getFullYear();   // 2023
+            let month = date.getMonth() + 1; // 05
+            let day = date.getDate();        // 11
+
+            if(month < 10) {
+                month = "0" + month;
+            } if(day < 10) {
+                day = "0" + day;
+            }
+            const todayDate = [year, month, day].join('-');
+            console.log("\ntodayDate => ", todayDate); // 👉️ "2023-1-4"
+
+            if((dateValue < todayDate) || dateValue === undefined || dateValue == null) {
+                console.log("zła data");
+                    // window.location.href="admin.php";
+                $('.date-error').css('display', 'block');
+                $('div.delivery-date button').css('margin-top', '50px');
+
+                return; // (?) - (!) TUTAJ MA "WYJŚĆ" TA FUNKCJA !
+
+            } else {
+                dateValue = validateDate(dateValue);
+            }
             // Można zamienić ten String na Obiekt (Object) / lub Tablicę;
                 // można to zrobić za pomocą metod -> $.parseParams() , lub - $.deparam() ;
             // jeśli dane są w postaci obiektu, możemy uzyskac do nich dostęp za pomocą notacji key-value;
@@ -21,29 +47,41 @@ $("#update-order-date").on("submit", function(e) {
             /*console.log("\ndateValue => ", dateValue);*/
             //console.log("\nobject => ", object);
 
-    //let dateValue = details[0][0].value; // "2023-01-01";  type = String;
-
-    //console.log("\ndateValue => ", dateValue); // wartość (value) pola Daty
-    //console.log("\ndateValue => ", typeof(dateValue)); // wartość (value) pola Daty
-
     $.post("update-order-date.php", details, function(data) {
-                    //$("#update-order-date").html(data);
+        //$("#update-order-date").html(data);
         //$("#update-order-date").hide();
         //$("button.cancel-order").hide();
-        toggleBox();
+        //toggleBox();
+
+
+
+        finishUpdate();
+
+        $("div.delivery-date").append("<span>Udało się zmienić status zamówienia</span>");
+
     })
+
+    //let dateValue = details[0][0].value; // "2023-01-01";  type = String;
+    //console.log("\ndateValue => ", dateValue); // wartość (value) pola Daty
+    //console.log("\ndateValue => ", typeof(dateValue)); // wartość (value) pola Daty
 })
 
+function validateDate(date) { // "2023-01-01"
 
-/*
-$("#update-order-date").on("submit", function(e) {
+    const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/; // Define a regular expression to match the date format (YYYY-MM-DD)
+
+    if (!dateRegex.test(date)) { // Check if the date (String) matches the date format
+        return null;             // Return null if the date (string) is not a valid date format
+    } else {
+        return date;
+    }
+}
+
+/* $("#update-order-date").on("submit", function(e) {
     e.preventDefault();
-
     let details = $(this).serialize();
-
     console.log("\ndetails => ", details);
     console.log("\ntypeof details => ", typeof(details));
-
     // Send the data to the server using AJAX
     $.ajax({
         type: "POST",
@@ -56,4 +94,4 @@ $("#update-order-date").on("submit", function(e) {
             console.log('Error: ' + textStatus + ' ' + errorThrown);
         }
     });
-});*/
+}); */
