@@ -152,7 +152,10 @@ h3.section-header {
     /*border: 1px solid #2d6eff;*/
     /*border-bottom: 1px ridge #3a3a3a;*/
     border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
-    margin-bottom: 15px;
+
+    margin-bottom: 20px;
+
+
     padding-bottom: 15px;
 }
 
@@ -229,6 +232,8 @@ div.order div.order-action-options {
     background-color: var(--content);
         /*padding: 0 20px 0 20px;*/ /* (!) */
     width: 120px;
+
+    border-radius: 2px;
 }
 
 div.order-options-container {
@@ -244,6 +249,7 @@ div.order-option {
     border-bottom: 1px ridge rgba(210, 210, 210, 0.38);
     padding-bottom: 5px;
     padding-top: 5px;
+    border-radius: 2px;
 }
 
 div.order-option:hover {
@@ -302,6 +308,8 @@ div.order-option a {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     padding-right: 5%;
+
+    margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 710px) {
@@ -485,3 +493,9 @@ span.date-error {
     margin-top: 15px;
     margin-left: 129px;
 }
+
+span.update-success {
+    font-weight: bold;
+    color: #3fce3f;
+}
+

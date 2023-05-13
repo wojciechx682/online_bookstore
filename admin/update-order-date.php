@@ -17,12 +17,9 @@ include_once "../functions.php";
     query("UPDATE zamowienia SET termin_dostawy='%s', status='W trakcie realizacji' WHERE id_zamowienia = '%s'", "updateOrder", [$date, $_SESSION["order-id"]] ); // ["update-successful"]=> bool(true); - jeśli udało się zrealizować ZAPYTANIE UPDATE !
 
 
-    //var_dump($_SESSION);
+    // var_dump($_SESSION);
 
-    //exit();
-
-
-
+    // exit();
 
     // (!) Dodać walidacje daty - tutaj albo w JS !
 

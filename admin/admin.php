@@ -79,7 +79,7 @@
         </main>
     </div>
 
-    <!--<footer>
+    <!-- <footer>
         <div id="footer">
             <script src="../scripts/set-theme.js"></script>
             <pre>

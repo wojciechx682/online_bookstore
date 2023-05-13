@@ -2,7 +2,7 @@
     session_start();
     include_once "../functions.php";
     if(!(isset($_SESSION['zalogowany']))) {
-        header("Location: index.php?login-error"); // (?)
+        header("Location: index.php?login-error");
         exit();
     }
 ?>
@@ -14,16 +14,7 @@
 
     <body>
 
-        <?php
-            /*echo "<div style='margin-left: 18px;'><br> hi admin <br></div>";
-            echo "<div style='margin-left: 18px !important; margin-bottom: 15px; color: #002fad; font-weight: bold;'><i>";
-                    echo var_dump($_SESSION);
-                    echo "</i></div>";*/
-        ?>
-
         <div id="all-container">
-
-            <?php //require "../view/___header-container.php"; ?>
 
             <div id="container">
 
@@ -33,16 +24,14 @@
 
                     <?php require "../template/admin/top-nav.php"; ?>
 
-
                     <div id="content">
 
                         <h3 class="section-header">Zamówienia</h3>
 
-                        <?php require "../view/admin/order-header.php"; ?>  <!-- order header => ID, Data, Klient, ... -->
+                        <?php require "../view/admin/order-header.php"; ?>
+                        <!-- order header => ID, Data, Klient, ... -->
 
                         <?php
-                            // query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia", "get_orders", "");
-
                             query("SELECT zm.id_zamowienia,
                                 zm.data_zlozenia_zamowienia, 
                                 kl.imie, kl.nazwisko,
@@ -53,13 +42,12 @@
                                 zm.id_klienta = kl.id_klienta", "get_all_orders", "");
                         ?>
 
-
                     </div>
 
                 </main>
             </div>
 
-            <!--<footer>
+            <!-- <footer>
                 <div id="footer">
                     <script src="../scripts/set-theme.js"></script>
                     <pre>
@@ -71,6 +59,5 @@
             <?php //require "../view/___footer.php"; ?>
 
         </div>
-
     </body>
 </html>

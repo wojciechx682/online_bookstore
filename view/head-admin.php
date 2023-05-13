@@ -8,13 +8,9 @@
         <link rel="stylesheet" href="../css/slider.css">
             <link rel="stylesheet" href="../css/book-page-tabs.css">
             <link rel="stylesheet" href="../css/book-page.css">
-
             <link rel="stylesheet" href="../css/new.css">
-
-        <link rel="stylesheet" href="../css/admin.css"> <!-- <== -->
-
-        <link href="../assets/fontello/css/fontello.css" rel="stylesheet" type="text/css"> <!-- fontello -->
-
+            <link rel="stylesheet" href="../css/admin.css">
+            <link href="../assets/fontello/css/fontello.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="../css/jquery-outsider.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +21,5 @@
     <script src="../scripts/display-nav.js"></script>
     <script src="../scripts/change-quantity.js"></script>
     <script src="../scripts/load-theme.js"></script>
-
     <script src="../scripts/show-order-options.js"></script> <!-- admin/orders.php -->
 </head>

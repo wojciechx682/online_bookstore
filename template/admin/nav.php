@@ -1,10 +1,9 @@
+
 <!-- template used on admin page (admin.php) to display nav -->
 
 <aside id="admin-nav">
 
     <div id="nav" class="nav-visible admin-nav"> <!-- html5 nav -->
-
-        <!-- <i>this is admin nav</i> -->
 
         <div id="admin-data">
 
@@ -15,17 +14,14 @@
                 <span><?= $_SESSION["stanowisko"] ?></span>
             </div>
 
-
-
         </div>
-
 
         <a href="admin.php"><h3>Panel główny</h3><hr></a>
         <a href="orders.php"><h3>Zamówienia</h3><hr></a>
-        <!--<h3><a href="orders.php">Zamówienia</a></h3><hr>-->
+
+        <!-- <h3><a href="orders.php">Zamówienia</a></h3><hr> -->
 
         <!-- <h3>Sortowanie</h3>
-
             <select id="sortuj_wg">
                 <option value="1">ceny rosnąco</option>
                 <option value="2">ceny malejąco</option>
@@ -34,9 +30,7 @@
                 <option value="5">Najnowszych</option>
                 <option value="6">Najstarszych</option>
             </select>
-
             <h3>Cena</h3>
-
             <div id="price-range">
                 <label>
                     <span>
@@ -52,17 +46,13 @@
                 </label>
                 <div id="slider"></div>
             </div>
-
             <div id="input-search-nav">
                 <h3>Tytyuł</h3>
-
                 <form action="___index2.php" method="get">
                     <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
                     <input type="submit" value="">
                 </form>
             </div>
-
             <button id="filter-authors">Zastosuj</button> -->
     </div>
-
 </aside>
