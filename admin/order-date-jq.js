@@ -31,7 +31,7 @@ $("#update-order-date").on("submit", function(e) {
                 $('.date-error').css('display', 'block');
                 $('div.delivery-date button').css('margin-top', '50px');
 
-                return; // (?) - (!) TUTAJ MA "WYJŚĆ" TA FUNKCJA !
+                return; // (?) - (!) TUTAJ MA "WYJŚĆ" TA FUNKCJA ! - czy na pewno ? ...
 
             } else {
                 dateValue = validateDate(dateValue);

@@ -143,7 +143,7 @@
 
             if(selectedOption.innerHTML === "W trakcie realizacji") {
                 form.style.display = "block";
-            } else if(selectedOption.innerHTML === "Wysłano") {
+            } else if(selectedOption.innerHTML === "Wysłano") { // (!!!!!!!!!!!!!!!!!!!!!!)
                 form.style.display = "block";
 
                 const deliveryDate = document.createElement('input');
@@ -160,7 +160,7 @@
 
     </script>
 
-    <!-- ukrycie formularza + buttona "Anuluj" PO POMYŚLNYM ZREALIZOWANIU ZAPYTANIA TYPU UPDATE (!) -->
+    <!-- ukrycie formularza + buttona "Anuluj" - PO POMYŚLNYM ZREALIZOWANIU ZAPYTANIA TYPU UPDATE (!) -->
 
     <script>
         function finishUpdate() {
@@ -191,7 +191,9 @@
     <script src="order-date-jq.js"></script>
 
     <?php
-        /* if(isset($_SESSION["update-successful"]) && $_SESSION["update-successful"] === true ) {
+        /* !!! TO POWINNO BYĆ ODKOMENTOWANE ! - ponieważ ta zmienna istnieje TYLKO WTEDY - gdy udało się ZAKTUALIZOWAĆ DANE !!!!
+
+        if(isset($_SESSION["update-successful"]) && $_SESSION["update-successful"] === true ) {
             unset($_SESSION["update-successful"]);
             echo '<script>finishUpdate();</script>';
         } */
