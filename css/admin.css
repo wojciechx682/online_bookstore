@@ -379,7 +379,14 @@ div.order-option a {
     font-size: 1.2rem;
     width: 595px;
     display: inline-block;
+    user-select: none;
 }
+
+#update-status > h2:hover {
+    cursor: pointer;
+}
+
+
 
 #update-status hr {
     background-color: rgba(166, 166, 166, 0.7);
@@ -394,7 +401,7 @@ div.order-option a {
     outline: 0;
     background-color: #dadada;
     height: 35px;
-    width: 210px;
+    width: 215px;
     border-radius: 5px;
     margin-top: 5px;
     margin-left: 30px;
@@ -403,6 +410,10 @@ div.order-option a {
     position: relative;
     top: 9px;
     padding-left: 7px;
+}
+
+#update-status select#status-list:hover {
+   cursor: pointer;
 }
 
 .hidden {
@@ -418,27 +429,34 @@ div.order-option a {
     padding-bottom: 2px;
     position: relative;
     top: -3px;
+
+    border-radius: 3px;
 }
 
 .icon-cancel:hover {
     cursor: pointer;
     user-select: none;
-    color: #1f1f1f;
-    background-color: rgba(49, 49, 49, 0.19);
+    /*color: #1f1f1f;*/
+    color: #c71616;
+    background-color: rgba(14, 14, 14, 0.4);
 }
 
 .status-title {
-    margin-left: 20px;
+    margin-left: 25px;
     width: 40px;
     margin-right: 0;
     float: left;
+}
+
+.status-title > label {
+    user-select: none;
 }
 
 div.delivery-date {
     display: none;
     color: #fafaff;
         /*border: 1px ridge darkblue;*/
-    padding: 20px;
+    padding: 20px 20px 20px 29px;
 }
 
 div.delivery-date input[type="date"] {
@@ -452,10 +470,14 @@ div.delivery-date input[type="date"] {
     background-color: #dadada;
     position: relative;
     top: -1px;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: .5px;
 }
 
 div.delivery-date label {
     float: left;
+    cursor: pointer;
 }
 
 div.delivery-date button {
@@ -496,6 +518,11 @@ span.date-error {
 
 span.update-success {
     font-weight: bold;
-    color: #3fce3f;
+    /*color: #3fce3f;*/
+    color: #00ac00;
+    user-select: none;
 }
 
+form#update-order-date button.update-order-status:nth-of-type(1) {
+    margin-left: -14px !important;
+}

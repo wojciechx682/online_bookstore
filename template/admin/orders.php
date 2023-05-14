@@ -20,10 +20,10 @@
                     <a href="order-details.php?%s">Przeglądaj</a>
                 </div>
                 <div class="order-option">
-                    <a href="">Zmień status</a>
+                    <a href=""><span style="color: red;">Zmień status</span></a>
                 </div>
                 <div class="order-option">
-                    <a href="">Usuń</a>
+                    <a href=""><span style="color: red;">Usuń</span></a>
                 </div>
             </div>
         </div>

@@ -28,18 +28,18 @@
 
                         <h3 class="section-header">Szczegóły zamówienia</h3>
 
-                        <?php require "../view/admin/order-details-header.php"; ?>  <!--order header => ID, Data, Klient, ...-->
+                        <?php require "../view/admin/order-details-header.php"; ?>
 
                         <?php
-                            $_SESSION["order-id"] = array_keys($_GET)[0]; // $_GET param => "987" (id_zamowienia);
+                            $_SESSION["order-id"] = array_keys($_GET)[0];
 
                             query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'", "get_order_details_admin", $_SESSION["order-id"]); // $_SESSION['order_details_books_id'];
 
-                            query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'", "get_order_sum_admin", $_SESSION["order-id"]); // stopka (SUMA);
+                            query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'", "get_order_sum_admin", $_SESSION["order-id"]);
 
                             echo '<div id="order-det-container">';
 
-                            query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'", "get_order_summary", $_SESSION["order-id"]); // szczegółowe dane zamówienia;
+                            query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'", "get_order_summary", $_SESSION["order-id"]);
 
                         ?>
 
@@ -78,13 +78,13 @@
 
             <i class="icon-cancel"></i><hr>
 
-            <h4 class="section-header status-title">Status</h4>
+            <h4 class="section-header status-title"><label for="status-list">Status:</label></h4>
 
             <select id="status-list">
-                <option value="oczekujace">Oczekujące na potwierdzenie</option>
-                <option value="wtrakcie">W trakcie realizacji</option>
-                <option value="wyslano">Wysłano</option>
-                <option value="dostarczono">Dostarczono</option>
+                <option>Oczekujące na potwierdzenie</option>
+                <option>W trakcie realizacji</option>
+                <option>Wysłano</option>
+                <option>Dostarczono</option>
             </select>
 
             <div style="clear: both;"></div>
@@ -106,29 +106,21 @@
 
     <script>
 
-        btn = document.querySelector('.update-order-status');        // "Potwierdź" zmianę statusu
+        btn = document.querySelector('.update-order-status');        // "Aktualizuj" zmianę statusu
         let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu
         let allContainer = document.getElementById("all-container");
 
         btn.addEventListener("click", function() {
-                // alert("yey ! ");
-                // console.log("statusBox => ", statusBox);
-                /* statusBox.classList.toggle("hidden");
-                allContainer.classList.toggle("bright"); */
             toggleBox();
         });
 
         icon = document.querySelector('.icon-cancel');
         icon.addEventListener("click", function() {
-                /* console.log("statusBox => ", statusBox);*/
-                /* statusBox.classList.toggle("hidden");
-                allContainer.classList.toggle("bright"); */
             toggleBox();
         });
 
         cancelBtn = document.querySelector('.cancel-order');
         cancelBtn.addEventListener("click", function() {
-                // console.log("cancelBtn => ", cancelBtn);
             toggleBox();
         });
 
@@ -144,12 +136,7 @@
             $("div.delivery-date button").css('margin-top', '35px');
         });
 
-    </script>
-
-    <script>
-
-        let list = document.getElementById("status-list"); // lista <select> - zmiana opcji wyboru -->
-
+        let list = document.getElementById("status-list"); // lista <select> - zmiana opcji wyboru;
         list.addEventListener("change", function() {
             const selectedOption = this.options[this.selectedIndex]; // get the <option> ELEMENT that was selected - after "change" event;
             const form = document.querySelector(".delivery-date");

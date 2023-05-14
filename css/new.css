@@ -2387,13 +2387,7 @@ div#content-books {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-
-
-
-
-
-
-
+    outline: none;
 }
 
 button.btn-link[disabled=disabled], button.btn-link:disabled { /* form acion "dodaj do koszyka" - button */

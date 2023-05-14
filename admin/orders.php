@@ -29,17 +29,16 @@
                         <h3 class="section-header">Zamówienia</h3>
 
                         <?php require "../view/admin/order-header.php"; ?>
-                        <!-- order header => ID, Data, Klient, ... -->
 
                         <?php
                             query("SELECT zm.id_zamowienia,
-                                zm.data_zlozenia_zamowienia, 
-                                kl.imie, kl.nazwisko,
-                                pl.kwota, pl.sposob_platnosci,
-                                zm.status 
-                                FROM zamowienia AS zm, klienci AS kl, platnosci AS pl 
-                                WHERE zm.id_zamowienia = pl.id_zamowienia AND
-                                zm.id_klienta = kl.id_klienta", "get_all_orders", "");
+                                            zm.data_zlozenia_zamowienia, 
+                                            kl.imie, kl.nazwisko,
+                                            pl.kwota, pl.sposob_platnosci,
+                                            zm.status 
+                                        FROM zamowienia AS zm, klienci AS kl, platnosci AS pl 
+                                        WHERE zm.id_zamowienia = pl.id_zamowienia AND
+                                        zm.id_klienta = kl.id_klienta", "get_all_orders", "");
                         ?>
 
                     </div>
