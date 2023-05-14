@@ -233,7 +233,7 @@ div.order div.order-action-options {
         /*padding: 0 20px 0 20px;*/ /* (!) */
     width: 120px;
 
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
 div.order-options-container {
@@ -478,11 +478,25 @@ div.delivery-date input[type="date"] {
 div.delivery-date label {
     float: left;
     cursor: pointer;
+
+}
+div.delivery-date label:nth-of-type(1) {
+    margin-bottom: 15px;
+}
+
+div.delivery-date label:nth-of-type(2) {
+    position: absolute;
+}
+
+div.delivery-date label:nth-of-type(2) {
+    display: none;
+    /* label - data dostawy - delivery date */
 }
 
 div.delivery-date button {
     margin-top: 35px;
-    margin-right: 25px;
+    /*margin-right: 25px;*/
+    margin-right: 13px;
     float: left;
 }
 
@@ -523,6 +537,11 @@ span.update-success {
     user-select: none;
 }
 
-form#update-order-date button.update-order-status:nth-of-type(1) {
+/*form#update-order-date button.update-order-status:nth-of-type(1) {
     margin-left: -14px !important;
+}*/
+
+form#update-order-date span.order-label {
+    display: inline-block;
+    min-width: 150px;
 }

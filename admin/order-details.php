@@ -51,9 +51,7 @@
 
                         </div>
 
-                        <div style="clear: both"></div>
-
-                        <!-- </div> -->
+                        <div style="clear: both"></div> <!-- </div> -->
 
                     </div>
                 </main>
@@ -68,7 +66,7 @@
                 </div>
             </footer> -->
 
-            <?php //require "../view/___footer.php"; ?>
+            <?php // require "../view/___footer.php"; ?>
 
         </div>
 
@@ -94,7 +92,14 @@
             <div class="delivery-date">
 
                 <form id="update-order-date" action="update-order-date.php" method="post">
-                    <label>Termin dostawy <input type="date" name="order-date"></label><div style="clear: both;"></div>
+                    <label>
+                        <span class="order-label">Termin dostawy</span><input type="date" name="order-date">
+                    </label>
+                        <div style="clear: both;"></div>
+                    <label>
+                        <span class="order-label">Data wysłania</span><input type="date" name="dispatch-date">
+                    </label>
+                        <div style="clear: both;"></div>
                     <span class="date-error">Podaj poprawną datę</span><div style="clear: both;"></div>
                     <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
                 </form>
@@ -137,24 +142,73 @@
         });
 
         let list = document.getElementById("status-list"); // lista <select> - zmiana opcji wyboru;
+
         list.addEventListener("change", function() {
             const selectedOption = this.options[this.selectedIndex]; // get the <option> ELEMENT that was selected - after "change" event;
             const form = document.querySelector(".delivery-date");
 
+            //const deliveryDate = document.createElement('input');
+            const deliveryDate = document.querySelector("form#update-order-date label:nth-of-type(2)"); // <label> - input - data wysłania zamówienia
+
+            const div = document.querySelector("div.delivery-date");
+            const btns = document.querySelectorAll("div.delivery-date button");
+
             if(selectedOption.innerHTML === "W trakcie realizacji") {
                 form.style.display = "block";
+                    if(deliveryDate.style.display === "block") {
+                        deliveryDate.style.display = "none";
+                    }
+                    if(div.style.paddingTop !== "20px") {
+                        div.style.paddingTop = "20px";
+                    }
+
+                $('.update-order-status').each(function(index, element) {
+                    $(element).css('margin-top', '35px'); // Set width to 200 pixels
+                });
             } else if(selectedOption.innerHTML === "Wysłano") { // (!!!!!!!!!!!!!!!!!!!!!!)
                 form.style.display = "block";
 
-                const deliveryDate = document.createElement('input');
-                deliveryDate.setAttribute('type', 'date');
-                deliveryDate.setAttribute('name', 'delivery-date');
-                //newInput.setAttribute('', 'Enter your new input here');
 
-                form.appendChild(deliveryDate);
+
+                console.log("\ndeliveryDate => ", deliveryDate);
+
+                deliveryDate.style.display = "block";
+                deliveryDate.style.marginBottom = "15px";
+
+
+                div.style.paddingTop = "5px";
+
+                /*for(let i=0; i<btns.length; i++) {
+                    btn[i].style.marginTop = "50px";
+                }*/
+
+               /* $('.update-order-status').each(function(element) {
+                    $(element).css('margin-top', '50px'); // Set margin-top for each element
+                    console.log("183");
+                });*/
+
+                $('.update-order-status').each(function(index, element) {
+                    $(element).css('margin-top', '50px'); // Set width to 200 pixels
+                });
+
+                /*$(document).ready(function() {
+                    $('.my-class').each(function(index, element) {
+                        $(element).css('margin-top', index * 10); // Set margin-top for each element
+                    });
+                });*/
+
+                //btn.style.marginTop = "50px";
+
+
+                /*deliveryDate.setAttribute('type', 'date');
+                deliveryDate.setAttribute('name', 'delivery-date');*/
+                        //newInput.setAttribute('', 'Enter your new input here');
+
+                //form.appendChild(deliveryDate);
 
             } else {
                 form.style.display = "none";
+                deliveryDate.style.display = "none";
             }
         });
 
@@ -164,7 +218,7 @@
 
     <script>
         function finishUpdate() {
-                console.log("\n212 finishedUpdate fun");
+                //console.log("\n212 finishedUpdate fun");
             const form = document.getElementById("update-order-date");
             const btn = document.querySelector(".cancel-order");
             form.style.display = "none";
