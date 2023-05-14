@@ -153,8 +153,19 @@
         list.addEventListener("change", function() {
             const selectedOption = this.options[this.selectedIndex]; // get the <option> ELEMENT that was selected - after "change" event;
             const form = document.querySelector(".delivery-date");
+
             if(selectedOption.innerHTML === "W trakcie realizacji") {
                 form.style.display = "block";
+            } else if(selectedOption.innerHTML === "Wysłano") {
+                form.style.display = "block";
+
+                const deliveryDate = document.createElement('input');
+                deliveryDate.setAttribute('type', 'date');
+                deliveryDate.setAttribute('name', 'delivery-date');
+                //newInput.setAttribute('', 'Enter your new input here');
+
+                form.appendChild(deliveryDate);
+
             } else {
                 form.style.display = "none";
             }
