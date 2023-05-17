@@ -907,7 +907,9 @@ EOT;
     }
 
     function updateOrder($result) {
-        $_SESSION["update-successful"] = true;
+
+        $_SESSION["update-successful"] = false;
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -992,7 +994,7 @@ EOT;
                                     // echo "\n type of result -> <br> gettype($result) <br>";
 
                         // (!) $result = "1";    // "boolean"
-                        echo "\n => " . gettype($result) . "\n\n <br>"; // "boolean"
+                        //echo "\n => " . gettype($result) . "\n\n <br>"; // "boolean"
 
                         /*exit();*/
 
