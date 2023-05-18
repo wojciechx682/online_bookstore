@@ -6,18 +6,20 @@ include_once "../functions.php";
     // plik obsługujący żądanie POST aktualizujące termin dostawy zamówienia ->
 
     // (!) w książce było info o tym, że znajdują się na stronie pliki PHP obsługujące żądania AJAX,
-    // muszę z nich skorzystać bo nie wiem co ma robić i jak wyglądać plik PHP obsługujący żądanie;
+    // muszę z nich skorzystać bo nie wiem co ma robić i jak wyglądać plik PHP obsługujący żądanie ;
 
-    $date = $_POST["order-date"]; // termin dostawy
-    //$dispDate = $_POST["dispatch-date"]; // data wysyłki
-// data serialized (string) =>  order-date=2023-05-17&dispatch-date=2023-05-18
+    // $date = $_POST["order-date"]; // termin dostawy
+    // $dispDate = $_POST["dispatch-date"]; // data wysyłki
+    // data serialized (string) =>  order-date=2023-05-17&dispatch-date=2023-05-18 ;
 
-                                                            //echo "<br> dateValue -> " . $date; // "dateValue -> 2023-05-16"
-                                                            //exit();
+                                                            // echo "<br> dateValue -> " . $date; // "dateValue -> 2023-05-16" ;
+                                                            // exit() ;
 
     $_SESSION["update-successful"] = true;
 
-    query("UPDATE zamowienia SET termin_dostawy='%s', status='W trakcie realizacji' WHERE id_zamowienia = '%s'", "updateOrder", [$date, $_SESSION["order-id"]] ); // (!) ["update-successful"]=> bool(true); - jeśli udało się zrealizować ZAPYTANIE UPDATE !
+    if(isset($_POST["order-date"])) {
+        query("UPDATE zamowienia SET termin_dostawy='%s', status='W trakcie realizacji' WHERE id_zamowienia = '%s'", "updateOrder", [$_POST["order-date"], $_SESSION["order-id"]]);
+    }
 
     if(isset($_POST["dispatch-date"])) {
         query("UPDATE zamowienia SET data_wysłania_zamowienia='%s', status='Wysłano' WHERE id_zamowienia = '%s'", "updateOrder", [$_POST["dispatch-date"], $_SESSION["order-id"]] );

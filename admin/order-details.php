@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    include_once "../functions.php";
+        session_start();
+        include_once "../functions.php";
     if(!(isset($_SESSION['zalogowany']))) {
         header("Location: ../user/___index2.php?login-error");
         exit();
@@ -106,8 +106,6 @@
                         </label>
                         <div style="clear: both;"></div>
 
-
-
                 <span class="date-error">Podaj poprawną datę</span><div style="clear: both;"></div>
                 <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
             </form>
@@ -119,8 +117,8 @@
 
 <script>
 
-    btn = document.querySelector('.update-order-status');        // "Aktualizuj" zmianę statusu
-    let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu
+    btn = document.querySelector('button.update-order-status');  // button - "Aktualizuj" zmianę statusu;
+    let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu;
     let allContainer = document.getElementById("all-container");
 
     btn.addEventListener("click", function() {
@@ -143,10 +141,23 @@ function toggleBox() {
 }
 
 // kliknięcie na datę usuwa kom. o błędzie
-dateInput = document.querySelector('form#update-order-date input[type="date"]');
-dateInput.addEventListener("focus", function() {
+//dateInput = document.querySelector('form#update-order-date input[type="date"]');
+
+let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"]');
+
+/* dateInput.addEventListener("focus", function() {
     $("span.date-error").hide();
     $("div.delivery-date button").css('margin-top', '35px');
+}); */
+
+// Loop through each input element;
+dateInputs.forEach(function(dateInput) {
+    // Add the event listener to each input element;
+    dateInput.addEventListener("focus", function() {
+        // Perform your desired actions when the input is focused;
+        $("span.date-error").hide();
+        $("div.delivery-date button").css('margin-top', '35px');
+    });
 });
 
     let list = document.getElementById("status-list"); // lista <select> - zmiana opcji wyboru;
@@ -197,12 +208,14 @@ dateInput.addEventListener("focus", function() {
 
             div.style.paddingTop = "5px";
 
-
-
             if(delDate.style.display === "block") {
                 delDate.style.display = "none"; // ukricye daty dostarczenia
             }
 
+            //fDate.style.display = "none";
+            if(fDate.style.display === "none") { // <input type="date" ...>
+                fDate.style.display = "block";
+            }
 
             /*for(let i=0; i<btns.length; i++) {
                 btn[i].style.marginTop = "50px";
@@ -211,31 +224,30 @@ dateInput.addEventListener("focus", function() {
            /* $('.update-order-status').each(function(element) {
                 $(element).css('margin-top', '50px'); // Set margin-top for each element
                 console.log("183");
-            });*/
+            }); */
 
             $('.update-order-status').each(function(index, element) {
                 $(element).css('margin-top', '50px'); // Set width to 200 pixels
             });
 
-            /*$(document).ready(function() {
+            /* $(document).ready(function() {
                 $('.my-class').each(function(index, element) {
                     $(element).css('margin-top', index * 10); // Set margin-top for each element
                 });
-            });*/
+            }); */
 
             //btn.style.marginTop = "50px";
 
 
-            /*deliveryDate.setAttribute('type', 'date');
-            deliveryDate.setAttribute('name', 'delivery-date');*/
-                    //newInput.setAttribute('', 'Enter your new input here');
+            /* deliveryDate.setAttribute('type', 'date');
+            deliveryDate.setAttribute('name', 'delivery-date'); */
+                    // newInput.setAttribute('', 'Enter your new input here');
 
-            //form.appendChild(deliveryDate);
+            // form.appendChild(deliveryDate);
 
         } else if (selectedOption.innerHTML === "Dostarczono") {
 
             form.style.display = "block";
-
             fDate.style.display = "none";
 
             if(deliveryDate.style.display === "block") { // <input type="date" ...>
@@ -243,9 +255,6 @@ dateInput.addEventListener("focus", function() {
             }
 
             delDate.style.display = "block";
-
-
-
 
         } else {
             form.style.display = "none";
@@ -286,8 +295,7 @@ dateInput.addEventListener("focus", function() {
 <script src="order-date-jq.js"></script>
 
 <?php
-    //!!! TO POWINNO BYĆ ODKOMENTOWANE ! - ponieważ ta zmienna istnieje TYLKO WTEDY - gdy udało się ZAKTUALIZOWAĆ DANE !!!!
-
+    //!!! TO POWINNO BYĆ ODKOMENTOWANE ! - ponieważ ta zmienna istnieje TYLKO WTEDY - gdy udało się ZAKTUALIZOWAĆ DANE !!!!; (jednak nie bo AJAX nie odswieza strony)
     /*if(isset($_SESSION["update-successful"]) && $_SESSION["update-successful"] === true ) {
         unset($_SESSION["update-successful"]);
         echo '<script>finishUpdate();</script>';

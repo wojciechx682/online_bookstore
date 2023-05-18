@@ -1,6 +1,6 @@
 $("form#update-order-date").on("submit", function(e) {
 
-    e.preventDefault(); // uniemożliwienie wysłania formularza;
+    e.preventDefault(); // uniemożliwienie wysłania formularza ;
 
     let data = $("form#update-order-date").serialize();
     // Serializacja danych formularza;  Pobranie danych z formularza;
@@ -10,19 +10,16 @@ $("form#update-order-date").on("submit", function(e) {
 
                     /* let details = $(this); */ // obiekt zawierający dane formularza;
                         // console.log("\ndetails => ", details);
-                        // console.log("\ntypeof details => ", typeof(details)); // String
+                        // console.log("\ntypeof details => ", typeof(details)); // String;
 
-    console.log("\ndata serialized (string) => ", data);
+    //console.log("\ndata serialized (string) => ", data);
 
     let dateValue = data.slice(11,21); // "2023-01-01" - TERMIN DOSTAWY (!)
     let dispDate = data.slice(36); // "2023-01-01"
     let delDate = data.slice(42); // "2023-01-01" - data dostarczenia;
 
-    console.log("\ndateValue => ", dateValue);
-    console.log("\ntypeof dateValue => ", typeof(dateValue)); // String
-
+    console.log("\ndateValue => ", dateValue); // String;
     console.log("\ndispDate => ", dispDate);
-    console.log("\ndispDate 24 => ", dispDate.length);
     console.log("\ndelDate 26 => ", delDate);
 
             const date = new Date(); // Walidacja daty; // obiekt Date
@@ -138,7 +135,6 @@ function validateDate(date) { // "2023-01-01"
 function error() {
     $('.date-error').css('display', 'block');
     $('div.delivery-date button').css('margin-top', '50px');
-
 }
 
 /* $("#update-order-date").on("submit", function(e) {

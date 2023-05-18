@@ -459,6 +459,8 @@ div.delivery-date {
     color: #fafaff;
         /*border: 1px ridge darkblue;*/
     padding: 20px 20px 20px 29px;
+
+    min-height: 80px;
 }
 
 div.delivery-date input[type="date"] {
@@ -498,6 +500,7 @@ div.delivery-date label:nth-of-type(2) {
 div.delivery-date label:nth-of-type(3) {
     display: none;
     /* label - data dostawy - delivery date */
+    margin-bottom: 15px;
 }
 
 div.delivery-date button {
