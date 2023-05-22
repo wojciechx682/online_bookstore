@@ -1,6 +1,7 @@
 <?php
     session_start();
     include_once "../functions.php";
+
     if(!(isset($_SESSION['zalogowany']))) {
         header("Location: ../user/___index2.php?login-error");
         exit();
@@ -28,7 +29,7 @@
 
                     <h3 class="section-header">Zamówienia</h3>
 
-                    <?php require "../view/admin/order-header.php"; ?>
+                    <?php require "../view/admin/order-header.php"; // table header ?>
 
                     <?php
                         query("SELECT zm.id_zamowienia,

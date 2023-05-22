@@ -835,9 +835,9 @@ EOT;
 
     function get_order_details_admin($result) {
         $i = 0;
-        //$row = $result->fetch_assoc();
+        // $row = $result->fetch_assoc();
         while($row = $result->fetch_assoc()) {
-            //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
+            // echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
 
             // load the content from the external template file into string
             $order = file_get_contents("../template/admin/order-details.php");
@@ -845,19 +845,13 @@ EOT;
             // replace fields in $order string to author data from $result, display result content as HTML
             echo sprintf($order, $i, $row["tytul"], $row["ilosc"], $row["cena"]);
 
-           /* if($i === 0) {
+            /* if($i === 0) {
                 $order_f = file_get_contents("../template/admin/order-details-footer.php");
                 // replace fields in $order string to author data from $result, display result content as HTML
                 echo sprintf($order_f, $row["kwota"]);
-            }*/
-
-
+            } */
             $i++;
         }
-
-
-
-
 
         $result->free_result();
     }

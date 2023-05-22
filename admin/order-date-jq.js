@@ -12,15 +12,15 @@ $("form#update-order-date").on("submit", function(e) {
                         // console.log("\ndetails => ", details);
                         // console.log("\ntypeof details => ", typeof(details)); // String;
 
-    //console.log("\ndata serialized (string) => ", data);
+    // console.log("\ndata serialized (string) => ", data);
 
     let dateValue = data.slice(11,21); // "2023-01-01" - TERMIN DOSTAWY (!)
-    let dispDate = data.slice(36); // "2023-01-01"
+    let dispDate = data.slice(36,46); // "2023-01-01"
     let delDate = data.slice(42); // "2023-01-01" - data dostarczenia;
 
     console.log("\ndateValue => ", dateValue); // String;
     console.log("\ndispDate => ", dispDate);
-    console.log("\ndelDate 26 => ", delDate);
+    console.log("\ndelDate => ", delDate);
 
             const date = new Date(); // Walidacja daty; // obiekt Date
 
@@ -36,7 +36,7 @@ $("form#update-order-date").on("submit", function(e) {
 
             let todayDate = [year, month, day].join('-');
                 console.log("\ntodayDate => ", todayDate); // 👉️ "2023-1-4"
-                console.log("\ntodayDate => ", typeof(todayDate)); // 👉️ "2023-1-4"
+                // console.log("\ntodayDate => ", typeof(todayDate)); // 👉️ "2023-1-4"
 
 let list = document.getElementById("status-list");
 const selectedOption = list.options[list.selectedIndex];
@@ -53,10 +53,9 @@ const selectedOption = list.options[list.selectedIndex];
 
             } else if (
                 (selectedOption.innerHTML === "Wysłano") &&
-                (dispDate < todayDate)
+                ((dispDate < todayDate) || (dateValue < todayDate))
             )  {
-
-                //console.log("\n56");
+                console.log("\n56");
                 error();
                 return;
             } else if (
@@ -114,6 +113,8 @@ const selectedOption = list.options[list.selectedIndex];
 
         //$("div.delivery-date").html(data); // data - dane zwrócone z serwera.
         $("div.delivery-date").append(data);
+
+        //$("div.order-status > span")
     });
 
     //let dateValue = details[0][0].value; // "2023-01-01";  type = String;

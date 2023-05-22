@@ -5,7 +5,7 @@ function showOptions(id) { // admin/orders.php
     const options = button.nextElementSibling.querySelector('.order-action-options');
     const icon = button.querySelector('i');
 
-    console.log("i -> ", icon)
+    // console.log("i -> ", icon)
 
     if(options.style.display === "block") {
         options.style.display = "none";
@@ -16,4 +16,5 @@ function showOptions(id) { // admin/orders.php
         icon.classList.remove('icon-down-open');
         icon.classList.add('icon-up-open');
     }
+
 }

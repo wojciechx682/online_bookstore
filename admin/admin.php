@@ -1,8 +1,9 @@
 <?php
     session_start();
     include_once "../functions.php";
+
     if(!(isset($_SESSION['zalogowany']))) {
-        header("Location: ../user/___index2.php?login-error"); // (?)
+        header("Location: ../user/___index2.php?login-error");
         exit();
     }
 
@@ -31,7 +32,7 @@
 
         <div id="container">
 
-            <main>
+            <main
 
                 <?php require "../template/admin/nav.php"; ?>
 
