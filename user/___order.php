@@ -142,20 +142,22 @@
                                                 //$termin_dostawy = date('d-m-Y H:i', strtotime($date. ' +5 days'));
                                                 //$termin_dostawy = date('Y-m-d ', strtotime($date. ' +5 days'));
 
-                        // Termin dostawy
-                    //$termin_dostawy = $datetime->add(new DateInterval('P5D'))->format('Y-m-d'); // + 5 days
+                    // Termin dostawy
+                    // $termin_dostawy = $datetime->add(new DateInterval('P5D'))->format('Y-m-d'); // + 5 days
                     $termin_dostawy = NULL;
 
                         // $termin_dostawy = $termin_dostawy->format('Y-m-d');
                         // echo "<br> Termin dostawy = " . $termin_dostawy."<br>";    // ('Y-m-d')
 
-                        // data wysłania zamówienia
-                    $data_wyslania_zamowienia = $datetime->add(new DateInterval('P1D'))->format('Y-m-d H:i:s');
-                        // $data_wyslania_zamowienia = $data_wyslania_zamowienia->format('Y-m-d H:i:s');
-                        // echo "<br>Data wysłania zamówienia : " . $data_wyslania_zamowienia;
+                    // data wysłania zamówienia
+                    // $data_wyslania_zamowienia = $datetime->add(new DateInterval('P1D'))->format('Y-m-d H:i:s');
+                    $data_wyslania_zamowienia = NULL;
+                                    // $data_wyslania_zamowienia = $data_wyslania_zamowienia->format('Y-m-d H:i:s');
+                                    // echo "<br>Data wysłania zamówienia : " . $data_wyslania_zamowienia;
 
-                        // data dostarczenia zamówienia
-                    $data_dostarczenia_zamowienia = $datetime->add(new DateInterval('P5D'))->format('Y-m-d');
+                    // data dostarczenia zamówienia
+                    // $data_dostarczenia_zamowienia = $datetime->add(new DateInterval('P5D'))->format('Y-m-d');
+                    $data_dostarczenia_zamowienia = NULL;
                         //echo "<br><br>Data dostarczenia zamówienia : " . $data_dostarczenia_zamowienia;
 
                         // $status_array = ["W trakcie realizacji", "Wysłano", "Dostarczono", "Zrealizowano/Zakończono"];

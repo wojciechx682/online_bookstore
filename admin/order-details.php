@@ -6,6 +6,8 @@
         header("Location: ../user/___index2.php?login-error");
         exit();
     }
+
+
 ?>
 
 <!DOCTYPE HTML>
@@ -34,7 +36,7 @@
                     <?php
                         $_SESSION["order-id"] = array_keys($_GET)[0]; // $_GET -> id_zamówienia
 
-                        var_dump($_SESSION);
+                        // var_dump($_SESSION);
 
                         query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s' ",
                             "get_order_details_admin", $_SESSION["order-id"]); // content of table; $_SESSION['order_details_books_id'];
@@ -127,16 +129,16 @@
 
     btn = document.querySelector('button.update-order-status');  // button - "Aktualizuj" zmianę statusu;
     let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu;
-    let allContainer = document.getElementById("all-container");
+        let allContainer = document.getElementById("all-container");
     icon = document.querySelector('.icon-cancel');
     cancelBtn = document.querySelector('.cancel-order');         // przycisk "Anuluj"
 
-    btn.addEventListener("click", function() {
-        toggleBox(); // pojawienie się okienka po kliknięciu przycisku "Aktualizuj"
-    });
+        btn.addEventListener("click", function() {
+            toggleBox(); // pojawienie się okienka po kliknięciu przycisku "Aktualizuj"
+        });
 
     icon.addEventListener("click", function() {
-        toggleBox(); // zamknięcie okna po kliknięciu "x"
+        toggleBox(); // zamknięcie okna po kliknięciu "x";
     });
 
     cancelBtn.addEventListener("click", function() {
@@ -146,6 +148,45 @@
 function toggleBox() {
     statusBox.classList.toggle("hidden");
     allContainer.classList.toggle("bright");
+    resetBox();
+}
+
+function resetUrl() {
+    // Get the current URL without the query parameters
+    // let urlWithoutParams = window.location.href.split('?')[0];
+    // Replace the current URL without query parameters in the browser's history
+    // window.history.replaceState({}, document.title, urlWithoutParams);
+
+                // Get the current URL
+    var url = new URL(window.location.href);
+                //var url = JSON.parse(window.location.href);
+                // Create a URLSearchParams object from the URL's search parameters
+    var searchParams = new URLSearchParams(url.search);
+                // Remove the specific parameter
+    searchParams.delete('status');
+                // Replace the current URL's search parameters with the updated ones
+    url.search = searchParams.toString();
+                // Get the modified URL without the specified parameter
+    var modifiedURL = url.toString();
+    console.log("\n modifiedURL -> ", modifiedURL);
+                //window.location.href = modifiedURL;
+}
+
+function resetBox() {
+    // zresetowanie zawartości okna - po jego zamknięciu, (po tym jak udało się zrealizować zmianę statusu) ! -->
+    let form = document.querySelector("#update-order-date");
+    //form.style.display = "none";
+    //form.classList.toggle("hidden");
+    if(form.style.display === "none") {
+        form.style.display = "block";
+    }
+    let cancelBtn = document.querySelector('.cancel-order');
+    //cancelBtn.style.display = "none";
+    //cancelBtn.classList.toggle("hidden");
+    if(cancelBtn.style.display === "none") {
+        cancelBtn.style.display = "block";
+    }
+    $('.update-success').remove();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,6 +215,8 @@ dateInputs.forEach(function(dateInput) {
     let list = document.getElementById("status-list"); // lista <select> - zmiana opcji wyboru;
 
     list.addEventListener("change", function() {
+
+        resetBox();
 
         const selectedOption = this.options[this.selectedIndex]; // get the <option> ELEMENT that was selected - after "change" event;
         const form = document.querySelector(".delivery-date");   // div > form
@@ -285,13 +328,11 @@ dateInputs.forEach(function(dateInput) {
                 form.style.display = "none";
                 btn.style.display = "none";
 
-        //$("span.order-status-name").text("New Text Value");
+        let list = document.getElementById("status-list");  // <select> list;
+        let option = list.options[list.selectedIndex];      // get currently selected <option> element;
+        $("span.order-status-name").text(option.innerHTML); // zmiana wyświetlanego statusu po jego zmianie;
 
-
-        //const// zmiana wyświetlanego statusu po jego zmianie;
-
-
-
+        //toggleBox();
     }
 
     // kliknięcie "Esc" zamyka okno zmiany statusu --->
@@ -317,6 +358,17 @@ dateInputs.forEach(function(dateInput) {
         echo '<script>finishUpdate();</script>';
     }*/
 ?>
+
+    <?php
+        if(isset($_GET["status"]) && ($_GET["status"] == "true")) {
+            echo '<script>toggleBox();</script>';
+            echo '<script>resetUrl();</script>';
+
+
+        }
+    ?>
+
+
 
 </body>
 </html>

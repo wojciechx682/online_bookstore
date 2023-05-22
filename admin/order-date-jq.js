@@ -109,6 +109,8 @@ const selectedOption = list.options[list.selectedIndex];
 
         finishUpdate(); // wywołanie funkcji po powrocie ze skryptu PHP;
 
+
+
         //$("div.delivery-date").append("<span class='update-success'>Udało się zmienić status zamówienia</span>");
 
         //$("div.delivery-date").html(data); // data - dane zwrócone z serwera.

@@ -15,9 +15,21 @@ include_once "../functions.php";
                                                             // echo "<br> dateValue -> " . $date; // "dateValue -> 2023-05-16" ;
                                                             // exit() ;
 
+
+
+
+    if(isset($_POST["comment"]) && !empty($_POST["comment"])) {
+        // walidacja + sanityzacja ?
+
+
+    }
+
+    exit();
+
+    ////////////////////////////////////////////////////////////////////////////
     $_SESSION["update-successful"] = true;
 
-    if(isset($_POST["order-date"]) && !empty($_POST["order-date"]) ) { // termin dostawy
+    if(isset($_POST["comment"]) && !empty($_POST["comment"]) ) { // komentarz po zarchiwizowaniu zamówienia;
 
         query("UPDATE zamowienia SET termin_dostawy='%s', status='W trakcie realizacji' WHERE id_zamowienia = '%s'", "updateOrder", [$_POST["order-date"], $_SESSION["order-id"]]); // "W trakcie realizacji" -> termin_dostawy;
     }
@@ -43,10 +55,6 @@ include_once "../functions.php";
     }
 
 
-    // (!) Dodać walidacje daty - tutaj albo w JS !
 
-    // ✓ (!) trzeba sprawdzić, czy udało się zrealizować ZAPYTANIE. można użyć do tego nowej funkcji we funkcji query()
-
-        // albo przeczytać strony z książki
 
 ?>
