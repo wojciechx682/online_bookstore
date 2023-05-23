@@ -3,26 +3,31 @@
 // admin podaje powód (notatkę) - którą potem może wyświetlić klient.
 
 
-function removeOrder() { // po kliknięciu przycisku "Usuń"
-    // console.log("yeey");
+function removeOrder(order_id) { // po kliknięciu przycisku "Archiwizuj"
 
-    let removeBox = document.getElementById("update-status"); // pojawienie się okenka po kliknięciu "Usuń";
+    console.log("\n order_id --> ", order_id);
+
+    // let removeBox = document.getElementById("update-status"); // pojawienie się okenka po kliknięciu "Usuń";
+    let removeBox = document.querySelector(".update-status"+order_id); // pojawienie się okenka po kliknięciu "Usuń";
+
+    // console.log("\n order_id --> ", removeBox); // <div class="update-status1035 hidden"> - OKIENKO PO KLIKNIĘCIU "ARCHIWIZUJ";
+
     removeBox.classList.toggle("hidden");
 
         let allContainer = document.getElementById("all-container");
         allContainer.classList.toggle("bright");
 
-    icon = document.querySelector('.icon-cancel');
-        cancelBtn = document.querySelector('.cancel-order');         // przycisk "Anuluj"
+    icon = document.querySelector(".icon-cancel"+order_id);
+        cancelBtn = document.querySelector(".cancel-order"+order_id);         // przycisk "Anuluj"
 
     // zamknięcie okna po kliknięciu "x";
     icon.addEventListener("click", function() {
         //toggleRemoveBox(removeBox, allContainer);
-        removeOrder(); // rekurencja -> toggle - tym razem zamknięcie okienka;
+        removeOrder(order_id); // rekurencja -> toggle - tym razem zamknięcie okienka;
     });
 
     cancelBtn.addEventListener("click", function() {
-        removeOrder(); // przycisk "Anuluj"
+        removeOrder(order_id); // przycisk "Anuluj"
     });
 
     $('.delivery-date').css("display", "block"); // wyświetlenie formularza (domyślnie był ukryty

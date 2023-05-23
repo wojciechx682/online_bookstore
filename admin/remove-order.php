@@ -18,10 +18,14 @@ include_once "../functions.php";
 
 
 
-    if(isset($_POST["comment"]) && !empty($_POST["comment"])) {
+    if(   /*isset($_POST["comment"])  && !empty($_POST["comment"])
+       && */ isset($_POST["order-id"]) && !empty($_POST["order-id"])
+    ) {
         // walidacja + sanityzacja ?
 
-
+        echo "<br> id -> " . $_POST["order-id"] . "<br>";
+        /*echo "<br> comment -> " . $_POST["comment"] . "<br>";*/
+        exit();
     }
 
     exit();

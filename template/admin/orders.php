@@ -23,7 +23,7 @@
                     <a href="order-details.php?%s&status=true" onclick=""><span style="color: red;">Zmień status</span></a>
                 </div>
                 <div class="order-option">
-                    <a href="#" onclick="removeOrder()"><span style="color: red;">Archiwizuj</span></a>
+                    <a href="#" onclick="removeOrder(%s)"><span style="color: red;">Archiwizuj</span></a>
                 </div>
             </div>
         </div>
@@ -31,50 +31,30 @@
     </div>
 </div>
 
-<!-- --- -->
+<!-- --------------------------------------------------------------------------------------------------------------- -->
 
-<div id="update-status" class="hidden">
+<div class="update-status%s hidden">
 
     <h2>Archiwizuj zamówienie</h2>
 
-    <i class="icon-cancel"></i><hr>
-
-    <!--<h4 class="section-header status-title"><label for="status-list">Status:</label></h4>
-    <select id="status-list">
-        <option>Oczekujące na potwierdzenie</option>
-        <option>W trakcie realizacji</option>
-        <option>Wysłano</option>
-        <option>Dostarczono</option>
-    </select>
-    <div style="clear: both;"></div>-->
-
-    <!--  form (?) -->
+    <i class="icon-cancel icon-cancel%s"></i><hr>
 
     <div class="delivery-date">
-        <form id="remove-order" action="remove-order.php" method="post">
-            <!-- <label>
-                 <span class="order-label">Termin dostawy</span><input type="date" name="order-date">
-             </label>
-             <div style="clear: both;"></div>
-             <label>
-                 <span class="order-label">Data wysłania</span><input type="date" name="dispatch-date">
-             </label>
-             <div style="clear: both;"></div>
-             <label>
-                 <span class="order-label">Dostarczono</span><input type="date" name="delivered-date">
-             </label>
-             <div style="clear: both;"></div>
-             <span class="date-error">Podaj poprawną datę</span><div style="clear: both;"></div>-->
-            <!--<input type-->
+        <form class="remove-order" action="remove-order.php" method="post">
+
+            <input type="hidden" name="order-id" value="%s">
 
             <span class="info">Dodaj komentarz wyjaściajacy powód zarchiwizowania zamówienia</span>
             <textarea name="comment" id="comment"  maxlength="50" minlength="10">
-					</textarea> <!-- rows="4" cols="80" -->
+					</textarea>
             <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
         </form>
-        <button class="update-order-status cancel-order btn-link btn-link-static">Anuluj</button>
+        <button class="update-order-status cancel-order cancel-order%s btn-link btn-link-static">Anuluj</button>
     </div>
 
 </div>
+
+
+
 
 
