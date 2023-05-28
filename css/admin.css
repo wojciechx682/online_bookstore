@@ -163,7 +163,7 @@ h3.section-header {
     color: #fafaff;
 }
 
-div.order {
+div.order, div.admin-books {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-left-radius: 0;
@@ -172,7 +172,7 @@ div.order {
     overflow-x: hidden;
 }
 
-.order-id, .order-date, .order-client,  .order-total-sum, .order-payment, .order-status, .order-action {
+.order-id, .order-date, .order-client,  .order-total-sum, .order-payment, .order-status, .order-action, .a-book-id, .a-book-title, .a-book-category, .a-book-price, .a-book-author, .a-book-magazine, .a-book-quantity {
         /* border: 1px dashed black; */
         /* border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
     border-right: 1px ridge rgba(166, 166, 166, 0.38);

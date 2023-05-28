@@ -3257,7 +3257,7 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
 
 /* my_orders.php -->    --------------------------------------------------------------- */
 
-.order {
+.order, div.admin-books {
     /*border: 1px dashed black;*/
     border: 1px ridge rgba(166, 166, 166, 0.38);
 
@@ -3274,7 +3274,7 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
     text-align: left !important;
 }
 .order-date-title, .order-status-title, .order-id-title,
-.order-date, .order-status, .order-id {
+.order-date, .order-status, .order-id, .a-book-id, .a-book-title, .a-book-category, .a-book-price, .a-book-author, .a-book-magazine, .a-book-quantity  {
     /*border: 1px dashed black;*/
 
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);

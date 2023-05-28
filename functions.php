@@ -829,6 +829,17 @@ EOT;
         $result->free_result();
     }
 
+    function get_all_books($result) { // admin/books
+        while($row = $result->fetch_assoc()) {
+            //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
+            // load the content from the external template file into string
+            $order = file_get_contents("../template/admin/books.php");
+            // replace fields in $order string to author data from $result, display result content as HTML
+            echo sprintf($order, $row['id_ksiazki'], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row['nazwa_magazynu'], $row["ilosc_dostepnych_egzemplarzy"]);
+        }
+        $result->free_result();
+    }
+
     function get_orders_boxes($result) {
         while($row = $result->fetch_assoc()) {
             //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";

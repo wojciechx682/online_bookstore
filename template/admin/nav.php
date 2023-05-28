@@ -18,6 +18,7 @@
 
         <a href="admin.php"><h3>Panel główny</h3><hr></a>
         <a href="orders.php"><h3>Zamówienia</h3><hr></a>
+        <a href="books.php"><h3>Produkty</h3><hr></a>
 
     </div>
 </aside>
