@@ -60,48 +60,55 @@
 
     </div>
 
-    <!--<div id="update-status" class="hidden">
+        <?php
+            query("SELECT zm.id_zamowienia,
+                            zm.data_zlozenia_zamowienia, 
+                            kl.imie, kl.nazwisko,
+                            pl.kwota, pl.sposob_platnosci,
+                            zm.status 
+                        FROM zamowienia AS zm, klienci AS kl, platnosci AS pl 
+                        WHERE zm.id_zamowienia = pl.id_zamowienia AND
+                        zm.id_klienta = kl.id_klienta", "get_orders_boxes", ""); // remove order box; used another query because of the brightness effect - to be outside <div#all-container>
+        ?>
 
-        <h2>Archiwizuj zamówienie</h2>
+<script>
 
-        <i class="icon-cancel"></i><hr>-->
+    function resetError(textarea) {
+        // archiwizowanie zamówienia - kliknięcie na <textarea> usuwa komunikat o błędzie;
+        let spanError = textarea.nextElementSibling; // span z komunikatem o błędzie;
+        if(spanError.style.display === "block") {
+            spanError.style.display = "none";
+        }
+    }
 
-                                                                            <!--<h4 class="section-header status-title"><label for="status-list">Status:</label></h4>
-                                                                            <select id="status-list">
-                                                                                <option>Oczekujące na potwierdzenie</option>
-                                                                                <option>W trakcie realizacji</option>
-                                                                                <option>Wysłano</option>
-                                                                                <option>Dostarczono</option>
-                                                                            </select>
-                                                                            <div style="clear: both;"></div>-->
+    function finishArchive(textarea) {
 
-                                                                            <!--  form (?) -->
+    }
 
-        <!--<div class="delivery-date">
+    document.addEventListener('keydown', function(event) {
 
-            <form id="remove-order" action="remove-order.php" method="post">-->
-                                                                           <!-- <label>
-                                                                                <span class="order-label">Termin dostawy</span><input type="date" name="order-date">
-                                                                            </label>
-                                                                            <div style="clear: both;"></div>
-                                                                            <label>
-                                                                                <span class="order-label">Data wysłania</span><input type="date" name="dispatch-date">
-                                                                            </label>
-                                                                            <div style="clear: both;"></div>
-                                                                            <label>
-                                                                                <span class="order-label">Dostarczono</span><input type="date" name="delivered-date">
-                                                                            </label>
-                                                                            <div style="clear: both;"></div>
-                                                                            <span class="date-error">Podaj poprawną datę</span><div style="clear: both;"></div>-->
-                                                                            <!--<input type-->
+        // kliknięcie "Esc" zamyka okno archiwizowania;
 
-                <!--<span class="info">Dodaj komentarz wyjaściajacy powód zarchiwizowania zamówienia</span>
-                <textarea name="comment" id="comment"  maxlength="50" minlength="10">
-					</textarea>
-                <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
-            </form>
-            <button class="update-order-status cancel-order btn-link btn-link-static">Anuluj</button>
-        </div>
-    </div>-->
+        let removeBoxes = document.querySelectorAll('.update-status'); // okienka Archiwizowania zamówienia;
+        let allContainer = document.getElementById("all-container");
+
+        for (let i = 0; i < removeBoxes.length; i++) { // dla każdego okienka;
+            let removeBox = removeBoxes[i]; // perform actions on each element;
+
+            if(!removeBox.classList.contains("hidden")) {
+                if (event.key === 'Escape') {
+
+                    removeBox.classList.toggle("hidden"); // zamknięcie okna;
+                    allContainer.classList.toggle("bright");
+                }
+            }
+        }
+    });
+
+</script>
+
+    <script src="remove-order.js"></script>
+    <!--<script src="test.js"></script>-->
+
 </body>
 </html>

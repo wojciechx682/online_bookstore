@@ -359,7 +359,7 @@ div.order-option a {
 }*/
 
 #update-status, .update-status {
-    height: 300px;
+    height: 310px;
     width: 660px;
     background-color: #545454;
         /*position: fixed;
@@ -426,6 +426,16 @@ div.order-option a {
 .bright {
     filter: brightness(50%);
 }
+
+.normal {
+    /*filter: brightness(100%);*/
+    filter: invert(100%);
+}
+
+#all-container .update-status {
+    filter: none;
+}
+
 
 .icon-cancel {
     display: inline-block;
@@ -541,7 +551,7 @@ span.date-error {
     margin-left: 129px;
 }
 
-span.update-success {
+span.update-success, span.archive-success {
     font-weight: bold;
     /*color: #3fce3f;*/
     color: #00ac00;
@@ -555,6 +565,23 @@ span.update-failed {
     user-select: none;
 }
 
+span.archive-success {
+    display: block;
+    margin-top: 10px;
+}
+
+/* archiwizowanie zamówienia -> */
+
+.remove-order-error {
+    display: none;
+    font-weight: bold;
+    color: red;
+    position: absolute;
+    top: 228px;
+    /*margin-top: 15px;
+    margin-left: 129px;*/
+}
+
 /*form#update-order-date button.update-order-status:nth-of-type(1) {
     margin-left: -14px !important;
 }*/
@@ -562,6 +589,10 @@ span.update-failed {
 form#update-order-date span.order-label {
     display: inline-block;
     min-width: 150px;
+}
+
+.visible {
+    display: block !important;
 }
 
 textarea#comment {

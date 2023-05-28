@@ -2,80 +2,75 @@ $("form#update-order-date").on("submit", function(e) {
 
     e.preventDefault(); // uniemożliwienie wysłania formularza ;
 
-    let data = $("form#update-order-date").serialize();
-    // Serializacja danych formularza;  Pobranie danych z formularza;
-    // -> dane w postaci tekstowej (String) ;
-
-            // let details = $(this).serialize(); // wszystkie dane z formularza; zmienna "details" jest typu String ;
-
-                    /* let details = $(this); */ // obiekt zawierający dane formularza;
-                        // console.log("\ndetails => ", details);
-                        // console.log("\ntypeof details => ", typeof(details)); // String;
+    let data = $("form#update-order-date").serialize(); // serializacja danych formularza;  pobranie danych z formularza;
+                                                                                    // dane w postaci tekstowej (String);
+    // let details = $(this).serialize();
+        // let details = $(this); // obiekt zawierający dane formularza;
 
     // console.log("\ndata serialized (string) => ", data);
 
-    let dateValue = data.slice(11,21); // "2023-01-01" - TERMIN DOSTAWY (!)
-    let dispDate = data.slice(36,46); // "2023-01-01"
+                                                          // można zamienić ten String na Obiekt (Object) / lub Tablicę;
+                                              // można to zrobić za pomocą metod -> $.parseParams() , lub - $.deparam();
+                            // jeśli dane są w postaci obiektu, możemy uzyskac do nich dostęp za pomocą notacji key-value;
+                            // let dataObject = $.deparam(details); // (nie działa...)
+                            // let dateValue = dataObject.name;
+                            // let object = JSON.parse(details);
+
+    let dateValue = data.slice(11,21); // "2023-01-01" - termin dostawy;
+    let dispDate = data.slice(36,46); // "2023-01-01" - data wysłania;
     let delDate = data.slice(42); // "2023-01-01" - data dostarczenia;
 
+    console.log("\ndata (string) => ", data); // String;
     console.log("\ndateValue => ", dateValue); // String;
     console.log("\ndispDate => ", dispDate);
     console.log("\ndelDate => ", delDate);
 
-            const date = new Date(); // Walidacja daty; // obiekt Date
+    const date = new Date(); // walidacja daty; // obiekt Date;
 
-                const year = date.getFullYear();  // 2023
-                let month = date.getMonth() + 1;  // 05
-                let day = date.getDate();         // 11
+        const year = date.getFullYear();  // 2023;
+        let month = date.getMonth() + 1;  // 05;
+        let day = date.getDate();         // 11;
 
-                if(month < 10) {
-                    month = "0" + month;
-                } if(day < 10) {
-                    day = "0" + day;
-                }
+        if(month < 10) {
+            month = "0" + month;
+        } if(day < 10) {
+            day = "0" + day;
+        }
 
-            let todayDate = [year, month, day].join('-');
-                console.log("\ntodayDate => ", todayDate); // 👉️ "2023-1-4"
-                // console.log("\ntodayDate => ", typeof(todayDate)); // 👉️ "2023-1-4"
+    let todayDate = [year, month, day].join('-'); // 👉️ "2023-1-4";
 
-let list = document.getElementById("status-list");
-const selectedOption = list.options[list.selectedIndex];
+    let list = document.getElementById("status-list"); // <select>
+    const selectedOption = list.options[list.selectedIndex]; // aktualnie wybrany element listy;
 
     //console.log("\n45 selectedOption -> ", selectedOption);
 
             if(
                 (selectedOption.innerHTML === "W trakcie realizacji") &&
-
-                (dateValue < todayDate) || dateValue === undefined || dateValue == null) {
-                // przeszła data, lub pusta ;
+                (dateValue < todayDate) || (dateValue === undefined) || (dateValue == null) ) // przeszła data, lub pusta ->
+            {
                 error();
                 return;
 
             } else if (
                 (selectedOption.innerHTML === "Wysłano") &&
-                ((dispDate < todayDate) || (dateValue < todayDate))
-            )  {
-                console.log("\n56");
+                ((dispDate < todayDate) || (dateValue < todayDate)) )
+            {
                 error();
                 return;
             } else if (
                 (selectedOption.innerHTML === "Dostarczono") &&
-                (delDate < todayDate)
-            )  {
-
-                //console.log("\n56");
+                (delDate < todayDate) )
+            {
                 error();
                 return;
             }
             else {
-                /*    //console.log("\n54");
-                dateValue = validateDate(dateValue); // walidacja daty - czy jest w dobrym formacie;
+                /* dateValue = validateDate(dateValue); // walidacja daty - czy jest w dobrym formacie;
                 if(dateValue === null) {
-                    error(); // coś nie tak z tą datą - nie przeszła walidacji;
+                    error(); // coś nie tak z tą datą - nie przeszła walidacji; // (nie działa ten kod);
                     return;
                 }
                 if(dispDate.length > 0 && (selectedOption.innerHTML === "Wysłano")) {
-                    console.log("\n65");
                     dateValue = validateDate(dispDate); // walidacja daty;
                     console.log("\n dateValue (69) -> ", dateValue);
                     if(dateValue === null) {
@@ -83,17 +78,8 @@ const selectedOption = list.options[list.selectedIndex];
                         error();
                         return;
                     }
-                }*/
-
+                } */
             }
-                            // Można zamienić ten String na Obiekt (Object) / lub Tablicę;
-                                // można to zrobić za pomocą metod -> $.parseParams() , lub - $.deparam() ;
-                            // jeśli dane są w postaci obiektu, możemy uzyskac do nich dostęp za pomocą notacji key-value;
-                            //let dataObject = $.deparam(details);
-                            //let dateValue = dataObject.name;
-                            //let object = JSON.parse(details);
-                            /*console.log("\ndateValue => ", dateValue);*/
-                            //console.log("\nobject => ", object);
 
 // AJAX request;
     $.post("update-order-date.php", data, function(data) {

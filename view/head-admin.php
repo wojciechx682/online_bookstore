@@ -24,4 +24,7 @@
     <script src="../scripts/show-order-options.js"></script> <!-- admin/orders.php -->
     <script src="../scripts/remove-order.js"></script> <!-- admin/orders.php -->
     <script src="../scripts/box-functions.js"></script> <!-- wspólne funkcjonalności dla okienek - kliknięcie "X" zamyka okno -->
+
+    <!-- <script type="module" src="../assets/DOMPurify/src/purify.js"></script>-->         <!-- admin/orders - archiwizacja zamówienia - DOM Purify -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.2/dist/purify.min.js"></script> <!-- admin/orders - archiwizacja zamówienia - DOM Purify -->
 </head>

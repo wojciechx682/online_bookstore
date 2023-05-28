@@ -32,7 +32,7 @@
 
         <div id="container">
 
-            <main
+            <main>
 
                 <?php require "../template/admin/nav.php"; ?>
 
@@ -40,7 +40,7 @@
 
                 <div id="content">
 
-                    <?php //var_dump($_SESSION) ?>
+
 
                 </div>
 
