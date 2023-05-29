@@ -11,8 +11,25 @@
     <div class="a-book-author">%s %s</div>
     <div class="a-book-magazine">%s</div>
     <div class="a-book-quantity">%s</div>
+
     <div class="book-action">
 
+        <div class="book-action-button" id="book-action-button%s" onclick="showBooksOptions(this.id)">Zarządzaj <i class="icon-down-open"></i></div>
+
+        <div class="book-options-container">
+            <div class="book-action-options">
+                <div class="book-option">
+                    <a href="book-details.php?%s">Przeglądaj</a>
+                </div>
+                <div class="book-option">
+                    <a href="order-details.php?%s&status=true" onclick="">Edytuj</a>
+                </div>
+                <div class="book-option">
+                    <a href="#" onclick="removeOrder(%s)">Usuń</a>
+                </div>
+            </div>
+        </div>
 
     </div>
+
 </div>

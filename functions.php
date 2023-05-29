@@ -633,8 +633,6 @@ EOT;
         }
     }
 
-
-
 	function verify_password($result) // validate_password.php;     confirm_password.php;
 	{
 		/*while ($row = $result->fetch_assoc())
@@ -835,7 +833,7 @@ EOT;
             // load the content from the external template file into string
             $order = file_get_contents("../template/admin/books.php");
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, $row['id_ksiazki'], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row['nazwa_magazynu'], $row["ilosc_dostepnych_egzemplarzy"]);
+            echo sprintf($order, $row['id_ksiazki'], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row['nazwa_magazynu'], $row["ilosc_dostepnych_egzemplarzy"], $row['id_ksiazki'], $row['id_ksiazki'], $row['id_ksiazki'], $row['id_ksiazki']);
         }
         $result->free_result();
     }
@@ -899,7 +897,6 @@ EOT;
 
     }
 
-
     function get_employee($result) {
             $row = $result->fetch_assoc();
         $_SESSION["employee_id"] = $row["id_pracownika"];
@@ -929,6 +926,30 @@ EOT;
         $_SESSION["archive-successful"] = false;
 
     }
+
+    function get_book_details($result) {
+        // admin/book-details.php?%s
+
+        $row = $result->fetch_assoc();
+
+        //$_SESSION["status"] = $row["status"];
+
+        $book = file_get_contents("../template/admin/book-details.php");
+
+        echo sprintf($book, $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["cena"], $row["nazwa_wydawcy"], $row["opis"], $row["wymiary"], $row["ilosc_stron"], $row["oprawa"], $row["stan"], $row["srednia_ocen"], $row["image_url"], $row["liczba_ocen"], $row["ile_razy_sprzedana"], $row["nazwa_kategorii"], $row["nazwa_subkategorii"], $row["ilosc_dostepnych_egzemplarzy"], $row["nazwa"], $row["miejscowosc"], $row["numer_ulicy"], $row["kod_pocztowy"] );
+
+        // pole "ile_razy_sprzedana" - określa liczbę zamówień, w których znalazła się ta książka. (nie jest to liczba sprzedanych sztuk!)
+
+        $result->free_result();
+
+
+
+
+
+
+    }
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

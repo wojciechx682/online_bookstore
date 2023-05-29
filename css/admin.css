@@ -172,7 +172,7 @@ div.order, div.admin-books {
     overflow-x: hidden;
 }
 
-.order-id, .order-date, .order-client,  .order-total-sum, .order-payment, .order-status, .order-action, .a-book-id, .a-book-title, .a-book-category, .a-book-price, .a-book-author, .a-book-magazine, .a-book-quantity {
+.order-id, .order-date, .order-client,  .order-total-sum, .order-payment, .order-status, .order-action {
         /* border: 1px dashed black; */
         /* border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
@@ -190,11 +190,27 @@ div.order, div.admin-books {
     overflow: hidden;
     padding-top: 12px;
     z-index: 0;
-
-    
 }
 
-div.order-action {
+.a-book-id, .a-book-title, .a-book-category, .a-book-price, .a-book-author, .a-book-magazine, .a-book-quantity, .book-action  {
+    border-right: 1px ridge rgba(166, 166, 166, 0.38);
+    float: left;
+    /*width: 16.66%;*/
+    width: 12.5%;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    color: var(--text-color);
+    border-bottom: none;
+    font-weight: normal;
+    min-height: 30px;
+    height: 45px;
+    overflow: hidden;
+    padding-top: 12px;
+    z-index: 0;
+}
+
+div.order-action, div.book-action {
     border-right: none;
         /*position: relative;*/
 }
@@ -205,7 +221,7 @@ div.order-content {
     border-radius: 0;
 }
 
-div.order div.order-action-button {
+div.order div.order-action-button, div.book-action-button {
     position: relative;
     top: -3px;
     border: 1px ridge rgba(166, 166, 166, 0.38);
@@ -216,13 +232,13 @@ div.order div.order-action-button {
     user-select: none;
 }
 
-div.order div.order-action-button:hover {
+div.order div.order-action-button:hover, div.book-action-button:hover {
     border: 1px ridge rgba(210, 210, 210, 0.38);
     user-select: none;
     cursor: pointer;
 }
 
-div.order div.order-action-options {
+div.order div.order-action-options, div.book-action-options {
         z-index: 100;
     position: absolute;
         /*top: 20px;*/
@@ -238,7 +254,7 @@ div.order div.order-action-options {
     border-radius: 3px;
 }
 
-div.order-options-container {
+div.order-options-container, div.book-options-container {
         /*border: 1px solid red;*/
     width: 120px;
     height: 55px;
@@ -247,18 +263,18 @@ div.order-options-container {
     padding-left: 2px;
 }
 
-div.order-option {
+div.order-option, div.book-option {
     border-bottom: 1px ridge rgba(210, 210, 210, 0.38);
     padding-bottom: 5px;
     padding-top: 5px;
     border-radius: 2px;
 }
 
-div.order-option:hover {
+div.order-option:hover, div.book-option:hover {
     background-color: #626262;
 }
 
-div.order-option a {
+div.order-option a, div.book-option a {
     text-decoration: none;
     color: var(--text-color);
 }

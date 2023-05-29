@@ -9,6 +9,7 @@
     <div class="a-book-author">Autor</div>
     <div class="a-book-magazine">Magazyn</div>
     <div class="a-book-quantity">Ilość egzemplarzy</div> <!-- Ilość dostępnych egzemplarzy -->
+    <div class="book-action">Zarządzaj</div>
 
     <!-- <hr> -->
     <!--<div style="clear:both;"></div>-->
