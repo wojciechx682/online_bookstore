@@ -44,7 +44,6 @@ if(!(isset($_SESSION['zalogowany']))) {
                     //query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'", "get_order_sum_admin", $_SESSION["order-id"]); // footer of table;
 
                     //echo '<div id="order-det-container">';
-
                     //query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s' ", "get_order_summary", $_SESSION["order-id"]); // sposób płatności, data, forma;
 
                     query("SELECT ks.tytul, ks.cena, ks.rok_wydania, au.imie, au.nazwisko, wd.nazwa_wydawcy, ks.opis, ks.wymiary, ks.ilosc_stron, 
@@ -61,8 +60,6 @@ GROUP BY szczegoly_zamowienia.id_ksiazki) AS ile_razy_sprzedana, kat.nazwa AS na
                         JOIN magazyn AS mag ON magks.id_magazynu = mag.id_magazynu
                         WHERE ks.id_ksiazki = '%s' LIMIT 1;","get_book_details", [$_SESSION["book-id"], $_SESSION["book-id"]]); // dane szczegółowe książki;
                         // !!! W PRZYSZŁOŚCI -> USUNĄĆ LIMIT 1 - a zamiast tego dodać "id_magazynu" !!!
-
-
                 ?>
 
                 <!--<div id="order-status">

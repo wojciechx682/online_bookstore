@@ -152,10 +152,17 @@ h3.section-header {
     /*border: 1px solid #2d6eff;*/
     /*border-bottom: 1px ridge #3a3a3a;*/
     border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
-
     margin-bottom: 20px;
+    padding-bottom: 15px;
+}
 
-
+h4.section-header {
+    margin-top: 5px;
+    font-size: 1.1em;
+    /*border: 1px solid #2d6eff;*/
+    /*border-bottom: 1px ridge #3a3a3a;*/
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
+    margin-bottom: 20px;
     padding-bottom: 15px;
 }
 
@@ -634,4 +641,65 @@ textarea#comment {
 span.info {
     display: inline-block;
     margin-bottom: 12px;
+}
+
+/*  admin/book-details --> --------------------------------------------------------------- */
+
+article#book-details {
+    border: 1px solid blue;
+    height: 450px;
+    font-weight: normal;
+}
+
+figure#book-details-figure {
+    margin: 0 25px 0 0;
+    float: left;
+    /*margin-right: 25px;*/
+}
+
+section#basic-data, section#detailed-information {
+    float: left;
+    border: 1px ridge rgba(166, 166, 166, 0.38);
+    border-radius: 4px;
+}
+
+div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state, div#book-description-content, div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content {
+    float: left;
+    padding: 5px 5px 5px 10px;
+}
+
+div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state {
+    min-width: 128px;
+}
+
+div#book-title, div#book-author, div#book-year, div#book-price,
+div#book-description, div#book-dimensions, div#book-pages, div#book-cover {
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
+    border-right: 1px ridge rgba(166, 166, 166, 0.38);
+}
+
+div#book-publisher, div#book-state {
+    border-right: 1px ridge rgba(166, 166, 166, 0.38);
+}
+
+div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content,
+div#book-description-content, div#book-dimensions-content, div#book-pages-content, div#book-cover-content
+{
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
+}
+
+div#book-description-content, div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content {
+    min-width: 300px;
+}
+
+div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content {
+    min-width: 200px;
+}
+
+section#detailed-information {
+    /*width: 100%;*/
+    width: 528px;
+    /*height: 200px;*/
+
+    /*border: 1px solid red;*/
 }

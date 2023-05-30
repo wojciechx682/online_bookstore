@@ -1,4 +1,3 @@
-
 <!-- template used on order page (order.php) to display orders made by client -->
 
 <!-- echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>"; -->
@@ -29,7 +28,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 </div>
