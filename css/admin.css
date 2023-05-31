@@ -156,14 +156,19 @@ h3.section-header {
     padding-bottom: 15px;
 }
 
+h3.book-details-section-header {
+    margin-bottom: 25px;
+}
+
 h4.section-header {
     margin-top: 5px;
     font-size: 1.1em;
     /*border: 1px solid #2d6eff;*/
     /*border-bottom: 1px ridge #3a3a3a;*/
-    border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
     margin-bottom: 20px;
-    padding-bottom: 15px;
+    padding-bottom: 15px;*/
+    margin-bottom: 20px;
 }
 
 .section-header {
@@ -342,6 +347,13 @@ div.order-option a, div.book-option a {
         min-width: 475px !important;
     }
 }
+
+@media only screen and (max-width: 1445px) { /* admin/book-details --> */
+    #statistics-information{
+        margin-top: 20px;
+    }
+}
+
 
 .order-sum-pay-met, .order-sum-pay-date, .order-sum-del-meth {
         /*display: inline-block;
@@ -646,7 +658,7 @@ span.info {
 /*  admin/book-details --> --------------------------------------------------------------- */
 
 article#book-details {
-    border: 1px solid blue;
+    /*border: 1px solid blue;*/
     height: 450px;
     font-weight: normal;
 }
@@ -657,33 +669,47 @@ figure#book-details-figure {
     /*margin-right: 25px;*/
 }
 
-section#basic-data, section#detailed-information {
+section#basic-data {
+    width: 368px;
+}
+
+section#basic-data, section#detailed-information, section#statistics-information {
     float: left;
     border: 1px ridge rgba(166, 166, 166, 0.38);
     border-radius: 4px;
 }
 
-div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state, div#book-description-content, div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content {
+section#detailed-information {
+    margin-right: 20px;
+}
+
+div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state, div#book-description-content, div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content,
+div#book-avg-rating, div#book-ratings-amount, div#book-orders-count, div#book-category-name, div#book-subcategory-name,
+div#book-avg-rating-content, div#book-ratings-amount-content, div#book-orders-count-content, div#book-category-name-content, div#book-subcategory-name-content, div#book-cart-count, div#book-cart-count-content, div#book-items-sold, div#book-items-sold-content {
     float: left;
     padding: 5px 5px 5px 10px;
 }
 
-div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state {
-    min-width: 128px;
+div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state, div#book-avg-rating, div#book-ratings-amount, div#book-orders-count, div#book-category-name, div#book-subcategory-name, div#book-cart-count, div#book-items-sold  {
+    width: 128px;
 }
 
-div#book-title, div#book-author, div#book-year, div#book-price,
-div#book-description, div#book-dimensions, div#book-pages, div#book-cover {
+div#book-title, div#book-author, div#book-year, div#book-price, div#book-state,
+div#book-dimensions, div#book-pages, div#book-cover,
+div#book-avg-rating, div#book-ratings-amount, div#book-category-name, div#book-subcategory-name, div#book-orders-count, div#book-cart-count {
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
-div#book-publisher, div#book-state {
+div#book-publisher, div#book-state, div#book-description, div#book-orders-count, div#book-cart-count, div#book-cart-count, div#book-items-sold
+ {
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
 div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content,
-div#book-description-content, div#book-dimensions-content, div#book-pages-content, div#book-cover-content
+ div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content,
+div#book-avg-rating-content, div#book-ratings-amount-content, div#book-category-name-content,
+div#book-subcategory-name-content, div#book-orders-count-content, div#book-cart-count-content
 {
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
 }
@@ -696,10 +722,59 @@ div#book-title-content, div#book-author-content, div#book-year-content, div#book
     min-width: 200px;
 }
 
-section#detailed-information {
+section#detailed-information,
+section#statistics-information {
     /*width: 100%;*/
-    width: 528px;
+    width: 550px;
     /*height: 200px;*/
 
     /*border: 1px solid red;*/
+}
+
+section#statistics-information {
+    /*margin-top: 20px;*/ /* (!) */
+}
+
+/* wspólna szerokość dla drugich kolumn -> */
+
+div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content {
+    min-width: 230px;
+}
+
+div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content, div#book-description-content,
+div#book-avg-rating-content, div#book-ratings-amount-content, div#book-orders-count-content, div#book-category-name-content, div#book-subcategory-name-content, div#book-cart-count-content, div#book-items-sold-content {
+    min-width: 414px;
+}
+
+/* opis - osobne wymiary -> */
+
+div#book-description, div#book-description-content {
+    height: 245px;
+}
+
+div#book-description-content {
+    width: 414px !important;
+
+    overflow: hidden;
+}
+
+hr#book-details-hr {
+    background-color: rgba(166, 166, 166, 0.53);
+    border: none;
+    height: 1px;
+    margin: 20px 0;
+    /*max-width: 255px;*/
+}
+
+div#book-orders-count, div#book-orders-count-content {
+    height: 110px;
+}
+
+div#book-cart-count, div#book-cart-count-content {
+    height: 68px;
+}
+
+div#section-container { /* to avoid float left glitching */
+    float: left;
+    min-width: 560px;
 }

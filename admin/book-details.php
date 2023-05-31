@@ -29,7 +29,7 @@ if(!(isset($_SESSION['zalogowany']))) {
 
             <div id="content">
 
-                <h3 class="section-header">Szczegóły książki</h3>
+                <h3 class="section-header book-details-section-header">Szczegóły książki</h3>
 
                 <?php //require "../view/admin/order-details-header.php";
                       // first row, header of columns ?>
@@ -49,8 +49,10 @@ if(!(isset($_SESSION['zalogowany']))) {
                     query("SELECT ks.tytul, ks.cena, ks.rok_wydania, au.imie, au.nazwisko, wd.nazwa_wydawcy, ks.opis, ks.wymiary, ks.ilosc_stron, 
                                         ks.oprawa, ks.stan, ks.rating AS srednia_ocen, ks.image_url,
                                (SELECT COUNT(*) FROM ratings WHERE ratings.id_ksiazki = ks.id_ksiazki) AS liczba_ocen, 
+						  (SELECT COUNT(*) FROM koszyk WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_klientow_posiadajacych_w_koszyku,
+						  (SELECT SUM(ilosc) FROM szczegoly_zamowienia WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_sprzedanych_egzemplarzy,						  
                                (SELECT COUNT(*) FROM szczegoly_zamowienia, ksiazki WHERE szczegoly_zamowienia.id_ksiazki = ksiazki.id_ksiazki AND ksiazki.id_ksiazki='%s'
-GROUP BY szczegoly_zamowienia.id_ksiazki) AS ile_razy_sprzedana, kat.nazwa AS nazwa_kategorii, sub.nazwa AS nazwa_subkategorii, magks.ilosc_dostepnych_egzemplarzy, mag.nazwa, mag.miejscowosc, mag.ulica, mag.numer_ulicy, mag.kod_pocztowy
+GROUP BY szczegoly_zamowienia.id_ksiazki) AS ilosc_zamowien_w_ktorych_wystapila, kat.nazwa AS nazwa_kategorii, sub.nazwa AS nazwa_subkategorii, magks.ilosc_dostepnych_egzemplarzy, mag.nazwa, mag.miejscowosc, mag.ulica, mag.numer_ulicy, mag.kod_pocztowy
                         FROM ksiazki AS ks
                         JOIN autor AS au ON ks.id_autora = au.id_autora
                         JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
@@ -58,7 +60,7 @@ GROUP BY szczegoly_zamowienia.id_ksiazki) AS ile_razy_sprzedana, kat.nazwa AS na
                         JOIN kategorie AS kat ON sub.id_kategorii = kat.id_kategorii
                         JOIN magazyn_ksiazki AS magks ON ks.id_ksiazki = magks.id_ksiazki
                         JOIN magazyn AS mag ON magks.id_magazynu = mag.id_magazynu
-                        WHERE ks.id_ksiazki = '%s' LIMIT 1;","get_book_details", [$_SESSION["book-id"], $_SESSION["book-id"]]); // dane szczegółowe książki;
+                        WHERE ks.id_ksiazki = '%s' LIMIT 1","get_book_details", [$_SESSION["book-id"], $_SESSION["book-id"], $_SESSION["book-id"], $_SESSION["book-id"]]); // dane szczegółowe książki;
                         // !!! W PRZYSZŁOŚCI -> USUNĄĆ LIMIT 1 - a zamiast tego dodać "id_magazynu" !!!
                 ?>
 
@@ -319,8 +321,10 @@ GROUP BY szczegoly_zamowienia.id_ksiazki) AS ile_razy_sprzedana, kat.nazwa AS na
 <!--<script src="order-date-jq.js"></script>-->
 
 <?php
-//!!! TO POWINNO BYĆ ODKOMENTOWANE ! - ponieważ ta zmienna istnieje TYLKO WTEDY - gdy udało się ZAKTUALIZOWAĆ DANE !!!!; (jednak nie bo AJAX nie odswieza strony)
-/*if(isset($_SESSION["update-successful"]) && $_SESSION["update-successful"] === true ) {
+
+/* //!!! TO POWINNO BYĆ ODKOMENTOWANE ! - ponieważ ta zmienna istnieje TYLKO WTEDY - gdy udało się ZAKTUALIZOWAĆ DANE !!!!; (jednak nie bo AJAX nie odswieza strony)
+ *
+ * if(isset($_SESSION["update-successful"]) && $_SESSION["update-successful"] === true ) {
     unset($_SESSION["update-successful"]);
     echo '<script>finishUpdate();</script>';
 }*/
@@ -332,6 +336,26 @@ GROUP BY szczegoly_zamowienia.id_ksiazki) AS ile_razy_sprzedana, kat.nazwa AS na
     echo '<script>resetUrl();</script>';
 }*/
 ?>
+
+<script>
+    // wstawienie "0" - jeśli wartości zwrócone z BD były NULL;
+
+    let ordersCount = document.getElementById("book-orders-count-content");
+    let cartCount = document.getElementById("book-cart-count-content");
+    let itemsSold = document.getElementById("book-items-sold-content");
+
+    if (ordersCount.innerHTML === '') {
+        ordersCount.innerHTML = "0";
+    }
+    if (cartCount.innerHTML === '') {
+        cartCount.innerHTML = "0";
+    }
+    if (itemsSold.innerHTML === '') {
+        itemsSold.innerHTML = "0";
+    }
+
+
+</script>
 
 </body>
 </html>
