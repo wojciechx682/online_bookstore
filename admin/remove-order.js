@@ -13,7 +13,6 @@ $("form.remove-order").on("submit", function(e) { // po wysłaniu formularza
 
     let postData = $(this).serialize();
 
-
     console.log("\n 16 data => ", data);
     console.log("\npostData => ", postData);
     console.log("\ntypeof data => ", typeof(data)); // Object;

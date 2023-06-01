@@ -160,6 +160,15 @@ h3.book-details-section-header {
     margin-bottom: 25px;
 }
 
+h3.section-header-books {
+    /*border: none;*/
+    border: 1px solid red;
+    width: 300px;
+
+    /*float: left;*/
+    display: inline-block;
+}
+
 h4.section-header {
     margin-top: 5px;
     font-size: 1.1em;
