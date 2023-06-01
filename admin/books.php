@@ -40,17 +40,26 @@ if(!(isset($_SESSION['zalogowany']))) {
 
             <div id="content">
 
-                <h3 class="section-header section-header-books">Książki</h3>
+                <div id="admin-books-header-container">
 
-                <!-- <div style="clear: both;"></div> -->
+                    <h3 class="section-header section-header-books">Książki</h3>
 
-                <form id="change-magazine-form" action="change-magazine.php" method="post">
-                    <select id="change-magazine" name="change-magazine"> <!-- js manage "change" event for <select> list, and then sends the <form>; -->
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
-                    <!--<input type="submit" value="wyślij">-->
-                </form>
+                    <!-- <div style="clear: both;"></div> -->
+
+                    <form id="change-magazine-form" action="change-magazine.php" method="post">
+                        <select id="change-magazine" name="change-magazine"> <!-- js manage "change" event for <select> list, and then sends the <form>; -->
+                            <!--<option value="1">1</option>
+                            <option value="2">2</option>-->
+                            <?php
+                                query("SELECT mg.id_magazynu, mg.nazwa FROM magazyn AS mg", "createMagazineSelectList", "");
+                            ?>
+                        </select>
+                        <!--<input type="submit" value="wyślij">-->
+                    </form>
+
+
+                </div>
+
 
 <!-- SELECT mg.id_magazynu, mg.nazwa, mg.kraj, mg.wojewodztwo, mg.miejscowosc, mg.ulica, mg.kod_pocztowy, mg.kod_miejscowosc
 FROM magazyn AS mg
@@ -67,11 +76,14 @@ query() -> function -> template(?)
                 <?php require "../view/admin/books-header.php"; // table header ?>
 
                 <?php
-                query("SELECT ks.id_ksiazki, ks.tytul, ks.cena,
-                                    kt.nazwa AS nazwa_kategorii, mgk.ilosc_dostepnych_egzemplarzy, au.imie, au.nazwisko, mg.nazwa AS nazwa_magazynu
+                /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena,
+                                    kt.nazwa AS nazwa_kategorii, mgk.ilosc_dostepnych_egzemplarzy, au.imie, au.nazwisko, mg.nazwa AS nazwa_magazynu, mg.id_magazynu
                                     FROM ksiazki AS ks, subkategorie AS sbk, kategorie AS kt, autor AS au, magazyn_ksiazki AS mgk, magazyn AS mg
-                                    WHERE ks.id_subkategorii = sbk.id_subkategorii AND sbk.id_kategorii = kt.id_kategorii AND ks.id_autora = au.id_autora AND mgk.id_ksiazki = ks.id_ksiazki AND mgk.id_magazynu = mg.id_magazynu", "get_all_books", ""); // content of the table;
+                                    WHERE ks.id_subkategorii = sbk.id_subkategorii AND sbk.id_kategorii = kt.id_kategorii AND ks.id_autora = au.id_autora AND mgk.id_ksiazki = ks.id_ksiazki AND mgk.id_magazynu = mg.id_magazynu", "get_all_books", "");*/ // content of the table;
                 ?>
+
+                <div id="books-content"></div>
+
 
             </div>
 
@@ -99,6 +111,12 @@ query() -> function -> template(?)
 
         selectList.addEventListener("change", function() { // This code will execute when the selected option changes
             magazineForm.submit(); // submit the form after changing selected <option> element, the form will be first processed in "change-magazine.js" file that will send AJAX request to "change-magazine.php" file;
+        });*/
+
+        // send <form> after page load;
+        /*window.addEventListener('load', function() {
+            // Execute this code after the page finishes loading
+            document.getElementById('change-magazine-form').submit();
         });*/
 
     </script>

@@ -1,23 +1,54 @@
 
-$("select#change-magazine").on("change", function(e) { // after submitting the form
+$(document).ready(function() { // after page load/reload - send <form>;
 
-    console.log("<option> element of <select> list has been changed");
+    $("form#change-magazine-form").submit(); // submit the <form>
+});
 
-    $("form#change-magazine-form").submit();
-})
+$("select#change-magazine").on("change", function(e) { // after changing <option> element in <select> list;
 
-$("form#change-magazine-form").on("submit", function(e) { // after submitting the form
+    //console.log("<option> element of <select> list has been changed");
+
+    $("form#change-magazine-form").submit(); // submit the <form>
+});
+
+$("form#change-magazine-form").on("submit", function(e) { // after submitting form;
 
     e.preventDefault();
 
-    console.log("form submited !");
+    //console.log("form submited !");
 
-    let form = $(this); // obiekt zawierający dane formularza;
-    let postData = $(this).serialize().slice(16).trim(); // "change-magazine=1"
+    //let form = $(this); // obiekt zawierający dane formularza;
+    let data = $(this).serialize(); // dane formularza do przesłania metodą post;
+    let postData = parseInt($(this).serialize().slice(16).trim()); // "change-magazine=1" => "1" (id_maazynu);
 
-    console.log("\n 16 form => ", form);
-    console.log("\npostData =>", postData);
-    console.log("\ntypeof form => ", typeof(form)); // Object;
+    console.log("\ndata => ", data); // Object
+    console.log("\npost data (id_magazynu) =>", postData); // atrybut value elementu <option> (jest to id_magazynu);
+    console.log("\ntypeof(post data) (id_magazynu) =>", typeof(postData)); // atrybut value elementu <option> (jest to id_magazynu);
+    //console.log("\ntypeof form => ", typeof(form)); // Object;
+
+    if((data !== '') && (typeof(postData) === 'number') && (!isNaN(postData))) {
+        console.log("25");
+        $.post("change-magazine.php", data, function(data) {
+            // AJAX request to PHP script ...;
+
+            let booksHeader = document.querySelector('.admin-books');
+
+            if(booksHeader.style.display === 'none') {
+                booksHeader.style.display = "block";
+            }
+
+            $("#books-content").html(data);
+        });
+    } else {
+        // błąd z id-magazynu (!) ;
+
+        $("div.admin-books").css('display', 'none');
+
+        $("div#books-content").html('<span class="admin-books-error" style="display: block;">Wystąpił błąd. Serwer nie zwrócił poprawnych danych. Spróbuj ponownie później</span>');
+
+    }
+
+
 
     //let warehouse =
 

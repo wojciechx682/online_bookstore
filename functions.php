@@ -944,6 +944,15 @@ EOT;
 
         $result->free_result();
     }
+
+    function createMagazineSelectList($result) {
+        // create <option> elements inside <select> list based on warehouse names in database;
+        while($row = $result->fetch_assoc()) {
+            echo '<option value="'.$row["id_magazynu"].'">'.$row["nazwa"].'</option>';
+        }
+        echo '<option value="asdasd"></option>';
+        $result->free_result();
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Funkcja ustanawiająca połączenie z bazą danych i realizująca zapytanie sql

@@ -161,9 +161,9 @@ h3.book-details-section-header {
 }
 
 h3.section-header-books {
-    /*border: none;*/
-    border: 1px solid red;
-    width: 300px;
+    border: none;
+    /*border: 1px solid red;*/
+    /*width: 300px;*/
 
     /*float: left;*/
     display: inline-block;
@@ -589,10 +589,19 @@ form#update-order-date {
 span.date-error {
     display: none;
     font-weight: bold;
-    color: red;
+    color: red !important;
         position: absolute;
     margin-top: 15px;
     margin-left: 129px;
+}
+
+span.admin-books-error {
+    display: none;
+    font-weight: bold;
+    color: red !important;
+    /*position: absolute;
+    margin-top: 15px;
+    margin-left: 129px;*/
 }
 
 span.update-success, span.archive-success {
@@ -771,7 +780,7 @@ hr#book-details-hr {
     background-color: rgba(166, 166, 166, 0.53);
     border: none;
     height: 1px;
-    margin: 20px 0;
+    margin: -10px 0 20px 0;
     /*max-width: 255px;*/
 }
 
@@ -787,3 +796,44 @@ div#section-container { /* to avoid float left glitching */
     float: left;
     min-width: 560px;
 }
+
+select#change-magazine { /* lista <select> do zmiany magazynu - admin/books.php */
+    background-color: transparent;
+
+    position: relative;
+    top: -3px;
+    border: 1px ridge rgba(166, 166, 166, 0.38);
+    border-radius: 3px;
+    width: 120px;
+    padding: 3px 3px 4px 10px;
+    margin: 0 auto 0 auto;
+    user-select: none;
+
+    outline: none;
+
+    color: var(--text-color);
+}
+
+select#change-magazine:hover {
+    cursor: pointer;
+    border: 1px ridge rgba(210, 210, 210, 0.38);
+    user-select: none;
+
+}
+
+select#change-magazine option {
+    /*background-color: var(--content);*/
+    background-color: #656565;
+}
+select#change-magazine option:hover {
+    cursor: pointer;
+}
+
+form#change-magazine-form {
+    float: right;
+    margin-top: 15px;
+}
+
+/* div#admin-books-header-container {
+
+} */
