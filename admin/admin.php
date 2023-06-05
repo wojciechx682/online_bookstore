@@ -9,13 +9,13 @@
 
     /* if(isset($_GET["login-error"])) {
         echo '
-                    <script>
-                        alert("Musisz być zaloowany !")
-                        let url = new URL(window.location.href);
-                        url.searchParams.delete("login-error");
-                        window.location.href = url.toString();
-                    </script>
-                 ';
+                <script>
+                    alert("Musisz być zaloowany !")
+                    let url = new URL(window.location.href);
+                    url.searchParams.delete("login-error");
+                    window.location.href = url.toString();
+                </script>
+             ';
     } */
 ?>
 
@@ -39,8 +39,6 @@
                 <?php require "../template/admin/top-nav.php"; ?>
 
                 <div id="content">
-
-
 
                 </div>
 

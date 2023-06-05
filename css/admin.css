@@ -180,6 +180,17 @@ h4.section-header {
     margin-bottom: 20px;
 }
 
+h4.section-header-update-order {
+    margin-top: 20px;
+    font-size: 1.1em;
+    /*border: 1px solid #2d6eff;*/
+    /*border-bottom: 1px ridge #3a3a3a;*/
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
+    margin-bottom: 20px;
+    padding-bottom: 15px;*/
+    color: #fafaff;
+}
+
 .section-header {
     color: #fafaff;
 }
@@ -414,9 +425,10 @@ div.order-option a, div.book-option a {
         left: 45em;*/
     position: absolute;
     top: 50%;
-    left: 60%;
+    /*left: 60%;*/
+    left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 2000;
+    z-index: 90;
     border-radius: 5px;
 }
 #update-status > h2, .update-status > h2 {
@@ -519,6 +531,8 @@ div.delivery-date {
     padding: 6px 20px 20px 29px;
 
     min-height: 80px;
+
+    z-index: 1000;
 }
 
 div.delivery-date input[type="date"] {
@@ -876,3 +890,24 @@ div#warehouse-name, div#warehouse-name-content {
 
 /* ilość dostępnych egzemplarzy --> */
 
+/* ------------------------------------------------------------------------------------------------------------------ */
+
+/* ikona ładowania (ajax) --> */
+
+img#loading-icon {
+    margin: 0;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    color: white;
+
+    z-index: 100;
+
+    width: 108.5px;
+    height: 108.5px;
+}
+
+.not-visible {
+    display: none;
+}

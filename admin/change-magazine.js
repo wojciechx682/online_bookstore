@@ -28,17 +28,53 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
 
     if((data !== '') && (typeof(postData) === 'number') && (!isNaN(postData))) {
         // console.log("25");
-        $.post("change-magazine.php", data, function(data) {
+        /*$.post("change-magazine.php", data, function(data) {
             // AJAX request to PHP script ...;
-
             let booksHeader = document.querySelector('.admin-books');
-
             if(booksHeader.style.display === 'none') {
                 booksHeader.style.display = "block";
             }
-
             $("#books-content").html(data);
+        });*/
+
+        $.ajax({
+            type: "POST",                    // GET or POST;
+            url: "change-magazine.php",    // Path to file (that process the <form> data);
+            data: data,                      // serialized <form> data;
+            timeout: 2000,                   // Waiting time;
+            beforeSend: function() {         // Before Ajax - function called before sending the request;
+                //$content.append('<div id="load">Loading</div>');      // Load message
+                $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
+            },
+            complete: function() {           // Once finished - function called always after sending request;
+                //$('#load').remove();                                  // Clear message
+                $("img#loading-icon").toggleClass("not-visible");
+                /*finishUpdate();
+                $("div.delivery-date").append(formData);*/
+            },
+            success: function(data) {                               // Show content
+                //$content.html( $(data).find('#container') ).hide().fadeIn(400);
+                let booksHeader = document.querySelector('.admin-books');
+                if(booksHeader.style.display === 'none') {
+                    booksHeader.style.display = "block";
+                }
+                $("#books-content").html(data);
+            },
+            error: function(data) {                                     // Show error msg
+                //$content.html('<div id="container">Please try again soon.</div>');
+                /*finishUpdate();
+                $("div.delivery-date").append(formData);*/
+            }
         });
+
+
+
+
+
+
+
+
+
     } else {
         // błąd z id-magazynu (!) ;
 

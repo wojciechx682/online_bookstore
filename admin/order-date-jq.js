@@ -2,7 +2,7 @@ $("form#update-order-date").on("submit", function(e) {
 
     e.preventDefault(); // uniemożliwienie wysłania formularza ;
 
-    let data = $("form#update-order-date").serialize(); // serializacja danych formularza;  pobranie danych z formularza;
+    let formData = $("form#update-order-date").serialize(); // serializacja danych formularza;  pobranie danych z formularza;
                                                                                     // dane w postaci tekstowej (String);
     // let details = $(this).serialize();
         // let details = $(this); // obiekt zawierający dane formularza;
@@ -16,11 +16,11 @@ $("form#update-order-date").on("submit", function(e) {
                             // let dateValue = dataObject.name;
                             // let object = JSON.parse(details);
 
-    let dateValue = data.slice(11,21); // "2023-01-01" - termin dostawy;
-    let dispDate = data.slice(36,46); // "2023-01-01" - data wysłania;
-    let delDate = data.slice(42); // "2023-01-01" - data dostarczenia;
+    let dateValue = formData.slice(11,21); // "2023-01-01" - termin dostawy;
+    let dispDate = formData.slice(36,46); // "2023-01-01" - data wysłania;
+    let delDate = formData.slice(42); // "2023-01-01" - data dostarczenia;
 
-    console.log("\ndata (string) => ", data); // String;
+    console.log("\ndata (string) => ", formData); // String;
     console.log("\ndateValue => ", dateValue); // String;
     console.log("\ndispDate => ", dispDate);
     console.log("\ndelDate => ", delDate);
@@ -44,6 +44,7 @@ $("form#update-order-date").on("submit", function(e) {
 
     //console.log("\n45 selectedOption -> ", selectedOption);
 
+            // kontrola błędów (js);
             if(
                 (selectedOption.innerHTML === "W trakcie realizacji") &&
                 (dateValue < todayDate) || (dateValue === undefined) || (dateValue == null) ) // przeszła data, lub pusta ->
@@ -82,32 +83,59 @@ $("form#update-order-date").on("submit", function(e) {
             }
 
 // AJAX request;
-    $.post("update-order-date.php", data, function(data) {
-
+    /*$.post("update-order-date.php", data, function(data) {
             // funkcja wywołana w momencie zwrócenia dannych / otrzymania odpowiedzi z serwera;
-
                         // $("#update-order-date").html(data);
                         // $("#update-order-date").hide();
                         // $("button.cancel-order").hide();
                         // toggleBox();
+            // data serialized (string) =>  order-date=2023-05-17&dispatch-date=2023-05-18;
+        //finishUpdate(); // wywołanie funkcji po powrocie ze skryptu PHP;
+            //$("div.delivery-date").append("<span class='update-success'>Udało się zmienić status zamówienia</span>");
+            //$("div.delivery-date").html(data); // data - dane zwrócone z serwera.
+        /!*$("div.delivery-date").append(data);*!/
+            //$("div.order-status > span")
+    });*/
+        //let dateValue = details[0][0].value; // "2023-01-01";  type = String;
+        //console.log("\ndateValue => ", dateValue); // wartość (value) pola Daty
+        //console.log("\ndateValue => ", typeof(dateValue)); // wartość (value) pola Daty
 
-        // data serialized (string) =>  order-date=2023-05-17&dispatch-date=2023-05-18
-
-        finishUpdate(); // wywołanie funkcji po powrocie ze skryptu PHP;
 
 
+    $.ajax({
+        type: "POST",                    // GET or POST;
+        url: "update-order-date.php",    // Path to file (that process the <form> data);
+        data: formData,                      // serialized <form> data;
+        timeout: 2000,                   // Waiting time;
+        beforeSend: function() {         // Before Ajax - function called before sending the request;
+            //$content.append('<div id="load">Loading</div>');      // Load message
+            $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
+        },
+        complete: function(formData) {           // Once finished - function called always after sending request;
+            //$('#load').remove();                                  // Clear message
+            $("img#loading-icon").toggleClass("not-visible");
 
-        //$("div.delivery-date").append("<span class='update-success'>Udało się zmienić status zamówienia</span>");
+            /*finishUpdate();
+            $("div.delivery-date").append(formData);*/
+        },
+        success: function(formData) {                               // Show content
+            //$content.html( $(data).find('#container') ).hide().fadeIn(400);
+            finishUpdate();
+            $("div.delivery-date").append(formData);
 
-        //$("div.delivery-date").html(data); // data - dane zwrócone z serwera.
-        $("div.delivery-date").append(data);
-
-        //$("div.order-status > span")
+        },
+        error: function(formData) {                                     // Show error msg
+            //$content.html('<div id="container">Please try again soon.</div>');
+            finishUpdate();
+            $("div.delivery-date").append(formData);
+        }
     });
 
-    //let dateValue = details[0][0].value; // "2023-01-01";  type = String;
-    //console.log("\ndateValue => ", dateValue); // wartość (value) pola Daty
-    //console.log("\ndateValue => ", typeof(dateValue)); // wartość (value) pola Daty
+
+
+
+
+
 })
 
 function validateDate(date) { // "2023-01-01"

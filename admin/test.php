@@ -96,7 +96,7 @@
 
 </div>
 
-<img src="../assets/loading-2-fast.gif" alt="loading-2">
+
 
 </body>
 </html>

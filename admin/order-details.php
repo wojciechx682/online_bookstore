@@ -15,6 +15,24 @@ if(!(isset($_SESSION['zalogowany']))) {
 
 <?php require "../view/head-admin.php"; ?>
 
+<style>
+    /* (tymczasowo) */
+
+    /*#center {
+        width: 335px;
+        height: 150px;
+        border: 1px solid white;    font-weight: normal;    padding: 5px 12px;
+
+        text-align: center;
+        margin: 0 auto 0 auto;
+
+        position: relative;
+    }*/
+
+
+
+</style>
+
 <body>
 
 <div id="all-container">
@@ -34,20 +52,20 @@ if(!(isset($_SESSION['zalogowany']))) {
                 <?php require "../view/admin/order-details-header.php"; // first row, header of columns ?>
 
                 <?php
-                $_SESSION["order-id"] = array_keys($_GET)[0]; // $_GET -> id_zamówienia
+                    $_SESSION["order-id"] = array_keys($_GET)[0]; // $_GET -> id_zamówienia
 
-                // var_dump($_SESSION);
+                    // var_dump($_SESSION);
 
-                query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s' ",
-                    "get_order_details_admin", $_SESSION["order-id"]); // content of table; $_SESSION['order_details_books_id'];
+                    query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s' ",
+                        "get_order_details_admin", $_SESSION["order-id"]); // content of table; $_SESSION['order_details_books_id'];
 
-                query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
-                    "get_order_sum_admin", $_SESSION["order-id"]); // footer of table;
+                    query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
+                        "get_order_sum_admin", $_SESSION["order-id"]); // footer of table;
 
-                echo '<div id="order-det-container">';
+                    echo '<div id="order-det-container">';
 
-                query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s' ",
-                    "get_order_summary", $_SESSION["order-id"]); // sposób płatności, data, forma;
+                    query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s' ",
+                        "get_order_summary", $_SESSION["order-id"]); // sposób płatności, data, forma;
                 ?>
 
                 <div id="order-status">
@@ -85,7 +103,7 @@ if(!(isset($_SESSION['zalogowany']))) {
 
     <i class="icon-cancel"></i><hr>
 
-    <h4 class="section-header status-title"><label for="status-list">Status:</label></h4>
+    <h4 class="section-header-update-order status-title"><label for="status-list">Status:</label></h4>
 
     <select id="status-list">
         <option>Oczekujące na potwierdzenie</option>
@@ -368,5 +386,7 @@ if(isset($_GET["status"]) && ($_GET["status"] == "true")) {
 }
 ?>
 
+<img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
+<!-- class="not-visible" -->
 </body>
 </html>

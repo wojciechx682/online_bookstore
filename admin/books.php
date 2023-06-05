@@ -119,5 +119,7 @@ query() -> function -> template(?)
 
 </div>
 
+<img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
+
 </body>
 </html>
