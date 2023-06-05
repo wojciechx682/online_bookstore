@@ -361,6 +361,9 @@ div.order-option a, div.book-option a {
     #statistics-information{
         margin-top: 20px;
     }
+    /*#warehouse-information {
+        margin-top: 20px;
+    }*/
 }
 
 
@@ -691,7 +694,7 @@ section#basic-data {
     width: 368px;
 }
 
-section#basic-data, section#detailed-information, section#statistics-information {
+section#basic-data, section#detailed-information, section#statistics-information, section#warehouse-information {
     float: left;
     border: 1px ridge rgba(166, 166, 166, 0.38);
     border-radius: 4px;
@@ -703,23 +706,26 @@ section#detailed-information {
 
 div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state, div#book-description-content, div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content,
 div#book-avg-rating, div#book-ratings-amount, div#book-orders-count, div#book-category-name, div#book-subcategory-name,
-div#book-avg-rating-content, div#book-ratings-amount-content, div#book-orders-count-content, div#book-category-name-content, div#book-subcategory-name-content, div#book-cart-count, div#book-cart-count-content, div#book-items-sold, div#book-items-sold-content {
+div#book-avg-rating-content, div#book-ratings-amount-content, div#book-orders-count-content, div#book-category-name-content, div#book-subcategory-name-content, div#book-cart-count, div#book-cart-count-content, div#book-items-sold, div#book-items-sold-content,
+div#warehouse-name, div#warehouse-location-name, div#warehouse-name-content, div#warehouse-location-name-content-country, div#warehouse-address, div#warehouse-post-code, div#warehouse-address-content-city, div#warehouse-post-code-content, div#warehouse-number-of-books-available, div#warehouse-number-of-books-available-content {
     float: left;
     padding: 5px 5px 5px 10px;
 }
 
-div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state, div#book-avg-rating, div#book-ratings-amount, div#book-orders-count, div#book-category-name, div#book-subcategory-name, div#book-cart-count, div#book-items-sold  {
+div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state, div#book-avg-rating, div#book-ratings-amount, div#book-orders-count, div#book-category-name, div#book-subcategory-name, div#book-cart-count, div#book-items-sold,
+div#warehouse-name, div#warehouse-location-name, div#warehouse-address, div#warehouse-post-code, div#warehouse-number-of-books-available {
     width: 128px;
 }
 
 div#book-title, div#book-author, div#book-year, div#book-price, div#book-state,
 div#book-dimensions, div#book-pages, div#book-cover,
-div#book-avg-rating, div#book-ratings-amount, div#book-category-name, div#book-subcategory-name, div#book-orders-count, div#book-cart-count {
+div#book-avg-rating, div#book-ratings-amount, div#book-category-name, div#book-subcategory-name, div#book-orders-count, div#book-cart-count,
+div#warehouse-name, div#warehouse-location-name, div#warehouse-address {
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
-div#book-publisher, div#book-state, div#book-description, div#book-orders-count, div#book-cart-count, div#book-cart-count, div#book-items-sold
+div#book-publisher, div#book-state, div#book-description, div#book-orders-count, div#book-cart-count, div#book-cart-count, div#book-items-sold, div#warehouse-post-code, div#warehouse-number-of-books-available
  {
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
 }
@@ -727,7 +733,7 @@ div#book-publisher, div#book-state, div#book-description, div#book-orders-count,
 div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content,
  div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content,
 div#book-avg-rating-content, div#book-ratings-amount-content, div#book-category-name-content,
-div#book-subcategory-name-content, div#book-orders-count-content, div#book-cart-count-content
+div#book-subcategory-name-content, div#book-orders-count-content, div#book-cart-count-content, div#warehouse-name-content, div#warehouse-location-name, div#warehouse-location-name-content-country, div#warehouse-address, div#warehouse-address-content-city, div#warehouse-post-code, div#warehouse-post-code-content
 {
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
 }
@@ -736,12 +742,15 @@ div#book-description-content, div#book-dimensions-content, div#book-pages-conten
     min-width: 300px;
 }
 
+
+
 div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content {
     min-width: 200px;
 }
 
 section#detailed-information,
-section#statistics-information {
+section#statistics-information,
+section#warehouse-information {
     /*width: 100%;*/
     width: 550px;
     /*height: 200px;*/
@@ -753,6 +762,12 @@ section#statistics-information {
     /*margin-top: 20px;*/ /* (!) */
 }
 
+section#warehouse-information {
+    margin-top: 20px;
+}
+
+
+
 /* wspólna szerokość dla drugich kolumn -> */
 
 div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content {
@@ -760,7 +775,8 @@ div#book-title-content, div#book-author-content, div#book-year-content, div#book
 }
 
 div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content, div#book-description-content,
-div#book-avg-rating-content, div#book-ratings-amount-content, div#book-orders-count-content, div#book-category-name-content, div#book-subcategory-name-content, div#book-cart-count-content, div#book-items-sold-content {
+div#book-avg-rating-content, div#book-ratings-amount-content, div#book-orders-count-content, div#book-category-name-content, div#book-subcategory-name-content, div#book-cart-count-content, div#book-items-sold-content,
+div#warehouse-name-content, div#warehouse-location-name-content-country, div#warehouse-address-content-city, div#warehouse-post-code-content, div#warehouse-number-of-books-available-content {
     min-width: 414px;
 }
 
@@ -780,7 +796,23 @@ hr#book-details-hr {
     background-color: rgba(166, 166, 166, 0.53);
     border: none;
     height: 1px;
-    margin: -10px 0 20px 0;
+    margin: 20px 0 20px 0;
+    /*max-width: 255px;*/
+}
+
+hr#book-details-hr-books {
+    background-color: rgba(166, 166, 166, 0.53);
+    border: none;
+    height: 1px;
+    margin: -5px 0 25px 0;
+    /*max-width: 255px;*/
+}
+
+hr#book-details-hr-edit-books {
+    background-color: rgba(166, 166, 166, 0.53);
+    border: none;
+    height: 1px;
+    margin: -15px 0 25px 0;
     /*max-width: 255px;*/
 }
 
@@ -834,6 +866,13 @@ form#change-magazine-form {
     margin-top: 15px;
 }
 
-/* div#admin-books-header-container {
+ div#admin-books-header-container {
+    /*border: 1px solid #002aff;*/
+}
 
-} */
+div#warehouse-name, div#warehouse-name-content {
+    height: 50px;
+}
+
+/* ilość dostępnych egzemplarzy --> */
+

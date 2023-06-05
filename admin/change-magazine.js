@@ -27,7 +27,7 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
     //console.log("\ntypeof form => ", typeof(form)); // Object;
 
     if((data !== '') && (typeof(postData) === 'number') && (!isNaN(postData))) {
-        console.log("25");
+        // console.log("25");
         $.post("change-magazine.php", data, function(data) {
             // AJAX request to PHP script ...;
 

@@ -2105,7 +2105,7 @@ button#filter-authors:hover {
 
 .nav-visible {
     display: block !important;
-    /*width: 25% !important;*/ /* (!!!) */
+    width: 25% !important; /* (!!!) */
 }
 
 div#content {

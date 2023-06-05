@@ -18,10 +18,10 @@
         <div class="book-options-container">
             <div class="book-action-options">
                 <div class="book-option">
-                    <a href="book-details.php?%s">Przeglądaj</a>
+                    <a href="book-details.php?book=%s&warehouse=%s">Przeglądaj</a>
                 </div>
                 <div class="book-option">
-                    <a href="order-details.php?%s&status=true" onclick="">Edytuj</a>
+                    <a href="edit-book.php" onclick="">Edytuj</a>
                 </div>
                 <div class="book-option">
                     <a href="#" onclick="removeOrder(%s)">Usuń</a>

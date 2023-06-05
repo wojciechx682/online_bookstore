@@ -71,7 +71,7 @@ query() -> function -> template(?)
 -->
 
 
-                <hr id="book-details-hr">
+                <hr id="book-details-hr-books">
 
                 <?php require "../view/admin/books-header.php"; // table header ?>
 
@@ -105,23 +105,17 @@ query() -> function -> template(?)
 
     <script>
         // send <form> after changing selected <option> element in <select> list;
-
         /*let selectList = document.getElementById("change-magazine");
         let magazineForm = document.getElementById("change-magazine-form");
-
         selectList.addEventListener("change", function() { // This code will execute when the selected option changes
             magazineForm.submit(); // submit the form after changing selected <option> element, the form will be first processed in "change-magazine.js" file that will send AJAX request to "change-magazine.php" file;
         });*/
-
         // send <form> after page load;
         /*window.addEventListener('load', function() {
             // Execute this code after the page finishes loading
             document.getElementById('change-magazine-form').submit();
         });*/
-
     </script>
-
-
 
 </div>
 

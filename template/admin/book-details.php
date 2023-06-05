@@ -18,7 +18,7 @@
             <div id="book-price">Cena</div> <div id="book-price-content">%s</div> <div style="clear:both;"></div>
             <div id="book-publisher">Wydawnictwo</div> <div id="book-publisher-content">%s</div> <div style="clear:both;"></div>
 
-        </section> <!--<div style="clear:both;"></div>-->
+        </section> <div style="clear:both;"></div>
     </div>
 
     <div style="clear:both;"></div>
@@ -50,11 +50,33 @@
         <div id="book-orders-count">Liczba zamówień, w których wystąpiła (conajmniej raz)</div><div id="book-orders-count-content">%s</div> <div style="clear:both;"></div>
         <div id="book-cart-count">Ilość klietnów posiadających w koszyku</div><div id="book-cart-count-content">%s</div> <div style="clear:both;"></div>
         <div id="book-items-sold">Ilość sprzedanych sztuk</div><div id="book-items-sold-content">%s</div> <div style="clear:both;"></div>
-
     </section>
 
     <div style="clear: both;"></div>
 
-    Magazyn -->
+    <section id="warehouse-information">
+        <div id="warehouse-name">Nazwa magazynu</div>
+            <div id="warehouse-name-content">%s</div>
+            <div style="clear:both;"></div>
+
+        <div id="warehouse-location-name">Lokalizacja</div>
+            <div id="warehouse-location-name-content-country">%s - %s</div>
+            <!--<div id="warehouse-location-name-content-province">(województwo)</div>-->
+            <div style="clear:both;"></div>
+
+        <div id="warehouse-address">Adres</div>
+            <div id="warehouse-address-content-city">%s, %s %s</div>
+            <!--<div id="warehouse-address-content-street"></div>-->
+            <div style="clear:both;"></div>
+
+        <div id="warehouse-post-code">Kod pocztowy</div>
+            <div id="warehouse-post-code-content">%s, %s</div>
+            <div style="clear:both;"></div>
+
+        <div id="warehouse-number-of-books-available">Ilość dostępnych egzemplarzy</div>
+            <div id="warehouse-number-of-books-available-content">%s</div>
+            <div style="clear:both;"></div>
+
+    </section>
 
 </article>
