@@ -1,37 +1,17 @@
 <?php
-session_start();
-include_once "../functions.php";
+    session_start();
+    include_once "../functions.php";
 
-if(!(isset($_SESSION['zalogowany']))) {
-    header("Location: ../user/___index2.php?login-error");
-    exit();
-}
-
-
+    if(!(isset($_SESSION['zalogowany']))) {
+        header("Location: ../user/___index2.php?login-error");
+        exit();
+    }
 ?>
 
 <!DOCTYPE HTML>
 <html lang="pl">
 
 <?php require "../view/head-admin.php"; ?>
-
-<style>
-    /* (tymczasowo) */
-
-    /*#center {
-        width: 335px;
-        height: 150px;
-        border: 1px solid white;    font-weight: normal;    padding: 5px 12px;
-
-        text-align: center;
-        margin: 0 auto 0 auto;
-
-        position: relative;
-    }*/
-
-
-
-</style>
 
 <body>
 
@@ -52,25 +32,48 @@ if(!(isset($_SESSION['zalogowany']))) {
                 <?php require "../view/admin/order-details-header.php"; // first row, header of columns ?>
 
                 <?php
-                    $_SESSION["order-id"] = array_keys($_GET)[0]; // $_GET -> id_zamówienia
+                    $_SESSION["order-id"] = array_keys($_GET)[0]; // $_GET -> id_zamówienia - "1038";
+
+                    /*
+                        $array = array(
+                            "name" => "John",
+                            "age" => 30,
+                            "city" => "New York",
+                            "gender" => "Male"
+                        );
+
+                        $keys = array_keys($array);
+                        print_r($keys);
+
+                        // output -->
+                        Array
+                        (
+                            [0] => name
+                            [1] => age
+                            [2] => city
+                            [3] => gender
+                        )
+                    */
 
                     // var_dump($_SESSION);
 
-                    query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s' ",
-                        "get_order_details_admin", $_SESSION["order-id"]); // content of table; $_SESSION['order_details_books_id'];
+                    query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'",
+                        "get_order_details_admin", $_SESSION["order-id"]); // content of table;  $_SESSION['order_details_books_id'];
+                                                                               // (content) id_zamowienia, tytul, cena, ilosc, kwota;
 
                     query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
                         "get_order_sum_admin", $_SESSION["order-id"]); // footer of table;
+                                                                           // kwota (suma) zamówienia;
 
                     echo '<div id="order-det-container">';
 
-                    query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s' ",
-                        "get_order_summary", $_SESSION["order-id"]); // sposób płatności, data, forma;
+                    query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
+                        "get_order_summary", $_SESSION["order-id"]); // sposób_płatności, data_platnosci, forma_dostarczenia, status;
                 ?>
 
                 <div id="order-status">
 
-                    <span>Status: </span>
+                    <span>Status :</span>
 
                     <?php echo '<span class="order-status-name">' . $_SESSION["status"] . '</span>'; ?> <br>
 
@@ -80,24 +83,13 @@ if(!(isset($_SESSION['zalogowany']))) {
 
                 <div style="clear: both"></div>
 
-            </div>
+            </div> <!-- content -->
         </main>
-    </div>
+    </div> <!-- container -->
 
-    <!-- <footer>
-        <div id="footer">
-            <script src="../scripts/set-theme.js"></script>
-            <pre>
-                <button id="white" onclick="setWhiteTheme()">white</button>  <button id="black" onclick="setBlackTheme()">black</button>  © 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us
-            </pre>
-        </div>
-    </footer> -->
+</div> <!-- all-container -->
 
-    <?php // require "../view/___footer.php"; ?>
-
-</div>
-
-<div id="update-status" class="hidden">
+<div id="update-status" class="hidden"> <!-- okno zmiany statusu zamówienia -->
 
     <h2>Zmień status zamówienia</h2>
 
@@ -114,57 +106,65 @@ if(!(isset($_SESSION['zalogowany']))) {
 
     <div style="clear: both;"></div>
 
-    <!--  form (?) -->
-
     <div class="delivery-date">
 
         <form id="update-order-date" action="update-order-date.php" method="post">
             <label>
                 <span class="order-label">Termin dostawy</span><input type="date" name="order-date">
             </label>
-            <div style="clear: both;"></div>
+                <div style="clear: both;"></div>
 
             <label>
                 <span class="order-label">Data wysłania</span><input type="date" name="dispatch-date">
             </label>
-            <div style="clear: both;"></div>
+                <div style="clear: both;"></div>
 
             <label>
-                <span class="order-label">Dostarczono</span><input type="date" name="delivered-date">
+                <span class="order-label">Data dostarczenia</span><input type="date" name="delivered-date">
             </label>
-            <div style="clear: both;"></div>
+                <div style="clear: both;"></div>
 
-            <span class="date-error">Podaj poprawną datę</span><div style="clear: both;"></div>
+                <span class="date-error">Podaj poprawną datę</span><div style="clear: both;"></div>
             <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
         </form>
 
         <button class="update-order-status cancel-order btn-link btn-link-static">Anuluj</button>
-    </div>
 
-</div>
+    </div> <!-- delivery-date -->
+
+</div> <!-- update-status -->
 
 <script>
 
     btn = document.querySelector('button.update-order-status');  // button - "Aktualizuj" zmianę statusu;
-    let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu;
+    let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu; div#update-status.hidden;
     let allContainer = document.getElementById("all-container");
-    icon = document.querySelector('.icon-cancel');
-    cancelBtn = document.querySelector('.cancel-order');         // przycisk "Anuluj"
+    icon = document.querySelector('.icon-cancel');               // <i class="icon-cancel">
+    cancelBtn = document.querySelector('.cancel-order');         // przycisk "Anuluj"; button.cancel-order;
 
-    btn.addEventListener("click", function() {
-        toggleBox(); // pojawienie się okienka po kliknięciu przycisku "Aktualizuj"
-    });
+            /* /!* v1 --> *!/ btn.addEventListener("click", function() {
+                toggleBox(); // pojawienie się okienka po kliknięciu przycisku "Aktualizuj";  <div id="update-status">;
+                             // toggle class="hidden"; + resetBox();
+            });
+            icon.addEventListener("click", function() {
+                toggleBox(); // zamknięcie okna po kliknięciu "x";
+            });
+            cancelBtn.addEventListener("click", function() {
+                toggleBox(); // przycisk "Anuluj";
+            });*/
 
-    icon.addEventListener("click", function() {
-        toggleBox(); // zamknięcie okna po kliknięciu "x";
-    });
+    /* /!* v2 --> *!/ btn.addEventListener("click", toggleBox);
+    icon.addEventListener("click", toggleBox);
+    cancelBtn.addEventListener("click", toggleBox);*/
 
-    cancelBtn.addEventListener("click", function() {
-        toggleBox(); // przycisk "Anuluj"
+    let buttons = [btn, icon, cancelBtn]; // "Aktualizuj", "X", "Anuluj"
+
+    buttons.forEach(function(button) {
+        button.addEventListener("click", toggleBox);
     });
 
     function toggleBox() {
-        statusBox.classList.toggle("hidden");
+        statusBox.classList.toggle("hidden");    // update-status box
         allContainer.classList.toggle("bright");
         resetBox();
     }
@@ -187,27 +187,24 @@ if(!(isset($_SESSION['zalogowany']))) {
         // Get the modified URL without the specified parameter
         var modifiedURL = url.toString();
         console.log("\n modifiedURL -> ", modifiedURL);
-        //window.location.href = modifiedURL;
+        //window.location.href = modifiedURL; // ta linia zmienia URL na taki, aby nie wyskakiwało okno zmiany statusu po odświeżeniu;
+                                              // można to przenieść (?) gdzie indziej, np po kliknięciu (zamknięciu) okna zmiany statusu - tak aby po odświeżeniu storny nie pojawiało się ono ponownie;
     }
 
     function resetBox() {
-        // zresetowanie zawartości okna - po jego zamknięciu, (po tym jak udało się zrealizować zmianę statusu) ! -->
-        let form = document.querySelector("#update-order-date");
-        //form.style.display = "none";
-        //form.classList.toggle("hidden");
+        let form = document.querySelector("#update-order-date"); // zresetowanie zawartości okna - po jego zamknięciu;
         if(form.style.display === "none") {
             form.style.display = "block";
         }
+
         let cancelBtn = document.querySelector('.cancel-order');
-        //cancelBtn.style.display = "none";
-        //cancelBtn.classList.toggle("hidden");
         if(cancelBtn.style.display === "none") {
             cancelBtn.style.display = "block";
         }
-        $('.update-success').remove();
+        $('.update-success').remove();                           // "Udało się zmienić status zamówienia";
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // -----------------------------------------------------------------------------------------------------------------
     // kliknięcie na datę usuwa kom. o błędzie;
 
     let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"]'); // querySelectorAll() is a method of the Document object that allows you to select multiple elements in the document based on a CSS selector;
@@ -224,11 +221,11 @@ if(!(isset($_SESSION['zalogowany']))) {
         dateInput.addEventListener("focus", function() {
             // Perform your desired actions when the input is focused;
             $("span.date-error").hide();
-            $("div.delivery-date button").css('margin-top', '35px'); // ?
+            $("div.delivery-date button").css('margin-top', '35px'); // (?)
         });
     });
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // -----------------------------------------------------------------------------------------------------------------
 
     let list = document.getElementById("status-list"); // lista <select> - zmiana opcji wyboru;
 
@@ -237,35 +234,33 @@ if(!(isset($_SESSION['zalogowany']))) {
         resetBox();
 
         const selectedOption = this.options[this.selectedIndex]; // get the <option> ELEMENT that was selected - after "change" event;
-        const form = document.querySelector(".delivery-date");   // div > form
-        // const deliveryDate = document.createElement('input');
+        const deliveryDate = document.querySelector(".delivery-date"); // div class="delivery-date" --> form id="update-order-date";
 
-        const fDate = document.querySelector("form#update-order-date label:nth-of-type(1)"); // <label> - input - termin dostawy;
-        const deliveryDate = document.querySelector("form#update-order-date label:nth-of-type(2)"); // <label> - input - data wysłania zamówienia;
-        const delDate = document.querySelector("form#update-order-date label:nth-of-type(3)"); // <label> - input - data dostarczenia;
-        const div = document.querySelector("div.delivery-date"); // div > form
-        const btns = document.querySelectorAll("div.delivery-date button");
+        const expDeliveryDate = document.querySelector("form#update-order-date label:nth-of-type(1)"); // <label> - input - termin dostawy;
+        const sentDate = document.querySelector("form#update-order-date label:nth-of-type(2)"); // <label> - input - data wysłania zamówienia;
+        const dateDelivered = document.querySelector("form#update-order-date label:nth-of-type(3)"); // <label> - input - data dostarczenia;
+        // const div = document.querySelector("div.delivery-date"); // div > form
+        // const btns = document.querySelectorAll("div.delivery-date button");
 
-        form.style.display = "block"; // <div class="delivery-date">
+        deliveryDate.style.display = "block"; // <div class="delivery-date">
 
         if(selectedOption.innerHTML === "W trakcie realizacji") {
 
             //form.style.display = "block"; // <div class="delivery-date">
 
-            if(fDate.style.display === "none") { // termin dostawy
-                fDate.style.display = "block";
+            if(expDeliveryDate.style.display === "none") { // termin dostawy
+                expDeliveryDate.style.display = "block";
             }
 
-            if(deliveryDate.style.display === "block") { // data wysłania
-                deliveryDate.style.display = "none";
+            if(sentDate.style.display === "block") { // data wysłania
+                sentDate.style.display = "none";
+            }
+            if(dateDelivered.style.display === "block") { // data dostarczenia
+                dateDelivered.style.display = "none";
             }
 
-            if(delDate.style.display === "block") { // data dostarczenia
-                delDate.style.display = "none";
-            }
-
-            if(div.style.paddingTop !== "20px") { // (?)
-                div.style.paddingTop = "20px";
+            if(deliveryDate.style.paddingTop !== "20px") { // (?)
+                deliveryDate.style.paddingTop = "20px";
             }
 
             $('.update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj"
@@ -274,21 +269,20 @@ if(!(isset($_SESSION['zalogowany']))) {
 
         } else if(selectedOption.innerHTML === "Wysłano") {
 
-            //form.style.display = "block"; // termin dostawy
-
+            // form.style.display = "block"; // termin dostawy
             // console.log("\ndeliveryDate => ", deliveryDate);
 
-            deliveryDate.style.display = "block"; // data wysłania
-            deliveryDate.style.marginBottom = "15px";
+            sentDate.style.display = "block"; // data wysłania
+            sentDate.style.marginBottom = "15px";
 
-            div.style.paddingTop = "5px"; // div > form
+            deliveryDate.style.paddingTop = "5px"; // div > form
 
-            if(delDate.style.display === "block") { // data dostarczenia
-                delDate.style.display = "none";
+            if(dateDelivered.style.display === "block") { // data dostarczenia
+                dateDelivered.style.display = "none";
             }
 
-            if(fDate.style.display === "none") { // termin dostawy;  <input type="date" ...>
-                fDate.style.display = "block";
+            if(expDeliveryDate.style.display === "none") { // termin dostawy;  <input type="date" ...>
+                expDeliveryDate.style.display = "block";
             }
 
             /*for(let i=0; i<btns.length; i++) {
@@ -317,31 +311,29 @@ if(!(isset($_SESSION['zalogowany']))) {
         } else if (selectedOption.innerHTML === "Dostarczono") {
 
             // form.style.display = "block";
-            fDate.style.display = "none"; // termin dostawy
+            expDeliveryDate.style.display = "none"; // termin dostawy
 
-            if(deliveryDate.style.display === "block") { // data wysłania;
-                deliveryDate.style.display = "none";
+            if(sentDate.style.display === "block") { // data wysłania;
+                sentDate.style.display = "none";
             }
 
-            delDate.style.display = "block"; // data dostarczenia
+            dateDelivered.style.display = "block"; // data dostarczenia
 
         } else {
-            form.style.display = "none";
             deliveryDate.style.display = "none";
+            sentDate.style.display = "none";
         }
     });
 
 </script>
 
-
-
 <script>
 
-    // <!-- ukrycie formularza + buttona "Anuluj" - PO POMYŚLNYM ZREALIZOWANIU ZAPYTANIA TYPU UPDATE (!) -->
+    // <!-- ukrycie formularza + buttona "Anuluj" - po pomyślnym zrealizowaniu zapytania typu update -->
 
     function finishUpdate() {
-        // console.log("\n212 finishedUpdate fun");
-        const form = document.getElementById("update-order-date"); // ukrycie formularza
+            // console.log("\n212 finishedUpdate fun");
+        const form = document.getElementById("update-order-date"); // ukrycie formularza (zawiera przycisk "Potwierdź") - <form #update-order-date>
         const btn = document.querySelector(".cancel-order");       // ukrycie przycisku "Anuluj"
         form.style.display = "none";
         btn.style.display = "none";
@@ -349,15 +341,13 @@ if(!(isset($_SESSION['zalogowany']))) {
         let list = document.getElementById("status-list");  // <select> list;
         let option = list.options[list.selectedIndex];      // get currently selected <option> element;
         $("span.order-status-name").text(option.innerHTML); // zmiana wyświetlanego statusu po jego zmianie;
-
-        //toggleBox();
     }
 
     // kliknięcie "Esc" zamyka okno zmiany statusu --->
 
     document.addEventListener('keydown', function(event) {
-        let statusBox = document.getElementById("update-status"); // całe okieno zmiany statusu;
-        if(!statusBox.classList.contains("hidden")) {
+        let statusBox = document.getElementById("update-status"); // całe okieno zmiany statusu; <div id="update-status">
+        if(!statusBox.classList.contains("hidden")) { // jeśli element jest widoczny
             if (event.key === 'Escape') {
                 console.log('Esc key pressed'); // add code here to perform an action when Esc key is pressed
                 toggleBox(); // zamknięcie okna;
@@ -367,26 +357,26 @@ if(!(isset($_SESSION['zalogowany']))) {
 
 </script>
 
-<script src="order-date-jq.js"></script>
+<script src="order-date-jq.js"></script> <!-- obsługa i wysłanie żądania AJAX -->
 
 <?php
-//!!! TO POWINNO BYĆ ODKOMENTOWANE ! - ponieważ ta zmienna istnieje TYLKO WTEDY - gdy udało się ZAKTUALIZOWAĆ DANE !!!!; (jednak nie bo AJAX nie odswieza strony)
-/*if(isset($_SESSION["update-successful"]) && $_SESSION["update-successful"] === true ) {
-    unset($_SESSION["update-successful"]);
-    echo '<script>finishUpdate();</script>';
-}*/
+    // to powinno być odkomentowane - ponieważ ta zmienna istnieje tylko wtedy - gdy udało się zaktualizować dane;
+    // (jednak nie bo ajax nie odswieza strony);
+
+    /* if(isset($_SESSION["update-successful"]) && $_SESSION["update-successful"] === false ) {
+        unset($_SESSION["update-successful"]);
+        echo '<script>finishUpdate();</script>';
+    } */
 ?>
 
 <?php
-if(isset($_GET["status"]) && ($_GET["status"] == "true")) {
-    echo '<script>toggleBox();</script>';
-    echo '<script>resetUrl();</script>';
-
-
-}
+    if(isset($_GET["status"]) && ($_GET["status"] == "true")) {
+        echo '<script>toggleBox();</script>';
+        echo '<script>resetUrl();</script>'; // (aktualnie wyłączone z użycia - zakomentowana linia kodu wewnątrz funkcji)
+    }
 ?>
 
 <img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
-<!-- class="not-visible" -->
+
 </body>
 </html>

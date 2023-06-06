@@ -29,7 +29,7 @@
 
                     <h3 class="section-header">Zamówienia</h3>
 
-                    <?php require "../view/admin/order-header.php"; // table header ?>
+                    <?php require "../view/admin/order-header.php"; // table header; ?>
 
                     <?php
                         query("SELECT zm.id_zamowienia,
@@ -39,26 +39,16 @@
                                         zm.status 
                                     FROM zamowienia AS zm, klienci AS kl, platnosci AS pl 
                                     WHERE zm.id_zamowienia = pl.id_zamowienia AND
-                                    zm.id_klienta = kl.id_klienta", "get_all_orders", ""); // content of the table;
+                                    zm.id_klienta = kl.id_klienta", "get_all_orders", ""); // content of the table - wszystkie zamówienia złożone przez klientów;
                     ?>
 
                 </div>
 
             </main>
+
         </div>
 
-        <!-- <footer>
-            <div id="footer">
-                <script src="../scripts/set-theme.js"></script>
-                <pre>
-                    <button id="white" onclick="setWhiteTheme()">white</button>  <button id="black" onclick="setBlackTheme()">black</button>  © 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us
-                </pre>
-            </div>
-        </footer> -->
-
-        <?php //require "../view/___footer.php"; ?>
-
-    </div>
+    </div> <!-- all-container -->
 
         <?php
             query("SELECT zm.id_zamowienia,
@@ -68,13 +58,13 @@
                             zm.status 
                         FROM zamowienia AS zm, klienci AS kl, platnosci AS pl 
                         WHERE zm.id_zamowienia = pl.id_zamowienia AND
-                        zm.id_klienta = kl.id_klienta", "get_orders_boxes", ""); // remove order box; used another query because of the brightness effect - to be outside <div#all-container>
+                        zm.id_klienta = kl.id_klienta", "get_orders_boxes", "");
+            // remove (archive) order box; used another query because of the brightness effect - to be outside <div#all-container>
         ?>
 
 <script>
 
-    function resetError(textarea) {
-        // archiwizowanie zamówienia - kliknięcie na <textarea> usuwa komunikat o błędzie;
+    function resetError(textarea) {                  // archiwizowanie zamówienia - kliknięcie na <textarea> usuwa komunikat o błędzie (jeśli był on widoczny);
         let spanError = textarea.nextElementSibling; // span z komunikatem o błędzie;
         if(spanError.style.display === "block") {
             spanError.style.display = "none";
@@ -88,16 +78,15 @@
     document.addEventListener('keydown', function(event) {
 
         // kliknięcie "Esc" zamyka okno archiwizowania;
+            // ~ można by to zrobić lepiej, tak aby pętla nie iterowała przez wszystie elementy (wszystkie zamówienia);
 
-        let removeBoxes = document.querySelectorAll('.update-status'); // okienka Archiwizowania zamówienia;
+        let removeBoxes = document.querySelectorAll('div.update-status'); // okienka Archiwizowania zamówienia;
         let allContainer = document.getElementById("all-container");
 
         for (let i = 0; i < removeBoxes.length; i++) { // dla każdego okienka;
             let removeBox = removeBoxes[i]; // perform actions on each element;
-
-            if(!removeBox.classList.contains("hidden")) {
+            if(!removeBox.classList.contains("hidden")) { // jeśli nie zawiera klasy hidden (tzn jest widoczny);
                 if (event.key === 'Escape') {
-
                     removeBox.classList.toggle("hidden"); // zamknięcie okna;
                     allContainer.classList.toggle("bright");
                 }
@@ -107,8 +96,7 @@
 
 </script>
 
-    <script src="remove-order.js"></script>
-    <!--<script src="test.js"></script>-->
+<script src="remove-order.js"></script> <!-- admin\remove-order.js -->
 
 </body>
 </html>

@@ -142,7 +142,7 @@ div#container main div#top-nav {
 /* content --> --------------------------------------------------------------------------------- */
 
 div#content {
-    border: 1px solid #2d6eff;
+    /*border: 1px solid #2d6eff;*/
     padding-left: 20px;
 }
 
@@ -608,7 +608,7 @@ span.date-error {
     font-weight: bold;
     color: red !important;
         position: absolute;
-    margin-top: 15px;
+    margin-top: 0;
     margin-left: 129px;
 }
 

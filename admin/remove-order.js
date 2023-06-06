@@ -1,6 +1,8 @@
-//import DOMPurify from 'dompurify';
+// okienko archiwizowania zamówienia - admin/orders.php
 
 $("form.remove-order").on("submit", function(e) { // po wysłaniu formularza
+
+    // "plik wie, który formularz został wysłany - jest to tylko jeden - odpowiedni - a nie wszystie formularze - tj. te które istnieją w kodzie i jest ich tyle ile jest zamówień";
 
     // plik JS wysyłający formularz z wykorzystaniem AJAX;
     // plik "remove-order.php" obsługuje żądanie, odbiera dane i wykonuje zapytanie do BD.
@@ -10,6 +12,8 @@ $("form.remove-order").on("submit", function(e) { // po wysłaniu formularza
     //let data = $("form.remove-order").serialize();
     let data = $(this); // obiekt zawierający dane formularza;
     let form = $(this);
+
+    //console.log("data --> ", data);
 
     let postData = $(this).serialize();
 
@@ -46,9 +50,13 @@ $("form.remove-order").on("submit", function(e) { // po wysłaniu formularza
     if( (comment !== sanitizedComment) || (sanitizedComment.length < 10) || (sanitizedComment.length > 255) ) {
         // niebezpieczne znaki - lub - niepoprawna długość;
             //$('.remove-order-error').css('display', 'block');
-        $('.remove-order-error').css('display', 'block');
+
                     //$('div.delivery-date button').css('margin-top', '50px');
         //return;
+
+        $('.remove-order-error').css('display', 'block');
+
+
     } else {
         $('.remove-order-error').css('display', 'none');
 

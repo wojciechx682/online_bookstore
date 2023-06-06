@@ -151,7 +151,7 @@ function validateDate(date) { // "2023-01-01"
 
 function error() {
     $('.date-error').css('display', 'block');
-    $('div.delivery-date button').css('margin-top', '50px');
+    //$('div.delivery-date button').css('margin-top', '50px');
 }
 
 /* $("#update-order-date").on("submit", function(e) {

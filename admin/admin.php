@@ -6,17 +6,6 @@
         header("Location: ../user/___index2.php?login-error");
         exit();
     }
-
-    /* if(isset($_GET["login-error"])) {
-        echo '
-                <script>
-                    alert("Musisz być zaloowany !")
-                    let url = new URL(window.location.href);
-                    url.searchParams.delete("login-error");
-                    window.location.href = url.toString();
-                </script>
-             ';
-    } */
 ?>
 
 <!DOCTYPE HTML>
@@ -27,8 +16,6 @@
 <body>
 
     <div id="all-container">
-
-        <?php //require "../view/___header-container.php"; ?>
 
         <div id="container">
 

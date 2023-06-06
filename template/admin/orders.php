@@ -23,7 +23,7 @@
                     <a href="order-details.php?%s&status=true" onclick="">Zmień status</a>
                 </div>
                 <div class="order-option">
-                    <a href="#" onclick="removeOrder(%s)">Archiwizuj</a>
+                    <a href="#" onclick="removeOrder(%s)">Archiwizuj</a> <!-- scripts\remove-order.js -->
                 </div>
             </div>
         </div>
