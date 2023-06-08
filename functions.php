@@ -844,7 +844,7 @@ EOT;
             // load the content from the external template file into string
             $order = file_get_contents("../template/admin/orders-boxes.php");
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, $row['id_zamowienia'], $row['id_zamowienia'], $row['id_zamowienia'], $row['id_zamowienia']);
+            echo sprintf($order, $row['id_zamowienia'], $row['id_zamowienia'], $row['id_zamowienia'], $row['id_zamowienia'], $row['id_zamowienia']);
         }
         $result->free_result();
     }
@@ -950,7 +950,7 @@ EOT;
         while($row = $result->fetch_assoc()) {
             echo '<option value="'.$row["id_magazynu"].'">'.$row["nazwa"].'</option>';
         }
-        echo '<option value="asdasd"></option>';
+        echo '<option value="asdasd"></option>'; // remove thhat line in the future;
         $result->free_result();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

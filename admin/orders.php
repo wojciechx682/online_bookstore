@@ -13,6 +13,8 @@
 
 <?php require "../view/head-admin.php"; ?>
 
+<!-- !!!!!!!! Zamówienia (orders) -> admin/orders.php --- POWINNY WYŚWEITLAĆ TYLKO TE ZAMÓWIENIA, KTÓRE SĄ PRZYPISANE DLA DANEGO PRACOWNIKA! -->
+
 <body>
 
     <div id="all-container">
@@ -42,11 +44,11 @@
                                     zm.id_klienta = kl.id_klienta", "get_all_orders", ""); // content of the table - wszystkie zamówienia złożone przez klientów;
                     ?>
 
-                </div>
+                </div> <!-- content -->
 
             </main>
 
-        </div>
+        </div> <!-- container -->
 
     </div> <!-- all-container -->
 
@@ -72,7 +74,7 @@
     }
 
     function finishArchive(textarea) {
-
+        // (?)
     }
 
     document.addEventListener('keydown', function(event) {
@@ -87,8 +89,38 @@
             let removeBox = removeBoxes[i]; // perform actions on each element;
             if(!removeBox.classList.contains("hidden")) { // jeśli nie zawiera klasy hidden (tzn jest widoczny);
                 if (event.key === 'Escape') {
+
+                    //resetRemoveBox();
+
                     removeBox.classList.toggle("hidden"); // zamknięcie okna;
                     allContainer.classList.toggle("bright");
+
+                    //let errorMsg = document.querySelector(".archive-success");
+                    //let errorMsg = $("span.archive-success");
+                    let errorMsg = removeBox.querySelector("span.archive-success");
+
+                    console.log("errorMsg -> ", errorMsg)
+
+                    if(errorMsg) {     // jeśli element istnieje w kodzie HTML (jeśli "istnieje");
+                        errorMsg.remove();
+                    }
+
+                    //let confirmButton = $('form.remove-order button[type="submit"]');
+                    let confirmButton = removeBox.querySelector('form.remove-order button[type="submit"]');
+                    //let cancelButton = $('button.cancel-order');
+                    let cancelButton = removeBox.querySelector('button.cancel-order');
+                    //let textarea = $('textarea[name="comment"]');
+                    let textarea = removeBox.querySelector('textarea[name="comment"]');
+
+                    console.log("confirmButton -> ", confirmButton);
+                    console.log("cancelButton -> ", cancelButton);
+
+                        //confirmButton.css("display", "block");
+                    confirmButton.style.display = "initial";
+                        //cancelButton.css("display", "block");
+                    cancelButton.style.display = "initial";
+                        //textarea.val("");
+                    textarea.value = "";
                 }
             }
         }

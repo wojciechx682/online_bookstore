@@ -59,7 +59,7 @@
 
                     query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'",
                         "get_order_details_admin", $_SESSION["order-id"]); // content of table;  $_SESSION['order_details_books_id'];
-                                                                               // (content) id_zamowienia, tytul, cena, ilosc, kwota;
+                                                                                // (content) id_zamowienia, tytul, cena, ilosc, kwota;
 
                     query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
                         "get_order_sum_admin", $_SESSION["order-id"]); // footer of table;
@@ -81,6 +81,8 @@
 
                 </div>
 
+                </div> <!-- <div#order-det-container> -->
+
                 <div style="clear: both"></div>
 
             </div> <!-- content -->
@@ -97,7 +99,7 @@
 
     <h4 class="section-header-update-order status-title"><label for="status-list">Status:</label></h4>
 
-    <select id="status-list">
+    <select id="status-list"> <!-- label (?) -  name="status-list" - nie działa ... -->
         <option>Oczekujące na potwierdzenie</option>
         <option>W trakcie realizacji</option>
         <option>Wysłano</option>
@@ -130,14 +132,14 @@
 
         <button class="update-order-status cancel-order btn-link btn-link-static">Anuluj</button>
 
-    </div> <!-- delivery-date -->
+    </div> <!-- div delivery-date -->
 
-</div> <!-- update-status -->
+</div> <!-- div update-status -->
 
 <script>
 
     btn = document.querySelector('button.update-order-status');  // button - "Aktualizuj" zmianę statusu;
-    let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu; div#update-status.hidden;
+    let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu; div #update-status.hidden;
     let allContainer = document.getElementById("all-container");
     icon = document.querySelector('.icon-cancel');               // <i class="icon-cancel">
     cancelBtn = document.querySelector('.cancel-order');         // przycisk "Anuluj"; button.cancel-order;
@@ -164,7 +166,7 @@
     });
 
     function toggleBox() {
-        statusBox.classList.toggle("hidden");    // update-status box
+        statusBox.classList.toggle("hidden");    // div update-status okienko;
         allContainer.classList.toggle("bright");
         resetBox();
     }
@@ -197,11 +199,11 @@
             form.style.display = "block";
         }
 
-        let cancelBtn = document.querySelector('.cancel-order');
+        let cancelBtn = document.querySelector('.cancel-order'); // "Anuluj";
         if(cancelBtn.style.display === "none") {
             cancelBtn.style.display = "block";
         }
-        $('.update-success').remove();                           // "Udało się zmienić status zamówienia";
+        $('.update-success').remove();                           // tekst "Udało się zmienić status zamówienia";
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -209,19 +211,10 @@
 
     let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"]'); // querySelectorAll() is a method of the Document object that allows you to select multiple elements in the document based on a CSS selector;
 
-    // dateInput = document.querySelector('form#update-order-date input[type="date"]');
-    /* dateInput.addEventListener("focus", function() {
-        $("span.date-error").hide();
-        $("div.delivery-date button").css('margin-top', '35px');
-    }); */
-
-    // Loop through each input element;
-    dateInputs.forEach(function(dateInput) {
-        // Add the event listener to each input element;
-        dateInput.addEventListener("focus", function() {
-            // Perform your desired actions when the input is focused;
-            $("span.date-error").hide();
-            $("div.delivery-date button").css('margin-top', '35px'); // (?)
+    dateInputs.forEach(function(dateInput) { // loop through each input element;
+        dateInput.addEventListener("focus", function() { // add the event listener to each input element;
+            $("span.date-error").hide(); // perform your desired actions when the input is focused;
+            $("div.delivery-date button").css('margin-top', '70px'); // (?)
         });
     });
 
@@ -231,16 +224,17 @@
 
     list.addEventListener("change", function() {
 
-        resetBox();
+        //resetBox();
 
-        const selectedOption = this.options[this.selectedIndex]; // get the <option> ELEMENT that was selected - after "change" event;
+        const selectedOption = this.options[this.selectedIndex]; // <option> ELEMENT that was selected - after "change" event;
         const deliveryDate = document.querySelector(".delivery-date"); // div class="delivery-date" --> form id="update-order-date";
 
         const expDeliveryDate = document.querySelector("form#update-order-date label:nth-of-type(1)"); // <label> - input - termin dostawy;
         const sentDate = document.querySelector("form#update-order-date label:nth-of-type(2)"); // <label> - input - data wysłania zamówienia;
         const dateDelivered = document.querySelector("form#update-order-date label:nth-of-type(3)"); // <label> - input - data dostarczenia;
-        // const div = document.querySelector("div.delivery-date"); // div > form
-        // const btns = document.querySelectorAll("div.delivery-date button");
+            // const div = document.querySelector("div.delivery-date"); // div > form
+            // const btns = document.querySelectorAll("div.delivery-date button");
+        const dateError = document.querySelector('span.date-error');
 
         deliveryDate.style.display = "block"; // <div class="delivery-date">
 
@@ -248,36 +242,40 @@
 
             //form.style.display = "block"; // <div class="delivery-date">
 
-            if(expDeliveryDate.style.display === "none") { // termin dostawy
+            dateError.style.marginTop = "12px";
+
+            if(expDeliveryDate.style.display === "none") { // termin_dostawy
                 expDeliveryDate.style.display = "block";
             }
 
-            if(sentDate.style.display === "block") { // data wysłania
+            if(sentDate.style.display === "block") { // data_wysłania_zamowienia
                 sentDate.style.display = "none";
             }
-            if(dateDelivered.style.display === "block") { // data dostarczenia
+            if(dateDelivered.style.display === "block") { // data_dostarczenia
                 dateDelivered.style.display = "none";
             }
 
-            if(deliveryDate.style.paddingTop !== "20px") { // (?)
-                deliveryDate.style.paddingTop = "20px";
-            }
+if(deliveryDate.style.paddingTop !== "15px") { // (?)
+    deliveryDate.style.paddingTop = "15px";
+}
 
-            $('.update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj"
-                $(element).css('margin-top', '35px');
+            $('.update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) "Aktualizuj";
+                $(element).css('margin-top', '70px');
             });
 
-        } else if(selectedOption.innerHTML === "Wysłano") {
+        } else if (selectedOption.innerHTML === "Wysłano") {
+
+            dateError.style.marginTop = "37px";
 
             // form.style.display = "block"; // termin dostawy
             // console.log("\ndeliveryDate => ", deliveryDate);
 
-            sentDate.style.display = "block"; // data wysłania
-            sentDate.style.marginBottom = "15px";
+            sentDate.style.display = "block"; // data_wysłania
+sentDate.style.marginBottom = "15px"; // (!)
 
-            deliveryDate.style.paddingTop = "5px"; // div > form
+            deliveryDate.style.paddingTop = "15px"; // div.delivery-date --> form
 
-            if(dateDelivered.style.display === "block") { // data dostarczenia
+            if(dateDelivered.style.display === "block") { // data_dostarczenia
                 dateDelivered.style.display = "none";
             }
 
@@ -285,39 +283,50 @@
                 expDeliveryDate.style.display = "block";
             }
 
-            /*for(let i=0; i<btns.length; i++) {
-                btn[i].style.marginTop = "50px";
-            }*/
-            /*$('.update-order-status').each(function(element) {
-                $(element).css('margin-top', '50px'); // Set margin-top for each element
-                console.log("183");
-            });*/
+/*for(let i=0; i<btns.length; i++) {
+btn[i].style.marginTop = "50px";
+}*/
+/*$('.update-order-status').each(function(element) {
+$(element).css('margin-top', '50px'); // Set margin-top for each element
+console.log("183");
+});*/
 
-            $('.update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj"
-                $(element).css('margin-top', '50px');
+            $('.update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) "Aktualizuj";
+                $(element).css('margin-top', '70px');
             });
 
-            /* $(document).ready(function() {
-                $('.my-class').each(function(index, element) {
-                    $(element).css('margin-top', index * 10); // Set margin-top for each element
-                });
-            }); */
-            //btn.style.marginTop = "50px";
-            /* deliveryDate.setAttribute('type', 'date');
-            deliveryDate.setAttribute('name', 'delivery-date'); */
-            // newInput.setAttribute('', 'Enter your new input here');
-            // form.appendChild(deliveryDate);
+/* $(document).ready(function() {
+$('.my-class').each(function(index, element) {
+$(element).css('margin-top', index * 10); // Set margin-top for each element
+});
+}); */
+//btn.style.marginTop = "50px";
+/* deliveryDate.setAttribute('type', 'date');
+deliveryDate.setAttribute('name', 'delivery-date'); */
+// newInput.setAttribute('', 'Enter your new input here');
+// form.appendChild(deliveryDate);
 
         } else if (selectedOption.innerHTML === "Dostarczono") {
 
-            // form.style.display = "block";
-            expDeliveryDate.style.display = "none"; // termin dostawy
+            dateError.style.marginTop = "12px";
 
-            if(sentDate.style.display === "block") { // data wysłania;
+            // form.style.display = "block";
+
+            expDeliveryDate.style.display = "none"; // termin_dostawy
+
+            if(sentDate.style.display === "block") { // data_wysłania;
                 sentDate.style.display = "none";
             }
 
-            dateDelivered.style.display = "block"; // data dostarczenia
+            dateDelivered.style.display = "block"; // data_dostarczenia;
+
+            if(deliveryDate.style.paddingTop !== "15px") { // (?)
+                deliveryDate.style.paddingTop = "15px";
+            }
+
+            $('.update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) "Aktualizuj";
+                $(element).css('margin-top', '70px');
+            });
 
         } else {
             deliveryDate.style.display = "none";
@@ -329,27 +338,24 @@
 
 <script>
 
-    // <!-- ukrycie formularza + buttona "Anuluj" - po pomyślnym zrealizowaniu zapytania typu update -->
-
-    function finishUpdate() {
-            // console.log("\n212 finishedUpdate fun");
+    function finishUpdate() { // ukrycie formularza + buttona "Anuluj" - po pomyślnym zrealizowaniu zapytania typu update;
         const form = document.getElementById("update-order-date"); // ukrycie formularza (zawiera przycisk "Potwierdź") - <form #update-order-date>
         const btn = document.querySelector(".cancel-order");       // ukrycie przycisku "Anuluj"
         form.style.display = "none";
         btn.style.display = "none";
 
         let list = document.getElementById("status-list");  // <select> list;
-        let option = list.options[list.selectedIndex];      // get currently selected <option> element;
+        let option = list.options[list.selectedIndex];      // currently selected <option> element;
         $("span.order-status-name").text(option.innerHTML); // zmiana wyświetlanego statusu po jego zmianie;
     }
 
-    // kliknięcie "Esc" zamyka okno zmiany statusu --->
+    // kliknięcie "Esc" zamyka okno zmiany statusu;
 
     document.addEventListener('keydown', function(event) {
         let statusBox = document.getElementById("update-status"); // całe okieno zmiany statusu; <div id="update-status">
-        if(!statusBox.classList.contains("hidden")) { // jeśli element jest widoczny
+        if(!statusBox.classList.contains("hidden")) { // jeśli element jest widoczny;
             if (event.key === 'Escape') {
-                console.log('Esc key pressed'); // add code here to perform an action when Esc key is pressed
+                //console.log('Esc key pressed'); // add code here to perform an action when Esc key is pressed
                 toggleBox(); // zamknięcie okna;
             }
         }
@@ -370,7 +376,7 @@
 ?>
 
 <?php
-    if(isset($_GET["status"]) && ($_GET["status"] == "true")) {
+    if(isset($_GET["status"]) && ($_GET["status"] == "true")) { // admin/orders - kliknięcie "Zmień status";
         echo '<script>toggleBox();</script>';
         echo '<script>resetUrl();</script>'; // (aktualnie wyłączone z użycia - zakomentowana linia kodu wewnątrz funkcji)
     }

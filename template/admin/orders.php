@@ -1,5 +1,5 @@
 
-<!-- template used on order page (order.php) to display orders made by client -->
+<!-- template used on order page (order.php) to display ALL orders made by clients -->
 
 <!-- echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>"; -->
 

@@ -7,7 +7,7 @@
 
     <i class="icon-cancel icon-cancel%s"></i><hr>
 
-    <div class="delivery-date">
+    <div class="delivery-date delivery-date%s">
         <form class="remove-order" action="remove-order.php" method="post">
 
             <input type="hidden" name="order-id" value="%s"> <!-- id_zamówienia (!) -->

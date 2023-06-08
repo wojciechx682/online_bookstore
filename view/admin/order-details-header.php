@@ -7,8 +7,6 @@
     <div class="order-det-quan">Ilość</div>
     <div class="order-det-price">Cena</div>
     <!--<div class="order-det-sum">SUMA</div>-->
-
-
     <!-- <hr> -->
     <!--<div style="clear:both;"></div>-->
 </div>
