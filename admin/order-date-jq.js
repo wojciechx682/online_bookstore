@@ -8,27 +8,15 @@ $("form#update-order-date").on("submit", function(e) {
     let formData = $("form#update-order-date").serialize(); // serializacja danych formularza;  pobranie danych z formularza;
     let data = $(this);                                                                 // dane w postaci tekstowej (String);
 
-    console.log("\ndata (Object) => ", data);
-
-    // można zamienić ten String na Obiekt (Object) / lub Tablicę;
-    // można to zrobić za pomocą metod -> $.parseParams() , lub - $.deparam();
-    // jeśli dane są w postaci obiektu, możemy uzyskac do nich dostęp za pomocą notacji key-value;
-    // let dataObject = $.deparam(details); // (nie działa...);
-    // let dateValue = dataObject.name;
-    // let object = JSON.parse(details);
-
-        // let dateValue = formData.slice(11,21);
     let expDeliveryDate = data[0][0].value; // "2023-01-01" - termin dostawy;
-        // let dispDate = formData.slice(36,46);
     let sentDate = data[0][1].value; // "2023-01-01" - data wysłania;
-        // let delDate = formData.slice(42);
     let dateDelivered = data[0][2].value; // "2023-01-01" - data dostarczenia;
 
-    console.log("\nformData (String) => ", formData);
+    /*console.log("\nformData (String) => ", formData);
     console.log("\ndata (Object) => ", data);
     console.log("\ndateValue => ", expDeliveryDate);
     console.log("\ndispDate => ", sentDate);
-    console.log("\ndelDate => ", dateDelivered);
+    console.log("\ndelDate => ", dateDelivered);*/
 
     const date = new Date(); // walidacja daty; // obiekt Date;
 
@@ -47,10 +35,7 @@ $("form#update-order-date").on("submit", function(e) {
     let list = document.getElementById("status-list"); // <select>
     const selectedOption = list.options[list.selectedIndex]; // aktualnie wybrany element listy;
 
-    //console.log("\n45 selectedOption -> ", selectedOption);
-
-            // walidacja daty - kontrola błędów (js);
-            if(
+            if( // walidacja daty - kontrola błędów (js);
                 (selectedOption.innerHTML === "W trakcie realizacji") &&
                 (expDeliveryDate < todayDate) || (expDeliveryDate === undefined) || (expDeliveryDate == null) ) // przeszła data, lub pusta ->
             {
@@ -75,14 +60,14 @@ $("form#update-order-date").on("submit", function(e) {
                     beforeSend: function() {         // Before Ajax - function called before sending the request;
                         $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
                     },
-                    complete: function(formData) {           // Once finished - function called always after sending request;
+                    complete: function() {          // Once finished - function called always after sending request;
                         $("img#loading-icon").toggleClass("not-visible");
                     },
-                    success: function(formData) {            // Show content;
+                    success: function(formData) {   // Show content;
                         finishUpdate();
                         $("div.delivery-date").append(formData);
                     },
-                    error: function(formData) {              // Show error msg;
+                    error: function(formData) {     // Show error msg;
                         finishUpdate();
                         $("div.delivery-date").append(formData);
                     }
@@ -100,12 +85,9 @@ $("form#update-order-date").on("submit", function(e) {
 }*/
 
 function error(px) {
-    //$('.date-error').css('display', 'block');
-    //$('.date-error').css('margin-top', px+'px');
     $('.date-error').css({
         'display': 'block',
-        'margin-top': px+'px',
-        'font-size': '16px'
+        'margin-top': px+'px'
     });
 }
 

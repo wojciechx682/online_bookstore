@@ -15,7 +15,6 @@ include_once "../functions.php";
 
         $comment = filter_var($_POST["comment"],FILTER_SANITIZE_STRING); // sanityzacja (back-end);
 
-        // należy pobrać id ostatnio wstawionego wiersza w tabeli klienci;
         query("UPDATE zamowienia SET komentarz='%s', status='%s' WHERE id_zamowienia = '%s'", "archiveOrder", [$_POST["comment"], "Zarchiwizowane", $_POST["order-id"]]); // $_SESSION["archive-successful"] --> false;
     }
 
@@ -27,4 +26,3 @@ include_once "../functions.php";
     }
 
 ?>
-

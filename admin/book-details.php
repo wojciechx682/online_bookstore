@@ -30,20 +30,9 @@
                 <h3 class="section-header book-details-section-header">Szczegóły książki</h3>
 
                 <?php
-                    // $_SESSION["book-id"] = array_keys($_GET)[0]; // $_GET -> id_książki - "36";
-                    // $_SESSION["warehouse-id"] = array_keys($_GET)[1]; // $_GET -> id_magazynu- "1";
 
                     $_SESSION["book-id"] = $_GET["book"]; // $_GET -> id_książki - "36";
                     $_SESSION["warehouse-id"] = $_GET["warehouse"]; // $_GET -> id_magazynu- "1";
-
-                    // var_dump($_SESSION);
-
-                    // query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s' ","get_order_details_admin", $_SESSION["order-id"]); // content of table; $_SESSION['order_details_books_id'];
-
-                    //query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'", "get_order_sum_admin", $_SESSION["order-id"]); // footer of table;
-
-                    //echo '<div id="order-det-container">';
-                    //query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s' ", "get_order_summary", $_SESSION["order-id"]); // sposób płatności, data, forma;
 
                     query("SELECT ks.tytul, ks.cena, ks.rok_wydania, au.imie, au.nazwisko, wd.nazwa_wydawcy, ks.opis, ks.wymiary, ks.ilosc_stron, 
                                         ks.oprawa, ks.stan, ks.rating AS srednia_ocen, ks.image_url,
@@ -64,30 +53,15 @@
                         // !!! W PRZYSZŁOŚCI -> USUNĄĆ LIMIT 1 - a zamiast tego dodać "id_magazynu" !!!
                 ?>
 
-                <!--<div id="order-status">
-
-                    <span>Status: </span>
-
-                    <?php /*echo '<span class="order-status-name">' . $_SESSION["status"] . '</span>'; */?> <br>
-
-                    <button class="update-order-status btn-link btn-link-static">Aktualizuj</button>
-
-                </div>
-
-                <div style="clear: both"></div>-->
-
-            </div>
+            </div> <!-- #content -->
         </main>
-    </div>
+    </div> <!-- #container -->
 
-</div>
-
-<!--<script src="order-date-jq.js"></script>-->
+</div> <!-- #all-container -->
 
 <script>
-    // wstawienie "0" - jeśli wartości zwrócone z BD wynosiły NULL;
 
-        let ordersCount = document.getElementById("book-orders-count-content");
+        let ordersCount = document.getElementById("book-orders-count-content"); // wstawienie "0" - jeśli wartości zwrócone z BD wynosiły NULL;
         let cartCount = document.getElementById("book-cart-count-content");
         let itemsSold = document.getElementById("book-items-sold-content");
 

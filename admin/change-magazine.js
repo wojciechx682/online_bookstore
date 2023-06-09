@@ -18,10 +18,10 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
     let data = $(this).serialize(); // dane formularza do przesłania metodą post; // let data = $(this);
     let postData = parseInt($(this).serialize().slice(16).trim()); // "change-magazine=1" => "1" (id_maazynu);
 
-    //console.log("\ndata => ", data); // Object;
-    //console.log("\npost_data (id_magazynu) =>", postData); // atrybut value elementu <option> (jest to id_magazynu);
-    //console.log("\ntypeof(post data) (id_magazynu) =>", typeof(postData)); // atrybut value elementu <option> (jest to id_magazynu);
-    //console.log("\ntypeof form => ", typeof(form)); // Object;
+    console.log("\ndata => ", data); // String;
+    console.log("\npost_data (id_magazynu) =>", postData); // atrybut value elementu <option> (jest to id_magazynu);
+    console.log("\ntypeof(post data) (id_magazynu) =>", typeof(postData)); // atrybut value elementu <option> (jest to id_magazynu);
+    console.log("\ntypeof form => ", typeof(form)); // Object;
 
     if((data !== '') && (typeof(postData) === 'number') && (!isNaN(postData))) { // nie pusta, liczba, nie jest to "NaN"
 
@@ -41,7 +41,7 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
                 if(booksHeader.style.display === 'none') {
                     booksHeader.style.display = "block";
                 }
-                $("#books-content").html(data);
+                $("#books-content").html(data); // Show content (data returned from server);
             },
             error: function(data) {          // Show error msg
                     // cal$content.html('<div id="container">Please try again soon.</div>');

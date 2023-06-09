@@ -947,6 +947,7 @@ EOT;
 
     function createMagazineSelectList($result) {
         // create <option> elements inside <select> list based on warehouse names in database;
+            // <option> elementy - są generowane dynamicznie na podstawie BD i danych o magazynach;
         while($row = $result->fetch_assoc()) {
             echo '<option value="'.$row["id_magazynu"].'">'.$row["nazwa"].'</option>';
         }

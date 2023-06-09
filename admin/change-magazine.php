@@ -5,7 +5,7 @@ include_once "../functions.php";
 
     if(isset($_POST["change-magazine"]) && !empty($_POST["change-magazine"])) {
 
-        $warehouseId = filter_var($_POST["change-magazine"], FILTER_VALIDATE_INT);
+        $warehouseId = filter_var($_POST["change-magazine"], FILTER_VALIDATE_INT); // returns - filtered_value - or - false;
 
         if($warehouseId) { // $warehouseId passed the filter and is a valid integer;
 
@@ -19,6 +19,7 @@ include_once "../functions.php";
         }
     }
 
-    // else (?) ;
+    // else (?) ;   // z tego co widzę to jeśli wystąpił błąd z id-magazynu, JS obsługuje to wcześniej i wyswietla błąd;
+                    // co prawda można to dalej rozbudowywać ale po co ?
 
 ?>

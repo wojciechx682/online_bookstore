@@ -27,7 +27,7 @@
 
             <div id="content">
 
-                <div id="admin-books-header-container">
+                <div id="admin-books-header-container"> <!-- "Książki" + lista <select> z wyborem magazynu -->
 
                     <h3 class="section-header section-header-books">Książki</h3>
 
@@ -35,11 +35,8 @@
                         <select id="change-magazine" name="change-magazine"> <!-- js manage "change" event for <select> list, and then sends the <form>; -->
                             <?php
                                 query("SELECT mg.id_magazynu, mg.nazwa FROM magazyn AS mg", "createMagazineSelectList", "");
-                                // <option> elementy - są generowane dynamicznie na podstawie BD i danych o magazynach;
-                                // <option value="1">1</option>
                             ?>
                         </select>
-                        <!-- <input type="submit" value="wyślij"> -->
                     </form>
 
                 </div>
@@ -48,36 +45,15 @@
 
                 <?php require "../view/admin/books-header.php"; // table header ?>
 
-                <?php
-                    /* query("SELECT ks.id_ksiazki, ks.tytul, ks.cena,
-                                        kt.nazwa AS nazwa_kategorii, mgk.ilosc_dostepnych_egzemplarzy, au.imie, au.nazwisko, mg.nazwa AS nazwa_magazynu, mg.id_magazynu
-                                        FROM ksiazki AS ks, subkategorie AS sbk, kategorie AS kt, autor AS au, magazyn_ksiazki AS mgk, magazyn AS mg
-                                        WHERE ks.id_subkategorii = sbk.id_subkategorii AND sbk.id_kategorii = kt.id_kategorii AND ks.id_autora = au.id_autora AND mgk.id_ksiazki = ks.id_ksiazki AND mgk.id_magazynu = mg.id_magazynu", "get_all_books", ""); */ // content of the table;
-                ?>
+                <div id="books-content"></div> <!-- here are inserted rows with information about books; -->
 
-                <div id="books-content"></div> <!-- tutaj wstawione zostają wiersze z informacjami o książkach -->
-
-            </div>
+            </div> <!-- #content -->
 
         </main>
 
-    </div>
+    </div> <!-- #container -->
 
-    <script src="change-magazine.js"></script>
-
-    <script>
-        // send <form> after changing selected <option> element in <select> list;
-        /*let selectList = document.getElementById("change-magazine");
-        let magazineForm = document.getElementById("change-magazine-form");
-        selectList.addEventListener("change", function() { // This code will execute when the selected option changes
-            magazineForm.submit(); // submit the form after changing selected <option> element, the form will be first processed in "change-magazine.js" file that will send AJAX request to "change-magazine.php" file;
-        });*/
-        // send <form> after page load;
-        /*window.addEventListener('load', function() {
-            // Execute this code after the page finishes loading
-            document.getElementById('change-magazine-form').submit();
-        });*/
-    </script>
+    <script src="change-magazine.js"></script> <!-- handle AJAX request -->
 
 </div>
 

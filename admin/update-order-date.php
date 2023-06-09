@@ -35,5 +35,4 @@ include_once "../functions.php";
 
     // (!) Dodać walidacje daty - tutaj albo w JS;
     // ✓ trzeba sprawdzić, czy udało się zrealizować ZAPYTANIE. można użyć do tego nowej funkcji we funkcji query();
-
 ?>

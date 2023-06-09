@@ -8,6 +8,7 @@
 // ✓ (!) ZMIANA STATUSU ZAMÓWIENIA - odbywa się z pomoca AJAX;
 
 ------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 
 Archiwizacja zamówienia ->
 
@@ -90,3 +91,16 @@ Walidacja + Sanityzacja Komentarza (comment) :
 -> yup (WALIDACJA)
    "najlepsze rozwiązanie" -> do walidacji
 ------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+-> Notatki z projektu -->
+
+admin/order-date-jq.js ->
+
+// można zamienić ten String na Obiekt (Object) / lub Tablicę;
+// można to zrobić za pomocą metod -> $.parseParams() , lub - $.deparam();
+// jeśli dane są w postaci obiektu, możemy uzyskac do nich dostęp za pomocą notacji key-value;
+// let dataObject = $.deparam(details); // (nie działa...);
+// let dateValue = dataObject.name;
+// let object = JSON.parse(details);
+
