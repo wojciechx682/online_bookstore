@@ -11,15 +11,13 @@
 session_start();
 include_once "../functions.php";
 
-    //var_dump($_POST); echo "<br><br>"; print_r($_POST); echo "<br><br>";
-
     if (
         isset($_POST['edit-book-title']) && !empty($_POST['edit-book-title']) &&
         isset($_POST['edit-book-change-author']) && !empty($_POST['edit-book-change-author']) &&
         isset($_POST['edit-book-release-year']) && !empty($_POST['edit-book-release-year']) &&
         isset($_POST['edit-book-price']) && !empty($_POST['edit-book-price']) &&
         isset($_POST['edit-book-change-publisher']) && !empty($_POST['edit-book-change-publisher']) &&
-        /*isset($_POST['edit-book-image']) && !empty($_POST['edit-book-image']) &&*/
+        isset($_FILES['edit-book-image']) &&
         isset($_POST['edit-book-desc']) && !empty($_POST['edit-book-desc']) &&
         isset($_POST['edit-book-cover']) && !empty($_POST['edit-book-cover']) &&
         isset($_POST['edit-book-pages']) && !empty($_POST['edit-book-pages']) &&
@@ -27,9 +25,7 @@ include_once "../functions.php";
         isset($_POST['edit-book-category']) && !empty($_POST['edit-book-category']) &&
         isset($_POST['edit-book-subcategory']) && !empty($_POST['edit-book-subcategory'])
     ) {
-        // All required fields are set and not empty;
-        // Perform the necessary actions or validations here;
-        // For example, update the book data in the database;
+        // All required fields are set and not empty; Perform the necessary actions or validations here; // For example, update the book data in the database;
 
         // Fields Validation;
 
@@ -43,11 +39,11 @@ include_once "../functions.php";
             echo "<br> opis - "  . $_POST['edit-book-desc'];
             echo "<br> oprawa - " . $_POST['edit-book-cover'];
             echo "<br> liczba_stron - " .$_POST['edit-book-pages'];
-        echo "<br> wymiary - " . $_POST['edit-book-dims'];
+            echo "<br> wymiary - " . $_POST['edit-book-dims'];
         echo "<br> kategoria (id) - " . $_POST['edit-book-category'] ;
-        echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'];
+        echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'] . "<br>";
 
-        echo "<br>";
+       /* UPDATE ksiazki SET tytul='%s', id_autora='%s', rok_wydania='%s', cena='%s', id_wydawcy='%s', opis=='%s', oprawa='%s', ilosc_stron='%s', wymiary='%s',*/
 
         $title = filter_var($_POST['edit-book-title'], FILTER_SANITIZE_STRING);
         $author = filter_var($_POST['edit-book-change-author'], FILTER_VALIDATE_INT);
@@ -77,40 +73,78 @@ include_once "../functions.php";
             $subcategory === false;
         */
 
+        // Check if values pass the tests;
+        if (
+            $title !== $_POST['edit-book-title'] ||
+            $author === false ||
+            $year === false || $year < 1900 || $year > 2023 ||
+            $price === false || $price < 1 || $price > 500 ||
+            $publisher === false ||
+            $pages === false || $pages < 1 ||
+            $cover !== $_POST['edit-book-cover'] ||
+            $desc !== $_POST['edit-book-desc'] ||
+            $dims !== $_POST['edit-book-dims'] ||
+            $category === false ||
+            $subcategory === false
+        ) {
+            echo "<br>Error: Invalid or missing values<br>";
+        } else {
+            // All values are valid; // Perform the necessary actions or validations here; // For example, update the book data in the database;
+
+            echo "<br>Success: Values are valid<br>";
+
+            $file = $_FILES['edit-book-image']; // validate file;
+
+            if (
+                isset($file["name"]) && !empty($file["name"]) &&
+                isset($file["full_path"]) && !empty($file["full_path"]) &&
+                isset($file["type"]) && !empty($file["type"]) &&
+                isset($file["tmp_name"]) && !empty($file["tmp_name"]) &&
+                $file['error'] === UPLOAD_ERR_OK
+            ) {
+                echo "<br> success (file uploaded) <br>";
+
+                $filename = $file["name"];
+                $tmpPath = $file["tmp_name"];
+                $destPath = "../assets/books/" . $filename;
+
+                // WALIDACJA I SANITYZACJA PLIKU !
+
+
+
+
+
+
+
+
+                if (move_uploaded_file($tmpPath, $destPath)) {
+                    echo '<br>File uploaded successfully.';
+                } else {
+                    echo '<br>Error moving uploaded file.';
+                }
+
+
+            } else {
+                echo "<br> ERROR (file NOT uploaded) <br>";
+
+
+            }
+
+        }
+
         $values = [$title, $author, $year, $price, $publisher, $desc, $cover, $pages, $dims, $category, $subcategory];
 
         print_r($values);
-
-
-
-
-
-
-
-
-
-
-
     } else {
         // Some required fields are missing or empty;
         // Handle the error or display an error message to the user;
-
         echo "<br> error <br>";
     }
 
-    if(isset($_FILES['edit-book-image'])) {
-        //echo "<br>47<br>";
-        //var_dump($_FILES); echo "<br><br>"; print_r($_FILES); echo "<br><br>";
-        //echo "<br><br>";
+    exit();
+
+    /*if(isset($_FILES['edit-book-image'])) {
         $file = $_FILES['edit-book-image'];
-        //echo "<br> 54-> " . $file["name"];
-        /*if(
-           isset($file["name"]) && !empty($file["name"])
-        ) {
-            echo "<br>file name is sset";
-        } else {
-            echo "<br>file name is NOT sset";
-        }*/
         if (
             isset($file["name"]) && !empty($file["name"]) &&
             isset($file["full_path"]) && !empty($file["full_path"]) &&
@@ -123,7 +157,7 @@ include_once "../functions.php";
         } else {
             echo "<br> ERROR (file NOT uploaded) <br>";
         }
-    }
+    }*/
 
     /*array(1) { ["edit-book-image"]=> array(6) {
                                                 ["name"]=> string(7) "111.bmp"
@@ -147,7 +181,7 @@ include_once "../functions.php";
     ];*/
 
 
-    // echo "<br><hr><br>";
+
 
 
 

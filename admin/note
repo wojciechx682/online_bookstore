@@ -111,3 +111,10 @@ admin/edit-book-data.php -->
 
 Przy formularzu dodawania pliku na serwer trzeba będzie to skonfigurować na Hostingu.
 
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+edit-book.php -> ... . js (AJAX) --> get_subcategories.php
+
+                                     zwraca DANE w postaci JSON (!)
+                                     (można by to opisać)

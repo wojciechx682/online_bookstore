@@ -245,7 +245,8 @@
                             </span>
 
                             <select id="edit-book-category"
-                                    name="edit-book-category">
+                                    name="edit-book-category"
+                                    onchange="getSubcategories(this)">
                                 <?php
                                     query("SELECT kt.id_kategorii, kt.nazwa FROM kategorie AS kt", "createCategorySelectList", "");
                                 ?>
@@ -257,7 +258,7 @@
                         <p>
                             <span>
                                 <label for="edit-book-subcategory">
-                                    Kategoria
+                                    Podkategoria
                                 </label>
                             </span>
 
@@ -280,6 +281,8 @@
     </div> <!-- #container -->
 
 </div> <!-- #all-container -->
+
+<script src="category.js"></script> <!-- (!) nazwa robocza !!! -->
 
 </body>
 </html>

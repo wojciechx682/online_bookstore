@@ -983,6 +983,32 @@ EOT;
         $result->free_result();
     }
 
+    // powyższe kilka funkcji można zoptymalizować tak, aby była to jedna (np używając tablicy num. a nie assocjacyjnych);
+
+    function getSubcategories($result) {
+
+        // returns data in JSON format - instead text/html (as all other functions in this code);
+            // subcategories - array();
+            // add each subcategory - as an object to the array;
+            // return array as JSON-encoded response;
+
+        $subcategories = []; // array();
+
+        while($row = $result->fetch_assoc()) {
+
+            $subcategory = [
+                'id' => $row['id_subkategorii'],
+                'name' => $row['nazwa'],
+                'category_id' => $row['id_kategorii']
+            ];
+
+            $subcategories[] = $subcategory; // what does that line do ? how does it do ?
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($subcategories);
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
