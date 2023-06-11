@@ -1,6 +1,6 @@
 <?php
-session_start();
-include_once "../functions.php";
+    session_start();
+    include_once "../functions.php";
 
     if(!(isset($_SESSION['zalogowany']))) {
         header("Location: ../user/___index2.php?login-error");
@@ -13,11 +13,39 @@ include_once "../functions.php";
 
 <?php require "../view/head-admin.php"; ?>
 
+<style>
+    /* (~) temporary ! */
+
+    #all-container {
+        border: 1px solid red !important;
+    }
+
+    #container {
+        border: 1px solid purple;
+    }
+
+    #content {
+            font-weight: normal !important;
+        border: 1px solid #14ffab;
+    }
+
+    /* -------------------------------------------------------- */
+
+    /*form#edit-book-data div {
+        border: 1px solid lightgreen;
+    }*/
+    form#edit-book-data div p span {
+        display: inline-block;
+        min-width: 125px;
+
+        border: 1px solid lightblue;
+    }
+
+</style>
+
 <body>
 
 <div id="all-container">
-
-    <?php //require "../view/___header-container.php"; ?>
 
     <div id="container">
 
@@ -33,77 +61,225 @@ include_once "../functions.php";
 
                     <h3 class="section-header section-header-books">Edytuj książkę</h3>
 
-                    <!-- <div style="clear: both;"></div> -->
-
-                    <!--<form id="change-magazine-form" action="change-magazine.php" method="post">
-                        <select id="change-magazine" name="change-magazine">
-                            <?php
-/*                                query("SELECT mg.id_magazynu, mg.nazwa FROM magazyn AS mg", "createMagazineSelectList", "");
-                            */?>
-                        </select>
-                    </form>-->
-
                 </div>
 
-
-                <!-- SELECT mg.id_magazynu, mg.nazwa, mg.kraj, mg.wojewodztwo, mg.miejscowosc, mg.ulica, mg.kod_pocztowy, mg.kod_miejscowosc
-                FROM magazyn AS mg
-
-                <option> elementy - powinny być generowane dynamicznie na podstawie BD i danych o magazynach
-
-                query() -> function -> template(?)
-                                       echo "<option ...> ...</> ";
-                -->
-
-
                 <hr id="book-details-hr-edit-books">
-
-                <?php //require "../view/admin/books-header.php"; // table header ?>
-
-                <?php
-                    /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena,
-                                        kt.nazwa AS nazwa_kategorii, mgk.ilosc_dostepnych_egzemplarzy, au.imie, au.nazwisko, mg.nazwa AS nazwa_magazynu, mg.id_magazynu
-                                        FROM ksiazki AS ks, subkategorie AS sbk, kategorie AS kt, autor AS au, magazyn_ksiazki AS mgk, magazyn AS mg
-                                        WHERE ks.id_subkategorii = sbk.id_subkategorii AND sbk.id_kategorii = kt.id_kategorii AND ks.id_autora = au.id_autora AND mgk.id_ksiazki = ks.id_ksiazki AND mgk.id_magazynu = mg.id_magazynu", "get_all_books", "");*/ // content of the table;
-                ?>
 
                 <div id="books-content">
                     <!-- (?) -->
                 </div>
 
-            </div>
+                <!-- Edytowanie danych o książce -->
+
+                <form action="edit-book-data.php" method="post" id="edit-book-data" class="edit-book-data" name="edit-book-data"
+                      enctype="multipart/form-data">
+
+                    <!-- form       (!) label           fieldset + legend      -->
+
+                    <!-- input      text
+                                password
+                                number                      -> step=""
+                                search
+                                checkbox                    checked
+                                radio                       selected
+                                tel                         disabled    required
+                                email
+                                date                        placeholder
+                                month
+                                week
+                                time                        submit
+                                color                       button
+                                                            -->
+                    <!-- <select>   size=""
+                         <select multiple>     <textarea>
+                                    <button>   submit       -->
+
+                    <!-- ------------------------------------------------------------------------------------------- -->
+
+                    <!--<label>
+                        tytuł <input type="text" name="book-title">
+                    </label>-->
+
+                    <div> <!-- tytuł - varchar(255) -->
+                        <p>
+                            <span>
+                                <label for="edit-book-title">
+                                    Tytuł książki
+                                </label>
+                            </span>
+                            <input type="text"
+                                   name="edit-book-title" id="edit-book-title" value="test">
+                        </p>
+                    </div>
+
+                    <div> <!-- autor - int(11) -->
+                        <p>
+                            <span>
+                                <label for="edit-book-change-author">
+                                    Autor
+                                </label>
+                            </span>
+
+                            <select id="edit-book-change-author"
+                                    name="edit-book-change-author">
+                                <?php
+                                    query("SELECT au.id_autora, au.imie, au.nazwisko FROM autor AS au", "createAuthorSelectList", "");
+                                ?>
+                            </select>
+                        </p>
+                    </div>
+
+                    <div> <!-- rok_wydania - year(4) -->
+                        <p>
+                            <span>
+                                <label for="edit-book-release-year">
+                                    Rok wydania
+                                </label>
+                            </span>
+                            <input type="number" min="1900" max="2023"
+                                   name="edit-book-release-year" id="edit-book-release-year" value="1999">
+                        </p>
+                    </div>
+
+                    <div> <!-- cena - float-->
+                        <p>
+                            <span>
+                                <label for="edit-book-price">
+                                    Cena
+                                </label>
+                            </span>
+                            <input type="number" min="1" max="500" step="0.01"
+                                   name="edit-book-price" id="edit-book-price" value="85">
+                        </p>
+                    </div>
+
+                    <div> <!-- wydawnictwo - int(11) -->
+                        <p>
+                            <span>
+                                <label for="edit-book-change-publisher">
+                                    Wydawnictwo
+                                </label>
+                            </span>
+
+                            <select id="edit-book-change-publisher"
+                                    name="edit-book-change-publisher">
+                                <?php
+                                    query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM wydawcy AS wd", "createPublisherSelectList", "");
+                                ?>
+                            </select>
+                        </p>
+                    </div>
+
+                    <hr id="book-details-hr">
+
+                        <!-- image_url -->
+
+                        Zdjęcie książki <br><br>
+
+                        <input type="file" name="edit-book-image" id="edit-book-image">
+
+                        <!-- Walidacja + Sanityzacja -->
+
+                    <hr id="book-details-hr">
+
+                    <div> <!-- opis - varchar(1000) -->
+                        <p>
+                            <span>
+                                <label for="edit-book-desc">
+                                    Opis
+                                </label>
+                            </span>
+                            <input type="text"
+                                   name="edit-book-desc" id="edit-book-desc" value="test">
+                        </p>
+                    </div>
+
+                    <div> <!-- oprawa - varchar(255) -->
+                        <p>
+                            <span>
+                                <label for="edit-book-cover">
+                                    Oprawa
+                                </label>
+                            </span>
+
+                            <select id="edit-book-cover"
+                                    name="edit-book-cover">
+                                <option value="twarda">Twarda</option>
+                                <option value="miekka">Miękka</option>
+                            </select>
+                        </p>
+                    </div>
+
+                    <div> <!-- ilość_stron - int(11) -->
+                        <p>
+                            <span>
+                                <label for="edit-book-pages">
+                                    Ilość stron
+                                </label>
+                            </span>
+                            <input type="number" min="1" max="1500" step="1"
+                                   name="edit-book-pages" id="edit-book-pages" value="450">
+                        </p>
+                    </div>
+
+                    <div> <!-- Wymiary - varchar(25) -->
+                        <p>
+                            <span>
+                                <label for="edit-book-dims">
+                                    Wymiary (!) JS -> Validation
+                                </label>
+                            </span>
+                            <input type="text"
+                                   name="edit-book-dims" id="edit-book-dims" value="test">
+                        </p>
+                    </div>
+
+                    <hr id="book-details-hr">
+
+                    <div> <!-- kategoria - (to pole nie istnieje w tablie książki) -->
+                        <p>
+                            <span>
+                                <label for="edit-book-category">
+                                    Kategoria
+                                </label>
+                            </span>
+
+                            <select id="edit-book-category"
+                                    name="edit-book-category">
+                                <?php
+                                    query("SELECT kt.id_kategorii, kt.nazwa FROM kategorie AS kt", "createCategorySelectList", "");
+                                ?>
+                            </select>
+                        </p>
+                    </div>
+
+                    <div> <!-- podkategoria -->
+                        <p>
+                            <span>
+                                <label for="edit-book-subcategory">
+                                    Kategoria
+                                </label>
+                            </span>
+
+                            <select id="edit-book-subcategory"
+                                    name="edit-book-subcategory">
+                                <?php
+                                query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subkategorie AS subkt", "createSubcategorySelectList", "");
+                                ?>
+                            </select>
+                        </p>
+                    </div>
+
+                    <input type="submit">
+
+                </form>
+
+            </div> <!-- #content -->
 
         </main>
-    </div>
+    </div> <!-- #container -->
 
-    <!-- <footer>
-        <div id="footer">
-            <script src="../scripts/set-theme.js"></script>
-            <pre>
-                <button id="white" onclick="setWhiteTheme()">white</button>  <button id="black" onclick="setBlackTheme()">black</button>  © 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us
-            </pre>
-        </div>
-    </footer> -->
-
-    <?php //require "../view/___footer.php"; ?>
-
-    <script src="change-magazine.js"></script>
-
-    <script>
-        // send <form> after changing selected <option> element in <select> list;
-        /*let selectList = document.getElementById("change-magazine");
-        let magazineForm = document.getElementById("change-magazine-form");
-        selectList.addEventListener("change", function() { // This code will execute when the selected option changes
-            magazineForm.submit(); // submit the form after changing selected <option> element, the form will be first processed in "change-magazine.js" file that will send AJAX request to "change-magazine.php" file;
-        });*/
-        // send <form> after page load;
-        /*window.addEventListener('load', function() {
-            // Execute this code after the page finishes loading
-            document.getElementById('change-magazine-form').submit();
-        });*/
-    </script>
-
-</div>
+</div> <!-- #all-container -->
 
 </body>
 </html>

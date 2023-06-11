@@ -31,9 +31,9 @@
 
             </main>
 
-        </div>
+        </div> <!-- #container -->
 
-    </div>
+    </div> <!-- #all-container -->
 
 </body>
 </html>

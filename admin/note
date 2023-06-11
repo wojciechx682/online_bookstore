@@ -104,3 +104,10 @@ admin/order-date-jq.js ->
 // let dateValue = dataObject.name;
 // let object = JSON.parse(details);
 
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+admin/edit-book-data.php -->
+
+Przy formularzu dodawania pliku na serwer trzeba będzie to skonfigurować na Hostingu.
+

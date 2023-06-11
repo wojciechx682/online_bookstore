@@ -104,7 +104,7 @@
 	
             // istnieje gotowa funkcja walidująca email ->
             //       filter_var(zmienna, filtr)
-            // - przefiltruj zmienną w sposób określony przez rodzaj filtru (drugi parametr funkcji)
+            // - przefiltruj zmienną w sposób określony przez rodzaj filtru (drugi parametr funkcji);
             // sanityzacja kodu - wyczyszczenie źródła z potencjalnie groźnych zapisów
 
 		$email = str_replace(str_split(' '), '', $email); // remove all white spaces

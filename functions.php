@@ -954,6 +954,36 @@ EOT;
         echo '<option value="asdasd"></option>'; // remove thhat line in the future;
         $result->free_result();
     }
+
+    function createAuthorSelectList($result) {
+        while($row = $result->fetch_assoc()) {
+            echo '<option value="'.$row["id_autora"].'">'.$row["imie"]. " " . $row["nazwisko"] .'</option>';
+        }
+        $result->free_result();
+    }
+
+    function createPublisherSelectList($result) {
+        while($row = $result->fetch_assoc()) {
+            echo '<option value="'.$row["id_wydawcy"].'">'.$row["nazwa_wydawcy"].'</option>';
+        }
+        $result->free_result();
+    }
+
+    function createCategorySelectList($result) {
+        while($row = $result->fetch_assoc()) {
+            echo '<option value="'.$row["id_kategorii"].'">'.$row["nazwa"].'</option>';
+        }
+        $result->free_result();
+    }
+
+    function createSubcategorySelectList($result) {
+        while($row = $result->fetch_assoc()) {
+            echo '<option value="'.$row["id_subkategorii"].'">'.$row["nazwa"].'</option>';
+        }
+        $result->free_result();
+    }
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Funkcja ustanawiająca połączenie z bazą danych i realizująca zapytanie sql
