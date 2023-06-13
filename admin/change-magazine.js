@@ -19,11 +19,11 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
     let postData = parseInt($(this).serialize().slice(16).trim()); // "change-magazine=1" => "1" (id_maazynu);
 
     console.log("\ndata => ", data); // String;
+    console.log("\ntypeof(data) =>", typeof(data)); // String;
     console.log("\npost_data (id_magazynu) =>", postData); // atrybut value elementu <option> (jest to id_magazynu);
-    console.log("\ntypeof(post data) (id_magazynu) =>", typeof(postData)); // atrybut value elementu <option> (jest to id_magazynu);
-    console.log("\ntypeof form => ", typeof(form)); // Object;
+    console.log("\ntypeof(post data) (id_magazynu) =>", typeof(postData)); // number;
 
-    if((data !== '') && (typeof(postData) === 'number') && (!isNaN(postData))) { // nie pusta, liczba, nie jest to "NaN"
+    if((data !== '') && (typeof(postData) === 'number') && (!isNaN(postData))) { // nie pusta, liczba, nie jest to "NaN";
 
         $.ajax({
             type: "POST",                    // GET or POST;
@@ -37,7 +37,7 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
                 $("img#loading-icon").toggleClass("not-visible");
             },
             success: function(data) {        // Show content;
-                let booksHeader = document.querySelector('.admin-books');
+                let booksHeader = document.querySelector('.admin-books'); // table header;
                 if(booksHeader.style.display === 'none') {
                     booksHeader.style.display = "block";
                 }

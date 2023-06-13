@@ -1,9 +1,12 @@
 <?php
 
+//admin/category.js;
+
 session_start();
 include_once "../functions.php";
 
     if (
+            isset($_POST['edit-book-id']) && !empty($_POST['edit-book-id']) &&
         isset($_POST['edit-book-title']) && !empty($_POST['edit-book-title']) &&
         isset($_POST['edit-book-change-author']) && !empty($_POST['edit-book-change-author']) &&
         isset($_POST['edit-book-release-year']) && !empty($_POST['edit-book-release-year']) &&
@@ -34,6 +37,7 @@ include_once "../functions.php";
 
         // Fields Validation;
 
+                $bookId = filter_var($_POST['edit-book-id'], FILTER_VALIDATE_INT);
             $title = filter_var($_POST['edit-book-title'], FILTER_SANITIZE_STRING);
             $author = filter_var($_POST['edit-book-change-author'], FILTER_VALIDATE_INT);
             $year = filter_var($_POST['edit-book-release-year'], FILTER_VALIDATE_INT);
@@ -63,6 +67,7 @@ include_once "../functions.php";
 
         // Check if values pass the tests;
         if (
+            $bookId === false ||
             $title !== $_POST['edit-book-title'] ||
             $author === false ||
             $year === false || $year < 1900 || $year > 2023 ||
@@ -211,6 +216,13 @@ include_once "../functions.php";
         echo "error - data were NOT set in $ _ POST";
 
         // POLA NIE BYŁY USTAWIONE (NIE ISTNIAŁY) / LUB BYŁY PUSTE !
+    }
+
+    if( isset($_SESSION["update-book-successful"]) && $_SESSION["update-book-successful"] === false ) {
+        unset($_SESSION["update-book-successful"]);
+        echo "<span class='archive-success'>Udało się zmienić zaktualizować dane</span>";
+    } else { // ture ;
+        echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić danych</span>";
     }
 
     //exit();

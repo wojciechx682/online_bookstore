@@ -13,36 +13,6 @@
 
 <?php require "../view/head-admin.php"; ?>
 
-<style>
-    /* (~) temporary ! */
-
-    #all-container {
-        border: 1px solid red !important;
-    }
-
-    #container {
-        border: 1px solid purple;
-    }
-
-    #content {
-            font-weight: normal !important;
-        border: 1px solid #14ffab;
-    }
-
-    /* -------------------------------------------------------- */
-
-    /*form#edit-book-data div {
-        border: 1px solid lightgreen;
-    }*/
-    form#edit-book-data div p span {
-        display: inline-block;
-        min-width: 125px;
-
-        border: 1px solid lightblue;
-    }
-
-</style>
-
 <body>
 
 <div id="all-container">
@@ -65,53 +35,22 @@
 
                 <hr id="book-details-hr-edit-books">
 
-                <div id="books-content">
-                    <!-- (?) -->
-                </div>
+                <script>
 
-                <!-- ---------------------------------------------------------------------------------------------- -->
+                        //let bookId = '<?php //echo $_POST["book-id"]; ?>'; // walidacja / sanityzacja ?
 
+                    let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt WHERE ks.id_ksiazki = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii", "getBookData", $_POST["book-id"]); ?>';
 
-                <?php
-                   /* if($bookId = filter_var($_GET["book-id"], FILTER_VALIDATE_NUMBER_INT)) {
-                        query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt WHERE ks.id_subkategorii = subkt.id_subkategorii AND subkt.id_kategorii = kt.id_kategorii AND ks.id_ksiazki=35", "createEditForm", $bookId);
-                    }*/
-                ?>
+                    bookData = JSON.parse(bookData);
 
+                </script>
 
-
-                <!-- ---------------------------------------------------------------------------------------------- -->
+                    <!-- <div id="books-content"> </div> -->
 
                 <!-- Edytowanie danych o książce -->
 
                 <form action="edit-book-data.php" method="post" id="edit-book-data" class="edit-book-data" name="edit-book-data"
                       enctype="multipart/form-data">
-
-                    <!-- form       (!) label           fieldset + legend      -->
-
-                    <!-- input      text
-                                password
-                                number                      -> step=""
-                                search
-                                checkbox                    checked
-                                radio                       selected
-                                tel                         disabled    required
-                                email
-                                date                        placeholder
-                                month
-                                week
-                                time                        submit
-                                color                       button
-                                                            -->
-                    <!-- <select>   size=""
-                         <select multiple>     <textarea>
-                                    <button>   submit       -->
-
-                    <!-- ------------------------------------------------------------------------------------------- -->
-
-                    <!--<label>
-                        tytuł <input type="text" name="book-title">
-                    </label>-->
 
                     <div> <!-- tytuł - varchar(255) -->
                         <p>
@@ -121,7 +60,7 @@
                                 </label>
                             </span>
                             <input type="text"
-                                   name="edit-book-title" id="edit-book-title" value="tytuł książki">
+                                   name="edit-book-title" id="edit-book-title">
                         </p>
                     </div>
 
@@ -150,7 +89,7 @@
                                 </label>
                             </span>
                             <input type="number" min="1900" max="2023"
-                                   name="edit-book-release-year" id="edit-book-release-year" value="1999">
+                                   name="edit-book-release-year" id="edit-book-release-year">
                         </p>
                     </div>
 
@@ -162,7 +101,7 @@
                                 </label>
                             </span>
                             <input type="number" min="1" max="500" step="0.01"
-                                   name="edit-book-price" id="edit-book-price" value="85">
+                                   name="edit-book-price" id="edit-book-price">
                         </p>
                     </div>
 
@@ -185,13 +124,11 @@
 
                     <hr id="book-details-hr">
 
-                        <!-- image_url -->
-
-                       <!-- <label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
+                        <!-- <label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
                             Wybierz plik (JPEG, PNG, GIF)
                         </label>
                         <input type="file" name="edit-book-image" id="edit-book-image"
-                        accept="image/*">-->
+                        accept="image/*"> -->
                                     <!-- accept=".jpg, .jpeg, .png" --> <!-- WEWNĄTRZ LABEL - WSTAWIĆ TUTAJ MOJEGO BUTTONA .btn ... (!) -->
                                     <!-- Zdjęcie książki <br><br>--> <!--<button >Wybierz plik</button>-->
                         <input type="file" name="edit-book-image" id="edit-book-image">
@@ -199,8 +136,6 @@
                         <div class="preview">
                             <p>No files currently selected for upload</p>
                         </div>
-
-                        <!-- Walidacja + Sanityzacja -->
 
                     <hr id="book-details-hr">
 
@@ -212,7 +147,7 @@
                                 </label>
                             </span>
                             <input type="text"
-                                   name="edit-book-desc" id="edit-book-desc" value="opis książki">
+                                   name="edit-book-desc" id="edit-book-desc">
                         </p>
                     </div>
 
@@ -240,7 +175,7 @@
                                 </label>
                             </span>
                             <input type="number" min="1" max="1500" step="1"
-                                   name="edit-book-pages" id="edit-book-pages" value="450">
+                                   name="edit-book-pages" id="edit-book-pages">
                         </p>
                     </div>
 
@@ -248,11 +183,11 @@
                         <p>
                             <span>
                                 <label for="edit-book-dims">
-                                    Wymiary (!) JS -> Validation
+                                    Wymiary
                                 </label>
                             </span>
                             <input type="text"
-                                   name="edit-book-dims" id="edit-book-dims" value="255 x 746 x 982">
+                                   name="edit-book-dims" id="edit-book-dims">
                         </p>
                     </div>
 
@@ -287,19 +222,19 @@
                             <select id="edit-book-subcategory"
                                     name="edit-book-subcategory">
                                 <?php
-                                query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subkategorie AS subkt", "createSubcategorySelectList", "");
+                                    query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subkategorie AS subkt", "createSubcategorySelectList", "");
                                 ?>
                             </select>
                         </p>
                     </div>
 
+                    <input type="hidden" value="" name="edit-book-id" id="edit-book-id"> <!-- id_ksiązki - int(11) -->
+
                     <input type="submit">
 
                 </form>
 
-                <div class="result">
-
-                </div>
+                <div class="result"></div>
 
             </div> <!-- #content -->
 
@@ -315,15 +250,12 @@
     let input = document.querySelector('#edit-book-image');
     let div = document.querySelector('.preview');
 
-    //input.style.opacity = "0"; // display: none; ?    visibility: hidden; ?
-
-    // Note: opacity is used to hide the file input instead of visibility: hidden or display: none, because assistive technology interprets the latter two styles to mean the file input isn't interactive;
+    // input.style.opacity = "0"; // display: none; ? visibility: hidden; ?
+        // Note: opacity is used to hide the file input instead of visibility: hidden or display: none, because assistive technology interprets the latter two styles to mean the file input isn't interactive;
 
     input.addEventListener("change", validateImage); // when file is selected (uploaded);
 
     function validateImage() {
-
-        console.log("\n305");
 
         while(div.firstChild) {
             div.removeChild(div.firstChild);
@@ -402,22 +334,29 @@
     // other fields validation;
         // in "category.js" file;
 
+    // console.log('The POST value is:', bookId);
 
+    // Fill form data with book data retrieved from DB;
+        // used jQ because performance difference is minimal;
+    $("#edit-book-title").val(bookData[0]["tytul"]);
+    $("#edit-book-id").val(bookData[0]["id_ksiazki"]);
+
+    $("#edit-book-change-author").val(bookData[0]["id_autora"]); // Change to the value attribute for <option>;
+    $("#edit-book-release-year").val(bookData[0]["rok_wydania"]);
+    $("#edit-book-price").val(bookData[0]["cena"]);
+    $("#edit-book-change-publisher").val(bookData[0]["id_wydawcy"]);
+    $("#edit-book-desc").val(bookData[0]["opis"]);
+    //$("#edit-book-cover").val(bookData[0]["oprawa"]);
+    $("#edit-book-pages").val(bookData[0]["ilosc_stron"]);
+    $("#edit-book-dims").val(bookData[0]["wymiary"]);
+    $("#edit-book-category").val(bookData[0]["id_kategorii"]);
+    $("#edit-book-subcategory").val(bookData[0]["id_subkategorii"]);
 
 </script>
-
 
 <img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
 
 <script src="category.js"></script> <!-- (!) nazwa robocza !!! -->
-
-
-
-
-
-
-
-
 
 </body>
 </html>

@@ -827,13 +827,12 @@ EOT;
         $result->free_result();
     }
 
-    function get_all_books($result) { // admin/books
+    function get_all_books($result) { // admin/books;
         while($row = $result->fetch_assoc()) {
-            //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
             // load the content from the external template file into string
-            $order = file_get_contents("../template/admin/books.php");
+            $book = file_get_contents("../template/admin/books.php");
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, $row['id_ksiazki'], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row['nazwa_magazynu'], $row["ilosc_dostepnych_egzemplarzy"], $row['id_ksiazki'],  $row['id_ksiazki'], $row['id_magazynu'], $row['id_ksiazki'], $row['id_ksiazki'], $row['id_ksiazki']);
+            echo sprintf($book, $row['id_ksiazki'], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row['nazwa_magazynu'], $row["ilosc_dostepnych_egzemplarzy"], $row['id_ksiazki'],  $row['id_ksiazki'], $row['id_magazynu'], $row['id_ksiazki'], $row['id_ksiazki']);
         }
         $result->free_result();
     }
@@ -1003,6 +1002,39 @@ EOT;
         header('Content-Type: application/json');
         echo json_encode($subcategories);
     }
+
+    function getBookData($result) {
+        // returns data in JSON format - instead text/html (as all other functions in this code);
+        // subcategories - array();
+        // add each subcategory - as an object to the array;
+        // return array as JSON-encoded response;
+
+        $bookData = []; // array();
+        while($row = $result->fetch_assoc()) {
+            $data = [
+                'id_ksiazki' => $row['id_ksiazki'],
+                'tytul' => $row['tytul'],
+                'id_autora' => $row['id_autora'],
+                'rok_wydania' => $row['rok_wydania'],
+                'cena' => $row['cena'],
+                'id_wydawcy' => $row['id_wydawcy'],
+                'opis' => $row['opis'],
+                'oprawa' => $row['oprawa'],
+                'ilosc_stron' => $row['ilosc_stron'],
+                'wymiary' => $row['wymiary'],
+                'id_subkategorii' => $row['id_subkategorii'],
+                'id_kategorii' => $row['id_kategorii']
+            ];
+            $bookData[] = $data; // what does that line do ? how does it do ?
+        }
+        //header('Content-Type: application/json');
+        echo json_encode($bookData);
+    }
+
+    function updateBookData($result) {
+        $_SESSION["update-book-successful"] = false;
+    }
+
 
     /*function createEditForm($result) {
         $row = $result->fetch_assoc();

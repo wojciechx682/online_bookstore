@@ -42,7 +42,6 @@ $("form.edit-book-data").on("submit", function(e) {
         //let postData = $(this).serialize(); // serialized <form> data;
     let formData = new FormData(this); // Create a new FormData object
     // need to use the FormData object to send the form data, including the image file.
-
     let result = document.querySelector('div.result');
 
     console.log("\n46 data -> ", data);
@@ -64,6 +63,7 @@ $("form.edit-book-data").on("submit", function(e) {
         let bookDims = DOMPurify.sanitize(data[0][9].value); // cena / number / inputedit-book-dims;
         let bookCat = DOMPurify.sanitize(data[0][10].value); // kategoria / number / select#edit-book-category;
         let bookSubcat = DOMPurify.sanitize(data[0][11].value); // podkategoria / number / select#edit-book-subcategory;
+        let bookId = DOMPurify.sanitize(data[0][12].value); // id_ksiazki / number / input#edit-book-id
 
 console.log("\nbookTitle -> ", bookTitle);
 console.log("\nbookAuthor -> ", bookAuthor);
@@ -77,6 +77,7 @@ console.log("\nbookPages -> ", bookPages);
 console.log("\nbookDims -> ", bookDims);
 console.log("\nbookCat -> ", bookCat);
 console.log("\nbookSubcat -> ", bookSubcat); // <script>alert()</script>
+console.log("\nbookId -> ", bookId);
 
     if (
         bookTitle !== data[0][0].value ||   // check, if values were correct (if passed validation);
@@ -91,9 +92,10 @@ console.log("\nbookSubcat -> ", bookSubcat); // <script>alert()</script>
         bookDims !== data[0][9].value ||
         bookDims.length > 15 ||
         bookCat !== data[0][10].value ||
-        bookSubcat !== data[0][11].value
-    ) {
+        bookSubcat !== data[0][11].value ||
+        bookId !== data[0][12].value
 
+    ) {
         result.innerHTML = "Wystąpił problem. Podaj poprawne dane"; // data didn't pass validation;
 
     } else {

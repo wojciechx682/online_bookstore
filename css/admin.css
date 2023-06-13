@@ -270,7 +270,8 @@ div.order div.order-action-button:hover, div.book-action-button:hover {
     cursor: pointer;
 }
 
-div.order div.order-action-options, div.book-action-options {
+div.order div.order-action-options, div.book-action-options/*,
+div.book-option form label*/ {
         z-index: 100;
     position: absolute;
         /*top: 20px;*/
@@ -284,6 +285,45 @@ div.order div.order-action-options, div.book-action-options {
     width: 120px;
 
     border-radius: 3px;
+}
+
+.book-option form input[type="submit"] {
+   /* opacity: 0;
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;*/
+
+    background-color: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    font-weight: normal;
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
+.book-option form input[type="text"] {
+     opacity: 0;
+     height: 0;
+     width: 0;
+     margin: 0;
+     padding: 0;
+     border: 0;
+}
+
+
+.book-option form {
+    margin: 0 auto;
+    text-align: center;
+    /*cursor: pointer;*/
+}
+
+.book-option form label {
+    cursor: pointer;
 }
 
 div.order-options-container, div.book-options-container {
@@ -306,10 +346,16 @@ div.order-option:hover, div.book-option:hover {
     background-color: #626262;
 }
 
-div.order-option a, div.book-option a {
+div.order-option a, div.book-option a,
+div.book-option form label {
     text-decoration: none;
     color: var(--text-color);
 }
+
+/*div.book-option form {
+    margin: 0;
+    padding: 0;
+}*/
 
 .order-det-lp, .order-det-product, .order-det-quan, .order-det-price, .order-det-sum {
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
@@ -921,4 +967,66 @@ img#loading-icon {
 
 .not-visible {
     display: none;
+}
+
+/* admin\edit-book ---------------------------------------------------------------------- */
+
+#content form#edit-book-data input:not([type="submit"]) { /*[type="text"]*/
+    /*margin-left: 5px;*/
+    /*width: 200px;*/
+    min-width: 150px;
+    /*width: calc(100% * 0.218);*/
+    width: 235px;
+    /*background-color: rgb(255, 255, 255);*/
+    color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+    /*font-size: 20px;*/
+    font-weight: bold;
+    padding: 8px;
+    box-sizing: border-box;
+    outline: none;
+    /*margin-top: 10px;*/
+    /*margin-left: 15px;*/ /* (?) */
+}
+
+#content form#edit-book-data input:not([type="submit"]):hover {
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+}
+
+#content form#edit-book-data select {
+    /*margin-top: 15px;
+    margin-bottom: 15px;*/
+    outline: none;
+    /* background-color: rgb(255, 255, 255); */
+    color: #494949;
+    border: 1px ridge #cbcbcb;
+    border-radius: 5px;
+    /* font-size: 20px; */
+    /*font-weight: bold;*/
+    padding: 3px 5px 3px 5px;
+    box-sizing: border-box;
+    /*outline: none;*/
+    /*margin-top: 10px;*/
+    /* transition: all 0.125s ease-in-out;*/
+    /*width: 50%;*/
+}
+
+div.result {
+    margin-top: 5px;
+    padding-top: 8px;
+}
+
+form#edit-book-data div p span {
+    display: inline-block;
+    min-width: 125px;
+
+    /*border: 1px solid lightblue;*/
+}
+
+form#edit-book-data div p span label:hover {
+    cursor: pointer;
 }

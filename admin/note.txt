@@ -113,6 +113,27 @@ Przy formularzu dodawania pliku na serwer trzeba będzie to skonfigurować na Ho
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
+<!-- form       (!) label           fieldset + legend      -->
+
+                    <!-- input      text
+                                password
+                                number                      -> step=""
+                                search
+                                checkbox                    checked
+                                radio                       selected
+                                tel                         disabled    required
+                                email
+                                date                        placeholder
+                                month
+                                week
+                                time                        submit
+                                color                       button
+                                                            -->
+                    <!-- <select>   size=""
+                         <select multiple>     <textarea>
+                                    <button>   submit       -->
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 
 edit-book.php -> ... . js (AJAX) --> get_subcategories.php
 

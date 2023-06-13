@@ -27,25 +27,31 @@
 
             <div id="content">
 
-                <div id="admin-books-header-container"> <!-- "Książki" + lista <select> z wyborem magazynu -->
+                <div id="admin-books-header-container"> <!-- "książki" + lista <select> z wyborem magazynu -->
 
                     <h3 class="section-header section-header-books">Książki</h3>
 
                     <form id="change-magazine-form" action="change-magazine.php" method="post">
-                        <select id="change-magazine" name="change-magazine"> <!-- js manage "change" event for <select> list, and then sends the <form>; -->
+
+                        <select id="change-magazine" name="change-magazine">
+
+                            <!-- js manage "change" event for <select> list, and then sends the <form>; -->
+
                             <?php
                                 query("SELECT mg.id_magazynu, mg.nazwa FROM magazyn AS mg", "createMagazineSelectList", "");
                             ?>
+
                         </select>
+
                     </form>
 
-                </div>
+                </div> <!-- #admin-books-header-container -->
 
                 <hr id="book-details-hr-books">
 
                 <?php require "../view/admin/books-header.php"; // table header ?>
 
-                <div id="books-content"></div> <!-- here are inserted rows with information about books; -->
+                <div id="books-content"></div> <!-- here are inserted rows with information about books; - change-magazine.js - change-magazine.php - data from server; -->
 
             </div> <!-- #content -->
 

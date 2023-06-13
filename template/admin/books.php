@@ -1,4 +1,4 @@
-<!-- template used on order page (order.php) to display orders made by client -->
+<!-- template used on books page (book.php) to display books; -->
 
 <!-- echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>"; -->
 
@@ -21,7 +21,13 @@
                     <a href="book-details.php?book=%s&warehouse=%s">Przeglądaj</a>
                 </div>
                 <div class="book-option">
-                    <a href="edit-book.php?book-id=%s" onclick="">Edytuj</a>
+
+                    <form action="edit-book.php" method="post">
+                            <input type="hidden" value="%s" name="book-id">
+                        <!--<label for="submit-form">Edytuj</label>-->
+                        <input type="submit" value="Edytuj"> <!-- id="submit-form" -->
+                    </form>
+
                 </div>
                 <div class="book-option">
                     <a href="#" onclick="removeOrder(%s)">Usuń</a>
