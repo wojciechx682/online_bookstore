@@ -21,7 +21,7 @@
                     <a href="book-details.php?book=%s&warehouse=%s">Przeglądaj</a>
                 </div>
                 <div class="book-option">
-                    <a href="edit-book.php" onclick="">Edytuj</a>
+                    <a href="edit-book.php?book-id=%s" onclick="">Edytuj</a>
                 </div>
                 <div class="book-option">
                     <a href="#" onclick="removeOrder(%s)">Usuń</a>

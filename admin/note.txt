@@ -118,3 +118,6 @@ edit-book.php -> ... . js (AJAX) --> get_subcategories.php
 
                                      zwraca DANE w postaci JSON (!)
                                      (można by to opisać)
+
+
+Array ( [edit-book-title] => tytuł książki [edit-book-change-author] => 1 [edit-book-release-year] => 1999 [edit-book-price] => 85 [edit-book-change-publisher] => 1 [edit-book-desc] => opis książki [edit-book-cover] => twarda [edit-book-pages] => 450 [edit-book-dims] => 255 x 746 x 982 [edit-book-category] => 1 [edit-book-subcategory] => 1 )

@@ -833,7 +833,7 @@ EOT;
             // load the content from the external template file into string
             $order = file_get_contents("../template/admin/books.php");
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, $row['id_ksiazki'], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row['nazwa_magazynu'], $row["ilosc_dostepnych_egzemplarzy"], $row['id_ksiazki'],  $row['id_ksiazki'], $row['id_magazynu'], $row['id_ksiazki'], $row['id_ksiazki']);
+            echo sprintf($order, $row['id_ksiazki'], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row['nazwa_magazynu'], $row["ilosc_dostepnych_egzemplarzy"], $row['id_ksiazki'],  $row['id_ksiazki'], $row['id_magazynu'], $row['id_ksiazki'], $row['id_ksiazki'], $row['id_ksiazki']);
         }
         $result->free_result();
     }
@@ -986,29 +986,35 @@ EOT;
     // powyższe kilka funkcji można zoptymalizować tak, aby była to jedna (np używając tablicy num. a nie assocjacyjnych);
 
     function getSubcategories($result) {
-
         // returns data in JSON format - instead text/html (as all other functions in this code);
             // subcategories - array();
             // add each subcategory - as an object to the array;
             // return array as JSON-encoded response;
 
         $subcategories = []; // array();
-
         while($row = $result->fetch_assoc()) {
-
             $subcategory = [
                 'id' => $row['id_subkategorii'],
                 'name' => $row['nazwa'],
                 'category_id' => $row['id_kategorii']
             ];
-
             $subcategories[] = $subcategory; // what does that line do ? how does it do ?
         }
-
         header('Content-Type: application/json');
         echo json_encode($subcategories);
     }
 
+    /*function createEditForm($result) {
+        $row = $result->fetch_assoc();
+
+        //$_SESSION["status"] = $row["status"];
+
+        $bookForm = file_get_contents("../template/admin/edit-book.php");
+
+        echo sprintf($bookForm, $row["tytul"], $row["rok_wydania"], $row["opis"], $row["ilosc_stron"], $row["wymiary"]);
+
+        $result->free_result();
+    }*/
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -26,6 +26,10 @@ $("form.remove-order").on("submit", function(e) { // po wysłaniu formularza;
     // Sanityzacja danych wejściowych - Wyczyszczenie niebezpiecznych zapisów - Komentarz;
 
     const sanitizedComment = DOMPurify.sanitize(comment); // it works, but How ?
+    //const sanitizedComment = DOMPurify.sanitize(comment, { USE_PROFILES: { html: true } });
+
+
+
 
     // Walidacja wprowadzonych danych (niebezpieczne znaki, długość);
 
