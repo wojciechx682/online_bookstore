@@ -1,7 +1,7 @@
 
 
 
-body > div#all-container {
+body > div#main-container {
     margin: initial;
     margin-top: -8px; /* ustawić na -10px */
     width: initial;
@@ -538,7 +538,7 @@ div.book-option form label {
     filter: invert(100%);
 }
 
-#all-container .update-status {
+#main-container .update-status {
     filter: none;
 }
 

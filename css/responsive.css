@@ -39,7 +39,6 @@ body header * {
     #header-content,
     #advanced-search {
         width: 100%;
-
         min-width: 500px;
     }
 
