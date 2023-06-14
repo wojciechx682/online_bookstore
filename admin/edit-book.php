@@ -39,9 +39,10 @@
 
                         //let bookId = '<?php //echo $_POST["book-id"]; ?>'; // walidacja / sanityzacja ?
 
-                    let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt WHERE ks.id_ksiazki = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii", "getBookData", $_POST["book-id"]); ?>';
+                    let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt WHERE ks.id_ksiazki = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii", "getBookData", $_POST["book-id"]); ?>'; // $_POST value is retrieved from admin\books.php -> "Edytuj" button (input type="submit");
 
                     bookData = JSON.parse(bookData);
+                        console.log("\nbookData -> ", bookData);
 
                 </script>
 
@@ -124,19 +125,19 @@
 
                     <hr id="book-details-hr">
 
-                        <!-- <label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
-                            Wybierz plik (JPEG, PNG, GIF)
+                        <label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
+                            Wybierz plik
                         </label>
-                        <input type="file" name="edit-book-image" id="edit-book-image"
-                        accept="image/*"> -->
-                                    <!-- accept=".jpg, .jpeg, .png" --> <!-- WEWNĄTRZ LABEL - WSTAWIĆ TUTAJ MOJEGO BUTTONA .btn ... (!) -->
-                                    <!-- Zdjęcie książki <br><br>--> <!--<button >Wybierz plik</button>-->
-                        <input type="file" name="edit-book-image" id="edit-book-image">
-
+                        <input
+                                style="opacity: 0;"
+                                type="file" name="edit-book-image" id="edit-book-image"> <!-- accept="image/*" -->
+                                    <!-- accept=".jpg, .jpeg, .png" -->
+                        <!-- <button class="update-order-status btn-link btn-link-static">Aktualizuj</button> -->
+                        <!-- <input type="file" name="edit-book-image" id="edit-book-image"
+                                           class="btn-link btn-link-static"> -->
                         <div class="preview">
                             <p>No files currently selected for upload</p>
                         </div>
-
                     <hr id="book-details-hr">
 
                     <div> <!-- opis - varchar(1000) -->
@@ -230,7 +231,7 @@
 
                     <input type="hidden" value="" name="edit-book-id" id="edit-book-id"> <!-- id_ksiązki - int(11) -->
 
-                    <input type="submit">
+                    <input type="submit" id="input-submit-edit-book-data">
 
                 </form>
 
@@ -267,30 +268,25 @@
             const p = document.createElement('p');
             p.textContent = 'No files currently selected for upload';
             div.appendChild(p);
-
-            // ... myFun("errorMessage");
-
         } else { // file was selected;
             const ol = document.createElement('ol');
             ol.style.listStyleType = "none";
+            ol.style.paddingLeft = "0";
             div.appendChild(ol); // ?
 
             for (const file of curFiles) {
                 const li = document.createElement('li');
                 const p = document.createElement('p');
                 if (validFileType(file)) { // CHECK IF FILE IS IN PROPER IMG TYPE !
-                    p.textContent = `File name ${file.name}, file size ${returnFileSize(file.size)}.`;
-                    const image = document.createElement('img');
-                    image.src = URL.createObjectURL(file); // generate a thumbnail preview of the image;
+                    p.textContent = `File name - ${file.name}, file size - ${returnFileSize(file.size)}.`;
+                    //const image = document.createElement('img');
+                    //image.src = URL.createObjectURL(file); // generate a thumbnail preview of the image;
                     //li.appendChild(image);
                     li.appendChild(p);
                 } else { // file not valid - validFileType() - NOT VALID IMAGE TYPE! ;
-                    p.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
+                    p.textContent = `File name - ${file.name}: Not a valid file type. Update your selection.`;
                     li.appendChild(p);
-
-                    // myFun (?)
                 }
-
                 ol.appendChild(li);
             }
         }
@@ -331,22 +327,15 @@
         }
     }
 
-    // other fields validation;
-        // in "category.js" file;
+    // other fields validation; - in "category.js" file;
 
-    // console.log('The POST value is:', bookId);
-
-    // Fill form data with book data retrieved from DB;
-        // used jQ because performance difference is minimal;
-    $("#edit-book-title").val(bookData[0]["tytul"]);
-    $("#edit-book-id").val(bookData[0]["id_ksiazki"]);
-
+    $("#edit-book-title").val(bookData[0]["tytul"]); // Fill form data with book data retrieved from DB;
+    $("#edit-book-id").val(bookData[0]["id_ksiazki"]); // used jQ because performance difference is minimal;
     $("#edit-book-change-author").val(bookData[0]["id_autora"]); // Change to the value attribute for <option>;
     $("#edit-book-release-year").val(bookData[0]["rok_wydania"]);
     $("#edit-book-price").val(bookData[0]["cena"]);
     $("#edit-book-change-publisher").val(bookData[0]["id_wydawcy"]);
     $("#edit-book-desc").val(bookData[0]["opis"]);
-    //$("#edit-book-cover").val(bookData[0]["oprawa"]);
     $("#edit-book-pages").val(bookData[0]["ilosc_stron"]);
     $("#edit-book-dims").val(bookData[0]["wymiary"]);
     $("#edit-book-category").val(bookData[0]["id_kategorii"]);

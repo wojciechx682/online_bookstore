@@ -22,20 +22,20 @@ include_once "../functions.php";
     ) {
         // All required fields are set and not empty; Perform the necessary actions or validations here; // For example, update the book data in the database;
 
-        /*echo "<br> success <br><br>";
-            echo "<br> tytuł - " . $_POST['edit-book-title'];
-            echo "<br> autor (id) - " . $_POST['edit-book-change-author'];
-            echo "<br> rok_wydania - " . $_POST['edit-book-release-year'];
-            echo "<br> cena - " . $_POST['edit-book-price'] ;
-            echo "<br> wydawca (id) - " . $_POST['edit-book-change-publisher'];
-            echo "<br> opis - "  . $_POST['edit-book-desc'];
-            echo "<br> oprawa - " . $_POST['edit-book-cover'];
-            echo "<br> liczba_stron - " .$_POST['edit-book-pages'];
-            echo "<br> wymiary - " . $_POST['edit-book-dims'];
-        echo "<br> kategoria (id) - " . $_POST['edit-book-category'] ;
-        echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'] . "<br>";*/
+                /* echo "<br> success <br><br>";
+                    echo "<br> tytuł - " . $_POST['edit-book-title'];
+                    echo "<br> autor (id) - " . $_POST['edit-book-change-author'];
+                    echo "<br> rok_wydania - " . $_POST['edit-book-release-year'];
+                    echo "<br> cena - " . $_POST['edit-book-price'] ;
+                    echo "<br> wydawca (id) - " . $_POST['edit-book-change-publisher'];
+                    echo "<br> opis - "  . $_POST['edit-book-desc'];
+                    echo "<br> oprawa - " . $_POST['edit-book-cover'];
+                    echo "<br> liczba_stron - " .$_POST['edit-book-pages'];
+                    echo "<br> wymiary - " . $_POST['edit-book-dims'];
+                echo "<br> kategoria (id) - " . $_POST['edit-book-category'] ;
+                echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'] . "<br>"; */
 
-        // Fields Validation;
+        // back-end validation;
 
                 $bookId = filter_var($_POST['edit-book-id'], FILTER_VALIDATE_INT);
             $title = filter_var($_POST['edit-book-title'], FILTER_SANITIZE_STRING);
@@ -80,17 +80,14 @@ include_once "../functions.php";
             $category === false ||
             $subcategory === false
         ) {
-            echo "POST Error: Invalid or missing values";
 
-            // POLA NIE PRZESZŁY WALIDACJI !
-        } else {
-            // All values are valid; // Perform the necessary actions or validations here; // For example, update the book data in the database;
+            echo "POST Error: Invalid or missing values"; // fieldnt didn't pass validation;
 
-            // ✓ Pola przeszły walidację
+        } else {                                          // all values are valid; - fields PASSED validation;
+                                                          // perform the necessary actions or validations here;
+                                                          // for example, update the book data in the database;
 
-            //echo "<br>Success: Values are valid<br>";
-
-            $file = $_FILES['edit-book-image']; // validate file;
+            $file = $_FILES['edit-book-image'];           // validate file;
 
             if (
                 isset($file["name"]) && !empty($file["name"]) &&
@@ -99,22 +96,15 @@ include_once "../functions.php";
                 isset($file["tmp_name"]) && !empty($file["tmp_name"]) &&
                 $file['error'] === UPLOAD_ERR_OK
             ) {
-                //echo "<br> success (file uploaded) <br>";
-
-                /*echo "<br><hr><br>";
-                    print_r($file);
-                echo "<br><hr><br>";*/
-
-                //  ̶P̶L̶I̶K̶ ̶P̶R̶Z̶E̶S̶Z̶E̶D̶Ł̶ ̶W̶A̶L̶I̶D̶A̶C̶J̶Ę̶ (TZN ISTNIEJE! - ZOSTAŁ WYSŁANY);
+                // file exists - has been sent;
 
                 $filename = $file["name"];
                 $tmpPath = $file["tmp_name"];
                 $destPath = "../assets/books/" . $filename;
 
-                // WALIDACJA I SANITYZACJA PLIKU !
-                // ----------------------------------------------------------------------------------------------------
+                // file validation and sanitization;
 
-                // source of the code --> https://www.php.net/manual/en/features.file-upload.php
+                // source of the code (try {} catch - block) --> https://www.php.net/manual/en/features.file-upload.php;
 
                 try {
                     // Undefined | Multiple Files | $_FILES Corruption Attack
@@ -180,8 +170,7 @@ include_once "../functions.php";
                         throw new RuntimeException('Failed to move uploaded file.');
                     }
 
-
-                    echo 'File is uploaded successfully.';
+                    //echo 'File is uploaded successfully.';
 
                     query("UPDATE ksiazki SET tytul='%s', id_autora='%s', rok_wydania='%s', cena='%s', id_wydawcy='%s', image_url='%s', opis='%s', oprawa='%s', ilosc_stron='%s', wymiary='%s', id_subkategorii='%s' WHERE ksiazki.id_ksiazki='%s'", "updateBookData", [$title, $author, $year, $price, $publisher, $filename, $desc, $cover, $pages, $dims, $subcategory, $bookId]);
 
@@ -191,43 +180,27 @@ include_once "../functions.php";
 
                 }
 
-                // -----------------------------------------------------------------------------------------------------
-
-               /* if (move_uploaded_file($tmpPath, $destPath)) {
-                    echo '<br>File uploaded successfully.';
-                } else {
-                    echo '<br>Error moving uploaded file.';
-                }*/
-
-
-            } else {
-                // plik nie został przesłany;
-                // echo "ERROR (file NOT uploaded)";
-                echo 'Error uploading file. (file NOT uploaded) - Error code: ' . $file['error']; // Error code (0 if no error occurred);
-                                                                            // https://www.php.net/manual/en/features.file-upload.errors.php;
+            } else {                                   // file was not send (not uploaded);
+                                                       // error code (0 if no error occurred);
+                echo 'Error uploading file. (file NOT uploaded) - Error code: ' . $file['error'];
+                                                       // https://www.php.net/manual/en/features.file-upload.errors.php;
             }
         }
-
-        //$values = [$title, $author, $year, $price, $publisher, $desc, $cover, $pages, $dims, $category, $subcategory];
-        //print_r($values);
-    } else {
-        // Some required fields are missing or empty;
-        // Handle the error or display an error message to the user;
-        echo "error - data were NOT set in $ _ POST";
-
-        // POLA NIE BYŁY USTAWIONE (NIE ISTNIAŁY) / LUB BYŁY PUSTE !
+    } else {                                           // some required fields are missing or empty; isset(), empty();
+                                                       // handle the error or display an error message to the user;
+        echo "error - data were NOT set in $ _ POST";  // pola nie były ustawione (nie istniały) - lub były puste;
     }
 
     if( isset($_SESSION["update-book-successful"]) && $_SESSION["update-book-successful"] === false ) {
         unset($_SESSION["update-book-successful"]);
         echo "<span class='archive-success'>Udało się zmienić zaktualizować dane</span>";
-    } else { // ture ;
+    } else {                                           // ture ;
         echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić danych</span>";
     }
 
-    //exit();
 
-    /*if(isset($_FILES['edit-book-image'])) {
+
+    /* if(isset($_FILES['edit-book-image'])) {
         $file = $_FILES['edit-book-image'];
         if (
             isset($file["name"]) && !empty($file["name"]) &&
@@ -241,7 +214,7 @@ include_once "../functions.php";
         } else {
             echo "<br> ERROR (file NOT uploaded) <br>";
         }
-    }*/
+    } */
 
     /*array(1) { ["edit-book-image"]=> array(6) {
                                                 ["name"]=> string(7) "111.bmp"
@@ -254,7 +227,6 @@ include_once "../functions.php";
              }
 
     Array ( [edit-book-image] => Array ( [name] => 111.bmp [full_path] => 111.bmp [type] => image/bmp [tmp_name] => C:\xampp\tmp\php8CD9.tmp [error] => 0 [size] => 7806006 ) )
-
 
     $_FILES['field_name'] = [            // name attribute of <input type="file">
         'name' => 'file_name.ext',       // The original name of the file

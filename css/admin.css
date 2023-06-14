@@ -23,20 +23,20 @@ main {
 
 div#content {
     background-color: var(--content);
-        /*float: initial;
-        width: 100%;*/
+    /*float: initial;
+    width: 100%;*/
     color: white;
     font-weight: bold;
-        /*background-color: lightblue;*/
+    /*background-color: lightblue;*/
     float: none;
     overflow: hidden;
     width: unset;
-        /*max-width: 1175px;*/
+    /*max-width: 1175px;*/
 }
 
 div#nav {
     background-color: #003566;
-        /*color: #ebf2fa;*/ /* lekko niebieski */
+    /*color: #ebf2fa;*/ /* lekko niebieski */
     color: var(--text-color);
     max-width: 375px;
     min-width: 250px;
@@ -85,13 +85,13 @@ aside#admin-nav div#nav h3 + hr {
     border: none;
     height: 1px;
     margin: 5px 15px 5px 15px;
-        /*max-width: 255px;*/
+    /*max-width: 255px;*/
 }
 
 aside#admin-nav > div#nav > div#admin-data {
-        /*width: 100%;*/
+    /*width: 100%;*/
     padding-top: 12px;
-        background-color: #06437a;
+    background-color: #06437a;
     overflow: auto;
     overflow-x: hidden;
 }
@@ -107,16 +107,16 @@ aside#admin-nav > div#nav > div#admin-data div#admin-name {
 
 aside#admin-nav > div#nav > div#admin-data div#admin-name span:first-of-type:hover {
     color: #ffffff;
-        /*text-decoration: underline;*/
+    /*text-decoration: underline;*/
     border-bottom: 1px solid white;
     cursor: pointer;
     user-select: none;
-        /*padding-left: 2px;*/
+    /*padding-left: 2px;*/
 }
 
 aside#admin-nav > div#nav > div#admin-data div#admin-name span:nth-of-type(2) {
     font-size: 12px;
-        /*padding-left: 2px;*/
+    /*padding-left: 2px;*/
     user-select: none;
 }
 
@@ -205,11 +205,11 @@ div.order, div.admin-books {
 }
 
 .order-id, .order-date, .order-client,  .order-total-sum, .order-payment, .order-status, .order-action {
-        /* border: 1px dashed black; */
-        /* border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
+    /* border: 1px dashed black; */
+    /* border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
     float: left;
-        /*width: 16.66%;*/
+    /*width: 16.66%;*/
     width: 14.28%;
     text-align: center;
     padding-bottom: 5px;
@@ -244,7 +244,7 @@ div.order, div.admin-books {
 
 div.order-action, div.book-action {
     border-right: none;
-        /*position: relative;*/
+    /*position: relative;*/
 }
 
 div.order-content {
@@ -272,28 +272,28 @@ div.order div.order-action-button:hover, div.book-action-button:hover {
 
 div.order div.order-action-options, div.book-action-options/*,
 div.book-option form label*/ {
-        z-index: 100;
+    z-index: 100;
     position: absolute;
-        /*top: 20px;*/
+    /*top: 20px;*/
     margin: 0 auto 0 auto;
     border: 1px solid white;
-        /*margin-left: auto;*/
+    /*margin-left: auto;*/
     text-align: center !important;
     display: none;
     background-color: var(--content);
-        /*padding: 0 20px 0 20px;*/ /* (!) */
+    /*padding: 0 20px 0 20px;*/ /* (!) */
     width: 120px;
 
     border-radius: 3px;
 }
 
 .book-option form input[type="submit"] {
-   /* opacity: 0;
-    height: 0;
-    width: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;*/
+    /* opacity: 0;
+     height: 0;
+     width: 0;
+     margin: 0;
+     padding: 0;
+     border: 0;*/
 
     background-color: transparent;
     border: 0;
@@ -307,12 +307,12 @@ div.book-option form label*/ {
 }
 
 .book-option form input[type="text"] {
-     opacity: 0;
-     height: 0;
-     width: 0;
-     margin: 0;
-     padding: 0;
-     border: 0;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 
 
@@ -327,7 +327,7 @@ div.book-option form label*/ {
 }
 
 div.order-options-container, div.book-options-container {
-        /*border: 1px solid red;*/
+    /*border: 1px solid red;*/
     width: 120px;
     height: 55px;
     text-align: center !important;
@@ -360,10 +360,10 @@ div.book-option form label {
 .order-det-lp, .order-det-product, .order-det-quan, .order-det-price, .order-det-sum {
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
     float: left;
-        /*width: 16.66%;*/
+    /*width: 16.66%;*/
     text-align: center;
     padding-bottom: 5px;
-        /*padding-top: 5px;*/
+    /*padding-top: 5px;*/
     color: var(--text-color);
     border-bottom: none;
     font-weight: normal;
@@ -385,16 +385,16 @@ div.book-option form label {
     margin-top: 10px;
     width: 50%;
     margin-left: 0;
-        /*border: 1px ridge #3c9ce0;*/
+    /*border: 1px ridge #3c9ce0;*/
     /*min-width: 380px;*/   /* (!) */
     float: left;
-        /*display: inline-block;*/
+    /*display: inline-block;*/
 }
 .order-summary span {
     display: inline-block;
-        /*min-width: 160px;*/
+    /*min-width: 160px;*/
     margin-bottom: 8px;
-        /*font-weight: normal;*/
+    /*font-weight: normal;*/
     margin-right: 20px;
 }
 
@@ -425,21 +425,21 @@ div.book-option form label {
 
 
 .order-sum-pay-met, .order-sum-pay-date, .order-sum-del-meth {
-        /*display: inline-block;
-        width: 32%;*/
+    /*display: inline-block;
+    width: 32%;*/
     margin-bottom: 16px;
 }
 
-    /*.order-sum-pay-date {
-        min-width: 280px;
-    }*/
+/*.order-sum-pay-date {
+    min-width: 280px;
+}*/
 
 #order-status {
-        /*border: 1px ridge white;*/
+    /*border: 1px ridge white;*/
     width: 45%;
-        /*display: inline-block;*/
+    /*display: inline-block;*/
     float: left;
-        /*min-width: 315px;*/
+    /*min-width: 315px;*/
     margin-top: 10px;
     font-weight: normal;
 }
@@ -467,9 +467,9 @@ div.book-option form label {
     height: 330px;
     width: 660px;
     background-color: #545454;
-        /*position: fixed;
-        top: 25em;
-        left: 45em;*/
+    /*position: fixed;
+    top: 25em;
+    left: 45em;*/
     position: absolute;
     top: 50%;
     /*left: 60%;*/
@@ -482,7 +482,7 @@ div.book-option form label {
     margin-left: 20px;
     margin-top: 25px;
     color: #FAFAFFFF;
-        /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
     font-size: 1.2rem;
     width: 595px;
     display: inline-block;
@@ -500,11 +500,11 @@ div.book-option form label {
     border: none;
     height: 1px;
     margin: 5px 15px 5px 15px;
-        /*max-width: 255px;*/
+    /*max-width: 255px;*/
 }
 
 #update-status select#status-list, .update-status select#status-list {
-        /*appearance: none;*/
+    /*appearance: none;*/
     outline: 0;
     background-color: #dadada;
     height: 35px;
@@ -522,7 +522,7 @@ div.book-option form label {
 #update-status select#status-list:hover,
 .update-status select#status-list:hover
 {
-   cursor: pointer;
+    cursor: pointer;
 }
 
 .hidden {
@@ -574,7 +574,7 @@ div.book-option form label {
 div.delivery-date {
     display: none;
     color: #fafaff;
-        /*border: 1px ridge darkblue;*/
+    /*border: 1px ridge darkblue;*/
     padding: 6px 20px 20px 29px;
 
     min-height: 80px;
@@ -656,7 +656,7 @@ span.date-error {
     display: none;
     font-weight: bold;
     color: red !important;
-        position: absolute;
+    position: absolute;
     margin-top: 12px;
     margin-left: 129px;
 }
@@ -797,12 +797,12 @@ div#warehouse-name, div#warehouse-location-name, div#warehouse-address {
 }
 
 div#book-publisher, div#book-state, div#book-description, div#book-orders-count, div#book-cart-count, div#book-cart-count, div#book-items-sold, div#warehouse-post-code, div#warehouse-number-of-books-available
- {
+{
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
 div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content,
- div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content,
+div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content,
 div#book-avg-rating-content, div#book-ratings-amount-content, div#book-category-name-content,
 div#book-subcategory-name-content, div#book-orders-count-content, div#book-cart-count-content, div#warehouse-name-content, div#warehouse-location-name, div#warehouse-location-name-content-country, div#warehouse-address, div#warehouse-address-content-city, div#warehouse-post-code, div#warehouse-post-code-content
 {
@@ -937,7 +937,7 @@ form#change-magazine-form {
     margin-top: 15px;
 }
 
- div#admin-books-header-container {
+div#admin-books-header-container {
     /*border: 1px solid #002aff;*/
 }
 
@@ -971,7 +971,45 @@ img#loading-icon {
 
 /* admin\edit-book ---------------------------------------------------------------------- */
 
-#content form#edit-book-data input:not([type="submit"]) { /*[type="text"]*/
+#content form#edit-book-data input#input-submit-edit-book-data {
+        /*width: 15%;*/
+    margin-left: 0;
+    margin-top: 5px;
+
+        /*margin-left: 5px;*/
+        /*width: 200px;*/
+    /*min-width: 150px;*/
+        /*width: calc(100% * 0.218);*/
+    width: 175px;
+
+    /*background-color: rgb(255, 255, 255);*/
+    color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+    /*font-size: 20px;*/
+    font-weight: bold;
+    padding: 8px;
+    box-sizing: border-box;
+    outline: none;
+    /*margin-top: 10px;*/
+
+    margin-top: 30px;
+}
+
+#content form#edit-book-data input#input-submit-edit-book-data:hover {
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+}
+
+
+
+
+
+
+#content form#edit-book-data input[type="text"],
+#content form#edit-book-data input[type="number"] {
     /*margin-left: 5px;*/
     /*width: 200px;*/
     min-width: 150px;
@@ -990,7 +1028,8 @@ img#loading-icon {
     /*margin-left: 15px;*/ /* (?) */
 }
 
-#content form#edit-book-data input:not([type="submit"]):hover {
+#content form#edit-book-data input[type="text"]:hover,
+#content form#edit-book-data input[type="number"]:hover {
     cursor: pointer;
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
@@ -1029,4 +1068,13 @@ form#edit-book-data div p span {
 
 form#edit-book-data div p span label:hover {
     cursor: pointer;
+}
+
+div.preview {
+    position: relative;
+    top: -15px;
+}
+
+.edit-book-image {
+    margin-top: 33px !important;
 }

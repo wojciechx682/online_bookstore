@@ -75,14 +75,14 @@ $("form#update-order-date").on("submit", function(e) {
             }
 });
 
-/*function validateDate(date) { // "2023-01-01"
+/* function validateDate(date) { // "2023-01-01"
     const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/; // Define a regular expression to match the date format (YYYY-MM-DD);
     if (!dateRegex.test(date)) { // Check if the date (String) matches the date format
         return null;             // Return null if the date (string) is not a valid date format
     } else {
         return date;
     }
-}*/
+} */
 
 function error(px) {
     $('.date-error').css({
