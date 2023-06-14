@@ -2,23 +2,23 @@
 
 	session_start();
 	
-	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (!(isset($_SESSION['udanarejestracja'])))) // jeśli weszliśmy na zaloguj.php będąc zalogowanym
+	if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (!(isset($_SESSION['udanarejestracja'])))) // ✓ jeśli weszliśmy na zaloguj.php będąc zalogowanym;
 	{
 		header("Location: index.php");
 		exit();
 	}
-	elseif((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (isset($_SESSION['udanarejestracja'])) && ($_SESSION['udanarejestracja'] == "true")) // jeśli stworzyliśmy konto, będąc zalogowanym na inne
+	elseif((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true") && (isset($_SESSION['udanarejestracja'])) && ($_SESSION['udanarejestracja'] == "true")) // jeśli stworzyliśmy konto, będąc zalogowanym na inne;
 	{
 		header("Location: logout.php");
 		exit();
 	}
 	elseif(!isset($_SESSION['zalogowany']) &&
             isset($_SESSION['udanarejestracja'])
-    ) // jeśli stworzyliśmy konto (normalnie - nie będąc zalogowanym w tym czasie na inne)
+    ) // jeśli stworzyliśmy konto (normalnie - nie będąc zalogowanym w tym czasie na inne);
 	{
 		//unset($_SESSION['udanarejestracja']);
 
-		// Usuwanie zmiennych pamiętających wartości wpisane do formularza
+		// Usuwanie zmiennych pamiętających wartości wpisane do formularza;
 		if (isset($_SESSION['fr_imie'])) unset($_SESSION['fr_imie']);
 		if (isset($_SESSION['fr_nazwisko'])) unset($_SESSION['fr_nazwisko']);
 		if (isset($_SESSION['fr_email'])) unset($_SESSION['fr_email']);
@@ -92,8 +92,8 @@
                         </span>
                         <span class="login-row">
                                 <label>
-                                    Hasło <input type="password" name="haslo" required value="jan1"
-                                                       autocomplete="off">
+                                    Hasło <input type="password" name="haslo" required value="PassJacob33#"
+                                                       autocomplete="off"> <!-- jan -> jan1 -->
                                 </label>
                         </span>
 
@@ -116,10 +116,9 @@
                 ?>
 
                 <?php
-                    // pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło
-                    // czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI
-
-                    // normalne logowanie, podany złe hasło
+                    // pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło;
+                    // czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI;
+                    // normalne logowanie, podany złe hasło;
                     if(isset($_SESSION['blad']))
                     {
                         echo '<br>'.$_SESSION['blad'];
@@ -152,7 +151,6 @@
         content = document.getElementById("content"); // ustawienie wid div#content na 100%
         //console.log("content -> ", content);
         content.style.width = "100%";
-
         /*formSection = document.querySelector(".form-section");
         formSection.style.width = "25%";*/
     </script>

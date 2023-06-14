@@ -1,7 +1,11 @@
 
+// This file is fucked up; I could do it better;
+
 // admin/order-details.php
 
 $("form#update-order-date").on("submit", function(e) {
+
+    // use DOMPurify for date sanitization here ?
 
     e.preventDefault();
 

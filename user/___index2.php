@@ -30,25 +30,37 @@
                  ';
     }
 
-    // można lepiej zapisać -->
+    // (?) można lepiej zapisać -->
 
-    if((isset($_GET['kategoria'])) && (!empty($_GET['kategoria'])))
+    if(isset($_GET['kategoria']) && !empty($_GET['kategoria']))
     {
+        // to się spełni, jeśli następiło wejście pod dowolna kategorię --> index.php?kategoria=Wszystkie;
+            // chnage special characters to their HTML entities representation, and then the strip_tags() function is used to remove any HTML tags from the input. This helps prevent potential security vulnerabilities such as cross-site scripting (XSS) attacks;
+        /*echo "<script>console.log('37');</script>";*/
         $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
-        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
+        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
+        // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert();</script>;
     }
-    elseif((isset($_SESSION['kategoria'])) && (!empty($_SESSION['kategoria'])) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
+    elseif(isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria']) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
     {
+        // to się spełni, jeśli wsześniej następiło wejście pod dowolna kategorię --> index.php?kategoria=Wszystkie;
+        // ORAZ           wprowadzono tytuł z input-search-nav;
+                //echo "<script>console.log('43');</script>";
         $_SESSION["kategoria"] = htmlentities($_SESSION['kategoria'], ENT_QUOTES, "UTF-8");
-        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
+        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
+        // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert();</script>;
     }
-    if((isset($_POST["adv-search-category"])))
+    if(isset($_POST["adv-search-category"]))
     {
+        // to się spełni, jeśli nastąpił submit z wyszukiwania-zaawansowanego;
+            /*echo "<script>console.log('49');</script>";*/
         $_SESSION["kategoria"] = htmlentities($_POST['adv-search-category'], ENT_QUOTES, "UTF-8");
-        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]); // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
+        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
+        // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
     }
-    if(isset($_SESSION["kategoria"]) && isset($_GET["input-search"]))
+    if(isset($_GET["input-search"]))
     {
+        /*echo "<script>console.log('54');</script>";*/
         $_SESSION["kategoria"] = "Wszystkie";
     }
 ?>
@@ -170,7 +182,7 @@
 
                     </div> <!-- #nav -->
 
-                </aside>
+                </aside> <!-- #book-filters -->
 
                 <?php
 
