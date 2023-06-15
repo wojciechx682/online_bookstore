@@ -62,7 +62,7 @@
 
 <body>
 
-<div id="main-container">
+<div id="all-container">
 
     <?php require "../view/___header-container.php" ?>
 
@@ -78,7 +78,7 @@
 
                 <!-- Formularz Logowania -->
 
-                <!-- Księgarnia online <br><br>-->
+                <!--Księgarnia online<br><br>-->
 
                 <form action="logowanie.php" method="post" id="login-form">
 
@@ -87,7 +87,7 @@
                         <span class="login-row">
                                 <label>
                                     <!-- Login: <br> <input type="text" name="login"> <br> -->
-                                    E-mail <input type="email" name="email" required value="adam.nowak@wp.pl">
+                                    E-mail <input type="email" name="email" required value="jan.nowak@wp.pl">
                                 </label>
                         </span>
                         <span class="login-row">

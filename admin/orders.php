@@ -17,7 +17,7 @@
 
 <body>
 
-    <div id="main-container">
+    <div id="all-container">
 
         <div id="container">
 
@@ -83,7 +83,7 @@
             // ~ można by to zrobić lepiej, tak aby pętla nie iterowała przez wszystie elementy (wszystkie zamówienia);
 
         let removeBoxes = document.querySelectorAll('div.update-status'); // okienka Archiwizowania zamówienia;
-        let allContainer = document.getElementById("main-container");
+        let allContainer = document.getElementById("all-container");
 
         for (let i = 0; i < removeBoxes.length; i++) { // dla każdego okienka;
             let removeBox = removeBoxes[i]; // perform actions on each element;

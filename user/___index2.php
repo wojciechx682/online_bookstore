@@ -30,6 +30,8 @@
                  ';
     }
 
+    // (?) można lepiej zapisać -->
+
     if(isset($_GET['kategoria']) && !empty($_GET['kategoria']))
     {
         // to się spełni, jeśli następiło wejście pod dowolna kategorię --> index.php?kategoria=Wszystkie;
@@ -48,12 +50,6 @@
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
         // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert();</script>;
     }
-    elseif(!isset($_GET["kategoria"]))
-    {
-        /*echo "<script>console.log('54');</script>";*/
-        $_SESSION["kategoria"] = "Wszystkie";
-    }
-
     if(isset($_POST["adv-search-category"]))
     {
         // to się spełni, jeśli nastąpił submit z wyszukiwania-zaawansowanego;
@@ -76,14 +72,14 @@
 
 <body>
 
-    <div id="main-container">
+    <div id="all-container">
 
         <?php require "../view/___header-container.php"; ?>
 
         <div id="container">
 
             <main>
-
+                
                 <aside id="book-filters">
 
                     <div id="nav" class="nav-visible">
@@ -615,34 +611,3 @@
 
 </body>
 </html>
-
-<?php
-    if(isset($_GET['kategoria']) && !empty($_GET['kategoria']))
-    {
-        // to się spełni, jeśli następiło wejście pod dowolna kategorię --> index.php?kategoria=Wszystkie;
-        // chnage special characters to their HTML entities representation, and then the strip_tags() function is used to remove any HTML tags from the input. This helps prevent potential security vulnerabilities such as cross-site scripting (XSS) attacks;
-        $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
-        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
-    }
-    elseif(isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria']) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
-    {
-        // to się spełni, jeśli wsześniej następiło wejście pod dowolna kategorię --> index.php?kategoria=Wszystkie;
-        // ORAZ           wprowadzono tytuł z input-search-nav;
-        $_SESSION["kategoria"] = htmlentities($_SESSION['kategoria'], ENT_QUOTES, "UTF-8");
-        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
-    }
-    elseif(!isset($_GET["kategoria"]))
-    {
-        $_SESSION["kategoria"] = "Wszystkie";
-    }
-
-    if(isset($_POST["adv-search-category"]))
-    {
-        $_SESSION["kategoria"] = htmlentities($_POST['adv-search-category'], ENT_QUOTES, "UTF-8");
-        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
-    }
-    if(isset($_GET["input-search"]))
-    {
-        $_SESSION["kategoria"] = "Wszystkie";
-    }
-?>

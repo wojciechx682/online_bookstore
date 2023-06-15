@@ -15,7 +15,7 @@
 
 <body>
 
-<div id="main-container">
+<div id="all-container">
 
     <div id="container">
 
@@ -140,7 +140,7 @@
 
     btn = document.querySelector('button.update-order-status');  // button - "Aktualizuj" zmianę statusu;
     let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu; div #update-status.hidden;
-    let allContainer = document.getElementById("main-container");
+    let allContainer = document.getElementById("all-container");
     icon = document.querySelector('.icon-cancel');               // <i class="icon-cancel">
     cancelBtn = document.querySelector('.cancel-order');         // przycisk "Anuluj"; button.cancel-order;
 

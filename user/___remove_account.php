@@ -24,7 +24,7 @@
 
 <body>
 
-<div id="main-container">
+<div id="all-container">
 
     <div id="container">
 

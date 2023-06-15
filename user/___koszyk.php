@@ -16,7 +16,7 @@
 
 <body>
 
-<div id="main-container">
+<div id="all-container">
 
 <?php require "../view/___header-container.php"; ?>
 

@@ -20,7 +20,7 @@ function removeOrder(order_id) { // po kliknięciu przycisku "Archiwizuj"
     /*removeBox.style.filter = "inherit";*/
     //removeBox.classList.toggle('normal');
 
-        let allContainer = document.getElementById("main-container");
+        let allContainer = document.getElementById("all-container");
 
     if(!allContainer.classList.contains("bright")) {
         allContainer.classList.toggle("bright");
