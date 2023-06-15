@@ -50,6 +50,11 @@
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
         // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert();</script>;
     }
+    elseif(!isset($_GET["kategoria"]))
+    {
+        /*echo "<script>console.log('54');</script>";*/
+        $_SESSION["kategoria"] = "Wszystkie";
+    }
     if(isset($_POST["adv-search-category"]))
     {
         // to się spełni, jeśli nastąpił submit z wyszukiwania-zaawansowanego;
@@ -79,7 +84,7 @@
         <div id="container">
 
             <main>
-                
+
                 <aside id="book-filters">
 
                     <div id="nav" class="nav-visible">
