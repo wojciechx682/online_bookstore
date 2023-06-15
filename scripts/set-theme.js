@@ -3,19 +3,29 @@
     blackBtn = document.getElementById("black");
 
     body = document.body
-    header = document.getElementById("header");
+    /*header = document.getElementById("header");*/
+    header = document.getElementById("n-header");
     divCart = document.getElementsByClassName("top-nav-right");
     content = document.getElementById("content");
     mcontent = document.getElementById("main-content");
     books = Array.from(document.querySelectorAll(".book"));
     sticky = document.getElementById("sticky");
 
+    btnParent = document.getElementById("btn-parent");
+
     if(content) {
         console.log("content -> ", content);
     }
 
+
+
 function setBlackTheme() {
+
+    console.log("books -> ", books);
+
     header.style.backgroundColor = "#565656FF";
+    header.style.color = "white";
+    btnParent.style.color = "white !important";
     divCart[0].style.color = "#ffffff";
     if(content) {
         content.style.backgroundColor = "#565656";
@@ -27,9 +37,10 @@ function setBlackTheme() {
     }
 
     body.style.backgroundImage = "url('../assets/3.png')";
-    sticky.style.color = "#ffffff";
+    //sticky.style.color = "#ffffff";
 
     for (let i = 0; i < books.length; i++) {
+
         books[i].style.color = '#000000';
     }
 
@@ -52,7 +63,7 @@ function setWhiteTheme() {
 
     body.style.backgroundImage = "url('../assets/2.png')";
 
-    sticky.style.color = "#000";
+    //sticky.style.color = "#000";
 
     for (let i = 0; i < books.length; i++) {
         books[i].style.color = '#000000';

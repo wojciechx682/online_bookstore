@@ -281,7 +281,7 @@
 //		$result->free_result();
 //	}
 
-	function count_cart_quantity($result) // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku
+	function count_cart_quantity($result) // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku; index.php - pobiera ilość książek w koszyku klienta;
 	{
 		$row = $result->fetch_assoc();
 

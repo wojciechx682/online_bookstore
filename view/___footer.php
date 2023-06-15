@@ -5,7 +5,7 @@
             <!--<button id="white" onclick="setWhiteTheme()">white</button><button id="black" onclick="setBlackTheme()">black</button>© 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us-->
 
             <pre>
-                <button id="white" onclick="setWhiteTheme()">white</button>  <button id="black" onclick="setBlackTheme()">black</button>  © 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us
+               <!-- <button id="white" onclick="setWhiteTheme()">white</button>  <button id="black" onclick="setBlackTheme()">black</button> --> © 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us
             </pre>
         </div>
     </footer>

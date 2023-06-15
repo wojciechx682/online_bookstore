@@ -7,35 +7,32 @@
 
             <div id="n-top-header">
 
-                <!-- top-header -->
-                <div id="header-title"> Księgarnia internetowa </div>
+                <div id="header-title"> Księgarnia internetowa </div> <!-- top-header -->
                 <div id="btn-parent">
-                   <!-- <div class="btn from-center">Zaloguj</div>-->
-
+                    <!-- <div class="btn from-center">Zaloguj</div> -->
                     <?php if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) { echo '
-                    <a href="___account.php">
-                        <div class="btn from-center">Moje konto</div>
-                    </a>';} else { echo '<a href="___zaloguj.php"><div class="btn from-center">Zaloguj</div></a>';} ?>
+                        <a href="___account.php">
+                            <div class="btn from-center">Moje konto</div>
+                        </a>';}
+                          else { echo '<a href="___zaloguj.php"><div class="btn from-center">Zaloguj</div></a>';} ?>
 
                     <a href="___zarejestruj.php">
-                        <div class="btn from-center">Zarejestruj</div> <!-- zmienić aby było to przejście do rejestracji (hiperłącze) -->
+                        <div class="btn from-center">Zarejestruj</div>
                     </a>
 
                     <div id="div-cart-header">
-                        <!--<a class="top-nav-right" href="___koszyk.php" >Koszyk</a>-->
+                        <!-- <a class="top-nav-right" href="___koszyk.php" >Koszyk</a> -->
                         <a class="top-nav-right" href="___koszyk.php">Koszyk
                             <?php
-                            if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) {
-                                query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
-                                echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
-                            }
+                                if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) {
+                                    query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
+                                    echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
+                                }
                             ?>
                         </a>
                     </div>
-                    <!-- <div style="height: 25px; width: 25px; margin: 0 auto 0 auto; border: 1px dashed red;"> if you want to have content in center -->
-                </div>
 
-                <!-- header -->
+                </div> <!-- #btn-parent -->
 
             </div>
 
@@ -49,7 +46,7 @@
                 </form>
             </div>
 
-            <!--<div id="div-logo">
+            <!--<div id="div-logo">zz1z1
                 <img id="main-logo" src="../assets/logo4.png" alt="logo">
             </div>-->
 
