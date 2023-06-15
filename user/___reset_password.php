@@ -193,7 +193,7 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
 
 <body>
 
-<div id="all-container">
+<div id="main-container">
 
     <script src="../scripts/hide-field.js"></script>
 

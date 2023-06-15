@@ -15,7 +15,7 @@ include_once "../functions.php";
 
 <body>
 
-<div id="all-container">
+<div id="main-container">
 
     <?php require "../view/___header-container.php"; ?>
 

@@ -125,7 +125,7 @@ body {
     div#n-top-nav,
     div#n-top-nav-content,
     div#n-top-nav > div#n-top-nav-content > ol,
-    #all-container,
+    #main-container,
     #container,
     footer,
     #footer
@@ -1610,7 +1610,7 @@ footer {
 
 
 
-#all-container {
+#main-container {
                 /*overflow: auto;*/
     /*width: 1200px;*/
     width: 1375px;
