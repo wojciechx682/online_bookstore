@@ -32,16 +32,17 @@
 
     // (?) można lepiej zapisać -->
 
-    if(isset($_GET['kategoria']) && !empty($_GET['kategoria']))
+    if( isset($_GET['kategoria']) && !empty($_GET['kategoria']) )
     {
         // to się spełni, jeśli następiło wejście pod dowolna kategorię --> index.php?kategoria=Wszystkie;
-            // chnage special characters to their HTML entities representation, and then the strip_tags() function is used to remove any HTML tags from the input. This helps prevent potential security vulnerabilities such as cross-site scripting (XSS) attacks;
-        /*echo "<script>console.log('37');</script>";*/
+                                // chnage special characters to their HTML entities representation, and then the strip_tags() function is used to remove any HTML tags from the input. This helps prevent potential security vulnerabilities such as cross-site scripting (XSS) attacks;
+                            /*echo "<script>console.log('37');</script>";*/
         $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
+        // filter input ? filter var ?
         // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert();</script>;
     }
-    elseif(isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria']) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
+    /*elseif(isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria']) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
     {
         // to się spełni, jeśli wsześniej następiło wejście pod dowolna kategorię --> index.php?kategoria=Wszystkie;
         // ORAZ           wprowadzono tytuł z input-search-nav;
@@ -49,12 +50,15 @@
         $_SESSION["kategoria"] = htmlentities($_SESSION['kategoria'], ENT_QUOTES, "UTF-8");
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
         // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert();</script>;
-    }
+    }*/
     elseif(!isset($_GET["kategoria"]))
     {
-        /*echo "<script>console.log('54');</script>";*/
+        //echo "<script>console.log('54');</script>";
         $_SESSION["kategoria"] = "Wszystkie";
     }
+
+    // od teraz kategoria jest ZAWSZE ustawiona;
+
     if(isset($_POST["adv-search-category"]))
     {
         // to się spełni, jeśli nastąpił submit z wyszukiwania-zaawansowanego;
@@ -63,11 +67,13 @@
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
         // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert("hahaha");</script>;
     }
+
     if(isset($_GET["input-search"]))
     {
         /*echo "<script>console.log('54');</script>";*/
         $_SESSION["kategoria"] = "Wszystkie";
     }
+
 ?>
 
 <!DOCTYPE HTML>
@@ -146,83 +152,91 @@
 
                 <?php
 
-                    if( (isset($_GET['kategoria'])) &&
-                        !(empty($_GET['kategoria'])) &&
-                        (!(isset($_GET['autor'])) ||
-                            (empty($_GET['autor']))) ) // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>
-                    {
+                    print_r($_SESSION);
+
+                    if( isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria'])  // kategoria jest ustawiona zawsze (!);
+                        && !isset($_GET['input-search']) // nie było próby wyszukania książki;
+                    )   // && (!(isset($_GET['autor'])) || (empty($_GET['autor'])))
+                    {   // index.php?kategoria=Wszystkie;
+                        // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>;
                         echo '<div id="content">';
-                        echo '<script> displayNav(); </script>';
+                            echo '<script> displayNav(); </script>'; // ?????????????????????;
+                                // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; <script>alert("hahaha");</script>;
+                            // $kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
+                            // $kategoria = strip_tags($kategoria);
+                            // $_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)
 
-                        // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; <script>alert("hahaha");</script>;
-                        $kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
-                        $kategoria = strip_tags($kategoria);
-
-                        $_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)
-
-                            /* var_dump($_SESSION);
-                            print_r($_SESSION);
-                            print_r($_POST); */
-
-                        echo '<div id="content-books">';
-
-                        displayBooks($_SESSION['kategoria']);
-        //                            if($_SESSION['kategoria'] == "Wszystkie")
-        //                            {
-        //                                displayBooks($_SESSION['kategoria']);
-        //                            }
-                        /* else // --> "Dla dzieci" , "Fantastyka", "Informatyka", ...
-                         {
-                             // print_r($_SESSION);
-                             // query("SELECT id_ksiazki, image_url, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books",  $_SESSION['kategoria']);
-                             query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);
-
-                             // ($result = $polaczenie->query(sprintf("UPDATE klienci SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", mysqli_real_escape_string($polaczenie, $imie), mysqli_real_escape_string($polaczenie, $nazwisko), mysqli_real_escape_string($polaczenie, $miasto), mysqli_real_escape_string($polaczenie, $ulica), mysqli_real_escape_string($polaczenie, $numer_domu), mysqli_real_escape_string($polaczenie, $kod_pocztowy), mysqli_real_escape_string($polaczenie, $kod_miejscowosc), mysqli_real_escape_string($polaczenie, $wojewodztwo), mysqli_real_escape_string($polaczenie, $kraj), mysqli_real_escape_string($polaczenie, $pesel), mysqli_real_escape_string($polaczenie, $data_urodzenia), mysqli_real_escape_string($polaczenie, $telefon), mysqli_real_escape_string($polaczenie, $email), mysqli_real_escape_string($polaczenie, $login))))
-                         }*/
-
-                        echo '</div>'; // content-books
-                        echo '</div>'; // content
-                    }
-                    elseif ((!(isset($_GET['kategoria'])) || (empty($_GET['kategoria']))) &&
-                            (isset($_GET['autor'])) && !(empty($_GET['autor']))) // TYMCZASOWE wyświetlanie książek autora, po wpisaniu go w wyszukiwarce
-                    {
-                        echo '<div id="content"></div>';
-                        $autor = [$_GET['autor']];
-                        echo '<div id="content-books">';
-                            query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor); // do zmiany -> id subkategoii
-                        echo '</div>';
-                        echo '</div>';
-                    }
-                    else // jeśli (nie ustawiono kategorii i autora), lub (ustawiono kategorie ORAZ autora)
-                    {
-                        //print_r($_SESSION);
-
-                        if((isset($_GET['input-search'])) && (!empty($_GET['input-search']))) // pole wyszukiwania
-                        {
-                            echo '<div id="content">';
-                            echo '<script> displayNav(); </script>';
                             echo '<div id="content-books">';
 
-                            $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
+                                displayBooks($_SESSION['kategoria']);
+                //                            if($_SESSION['kategoria'] == "Wszystkie")
+                //                            {
+                //                                displayBooks($_SESSION['kategoria']);
+                //                            }
+                                /* else // --> "Dla dzieci" , "Fantastyka", "Informatyka", ...
+                                 {
+                                     // print_r($_SESSION);
+                                     // query("SELECT id_ksiazki, image_url, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books",  $_SESSION['kategoria']);
+                                     query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);
 
-                            //print_r($search_value); echo "<br>";
+                                     // ($result = $polaczenie->query(sprintf("UPDATE klienci SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", mysqli_real_escape_string($polaczenie, $imie), mysqli_real_escape_string($polaczenie, $nazwisko), mysqli_real_escape_string($polaczenie, $miasto), mysqli_real_escape_string($polaczenie, $ulica), mysqli_real_escape_string($polaczenie, $numer_domu), mysqli_real_escape_string($polaczenie, $kod_pocztowy), mysqli_real_escape_string($polaczenie, $kod_miejscowosc), mysqli_real_escape_string($polaczenie, $wojewodztwo), mysqli_real_escape_string($polaczenie, $kraj), mysqli_real_escape_string($polaczenie, $pesel), mysqli_real_escape_string($polaczenie, $data_urodzenia), mysqli_real_escape_string($polaczenie, $telefon), mysqli_real_escape_string($polaczenie, $email), mysqli_real_escape_string($polaczenie, $login))))
+                                 } */
 
-                            unset($_SESSION["kategoria"]);
-                            $_SESSION["kategoria"] = "Wszystkie"; // ew. do zmiany w przyszłości
-
-                            //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);
-                            /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, kt.nazwa, sb.id_kategorii
-                                        ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);*/
-                            query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
-                                             kt.nazwa, sb.id_kategorii, 
-                                                au.imie, au.nazwisko 
-                                             FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
-                                             WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
-                                             AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii
-
+                            echo '</div>'; // #content-books;
+                        echo '</div>'; // #content;
+                    }
+                    /*elseif (
+                               ( isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria'])  )
+                            &&   isset($_GET['autor']) && !empty($_GET['autor'])
+                    )
+                    {
+                        echo '<div id="content"></div>'; // tymczasone wyświetlanie książek autora, po wpisaniu go w wyszukiwarce ;
+                            $autor = [$_GET['autor']];
+                            echo '<div id="content-books">';
+                                query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor); // do zmiany -> id subkategoii;
                             echo '</div>';
+                        echo '</div>';
+                    }*/
+                    else if (
+                                isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria']) // kategoria jest ustawiona zawsze (!);
+
+                                && ( ( isset($_GET['input-search']) && !empty($_GET['input-search']) ) ||      // wyszukiwanie z headera;
+                                     ( isset($_GET['input-search-nav']) && !empty($_GET['input-search-nav']) ) // lub wyszukanie z panelu bocznego;
+                                   )
+                    )
+                    {
+                        // jeśli wyszukano z header'a lub z panelu bocznego;
+
+                        // print_r($_SESSION);
+
+                        if( isset($_GET['input-search']) && !empty($_GET['input-search']) )
+                        {
+                            echo '<div id="content">';
+                                echo '<script> displayNav(); </script>';
+                                echo '<div id="content-books">';
+
+                                    $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
+
+                                    //print_r($search_value); echo "<br>";
+
+                                    unset($_SESSION["kategoria"]);
+                                    $_SESSION["kategoria"] = "Wszystkie"; // ew. do zmiany w przyszłości
+
+                                    //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);
+                                    /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, kt.nazwa, sb.id_kategorii
+                                                ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);*/
+                                    query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+                                                     kt.nazwa, sb.id_kategorii, 
+                                                        au.imie, au.nazwisko 
+                                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
+                                                     WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
+                                                     AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii;
+
+                                echo '</div>';
                             echo '</div>';
+
                         }
+
                         else if(isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"])) {
                             // wyszukiwanie tytuły z panelu <nav> (tytuł książki z danej kategorii - $_SESSION["kategoria"]);
 
@@ -559,7 +573,7 @@
                 ?>
 
             </main>
-        </div>
+        </div> <!-- #container -->
 
         <!-- <footer>
             <div id="footer">
@@ -572,7 +586,7 @@
 
         <?php require "../view/___footer.php"; ?>
 
-    </div>
+    </div> <!-- #main-container -->
 
 
 <?php

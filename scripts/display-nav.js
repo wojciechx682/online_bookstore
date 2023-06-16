@@ -12,6 +12,8 @@ function displayNav() {
 	// nav.css("width", "25%");
 	// content.css("width", "75%");
 
+	console.log("\n\nfunction displayNav - executed - line no. 15 \n\n");
+
 	const nav = document.querySelector("#nav");
 	const content = document.querySelector("#content");
 	const mcontent = document.querySelector("#main-content");
