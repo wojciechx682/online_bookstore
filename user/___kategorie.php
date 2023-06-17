@@ -120,7 +120,7 @@ include_once "../functions.php";
 
             </main>
 
-        </div>
+        </div> <!-- #container -->
 
             <!--<footer>
                 <div id="footer">
