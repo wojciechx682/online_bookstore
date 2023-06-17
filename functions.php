@@ -115,43 +115,49 @@
 	{
         // content -> wyświetla wszystkie książki
 
-		$i = 0;
+        echo '<div id="content">';
+            echo '<div id="content-books">';
 
-		while ($row = $result->fetch_assoc())
-		{
+            $i = 0;
 
-//		  	echo '<div id="book'.$i.'" class="book">';
-//			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
-//			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
-//			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';
-//			  	echo '<form action="add_to_cart.php" method="post">';
-//			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
-//			  		echo '<input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">';
-//			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
-//			  	echo '</form>';
-//		  	echo '</div>';
+            while ($row = $result->fetch_assoc())
+            {
 
-//            $book = '
-//                <div id="book%s" class="book">
-//                    <div class="title">%s</div><br>
-//                    <div class="price">%s</div><br>
-//                    <div class="year">%s</div><br>
-//                    <form action="add_to_cart.php" method="post">
-//                        <input type="hidden" name="id_ksiazki" value="%s">
-//                        <input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">
-//                        <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>
-//                    </form>
-//                </div>
-//            ';
+            //		  	echo '<div id="book'.$i.'" class="book">';
+            //			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
+            //			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
+            //			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';
+            //			  	echo '<form action="add_to_cart.php" method="post">';
+            //			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
+            //			  		echo '<input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">';
+            //			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
+            //			  	echo '</form>';
+            //		  	echo '</div>';
 
-            // load the content from the external template file into string
-            $book = file_get_contents("../template/content-books.php");
+            //            $book = '
+            //                <div id="book%s" class="book">
+            //                    <div class="title">%s</div><br>
+            //                    <div class="price">%s</div><br>
+            //                    <div class="year">%s</div><br>
+            //                    <form action="add_to_cart.php" method="post">
+            //                        <input type="hidden" name="id_ksiazki" value="%s">
+            //                        <input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">
+            //                        <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>
+            //                    </form>
+            //                </div>
+            //            ';
 
-            // replace fields in $book string to book data from $result, display result content as HTML
-            echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["id_ksiazki"]); // return zamiast echo ?
+                // load the content from the external template file into string
+                $book = file_get_contents("../template/content-books.php");
 
-		  	$i++;
-		}
+                // replace fields in $book string to book data from $result, display result content as HTML
+                echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["id_ksiazki"]); // return zamiast echo ?
+
+                $i++;
+            }
+
+            echo '</div>'; // #content-books;
+        echo '</div>'; // #content;
 
 		$result->free_result();
 	}
@@ -1063,11 +1069,11 @@ EOT;
         // alias dla funkcji query() -> index.php
         if($kategoria == "Wszystkie")
         {
-                                                                    //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
-            /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
-                    ks.kategoria,
-                    ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora", "get_books", "");/*
-                                                                    //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);*/
+                                    //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
+                                    /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
+                                    ks.kategoria,
+                                    ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora", "get_books", "");/*
+                                    //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);*/
 
             query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                                      kt.nazwa, sb.id_kategorii, 

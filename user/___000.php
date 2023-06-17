@@ -34,7 +34,10 @@ if(isset($_GET["login-error"])) {
 
 if( isset($_GET['kategoria']) && !empty($_GET['kategoria']) )
 {
-    // to się spełni, jeśli następiło wejście pod dowolna kategorię --> index.php?kategoria=Wszystkie;
+
+    echo '<script>console.log("\n38\n")</script>';
+
+    // to się spełni, jeśli następiło wejście pod dowolna kategorię --> index.php?kategoria=Horror;
     // chnage special characters to their HTML entities representation, and then the strip_tags() function is used to remove any HTML tags from the input. This helps prevent potential security vulnerabilities such as cross-site scripting (XSS) attacks;
     /*echo "<script>console.log('37');</script>";*/
     $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
@@ -53,7 +56,8 @@ if( isset($_GET['kategoria']) && !empty($_GET['kategoria']) )
 }*/
 elseif(!isset($_GET["kategoria"]))
 {
-    //echo "<script>console.log('54');</script>";
+    echo '<script>console.log("\n59 - kategoria nie była w parametrze GET\n")</script>';
+
     $_SESSION["kategoria"] = "Wszystkie";
 }
 
@@ -70,7 +74,7 @@ if(isset($_POST["adv-search-category"]))
 
 if(isset($_GET["input-search"]))
 {
-    /*echo "<script>console.log('54');</script>";*/
+    echo "<script>console.log('\n77\n');</script>";
     $_SESSION["kategoria"] = "Wszystkie";
 }
 
@@ -152,19 +156,44 @@ if(isset($_GET["input-search"]))
 
             <?php
 
-            print_r($_SESSION);
+            //print_r($_SESSION);
 
-            if( isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria'])  // kategoria jest ustawiona zawsze (!);
-                && !isset($_GET['input-search']) // nie było próby wyszukania książki;
-            )   // && (!(isset($_GET['autor'])) || (empty($_GET['autor'])))
-            {   // index.php?kategoria=Wszystkie;
+            if( isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria'])
+                && !isset($_GET['input-search'])
+            )  // TEN WARUNEK BĘDZIE TRZEBA ROZBUDOWAĆ O ZMIENNE IS  NOT SET ... COŚ TAM !
+            {
+                // Kiedy następuje tutaj wejście ?
+                // jeśli wejdziemy pod -->
+
+                // ✓ -> "Strona główna";
+                // ✓ -> "Kategorie -> Wszystkie";
+                //                  -> Horror    ;
+                //    -> Wyszukwanie zaawansowane (działa dla podania tylko kategorii !  tutaj są problemy !);
+
+
+                // kategoria jest ustawiona zawsze (!);
+                // nie było próby wyszukania książki;
+
+                echo '<script>console.log(" ✓ kategoria \n\n 164")</script>';
+
+                echo "<br><hr><br>";
+                echo "\n 168 -> \n";
+                print_r($_SESSION);
+                echo "\n <- 168 \n";
+                echo "<br><hr><br>";
+
+                // && (!(isset($_GET['autor'])) || (empty($_GET['autor'])))
+                // index.php?kategoria=Wszystkie;
                 // <a href="index.php?kategoria=Wszystkie">Wszystkie</a>;
+
                 echo '<div id="content">';
-                echo '<script> displayNav(); </script>'; // ?????????????????????;
+                //echo '<script> console.log("170 --> \n\n"); displayNav(); </script>'; // odpala funkcję ale nie widać zmian z nav'em;
+
                 // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; <script>alert("hahaha");</script>;
-                // $kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
-                // $kategoria = strip_tags($kategoria);
-                // $_SESSION['kategoria'] = $kategoria; // wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?)
+                // $kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8"); // do usunięcia;
+                // $kategoria = strip_tags($kategoria); // do usunięcia
+                // $_SESSION['kategoria'] = $kategoria; // do usunięcia
+                // ~ (?) wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?); // (?);
 
                 echo '<div id="content-books">';
 
@@ -205,6 +234,8 @@ if(isset($_GET["input-search"]))
                 )
             )
             {
+                echo '<script>console.log(" ✓ kategoria \n\n 236")</script>';
+
                 // jeśli wyszukano z header'a lub z panelu bocznego;
 
                 // print_r($_SESSION);
@@ -219,12 +250,13 @@ if(isset($_GET["input-search"]))
 
                     //print_r($search_value); echo "<br>";
 
-                    unset($_SESSION["kategoria"]);
-                    $_SESSION["kategoria"] = "Wszystkie"; // ew. do zmiany w przyszłości
+                    //unset($_SESSION["kategoria"]);
+                    //$_SESSION["kategoria"] = "Wszystkie"; // ew. do zmiany w przyszłości
 
                     //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);
                     /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, kt.nazwa, sb.id_kategorii
                                 ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);*/
+
                     query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                                                      kt.nazwa, sb.id_kategorii, 
                                                         au.imie, au.nazwisko 
@@ -492,12 +524,12 @@ if(isset($_GET["input-search"]))
                 ////                                    echo '<script>window.location.href="index.php";</script>';/
                 //                                    //exit();//
                 //                                }
-                if (isset($_POST["adv-search-author"]) && !empty($_POST["adv-search-author"])) {
+                if ( isset($_POST["adv-search-author"]) && !empty($_POST["adv-search-author"]) ) {
                     $author = filter_input(INPUT_POST, "adv-search-author", FILTER_VALIDATE_INT);
-                    /*if (!$author || !is_numeric($_POST["adv-search-author"])) {
+                    /* if (!$author || !is_numeric($_POST["adv-search-author"])) {
                         // Handle invalid input (e.g. display an error message)
                         $_SESSION["advanced-search-error"] = "Podaj poprawne dane";
-                    }*/
+                    } */
                 }
                 //echo "<br> autor 438 --> ".$author; exit();
                 //                                if(isset($_SESSION["advanced-search-error"]) && !empty($_SESSION["advanced-search-error"])) {
@@ -509,7 +541,7 @@ if(isset($_GET["input-search"]))
                 $where = array();
                 $values = array();
 
-                // Check if the user provided a book title
+                // Check if the user provided a book title;
                 if (!empty($_POST['adv-search-title'])) {
                     // Add a condition for the book title
                     //$where[] = "ks.tytul LIKE '%" . $_POST['adv-search-title'] . "%'";
