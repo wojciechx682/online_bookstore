@@ -34,10 +34,9 @@
 
     if( isset($_GET['kategoria']) && !empty($_GET['kategoria']) ) // if variable EXISTS and has a NON-EMPTY value;
     {
-
-        echo '<script>console.log("\n38 - isset GET kategoria == true\n")</script>';
-
-        $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8");
+        // przypadek wejśia w dowolną kategorię z górnego panelu;
+            //echo '<script>console.log("\n38 - isset GET kategoria == true\n")</script>';
+        $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8"); // "Wszystkie", "Informatyka", "Horror"
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
     }
     /*elseif(isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria']) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
@@ -51,17 +50,18 @@
     }*/
     elseif( ! isset($_GET["kategoria"]) && ! isset($_GET["input-search-nav"]) )
     {
-        echo '<script>console.log("\n59 - kategoria nie była w parametrze GET\n")</script>';
+        //echo '<script>console.log("\n59 - kategoria nie była w parametrze GET\n")</script>'; // Strona główna, , Input-search
 
         $_SESSION["kategoria"] = "Wszystkie";
     }
 
     // od teraz kategoria jest ZAWSZE ustawiona;
 
-        if(isset($_POST["adv-search-category"]))
+        if( isset($_POST["adv-search-category"]) )
         {
-            // to się spełni, jeśli nastąpił submit z wyszukiwania-zaawansowanego;
-            /*echo "<script>console.log('49');</script>";*/
+            // to się spełni, jeśli nastąpił submit z wyszukiwania-zaawansowanego; - zmienna $_SESSION["kategoria"] przejmie wartość z tego formularza;
+
+            echo "<script>console.log('65 - kategoria była ustawiona w wyszukiwaniu zaawansowanym (użyto wyszukiwania zaawansowanego)');</script>";
             $_SESSION["kategoria"] = htmlentities($_POST['adv-search-category'], ENT_QUOTES, "UTF-8");
             $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
         }
@@ -140,16 +140,14 @@
                             <label for="input-search-nav">
                                 <h3>Tytyuł</h3>
                             </label>
-                                <!-- (szukaj tytułu w tej kategorii) -->
-                                <!-- <div id="div-search">-->
-                            <form action="___index2.php" method="get">
+                            <form action="___index2.php" method="get"> <!-- (szukaj tytułu w tej kategorii) -->
                                 <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
                                 <input type="submit" value="">
                             </form>
                         </div>
 
                         <?php
-                            query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // lista <ul> autorów
+                            query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // <ul> authors list;
                         ?>
 
                         <button id="filter-authors">Zastosuj</button>
@@ -165,6 +163,7 @@
                     echo "SESSION ->"; print_r($_SESSION); echo "<hr>"
 
                     // nie ma sensu sprawdzać czy kategoria jest ustawiona, ponieważ zawsze jest (w zmiennej $_SESSION['kat']);
+                        // (z wyjątkiem gdy wprowadzono tytuł w input-search-nav);
 
                 ?>
 
@@ -179,12 +178,17 @@
                             isset($_GET["input-search"])
                     ) {
 
+                        // ✓ kategoria nie była w parametrze GET, więc przyjmie wartość "Wszystkie" - linia 52;
+
                         if( ! empty($_GET["input-search"]) ) {
 
-                            echo "180 input-seach -> " . $_GET["input-search"] . "<br>";
+                            //echo "180 input-seach -> " . $_GET["input-search"] . "<br>";
                             // echo '<script> displayNav(); </script>'; // do usunięcia - to funkcja tutaj NIC NIE ROBI ale zostawiam jakby coś;
                             // input-search sanitization;
                             $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
+
+                            echo " 180 input-seach (sanitized) -> " . $search_value . "<br>";
+
                             // ew warunek jeśli jest różne od oryginalnej wartości wejściowej -> wyświetlić komunikat "podaj poprawne dane";
                             query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                                                      kt.nazwa, sb.id_kategorii, 
@@ -195,10 +199,11 @@
                         } else { // puste pole wyszukiwania;
 
                             echo '<h3>Brak wyników</h3>'; // (!) ewentualnie można to zrobić wewnątrz funkcji query (?);
-
                         }
                     }
                     elseif ( isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]) ) {
+
+                        // ✓ tutaj zmienna sesyjna "kategoria" przyjmuje wartość "Wszystkie" lub dowolną inną kategorią z istniejących - ponieważ wsześniej zostaje ustawiona;
 
                         echo "198 input-seach-nav -> " . $_GET["input-search-nav"] . "<br>";
 
@@ -222,14 +227,14 @@
                                                    
                                                  AND ks.tytul LIKE '%%%s%%'";
 
-                        if($_SESSION["kategoria"] != "Wszystkie") {
+                        if($_SESSION["kategoria"] != "Wszystkie") { // kategoria zawsze jest ustawiona wsześniej, przyjmuje wartość "Wszystkie" lub dowolną inną z istniejących;
 
                             // jeśli kategoria to np. "Informatyka", "Horror", "Fantastyka";
 
                             $where = array(); // [] ?
-                            //$where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
+                                //$where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
                             $where[] = " AND kt.nazwa LIKE '%%%s%%'"; //%%%s%% // "Informatyka", "Horror", "Fantastyka";
-                            $values[] = $_SESSION['kategoria']; // dodanie do tablicy argumentów zmiennej kategoria - do użycia w funkcji query(); // od teraz values = ["input-search-nav", "kategoria"];
+                            $values[] = $_SESSION['kategoria']; // dodanie do tablicy argumentów zmiennej kategoria - do użycia w funkcji query(); // od teraz values = ["input-search-nav" (tytul), "kategoria"];
                         }
 
                         if (!empty($where)) { // dodanie do zapytania warunku  w którym kategoria to ->  "Informatyka", "Horror", "Fantastyka";
@@ -247,14 +252,9 @@
                     // wyszukiwanie zaawansowane - advanced search result (POST);
 
                     else if ( isset($_POST["year-min"]) && !empty($_POST["year-min"]) &&
-                              isset($_POST["year-max"]) && !empty($_POST["year-max"]) &&
-                              !isset($_GET["kategoria"])
+                              isset($_POST["year-max"]) && !empty($_POST["year-max"])
 
                     ) {
-                        // !isset($_GET["kategoria"]) - w warunku (???????????);
-
-
-
                         // set up the initial query string
                             // $query = "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki";
                         $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, 
@@ -308,7 +308,7 @@
                         // check if the user selected a category
                         if ($_POST['adv-search-category'] != 'Wszystkie') {
                             // Add a condition for the category
-                            //$where[] = "ks.kategoria = '" . $_POST['adv-search-category'] . "'";
+                                //$where[] = "ks.kategoria = '" . $_POST['adv-search-category'] . "'"; // do usunięcia - ponieważ zmiena POST może mieć wartość "Wszystkie" - a takiej nazwy nie ma w tabeli "kategorie" !
                             $where[] = "kt.nazwa = '%s'";
                             $values[] = $_POST['adv-search-category']; // values += ["kategoria"];
 
@@ -323,7 +323,7 @@
                             $values[] = $_POST['adv-search-author'];
                         }
 
-                        // Check if the user provided a minimum year
+                        // check if the user provided a minimum year
                         if (!empty($_POST['year-min'])) {
                             // Add a condition for the minimum year
                             //$where[] = "ks.rok_wydania >= " . $_POST['year-min'];
@@ -331,7 +331,7 @@
                             $values[] = $_POST['year-min'];
                         }
 
-                        // Check if the user provided a maximum year
+                        // check if the user provided a maximum year
                         if (!empty($_POST['year-max'])) {
                             // Add a condition for the maximum year
                             //$where[] = "ks.rok_wydania <= " . $_POST['year-max'];

@@ -25,10 +25,11 @@
                                       the code inside the file before redirecting. */
                         }
 
-	function advanced_search($result)
+	/*function advanced_search($result)
 	{
+        // - .../index2.php
 		get_books($result);
-	}
+	}*/
 
     function get_authors($result)
     {
