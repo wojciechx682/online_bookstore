@@ -4,7 +4,7 @@
 
 	include_once "../functions.php";
 
-	// Do czego służy ten plik ? Zmienić jego nazwę na change password ?
+	// Do czego służy ten plik ? Z̶m̶i̶e̶n̶i̶ć̶ ̶j̶e̶g̶o̶ ̶n̶a̶z̶w̶ę̶ ̶n̶a̶ ̶c̶h̶a̶n̶g̶e̶ ̶p̶a̶s̶s̶w̶o̶r̶d̶ ?
 
 	// jesli wszystkie pola sa ustawione i nie sa puste
 
@@ -42,15 +42,16 @@
 
 		$_SESSION['validation_password'] = true;
 
-        $id = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT);
+        $id = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT); // id_klienta;
 
-		query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verify_password", $id); // ta funkcja ustawia zmienna sesyjna $_SESSION['stare_haslo'] ktora przechowuje haslo (hash hasła) z BD // CZY TO BEZPIECZNE ABY ZMIENNA SESYJNA PRZECHOWYWALA ZAHASHOWANE HASLO ?
+		query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verify_password", $id); // ta funkcja ustawia zmienna sesyjna $_SESSION['stare_haslo'] - ktora przechowuje haslo (hash hasła) z BD - klienta który chce zmienić swoje hasło;
+        //CZY TO BEZPIECZNE ABY ZMIENNA SESYJNA PRZECHOWYWALA ZAHASHOWANE HASLO - no tak ... oczywiście że tak - ponieważ hasło jest zahashowane...;
 
 		if(password_verify($stare_haslo, $_SESSION['stare_haslo'])) // czy haslo z inputa (bez hasha) jest równe haśle w bazie danych (zahashowane)
 		{
-            $pass_regex = '/^((?=.*[!@#$%^_&*-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
+            $pass_regex = '/^((?=.*[!@#$%^_&*-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/ ;
 
-            if(!(preg_match($pass_regex, $nowe_haslo)))
+            if( ! (preg_match($pass_regex, $nowe_haslo)) ) // ✓ testowane;
             {
                 $_SESSION['validation_password'] = false;
                 $_SESSION['error_form_password'] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&*-\/\?)";
@@ -62,29 +63,29 @@
 //                $_SESSION['error_form_password'] = "Hasło musi posiadać conajmniej 5 znaków";
 //            }
 
-            if((strlen($nowe_haslo)<5))
+            if( (strlen($nowe_haslo)<5) ) // ✖ ten warunek się nigdy nie spełni ponieważ wyżej w kodzie używam wyrażenia regularnego które żąda conajmniej 10 znaków;
 			{
 				$_SESSION['validation_password'] = false;
 				$_SESSION['error_form_password'] = "Hasło musi posiadać conajmniej 5 znaków";
 			}
 
-			if($nowe_haslo != $powtorz_haslo) // sprawdzenie czy oba hasła są identyczne
+			if($nowe_haslo != $powtorz_haslo) // sprawdzenie czy oba hasła są identyczne; // ✓ testowane;
 			{
 				$_SESSION['validation_password'] = false;			
 				$_SESSION['error_form_password'] = "Podane hasła nie są identyczne";			
 			}		
 			else // hasla są te same (nowe i powtórzone)
 			{
-				if($stare_haslo == $nowe_haslo)
+				if($stare_haslo == $nowe_haslo) // ✓ testowane;
 				{
 					$_SESSION['validation_password'] = false;			
 					$_SESSION['error_form_password'] = "Podaj hasło które różni się od aktualnego";		
 				}
 			}
 
-			if($_SESSION['validation_password']) // jeśli wszystko jest dobrze
+			if( $_SESSION['validation_password'] ) // jeśli wszystko jest dobrze; hasło przeszło wymagania co do długości, znaków specjalnych itp ...;
 			{
-				// zmien haslo na nowe (zahashowane)
+				// zmien haslo na nowe (zahashowane);
 
 				$new_password = password_hash($nowe_haslo, PASSWORD_DEFAULT);				
 
@@ -98,7 +99,7 @@
 			header('Location: ___account.php');
             exit();
 		}
-		else // hasla sa rozne (stare_haslo i haslo z BD)
+		else // hasla sa rozne (stare_haslo i haslo z BD); // Podano niepoprawne hasło do konta;
 		{		
 			$_SESSION['validation_password'] = false;
 			$_SESSION['error_form_password'] = "Złe hasło";		
@@ -107,12 +108,13 @@
             exit();
 		}
 	}
-	else // nie wypełniono wszystkich pól
-	{
+	else // nie było danych w żądaniu POST lub były one puste;
+	{    // nie wypełniono wszystkich pól
 		$_SESSION['validation_password'] = false;
 		$_SESSION['error_form_password'] = "Uzupełnij wszystkie pola";
 
 		header('Location: ___account.php');
         exit();
 	}
+
 ?>

@@ -44,3 +44,35 @@
 
 
 </head>
+
+------------------------------------------------------------------------------------------------------------------------
+
+problemy implementacyjne -->
+
+1.
+funkcja log_in() -->
+
+//$_SESSION['koszyk_ilosc_ksiazek'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
+//$_SESSION['test123'] = test_fun();
+//$id_klienta = $_SESSION['id'];
+//$_SESSION['test123'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
+
+nie da sie przypisać wartości zwrotnej funkcji do zmiennej, ponieważ funkcja query nigdy nic nie zwraca;
+
+
+2.
+
+- można było by przesyłać poufne dane (takie jak hasła) od razu w postaci zahashowanej - zamiast text/plain w zapytaniach POST
+  - ale czy jest to konieczne ? Trzeba było by się nad tym pochylić;
+
+------------------------------------------------------------------------------------------------------------------------
+
+tabela klienci - adres (rejestracja) - BAZA DANYCH ->
+
+- usunięcie klienta NIE POWODUJE usunięcia wpisu w tabeli "adres";
+natomiast
+- ✓ usunięcie adresu (wiersza) powoduje usunięcie przypisanego do niego klienta ✓; (a pracownika też ? - nie wiem nie sprawdzałem);
+
+------------------------------------------------------------------------------------------------------------------------
+
+BD -> nie przechowuje już informacji o "Województwie", "Kraju", "PESELu" - !!! - usunąć te pola z bazy danych ?

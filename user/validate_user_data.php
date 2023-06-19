@@ -4,8 +4,16 @@
 
 	include_once "../functions.php";
 
-	if(((isset($_POST['imie_edit'])) && (isset($_POST['nazwisko_edit'])) && (isset($_POST['email_edit'])) && (isset($_POST['telefon_edit']))) && ((($_POST['imie_edit']) != ($_SESSION['imie'])) || (($_POST['nazwisko_edit']) != ($_SESSION['nazwisko'])) || (($_POST['email_edit']) != ($_SESSION['email'])) || (($_POST['telefon_edit']) != ($_SESSION['telefon']))))
-	{
+    if(
+        ( isset($_POST['imie_edit']) && isset($_POST['nazwisko_edit']) && isset($_POST['email_edit']) && isset($_POST['telefon_edit'] ) )
+        && (
+            ($_POST['imie_edit'] != $_SESSION['imie']) || ($_POST['nazwisko_edit'] != $_SESSION['nazwisko']) || ($_POST['email_edit'] != $_SESSION['email']) || ($_POST['telefon_edit'] != $_SESSION['telefon'])
+        )
+    )
+    {   // Edycja danych użytkownika -> Imię, Nazwisko, E-mail, Telefon;
+
+        // jeśli podano dane (POST), i są one różne od tych które były aktualnie ustawione (w Sesji); (✓✓✓ a mówiąc super-dokładnie - to przynajmniej JEDEN input ma inną wartość niż ta co była w sesji - tzn. wprowadzono conajmniej jedną inną wartość - a więc chcemy edytować tą zmienną)
+
         $imie = filter_input(INPUT_POST, "imie_edit", FILTER_SANITIZE_STRING);
         $nazwisko = filter_input(INPUT_POST, "nazwisko_edit", FILTER_SANITIZE_STRING);
 		$email = $_POST['email_edit']; // filter_var SANITIZE_EMAIL + validate email
@@ -35,45 +43,45 @@
 
         $name_regex = '/^[A-ZŁŚŻ]{1}[a-ząęółśżźćń]+$/u';
 
-        if(!(preg_match($name_regex, $imie)))
+        if( ! (preg_match($name_regex, $imie)) )
         {
             $validation = false;
-            $_SESSION['error_form'] = "Podaj poprawne dane";
+            $_SESSION['error_form'] = "Podaj poprawne imię";
         }
-        if(!(preg_match($name_regex, $nazwisko)))
+        if( ! (preg_match($name_regex, $nazwisko)) )
         {
             $validation = false;
-            $_SESSION['error_form'] = "Podaj poprawne dane";
+            $_SESSION['error_form'] = "Podaj poprawne nazwisko";
         }
 
-		if((is_numeric($imie)) || (is_numeric($nazwisko)))  
+		if( (is_numeric($imie)) || (is_numeric($nazwisko)) )
 		{
 			$validation = false;
 			$_SESSION['error_form'] = "Podaj poprawne dane";		
 		}					
 
-		if((preg_match('/[0-9]/', $imie)) || (preg_match('/[0-9]/', $nazwisko)))
+		if( (preg_match('/[0-9]/', $imie)) || (preg_match('/[0-9]/', $nazwisko)) )
 		{
 			$validation = false;
 			$_SESSION['error_form'] = "Podaj poprawne dane";		
 		}
 
-		$email_sanitized = filter_var($email, FILTER_SANITIZE_EMAIL); // Sanityzacja email
+		$email_sanitized = filter_var($email, FILTER_SANITIZE_EMAIL); // sanityzacja email => <script>alert();</script>
 
-		if(!filter_var($email_sanitized, FILTER_VALIDATE_EMAIL) || ($email_sanitized != $email)) // email nie przeszedł walidacji
+		if( ! filter_var($email_sanitized, FILTER_VALIDATE_EMAIL) || ($email_sanitized != $email)) // email nie przeszedł walidacji;
 		{						
 			$validation = false;
 			$_SESSION['error_form'] = "Podaj poprawny adres e-mail";
 		}
-		else // musimy sprawdzić, czy taki email nie jest już zajęty
+		else // email przeszedł walidację,  musimy sprawdzić, czy taki email nie jest już zajęty;
 		{
-			if($email_sanitized != $_SESSION['email']) // czy jest różny od tego co było w polu formularza
+			if($email_sanitized != $_SESSION['email']) // czy jest różny od tego co było w polu formularza;
 			{
 				$_SESSION['email_exists'] = false;
 
-				query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_sanitized); // to przełączy zmienną $_SESSION['email_exists'], jeśli taki email będzie istnieć
+				query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_sanitized); // to przełączy zmienną $_SESSION['email_exists'] na true, jeśli taki email będzie istnieć;
 
-				if(isset($_SESSION['email_exists']) && $_SESSION["email_exists"])
+				if( isset($_SESSION['email_exists']) && $_SESSION["email_exists"]) // <-- działa, testowałem :)
 				{
 					$validation = false;
 					$_SESSION['error_form'] = "E-mail zajęty";
@@ -81,19 +89,19 @@
 			}
 		}			
 
-		if(!(is_numeric($telefon)))
+		if ( ! is_numeric($telefon) )
 		{
 			$validation = false;
-			$_SESSION['error_form'] = "Podaj poprawne dane";
+			$_SESSION['error_form'] = "Podaj poprawny telefon";
 		}
 
-		if((strlen($telefon)>15))
+		if ( strlen($telefon) > 15 )
 		{
 			$validation = false;
-			$_SESSION['error_form'] = "Podaj poprawne dane";		
+			$_SESSION['error_form'] = "Podaj poprawne telefon";
 		}
 		
-		if($validation)
+		if( $validation )
 		{
 //			$values = array();
 //			array_push($values, $imie);
@@ -102,8 +110,7 @@
 //			array_push($values, $telefon);
 //			array_push($values, $_SESSION["id"]);
 
-            $id = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT);
-
+            $id = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT); // id_klienta;
 
             $user_data = [$imie, $nazwisko, $email, $telefon, $id];
 
@@ -113,10 +120,10 @@
 
 			$_SESSION['validation_passed'] = true;
 
-			$_SESSION['imie'] = $_POST['imie_edit'];
-			$_SESSION['nazwisko'] = $_POST['nazwisko_edit'];
-			$_SESSION['email'] = $_POST['email_edit'];
-			$_SESSION['telefon'] = $_POST['telefon_edit'];
+			$_SESSION['imie'] = $imie;
+			$_SESSION['nazwisko'] = $nazwisko;
+			$_SESSION['email'] = $email;
+			$_SESSION['telefon'] = $telefon;
 
 			unset($_POST['imie_edit']);
 			unset($_POST['nazwisko_edit']);
@@ -125,16 +132,21 @@
 			unset($_SESSION['error_form']);
 
 			header('Location: ___account.php');
+            exit();
 		}
-		else
+		else // dane nie przeszły walidacji;
 		{
-			//echo '<script> alert("Niepoprawne dane") </script>';
+			    //echo '<script> alert("Niepoprawne dane") </script>';
 			header('Location: ___account.php');
+            exit();
 		}
 	}
-	else
+	else // nie było danych w żądaniu POST lub były one te same co już istniejące w Sesji;
 	{
-		//echo '<script> alert("Uzupełnij wszystkie pola") </script>'; 
+		    // echo '<script> alert("Uzupełnij wszystkie pola") </script>';
+
+        $_SESSION['error_form'] = "Podaj dane które różnią się od istniejących";
 		header('Location: ___account.php');
+        exit();
 	}
 ?>

@@ -78,17 +78,6 @@
 
 <?php require "../view/___head.php"; ?>
 
-<style>
-    /*#content {
-        background-color: lightblue !important;
-    }
-
-    #content-books {
-        background-color: lightgreen !important;
-    }*/
-
-</style>
-
 <body>
 
     <div id="main-container">
@@ -396,15 +385,6 @@
 
         </div> <!-- #container -->
 
-        <!-- <footer>
-            <div id="footer">
-                <script src="../scripts/set-theme.js"></script>
-                <pre>
-                    <button id="white" onclick="setWhiteTheme()">white</button>  <button id="black" onclick="setBlackTheme()">black</button>  © 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us
-                </pre>
-            </div>
-        </footer> -->
-
         <?php require "../view/___footer.php"; ?>
 
     </div> <!-- #main-container -->
@@ -425,17 +405,11 @@
 
         if (selectedValue && selectElement) {
             selectElement.value = selectedValue;
-            <?php
-                /*if(isset($_GET['kategoria'])) {
-                    echo 'sortBooks();';
-                }*/
-            ?>
+
+            sortBooks();
+
         }
     });
-
-    // nav-bar -->
-    /*let slider = document.querySelector(".noUi-origin");
-    console.log("\n\n slider--> ", slider);*/
 
 </script>
 

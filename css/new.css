@@ -2477,11 +2477,6 @@ form#register-form input:not([type="checkbox"])
     outline: none;
     /*margin-top: 10px;*/
 
-
-
-
-
-
 }
 
 form#register-form input:not([type="checkbox"]):hover {
@@ -2491,12 +2486,7 @@ form#register-form input:not([type="checkbox"]):hover {
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
 }
 
-
-
 form#register-form input[type="submit"]:hover {
-
-
-
 
     box-sizing: border-box;
 
@@ -2515,27 +2505,37 @@ form#register-form input[type="submit"]:hover {
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
 
-
-
 }
 
 form#register-form label {
     cursor: pointer;
 
-
 }
 
 form#register-form input[type="submit"] {
     width: 15%;
-
-
 }
 
 
 form#register-form input[type="checkbox"] {
     margin-right: 15px;
+}
 
+hr.register-form-hr-line {
 
+    background-color: rgba(166, 166, 166, 0.7);
+    border: none;
+    height: 1px;
+    margin: 15px 0px 15px 0px;
+    /*max-width: 255px;*/
+}
+
+div.g-recaptcha {
+    margin-top: 18px;
+}
+
+form#register-form input[type="submit"] {
+    margin-top: 18px;
 }
 
 .form-section { /* alredy exists in main.css */
@@ -2651,6 +2651,12 @@ span.login-row {
     /*color: red;*/
 }
 
+div#content form#login-form div.login-form-section label:hover
+{
+    cursor: pointer;
+}
+
+
 .login-form-section {
     /*background-color: #cbcbcb;*/
 
@@ -2696,6 +2702,14 @@ form#login-form input[type="submit"] {
 
 .login-form-section input:not([type="submit"]) {
     float: right;
+}
+
+/* linki "Przypomnij hasło", ... */
+
+a.a-login-page-link {
+    display: block;
+    margin: 18px 0 18px 0;
+    width: 280px;
 }
 
 
@@ -3205,7 +3219,7 @@ h3#order-summary-header + p {
     border-radius: 5px;
     /* font-size: 20px; */
     font-weight: bold;
-    padding: 4px;
+    padding: 6px;
     box-sizing: border-box;
     outline: none;
     margin-top: 3px;
@@ -3218,6 +3232,49 @@ h3#order-summary-header + p {
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
 }
+
+div#container > main > aside.account-data > div#nav a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+div#container > main > aside.account-data > div#nav a:hover {
+    text-decoration: underline;
+}
+
+div#container > main > aside.account-data > div#nav a h3 {
+    margin-top: 0px;
+    margin-bottom: 0;
+
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    user-select: none;
+}
+
+div#container > main > aside.account-data > div#nav a h3:hover {
+    background-color: #e5e5e5;
+}
+
+div#container > main > aside.account-data > div#nav a h3 + hr {
+    /*background-color: rgba(166, 166, 166, 0.7);*/
+    background-color: rgba(166, 166, 166, 0.53);
+    border: none;
+    height: 1px;
+    margin: 5px 15px 5px 15px;
+    /*max-width: 255px;*/
+}
+
+div#container > main aside.account-data > div#nav {
+    padding-top: 12px !important;
+    padding-right: 0px !important;
+    padding-bottom: 0px !important;
+    padding-left: 0px !important;
+}
+
+
 
 /* remove_account.php -->    --------------------------------------------------------------- */
 

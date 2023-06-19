@@ -75,7 +75,7 @@ include_once "../functions.php";
                         </div>
 
                         <?php
-                            query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // <ul> authors list;
+                        query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // <ul> authors list;
                         ?>
 
                         <button id="filter-authors">Zastosuj</button>
@@ -122,19 +122,33 @@ include_once "../functions.php";
 
         </div> <!-- #container -->
 
-            <!--<footer>
-                <div id="footer">
-                    <script src="../scripts/set-theme.js"></script>
-
-                    <pre>
-                        <button id="white" onclick="setWhiteTheme()">white</button>  <button id="black" onclick="setBlackTheme()">black</button>  © 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us
-                    </pre>
-                </div>
-            </footer>-->
-
             <?php require "../view/___footer.php"; ?>
 
-    </div>
+    </div> <!-- #main-container -->
+
+<script>
+
+    // save selected sorting option after page reload;
+
+    var selectElement = document.getElementById("sortuj_wg");
+
+    selectElement.addEventListener("change", function() {
+        var selectedValue = selectElement.value;
+        localStorage.setItem("selectedValue", selectedValue);
+    });
+
+    window.addEventListener("load", function() {
+        var selectedValue = localStorage.getItem("selectedValue");
+
+        if (selectedValue && selectElement) {
+            selectElement.value = selectedValue;
+
+            sortBooks();
+
+        }
+    });
+
+</script>
 
 </body>
 </html>

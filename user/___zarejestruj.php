@@ -10,6 +10,13 @@
 
 <?php require "../view/___head.php"; ?>
 
+<style>
+    div.error {
+        color: red !important;
+        font-weight: bold;
+    }
+</style>
+
 <body>
 
 <div id="main-container">
@@ -20,15 +27,13 @@
 
         <main>
 
-            <!-- <div id="nav"></div> -->
-
             <div id="content">
 
                 <!-- Formularz rejestracji -->
 
                 <form method="post" action="rejestracja.php" id="register-form">
 
-                    Stwórz nowe konto klienta<br><hr>
+                    Stwórz nowe konto klienta<hr class="register-form-hr-line">
 
                     <div class="form-section">
 
@@ -66,7 +71,7 @@
                                 } ?>">
 
                                 <?php
-                                    if(isset($_SESSION['e_nazwisko'])) // błąd z naziwskiem użytkownika
+                                    if(isset($_SESSION['e_nazwisko'])) // błąd z nazwiskiem użytkownika
                                     {
                                         echo '<div class="error">'.$_SESSION['e_nazwisko'].'</div>';
                                         unset($_SESSION['e_nazwisko']);
@@ -76,7 +81,6 @@
                         </span>
 
                         <span class="row">
-                            <!-- type="email" -->
                             <label>
                                 E-mail: <input type="email" name="email" required value="<?php
                                 if(isset($_SESSION['fr_email']))
@@ -97,23 +101,6 @@
                                 ?>
                             </label>
                         </span>
-
-                        <!-- Nickname: <br> <input type="text" name="nick" value="<?php /*
-                            if(isset($_SESSION['fr_nick']))
-                            {
-                                echo $_SESSION['fr_nick'];
-                                unset($_SESSION['fr_nick']);
-                            }
-                        */ ?>"> <br> -->
-
-                        <?php
-                            /*if(isset($_SESSION['e_nick'])) // błąd z nickiem użytkownika ...
-                            {
-                                echo '<div class="error">'.$_SESSION['e_nick'].'</div>';
-                                unset($_SESSION['e_nick']);
-                            } */
-                        ?>
-
 
                         <span class="row">
                             <label>
@@ -138,12 +125,9 @@
                             </label>
                         </span>
 
-                        <!-- <br> <hr> -->
                     </div>
 
-                    <div class="form-section">
-                        <!--Dane adresowe <br><br>-->
-
+                    <div class="form-section"> <!-- Dane adresowe -->
 
                         <span class="row">
                             <label>
@@ -214,8 +198,6 @@
                                 ?>
                             </label>
                         </span>
-
-                        <!-- <br>  <hr> <br> -->
 
                     </div>
 
@@ -355,14 +337,11 @@
                             </label>
                         </span>
 
-                        <!-- <hr> -->
-
                     </div>
-                    <div style="clear: both;"></div>
 
-                    <hr>
+                        <div style="clear: both;"></div>
 
-                    <!--<span class="row">-->
+                    <hr class="register-form-hr-line">
 
                         <label>
                             <input type="checkbox" name="regulamin" <?php
@@ -381,62 +360,36 @@
                         </label>
 
                         <?php
-                        if(isset($_SESSION['e_regulamin'])) // błąd z akceptacją regulaminu (checkbox) ...
-                        {
-                            echo '<div class="error">'.$_SESSION['e_regulamin'].'</div>';
-                            unset($_SESSION['e_regulamin']);
-                        }
+                            if(isset($_SESSION['e_regulamin'])) // błąd z akceptacją regulaminu (checkbox);
+                            {
+                                echo '<div class="error">'.$_SESSION['e_regulamin'].'</div>';
+                                unset($_SESSION['e_regulamin']);
+                            }
                         ?>
 
-                    <!--</span>-->
-
-                    <br><br>
 
                     <div class="g-recaptcha" data-sitekey="6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1"></div>
 
                     <?php
-                    if(isset($_SESSION['e_bot'])) // błąd z re'captcha
-                    {
-                        echo '<div class="error">'.$_SESSION['e_bot'].'</div>';
-                        unset($_SESSION['e_bot']);
-                    }
+                        if(isset($_SESSION['e_bot'])) // błąd z reCaptcha;
+                        {
+                            echo '<div class="error">'.$_SESSION['e_bot'].'</div>';
+                            unset($_SESSION['e_bot']);
+                        }
                     ?>
 
-                    <br>
-                    <input type="submit" value="Zarejestruj się" >
+
+                    <input type="submit" value="Zarejestruj się">
 
                     <?php
-                    if(isset($_SESSION['e_fields'])) // nie wypełniono wszystkich pol
+                    if(isset($_SESSION['e_fields'])) // nie wypełniono wszystkich pol;
                     {
                         echo '<div class="error">'.$_SESSION['e_fields'].'</div>';
                         unset($_SESSION['e_fields']);
                     }
                     ?>
 
-                    <!-- reCAPTCHA (v2 !!!)
-
-                        klucze reCAPTCHA (v2 !!!) :
-                            Site key = klucz jawny (HTML)
-                            Secret key = klucz tajny (PHP)
-
-                        Tworzenie reCaptcha:
-
-                            google.com/recaptcha
-
-                            -> v3 Admin Console
-                            -> Utwórz + (google.com/recaptcha/admin/create)
-
-                        etykieta: "XAMPP"
-                        nazwa domeny : "localhost"
-
-                        Site Key   :    	(html)
-                        Secret Key : 		(PHP)
-
-                        Umieszceznie reCAPTCHA w html :
-                        -> v3 Documentation
-                    -->
-
-                    <!-- reCAPTCHA (v2) - konto jan.nowak.6820@gmail.com
+                    <!-- reCAPTCHA (v2) - jan.nowak.6820@gmail.com
 
                         klucze reCAPTCHA (v2) :
                             Site key = klucz jawny (HTML)
@@ -452,8 +405,8 @@
                         etykieta: "XAMPP"
                         nazwa domeny : "localhost"
 
-                        Site Key   : 6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1   	(html)
-                        Secret Key : 6LcW48gfAAAAALDhZZERPDMpGD5aYMcLJ3s_IszG		(PHP)
+                        Site Key   :    	(html)    	6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1
+                        Secret Key : 		(PHP)    	6LcW48gfAAAAALDhZZERPDMpGD5aYMcLJ3s_IszG
 
                         Umieszceznie reCAPTCHA w html :
                         -> v3 Documentation
@@ -461,7 +414,7 @@
 
                 </form>
 
-            </div>
+            </div> <!-- #content -->
 
         </main>
 
@@ -470,39 +423,36 @@
             // validate password length (JS) -->
 
             function checkUsername(e, minLength) {
-                let elMsg = document.getElementById("feedback");
-                let elUsernmae = document.getElementById("haslo1"); // nazwa użytkownika
+                let elMsg = document.getElementById("feedback"); // <div> znajdujący się poniżej pola z hasłem
+                let elUsernmae = document.getElementById("haslo1"); // hasło - <input type="password">
 
                 let eventElement = e.target;
-                console.log("eventElement = ", eventElement);
-                let elementParent = eventElement.parentElement; // (!)      rodzic elementu -> <p>
-                //                  eventElement.parentNode;    // ✓
-                console.log("elementParent = ", elementParent);
-                let elementGrandParent = eventElement.parentNode.parentNode; // (!) dziadek -> <div>
-                console.log("elementGrandParent = ", elementGrandParent);
-                // elementGrandParent.removeChild(elementParent); // usunięcie <p> // ✓
+                    console.log("eventElement = ", eventElement); // <input type="password">
+                let elementParent = eventElement.parentElement; // eventElement.parentNode;
+                    console.log("elementParent = ", elementParent); // <label> - rodzic;
+                let elementGrandParent = eventElement.parentNode.parentNode;
+                    console.log("elementGrandParent = ", elementGrandParent); // <span class="row"> - dziadek;
 
                 if(elUsernmae.value.length < minLength) {
                     elMsg.textContent = "Hasło musi mieć conajmniej " + minLength + " znaków ";
 
                 } else {
-                    elMsg.textContent = ""; // usunięcie komunikatu
+                    elMsg.textContent = ""; // usunięcie komunikatu;
                 }
             }
+
             function removeMsg(e) {
                 let elMsg = document.getElementById("feedback");
 
                 let eventElement = e.target;
-                console.log("eventElement = ", eventElement);
+                    console.log("eventElement = ", eventElement);
 
                 if(elMsg.textContent !== "") {
                     elMsg.textContent = "";
                 }
             }
 
-            var el = document.getElementById("haslo1");
-
-
+            let el = document.getElementById("haslo1"); // hasło - <input type="password">
 
             el.addEventListener("blur", function(e) {
                 checkUsername(e, 10);
@@ -514,21 +464,23 @@
 
         </script>
 
-	</div>
+	</div> <!-- #container -->
 
     <?php require "../view/footer.php"; ?>
 
-</div>
+</div> <!-- #main-container -->
 
 
 
     <script>
-        content = document.getElementById("content"); // ustawienie wid div#content na 100%
-        // console.log("content -> ", content);
+            // ustawienie width div#content na 100%;
+        content = document.getElementById("content");
+            // console.log("content -> ", content);
         content.style.width = "100%";
     </script>
 
 
     <script src="https://www.google.com/recaptcha/api.js"></script>
+
 </body>
 </html>

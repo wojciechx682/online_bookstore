@@ -119,7 +119,7 @@
         echo '<div id="content">';
             echo '<div id="content-books">';
 
-            $i = 0;
+        $i = 0;
 
             while ($row = $result->fetch_assoc())
             {
@@ -260,7 +260,7 @@
 
 	function check_email($result)
 	{
-        // validate_user_data.php - sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną
+        // validate_user_data.php - sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną;
 		$_SESSION['email_exists'] = true;
 
             $row = $result->fetch_assoc();    // reset_password.php - resetowanie hasła
@@ -649,45 +649,51 @@ EOT;
 		$result->free_result();*/
 
         $row = $result->fetch_assoc();
-        $_SESSION['stare_haslo'] = $row['haslo'];
+            $_SESSION['stare_haslo'] = $row['haslo']; // hasło klienta w postaci zahashowanej;
         $result->free_result();
 	}
 
 	function log_in($result)
 	{
-        //echo "<br>477";
-        //exit();
-        // logowanie.php - skrypt logowania, logowanie -> weryfikacja hasła
+        // logowanie.php - skrypt logowania -> weryfikacja hasła;
 
-		$row = $result->fetch_assoc(); // wiersz - pola tabeli = tablica asocjacyjne
+        // sprawdza, czy istnieje taki email, jeśli nie - przekierowuje do pliku zaloguj.php + wyświetla komunikat "Niepoprawny e-mail lub hasło";
 
-        //echo "<br> row --> <br>";
+        // jeśli email istnieje (tzn jest taki klient/pracownik) - następuje weryfikacja hasła - czy podano poprawne hasło ? - za pomocą funkcji porównującej hash hasła zapisany w bazie danych z zahashowanym hasłem otrzymanym w tablicy POST;
 
-        if(empty($row)) {
-            $_SESSION["blad"] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowanie -> przekierowanie do zaloguj.php + komunikat
+        // jeśli hasło było poprawne, i był to KLIENT - następuje pobranie liczby książek znajdujących się w koszyku, zapisanie danych klienta w zmiennych sesyjnych oraz przekierowanie na stronę główną,
+        // jeśli hasło było poprawne, i był to PRACOWNIK - następuje zapisanie danych pracownika w zmiennych sesyjnych oraz przekierowanie na stronę główną panelu administratora;
+
+        // w przeciwnym przypadku (jeśli podano błędne dane logowania) - następuje przekierowania na stronę logowania + wyświetlenie komunikatu o błędzie;
+
+		$row = $result->fetch_assoc(); // wiersz - pola tabeli = tablica asocjacyjna;
+
+        if(empty($row)) { // (testowałem) --> to się wykona, JEŚLI PODANO ZŁY E-MAIL (nieistniejący) !
+            $_SESSION["blad"] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>';
+            // błędne dane logowania (NIEISTNIEJĄCY EMAIL) -> przekierowanie do zaloguj.php + komunikat;
             return;
         }
 
-		//echo '$_POST[login] = ' . $_POST['login'] . "<br>";
-		//echo '$_POST[haslo] = ' . $_POST['haslo'] . "<br>";
+                                           //echo '\n\n668 $_POST[login] = ' . $_POST['email'] . "<br>";
+                                           //echo '$_POST[haslo] = ' . $_POST['haslo'] . "<br>"; exit();
 
-		// WERYFIKACJA HASZA : (czy hasze hasła sa identyczne)
-		// porównanie hasha podanego przy logowaniu, z hashem zapisanym w bazie danych
-
-        // echo "<br> 717 <br>";
+		// WERYFIKACJA HASZA : (czy hasze hasła sa identyczne ?)
+		    // porównanie hasha (hasła) podanego przy logowaniu, z hashem zapisanym w bazie danych;
 
 		$haslo = $_POST['haslo']; // "zmienne tworzone poza funkcjami są globalne (więcej o funkcjach w manualu), a zmienne tworzone w funkcjach mają zasięg lokalny" - http://www.php.pl/Wortal/Artykuly/PHP/Podstawy/Zmienne-i-stale/Zasieg-zmiennych
 
         //echo "<br> haslo = $haslo <br>"; // exit();
         //echo "<br> row  = " . var_dump($row) . " <br>";  exit();
 
-		if(password_verify($haslo, $row['haslo'])) // true -> hasze sa takie same (podano poprawne hasło do konta)
+		if(password_verify($haslo, $row['haslo']))
 		{
+            // true -> hasze sa takie same (podano poprawne hasło do konta - email także był poprawny);
+
 			$_SESSION['zalogowany'] = true;
 
-            $id = array_keys($row)[0]; // wartość zmiennej => "id_klienta" lub "id_pracownika";
+            $id = array_keys($row)[0]; // przyjmie wartość typu String (TEKSTOWĄ) taką jak -> "id_klienta"; "id_pracownika"; (użyto takiego zapisu ponieważ ID w tabeli klienci ma inną NAZWĘ niż w tabeli pracownicy.
 
-			$_SESSION['id'] = $row[$id]; // zamienić na wartosć liczbową ✓
+			$_SESSION['id'] = $row[$id]; // wartość zmiennej => "id_klienta" lub "id_pracownika"; (tzn np 220, 221, ...);
 			$_SESSION['imie'] = $row['imie'];
 			$_SESSION['nazwisko'] = $row['nazwisko'];
                 $_SESSION['adres_id'] = $row['adres_id'];
@@ -696,44 +702,34 @@ EOT;
                 $_SESSION['numer_domu'] = $row['numer_domu'];
                 $_SESSION['kod_pocztowy'] = $row['kod_pocztowy'];
                 $_SESSION['kod_miejscowosc'] = $row['kod_miejscowosc'];
-                                    /*$_SESSION['wojewodztwo'] = $row['wojewodztwo'];
+                                    /* $_SESSION['wojewodztwo'] = $row['wojewodztwo'];
                                     $_SESSION['kraj'] = $row['kraj'];
 			                        $_SESSION['PESEL'] = $row['PESEL'];
-			                        $_SESSION['data_urodzenia'] = $row['data_urodzenia'];*/
+			                        $_SESSION['data_urodzenia'] = $row['data_urodzenia']; */
 			$_SESSION['telefon'] = $row['telefon'];
 			$_SESSION['email'] = $row['email'];
-			                        /*$_SESSION['login'] = $row['login'];*/
-
-            //var_dump($_SESSION); exit();
-
-			//$_SESSION['koszyk_ilosc_ksiazek'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
-			//$_SESSION['test123'] = test_fun();
-			//$id_klienta = $_SESSION['id'];
-			//$_SESSION['test123'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
+			                        //$_SESSION['login'] = $row['login'];
 
             if($id === "id_klienta") {
-                query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);	// pobranie liczby książek znajdujących się w kosztku
+                query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);
+                // pobranie liczby książek znajdujących się w kosztku; count_cart_quantity -> $_SESSION['koszyk_ilosc_ksiazek'] -> zapis do zmiennej;
             }
 
-			unset($_SESSION['blad']); // usuwa komunikat o błędzie logowania
+			unset($_SESSION['blad']); // usuwa komunikat o błędzie logowania; // jest potrzebne, ponieważ mogła nastąpić sytuacja, w której klient podał złe dane (nastąpiło ustawienie zmiennej $_SESSION["blad"]), po czym nastąpiło logowanie pracownika (wszystkie dane były poprawne) - wtedy zmienna $_SESSION["blad"] istnieje, i należy ją usunąć;
 
 			$result->free_result();   // pozbywamy się z pamięci rezultatu zapytania; free(); close();
 
             if($id === "id_klienta") {
-                header('Location: ___index2.php'); // przekierowanie do strony index.php
+                header('Location: ___index2.php');      // przekierowanie do strony index.php
             } else {
                 $_SESSION["stanowisko"] = $row["stanowisko"];
-                header('Location: ../admin/admin.php');     // pracownik - przekierowanie do strony admin.php
+                header('Location: ../admin/admin.php'); // pracownik - przekierowanie do strony admin.php
             }
-
-
-            //echo "<br>477";
-			exit();
+			exit(); // We Should use exit() after header_location instruction;
 		}
-		else  // dobry e-mail, złe hasło
+		else  // istniejący e-mail, złe (niepoprawne) hasło;
 		{
-            //echo "<br>477";
-			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowanie -> przekierowanie do zaloguj.php + komunikat
+			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowania (niepoprawne HASŁO) -> przekierowanie do zaloguj.php + komunikat;
 			header('Location: ___zaloguj.php');
 			exit();
 		}
@@ -741,7 +737,7 @@ EOT;
 
 	function register_verify_email($result)
 	{
-        // rejestracja (rejestracja.php) - weryfikacja, czy istnieje taki email (czy jest zajęty)
+        // rejestracja (rejestracja.php) - weryfikacja, czy istnieje taki email (czy jest zajęty);
 		$_SESSION['wszystko_OK'] = false;
 		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
 	}
@@ -758,7 +754,10 @@ EOT;
         // dodanie nowego użytkownika - rejestracja.php
         $_SESSION['udanarejestracja'] = true;
         // pobranie ID ostatnio wstawionego adresu  ->
-        query("SELECT adres_id FROM adres ORDER BY adres_id DESC LIMIT 1", "get_address_id", ""); // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
+        query("SELECT adres_id FROM adres ORDER BY adres_id DESC LIMIT 1", "get_address_id", "");
+            // $_SESSION['last_adres_id'] -> id ostatnio dodanego adresu;
+
+        // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
         //unset($_SESSION['wszystko_OK']);
         //header('Location: ___zaloguj.php');
     }
@@ -801,10 +800,10 @@ EOT;
         query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
     }
 
-    function get_address_id($result) // wywołanie w funkcji register();
+    function get_address_id($result) // wywołanie w funkcji register(); // rejestracja.php;
     {
         $row = $result->fetch_assoc();
-        $_SESSION['last_adres_id'] = $row["adres_id"];
+            $_SESSION['last_adres_id'] = $row["adres_id"];
         $result->free_result();
     }
 
