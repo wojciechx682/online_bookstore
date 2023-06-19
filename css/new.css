@@ -3325,7 +3325,7 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
 
 
     border-radius: 15px;
-    margin: 0 auto 10px auto;
+    margin: 20px auto 10px auto;
 
     /*padding: 10px 0 10px 10px;*/
     /*padding: 5px;*/
@@ -3478,7 +3478,7 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
 
     /*border: 1px ridge rgba(166, 166, 166, 0.38);*/
 
-    padding: 20px 20px 20px 0px;
+    padding: 20px 20px 20px 20px;
     text-align: right;
 }
 .order-sum > span {
@@ -3495,6 +3495,22 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
 
     /*max-width: 255px;*/
 }
+
+div.order-sum > span.order-in-progress {
+    /*display: inline-block;*/
+
+    display: block;
+    float: left;
+
+
+
+}
+
+div.order-sum > span.order-sent {
+   padding-top: 20px;
+   padding-bottom: 20px;
+}
+
 
 /* ___reset_password.php -->    --------------------------------------------------------------- */
 

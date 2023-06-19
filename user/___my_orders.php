@@ -3,7 +3,7 @@
 	session_start();
 	include_once "../functions.php";
 
-	if(!isset($_SESSION['zalogowany']))	{
+	if( ! isset($_SESSION['zalogowany']) )	{
 		header('Location: index.php');
 		exit();
 	}
@@ -24,32 +24,36 @@
 	<div id="container">
 
         <main>
-            <aside class="account-data">
+            <aside class="account-data"> <!-- lewy nav-bar -->
                 <div id="nav">
-                    <!-- <a href="edit_data.php">Edytuj dane użytkownika</a><br><br> -->
-                    <a href="___account.php"> ← </a><br><br>
-                    <a href="___my_orders.php">Zamówienia</a>
-                </div>
-            </aside>
+                            <!-- <a href="edit_data.php">Edytuj dane użytkownika</a><br><br> -->
+                    <!--<a href="___account.php"> ← </a><br><br>
+                    <a href="___my_orders.php">Zamówienia</a>-->
+
+                    <a href="___my_orders.php"><h3>Zamówienia</h3><hr></a>
+                    <a href="___account.php"><h3>Edytuj dane użytkownika</h3><hr></a>
+                    <a href="___remove_account.php"><h3>Usuń konto</h3><hr></a>
+                    <a href="logout.php"><h3>Wyloguj</h3><hr></a>
+
+                </div> <!-- #nav -->
+            </aside> <!-- .account-data (lewy nav-bar) -->
 
             <div id="content">
 
-                <!-- <h3>Zamówienia</h3><hr> -->
-                <!--<h3>Historia zamówień</h3><hr>-->
-                <h3 class="account-header">Historia zamówień</h3>
+                <h3 class="account-header">Historia zamówień</h3> <!-- <h3>Zamówienia</h3><hr> -->
 
                 <?php
                     echo '<script> displayNav(); </script>';
 
-                    query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia WHERE id_klienta = '%s'", "get_orders", $_SESSION['id']);
+                    query("SELECT id_zamowienia, data_zlozenia_zamowienia, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia FROM zamowienia WHERE id_klienta = '%s'", "get_orders", $_SESSION['id']); // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
                 ?>
 
-                <br><br><a href="logout.php">[ Wyloguj ]</a>
+                <!--<br><br><a href="logout.php">[ Wyloguj ]</a>-->
 
-            </div>
+            </div> <!-- #content -->
         </main>
 
-    </div>
+    </div> <!-- #container -->
 
     <?php require "../view/footer.php"; ?>
 
@@ -57,7 +61,7 @@
 
 <script>
     content = document.getElementById("content");
-    content.style.overflow = "auto";
+        content.style.overflow = "auto";
 </script>
 
 </body>

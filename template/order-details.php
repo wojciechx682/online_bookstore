@@ -1,7 +1,7 @@
 
 <!-- template used on order page (order.php) to display orders made by client -->
 
-<div class="order">
+<div class="order"> <!-- <-- pojedyncze zamówienie (pojemnik) -->
     <div class="order-date-title">
         Data
 

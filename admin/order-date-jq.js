@@ -46,7 +46,7 @@ $("form#update-order-date").on("submit", function(e) {
                 error(12);
             } else if (
                 (selectedOption.innerHTML === "Wysłano") &&
-                ((sentDate < todayDate) || (expDeliveryDate < todayDate)) )
+                ((sentDate < todayDate) || (expDeliveryDate < todayDate) || (expDeliveryDate < sentDate)) )
             {
                 error(37);
             } else if (
