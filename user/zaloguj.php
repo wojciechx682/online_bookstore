@@ -119,14 +119,14 @@
                     {
                         unset($_SESSION['udanarejestracja']);
 
-                        echo '<br><span style="color: blue;">Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto</span><br>';
+                        echo '<br><span style="font-weight: bold;">Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto</span><br>';
                     }
 
                     if(isset($_SESSION['deleted-successfully']) && $_SESSION['deleted-successfully'])
                     {
                         unset($_SESSION['deleted-successfully']);
 
-                        echo '<br><span style="color: blue;">Twoje konto zostało usunięte</span><br>';
+                        echo '<br><span style="font-weight: bold;">Twoje konto zostało usunięte</span><br>';
                     }
                 ?>
 

@@ -1560,7 +1560,7 @@ header {
 
     box-sizing: border-box;
 
-    overflow: auto;
+    /*overflow: scroll;*/
 
    /* border-left: 1px solid black;*/
 
@@ -2125,7 +2125,7 @@ div#content {
     /*color: #ffffff;*/
     padding: 15px 15px 15px 15px;
     /* border-bottom: 1px dashed black; */
-    /*overflow: auto;*/ /* (!) */
+    overflow: auto; /* (!) */
 
     width: 75%; /* 75% szerokości rodzica -> #container */
     /* class="content-short" */
@@ -3019,7 +3019,7 @@ h3#order-summary-header + p {
     border-radius: 15px;
 
     float: left;
-    padding: 4px 15px 0px 24px;
+    padding: 4px 15px 24px 24px;
     margin-top: 10px;
     width: 100%;
 
@@ -3099,8 +3099,8 @@ h3#order-summary-header + p {
 .edit_data_right-container input[type="password"]
 {
 
-    padding-top: 4px !important;
-    padding-bottom: 4px !important;
+    padding-top: 6.5px !important;
+    padding-bottom: 6.5px !important;
 
 
 
@@ -3110,7 +3110,7 @@ h3#order-summary-header + p {
 
 .edit_data_left, .edit_data_right {
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     height: 25px;
 }
 
@@ -3185,7 +3185,7 @@ h3#order-summary-header + p {
     border-radius: 5px;
     /* font-size: 20px; */
     font-weight: bold;
-    padding: 2px 10px 2px 10px;
+    padding: 20px 10px 2px 10px;
     box-sizing: border-box;
     outline: none;
 
@@ -3219,7 +3219,7 @@ h3#order-summary-header + p {
     border-radius: 5px;
     /* font-size: 20px; */
     font-weight: bold;
-    padding: 6px;
+    padding: 6.5px;
     box-sizing: border-box;
     outline: none;
     margin-top: 3px;
@@ -3303,7 +3303,7 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
 }
 
 .remove_account {
-    min-height: 375px;
+    min-height: 400px;
 }
 
 .content-invisible {
@@ -3314,6 +3314,20 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
 
 .insert-password {
     min-height: 200px;
+    padding-bottom: 45px;
+}
+
+/* komunikat "Złe hasło" - po podaniu złego hasła przy próbie usunięcia konta */
+
+div.remove_account span.remove-account-password-error {
+
+    display: block;
+
+    margin-top: 20px;
+    margin-left: 2px;
+
+    color: red;
+    font-weight: bold;
 }
 
 /* my_orders.php -->    --------------------------------------------------------------- */
@@ -3322,15 +3336,13 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
     /*border: 1px dashed black;*/
     border: 1px ridge rgba(166, 166, 166, 0.38);
 
-
-
     border-radius: 15px;
-    margin: 20px auto 10px auto;
+    margin: 20px auto 40px auto;
 
-    /*padding: 10px 0 10px 10px;*/
-    /*padding: 5px;*/
+        /*padding: 10px 0 10px 10px;*/
+        /*padding: 5px;*/
+        /*background-color: #606686;*/
 
-    /*background-color: #606686;*/
     overflow: auto;
     text-align: left !important;
 }
@@ -3345,8 +3357,8 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
     text-align: center;
 
 
-    padding-bottom: 5px;
-    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 .order-date-title, .order-status-title, .order-id-title {
@@ -3363,14 +3375,20 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
     border-top-left-radius: 10px;
 
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
+
+    background-color: #f3f3f3;
 }
 
 .order-status-title {
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
+
+    background-color: #f3f3f3;
 }
 
 .order-id-title {
     border-top-right-radius: 10px;
+
+    background-color: #f3f3f3;
 }
 
 .order-date, .order-status {
@@ -3435,6 +3453,15 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
     min-width: 200px;
     width: 55%;
 
+    padding: 12px 12px 12px 15px;
+
+
+}
+
+div.book-desc span.order-book-desc-row {
+    display: block;
+    padding-top: 2px;
+    padding-bottom: 2px;
 
 }
 
@@ -3455,6 +3482,43 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
     width: 10%;
 
 }
+
+/*div.order div.book-quan:last-of-type {
+    color: red !important;
+}*/
+
+div[class*="book-quan"] span,
+div[class*="order-book-price"] span
+{
+    /*color: blue;*/
+
+
+    text-align: center;
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
+
+    padding-bottom: 5px;
+
+    display: block;
+
+}
+
+div[class*="book-quan"]:not([class$="1"]) span,
+div[class*="order-book-price"]:not([class$="1"]) span
+{
+    /*color: red;*/
+
+    display: none;
+}
+
+div[class*="book-quan"]:not([class$="1"]),
+div[class*="order-book-price"]:not([class$="1"])
+{
+    /*color: red;*/
+
+    padding-top: 25px;
+
+}
+
 .order-book-price {
     /*border: 1px dashed black;*/
 
@@ -3509,6 +3573,27 @@ div.order-sum > span.order-in-progress {
 div.order-sum > span.order-sent {
    padding-top: 20px;
    padding-bottom: 20px;
+}
+
+div#content div.order div.book-url a > img {
+
+
+    -webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+
+
+
+    border-radius: 2px;
+}
+
+
+div#content div.order div.book-url a > img:hover {
+    transform: scale(101%);
+
+    filter: grayscale(25%);
+
+    cursor: pointer;
 }
 
 

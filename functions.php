@@ -260,18 +260,18 @@
 
 	function check_email($result)
 	{
-        // validate_user_data.php - sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną;
+        // validate_user_data.php - sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną; (zmiana danych konta);
+        // remove_account.php     - sprawdza, -----------||--------------  ---------||-----------;  (resetowanie hasła);
 		$_SESSION['email_exists'] = true;
 
             $row = $result->fetch_assoc();    // reset_password.php - resetowanie hasła
             $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
 	}
 
-    function verify_token($result)
+    function verify_token($result) // reset-password-form.php ;
     {
-        // reset-password-form.php
-            $row = $result->fetch_assoc();
-        $_SESSION["token_verified"] = true;
+                $row = $result->fetch_assoc();
+            $_SESSION["token_verified"] = true;
         $_SESSION["email"] = $row["email"];
         $_SESSION["exp_time"] = $row["exp_time"];
     }
@@ -553,12 +553,10 @@ EOT;
             $_SESSION["data_wysłania_zamowienia"] = $row["data_wysłania_zamowienia"];
             $_SESSION["data_dostarczenia"] = $row["data_dostarczenia"];
 
-
-
-           /* echo "<br> 608 termin dostawy -> <br>" . $_SESSION["termin_dostawy"] . "<br>";
+            /* echo "<br> 608 termin dostawy -> <br>" . $_SESSION["termin_dostawy"] . "<br>";
             echo "<br> 608 data wysłania -> <br>" . $_SESSION["data_wysłania_zamowienia"] . "<br>";
             echo "<br> 608 data wysłania -> <br>" . $_SESSION["data_wysłania_zamowienia"] . "<br>";
-            echo "<br> SUMA ZAMÓWIENIA -> <br>" . $_SESSION["order_sum"] . "<br>";*/
+            echo "<br> SUMA ZAMÓWIENIA -> <br>" . $_SESSION["order_sum"] . "<br>"; */
 
 
                 // load the content from the external template file into string
@@ -589,7 +587,7 @@ EOT;
                 // status zamówienia to "Wysłano" --> termin_dostawy, data_wyslania_zamowienia;
                 $order = file_get_contents("../template/order-sum-order-sent.php");
                 echo sprintf($order, $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"],  $_SESSION["order_sum"]);
-            } else if (
+            } elseif (
                 isset($_SESSION["data_dostarczenia"]) && !empty($_SESSION["data_dostarczenia"])
                 && $_SESSION["data_dostarczenia"] !== "0000-00-00"
                 && $row["status"] === "Dostarczono"
@@ -598,7 +596,13 @@ EOT;
                 $order = file_get_contents("../template/order-sum-order-delivered.php");
                 echo sprintf($order, $_SESSION["data_dostarczenia"], $_SESSION["order_sum"]);
 
-            } else { // status -> "Oczekujące na potwierdzenie";
+            } elseif (
+                $row["status"] === "Zarchiwizowane"
+            ) {
+                $order = file_get_contents("../template/order-sum-order-archived.php");
+                echo sprintf($order, $row["komentarz"], $_SESSION["order_sum"]);
+            }
+            else { // status -> "Oczekujące na potwierdzenie";
                 $order = file_get_contents("../template/order-sum.php");
                 echo sprintf($order, $_SESSION["order_sum"]);
             }
@@ -725,8 +729,16 @@ EOT;
             // $_SESSION["order_details_books_quantity"][count($_SESSION['order_details_books_quantity'])-1]
                 // - ilość egzamplarzy tej książki w tym zamówieniu (w danej iteracji);
 
+            // $_SESSION["order_details_books_id"][count($_SESSION['order_details_books_id'])-1] - id_książki ;
+
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, count($_SESSION['order_details_books_quantity']), $row["image_url"], $row['tytul'], $row['imie'], $row['nazwisko'], $row['rok_wydania'], $_SESSION["order_details_books_quantity"][count($_SESSION['order_details_books_quantity'])-1], $row["cena"]);
+            echo sprintf($order, count($_SESSION['order_details_books_quantity']),
+                $_SESSION["order_details_books_id"][count($_SESSION['order_details_books_id'])-1],
+                $row["image_url"], $row['tytul'], $row['imie'], $row['nazwisko'], $row['rok_wydania'],
+                count($_SESSION['order_details_books_quantity']),
+                $_SESSION["order_details_books_quantity"][count($_SESSION['order_details_books_quantity'])-1],
+                count($_SESSION['order_details_books_quantity']),
+                $row["cena"]);
 		}
 		$result->free_result();
 	}
@@ -754,7 +766,7 @@ EOT;
         }
     }
 
-	function verify_password($result) // validate_password.php;     confirm_password.php;
+	function verify_password($result) // validate_password.php (zmiana hasła); confirm_password.php (usuwanie konta);
 	{
 		/*while ($row = $result->fetch_assoc())
 		{
@@ -783,7 +795,7 @@ EOT;
 		$row = $result->fetch_assoc(); // wiersz - pola tabeli = tablica asocjacyjna;
 
         if(empty($row)) { // (testowałem) --> to się wykona, JEŚLI PODANO ZŁY E-MAIL (nieistniejący) !
-            $_SESSION["blad"] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>';
+            $_SESSION["blad"] = '<span style="color: red; font-weight: bold;">Nieprawidłowy e-mail lub hasło</span>';
             // błędne dane logowania (NIEISTNIEJĄCY EMAIL) -> przekierowanie do zaloguj.php + komunikat;
             return;
         }
@@ -843,7 +855,7 @@ EOT;
 		}
 		else  // istniejący e-mail, złe (niepoprawne) hasło;
 		{
-			$_SESSION['blad'] = '<span style="color: red">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowania (niepoprawne HASŁO) -> przekierowanie do zaloguj.php + komunikat;
+			$_SESSION['blad'] = '<span style="color: red; font-weight: bold;">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowania (niepoprawne HASŁO) -> przekierowanie do zaloguj.php + komunikat;
 			header('Location: ___zaloguj.php');
 			exit();
 		}

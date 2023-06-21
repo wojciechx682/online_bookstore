@@ -122,7 +122,7 @@
                     <?php
                         if( isset($_SESSION["password-changed"]) && $_SESSION["password-changed"] )
                         {   // if variable EXISTS and has value egual to "TRUE";
-                            echo "<h3>udało się zmienić hasło</h3>";
+                            echo "<h3>Udało się zmienić hasło</h3>";
                             session_unset();
                             session_destroy();
                         }
@@ -134,7 +134,7 @@
                         // normalne logowanie, podany złe hasło;
                         if(isset($_SESSION['blad']))
                         {
-                            echo '<br>'.$_SESSION['blad']; // wyświetlenie komunikatu "nieprawidłowy login lub hasło";
+                            echo ''.$_SESSION['blad']; // wyświetlenie komunikatu "nieprawidłowy login lub hasło";
                             unset($_SESSION["blad"]);
                         }
                     ?>
@@ -145,14 +145,14 @@
                         {
                             unset($_SESSION['udanarejestracja']);
 
-                            echo '<br><span style="color: blue;">Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto</span><br>';
+                            echo '<span style="font-weight: bold;">Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto</span><br>';
                         }
 
                         if(isset($_SESSION['deleted-successfully']) && $_SESSION['deleted-successfully'])
                         {
                             unset($_SESSION['deleted-successfully']);
 
-                            echo '<br><span style="color: blue;">Twoje konto zostało usunięte</span><br>';
+                            echo '<span style="font-weight: bold;">Twoje konto zostało usunięte</span><br>';
                         }
                     ?>
 

@@ -163,7 +163,7 @@
 
 		$pass_regex = '/^((?=.*[!@#$%^&_*+-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
 
-		if(!(preg_match($pass_regex, $haslo1))) 
+		if( ! preg_match($pass_regex, $haslo1) )
 		{		
 			$_SESSION['wszystko_OK'] = false;
 			$_SESSION['e_haslo'] = "

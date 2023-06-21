@@ -45,7 +45,7 @@
                 <?php
                     echo '<script> displayNav(); </script>';
 
-                    query("SELECT id_zamowienia, data_zlozenia_zamowienia, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia FROM zamowienia WHERE id_klienta = '%s'", "get_orders", $_SESSION['id']); // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
+                    query("SELECT id_zamowienia, data_zlozenia_zamowienia, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia, komentarz FROM zamowienia WHERE id_klienta = '%s'", "get_orders", $_SESSION['id']); // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
                 ?>
 
                 <!--<br><br><a href="logout.php">[ Wyloguj ]</a>-->
@@ -62,6 +62,23 @@
 <script>
     content = document.getElementById("content");
         content.style.overflow = "auto";
+
+    // set order status "Zarchiwizowane" text-color to green;
+
+    let orderStatus = document.querySelectorAll('div.order div.order-status');
+
+    console.log("\n\norder-status -> ", orderStatus);
+    console.log("\n\norder-status -> ", typeof orderStatus);
+
+    for(let i=0; i<orderStatus.length; i++) {
+        if(orderStatus[i].innerHTML == "Zarchiwizowane") {
+            orderStatus[i].style.color = "#30af30";
+            orderStatus[i].style.fontWeight = "bold";
+        }
+    }
+
+
+
 </script>
 
 </body>

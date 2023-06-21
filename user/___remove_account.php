@@ -3,17 +3,23 @@
 	session_start();
 	include_once "../functions.php";
 
-	if(!(isset($_SESSION['zalogowany']))) {
+	if( ! isset($_SESSION['zalogowany']) ) {
         header("Location: index.php?login-error");
 		exit();
 	}
-    if(isset($_SESSION["password_confirmed"]) && $_SESSION["password_confirmed"]) {
-        // podano poprawne hasło
-        query("DELETE FROM klienci WHERE id_klienta='%s'", "", $_SESSION["id"]);    // usunięcie konta klienta (+ jego zamówień, szczegółów zamówień, płatności, + koszyka)
-        query("DELETE FROM komentarze WHERE id_klienta='%s'", "", $_SESSION["id"]); // usunięcie komentarzy dodaych prze usera
-        query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["id"]); // usunięcie tokenów do resetowania hasłą, jeśli istniały jakies przypisane do tego usera;
-        query("DELETE FROM ratings WHERE id_klienta='%s'", "", $_SESSION["id"]);    // usunięcie komentarzy/opinii dodanych przez usera
+    if( isset($_SESSION["password_confirmed"]) && $_SESSION["password_confirmed"] ) { // podano poprawne hasło;
+
+        query("DELETE FROM klienci WHERE id_klienta='%s'", "", $_SESSION["id"]);
+            // usunięcie konta klienta (+ jego zamówień, szczegółów zamówień, płatności, + koszyka);
+        query("DELETE FROM komentarze WHERE id_klienta='%s'", "", $_SESSION["id"]);
+            // usunięcie komentarzy dodaych prze usera;
+        query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["id"]);
+            // usunięcie tokenów do resetowania hasła, jeśli istniały jakies przypisane do tego usera;
+        query("DELETE FROM ratings WHERE id_klienta='%s'", "", $_SESSION["id"]);
+            // usunięcie komentarzy/opinii dodanych przez usera
+
         header('location: logout.php');
+        exit();
     }
 ?>
 
@@ -26,18 +32,20 @@
 
 <div id="main-container">
 
-    <div id="container">
-
     <?php require "../view/___header-container.php"; ?>
 
         <div id="container">
             <main>
                 <aside class="account-data">
                     <div id="nav">
-                        <a href="___my_orders.php">[ Zamówienia ]</a><br><br>
-                        <a href="edit_data.php">[ Edytuj dane użytkownika ]</a><br><br>
-                        <a href="___remove_account.php">[ Usuń konto ]</a><br><br>
-                        <a href="logout.php"> [ Wyloguj ]</a>
+                            <!--<a href="___my_orders.php">[ Zamówienia ]</a><br><br>
+                            <a href="edit_data.php">[ Edytuj dane użytkownika ]</a><br><br>
+                            <a href="___remove_account.php">[ Usuń konto ]</a><br><br>
+                            <a href="logout.php"> [ Wyloguj ]</a>-->
+                        <a href="___my_orders.php"><h3>Zamówienia</h3><hr></a>
+                        <a href="___account.php"><h3>Edytuj dane użytkownika</h3><hr></a>
+                        <a href="___remove_account.php"><h3>Usuń konto</h3><hr></a>
+                        <a href="logout.php"><h3>Wyloguj</h3><hr></a>
                     </div>
                 </aside>
                 <div id="content">
@@ -59,12 +67,12 @@
                                     <div class="edit_data_right"><?=$_SESSION['email']?></div>
                                     <div class="edit_data_right"><?=$_SESSION['telefon']?></div><hr>
                                     <div class="edit_data_right"><?=$_SESSION['miejscowosc']?></div>
-                                    <div class="edit_data_right"><?=$_SESSION['ulica'], " ", $_SESSION['numer_domu']?></div>
-                                    <div class="edit_data_right"><?=$_SESSION['kod_pocztowy'], " ", $_SESSION['kod_miejscowosc']?></div>
+                                    <div class="edit_data_right"><?=$_SESSION['ulica'], ", ", $_SESSION['numer_domu']?></div>
+                                    <div class="edit_data_right"><?=$_SESSION['kod_pocztowy'], ", ", $_SESSION['kod_miejscowosc']?></div>
 
                             </div>
                             <div style="clear: both;"></div>
-                            <br>
+                                <br>
                             <form method="post">
                                 <label class="confirm-delete">
                                     <input required type="checkbox" name="confirm-delete" class="confirm-delete">Czy na pewno chcesz usunąć swoje konto ?
@@ -73,15 +81,15 @@
                                 <div class="edit_data_button">
                                     <button type="submit">Potwierdź</button>
                                 </div>
-                                <?php if(isset($_SESSION["password_confirmed"]) && !$_SESSION["password_confirmed"]) {
-                                    echo "złe hasło";
+                                <?php if( isset($_SESSION["password_confirmed"]) && ! $_SESSION["password_confirmed"] ) { // confirm_password.php -> $_SESSION["password_confirmed"] == false ;
+                                    echo '<span class="remove-account-password-error">Nieprawidłowe hasło</span>';
                                     unset($_SESSION["password_confirmed"]); } ?>
                             </form>
-                        </div>
-                    </div>
+                        </div> <!-- #edit_data_container -->
+                    </div> <!-- .dane_konta -->
 
-                    <!-- Hasło -->
-                    <div class="dane_konta content-invisible insert-password" >
+
+                    <div class="dane_konta content-invisible insert-password"> <!-- Hasło -->
                         <h3 class="account-header">Potwierdź dane</h3>
                         <div class="edit_data_container">
                             <div class="edit_data_left-container">
@@ -98,21 +106,21 @@
                                     </div>
                                 </form>
                             </div>
-                            <!-- <div style="clear: both;"></div>-->
-                            <!--<div class="edit_data_button">
-                                <button type="submit" form="confirm_password_form">Edytuj dane</button>
-                            </div>-->
-                        </div>
-                    </div>
+                                <!-- <div style="clear: both;"></div>-->
+                                <!-- <div class="edit_data_button">
+                                    <button type="submit" form="confirm_password_form">Edytuj dane</button>
+                                </div> -->
+                        </div> <!-- .edit_data_container -->
+                    </div> <!-- .dane_konta content-invisible insert-password -->
 
-                    <!-- <div style="clear: both;"></div> -->
+                        <!-- <div style="clear: both;"></div> -->
                     <script> displayNav(); </script>
-                </div>
-
+                </div> <!-- #content -->
             </main>
+
             <?php
-                if(isset($_POST["confirm-delete"]) && !empty($_POST["confirm-delete"])) {
-                    // ukrycie informacji o koncie i wyświetlenie formularza do podania hasła
+                if( isset($_POST["confirm-delete"]) && ! empty($_POST["confirm-delete"]) ) { // $_POST["confirm-delete"] - checkbox "Czy chcesz usunąć swoje konto ... " ;
+                        // ukrycie informacji o koncie i wyświetlenie formularza do podania hasła ;
                     echo '<script>             
                         const el = document.querySelectorAll(".dane_konta");                                             
                         for (let i = 0; i < el.length; i++) {
@@ -121,12 +129,11 @@
                     </script>';
                 }
             ?>
-        </div>
-        <?php require "../view/footer.php"; ?>
+        </div> <!-- #container -->
 
-    </div>
+    <?php require "../view/footer.php"; ?>
 
-</div>
+</div> <!-- #main-container -->
 
 </body>
 </html>

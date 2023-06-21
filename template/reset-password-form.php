@@ -18,17 +18,17 @@
 
         <div class="login-form-section">
 
-                        <span class="login-row">
-                                <label>
-                                    Nowe hasło <input type="password" name="new-password" id="new-password" reqiured>
-                                </label>
-                        </span>
+            <span class="login-row">
+                    <label>
+                        Nowe hasło <input type="password" name="new-password" id="new-password" reqiured>
+                    </label>
+            </span>
 
-                        <span class="login-row">
-                                <label>
-                                    Powtórz hasło <input type="password" name="confirm-password" id="confirm-password" reqiured>
-                                </label>
-                        </span>
+            <span class="login-row">
+                    <label>
+                        Powtórz hasło <input type="password" name="confirm-password" id="confirm-password" reqiured>
+                    </label>
+            </span>
 
             <input type="submit" value="Zmień hasło">
 

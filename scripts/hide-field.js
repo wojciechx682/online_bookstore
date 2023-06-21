@@ -1,15 +1,15 @@
 
-// reset-password-form.php
+// reset-password-form.php ;
 
-function hideResetForm() {
-    let form = document.getElementById("reset-form");
+function hideResetForm() { // ukrycie pierwszego formularza do wprwowadzenia adresu e-mail;
+    let form = document.getElementById("reset-form"); // "Podaj e-mail";
     form.style.display = "none";
 }
 
-function hideForm() {
+/*function hideForm() {
     let div = document.getElementById("get-email");
     div.style.display = "none";
-}
+}*/
 
 function hideTokenForm() {
     let form = document.getElementById("send-token");
