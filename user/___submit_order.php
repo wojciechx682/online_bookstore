@@ -3,10 +3,12 @@
 	session_start();
 	include_once "../functions.php";
 
-    if(!(isset($_SESSION['zalogowany']))) {
+    if( ! isset($_SESSION['zalogowany']) ) {
+
         header("Location: index.php?login-error");
         exit();
     }
+
 ?>
 
 <!DOCTYPE HTML>
@@ -161,11 +163,11 @@
 
             </div>
 
-            <script src="../scripts/set-span-width.js"></script>
+            <script src="../scripts/set-span-width.js"> </script>
 
         </main>
 
-	</div>
+	</div> <!-- #container -->
 
     <script>
         content = document.getElementById("content");
@@ -174,7 +176,7 @@
 
     <?php require "../view/footer.php"; ?>
 
-</div>
+</div> <!-- #main-container -->
 
 </body>
 </html>

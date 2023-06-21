@@ -5,8 +5,8 @@
 session_start();
 include_once "../functions.php";
 
-    if( ! isset($_SESSION["kategoria"])  )
-    {
+    if( ! isset($_SESSION["kategoria"])  ) {
+
         $_SESSION["kategoria"] = "Wszystkie";
     }
 

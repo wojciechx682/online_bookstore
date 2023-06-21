@@ -1,7 +1,7 @@
 
 // This file is fucked up; I could do it better;
 
-// admin/order-details.php
+// admin/order-details.php ;
 
 $("form#update-order-date").on("submit", function(e) {
 

@@ -4,8 +4,11 @@ include_once "../functions.php";
     // get-subcategories.php;
     // retrieve the category_id from the query string;
     // perform database query to fetch the subcategories based on the category_id;
+
 if (isset($_GET['category_id']) && !empty($_GET['category_id'])) {
+
     if($category_id = filter_var($_GET['category_id'], FILTER_VALIDATE_INT)) { // cat-id or false;
+
         query("SELECT sb.id_subkategorii, sb.nazwa, sb.id_kategorii FROM subkategorie AS sb, kategorie AS kt WHERE sb.id_kategorii = kt.id_kategorii AND sb.id_kategorii = '%s'", "getSubcategories", $category_id); // fetched subcategories;
     }
 }
