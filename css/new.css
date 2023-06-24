@@ -3605,6 +3605,10 @@ form#reset-form > h3.account-header {
 
 }
 
+form#reset-form div#get-email label:hover {
+    cursor: pointer;
+}
+
 form#reset-form input,
 form#send-token input,
 form#password-reset-input input

@@ -165,7 +165,7 @@
 
     function get_book($result) {
 
-        // get book details on book.php paeg
+        // get book details on book.php page ;
 
         $row = $result->fetch_assoc();
 
@@ -175,23 +175,30 @@
         // load the content from the external template file into string
         $book = file_get_contents("../template/book-page.php");
 
-                $_SESSION["avg_rating"] = $row["rating"];
-                $_SESSION["liczba_ocen"] = $row["liczba_ocen"];
-                $_SESSION["rating"] = $row["rating"];
+                // wstaw do Z.S wartości zwrócone z Bazy (!);
+                $_SESSION["avg_rating"] = $row["rating"]; // average book rating - "4.25" ;
+                $_SESSION["liczba_ocen"] = $row["liczba_ocen"]; // number of reviews ;
+                    $_SESSION["rating"] = $row["rating"];     // average book rating - "4.25" ;
                 $_SESSION["id_ksiazki"] = $row["id_ksiazki"];
 
-                if (isset($_SESSION["rate-error"])) {
-                    $message = $_SESSION["rate-error"];
-                    unset($_SESSION["rate-error"]);
-                } else if (isset($_SESSION["rate-success"])) {
-                    $message = $_SESSION["rate-success"];
-                    unset($_SESSION["rate-success"]);
-                } else {
-                    $message = "";
-                }
+        if ( isset($_SESSION["rate-error"]) ) { // komunikat - błąd przy dodawaniu oceny przez klienta ;
 
-                if(isset($row["liczba_egzemplarzy"]) && !empty($row["liczba_egzemplarzy"])) {
-                    if($row["liczba_egzemplarzy"]>0) {
+            $message = $_SESSION["rate-error"];
+                unset($_SESSION["rate-error"]);
+
+        } elseif ( isset($_SESSION["rate-success"]) ) {
+
+            $message = $_SESSION["rate-success"];
+                unset($_SESSION["rate-success"]);
+
+        } else {
+
+            $message = "";
+        }
+
+                if( isset($row["liczba_egzemplarzy"]) && ! empty($row["liczba_egzemplarzy"]) ) { // wyświetlenie statusu o dostępności książki (na bazie staów magazynowych) + odpowiednia akcja na przycisku dodania do koszyka (jeśli nie ma ksążki w magazynie - wyłączenie przycisku dodania ksiązki do koszyka);
+
+                    if($row["liczba_egzemplarzy"] > 0) {
                         $status = "dostępna";
                         $submit = "enabled";
                     } else {
@@ -203,29 +210,43 @@
                     $submit = "disabled";
                 }
 
-        // replace fields in $book string to book data from $result, display result content as HTML
+        // replace fields in $book string to book data from $result, display result content as HTML ;
         echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["cena"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $status, $submit);
+        // ../template/book-page.php ;
 
-        query("SELECT km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]); //$_SESSION["comments"]; <-- ta zmienna zawiera wykorzystany szablon HTML;  sql - możliwość wystąpienia błędów w wyniku złych relacji.
+        // pobranie komentarzy (treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
+        query("SELECT km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]);
+        // (!) $_SESSION["comments"]; - ta zmienna zawiera wykorzystany szablon HTML (przechowuje wszystkie komentarze danej książki !);
 
-        $book_page_tabs = file_get_contents("../template/book-page-tabs.php");
+        $book_page_tabs = file_get_contents("../template/book-page-tabs.php"); // wczytanie szablonu na sekcje (karty) z dodatkowymi informacjami o książce ;
 
         echo sprintf($book_page_tabs, $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], $row["oprawa"], $row["stan"], $row["id_ksiazki"], $row["rating"], $message, implode($_SESSION["comments"]));
 
-        //file_put_contents("../template/book-page-tabs-modified.php", $modified);
+        // file_put_contents("../template/book-page-tabs-modified.php", $modified);
     }
 
-    function get_ratings($result) {
-        // wstawia do tablicy sesyjnej ilości poszczególnych ocen dla książki ->   5 -> 4,   4 -> 26, 3 -> 15, ....
+    function get_ratings($result) { // "ocena", "liczba_ocen";
 
-        $_SESSION["ratings"] = [];
+        // wstawia do tablicy sesyjnej - ilości poszczególnych ocen dla książki ->   5 -> 4, 4 -> 26, 3 -> 15, ....
+        // $_SESSION["ratings"] -> [5] => 2 [4] => 1, ... ;
 
-        while($row = $result->fetch_assoc()) {
+        //    ocena      liczba_ocen
+        //      5 	         2
+        //      4 	         1
+        //      3 	         3
+        //      2 	         2
+
+        $_SESSION["ratings"] = []; // create new empty array ;
+
+        while($row = $result->fetch_assoc()) { // "ocena", "liczba_ocen";
+
             $book_rating = $row['ocena'];
             $num_of_ratings = $row['liczba_ocen'];
 
             $_SESSION['ratings'][$book_rating] = $num_of_ratings;
-        }
+
+        }  //  ̶$̶_̶S̶E̶S̶S̶I̶O̶N̶[̶"̶r̶a̶t̶i̶n̶g̶s̶"̶]̶ ̶-̶>̶ ̶[̶5̶]̶ ̶=̶>̶ ̶2̶ ̶[̶4̶]̶ ̶=̶>̶ ̶1̶,̶ ̶.̶.̶.̶ ̶;̶
+           // $_SESSION["ratings"] -> Array ( [5] => 2 [4] => 1 [3] => 3 [2] => 2 ) ;
 
         $result->free_result();
     }
@@ -238,21 +259,28 @@
         $_SESSION["rate_exists"] = true;
     }
 
-    function get_comments($result) {
+    function get_comments($result) { // "km.treść", "km.data", "km.imie", "km.ocena" ;
 
-        $i = 0;
+        // ̶$̶i̶ ̶=̶ ̶0̶;̶
 
-        $_SESSION["comments"] = [];
+        // Mauris venenatis quis metus non faucibus. Duis id ... 	2023-06-23 00:30:04 	Adam 	3
+        // Maecenas nulla est, semper vestibulum bibendum ac,... 	2023-06-23 00:30:46 	Adam 	4
+        // Lorem ipsum dolor sit amet, consectetur adipiscing... 	2023-06-23 00:32:29 	Adam 	5
+        // Fusce a laoreet est. Pellentesque habitant morbi t... 	2023-06-23 00:33:11 	Adam 	5
+        // Super książka polecam :) 	                            2023-06-23 09:56:58 	Adam 	3
+        // Super książka polecam :) 	                            2023-06-23 09:57:34 	Adam 	3
 
-        while ($row = $result->fetch_assoc())
+        $_SESSION["comments"] = []; // stworzenie nowej pustej tablicy ;
+
+        while ( $row = $result->fetch_assoc() )
         {
-            // load the content from the external template file into string
+            // load the content from the external template file into string ;
             $comment = file_get_contents("../template/book-comment.php");
 
-            // replace fields in $book string to book data from $result, display result content as HTML
-            $_SESSION["comments"][] = sprintf($comment, $row["imie"], $row["data"], $row["ocena"], $row["tresc"]); // return zamiast echo ?
+            //  ̶r̶e̶p̶l̶a̶c̶e̶ ̶f̶i̶e̶l̶d̶s̶ ̶i̶n̶ ̶$̶b̶o̶o̶k̶ ̶s̶t̶r̶i̶n̶g̶ ̶t̶o̶ ̶b̶o̶o̶k̶ ̶d̶a̶t̶a̶ ̶f̶r̶o̶m̶ ̶$̶r̶e̶s̶u̶l̶t̶,̶ ̶d̶i̶s̶p̶l̶a̶y̶ ̶r̶e̶s̶u̶l̶t̶ ̶c̶o̶n̶t̶e̶n̶t̶ ̶a̶s̶ ̶H̶T̶M̶L̶ ̶;̶ ̶
+            $_SESSION["comments"][] = sprintf($comment, $row["imie"], $row["data"], $row["ocena"], $row["tresc"]); //  ̶r̶e̶t̶u̶r̶n̶ ̶
 
-            $i++;
+            //$̶i̶+̶+̶;̶
         }
 
         $result->free_result();
@@ -267,6 +295,25 @@
             $row = $result->fetch_assoc();    // reset_password.php - resetowanie hasła
             $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
 	}
+
+    function generate_token() {     // remove_account.php; - return      $token_hashed    OR     null;
+
+        try {
+            $token = bin2hex(random_bytes(32));    // generate random token;
+            $token_hashed = hash("sha256", $token); // hash user token using sha256 algorithm;
+
+            return $token_hashed; // Return the generated token;
+
+        } catch (Exception $e) {
+                // Exception handling code
+                // You can handle the exception here, log it, display an error message, etc.
+                // For example:
+                    //echo "Wystąpił błąd podczas generowania tokenu. Spróbuj jeszcze raz";
+                // You can also log the error using error_log() or any other logging mechanism.
+
+            return null; // Return null or a default value to indicate failure
+        }
+    }
 
     function verify_token($result) // reset-password-form.php ;
     {

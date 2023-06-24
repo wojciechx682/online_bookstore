@@ -50,6 +50,7 @@
 problemy implementacyjne -->
 
 1.
+
 funkcja log_in() -->
 
 //$_SESSION['koszyk_ilosc_ksiazek'] = query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
@@ -59,11 +60,16 @@ funkcja log_in() -->
 
 nie da sie przypisać wartości zwrotnej funkcji do zmiennej, ponieważ funkcja query nigdy nic nie zwraca;
 
-
 2.
 
 - można było by przesyłać poufne dane (takie jak hasła) od razu w postaci zahashowanej - zamiast text/plain w zapytaniach POST
   - ale czy jest to konieczne ? Trzeba było by się nad tym pochylić;
+
+3. Zastosowanie techniki POST-REDIRECT-GET - w celu uniemożliwienia ponownego przesłania formularzy POST
+
+    -> należy zmienić WSZYSTKIE formularze z GET na POST ;
+
+    https://www.phptutorial.net/php-tutorial/php-prg/
 
 ------------------------------------------------------------------------------------------------------------------------
 

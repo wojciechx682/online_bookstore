@@ -6,50 +6,73 @@
     <div id="book-page-image">
         <img src="../assets/books/%s" alt="%s" title="%s">
     </div>
+
     <div id="book-page-details">
+
         <div id="book-page-title">
-            <span class="book-page-details">Tytuł</span>%s</div>
+            <span class="book-page-details">Tytuł</span>%s
+        </div>
         <div id="book-page-author">
-            <span class="book-page-details">Autor</span>%s %s</div>
-        <div id="book-page-year"><span class="book-page-details">Rok wydania</span>%s</div>
+            <span class="book-page-details">Autor</span>%s %s
+        </div>
+        <div id="book-page-year">
+            <span class="book-page-details">Rok wydania</span>%s
+        </div>
+
         <div id="book-page-rate">
-            <span id="book-rate" style="display:   none;">%s</span>
+            <span id="book-rate" style="display: none;">%s</span> <!-- $row["rating"] -->
 
             <div id="rate-container">
                 <div class="rate-outer">
-                    <div class="rate-inner-base"></div>
-                    <div class="rate-inner"></div>
+                    <div class="rate-inner-base"></div> <!-- pojemnik na Szare gwiazki -->
+                    <div class="rate-inner"></div>      <!-- pojemnik na Żółte gwiazdki -->
                 </div>
             </div>
             <span class="rating-num" id="rating-num"></span>
             <span class="rating-num">%s ocen, %s komentarzy</span>
         </div>
 
-        <div id="book-page-publ"><span class="book-page-details">Wydawnictwo</span>%s</div>
-        <div id="book-page-nopg"><span class="book-page-details">Ilość stron</span>%s</div>
+        <div id="book-page-publ">
+            <span class="book-page-details">Wydawnictwo</span>%s
+        </div>
+        <div id="book-page-nopg">
+            <span class="book-page-details">Ilość stron</span>%s
+        </div>
 
-    </div>
+    </div> <!-- #book-page-details -->
 
     <div id="add-to-cart">
 
-        <span class="book-page-details">Cena</span>%s
+        <span class="book-page-details">Cena</span>%s PLN
 
         <form action="add_to_cart.php" method="post">
+
             <input type="hidden" name="id_ksiazki" value="%s"> <!-- id książki -->
 
             <b>Ilosc: </b>
             <input type="text" id="koszyk_ilosc%s" name="koszyk_ilosc" value="1">
-            <button type="button" onclick="increase(%s)">+</button>
-            <button type="button" onclick="decrease(%s)"><span>-</span></button>
-            <div style="clear: both;"></div>
+
+            <button type="button" onclick="increase(%s)"> <!-- id książki -->
+                +
+            </button>
+
+            <button type="button" onclick="decrease(%s)"> <!-- id książki -->
+                <span>-</span>
+            </button>
+
+                <div style="clear: both;"></div>
+
             <div id="book-status">
                 %s
             </div>
 
-            <button type="submit" name="your_name" value="your_value" class="btn-link" %s>Dodaj ko koszyka</button>
+            <button type="submit" name="your_name" value="your_value" class="btn-link" %s>
+                Dodaj ko koszyka
+            </button>
+
         </form>
 
-    </div>
+    </div> <!-- # add-to-cart -->
 
     <div style="clear: both;"></div>
     <!--<header><h1>Lorem ipsum</h1></header>-->
