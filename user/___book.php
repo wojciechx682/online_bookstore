@@ -249,20 +249,16 @@ include_once "../functions.php";
                     // Make sure to execute this code after the page has loaded, either by placing it within a DOMContentLoaded event listener or at the end of the body tag.
 
 
-
                 const circle = document.getElementById('rating-circle');
                 const circumference = 2 * Math.PI * circle.getAttribute('r'); // obwód koła
-
                 console.log("\n\n\n\n circumference (obwód) koła)->", circumference); // "62,8318"
-
-
                 const offset = circumference * (1 - (rating / 5)); // Assuming the rating is out of 5
                 // zmienna określająca stopień wypełnienia koła
                 // 31,4159 (dla średniej_oceny 2.5)
-
-
                 circle.style.strokeDasharray = `${circumference}`;
                 circle.style.strokeDashoffset = `${offset}`;
+                
+                //////////////////////////////////////////////////////////////////////////////////////
 
 
             }
