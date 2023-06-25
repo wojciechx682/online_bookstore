@@ -23,7 +23,7 @@
         </li>
     </ul> <!-- ul.tab-list -->
 
-        <div class="tab-panel active" id="tab-1"> <!-- tab-panel -->
+        <div class="tab-panel" id="tab-1"> <!-- tab-panel -->
             <p>Java jest dojrzałym językiem programowania, który pozwala na pisanie kodu dla wielu rodzajów komputerów służących do różnych celów i działających na różnych platformach. Jest świetnym wyborem dla programistów, którym zależy na tworzeniu bezpiecznych aplikacji o wyjątkowej jakości. Wokół Javy skupia się duża społeczność, dzięki której język ten wciąż się rozwija, unowocześnia i wzbogaca o nowe elementy. Osoby, które swoje zawodowe życie wiążą z pisaniem programów w Javie, muszą poznać zaawansowane zagadnienia i mniej oczywiste funkcjonalności Javy, również te niedawno zaimplementowane. To konieczność dla każdego profesjonalnego programisty Javy.</p>
 
             <p>Oto kolejne, przejrzane, zaktualizowane i uzupełnione wydanie znakomitego podręcznika dla zawodowych programistów Javy. Znalazł się tu dokładny opis sposobów tworzenia interfejsu użytkownika, stosowania rozwiązań korporacyjnych, sieciowych i zabezpieczeń, a także nowości wprowadzonych w JDK 11. Przedstawiono techniki programowania baz danych oraz umiędzynarodowiania aplikacji Javy. Sporo uwagi poświęcono bibliotece Swing oraz jej wykorzystaniu do tworzenia realistycznej grafiki i efektów specjalnych. Ponadto w książce zostały pokazane nowe możliwości języka - zademonstrowano, jak dzięki nim uzyskać wyjątkową jakość aplikacji, a zamieszczone przykłady opracowano pod kątem zrozumiałości i wartości praktycznej.</p>
@@ -41,7 +41,7 @@
             <p><span class="book-details-tab">numer (id) książki</span><strong>%s</strong></p>
         </div>
 
-        <div class="tab-panel" id="tab-3">
+        <div class="tab-panel active" id="tab-3">
 
             <!-- <div id="book-page-rate-circle">
                 <div id="book-page-rate-circle">
@@ -55,7 +55,7 @@
         <circle cx="15" cy="17" r="10" stroke="#D3D3D3" stroke-width="1" fill="none" />
         <circle id="rating-circle" cx="15" cy="17" r="10" stroke="#ffc107" stroke-width="1" fill="none"
                 stroke-dasharray="62.8"
-                stroke-dashoffset="62.8" class="filled">
+                stroke-dashoffset="62.8">
         </circle>
         <text x="15" y="18.5" text-anchor="middle" font-size="3">
             <tspan x="15" dy="-0.5em">średnia</tspan>
@@ -63,6 +63,8 @@
         </text>
     </svg>
 </div>
+
+
 
             <div id="book-rating-details">
 
