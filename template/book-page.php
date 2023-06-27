@@ -49,8 +49,10 @@
 
             <input type="hidden" name="id_ksiazki" value="%s"> <!-- id książki -->
 
-            <b>Ilosc: </b>
-            <input type="text" id="koszyk_ilosc%s" name="koszyk_ilosc" value="1">
+            <label>
+                <b>Ilość: </b>
+                <input type="text" id="koszyk_ilosc%s" name="koszyk_ilosc" value="1"> <!-- id = " koszyk_ilosc { id książki } " -->
+            </label>
 
             <button type="button" onclick="increase(%s)"> <!-- id książki -->
                 +
@@ -66,11 +68,11 @@
                 %s
             </div>
 
-            <button type="submit" name="your_name" value="your_value" class="btn-link" %s>
+            <button type="submit" class="btn-link" %s> <!-- enabled/disabled -->
                 Dodaj ko koszyka
-            </button>
+            </button> <!-- name="your_name" value="your_value" -->
 
-        </form>
+        </form> <!-- add_to_cart.php -->
 
     </div> <!-- # add-to-cart -->
 

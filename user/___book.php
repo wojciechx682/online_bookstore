@@ -1,14 +1,133 @@
 <?php
+    session_start();
+    include_once "../functions.php";
 
-session_start();
-include_once "../functions.php";
+    // Check if the book ID is set in the session
+    if (isset($_SESSION["book-id"])) {
+        $book = $_SESSION["book-id"];
+    }
 
+
+    if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST) && ! empty($_POST)
+
+        //echo "<br><hr><br> POST array is SET and not Empty<br><hr><br>";
+        //var_dump($_POST);
+
+        /////////////////////////////////////////////////////////////////////////////
+        // get highest book-id from database ;
+        query("SELECT id_ksiazki FROM ksiazki ORDER BY id_ksiazki DESC LIMIT 1", "get_book_id", ""); // $_SESSION["max-book-id"] = "36" - set variable to be applied in book-id filter below;
+        // (if book-id is higher than maximum id number in db - manage the error);
+        // sanitize input - book-id ;
+        $book = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT); // book-id;
+        // validate book-id - valid integer in specific range ;
+        $_SESSION["book-id"] = filter_var($book, FILTER_VALIDATE_INT, array(
+                'options' => array(
+                    'min_range' => 1,  // Minimum allowed book-id value
+                    'max_range' => $_SESSION["max-book-id"] // Maximum allowed book-id value (highest book-id in database) ; functions() -> "get_book_id()"
+                )
+            )
+        ); // ✓ It ensures that the value is an integer within the specified range;
+        // check if there is really a book with that id ;
+        $_SESSION['book_exists'] = false;
+        query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
+        // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0 -> przestawi $_SESSION['book_exists'] -> na true ;
+        if($book === false || $_SESSION["book-id"] === false || $_SESSION['book_exists'] === false) {
+            // tutaj trzeba odpowiednio obsłużyć błąd ;
+            //
+            // ✓ id-książki nie przeszło walidacji, lub nie istnieje książka o takim id);
+            // handle error !;
+            //echo "\n error - invalid (didnt pass validation !) book-id (POST) or that book doesnt exist ! \n";
+            // create and make logic for handling error about not valid book-id ;
+
+            //unset($_SESSION["book-id"]);
+            // obsługa błędu ;
+
+            // musi być komunikat o błędzie + exit() ! ;
+
+            echo "<br><hr> 43 invalid book-id or book doesnt exist ! <br><hr>";
+            exit();
+
+        } else {
+            // ✓✓✓ valid book-id, book exist in db;
+            echo "\n 49 SESSION book-id -> " . $_SESSION["book-id"];
+            echo "<br> 51 Valid book-id and book exist ! <br><hr>";
+            //exit();
+
+
+            // redirect to the page itself
+            header('Location: ___book.php', true, 303);
+            exit();
+
+        }
+        /////////////////////////////////////////////////////////////////////////////
+    }
+
+/*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+echo "GET ->"; print_r($_GET); echo "<hr><br>";
+echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+
+
+    /*if( $_SERVER['REQUEST_METHOD'] === "GET" ) {
+
+        if ( isset($_SESSION['book-id']) ) {
+            // get the valid state from the session
+            $book = $_SESSION['book-id'];
+            //unset($_SESSION['book-id']);
+            echo "\n 68 book-id -> " . $_SESSION['book-id'];
+
+        }
+
+        echo "\n 71 book-id -> " . $book;
+    }
+
+    exit();*/
+
+    /*echo "\n 64 SESSION book-id -> " . $_SESSION["book-id"];*/
+
+    /*else if ( $_SERVER['REQUEST_METHOD'] === "GET" ) { // GET
+
+        //elseif( isset($_SESSION["book-id"]) ) {        // GET
+
+        if( isset($_SESSION["book-id"]) ) {
+            $book = $_SESSION["book-id"];
+            unset($_SESSION["book-id"]);
+
+            echo "<br>63 book -> " . $book . "<br><hr>";
+
+            exit();
+        }
+    }*/
+
+    //exit();
+
+   /* else {
+        echo "<br><hr><br> POST array is NOT (!) SET <br><hr><br>"; // nie podano parametru id-ksiazki w żądaniu POST ;
+        //var_dump($_POST);
+        //echo "\n Sesion book -> " . $_SESSION["book-id"] . "<br><hr>";
+
+        unset($_SESSION["book-id"]); // ✓
+
+
+        // musi być komunikat o błędzie + exit() ! ;
+
+        /////////////////////////////////////////////////////////////////////////////
+
+        /////////////////////////////////////////////////////////////////////////////
+    }*/
 ?>
+
+<?php /*if ($_SERVER['REQUEST_METHOD'] === "GET") : */?>
 
 <!DOCTYPE HTML>
 <html lang="pl">
 
 <?php require "../view/___head.php"; ?>
+
+<style>
+    div#add-to-cart {
+        border: 1px solid #286dff;
+    }
+</style>
 
 <body>
 
@@ -24,13 +143,77 @@ include_once "../functions.php";
 
             <div id="content">
 
+                <?php if ($_SERVER['REQUEST_METHOD'] === "GET") : ?>
+                    <div class="alert alert-success">
+                        Thank you for your donation of $<?= $_SESSION["book-id"] ?? '' ?><!-- id książki -->
+
+                        <?php query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
+                        kt.nazwa, sb.id_kategorii,
+                        (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
+                        (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
+                        (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
+                        au.imie, au.nazwisko, au.id_autora,
+                        ks.id_wydawcy, wd.nazwa_wydawcy
+                        FROM ksiazki AS ks
+                        JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                        JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                        LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
+                        LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                        WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]); ?>
+                    </div>
+                <?php endif ?>
+
+                <?php exit(); ?>
+
+
+
                 <?php
+
+/*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+echo "GET ->"; print_r($_GET); echo "<hr><br>";
+echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+//var_dump($_POST); echo "<br><hr><br>";
+//$book = array_keys($_POST)[0]; // id_książki (int);
+
+                // if( isset($_POST) && !empty($_POST) ) {
+
+
+
+
+
+
+
+
+                /////////////////////////////////////////////////////////////////////////////
+                //exit();
+
+
+
+                echo "<br><hr>";
+
+
+
+                echo "<br><hr>";
+
+                //exit();
+
+                //$_SESSION["book-id"] =
+
+                // Problemy implementacyjne ->  Po kliknięciu gwiazdki przy dodawaniu opinii, zostały one resetowane po najechaniu na inną gwiazdkę.    Od teraz, po kiknięciu, gwiazdki zostają zapisane.
+
+                // Podczas dodawania opinii, przy kliknięciu dwóch gwiazdek w następującej po sobie kolejności, wystąpił błąd polegający na dodaniu niewłaściwej oceny w skali 5/5 (Np. jeśli użytkownik kliknął "3", a potem "2" - ocena została zapisana jako "3") - rozwiązaniem było dodanie funkcji usuwającej atrybuty "name" ze wszystkich gwiazdek - po kliknięciu na dowolną gwiazdkę;
+
+                // Podczas odświeżania strony z książką poprzeż użycie klawiszy Ctrl + F5 pojawiał się błąd polegający na nieodopowiednim umiejscowieniu szarych gwiazdek proporcjonalnie względem żółtych gwizdek. Rozwiązaniem było dodanie lini window.onload - która czeka na wczytanie wszystkich zasobów strony (w tym stylów CSS) - tak aby ostatecznie zachować poprawne umiejscowienie żółtych i szarych gwizdek względem siebie ;
+
+                // Animacja wypełniania okręgu na żółto (proporcjonalnie do średniej oceny) - OPISAĆ - jak zostało zrobione to, że wypełnienie zaczyna się od początku okręgu;
+
+                // -------------------------------------------------------------------------
 
                 /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
                 echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
-                echo '<a href="___index2.php?kategoria=' . $_SESSION['kategoria'] . '">&larr; Wróć </a>'; // tymczasowe ;
+                echo '<a href="___index2.php?kategoria=' . $_SESSION['kategoria'] . '">&larr; Wróć </a>'; // tymczasowe (!) ;
 
                 /*echo 'Informatyka \ '*/
 
@@ -45,9 +228,17 @@ include_once "../functions.php";
                 //FROM ksiazki AS ks, autor AS au, komentarze AS km, ratings AS rt, magazyn_ksiazki AS mg, wydawcy AS wd
                 //WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = km.id_ksiazki AND ks.id_ksiazki = rt.id_ksiazki AND ks.id_wydawcy wd.id_wydawcy AND ks.id_ksiazki = mg.id_ksiazki AND ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);
 
-                $book = filter_var(filter_input(INPUT_GET, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
 
-                // validate book's id
+
+
+                //$book = filter_var(filter_input(INPUT_GET, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
+                    //$book = filter_var(filter_input(INPUT_POST, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
+
+
+
+
+                // validate book's id ;
+
                 /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating,
                              COUNT(km.id_ksiazki) AS liczba_komentarzy,
                              COUNT(rt.ocena) AS liczba_ocen,
@@ -62,10 +253,10 @@ include_once "../functions.php";
                                  LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
                              WHERE ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);*/  // ERROR - nie zwraca poprawnej ilości ocen i komentarzy !
 
-                // "The issue with your query is that you are using LEFT JOIN to join the ksiazki table with the komentarze and ratings tables. This means that for each row in the ksiazki table, all matching rows in the komentarze and ratings tables are returned. If there are multiple comments or ratings for a single book, each row for that book in the ksiazki table will be duplicated for each comment or rating. To fix this, you can use subqueries to count the number of comments and ratings for each book instead of joining the tables. Here's an example query that should give you the correct results"
+                // The issue with your query is that you are using LEFT JOIN to join the ksiazki table with the komentarze and ratings tables. This means that for each row in the ksiazki table, all matching rows in the komentarze and ratings tables are returned. If there are multiple comments or ratings for a single book, each row for that book in the ksiazki table will be duplicated for each comment or rating. To fix this, you can use subqueries to count the number of comments and ratings for each book instead of joining the tables. Here's an example query that should give you the correct results
 
-                // Solution below - This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.
-                // This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.
+                /* Solution below - This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.
+                This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.*/
 
                 /*if (isset($_SESSION["rate-error"])) {
                     $book[] = $_SESSION["rate-error"];
@@ -90,7 +281,7 @@ include_once "../functions.php";
                 // wynik zapytania -->
                 // 35	Java - Techniki zaawansowane Wydanie V	44.5	2018	2 (id_subkategori)	twarda	325	Java_techniki_zaawansowane.png	4.5	370 x 337 x 76	nowa	2 (liczba_kom) 	2   (liczba_ocen)	Cezary	Sokołowski	1	Helion	126 (ilosc dost. egzemplarzy)
 
-                /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
+                /* query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
                                 (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
                                 (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
 
@@ -110,6 +301,8 @@ include_once "../functions.php";
 
                 // ✓ zmiana kwerendy po dodaniu subkategorii ->
 
+
+
                 query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,   
                                 kt.nazwa, sb.id_kategorii,                                
                                     (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
@@ -122,7 +315,10 @@ include_once "../functions.php";
                                 JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
                                 LEFT JOIN autor AS au ON ks.id_autora = au.id_autora                                    
                                 LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                                WHERE ks.id_ksiazki = '%s'", "get_book", $book);  // It is used to retrieve detailed information about a specific book (based on $_GET["book-id"])
+                                WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]);  // It is used to retrieve detailed information about a specific book (based on $_GET["book-id"])
+
+                                // $_SESSION["book-id"]
+                                // $book
 
                 /*
                     The given query retrieves data from multiple tables using various JOIN clauses and calculates additional fields using subqueries. Let's break it down step by step:
@@ -178,7 +374,8 @@ include_once "../functions.php";
                                     WHERE id_ksiazki = '%s'
                                     GROUP BY ocena
                                     ORDER BY ocena DESC
-                                    ", "get_ratings", $book); // ✓ potrzebne w widoku w sekcji "Recenzje" ;
+                                    ", "get_ratings", $book); // ✓ potrzebne w widoku w sekcji "Recenzje" ; poziome paski z ocenami (żółte/szare) ;
+
                 // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen;
                 // $_SESSION["ratings"] -> [5] => 2 [4] => 1 ;
 
@@ -188,6 +385,8 @@ include_once "../functions.php";
                 //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
                 // The json_encode() function is used to encode a PHP value into a JSON string;
 
+                unset($_SESSION["book-id"]);
+
                 ?>
 
             </div> <!-- #content -->
@@ -196,16 +395,48 @@ include_once "../functions.php";
 
         <script>
 
+            const rating = document.getElementById("book-rate").textContent; // "4.5" - type "string";
+
+            let circleTest = document.getElementById("rating-circle");
+            let circumferenceTest = parseFloat(circleTest.getAttribute('r')) * 2 * Math.PI;
+            console.log("\n250 circumferenceTest -> ", circumferenceTest); // "62.83185307179586" - type = "number";
+            console.log("\n250 typeof circumferenceTest -> ", typeof circumferenceTest);
+            //console.log("\n250 circumferenceTest -> ", circumferenceTest);
+            //circleTest.style.strokeDasharray = `circumferenceTest`;
+            //circleTest.style.strokeDashoffset = `circumferenceTest`;
+            circleTest.style.strokeDasharray = circumferenceTest;
+            circleTest.style.strokeDashoffset  = circumferenceTest;
+
+            // (!) właściwość  stroke-dashoffset definiuje długość złotej linii, oraz odstępy pomiędzy przerwami, a więc aby początkowo ukryć złoty okrąg, należy ustawić  stroke-dashoffset=" " wartość na równą OBWODOWI KOŁA - dzięki czemu przerwa pomiędyz wzorem wyniesie dokładnie tyle co obwód koła, czyli złoty okrąg będzie niewidoczny
+            // " it creates a dash pattern with a dash length equal to the circumference ";
+
+            // poniżej troche o właściwościach stronke-dasharray i stroke-dashoffest, oraz dlaczego ustawienie obu tych wartości na wartość równą obwodowi koła - ukrywa początkowo złoty okrąg ;
+
+            // "Setting the `stroke-dasharray` value to the circumference of the circle effectively hides the yellow circle (makes it invisible) because it creates a dash pattern with a dash length equal to the circumference, and no gaps in between.
+            //
+            //Here's why this works:
+            //
+            //1. When `stroke-dasharray` is set to the circumference, each dash in the dash pattern has the same length as the circumference of the circle. Since the circumference is the total length of the circle's perimeter, setting the dash length to this value means that each dash will cover the entire circumference of the circle.
+            //
+            //2. By not specifying any gaps between the dashes (i.e., not providing a second value in the `stroke-dasharray` property), the dashes will be placed end-to-end without any gaps. This effectively fills the entire circumference of the circle with dashes.
+            //
+            //3. Since the `stroke-dashoffset` is initially set to the same value as the `stroke-dasharray` (in this case, the circumference), the entire yellow circle is initially hidden by the dash pattern. The dashes cover the entire perimeter of the circle, making it appear as if it's not filled.
+            //
+            //To make the yellow circle visible and show the filling effect, you update the `stroke-dashoffset` value to a smaller value based on the desired fill amount. As the `stroke-dashoffset` decreases, the dash pattern shifts along the path, revealing the yellow portion of the circle. By adjusting the `stroke-dashoffset` from the initial circumference to a smaller value, you control the extent of the fill and animate the filling effect.
+            //
+            //In summary, setting `stroke-dasharray` to the circumference and initially setting `stroke-dashoffset` to the same value effectively hides the yellow circle by covering it with dashes. Adjusting the `stroke-dashoffset` value subsequently reveals the yellow portion and creates the filling effect.
+            //
+            //I hope this clarifies why setting `stroke-dasharray` to the circumference hides the yellow circle. Let me know if you have any further questions!
 
             window.onload = function() {   // SD - (!) problem implementacyjny - ustawienie pozycji diva z szarymi gwiazdkami - rozwiązanie - poczekanie aż wszystkie zasoby strony (w tym CSS) się załadują) - Patrz chat gpt !
 
                 // dobra chuja nie ma tego w chat gpt - weź przedstaw mu ten problem jeszcze raz tak jakby nie był rozwiązany - i opisz w PD (problemy implementacyjne) ;
 
                 //const rating = 4.25;
-                const rating = document.getElementById("book-rate").textContent; // "4.5" - type "string";
+
                 const totalRate = 5;
                 // 4.5 / 5 * 100 => "90" - (!) Ocena wyrażona w procentach ;
-                const percentageRate = (rating / totalRate) * 100; // "number" -> "93.33399999999999"
+                const percentageRate = (rating / totalRate) * 100; // "number" -> "93.3339" ;
                 const percentageRateRounded = `${Math.round(percentageRate / 10) * 10}%`;
                 // "String" -> "90%"    // Zaokrąglona wartość oceny książki
                 const percentageRateBase = `${100 - Math.round(percentageRate / 10) * 10}%`;
@@ -235,6 +466,13 @@ include_once "../functions.php";
 
                 document.querySelector('.rating-num').innerHTML = rating ; // zaokrąglenie --> pomnożyć przez 10, zaokrąglić, podzielić przez 10 ;
 
+
+
+
+
+
+
+
                 //////////////////////////////////////////////////////////////////////////////////////
 
                 // Proporcjonalne wypełnienie okręgu ;
@@ -249,34 +487,68 @@ include_once "../functions.php";
                     // Make sure to execute this code after the page has loaded, either by placing it within a DOMContentLoaded event listener or at the end of the body tag.
 
 
-                const circle = document.getElementById('rating-circle');
-                const circumference = 2 * Math.PI * circle.getAttribute('r'); // obwód koła
-                console.log("\n\n\n\n circumference (obwód) koła)->", circumference); // "62,8318"
-                const offset = circumference * (1 - (rating / 5)); // Assuming the rating is out of 5
-                // zmienna określająca stopień wypełnienia koła
-                // 31,4159 (dla średniej_oceny 2.5)
-                circle.style.strokeDasharray = `${circumference}`;
+                 const circle = document.getElementById('rating-circle');
+                //const circumference = 2 * Math.PI * circle.getAttribute('r'); // obwód koła
+                const circumference = parseFloat(circle.getAttribute('r')) * 2 * Math.PI; // obwód ; calculate the circumference
+                    console.log("\n\n\n\n circumference (obwód) koła)->", circumference); // "62,8318"
+                            //const offset = circumference * (1 - (rating / 5));
+                            // zmienna określająca stopień wypełnienia koła ;
+                            // "31,4159" (dla średniej_oceny 2.5)
+                const offset = circumference * (1 - (rating / 5)); // Calculate the stroke dash offset ; "Przesunięcie kreski obrysu " ;
+                console.log("\n circumference -> ", circumference);
+                console.log("\n offset -> ", offset);
                 circle.style.strokeDashoffset = `${offset}`;
-                
+                //circle.style.strokeDasharray = `${circumference}`;
+
+
                 //////////////////////////////////////////////////////////////////////////////////////
 
 
             }
 
-            // ---------------------------------------------------------------------------------------------------------
-            // circle average rating -->
+            //////////////////////////////////////////////////////////////////////////////////////
 
-            // rating ;
+            /*let circleTest = document.getElementById("rating-circle");
+            let circumferenceTest = parseFloat(circleTest.getAttribute('r')) * 2 * Math.PI;
+            console.log("\n250 circumferenceTest -> ", circumferenceTest); // "62.83185307179586" - type = "number";
+            console.log("\n250 typeof circumferenceTest -> ", typeof circumferenceTest);
+                //console.log("\n250 circumferenceTest -> ", circumferenceTest);
+            //circleTest.style.strokeDasharray = `circumferenceTest`;
+            //circleTest.style.strokeDashoffset = `circumferenceTest`;
 
-             /*const ratingCircle = document.getElementById("book-rate").textContent; // "4.5" - type "string";
-             const totalRateCircle = 5; // total rating possible
-             const percentageRateCircle = (ratingCircle / totalRateCircle) * 100; // "80"
-             // calculate percentage of rating --> "70" ;
-             const percentageRateRoundedCircle = `${Math.round(percentageRateCircle)}%`; // "80%"
-             // round the percentage rating --> "70%" ;
-             const percentageRateBaseCircle = `${100 - Math.round(percentageRateCircle)}%`; // "20%";
-             // --> "30%";
-             document.querySelector('.rating-circle').style.background = `conic-gradient(gold ${percentageRateRoundedCircle}, gray ${percentageRateBaseCircle})`;*/
+            //circleTest.style.strokeDasharray = circleTest.style.strokeDashoffset = circumferenceTest;
+            circleTest.style.strokeDasharray  = circumferenceTest;
+
+            circleTest.style.strokeDashoffset = "50";
+
+            const rating = document.getElementById("book-rate").textContent;
+            const offset = circumferenceTest * (1 - (rating / 5)); // Calculate the stroke dash offset ; "Przesunięcie kreski obrysu " ;
+            console.log("\n circumference -> ", circumferenceTest);
+            console.log("\n offset -> ", offset);
+            circleTest.style.strokeDashoffset = `${offset}`;*/
+
+
+            /*circle.style.strokeDashoffset = `${offset}`;
+            circle.style.strokeDasharray = `${circumference}`;
+
+        //////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        // ---------------------------------------------------------------------------------------------------------
+        // circle average rating -->
+
+        // rating ;
+
+         /*const ratingCircle = document.getElementById("book-rate").textContent; // "4.5" - type "string";
+         const totalRateCircle = 5; // total rating possible
+         const percentageRateCircle = (ratingCircle / totalRateCircle) * 100; // "80"
+         // calculate percentage of rating --> "70" ;
+         const percentageRateRoundedCircle = `${Math.round(percentageRateCircle)}%`; // "80%"
+         // round the percentage rating --> "70%" ;
+         const percentageRateBaseCircle = `${100 - Math.round(percentageRateCircle)}%`; // "20%";
+         // --> "30%";
+         document.querySelector('.rating-circle').style.background = `conic-gradient(gold ${percentageRateRoundedCircle}, gray ${percentageRateBaseCircle})`;*/
 
             //document.querySelector('.rating-num-circle').innerHTML = ratingCircle.toFixed(2); // display the rating with 2 decimal places
 
@@ -293,35 +565,14 @@ include_once "../functions.php";
 
             //ratingCircle.classList.add("filled");
 
-
-
-
             // Assuming you have a variable named 'rating' that holds the average rating value
-
 
             //const rating = document.getElementById("book-rate").textContent; // "4.5" - type "string";
 
-            const rating = parseInt("4.5"); // "4.5" - type "string";
+            /*const rating = parseInt("4.5"); // "4.5" - type "string";
             const circle = document.getElementById('rating-circle');
             circle.style.strokeDashoffset = `${100 - rating}%`;
-            circle.classList.add('filled');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            circle.classList.add('filled');*/
 
             for(let i = 5, j = 0; i > 0; i--, j++) {
                 console.log("\n i = ", i, "; j = ", j , "\n");
@@ -330,7 +581,6 @@ include_once "../functions.php";
             /*for(let j = 0; j < 5; j++) {
                 console.log("\n j = ", j, "\n");
             }*/
-
 
             // ---------------------------------------------------------------------------------------------------------
             // ---------------------------------------------------------------------------------------------------------
@@ -354,13 +604,13 @@ include_once "../functions.php";
             console.log("\n 298 $ratings -> ", $ratings);               // [5] => 2 [4] => 1 ;
             console.log("\n 298 typeof $ratings -> ", typeof $ratings); // "Object"
 
-            console.log("\n 298 $no_ratings -> ", $no_ratings);     // "4" ;
+            console.log("\n 298 $no_ratings -> ", $no_ratings);     // "12" ;
             console.log("\n 298 btypeof $no_ratings -> ", typeof $no_ratings); // String ;
 
             //$ratings = array_reverse($ratings, true);
 
             //      bookRatingDetails.length == 5           (tyle ile jest divów - pasków poziomych z ocenami) ;
-            for (let i = bookRatingDetails.length, j = 0; i > 0 ; i--, j++) {  // ✓ Pętla po Kolekcji NodeList ;
+            for (let i = bookRatingDetails.length, j = 0; i > 0 ; i--, j++) {  // ✓ Pętla po Kolekcji NodeList - dla każdego pojemnika na paski - class="book-rating-details" ;
 
                 //   i   j  |
                 //  ---------
@@ -371,11 +621,12 @@ include_once "../functions.php";
                 //   1   4  |
 
 
-                let line = bookRatingDetails[j].querySelector(".line"); // i-ty element kolekcji -> div o klasie "line"
-                // POJEMNIK NA ŻÓŁTY I SZARY PASEK ;
-                // <div class="book-rating-details"> --> (wewnątrz każdego diva jest) --> .line -->
-                // .rated   - żółty pasek ;
-                // .unrated - cały pasek ;
+                let line = bookRatingDetails[j].querySelector(".line");
+                // i-ty element kolekcji -> div o klasie "line"
+                    // ✓ POJEMNIK NA ŻÓŁTY I SZARY PASEK ;
+                    // ✓ <div class="book-rating-details"> --> (wewnątrz każdego diva jest) --> .line -->
+                        // .rated   - żółty pasek ;
+                        // .unrated - cały pasek ;
 
                 // console.log("i -> ", i);
                 // console.log("line -> ", line);
@@ -410,13 +661,13 @@ include_once "../functions.php";
                 if($ratings[i] === undefined) { // ✓ jeśli dana ocena nie wystąpiła ani razu ;
                     newWidth = 100;     // szerokość paska ;
                     numer_of_rates = 0; // ilość_ocen ;
-                    rated.style.visibility = "hidden"; // ukrycie żółtego paska ;
+                    rated.style.visibility = "hidden"; // ukrycie (i-tego) żółtego paska ;
                 } else {
-                    // ustaw odpowiednią szerokość żółtego paska, zależnie od ilości ocen ;
+                    // ✓ ustaw odpowiednią (proporcjonalną !) szerokość żółtego paska, zależnie od ilości ocen (!) ;
 
                     // newWidth    - ✓ szerokość żółtego paska ;
                     // $no_ratings - ✓ liczba wszystkich ocen książki ;
-                    // $ratings[i] - ✓ilość wysąpień konkretnej oceny (np "5" - wysąpiło 2 razy)
+                    // $ratings[i] - ✓ ilość wysąpień konkretnej oceny (np "5" - wysąpiło 2 razy)
                     newWidth = ( width / $no_ratings ) * $ratings[i]; // ✓
                     numer_of_rates = $ratings[i];
                 }
@@ -434,16 +685,16 @@ include_once "../functions.php";
             // Gwiazdki - przy dodawaniu nowej opinii - Interakcje przy najechaniu kursorem ;
 
             const stars = document.querySelectorAll('.star'); // # add-rate -> # add-rate-outer -> .star ;
-            // Kolekcja typu NodeList ;
+            // Kolekcja typu NodeList ; // ✓ Kolekcja spanów z gwiazdkami ;
 
-            console.log("\n stars -> ", stars); // Kolekcja NodeList
+            console.log("\n stars -> ", stars); // Kolekcja NodeList // ✓ Kolekcja spanów z gwiazdkami ;
             console.log("\n typeof stars -> ", typeof stars); // "object"
 
             //let goldStars = 0;
 
             let keepStars = false; // ?
 
-            function updateStars(event, clear, keep) {
+            function updateStars(event, clear, keep) { // usunąć argumenty clear ;
 
                 console.log("\n 392 - keepStars -> ", keepStars) ;
 
@@ -489,7 +740,7 @@ include_once "../functions.php";
 
                 // to poniżej - zmienić lub usunac --->
                 else if (eventType === "mouseout") { // (!)
-                    if(!keepStars) {
+                    if(! keepStars) {
                         for (let i = 0; i < stars.length; i++) {
                             const star = stars[i];
                             star.classList.remove('gold');
@@ -611,7 +862,7 @@ include_once "../functions.php";
                     // event - element, który wywołał zdarzenie (<span> z gwiazdką)
                     updateStars(event, true, true);
                 });
-                star.addEventListener('mouseout', function (event) { // zakomentowanie tych linii -> ROZWIĄZANIE problemu implementacyjnego
+                star.addEventListener('mouseout', function (event) {
                     updateStars(event, false, false);
                 });
                 star.addEventListener('click', function (event) {
@@ -837,3 +1088,5 @@ window.addEventListener('load', function() {
 
 </body>
 </html>
+
+<?php /*endif*/ ?>

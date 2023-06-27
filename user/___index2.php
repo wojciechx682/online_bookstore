@@ -61,7 +61,7 @@
         {
             // to się spełni, jeśli nastąpił submit z wyszukiwania-zaawansowanego; - zmienna $_SESSION["kategoria"] przejmie wartość z tego formularza;
 
-            echo "<script>console.log('65 - kategoria była ustawiona w wyszukiwaniu zaawansowanym (użyto wyszukiwania zaawansowanego)');</script>";
+            //echo "<script>console.log('65 - kategoria była ustawiona w wyszukiwaniu zaawansowanym (użyto wyszukiwania zaawansowanego)');</script>";
             $_SESSION["kategoria"] = htmlentities($_POST['adv-search-category'], ENT_QUOTES, "UTF-8");
             $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
         }
@@ -194,10 +194,12 @@
 
                         // ✓ tutaj zmienna sesyjna "kategoria" przyjmuje wartość "Wszystkie" lub dowolną inną kategorią z istniejących - ponieważ wsześniej zostaje ustawiona;
 
-                        echo "198 input-seach-nav -> " . $_GET["input-search-nav"] . "<br>";
+                        // echo "198 input-seach-nav -> " . $_GET["input-search-nav"] . "<br>";
 
                         // input-search-nav sanitization;
                         $title = filter_input(INPUT_GET, "input-search-nav", FILTER_SANITIZE_STRING);
+
+                        echo "198 input-seach-nav -> " . $title . "<br>";
 
                         $values = [$title];
 

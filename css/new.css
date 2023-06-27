@@ -2289,6 +2289,29 @@ div#content-books {
     top: -40px;*/
 }
 
+                    .book-info > form button#submit-book-form {
+                        /*margin: 0;
+                        padding: 0;
+                        border: 0;
+                        background-color: transparent;*/
+                        background: none;
+                        border: none;
+                        padding: 0;
+                        margin: 0;
+                        font: inherit;
+                        cursor: pointer;
+                        color: inherit;
+                        text-align: left;
+                    }
+
+                    .book-info > form button#submit-book-form h3.book-title {
+                        font-weight: 400;
+                    }
+                    .book-info > form button#submit-book-form h3.book-title:hover {
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+
 .book-title {
     margin: 8px 0 0 0;
     font-size: 0.9rem;
@@ -3826,4 +3849,9 @@ div#advanced-search input[type="submit"]:hover {
 /*
 div {
     border: 1px dashed rgba(121, 121, 121, 0.49);
+}*/
+/*
+
+div#add-to-cart, div#add-to-cart * {
+    border: 1px dashed #e72b2b !important;
 }*/

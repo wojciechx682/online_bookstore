@@ -30,15 +30,15 @@
         </div>
 
         <div class="tab-panel" id="tab-2">
-            <p><span class="book-details-tab">tytuł</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">autor</span><strong>%s %s</strong></p>
-            <p><span class="book-details-tab">wydawnictwo</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">ilość stron</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">rok wydania</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">wymiary</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">oprawa</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">stan</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">numer (id) książki</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Tytuł</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Autor</span><strong>%s %s</strong></p>
+            <p><span class="book-details-tab">Wydawnictwo</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Ilość stron</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Rok wydania</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Wymiary</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Oprawa</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Stan</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Numer (id) książki</span><strong>%s</strong></p>
         </div>
 
         <div class="tab-panel active" id="tab-3">
@@ -50,21 +50,27 @@
                 </div>
             </div> -->
 
-<div id="circle-plot">
-    <svg viewBox="0 0 100 100">
-        <circle cx="15" cy="17" r="10" stroke="#D3D3D3" stroke-width="1" fill="none" />
-        <circle id="rating-circle" cx="15" cy="17" r="10" stroke="#ffc107" stroke-width="1" fill="none"
-                stroke-dasharray="62.8"
-                stroke-dashoffset="62.8">
-        </circle>
-        <text x="15" y="18.5" text-anchor="middle" font-size="3">
-            <tspan x="15" dy="-0.5em">średnia</tspan>
-            <tspan x="15" dy="1.2em">%s</tspan>
-        </text>
-    </svg>
-</div>
+            <div id="circle-plot">
+                <svg viewBox="0 0 100 100">
+                    <circle cx="15" cy="17" r="10" stroke="#D3D3D3" stroke-width="1" fill="none" />
+                    <circle id="rating-circle" cx="15" cy="17" r="10" stroke="#ffc107" stroke-width="1" fill="none"
+                             > <!-- stroke-dasharray="100"
+                            stroke-dashoffset="100"  -->
+                    </circle>
+                    <text x="15" y="18.5" text-anchor="middle" font-size="3">
+                        <tspan x="15" dy="-0.5em">średnia</tspan>
+                        <tspan x="15" dy="1.2em">%s</tspan>
+                    </text>
+                </svg>
+
+            </div>
 
 
+           <!-- <svg>
+                <circle cx="50" cy="50" r="40" stroke="black" stroke-width="1" fill="none"
+                        stroke-dasharray="20" />
+
+            </svg>-->
 
             <div id="book-rating-details">
 
@@ -134,7 +140,7 @@
                         <div>
                             <label for="textarea-comment" id="textarea-label">Twoja opinia</label>
                         </div>
-                        <textarea id="textarea-comment" name="comment" rows="4" cols="80" maxlength="255" minlength="5">Super książka polecam 8.5/10</textarea>
+                        <textarea id="textarea-comment" name="comment" required rows="4" cols="80" maxlength="255" minlength="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit</textarea>
                     </div>
 
                     <!--<hr>-->
@@ -144,6 +150,7 @@
                                 <!-- <div class="rate-inner-base"></div> -->
                             <span class="star" id="star-1">
 									1 <input type="hidden" value="1">
+                                      <!-- po kliknięciu na gwiazdkę dodany zostaje do niej (do inputa) atrybut name="star" -->
 								</span>
                             <span class="star" id="star-2">
 									2 <input type="hidden" value="2">

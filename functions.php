@@ -225,7 +225,7 @@
         // file_put_contents("../template/book-page-tabs-modified.php", $modified);
     }
 
-    function get_ratings($result) { // "ocena", "liczba_ocen";
+    function get_ratings($result) { // "ocena", "liczba_ocen" ;
 
         // wstawia do tablicy sesyjnej - ilości poszczególnych ocen dla książki ->   5 -> 4, 4 -> 26, 3 -> 15, ....
         // $_SESSION["ratings"] -> [5] => 2 [4] => 1, ... ;
@@ -284,6 +284,13 @@
         }
 
         $result->free_result();
+    }
+
+    // ..\user\book - POST ;
+    function get_book_id($result) {
+        // get highest book-id from db to apply max-range filter in ..\book.php (POST);
+        $row = $result->fetch_assoc();
+        $_SESSION["max-book-id"] = $row["id_ksiazki"];
     }
 
 	function check_email($result)

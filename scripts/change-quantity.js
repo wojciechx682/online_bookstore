@@ -1,11 +1,13 @@
 
 function changeQuantity(id_ksiazki, amount) {
+
 	const el = document.querySelector(`#koszyk_ilosc${id_ksiazki}`);
 	const newQuantity = parseInt(el.value) + amount;
+
 	if (newQuantity >= 1) {
 		el.value = newQuantity;
-		let form = document.querySelector(`#change_quantity_form${id_ksiazki}`); // koszyk.php
-		form.submit();															 // koszyk.php
+		let form = document.querySelector(`#change_quantity_form${id_ksiazki}`); // (tylko dla) koszyk.php
+		form.submit();															 // -----||---- koszyk.php
 	}
 }
 

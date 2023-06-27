@@ -122,7 +122,7 @@
 }
 
 #rating-num {
-    margin-left: 12px;
+    margin-left: 14px;
 }
 
 #rate-container {
@@ -166,9 +166,13 @@
 
 /* circle rates --> ------------------------------------------------------------------------------------------------- */
 #rating-circle {
-    stroke-dasharray: 62.8; /* circumference of the circle */
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 1s ease;
+/*stroke-dasharray: 62;*/  /* Set the stroke-dasharray to the circumference of the circle */
+                               /* Ta właściwość definiuje wzór kresek i przerw używanych do tworzenia linii przerywanej lub kropkowanej  - "5,2"*/
+/*stroke-dashoffset: 62; */ /* Initially hide the filled (yelow) portion */
+                       /*  Ta właściwość określa pozycję początkową wzoru kreski - "Przesunięcie", zmieniając ją, zmieniamy początkową pozycję wzoru kreski; */
+    transition: stroke-dashoffset 0.4s ease;
+
+    /*transform: rotate(90deg);*/ /* Rotate the circle by -90 degrees to start the fill from the top */
 
     width: 50px;
     height: 50px;
@@ -513,6 +517,11 @@ section.comment {
     margin-top: 5px;
 }
 
+
+#add-to-cart form label:hover {
+    cursor:pointer;
+}
+
 input[id^="koszyk_ilosc"] { /* ta zasada jest już w main.css */
     width: 45px;
     text-align: center;
@@ -592,5 +601,5 @@ div#add-to-cart form button[type="button"]:hover {
 
 div#add-to-cart form button[type="button"]:nth-of-type(2) span {
     position: relative;
-    top: -1.7px;
+    top: -0.5px;
 }

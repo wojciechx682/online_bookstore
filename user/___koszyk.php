@@ -31,6 +31,9 @@
                 <h3 id="cart-header">Koszyk</h3>
 
                 <?php
+
+                    // (!) Problem implementacyjny - (do zrobienia) - Zmiana użycia formularza do wysyłania i zapisywania ilości książek w koszyku na użycie technologii AJAX - ponieważ przy zmienie ilości książek w koszyku następuje każdorazowo odświeżenie strony ;
+
                     // echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">&larr; Wróć </a>';
 
                     $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);

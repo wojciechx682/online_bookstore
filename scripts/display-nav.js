@@ -1,4 +1,6 @@
 
+// used in -> account.php, remove_account.php ;
+
 function displayNav() {
 	// const nav = document.getElementById("nav");
 	// const content = document.getElementById("content");
