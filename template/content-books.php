@@ -14,10 +14,10 @@
                 <h3 class="book-title">Java - Techniki zaawansowane Wydanie V</h3>
             </a>
 
-            <!-- ✓✓✓ GET -> na POST <form> <-------------------- -->
+            <!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->
             <form method="post" action="../user/___book.php">
                 <input type="hidden" name="%s">
-                <button id="submit-book-form" type="submit">aaa<h3 class="book-title">%s</h3></button>
+                <button class="submit-book-form" type="submit">aaa<h3 class="book-title">%s</h3></button>
             </form>
 
             <div class="book-price">%s</div>

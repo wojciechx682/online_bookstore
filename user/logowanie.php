@@ -76,7 +76,9 @@
                                 ad.miejscowosc, ad.ulica, ad.numer_domu, ad.kod_pocztowy, ad.kod_miejscowosc
                          FROM klienci AS kl, adres AS ad 
                          WHERE kl.adres_id = ad.adres_id
-                         AND kl.email='%s'", "log_in", $email_sanitized); // funkcja log_in (odpowiedzialna za logowanie) uzyska hasło z tablicy $_POST["haslo"];
+                         AND BINARY kl.email='%s'", "log_in", $email_sanitized); // funkcja log_in (odpowiedzialna za logowanie) uzyska hasło z tablicy $_POST["haslo"];
+
+
 
             // funkcja log_in - ustawia $_SESSION["blad"] == "nieprawidłowy login lub hasło" - jeśli podano złe dane logowania;
                 // jeśli podano poprawne dane logowania, wewnątrz funkcji następuje przekierowanie do odpowiednich plików;

@@ -1,5 +1,5 @@
 
-<? // template used on the book page (book.php) to display the book comments ; ?>
+<!-- // template used on the book page (book.php) to display the book comments ; -->
 
 <section class="comment">
     <div class="comment-author">%s</div> <!-- autor komentarza (imie) -->

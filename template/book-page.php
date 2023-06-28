@@ -1,5 +1,5 @@
 
-<? // template used on the book page (book.php) to display the book details ?>
+<!-- // template used on the book page (book.php) to display the book details -->
 
 <div id="book-page">
 

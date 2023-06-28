@@ -32,7 +32,7 @@
 
         $id = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT); // id_klienta;
 
-        if ( $haslo !== $powtorz_haslo ) {
+        if ( ($haslo !== $powtorz_haslo) || ($haslo !== $_POST['haslo_confirm']) || ($powtorz_haslo !== $_POST['powtorz_haslo_confirm'])) {
             $_SESSION['password_confirmed'] = false;
         } else {
             query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verify_password", $id);
@@ -45,7 +45,12 @@
             $_SESSION['password_confirmed'] = false; // podane złe hasło;
         }
 
-        header('Location: ___remove_account.php'); // przekierowanie do strony remove_account.php
-        exit();
+    } else {
+        $_SESSION['password_confirmed'] = false;
     }
+
+    unset($_SESSION["stare_haslo"]);
+
+    header('Location: ___remove_account.php'); // przekierowanie do strony remove_account.php
+    exit();
 ?>

@@ -2,65 +2,150 @@
     session_start();
     include_once "../functions.php";
 
-    // Check if the book ID is set in the session
-    if (isset($_SESSION["book-id"])) {
-        $book = $_SESSION["book-id"];
-    }
+/*$book = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT);
 
+echo "<br><hr><br>";
+
+    echo "<br> book -> " . $book . "<br>";
+
+echo "<br><hr><br>";
+
+exit();*/
+
+// Check if the book ID is set in the session
+/*if (isset($_SESSION["book-id"])) {
+    $book = $_SESSION["book-id"];
+}*/
+
+/*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+echo "GET ->"; print_r($_GET); echo "<hr><br>";
+echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
     if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST) && ! empty($_POST)
 
         //echo "<br><hr><br> POST array is SET and not Empty<br><hr><br>";
         //var_dump($_POST);
 
-        /////////////////////////////////////////////////////////////////////////////
-        // get highest book-id from database ;
-        query("SELECT id_ksiazki FROM ksiazki ORDER BY id_ksiazki DESC LIMIT 1", "get_book_id", ""); // $_SESSION["max-book-id"] = "36" - set variable to be applied in book-id filter below;
-        // (if book-id is higher than maximum id number in db - manage the error);
-        // sanitize input - book-id ;
-        $book = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT); // book-id;
-        // validate book-id - valid integer in specific range ;
-        $_SESSION["book-id"] = filter_var($book, FILTER_VALIDATE_INT, array(
-                'options' => array(
-                    'min_range' => 1,  // Minimum allowed book-id value
-                    'max_range' => $_SESSION["max-book-id"] // Maximum allowed book-id value (highest book-id in database) ; functions() -> "get_book_id()"
-                )
-            )
-        ); // ✓ It ensures that the value is an integer within the specified range;
-        // check if there is really a book with that id ;
-        $_SESSION['book_exists'] = false;
-        query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
-        // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0 -> przestawi $_SESSION['book_exists'] -> na true ;
-        if($book === false || $_SESSION["book-id"] === false || $_SESSION['book_exists'] === false) {
-            // tutaj trzeba odpowiednio obsłużyć błąd ;
-            //
-            // ✓ id-książki nie przeszło walidacji, lub nie istnieje książka o takim id);
-            // handle error !;
-            //echo "\n error - invalid (didnt pass validation !) book-id (POST) or that book doesnt exist ! \n";
-            // create and make logic for handling error about not valid book-id ;
+        if ( isset(array_keys($_POST)[0]) && ! empty(array_keys($_POST)[0]) ) { // check if POST value exists and is not empty;
 
-            //unset($_SESSION["book-id"]);
-            // obsługa błędu ;
+            // "35" ;
 
-            // musi być komunikat o błędzie + exit() ! ;
+            // Process the form data and perform necessary validations ;
+            /////////////////////////////////////////////////////////////////////////////
+            // get highest book-id from database ;
+            query("SELECT id_ksiazki FROM ksiazki ORDER BY id_ksiazki DESC LIMIT 1", "get_book_id", "");
+            // $_SESSION["max-book-id"] = "35" - set variable to be applied in book-id filter below;
+                // (if book-id is higher than maximum id number in db - manage the error);
 
-            echo "<br><hr> 43 invalid book-id or book doesnt exist ! <br><hr>";
-            exit();
+            // sanitize input - book-id ;
+            $book = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT); // array_keys($_POST)[0] - book-id (id_książki);
+                                    // "35"
+            /*echo "<br><hr><br>";
+            echo "<br> book -> " . $book . "<br>";
+            echo "<br><hr><br>"; exit();*/
+
+            // validate book-id - ✓ valid integer in specific range ;
+            $_SESSION["book-id"] = filter_var($book, FILTER_VALIDATE_INT, [
+                    'options' => [
+                        'min_range' => 1,                       // Minimum allowed book-id value
+                        'max_range' => $_SESSION["max-book-id"] // Maximum allowed book-id value (highest book-id in database) ; functions() -> "get_book_id()"
+                    ]
+                ]
+            ); // ✓ It ensures that the value is an integer within the specified range;
+
+            // check if there is really a book with that id ;
+            $_SESSION['book_exists'] = false;
+            query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
+                // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0 -> przestawi
+            // $_SESSION['book_exists'] -> na true ;
+
+            if($book === false || $_SESSION["book-id"] === false || $_SESSION['book_exists'] === false || empty($_SESSION["max-book-id"])
+                               || ($_SESSION["book-id"] != array_keys($_POST)[0])) {
+                            // tutaj trzeba odpowiednio obsłużyć błąd ;
+                            //
+                            // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
+                                // handle error !;
+                                //echo "\n error - invalid (didnt pass validation !) book-id (POST) of that book doesnt exist ! \n";
+                                // create and make logic for handling error about not valid book-id ;
+
+                            //unset($_SESSION["book-id"]);
+                            // obsługa błędu ;
+
+                            // musi być komunikat o błędzie (np okienko) + exit() ! ;
+
+                echo "<br><hr> 43 invalid book-id OR book doesnt exist ! <br><hr>";
+
+                // obsługa błędu - np przekierowanie na poprzednią stronę (index.php) + wyświetlenie okienka z okmunikatem
+                                                                                        // na stronie index.php można sprawdzić, czy np ustawiona wartość $_SESSION["error_costam"] ma wartosc true, i wtedy wyswietlic okienko
+
+                // $_SESSION["error"] = true ;
+
+                unset($_SESSION["max-book-id"], $book, $_SESSION["book-id"], $_SESSION["book_exists"],
+                      $_POST);
+
+                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+
+                header('Location: ___index2.php');
+                exit();
+
+            } else { // input is OK
+
+                // Execute code (such as database updates) here;
+                // Perform any required actions with the form data (e.g., database update)
+
+                // ✓✓✓ valid book-id, book exist in db;
+                echo "\n 49 SESSION book-id -> " . $_SESSION["book-id"];
+                echo "<br> 51 Valid book-id and book exist ! <br><hr>";
+                //exit();
+
+                    unset($_SESSION["max-book-id"], $book, $_SESSION["book_exists"],
+                          $_POST);
+
+                // redirect to the page itself
+                    //header('Location: ___book.php', true, 303);
+
+                // Redirect to prevent form resubmission
+                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
+                exit();
+
+            }
+            /////////////////////////////////////////////////////////////////////////////
 
         } else {
-            // ✓✓✓ valid book-id, book exist in db;
-            echo "\n 49 SESSION book-id -> " . $_SESSION["book-id"];
-            echo "<br> 51 Valid book-id and book exist ! <br><hr>";
+
+            // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/user/___book.php bez podania wartości w POST[] ;
+
+            echo "<br> POST value (book-id) doesnt exist <br>" ;
+
+            header('Location: ___index2.php');
+            exit();
+
+            // $_SESSION["error"] = true ;
+
+            /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+            echo "GET ->"; print_r($_GET); echo "<hr><br>";
+            echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+
             //exit();
 
 
-            // redirect to the page itself
-            header('Location: ___book.php', true, 303);
-            exit();
-
         }
-        /////////////////////////////////////////////////////////////////////////////
+
+        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+        echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+
+    } elseif (
+        $_SERVER['REQUEST_METHOD'] === "GET" && ( ! isset($_SESSION["book-id"]) || empty($_SESSION["book-id"]) )
+    ) {
+        header('Location: ___index2.php'); exit();
     }
+
+
+
+    //exit();
 
 /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
 echo "GET ->"; print_r($_GET); echo "<hr><br>";
@@ -140,12 +225,11 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
         <main>
 
             <!-- <aside> <div id="nav"></div> </aside> -->
+            <!-- Thank you for your donation of $--> <!-- id książki -->
 
             <div id="content">
 
-                <?php if ($_SERVER['REQUEST_METHOD'] === "GET") : ?>
-                    <div class="alert alert-success">
-                        Thank you for your donation of $<?= $_SESSION["book-id"] ?? '' ?><!-- id książki -->
+                <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_SESSION["book-id"]) ) : ?>
 
                         <?php query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
                         kt.nazwa, sb.id_kategorii,
@@ -159,11 +243,25 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                         JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
                         LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
                         LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                        WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]); ?>
-                    </div>
-                <?php endif ?>
+                        WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]);
 
-                <?php exit(); ?>
+                        query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings
+                                        WHERE id_ksiazki = '%s'
+                                        GROUP BY ocena
+                                        ORDER BY ocena DESC", "get_ratings", $_SESSION["book-id"]);
+                            // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen;
+                            // $_SESSION["ratings"] -> [5] => 2 [4] => 1 ;
+                        $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]);
+                            // funstions -> get_ratings() -> to pass that array (PHP) to JS
+                            //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
+                            // The json_encode() function is used to encode a PHP value into a JSON string;
+                        ?>
+
+
+
+                <?php endif; ?>
+
+                <?php //exit(); ?>
 
 
 
@@ -177,23 +275,11 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                 // if( isset($_POST) && !empty($_POST) ) {
 
-
-
-
-
-
-
-
                 /////////////////////////////////////////////////////////////////////////////
                 //exit();
 
-
-
-                echo "<br><hr>";
-
-
-
-                echo "<br><hr>";
+                /*echo "<br><hr>";
+                echo "<br><hr>";*/
 
                 //exit();
 
@@ -213,7 +299,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
                 echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
-                echo '<a href="___index2.php?kategoria=' . $_SESSION['kategoria'] . '">&larr; Wróć </a>'; // tymczasowe (!) ;
+                //echo '<a href="___index2.php?kategoria=' . $_SESSION['kategoria'] . '">&larr; Wróć </a>'; // tymczasowe (!) ;
 
                 /*echo 'Informatyka \ '*/
 
@@ -228,14 +314,8 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 //FROM ksiazki AS ks, autor AS au, komentarze AS km, ratings AS rt, magazyn_ksiazki AS mg, wydawcy AS wd
                 //WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = km.id_ksiazki AND ks.id_ksiazki = rt.id_ksiazki AND ks.id_wydawcy wd.id_wydawcy AND ks.id_ksiazki = mg.id_ksiazki AND ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);
 
-
-
-
                 //$book = filter_var(filter_input(INPUT_GET, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
                     //$book = filter_var(filter_input(INPUT_POST, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
-
-
-
 
                 // validate book's id ;
 
@@ -303,22 +383,22 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
 
 
-                query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,   
-                                kt.nazwa, sb.id_kategorii,                                
-                                    (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
-                                    (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
-                                    (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
-                                    au.imie, au.nazwisko, au.id_autora,
-                                    ks.id_wydawcy, wd.nazwa_wydawcy
-                                FROM ksiazki AS ks
-                                JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
-                                JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
-                                LEFT JOIN autor AS au ON ks.id_autora = au.id_autora                                    
-                                LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                                WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]);  // It is used to retrieve detailed information about a specific book (based on $_GET["book-id"])
+/*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
+                kt.nazwa, sb.id_kategorii,
+                    (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
+                    (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
+                    (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
+                    au.imie, au.nazwisko, au.id_autora,
+                    ks.id_wydawcy, wd.nazwa_wydawcy
+                FROM ksiazki AS ks
+                JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
+                LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]); */ // It is used to retrieve detailed information about a specific book (based on $_GET["book-id"])
 
-                                // $_SESSION["book-id"]
-                                // $book
+                // $_SESSION["book-id"]
+                // $book
 
                 /*
                     The given query retrieves data from multiple tables using various JOIN clauses and calculates additional fields using subqueries. Let's break it down step by step:
@@ -369,23 +449,23 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 // pobranie ilości każdej oceny (5 - ilość 3, 4 - ilość 2, itd .... ->
                 // SD -> problem implementacyjny ;
 
-                // Oceny + Ich ilości dla tej książki ;
-                query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings
-                                    WHERE id_ksiazki = '%s'
-                                    GROUP BY ocena
-                                    ORDER BY ocena DESC
-                                    ", "get_ratings", $book); // ✓ potrzebne w widoku w sekcji "Recenzje" ; poziome paski z ocenami (żółte/szare) ;
+// Oceny + Ich ilości dla tej książki ;
+/*query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings
+                    WHERE id_ksiazki = '%s'
+                    GROUP BY ocena
+                    ORDER BY ocena DESC
+                    ", "get_ratings", $book); */// ✓ potrzebne w widoku w sekcji "Recenzje" ; poziome paski z ocenami (żółte/szare) ;
 
                 // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen;
                 // $_SESSION["ratings"] -> [5] => 2 [4] => 1 ;
 
-                $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]);
-                // funstions -> get_ratings() -> to pass that array (PHP) to JS
+//$_SESSION["raings_array"] = json_encode($_SESSION["ratings"]);
+                    // funstions -> get_ratings() -> to pass that array (PHP) to JS
 
-                //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
-                // The json_encode() function is used to encode a PHP value into a JSON string;
+                    //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
+                    // The json_encode() function is used to encode a PHP value into a JSON string;
 
-                unset($_SESSION["book-id"]);
+                                                    //unset($_SESSION["book-id"]);
 
                 ?>
 
@@ -394,6 +474,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
         </main>
 
         <script>
+
 
             const rating = document.getElementById("book-rate").textContent; // "4.5" - type "string";
 

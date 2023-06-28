@@ -5,10 +5,18 @@
     <div class="book-no">%s</div>
     <div class="book-url">
 
-            <a href="../user/___book.php?book=%s">
-                <img src="../assets/books/%s" alt="book">
-            </a>
+            <!--<a href="../user/___book.php?book=& s">
+                <img src="../assets/books/& s" alt="book">
+            </a>-->
 
+        <!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->
+
+        <form method="post" action="../user/___book.php">
+            <input type="hidden" name="%s">
+            <button type="submit" class="book-img-button">
+                <img src="../assets/books/%s" alt="book">
+            </button>
+        </form>
     </div>
     <div class="book-desc">
         <span class="order-book-desc-row">%s</span>

@@ -289,7 +289,8 @@
     // ..\user\book - POST ;
     function get_book_id($result) {
         // get highest book-id from db to apply max-range filter in ..\book.php (POST);
-        $row = $result->fetch_assoc();
+            $row = $result->fetch_assoc();
+
         $_SESSION["max-book-id"] = $row["id_ksiazki"];
     }
 
@@ -944,7 +945,7 @@ EOT;
 
 	function cart_verify_book($result)
 	{
-
+        // \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
         // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
 		$_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
         /*echo "<br>448<br>";*/

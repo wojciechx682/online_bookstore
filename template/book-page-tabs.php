@@ -1,5 +1,5 @@
 
-<? // template used on the book page (book.php) to display the book tabs ?>
+<!-- // template used on the book page (book.php) to display the book tabs -->
 
 <section class="book-page"> <!-- book-page-tabs -->
 

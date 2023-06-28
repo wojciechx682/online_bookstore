@@ -2289,7 +2289,10 @@ div#content-books {
     top: -40px;*/
 }
 
-                    .book-info > form button#submit-book-form {
+                    .book-info > form button.submit-book-form,
+                    div.book-url > form button.book-img-button /* \user\orders.php */
+
+                    {
                         /*margin: 0;
                         padding: 0;
                         border: 0;
@@ -2304,10 +2307,10 @@ div#content-books {
                         text-align: left;
                     }
 
-                    .book-info > form button#submit-book-form h3.book-title {
+                    .book-info > form button.submit-book-form h3.book-title {
                         font-weight: 400;
                     }
-                    .book-info > form button#submit-book-form h3.book-title:hover {
+                    .book-info > form button.submit-book-form h3.book-title:hover {
                         cursor: pointer;
                         text-decoration: underline;
                     }
@@ -3055,7 +3058,8 @@ h3#order-summary-header + p {
     margin-bottom: 15px;
 }
 
-.dane_konta:first-of-type {
+/*.dane_konta:first-of-type,*/
+.dane-konta-form {
     min-height: 280px;
 }
 
@@ -3340,9 +3344,11 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
     padding-bottom: 45px;
 }
 
-/* komunikat "Złe hasło" - po podaniu złego hasła przy próbie usunięcia konta */
+/* komunikat "Złe hasło" - po podaniu złego hasła przy próbie usunięcia konta,
+   oraz "Zaznacz checkbox" */
 
-div.remove_account span.remove-account-password-error {
+div.remove_account span.remove-account-password-error,
+div.remove_account span.remove-account-confirm-error {
 
     display: block;
 
@@ -3598,24 +3604,24 @@ div.order-sum > span.order-sent {
    padding-bottom: 20px;
 }
 
-div#content div.order div.book-url a > img {
-
-
+/* div#content div.order div.book-url a > img, */
+div#content div.order div.book-url > form button.book-img-button > img
+/* \user\orders.php */ {
     -webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
     -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
     box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
-
-
 
     border-radius: 2px;
 }
 
 
-div#content div.order div.book-url a > img:hover {
+
+/*div#content div.order div.book-url a > img:hover,*/
+div#content div.order div.book-url > form button.book-img-button > img:hover
+    /* \user\orders.php */ {
+
     transform: scale(101%);
-
     filter: grayscale(25%);
-
     cursor: pointer;
 }
 
