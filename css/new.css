@@ -320,6 +320,11 @@ body {
 
     .book-info {
         min-width: 165px !important;
+        padding-left: 8px !important;
+    }
+
+    .book-title {
+        margin: 8px 0 0 0 !important;
     }
 
     /*.outer-book {
@@ -2163,12 +2168,12 @@ div#content-books {
    /* position: relative;*/
 }
 
-.book img {
+/*.book img,*/
+.book form button.book-img-button img
+/* index.php - <form> - button/submit - (prg) */
+{
     transition: all 0.1s ease-in-out;
-
     border-radius: 3px;
-
-
 }
 
 .hidden {
@@ -2244,9 +2249,14 @@ div#content-books {
     padding-bottom: 150%;*/
     overflow: hidden;
     float: left;
+
+    text-align: center !important;
 }
 
-.book-cover img {
+/*.book-cover img,*/
+.book-cover > form button.book-img-button img
+/* index.php - <form> - button/submit - (prg) */
+{
     /*position: absolute;
     top: 0;
     left: 0;
@@ -2263,13 +2273,20 @@ div#content-books {
 
     /*margin: 0 auto;*/
 
-    width: 88%;
+    width: 95%; /* 100% (?) !!!!!!! */
 
     margin-top: 2px;
 
 }
 
-.book-cover > a {
+.book-cover > form button.book-img-button img:hover {
+    cursor: pointer;
+}
+
+/*.book-cover > a,*/
+.book-cover > form /* ? - ZASTANOWIĆ SIE KTÓRY ELEMENT TUTAJ WYBRAĆ */
+/* index.php - <form> - button/submit - (prg) */
+{
     margin: 0 auto;
     display: block;
     width: 100%;
@@ -2290,8 +2307,9 @@ div#content-books {
 }
 
                     .book-info > form button.submit-book-form,
-                    div.book-url > form button.book-img-button /* \user\orders.php */
-
+                    div.book-url > form button.book-img-button, /* \user\orders.php */
+                    .book-cover > form button.book-img-button
+                        /* index.php - <form> - button/submit - (prg) */
                     {
                         /*margin: 0;
                         padding: 0;
@@ -2307,8 +2325,12 @@ div#content-books {
                         text-align: left;
                     }
 
+                    .book-cover > form button.book-img-button {
+                        text-align: center;
+                    }
+
                     .book-info > form button.submit-book-form h3.book-title {
-                        font-weight: 400;
+                        /*font-weight: 400;*/
                     }
                     .book-info > form button.submit-book-form h3.book-title:hover {
                         cursor: pointer;
@@ -2316,14 +2338,14 @@ div#content-books {
                     }
 
 .book-title {
-    margin: 8px 0 0 0;
+    margin: 12px 0 0 0;
     font-size: 0.9rem;
 
     overflow: hidden;
     max-height: 17px;
 
 
-
+    color: #551a8b;
 
    /* position: relative;
     top: 0;
@@ -3606,7 +3628,10 @@ div.order-sum > span.order-sent {
 
 /* div#content div.order div.book-url a > img, */
 div#content div.order div.book-url > form button.book-img-button > img
-/* \user\orders.php */ {
+/* \user\orders.php */
+/*.book-cover > form button.book-img-button img*/
+    /* \user\index.php */
+{
     -webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
     -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
     box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);

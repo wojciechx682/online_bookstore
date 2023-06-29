@@ -4,20 +4,27 @@
 <div class="outer-book">
     <div class="book" id="book%s">
         <div class="book-cover">
-            <a href="../user/___book.php?book=%s">        <!-- GET -> na POST <form> <-------------------- -->
-                <img src="../assets/books/%s" alt="%s" title="%s">
-            </a>
+            <!--<a href="../user/___book.php?book=s">
+                <img src="../assets/books/s" alt="s" title="s">
+            </a>--> <!-- GET -> na POST <form> <-------------------- -->
+
+            <form method="post" action="../user/___book.php">
+                <input type="hidden" name="%s">
+                <button type="submit" class="book-img-button">
+                    <img src="../assets/books/%s" alt="%s" title="%s">
+                </button>
+            </form>
         </div>
         <div class="book-info">
 
-            <a href="../user/___book.php?book">        <!-- GET -> na POST <form> <-------------------- -->
+            <!--<a href="../user/___book.php?book">
                 <h3 class="book-title">Java - Techniki zaawansowane Wydanie V</h3>
-            </a>
+            </a>-->            <!-- GET -> na POST <form> <-------------------- -->
 
             <!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->
             <form method="post" action="../user/___book.php">
                 <input type="hidden" name="%s">
-                <button class="submit-book-form" type="submit">aaa<h3 class="book-title">%s</h3></button>
+                <button class="submit-book-form" type="submit"><h3 class="book-title">%s</h3></button>
             </form>
 
             <div class="book-price">%s</div>
