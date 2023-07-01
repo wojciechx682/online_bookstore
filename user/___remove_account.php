@@ -3,20 +3,36 @@
 	session_start();
 	include_once "../functions.php";
 
-	if( ! isset($_SESSION['zalogowany']) ) {
-        header("Location: index.php?login-error");
-		exit();
-	}
+    if( ! isset($_SESSION['zalogowany']) ) {
+
+        $_SESSION["login-error"] = true;
+        header("Location: ___zaloguj.php");
+        exit();
+    }
+
     if( isset($_SESSION["password_confirmed"]) && $_SESSION["password_confirmed"] ) { // podano poprawne hasło;
 
         query("DELETE FROM klienci WHERE id_klienta='%s'", "", $_SESSION["id"]);
-            // usunięcie konta klienta (+ jego zamówień, szczegółów zamówień, płatności, + koszyka);
-        query("DELETE FROM komentarze WHERE id_klienta='%s'", "", $_SESSION["id"]);
+            // usunięcie konta klienta (+ ✓ jego zamówień, ✓ szczegółów zamówień, ✓płatności, ✓ koszyka) - Dzięki zastosowaniu relacji i ograniczeń kluczy obcych w tych tabelach (ON DELETE CASCADE, ON UPDATE CASCADE);
+
+            // ✓ Usunięcie klienta usuwa również jego ZAMÓWIENIA ->
+                // "Zamówienia" -> Ograniczenia klucza obcego -> id_klienta ON DELETE CASCADE ;
+
+        query("DELETE FROM adres WHERE adres_id='%s'", "", $_SESSION["adres_id"]);
+            // usunięcie danych adresowych klienta (należy użyć osobnego zapytania ponieważ ON DELETE CASCADE usuwa klienta podczas usunięcia adresu (wiersza z adresem), a nie odwrotnie (wiersz z adresem pozostaje, jeśli usunięmy klienta) ; (✓✓✓ a wynika to z tego, że to w tabeli klientów jest klucz obcy "adres", a nie w tabeli adres KO "id_klienta") - ✓✓✓ a jest tak, ponieważ nie chciałem aby tabela "adres" przechowywała "id_klienta" oraz "id_pracownika"
+
+        //query("DELETE FROM komentarze WHERE id_klienta='%s'", "", $_SESSION["id"]);
             // usunięcie komentarzy dodaych prze usera;
-        query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["id"]);
-            // usunięcie tokenów do resetowania hasła, jeśli istniały jakies przypisane do tego usera;
-        query("DELETE FROM ratings WHERE id_klienta='%s'", "", $_SESSION["id"]);
+            //query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["id"]);
+                // usunięcie tokenów do resetowania hasła, jeśli istniały jakies przypisane do tego usera;
+            // ✓✓✓ NIE TRZEBA USUWAĆ WIERSZY Z TABELI TOKENÓW PONIEWAŻ JEST NAŁOŻENIE OGRANICZENIE klucza obcego (klienci) - email -> prt (email) - ON DELETE CASCADE
+        //query("DELETE FROM ratings WHERE id_klienta='%s'", "", $_SESSION["id"]);
             // usunięcie komentarzy/opinii dodanych przez usera
+
+        // Nie ma potrzeby usuwać "komentarze" i "oceny" (ratings) - ponieważ przy usunięciu klienta, zostają one usunięte;   komentarze, oceny -> ON DELETE CASCADE
+
+        // ✓✓✓ Podsumowując, usuwając tabelę klienci - Usuwamy również (odpowiednie wiersze w innych tabelach) jego tokeny resetowania hasła (jeśli istniały), zawartość koszyka (wiersze z tabeli koszyk), zamówienia, płatności, szczegóły zamówienia, (✓ kaskada idzie po usunięciu zamówienia na płatności i szczegóły zamówienia)
+        // komentarze oraz oceny ;
 
         header('location: logout.php');
         exit();

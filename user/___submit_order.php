@@ -5,7 +5,8 @@
 
     if( ! isset($_SESSION['zalogowany']) ) {
 
-        header("Location: index.php?login-error");
+        $_SESSION["login-error"] = true;
+        header("Location: ___zaloguj.php");
         exit();
     }
 

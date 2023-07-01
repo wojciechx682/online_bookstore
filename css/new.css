@@ -1343,7 +1343,9 @@ body {
 }
 
 header {
-    position: relative;
+    /*position: relative;*/ /* (?) */
+
+    /*top: 10px;*/
 }
 
 
@@ -1622,7 +1624,13 @@ footer {
     /*height: 1260px;*/
 
 
+    /*margin: 10px auto 0 auto;*/ /* ̶h̶e̶a̶d̶e̶r̶ ̶p̶r̶z̶e̶j̶m̶i̶e̶ ̶m̶a̶r̶g̶i̶n̶e̶s̶ ̶g̶ó̶r̶n̶y̶ ̶-̶ ̶1̶0̶p̶x̶ ̶-̶ ̶r̶o̶b̶i̶ę̶ ̶t̶o̶ ̶w̶ ̶c̶e̶l̶u̶ ̶p̶o̶k̶r̶y̶c̶i̶a̶ ̶c̶a̶ł̶e̶g̶o̶ ̶o̶b̶s̶z̶a̶r̶u̶ ̶c̶i̶e̶m̶n̶i̶e̶j̶s̶z̶y̶m̶ ̶k̶o̶l̶o̶r̶e̶m̶ ̶-̶ ̶p̶r̶z̶y̶ ̶b̶ł̶ę̶d̶z̶i̶e̶ ̶l̶o̶g̶o̶w̶a̶n̶i̶a̶ */
     margin: 10px auto 0 auto;
+
+
+    /*padding-top: 10px;*/
+
+
 
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
@@ -2176,36 +2184,97 @@ div#content-books {
     border-radius: 3px;
 }
 
+
+
+/* --------------------------------------------------------------------------------------------------- */
+/* zaloguj.php - komunikat o błędzie logowania - "Musisz być zalogowany" */
+
 .hidden {
     display: none;
 }
 
+.bright {
+    /*filter: brightness(50%);*/
 
+    background-color: rgba(0, 0, 0, 0.43);
+}
 
+button#confirm-message {
+    margin-top: 33px;
+}
 
+/* Ensure the background stays behind other content */
 
+.background {       /* komunikat "musisz się zalogować" - ciemne tło */
 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*background-color: rgba(0, 0, 0, 0.27);*/
+    /*filter: brightness(50%);*/
+    z-index: 100;
 
+    /*pointer-events: none;*/ /* background zasłania nam całą stronę, więc user nie może kliknąć nic innego niż "Potwierdź" w oknie dialogowym */
+}
 
+#login-error-message {
+    /*height: 310px;*/
+    height: 200px;
+    width: 660px;
+    /*background-color: #545454;*/
+    background-color: #ececec;
+    /*position: fixed;
+    top: 25em;
+    left: 45em;*/
 
+   /* position: absolute;
+    top: 50%;
+    !*left: 60%;*!
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 90;
+    border-radius: 5px; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+        border-radius: 10px;
+    z-index: 105; /* aby okno było widoczne nad tłem - div class="background" */
 
+    padding: 20px 25px;
 
+    -webkit-box-shadow: 0px 0px 10px -2px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 10px -2px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 10px -2px rgba(66, 68, 90, 1);
 
+}
 
+#login-error-message > h2 {
+        /*margin-left: 20px;
+    margin-top: 25px;*/
+            /*color: #FAFAFFFF;*/
+            /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
+    font-size: 1.2rem;
+    width: 595px;
+    display: inline-block;
+    user-select: none;
+    padding-bottom: 10px;
+}
 
+#login-error-message > h2:hover {
+    cursor: pointer;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+#login-error-message hr {
+    background-color: rgba(166, 166, 166, 0.7);
+    border: none;
+    height: 1px;
+    /*margin: 5px 15px 5px 15px;*/
+        /*max-width: 255px;*/
+}
+/* --------------------------------------------------------------------------------------------------- */
 
 
 
@@ -3388,7 +3457,8 @@ div.remove_account span.remove-account-confirm-error {
     border: 1px ridge rgba(166, 166, 166, 0.38);
 
     border-radius: 15px;
-    margin: 20px auto 40px auto;
+    /*margin: 20px auto 40px auto;*/
+    margin: 0px auto 40px auto;
 
         /*padding: 10px 0 10px 10px;*/
         /*padding: 5px;*/
@@ -3566,7 +3636,7 @@ div[class*="order-book-price"]:not([class$="1"])
 {
     /*color: red;*/
 
-    padding-top: 25px;
+    /*padding-top: 25px;*/ /* (?) */
 
 }
 

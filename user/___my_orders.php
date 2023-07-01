@@ -3,12 +3,13 @@
 	session_start();
 	include_once "../functions.php";
 
-	if( ! isset($_SESSION['zalogowany']) )	{
-		header('Location: index.php');
-		exit();
-	}
-?>
+    if( ! isset($_SESSION['zalogowany']) ) {
 
+        $_SESSION["login-error"] = true;
+            header("Location: ___zaloguj.php");
+                exit();
+    }
+?>
 
 <!DOCTYPE HTML>
 <html lang="pl">

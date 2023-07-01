@@ -4,6 +4,13 @@
 
 	include_once "../functions.php";
 
+	if( ! isset($_SESSION['zalogowany']) ) {
+
+		$_SESSION["login-error"] = true;
+		header("Location: ___zaloguj.php");
+		exit();
+	}
+
 	if( isset($_POST["comment"]) &&
         !empty($_POST["comment"]) &&
 		isset($_POST["star"]) &&

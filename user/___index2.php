@@ -19,16 +19,16 @@
         //		exit();
         //	}
 
-    if(isset($_GET["login-error"])) {
+    /*if(isset($_GET["login-error"])) {
         echo '
                     <script>
-                        alert("Musisz być zaloowany !")
+                        alert("Musisz być zalogowany !")
                         let url = new URL(window.location.href);
                         url.searchParams.delete("login-error");
                         window.location.href = url.toString();
                     </script>
                  ';
-    }
+    }*/
 
     // (?) można lepiej zapisać -->
 

@@ -3,8 +3,10 @@
 	include_once "../functions.php";
 
 	if( ! isset($_SESSION['zalogowany']) ) {
-        header("Location: ___index2.php?login-error");
-		exit();
+
+		$_SESSION["login-error"] = true;
+			header("Location: ___zaloguj.php");
+				exit();
 	}
 ?>
 

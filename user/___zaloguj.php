@@ -170,6 +170,111 @@
         <?php require "../view/___footer.php" ?>
 
     </div> <!-- #main-container -->
-	
+
+    <!-- <div class="update-status hidden">
+
+        <h2>Archiwizuj zamówienie</h2>
+
+        <i class="icon-cancel icon-cancel%s"></i><hr>
+
+        <div class="delivery-date delivery-date%s">
+            <form class="remove-order" action="remove-order.php" method="post">
+
+                <input type="hidden" name="order-id" value="%s">
+
+                <span class="info">Dodaj komentarz wyjaściajacy powód zarchiwizowania zamówienia</span>
+
+                <textarea name="comment" id="comment" class="comment" onfocus="resetError(this)"></textarea>
+
+                <span class="remove-order-error">Opinia powinna zawierać od 10 do 255 znaków, oraz nie zawierać znaków specjalnych</span><div style="clear: both;"></div>
+
+                <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
+            </form>
+            <button class="cancel-order cancel-order%s update-order-status btn-link btn-link-static">Anuluj</button>
+
+        </div>
+
+    </div> -->
+
+    <!-- class="hidden" -->
+
+
+
+
+
+    <div id="login-error-message" class="hidden">
+        <h2>Musisz być zalogowany !</h2>
+        <hr>
+        <button id="confirm-message" class="btn-link btn-link-static">Potwierdź</button>
+    </div>
+
+
+
+
+    <div class="background">
+        <!-- Content goes here -->
+
+
+    </div>
+
+    <?php if (isset($_SESSION["login-error"]) && $_SESSION["login-error"]) : ?>
+
+        <?php unset($_SESSION["login-error"]) ?>
+
+        <script>
+            let statusBox = document.getElementById("login-error-message");
+            let container = document.querySelector(".background");
+            statusBox.classList.toggle("hidden");
+            container.classList.toggle("bright");
+            let confirmBtn = document.getElementById("confirm-message");
+            confirmBtn.addEventListener("click", function() {
+                //console.log("\nclicked ! ");
+                statusBox.classList.toggle("hidden");
+                container.classList.toggle("bright");
+                container.style.pointerEvents = "none"; // ✓
+            });
+        </script>
+
+    <?php else: ?>
+
+        <script>
+            let container = document.querySelector(".background");
+            container.style.pointerEvents = "none"; // ✓
+        </script>
+
+    <?php endif; ?>
+<!--
+    <script>
+        let statusBox = document.getElementById("login-error-message");
+            // całe okiento z błędem logowania ;
+
+        let container = document.querySelector(".background"); /* dark background <div> */
+
+        /*let allContainer = body.parentElement;
+
+        if(!statusBox.classList.contains("hidden")) {
+            allContainer.classList.toggle("bright");
+        }*/
+
+        let confirmBtn = document.getElementById("confirm-message");
+
+
+        console.log("\n258 ! ");
+
+        console.log("\nstatusBox ->", statusBox);
+        console.log("\ncontainer ->", container);
+        console.log("\nconfirmBtn ->", confirmBtn);
+
+        confirmBtn.addEventListener("click", function() {
+
+            console.log("\nclicked ! ");
+
+
+            statusBox.classList.toggle("hidden");
+            container.classList.toggle("bright");
+        });
+
+    </script>-->
+
 </body>
 </html>
