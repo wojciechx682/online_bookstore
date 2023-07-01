@@ -2375,10 +2375,37 @@ button#confirm-message {
     top: -40px;*/
 }
 
+
+                    /* koszyk.php */
+
+                    div.cart-book span.book-details > form:first-child {
+                        float: left;
+                        width: 100px;
+                        /*-webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+                        -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+                        box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);*/
+                        margin-right: 5px;
+                        border-radius: 2px;
+                    }
+
+/*span.book-details img { 2907
+    float: left;
+    width: 100px;
+    -webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
+    margin-right: 5px;
+    border-radius: 2px;
+}*/
+
+
+
+
                     .book-info > form button.submit-book-form,
                     div.book-url > form button.book-img-button, /* \user\orders.php */
-                    .book-cover > form button.book-img-button
+                    .book-cover > form button.book-img-button,
                         /* index.php - <form> - button/submit - (prg) */
+                    .book-details > form button.book-img-button /* koszyk.php */
                     {
                         /*margin: 0;
                         padding: 0;

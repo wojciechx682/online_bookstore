@@ -33,7 +33,7 @@
 
                 <?php
                     query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, au.imie, au.nazwisko FROM klienci AS kl, koszyk AS ko, ksiazki AS ks, autor AS au WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND kl.id_klienta='%s'", "get_product_from_cart", $_SESSION["id"]);
-                    // książki które zamówił klient o danym ID;
+                    // książki które zamówił klient o danym ID; (które posiada aktualnie w koszyku)
                 ?>
 
                 <form action="___order.php" method="post" id="submit-order">

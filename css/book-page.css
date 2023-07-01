@@ -166,9 +166,9 @@
 
 /* circle rates --> ------------------------------------------------------------------------------------------------- */
 #rating-circle {
-/*stroke-dasharray: 62;*/  /* Set the stroke-dasharray to the circumference of the circle */
+stroke-dasharray: 62;  /* Set the stroke-dasharray to the circumference of the circle */
                                /* Ta właściwość definiuje wzór kresek i przerw używanych do tworzenia linii przerywanej lub kropkowanej  - "5,2"*/
-/*stroke-dashoffset: 62; */ /* Initially hide the filled (yelow) portion */
+stroke-dashoffset: 62;  /* Initially hide the filled (yelow) portion */
                        /*  Ta właściwość określa pozycję początkową wzoru kreski - "Przesunięcie", zmieniając ją, zmieniamy początkową pozycję wzoru kreski; */
     transition: stroke-dashoffset 0.4s ease;
 

@@ -168,6 +168,8 @@ div#tab-3 {
     /*font-family: 'Jacques Francois', serif;
     text-transform: uppercase;
     letter-spacing: 0.2em;*/
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 .book-page .book-tabs ul.tab-list li a {
@@ -180,11 +182,17 @@ div#tab-3 {
 .book-page .book-tabs ul.tab-list li.active, .tab-list li.hover {
     background-color: #e5e5e5;
     border-bottom: 3px solid #e5e5e5;
+
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 .book-page .book-tabs ul.tab-list li.active a, .book-page .book-tabs ul.tab-list li a:hover {
     color: #666;
     background-color: #e5e5e5;
+
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 /********** PANELS **********/
