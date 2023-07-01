@@ -2405,7 +2405,8 @@ button#confirm-message {
                     div.book-url > form button.book-img-button, /* \user\orders.php */
                     .book-cover > form button.book-img-button,
                         /* index.php - <form> - button/submit - (prg) */
-                    .book-details > form button.book-img-button /* koszyk.php */
+                    .book-details > form button.book-img-button, /* koszyk.php */
+                    div#n-top-nav-content ol li ul li form button.submit-book-form /* index - lista <ul> z kategoriami - button */
                     {
                         /*margin: 0;
                         padding: 0;

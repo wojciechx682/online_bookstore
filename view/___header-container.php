@@ -10,7 +10,7 @@
                 <div id="header-title"> Księgarnia internetowa </div> <!-- top-header -->
                 <div id="btn-parent">
                     <!-- <div class="btn from-center">Zaloguj</div> -->
-                    <?php if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) { echo '
+                    <?php if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) { echo '
                         <a href="___account.php">
                             <div class="btn from-center">Moje konto</div>
                         </a>';}
@@ -24,7 +24,7 @@
                         <!-- <a class="top-nav-right" href="___koszyk.php" >Koszyk</a> -->
                         <a class="top-nav-right" href="___koszyk.php">Koszyk
                             <?php
-                                if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) {
+                                if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
                                     query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
                                     echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
                                 }
@@ -37,7 +37,8 @@
             </div>
 
             <div id="div-search">
-                <form id="search-form" action="___index2.php" method="get" >
+                <!--<form id="search-form" action="___index2.php" method="get" >-->
+                <form id="search-form" action="___index2.php" method="post" > <!-- -> POST -->
                     <input type="search" name="input-search" id="input-search" > <!-- placeholder="tytuł książki" -->
 
                     <input type="submit" value=" ">
@@ -46,7 +47,7 @@
                 </form>
             </div>
 
-            <!--<div id="div-logo">zz1z1
+            <!--<div id="div-logo">
                 <img id="main-logo" src="../assets/logo4.png" alt="logo">
             </div>-->
 
@@ -54,7 +55,7 @@
             <div class="div-cart">
                 <a class="top-nav-right" href="___koszyk.php">Koszyk
                     <?php
-                    if((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany'] == "true")) {
+                    if(isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true") {
                         query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
                         echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
                     }

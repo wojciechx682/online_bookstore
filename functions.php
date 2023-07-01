@@ -92,11 +92,33 @@
         // header -> top-nav-content - wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav);
 
 		    $category_name = "Wszystkie";
-		echo "\n".'<li><a href="___index2.php?kategoria='.$category_name.'">'.$category_name.'</a></li>'; // Zamiana na jQuery ? event listener ?
+		/*echo "\n".'<li><a href="___index2.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
+
+		echo "\n".'<li>                
+                 <form method="post" action="___index2.php">
+                                <input type="hidden" name="kategoria" value="'.$category_name.'">
+                                <button class="submit-book-form" type="submit">'.$category_name.'</button>
+                           </form>                          
+                </li>';
+
 		while ($row = $result->fetch_assoc())
 		{
-		  	//echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
-            echo "\n".'<li><a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
+		  	                    // echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
+
+            // echo "\n".'<li><a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
+
+            echo "\n".'<li>
+                           <form method="post" action="___index2.php">
+                                <input type="hidden" name="kategoria" value="'.$row["nazwa"].'">
+                                <button class="submit-book-form" type="submit">'.$row["nazwa"].'</button>
+                           </form>
+                       </li>';
+
+            // <a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a>
+
+            /*<!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->*/
+
+
 		}
 		    $result->free_result();
 	}

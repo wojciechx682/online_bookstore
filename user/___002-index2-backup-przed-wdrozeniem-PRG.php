@@ -32,31 +32,28 @@
 
     // (?) można lepiej zapisać -->
 
-        /*if( isset($_GET['kategoria']) && ! empty($_GET['kategoria']) )*/ // if variable EXISTS and has a NON-EMPTY value;
-    /*if( isset($_POST['kategoria']) && ! empty($_POST['kategoria']) )
+    if( isset($_GET['kategoria']) && ! empty($_GET['kategoria']) ) // if variable EXISTS and has a NON-EMPTY value;
     {
         // przypadek wejśia w dowolną kategorię z górnego panelu;
             //echo '<script>console.log("\n38 - isset GET kategoria == true\n")</script>';
-        $_SESSION["kategoria"] = htmlentities($_POST['kategoria'], ENT_QUOTES, "UTF-8"); // "Wszystkie", "Informatyka", "Horror"
+        $_SESSION["kategoria"] = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8"); // "Wszystkie", "Informatyka", "Horror"
         $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
+    }
+    /*elseif(isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria']) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
+    {
+        // to się spełni, jeśli wsześniej następiło wejście pod dowolna kategorię --> index.php?kategoria=Wszystkie;
+        // ORAZ           wprowadzono tytuł z input-search-nav;
+                //echo "<script>console.log('43');</script>";
+        $_SESSION["kategoria"] = htmlentities($_SESSION['kategoria'], ENT_QUOTES, "UTF-8");
+        $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
+        // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert();</script>;
     }*/
-                /*elseif(isset($_SESSION['kategoria']) && !empty($_SESSION['kategoria']) && isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]))
-                {
-                    // to się spełni, jeśli wsześniej następiło wejście pod dowolna kategorię --> index.php?kategoria=Wszystkie;
-                    // ORAZ           wprowadzono tytuł z input-search-nav;
-                            //echo "<script>console.log('43');</script>";
-                    $_SESSION["kategoria"] = htmlentities($_SESSION['kategoria'], ENT_QUOTES, "UTF-8");
-                    $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
-                    // sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; $kategoria = <script>alert();</script>;
-                }*/
-
-        /*elseif( ! isset($_GET["kategoria"]) && ! isset($_GET["input-search-nav"]) )*/
-    /*elseif( ! isset($_POST["kategoria"]) && ! isset($_POST["input-search-nav"]) )
+    elseif( ! isset($_GET["kategoria"]) && ! isset($_GET["input-search-nav"]) )
     {
         //echo '<script>console.log("\n59 - kategoria nie była w parametrze GET\n")</script>'; // Strona główna, , Input-search
 
         $_SESSION["kategoria"] = "Wszystkie";
-    }*/
+    }
 
     // od teraz kategoria jest ZAWSZE ustawiona;
 
@@ -73,111 +70,6 @@
         echo "<script>console.log('\n77\n');</script>";
         $_SESSION["kategoria"] = "Wszystkie";
     }*/
-
-
-
-
-
-if( $_SERVER['REQUEST_METHOD'] === "POST" ) {
-
-    if( isset($_POST["input-search-nav"]) ) {        // && ! empty($_POST["input-search-nav"])
-
-        /* PRG - input-search-nav */
-
-        // input-search-nav - nie pusty, posiada wartość ;
-
-        $title = filter_input(INPUT_POST, "input-search-nav", FILTER_SANITIZE_STRING); // input-search-nav - sanitized ;
-
-        $_SESSION["input-search-nav"] = $title;
-
-        if( $title === false || $title === null || ($_SESSION["input-search-nav"] !== $_POST["input-search-nav"]) ) {
-
-            // validation failed - redirect to main page (index.php);   // echo "<br>error<br>";
-
-            unset($_POST, $title, $_SESSION["input-search-nav"]);
-                header('Location: ___index2.php');
-                    exit();
-        } else {
-            // validation passed ;
-
-            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
-            exit();
-        }
-
-    } /*else {
-
-        // pusty (nie istnieje) input-search nav ;
-
-    }*/
-    elseif ( isset($_POST['kategoria'])  )   // && ! empty($_POST['kategoria'])
-    {
-
-        /* PRG - top-nav -> kategoria */
-
-            // przypadek wejśia w dowolną kategorię z górnego panelu;
-            //echo '<script>console.log("\n38 - isset GET kategoria == true\n")</script>';
-        //$_SESSION["kategoria"] = htmlentities($_POST['kategoria'], ENT_QUOTES, "UTF-8"); // "Wszystkie", "Informatyka", "Horror"
-        //$_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
-
-        $category = filter_input(INPUT_POST, "kategoria", FILTER_SANITIZE_STRING); // kategoria - sanitized ;
-        $_SESSION["kategoria"] = $category;
-
-        // check if category exists in db ... ;
-
-        if( $category === false || $category === null || ($_SESSION["kategoria"] !== $_POST["kategoria"]) ) {
-            // validation failed - redirect to main page (index.php);   // echo "<br>error<br>";
-
-            $_SESSION["kategoria"] = "Wszystkie";
-
-            //unset($_POST, $category, $_SESSION["kategoria"]);
-            unset($_POST, $category); // , $_SESSION["kategoria"]
-                header('Location: ___index2.php');
-                    exit();
-        } else {
-            // validation passed ;
-            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
-            exit();
-        }
-    }
-
-    elseif ( isset($_POST["input-search"]) ) {
-
-        $search_value = filter_input(INPUT_POST, 'input-search', FILTER_SANITIZE_STRING);
-        $_SESSION["input-search"] = $search_value;
-
-        if( $search_value === false || $search_value === null || ($_SESSION["input-search"] !== $_POST["input-search"]) ) {
-            // validation failed - redirect to main page (index.php);   // echo "<br>error<br>";
-
-            //$_SESSION["kategoria"] = "Wszystkie";
-
-            //unset($_POST, $category, $_SESSION["kategoria"]);
-            unset($_POST, $search_value, $_SESSION["input-search"]); // , $_SESSION["kategoria"]
-                header('Location: ___index2.php');
-                    exit();
-        } else {
-            // validation passed ;
-            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
-            exit();
-        }
-
-    }
-
-
-
-}
-
-
-
-// if( ! isset($_SESSION["kategoria"]) && ! isset($_POST["input-search-nav"]) )
-if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
-{
-    //echo '<script>console.log("\n59 - kategoria nie była w parametrze GET\n")</script>'; // Strona główna, , Input-search
-
-    $_SESSION["kategoria"] = "Wszystkie";
-}
-
-
-
 
 ?>
 
@@ -215,36 +107,32 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                         <!-- <button id="sort_button" onclick="sortBooks()">Sortuj</button> -->
 
-        <h3>Cena</h3>
+                        <h3>Cena</h3>
 
-        <div id="price-range">
-            <label>
-                <span>
-                    Min
-                </span>
-                    <input type="number" id="value-min">
-            </label>
-            <label>
-                <span>
-                    Max
-                </span>
-                    <input type="number" id="value-max">
-            </label>
-            <div id="slider"></div>
-        </div>
+                        <div id="price-range">
+                            <label>
+                                <span>
+                                    Min
+                                </span>
+                                    <input type="number" id="value-min">
+                            </label>
+                            <label>
+                                <span>
+                                    Max
+                                </span>
+                                    <input type="number" id="value-max">
+                            </label>
+                            <div id="slider"></div>
+                        </div>
 
                         <div id="input-search-nav-div">
-
                             <label for="input-search-nav">
                                 <h3>Tytyuł</h3>
                             </label>
-
-                            <form method="post"> <!-- action="___index2.php" -->
-                                <!-- (szukaj tytułu w tej kategorii) -->
+                            <form action="___index2.php" method="get"> <!-- (szukaj tytułu w tej kategorii) -->
                                 <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
                                 <input type="submit" value="">
                             </form>
-
                         </div>
 
                         <?php
@@ -274,23 +162,19 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                     // ! $_GET['kategoria'] --> $_SESSION["kategoria"] --> "Wszystkie" (domyślnie)
                     // ✓ Kategoria jest ustawiona zawsze;
 
+
                     if (
-                            /*isset($_GET["input-search"])*/
-                            isset($_SESSION["input-search"]) // $_SESSION["input-search"]
+                            isset($_GET["input-search"])
                     ) {
 
                         // ✓ kategoria nie była w parametrze GET, więc przyjmie wartość "Wszystkie" - linia 52;
 
-                        //if( ! empty($_GET["input-search"]) ) {
+                        if( ! empty($_GET["input-search"]) ) {
 
                             //echo "180 input-seach -> " . $_GET["input-search"] . "<br>";
                             // echo '<script> displayNav(); </script>'; // do usunięcia - to funkcja tutaj NIC NIE ROBI ale zostawiam jakby coś;
                             // input-search sanitization;
-                            //$search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
-
-                            $search_value = $_SESSION["input-search"];
-                                unset($_SESSION["input-search"]);
-
+                            $search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
 
                             echo " 180 input-seach (sanitized) -> " . $search_value . "<br>";
 
@@ -301,28 +185,19 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                                                      FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
                                                      WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
                                                      AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii;
-                        /*} else { // puste pole wyszukiwania;
+                        } else { // puste pole wyszukiwania;
 
                             echo '<h3>Brak wyników</h3>'; // (!) ewentualnie można to zrobić wewnątrz funkcji query (?);
-                        }*/
+                        }
                     }
-
-                    /*elseif ( isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]) ) {*/
-
-                    /*elseif ( isset($_POST["input-search-nav"]) && !empty($_POST["input-search-nav"]) ) {*/
-
-                    elseif ( isset($_SESSION["input-search-nav"]) && ! empty($_SESSION["input-search-nav"]) ) {
+                    elseif ( isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]) ) {
 
                         // ✓ tutaj zmienna sesyjna "kategoria" przyjmuje wartość "Wszystkie" lub dowolną inną kategorią z istniejących - ponieważ wsześniej zostaje ustawiona;
 
-                                    // echo "198 input-seach-nav -> " . $_GET["input-search-nav"] . "<br>";
-                                        // input-search-nav sanitization;
-                                   /* $title = filter_input(INPUT_GET, "input-search-nav", FILTER_SANITIZE_STRING);*/
+                        // echo "198 input-seach-nav -> " . $_GET["input-search-nav"] . "<br>";
 
-                        /*$title = filter_input(INPUT_POST, "input-search-nav", FILTER_SANITIZE_STRING);*/
-
-                        $title = $_SESSION["input-search-nav"];
-                            unset($_SESSION["input-search-nav"]);
+                        // input-search-nav sanitization;
+                        $title = filter_input(INPUT_GET, "input-search-nav", FILTER_SANITIZE_STRING);
 
                         echo "198 input-seach-nav -> " . $title . "<br>";
 
@@ -364,8 +239,6 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                         query($query, "get_books", $values);
 
                     }
-
-
 
                     // wyszukiwanie zaawansowane - advanced search result (POST);
 
