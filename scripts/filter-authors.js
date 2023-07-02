@@ -1,4 +1,6 @@
 
+// Filtering - <ul> author's list ;
+
 let btn = document.getElementById("filter-authors");
     // <button id="filter-authors"> Zastosuj </button>
 btn.addEventListener("click", filterAuthors);

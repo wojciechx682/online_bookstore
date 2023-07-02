@@ -266,7 +266,7 @@
                         //                                )
 
 
-                        if ( isset($_POST["adv-search-title"]) && !empty($_POST["adv-search-title"]) ) {
+                        if ( isset($_POST["adv-search-title"]) && ! empty($_POST["adv-search-title"]) ) {
                             // sanitize adv-seatch-title;
                             $title = filter_input(INPUT_POST, "adv-search-title", FILTER_SANITIZE_STRING);
                         }
@@ -289,7 +289,7 @@
                         $values = array();
 
                         // check if the user provided a book title;
-                        if (!empty($_POST['adv-search-title'])) {
+                        if ( ! empty($_POST['adv-search-title'])) {
                             // Add a condition for the book title (!)
                             // $where[] = "ks.tytul LIKE '%" . $_POST['adv-search-title'] . "%'";
                             $where[] = "ks.tytul LIKE '%%%s%%'"; //%%%s%%

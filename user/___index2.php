@@ -78,7 +78,7 @@
 
 
 
-if( $_SERVER['REQUEST_METHOD'] === "POST" ) {
+if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
 
     if( isset($_POST["input-search-nav"]) ) {        // && ! empty($_POST["input-search-nav"])
 
@@ -173,11 +173,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {
             isset($_POST["adv-search-author"]) &&
             isset($_POST["year-min"]) &&
             isset($_POST["year-max"])
-
     ) {
-
-
-
         /* PRG - advanced search */
 
         // zamienić to na rok ;
@@ -248,6 +244,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {
             $_SESSION["adv-search-author"] = $author;
 
             if( $author === false || ($_SESSION["adv-search-author"] !== $_POST["adv-search-author"]) ) {
+
                 $valid = false;
 
                 //echo "<br>autor --> $author<br>";
@@ -256,17 +253,40 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {
             }
         }
 
+        // check if the user provided a minimum year
+        if ( ! empty($_POST['year-min']) ) {
+                // Add a condition for the minimum year
+                //$where[] = "ks.rok_wydania >= " . $_POST['year-min'];
+            //$where[] = "ks.rok_wydania >= '%s'";
+            //$values[] = $_POST['year-min'];
+            $year_min = filter_input(INPUT_POST, "year-min", FILTER_VALIDATE_INT);
 
+            $_SESSION["year-min"] = $year_min;
 
+            if( $year_min === false ) {
+                $valid = false;
+            }
+        }
 
+        // check if the user provided a maximum year
+        if ( ! empty($_POST['year-max']) ) {
+            // Add a condition for the maximum year
+            //$where[] = "ks.rok_wydania <= " . $_POST['year-max'];
+            //$where[] = "ks.rok_wydania <= '%s'";
+            //$values[] = $_POST['year-max'];
 
+            $year_max = filter_input(INPUT_POST, "year-max", FILTER_VALIDATE_INT);
 
+            $_SESSION["year-max"] = $year_max;
 
+            if( $year_max === false ) {
+                $valid = false;
+            }
+        }
 
-
-
-
-
+        // $_SESSION["adv-search-category"]
+        // $_SESSION["adv-search-title"]
+        // $_SESSION["adv-search-author"]
 
         ////////////////////////////////////////////////////////////////////////////
 
@@ -278,24 +298,25 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {
 
             // $_SESSION["kategoria"] = "Wszystkie"; // ? - testowałem i - i tak jest ustawiana ;
 
-            unset($_POST, $category, $_SESSION["kategoria"], $title, $_SESSION["adv-search-title"], $author, $_SESSION["adv-search-author"], $_SESSION["adv-search-query"]);
+            unset($_POST, $category, $_SESSION["adv-search-category"], $title, $_SESSION["adv-search-title"], $author, $_SESSION["adv-search-author"], $_SESSION["adv-search-query"], $year_min, $year_max, $_SESSION["year-min"], $_SESSION["year-max"]);
 
                 header('Location: ___index2.php');
                     exit();
         } else {
+
             // validation passed ;
 
             // ✓ zmienne sesyjne z formularza ustawione
 
             // Initialize an array to store the conditions for the WHERE clause;
 
-            $where = array();
-            $values = array();
+            $where = [];  //   WHERE CONDITION
+            $values = []; //   VALUES USED AS ARGUMENTS
 
             // check if the user provided a book title;
-            if ( ! empty($_SESSION['adv-search-title'])) {
+            if ( ! empty($_SESSION['adv-search-title']) ) {
                 // Add a condition for the book title (!)
-                // $where[] = "ks.tytul LIKE '%" . $_POST['adv-search-title'] . "%'";
+                    // $where[] = "ks.tytul LIKE '%" . $_POST['adv-search-title'] . "%'";
                 $where[] = "ks.tytul LIKE '%%%s%%'"; //%%%s%%
                 $values[] = $_SESSION['adv-search-title']; // values += ["title"];
             }
@@ -318,49 +339,35 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {
                 $values[] = $_SESSION['adv-search-author'];
             }
 
-            // check if the user provided a minimum year
-            if ( ! empty($_POST['year-min'])) {
-                // Add a condition for the minimum year
-                //$where[] = "ks.rok_wydania >= " . $_POST['year-min'];
-                $where[] = "ks.rok_wydania >= '%s'";
-                $values[] = $_POST['year-min'];
-            }
+// check if the user provided a minimum year
+if ( ! empty($_SESSION['year-min']) ) {
+    // Add a condition for the minimum year
+    //$where[] = "ks.rok_wydania >= " . $_POST['year-min'];
+    $where[] = "ks.rok_wydania >= '%s'";
+    $values[] = $_SESSION['year-min'];
+}
 
-            // check if the user provided a maximum year
-            if ( ! empty($_POST['year-max'])) {
-                // Add a condition for the maximum year
-                //$where[] = "ks.rok_wydania <= " . $_POST['year-max'];
-                $where[] = "ks.rok_wydania <= '%s'";
-                $values[] = $_POST['year-max'];
-            }
+// check if the user provided a maximum year
+if ( ! empty($_SESSION['year-max']) ) {
+    // Add a condition for the maximum year
+    //$where[] = "ks.rok_wydania <= " . $_POST['year-max'];
+    $where[] = "ks.rok_wydania <= '%s'";
+    $values[] = $_SESSION['year-max'];
+}
 
             // check if any conditions were added to the WHERE clause
-            if (!empty($where)) {
+            if ( ! empty($where) ) {
                 // Combine the conditions into a single WHERE clause
                 //$query .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where);
                 $_SESSION["adv-search-query"] .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where);
 
                 $_SESSION["adv-search-values"] = $values;
 
-                //$_SESSION["adv-search-query"] = $query;
+                // $_SESSION["adv-search-query"] = $query;
             }
 
             // execute the query
-            //query($query, "get_books", $values);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            // query($query, "get_books", $values);
 
             header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
             exit();
@@ -406,36 +413,41 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                         <?= "<h3>".$_SESSION["kategoria"]."</h3>"; ?>
 
-                        <h3>Sortowanie</h3>
+<h3>Sortowanie</h3>
 
-                        <select id="sortuj_wg">
-                            <option value="1">ceny rosnąco</option>
-                            <option value="2">ceny malejąco</option>
-                            <option value="3">nazwy A-Z</option>
-                            <option value="4">nazwy Z-A</option>
-                            <option value="5">Najnowszych</option>
-                            <option value="6">Najstarszych</option>
-                        </select>
+<select id="sortuj_wg">
+    <option value="1">ceny rosnąco</option>
+    <option value="2">ceny malejąco</option>
+    <option value="3">nazwy A-Z</option>
+    <option value="4">nazwy Z-A</option>
+    <option value="5">Najnowszych</option>
+    <option value="6">Najstarszych</option>
+</select>
 
                         <!-- <button id="sort_button" onclick="sortBooks()">Sortuj</button> -->
 
         <h3>Cena</h3>
 
         <div id="price-range">
+
             <label>
                 <span>
                     Min
                 </span>
                     <input type="number" id="value-min">
             </label>
+
             <label>
                 <span>
                     Max
                 </span>
                     <input type="number" id="value-max">
             </label>
+
             <div id="slider"></div>
+
         </div>
+
 
                         <div id="input-search-nav-div">
 
@@ -444,8 +456,8 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                             </label>
 
                             <form method="post"> <!-- action="___index2.php" -->
-                                <!-- (szukaj tytułu w tej kategorii) -->
-                                <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
+                                    <!-- (szukaj tytułu w tej kategorii) -->
+                                    <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
                                 <input type="submit" value="">
                             </form>
 
@@ -463,13 +475,12 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                 <?php
 
-                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>"
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>"*/
 
                     // nie ma sensu sprawdzać czy kategoria jest ustawiona, ponieważ zawsze jest (w zmiennej $_SESSION['kat']);
                         // (z wyjątkiem gdy wprowadzono tytuł w input-search-nav);
-
                 ?>
 
                 <?php

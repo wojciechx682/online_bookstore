@@ -1,4 +1,6 @@
 
+// price range - noUISlider (jQ) ;  // książka jQuery - strona 544 - 549;
+
 $min = $('#value-min');                          // minimum text input
 $max = $('#value-max');                          // minimum text input
 
@@ -25,7 +27,7 @@ function update(min, max) {                     // update content-books
 
 function initFun() {                            // Tasks when script first runs
     $('#slider').noUiSlider({                   // Set up the slide control
-        range: [5, 150], start: [15, 130], handles: 2, margin: 1, connect: true,
+        range: [5, 150], start: [8, 135], handles: 2, margin: 1, connect: true,
         serialization: {to: [$min, $max], resolution: 1}
     }).change(function() {
         update($min.val(), $max.val());

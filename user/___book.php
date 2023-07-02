@@ -956,6 +956,8 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
             // Komentarze poniżej ;
             // ustawianie szerokości gwiazdek przy każdym komentarzu ;
 
+            // error - pojawia się jeśli nie ma żadnych komentarzy ! - "commentRate" - nie istnieje !
+
             // set the "name" attribute for input type hidden, that was selected
 
             let commentRate = document.querySelector(".comment-rate").textContent.trim(); // 1, 2, ..., 5

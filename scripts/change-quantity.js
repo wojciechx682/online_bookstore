@@ -5,7 +5,7 @@ function changeQuantity(id_ksiazki, amount) {
 	const newQuantity = parseInt(el.value) + amount;
 
 	if (newQuantity >= 1) {
-		el.value = newQuantity;
+		el.value = newQuantity;													 // koszyk.php,	book.php
 		let form = document.querySelector(`#change_quantity_form${id_ksiazki}`); // (tylko dla) koszyk.php
 		form.submit();															 // -----||---- koszyk.php
 	}

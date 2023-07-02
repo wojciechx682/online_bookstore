@@ -24,7 +24,9 @@
             <!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->
             <form method="post" action="../user/___book.php">
                 <input type="hidden" name="%s">
-                <button class="submit-book-form" type="submit"><h3 class="book-title">%s</h3></button>
+                <button class="submit-book-form" type="submit">
+                    <h3 class="book-title">%s</h3>
+                </button>
             </form>
 
             <div class="book-price">%s</div>
