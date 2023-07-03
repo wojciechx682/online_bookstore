@@ -33,7 +33,7 @@
 
     function get_authors($result)
     {
-        // tworzy linki - w których kazdy wyświetli imie i nazwisko autora.
+        // tworzy linki - w których kazdy wyświetli imie i nazwisko autora;
 
         echo '<h3>Autorzy </h3>';
         echo '<ul id="ul-authors">';
@@ -41,7 +41,7 @@
             echo '<li id="all-authors">
                   <label>
                      <input type="checkbox" name="author-checkbox" class="author-checkbox" id="all-authors">Wszyscy
-                  </labeL>';
+                  </label>';
 
             /*echo "<br>40<br>";*/
             while ($row = $result->fetch_assoc())

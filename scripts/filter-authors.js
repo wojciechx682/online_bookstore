@@ -16,7 +16,7 @@ console.log("\nli => ", li);
 all.addEventListener("change", updateAll);
 
 function updateAll() {
-    for(let i=0; i<li.length; i++) { // tyle razy ile jest checkboxów z autorami
+    for(let i=0; i < li.length; i++) { // tyle razy ile jest checkboxów z autorami
         li[i].checked = all.checked; // uaktualnienie właściwości checked
     }
 }
