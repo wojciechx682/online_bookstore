@@ -1359,7 +1359,7 @@ EOT;
 
                         //echo "<br>num_of_rows --> " . $num_of_rows . "<br>";
 
-                        if($num_of_rows>0) // znaleziono rekordy
+                        if($num_of_rows > 0) // znaleziono rekordy
                         {
 
                             //echo "<br>625<br>"; //exit();
@@ -1404,7 +1404,7 @@ EOT;
         }
         catch(Exception $e) // exception - wyjątek; przechwycenie i obsługa wyjątku;
         {
-            echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności]</div>'; // użycie "return" zamisat echo
+            echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności] </div>'; // użycie "return" zamisat echo
             echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - dla deweloperów
             exit(); // (?)
         }

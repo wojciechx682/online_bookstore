@@ -35,7 +35,9 @@ const sortBooks = () => { // function is defined using arrow function syntax ;
 
 	//let books = Array.from($('#content-books > .outer-book')); // create array that contains every book ;
 
-	let books = Array.from($('#content-books > .outer-book:not(:has(.book.hidden))'));
+	//let books = Array.from($('#content-books > .outer-book:not(:has(.book.hidden))'));
+
+	let books = Array.from( document.querySelectorAll("#content-books > .outer-book:not(:has(.book.hidden))") );
 	// wybierz tylko te elementy, które nie są ukryte (nie zawierają klasy "book hidden") - aby sortować tylko widoczne elementy
 
 	console.log("books ->", books);
@@ -60,6 +62,10 @@ const sortBooks = () => { // function is defined using arrow function syntax ;
 	const sortByPriceDescending = (a, b) => Number(b.querySelector(".book-price").textContent) - Number(a.querySelector(".book-price").textContent);
 	const sortByYearAscending = (a, b) => Number(a.querySelector(".book-year").textContent) - Number(b.querySelector(".book-year").textContent);
 	const sortByYearDescending = (a, b) => Number(b.querySelector(".book-year").textContent) - Number(a.querySelector(".book-year").textContent);
+	                                       // metoda Number - konwertuje ciągi tekstowe w tablicy na liczby;
+	                                       // "Values of other types can be converted to numbers using the Number() function."
+
+
 	// function compareFn(a, b) {
 	// 	if (a is less than b by some ordering criterion) {
 	// 		return -1;
