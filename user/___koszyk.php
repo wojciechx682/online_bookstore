@@ -16,6 +16,19 @@
 
 <?php require "../view/___head.php"; ?>
 
+<style>
+    /*.book-details {
+        border: 1px solid blue;
+    }
+    .book-description {
+        border: 1px solid pink;
+    }*/
+
+    form.change_quantity_form {
+        border: 1px solid red;
+    }
+</style>
+
 <body>
 
 <div id="main-container">
@@ -30,6 +43,10 @@
 
             <div id="content">
 
+                <?php   /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr>"*/ ?>
+
                 <h3 id="cart-header">Koszyk</h3>
 
                 <?php
@@ -38,16 +55,40 @@
 
                     // echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">&larr; Wróć </a>';
 
-                    $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
+                    $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING); // id_klienta ;
 
-                    query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, au.imie, au.nazwisko FROM klienci AS kl, koszyk AS ko, ksiazki AS ks, autor AS au WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND kl.id_klienta='%s'", "get_product_from_cart", $id); // książki które zamówił klient o danym ID;
+                    query("SELECT kl.id_klienta, 
+                                        ko.id_ksiazki, ko.ilosc, 
+                                        ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, 
+                                        au.imie, au.nazwisko 
+                                  FROM klienci AS kl, 
+                                       koszyk AS ko, 
+                                       ksiazki AS ks, 
+                                       autor AS au 
+                                  WHERE kl.id_klienta = ko.id_klienta AND 
+                                        ko.id_ksiazki = ks.id_ksiazki AND 
+                                        ks.id_autora = au.id_autora AND 
+                                        kl.id_klienta='%s'", "get_product_from_cart", $id);
+                                  // książki które zamówił klient o danym ID;
+                                  // get_product_from_cart() --> $_SESSION['suma_zamowienia'] ;   "285.45" ;
+                                     // \template\cart-products.php;
 
-                    query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id);
+                    query("SELECT SUM(ilosc) AS suma 
+                                 FROM koszyk 
+                                 WHERE id_klienta='%s'", "count_cart_quantity", $id);
+                                // po to, aby przy zmianie ilości książek w koszyku aktualizowała się liczba w headerze przy "Koszyk (3)" ;
+                                // count_cart_quantity() --> $_SESSION['koszyk_ilosc_ksiazek'] ;  "4" ;
 
-                    echo "<h3 id='order-sum'><span class='order-sum'>suma</span>" . $_SESSION["suma_zamowienia"] . " PLN </h3>";
+                    echo "<h3 id='order-sum'>
+                            <span class='order-sum'>suma</span>" . $_SESSION["suma_zamowienia"] . " PLN 
+                      </h3>";
+                                   // get_product_from_cart () --> $_SESSION["suma_zamowienia"] ;
                 ?>
 
-                <button class="btn-link btn-link-static"><a href="___submit_order.php">Złóż zamówienie</a></button>
+                <button class="btn-link btn-link-static">
+                    <a href="___submit_order.php">Złóż zamówienie</a>
+                </button>
+
                 <!-- <br><a href="submit_order.php">Złóż zamówienie</a> -->
 
             </div>

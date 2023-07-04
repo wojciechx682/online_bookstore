@@ -2406,7 +2406,10 @@ button#confirm-message {
                     .book-cover > form button.book-img-button,
                         /* index.php - <form> - button/submit - (prg) */
                     .book-details > form button.book-img-button, /* koszyk.php */
+                .cart-book > span.book-details form button.submit-book-form, /* koszyk.php - tytuł książki (!) */
                     div#n-top-nav-content ol li ul li form button.submit-book-form /* index - lista <ul> z kategoriami - button */
+
+
                     {
                         /*margin: 0;
                         padding: 0;
@@ -2429,9 +2432,13 @@ button#confirm-message {
                     .book-info > form button.submit-book-form h3.book-title {
                         /*font-weight: 400;*/
                     }
-                    .book-info > form button.submit-book-form h3.book-title:hover {
+                    .book-info > form button.submit-book-form h3.book-title:hover,
+
+                    .cart-book form button.submit-book-form h3.book-title:hover
+                    {
                         cursor: pointer;
                         text-decoration: underline;
+
                     }
 
 .book-title {
@@ -2447,6 +2454,18 @@ button#confirm-message {
    /* position: relative;
     top: 0;
     left: 0;*/
+}
+
+.cart-book form button.submit-book-form h3.book-title { /* koszyk - formularz - tytuł książki */
+    margin: 0;
+    font-size: initial;
+    /*margin: 10px;*/
+    padding-bottom: 22px;
+    /*margin-bottom: 25px;*/
+
+
+    /*border: 1px solid blue;*/
+
 }
 
 /*.book:hover .book-title {
@@ -2958,7 +2977,7 @@ span.book-details img:hover {
 span.book-details {
     display: block;
 
-    overflow: hidden !important;
+/*overflow: hidden !important;*/
 
     /*width: 300px;*/
 
@@ -2966,7 +2985,9 @@ span.book-details {
 
     /*background-color: #a2c3f6;*/
 
-    min-width: 600px !important;
+    min-width: 730px !important;
+
+    height: 150px;
 
 
 }
@@ -2979,7 +3000,7 @@ span.book-details {
     margin-bottom: 25px;
     padding-bottom: 25px;
 
-    overflow: hidden !important;
+/*overflow: hidden !important;*/
 
 
 }
@@ -2994,15 +3015,17 @@ span.book-details {
 }
 
 .book-description {
-    min-width: 215px;
+min-width: 300px;
     margin-left: 10px;
     margin-right: 40px;
 
 
-    /*width: 50%;*/
+        /*width: 50%;*/
+    transition: margin .3s;
 
+    min-height: 135px;
 
-    overflow: hidden;
+/*overflow: hidden;*/
 }
 
 span.book-details div.book-description div.title {
@@ -3015,6 +3038,14 @@ span.book-details div.book-description div.title {
 
 
 }
+
+/*
+div.cart-book > span.book-details div.book-description div.price,
+div.cart-book > span.book-details div.book-description div.year,
+div.cart-book > span.book-details div.book-description div.author {
+    user-select: none;
+}
+*/
 
 .change_quantity_form b {
 

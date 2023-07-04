@@ -96,7 +96,7 @@
 
                             <span class="login-row">
                                     <label>
-                                        E-mail <input type="email" name="email" required value="adam.nowak@wp.pl">
+                                        E-mail <input type="email" name="email" required value="jakub.wojciechowski.682@gmail.com">
                                     </label>
                             </span>
                             <span class="login-row">
