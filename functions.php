@@ -1383,6 +1383,11 @@ EOT;
                                 $fun($result);
                             }
 
+                            /*if($fun == "log_in" || $fun == "get_product_from_cart") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
+
+                                $fun($result);
+                            }*/
+
                             // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
 
                              // dla register_verify_email (rejestracja) nie powinna wykonać się funkcja $fun !
