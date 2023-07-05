@@ -1413,7 +1413,61 @@ EOT;
         //return "<br> query = ".$query.", type = ".$type."<br>";
     }
 
-	function get_first_word($string)
+/*function query($query, $fun, $value)
+{
+    require "connect.php";
+    mysqli_report(MYSQLI_REPORT_STRICT);
+
+    try
+    {
+        $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+
+        if($polaczenie->connect_errno) {
+            throw new Exception(mysqli_connect_errno());
+        }
+
+        if(!is_array($value)) {
+            $value = [$value];
+        }
+
+        foreach($value as &$val) {
+            $val = mysqli_real_escape_string($polaczenie, $val);
+        }
+        unset($val);
+
+        if($result = $polaczenie->query(vsprintf($query, $value)))
+        {
+            if(!is_object($result)) {
+                if($fun != "") {
+                    $fun($result);
+                }
+            } else {
+                $num_of_rows = $result->num_rows;
+
+                if($num_of_rows > 0) {
+                    $fun($result);
+                } else {
+                    if($fun != "" && !in_array($fun, ["register_verify_email", "check_email", "verify_token", "cart_verify_book", "verify_rate_exists"])) {
+                        $fun($result);
+                    }
+                }
+            }
+        } else {
+            throw new Exception($polaczenie->error);
+        }
+
+        $polaczenie->close();
+    }
+    catch(Exception $e)
+    {
+        echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności ] </div>';
+        echo '<br><span style="color:red">Informacja developerska: </span>'.$e;
+        exit();
+    }
+}*/
+
+
+function get_first_word($string)
     {
     	// ta funkcja zwraca pierwsze słowo ze stringa
         $arr = explode(' ', trim($string));

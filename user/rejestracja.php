@@ -377,7 +377,8 @@
 
         // var_dump($_SESSION); exit();
 
-		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_sanitized);  // przestawi mi zmienną $_SESSION['wszystko_OK'] na false, jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result); tzn że taki klient już jest!;
+		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_sanitized);
+        // przestawi mi zmienną $_SESSION['wszystko_OK'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest!;
 
 		if($_SESSION['wszystko_OK']) // udana walidacja;
 		{
