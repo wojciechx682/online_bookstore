@@ -47,8 +47,19 @@
                     // książki które zamówił klient o danym ID; (które posiada aktualnie w koszyku) ;
                 ?>
 
+                <?php
+                    if( ! isset($_SESSION["koszyk_ilosc_ksiazek"]) || $_SESSION['koszyk_ilosc_ksiazek'] == 0) {
+
+                        $_SESSION["quantity-error"] = true;
+                        echo '<script>window.location.href="___koszyk.php";</script>';
+                        exit();
+                    }
+
+
+                ?>
+
                 <form action="___order.php" method="post"
-                      id="submit-order">
+                      id="submit-order" >
 
                     <p>
                         <strong>
@@ -59,8 +70,8 @@
                     <div>
                         <label>
                             <p class="option">
-                                <input type="radio" name="zamowienie-typ-dostawy" id="dostawa_kurier_dpd" value="Kurier DPD">
-
+                                <input type="radio" name="zamowienie-typ-dostawy" id="dostawa_kurier_dpd"
+                                                    value="Kurier DPD">
                                 <span>
                                     <img src="../assets/dpd.png" title="Kurier DPD">
                                         Kurier DPD
@@ -69,109 +80,130 @@
                         </label>
                     </div>
 
-                <div>
-                    <label>
-                        <p class="option">
-                            <input type="radio" name="zamowienie-typ-dostawy" id="dostawa_kurier_inpost" value="Kurier Inpost">
-                            <span>
-                                <img src="../assets/inpost.png" title="Kurier Inpost">
-                                    Kurier Inpost
-                            </span>
-                        </p>
-                    </label>
-                </div>
+                    <div>
+                        <label>
+                            <p class="option">
+                                <input type="radio" name="zamowienie-typ-dostawy" id="dostawa_kurier_inpost"
+                                                    value="Kurier Inpost">
+                                <span>
+                                    <img src="../assets/inpost.png" title="Kurier Inpost">
+                                        Kurier Inpost
+                                </span>
+                            </p>
+                        </label>
+                    </div>
 
-                <div>
-                    <label>
-                        <p class="option">
-                            <input type="radio" name="zamowienie-typ-dostawy" id="odbior_paczkomaty_inpost" value="Paczkomaty 24/7 (Inpost)">
-                            <span>
-                                <img src="../assets/paczkomaty24_7.png" title="Paczkomaty 24/7 (Inpost)">
-                                    Paczkomaty 24/7 (Inpost)
-                            </span>
-                        </p>
-                    </label>
-                </div>
+                    <div>
+                        <label>
+                            <p class="option">
+                                <input type="radio" name="zamowienie-typ-dostawy" id="odbior_paczkomaty_inpost"
+                                                    value="Paczkomaty 24/7 (Inpost)">
+                                <span>
+                                    <img src="../assets/paczkomaty24_7.png" title="Paczkomaty 24/7 (Inpost)">
+                                        Paczkomaty 24/7 (Inpost)
+                                </span>
+                            </p>
+                        </label>
+                    </div>
 
-                <div>
-                    <label>
-                        <p class="option">
-                            <input type="radio" name="zamowienie-typ-dostawy" id="odbior_poczta_polska" value="Odbiór w punkcie (Poczta polska)">
-                            <span>
-                                <img src="../assets/odbior_poczta_polska.png" title="Odbiór w punkcie (Poczta polska)">
-                                    Odbiór w punkcie (Poczta polska)
-                            </span>
-                        </p>
-                    </label>
-                </div>
+                    <div>
+                        <label>
+                            <p class="option">
+                                <input type="radio" name="zamowienie-typ-dostawy" id="odbior_poczta_polska"
+                                                    value="Odbiór w punkcie (Poczta polska)">
+                                <span>
+                                    <img src="../assets/odbior_poczta_polska.png" title="Odbiór w punkcie (Poczta polska)">
+                                        Odbiór w punkcie (Poczta polska)
+                                </span>
+                            </p>
+                        </label>
+                    </div>
 
-                <div>
-                    <label>
-                        <p class="option">
-                            <input type="radio" name="zamowienie-typ-dostawy" id="odbior_w_ksiegarni" value="Odbiór w sklepie (Księgarnia)">
-                            <span>
-                                <img src="../assets/odbior_osobisty.png" title="Odbiór w sklepie (Księgarnia)">
-                                    Odbiór w sklepie (Księgarnia)
-                            </span>
-                        </p>
-                    </label>
-                </div>
+                    <div>
+                        <label>
+                            <p class="option">
+                                <input type="radio" name="zamowienie-typ-dostawy" id="odbior_w_ksiegarni"
+                                                    value="Odbiór w sklepie (Księgarnia)">
+                                <span>
+                                    <img src="../assets/odbior_osobisty.png" title="Odbiór w sklepie (Księgarnia)">
+                                        Odbiór w sklepie (Księgarnia)
+                                </span>
+                            </p>
+                        </label>
+                    </div>
 
-                <div style="clear: both;"></div>
+                    <div style="clear: both;"></div>
 
-                <p>
-                    <strong>
-                        Wybierz typ płatności
-                    </strong>
-                <br>
+                    <p>
+                        <strong>
+                            Wybierz typ płatności
+                        </strong>
+                    </p>
 
-                <div>
-                    <label>
-                        <p class="option">
-                            <input type="radio" name="zamowienie-typ-platnosci" id="platnosc-blik" value="Blik">
-                            <span>
-                                 <img src="../assets/blik.png" title="Blik">
-                                    Blik
-                            </span>
-                        </p>
-                    </label>
-                </div>
+                    <div>
+                        <label>
+                            <p class="option">
+                                <input type="radio" name="zamowienie-typ-platnosci" id="platnosc-blik"
+                                                    value="Blik">
+                                <span>
+                                     <img src="../assets/blik.png" title="Blik">
+                                        Blik
+                                </span>
+                            </p>
+                        </label>
+                    </div>
 
-                <div>
-                    <label>
-                        <p class="option">
-                            <input type="radio" name="zamowienie-typ-platnosci" id="platnosc-pobranie" value="Pobranie">
-                            <span>
-                                <img src="../assets/pobranie.png" title="Pobranie">
-                                    Pobranie
-                            </span>
-                        </p>
-                    </label>
-                </div>
+                    <div>
+                        <label>
+                            <p class="option">
+                                <input type="radio" name="zamowienie-typ-platnosci" id="platnosc-pobranie"
+                                                    value="Pobranie">
+                                <span>
+                                    <img src="../assets/pobranie.png" title="Pobranie">
+                                        Pobranie
+                                </span>
+                            </p>
+                        </label>
+                    </div>
 
-                <div>
-                    <label>
-                        <p class="option">
-                            <input type="radio" name="zamowienie-typ-platnosci" id="platnosc-katra-online" value="Karta płatnicza (online)">
-                            <span>
-                                <img src="../assets/karta.png" title="Karta płatnicza (online)">
-                                    Karta płatnicza (online)
-                            </span>
-                        </p>
-                    </label>
-                </div>
+                    <div>
+                        <label>
+                            <p class="option">
+                                <input type="radio" name="zamowienie-typ-platnosci" id="platnosc-katra-online"
+                                                    value="Karta płatnicza (online)">
+                                <span>
+                                    <img src="../assets/karta.png" title="Karta płatnicza (online)">
+                                        Karta płatnicza (online)
+                                </span>
+                            </p>
+                        </label>
+                    </div>
 
-                <div style="clear: both;"></div>
+                    <div style="clear: both;"></div>
 
-                <button type="submit" class="btn-link btn-link-static">Zamawiam</button>
+                    <button type="submit" class="btn-link btn-link-static">
+                        Zamawiam
+                    </button>
 
                 </form> <!-- POST -> order.php -->
 
                 <?php
-                    if(isset($_SESSION["order-error"])) {
-                        unset($_SESSION["order-error"]);
-                        echo "<p>Aby złożyć zamówienie, dodaj książki do koszyka !</p>";
+                    /*if( isset($_SESSION["order-error"]) ) {
+                            unset($_SESSION["order-error"]);
+                        echo "<p><strong>Aby złożyć zamówienie, dodaj książki do koszyka</strong></p>";
+                    }*/
+                    if ( isset($_SESSION["delivery-error"]) ) { // order_php -> "true";
+                            unset($_SESSION["delivery-error"]);
+                        echo "<p><strong>Podaj poprawną formę dostawy</strong></p>";
                     }
+                    elseif ( isset($_SESSION["payment-error"]) ) { // order_php -> "true";
+                            unset($_SESSION["payment-error"]);
+                        echo "<p><strong>Podaj poprawną formę płatności</strong></p>";
+                    } elseif ( isset($_SESSION["order-error"]) ) { // empty POST values ;
+                            unset($_SESSION["order-error"]);
+                        echo "<p><strong>Aby złożyć zamówienie, wybierz formę dostawy i typ płatności</strong></p>";
+                    }
+
                 ?>
 
             </div>

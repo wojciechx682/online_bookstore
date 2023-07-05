@@ -152,9 +152,9 @@
                     <p>
                         <div id="year-range">
                             <span class="adv-search">
-                                <label for="adv-search-year">
+                                <!--<label for="adv-search-year">-->
                                     Rok wydania
-                                </label>
+                                <!--</label>-->
                             </span>
                                 <label>
                                     od <input type="number" id="year-min" name="year-min">

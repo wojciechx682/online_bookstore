@@ -3120,6 +3120,9 @@ span.order-sum {
     text-transform: uppercase;
 }
 
+span.order-sum-cart {
+    padding: 0;
+}
 
 
 

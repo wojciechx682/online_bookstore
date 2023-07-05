@@ -992,9 +992,9 @@ EOT;
     function get_id($result)
     {
         // order.php -> get_last_order_id($result) -> ustawia id ostatniego zamówienia w zmiennej sesyjnej
-        $row = $result->fetch_assoc();
+            $row = $result->fetch_assoc();
         $_SESSION['last_order_id'] = $row["id_zamowienia"];
-        $result->free_result();
+            $result->free_result();
     }
 
     function get_last_order_id($result)

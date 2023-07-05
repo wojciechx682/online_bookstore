@@ -217,7 +217,7 @@
 
     </div>
 
-    <?php if (isset($_SESSION["login-error"]) && $_SESSION["login-error"]) : ?>
+    <?php if ( isset($_SESSION["login-error"]) && $_SESSION["login-error"] ) : ?>
 
         <?php unset($_SESSION["login-error"]) ?>
 

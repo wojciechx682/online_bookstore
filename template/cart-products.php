@@ -1,5 +1,5 @@
 
-<? // template used on the cart page (cart.php) to display the products currently in the cart of a given customer ?>
+<!-- template used on the cart page (cart.php) to display the products currently in the cart of a given customer -->
 
 <div id="book%s" class="cart-book">
 
