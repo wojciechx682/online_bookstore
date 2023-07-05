@@ -1404,7 +1404,7 @@ EOT;
         }
         catch(Exception $e) // exception - wyjątek; przechwycenie i obsługa wyjątku;
         {
-            echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności] </div>'; // użycie "return" zamisat echo
+            echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności ] </div>'; // użycie "return" zamisat echo
             echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - dla deweloperów
             exit(); // (?)
         }
