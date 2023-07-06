@@ -47,7 +47,8 @@
 		header('Location: ___index2.php');
 		exit();
 	}
-	else { // zmienne $_POST['email'], $_POST['haslo'] - istnieją (mogą być puste), ORAZ (AND) NIE jesteśmy zalogowani ;
+	else {
+        // zmienne $_POST['email'], $_POST['haslo'] - istnieją (mogą być puste), ORAZ (AND) NIE jesteśmy zalogowani ;
 
         // ✓ spełni się, jeśli ->
             // podaliśmy login i hasło, oraz nie byliśmy zalogowani; ("normale logowanie");
@@ -62,7 +63,7 @@
 
 		// if( filter_var($email_sanitized, FILTER_VALIDATE_EMAIL) == false || $email_sanitized != $email )
 
-		if( ! filter_var($email_sanitized, FILTER_VALIDATE_EMAIL) || ($email_sanitized != $_POST["email"]))
+		if( ! filter_var($email_sanitized, FILTER_VALIDATE_EMAIL) || ($email_sanitized != $_POST["email"]) )
 		{
 			$_SESSION['blad'] = '<span class="error">Podaj poprawny adres e-mail</span>'; // email nie przeszedł walidacji;
 			header('Location: ___zaloguj.php');
@@ -92,7 +93,7 @@
                                 ad.miejscowosc, ad.ulica, ad.numer_domu, ad.kod_pocztowy, ad.kod_miejscowosc
                          FROM pracownicy AS pr, adres AS ad 
                          WHERE pr.adres_id = ad.adres_id
-                         AND pr.email='%s'", "log_in", $email_sanitized) ; // ✓ zmodyfikować funkcję log_in ! // ✓ dodac instrukcję warunkową (if);
+                         AND pr.email='%s'", "log_in", $email_sanitized) ; // ✓✓✓ zmodyfikować funkcję log_in ! // ✓✓✓ dodac instrukcję warunkową (if);
             }
 
             header('Location: ___zaloguj.php');

@@ -2,29 +2,33 @@
 
 	session_start();
 	
-	if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" && ! isset($_SESSION['udanarejestracja']) )
-	{   // ✓ "jeśli weszliśmy na zaloguj.php będąc zalogowanym"; - (i nie było to przekierowanie po zakończeniu pomyślnej rejestracji będąc zalogowanym na inne konto);
-
-        // zmienna $_SESSION['zalogowany'] jest ustawiana na wartość "true" wewnątrz funkcji log_in() - tylko wtedy, jeśli podano poprawne dane logowania;
-		header("Location: ___index2.php"); // index.php;
+	if ( isset($_SESSION['zalogowany']) &&
+               $_SESSION['zalogowany'] == "true" &&
+        ! isset($_SESSION['udanarejestracja']) )
+	{
+        // ✓ "jeśli weszliśmy na zaloguj.php będąc wcześniej zalogowanym" ;
+        // - (i nie było to przekierowanie po zakończeniu pomyślnej rejestracji /będąc zalogowanym na inne konto);
+            // zmienna $_SESSION['zaloogwany'] jest ustawiana na wartość "true" wewnątrz funkcji log_in() - tylko wtedy, jeśli podano poprawne dane logowania;
+		header("Location: ___index2.php"); // przekierowanie na strone główną;
 		exit();
 	}
-	elseif( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" && isset($_SESSION['udanarejestracja']) && $_SESSION['udanarejestracja'] == "true" )
-	{   // ✓ jeśli pomyślnie stworzyliśmy konto, będąc zalogowanym na inne;
-		header("Location: logout.php");
+	elseif ( isset($_SESSION['zalogowany']) &&
+                   $_SESSION['zalogowany'] == "true" &&
+             isset($_SESSION['udanarejestracja']) &&
+                   $_SESSION['udanarejestracja'] == "true" )
+	{   // ✓ jeśli (pomyślnie) stworzyliśmy konto, będąc zalogowanym na inne ;
+		header("Location: logout.php"); // ustawi zmienną $_SESSION['udanarejestracja'] = true, przekieruje z powrotem do zaloguj.php (spełni się 3-ci warunek w zaloguj.php);
 		exit();
 	}
-	elseif( !isset($_SESSION['zalogowany']) &&
-             isset($_SESSION['udanarejestracja'])
+	elseif ( ! isset($_SESSION['zalogowany']) &&
+               isset($_SESSION['udanarejestracja'])
     ) // ✓ jeśli stworzyliśmy konto (normalnie - nie będąc zalogowanym w tym czasie na inne);
 	{
-		//unset($_SESSION['udanarejestracja']);
+		// unset($_SESSION['udanarejestracja']);
 
         /*echo "<br> 23 <br> get -> " . print_r($_GET) . "<br>";
         echo "<br> post -> " . print_r($_POST) . "<br>";
         echo "<br> session -> " . print_r($_SESSION) . "<br>"; exit();*/
-
-
 
 		// ✓ Usuwanie zmiennych pamiętających wartości wpisane do formularza - ponieważ ISTNIEJĄ one po pomyślnym stowrzeniu nowego konta !
 		if (isset($_SESSION['fr_imie'])) unset($_SESSION['fr_imie']);
@@ -90,7 +94,9 @@
 
                     <!-- Księgarnia online<br><br> -->
 
-                    <form action="logowanie.php" method="post" id="login-form">
+                    <form action="logowanie.php"
+                            method="post"
+                            id="login-form">
 
                         <div class="login-form-section">
 
@@ -99,6 +105,7 @@
                                         E-mail <input type="email" name="email" required value="jakub.wojciechowski.682@gmail.com">
                                     </label>
                             </span>
+
                             <span class="login-row">
                                     <label>
                                         Hasło <input type="password" name="haslo" required value="PassJacob33#"
@@ -112,8 +119,6 @@
 
                     </form>
 
-
-
                     <a href="___reset_password.php" class="a-login-page-link">Przypomnij hasło</a>
 
                     <a href="___zarejestruj.php" class="a-login-page-link">Nie posiadasz konta? Zarejestruj się</a>
@@ -121,7 +126,7 @@
 
                     <?php
                         if( isset($_SESSION["password-changed"]) && $_SESSION["password-changed"] )
-                        {   // if variable EXISTS and has value egual to "TRUE";
+                        {       // if variable EXISTS and has value egual to "TRUE";
                             echo "<h3>Udało się zmienić hasło</h3>";
                             session_unset();
                             session_destroy();
@@ -130,8 +135,8 @@
 
                     <?php
                         // pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło;
-                        // czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI;
-                        // normalne logowanie, podany złe hasło;
+                            // czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI;
+                        // normalne logowanie, podany zły login/hasło;
                         if(isset($_SESSION['blad']))
                         {
                             echo ''.$_SESSION['blad']; // wyświetlenie komunikatu "nieprawidłowy login lub hasło";
@@ -198,23 +203,14 @@
 
     <!-- class="hidden" -->
 
-
-
-
-
     <div id="login-error-message" class="hidden">
         <h2>Musisz być zalogowany !</h2>
         <hr>
         <button id="confirm-message" class="btn-link btn-link-static">Potwierdź</button>
     </div>
 
-
-
-
     <div class="background">
         <!-- Content goes here -->
-
-
     </div>
 
     <?php if ( isset($_SESSION["login-error"]) && $_SESSION["login-error"] ) : ?>
@@ -274,7 +270,7 @@
             container.classList.toggle("bright");
         });
 
-    </script>-->
+    </script> -->
 
 </body>
 </html>

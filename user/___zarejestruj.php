@@ -13,7 +13,7 @@
 <style>
     div.error {
         color: red !important;
-        font-weight: bold;
+        /*font-weight: bold;*/
     }
 </style>
 
@@ -31,28 +31,30 @@
 
                 <!-- Formularz rejestracji -->
 
-                <form method="post" action="rejestracja.php" id="register-form">
+                <form method="post"
+                      action="rejestracja.php"
+                            id="register-form">
 
-                    Stwórz nowe konto klienta<hr class="register-form-hr-line">
+                    Stwórz nowe konto klienta <hr class="register-form-hr-line">
 
                     <div class="form-section">
 
                         <span class="row">
                             <label>
                                 Imię: <input type="text" name="imie" required value="<?php
-                                if(isset($_SESSION['fr_imie']))
-                                {
-                                    echo $_SESSION['fr_imie'];
-                                    unset($_SESSION['fr_imie']);
-                                }
+                                    if(isset($_SESSION['fr_imie']))
+                                    {
+                                        echo $_SESSION['fr_imie'];
+                                        unset($_SESSION['fr_imie']);
+                                    }
                                 else {
                                     echo "Adam";
-                                } ?>"> <br>
+                                } ?>">
 
                                 <?php
                                     if(isset($_SESSION['e_imie'])) {
                                         echo '<div class="error">'.$_SESSION['e_imie'].'</div>';
-                                        unset($_SESSION['e_imie']);
+                                            unset($_SESSION['e_imie']);
                                     }
                                 ?>
                             </label>
@@ -61,20 +63,20 @@
                         <span class="row">
                             <label>
                                 Nazwisko: <input type="text" name="nazwisko" required value="<?php
-                                if(isset($_SESSION['fr_nazwisko']))
-                                {
-                                    echo $_SESSION['fr_nazwisko'];
-                                    unset($_SESSION['fr_nazwisko']);
-                                }
+                                    if(isset($_SESSION['fr_nazwisko']))
+                                    {
+                                        echo $_SESSION['fr_nazwisko'];
+                                            unset($_SESSION['fr_nazwisko']);
+                                    }
                                 else {
                                     echo "Nowak";
                                 } ?>">
 
                                 <?php
-                                    if(isset($_SESSION['e_nazwisko'])) // błąd z nazwiskiem użytkownika
+                                    if(isset($_SESSION['e_nazwisko'])) // błąd z nazwiskiem użytkownika;
                                     {
                                         echo '<div class="error">'.$_SESSION['e_nazwisko'].'</div>';
-                                        unset($_SESSION['e_nazwisko']);
+                                            unset($_SESSION['e_nazwisko']);
                                     }
                                 ?>
                             </label>
@@ -83,11 +85,11 @@
                         <span class="row">
                             <label>
                                 E-mail: <input type="email" name="email" required value="<?php
-                                if(isset($_SESSION['fr_email']))
-                                {
-                                    echo $_SESSION['fr_email'];
-                                    unset($_SESSION['fr_email']);
-                                }
+                                    if(isset($_SESSION['fr_email']))
+                                    {
+                                        echo $_SESSION['fr_email'];
+                                            unset($_SESSION['fr_email']);
+                                    }
                                 else {
                                     echo "adam.nowak@wp.pl";
                                 } ?>">
@@ -96,7 +98,7 @@
                                     if(isset($_SESSION['e_email']))
                                     {
                                         echo '<div class="error">'.$_SESSION['e_email'].'</div>';
-                                        unset($_SESSION['e_email']);
+                                            unset($_SESSION['e_email']);
                                     }
                                 ?>
                             </label>
@@ -106,13 +108,14 @@
                             <label>
                                 Hasło: <input type="password" maxlength="30" id="haslo1" name="haslo1"
                                                    required value="PassJacob33#" >
-                                <div id="feedback"></div>
+
+                                <div id="feedback" style="color:red;"></div>
 
                                 <?php
                                     if(isset($_SESSION['e_haslo']))
                                     {
                                         echo '<div class="error">'.$_SESSION['e_haslo'].'</div>';
-                                        unset($_SESSION['e_haslo']);
+                                            unset($_SESSION['e_haslo']);
                                     }
                                 ?>
                             </label>
@@ -135,7 +138,7 @@
                                     if(isset($_SESSION['fr_miejscowosc']))
                                     {
                                         echo $_SESSION['fr_miejscowosc'];
-                                        unset($_SESSION['fr_miejscowosc']);
+                                            unset($_SESSION['fr_miejscowosc']);
                                     }
                                     else {
                                         echo "Dolna odra";
@@ -146,7 +149,7 @@
                                     if(isset($_SESSION['e_miejscowosc']))
                                     {
                                         echo '<div class="error">'.$_SESSION['e_miejscowosc'].'</div>';
-                                        unset($_SESSION['e_miejscowosc']);
+                                            unset($_SESSION['e_miejscowosc']);
                                     }
                                 ?>
                             </label>
@@ -158,7 +161,7 @@
                                     if(isset($_SESSION['fr_ulica']))
                                     {
                                         echo $_SESSION['fr_ulica'];
-                                        unset($_SESSION['fr_ulica']);
+                                            unset($_SESSION['fr_ulica']);
                                     }
                                     else {
                                         echo "Słoneczna";
@@ -169,7 +172,7 @@
                                     if(isset($_SESSION['e_ulica']))
                                     {
                                         echo '<div class="error">'.$_SESSION['e_ulica'].'</div>';
-                                        unset($_SESSION['e_ulica']);
+                                            unset($_SESSION['e_ulica']);
                                     }
                                 ?>
                             </label>
@@ -181,7 +184,7 @@
                                     if(isset($_SESSION['fr_numer_domu']))
                                     {
                                         echo $_SESSION['fr_numer_domu'];
-                                        unset($_SESSION['fr_numer_domu']);
+                                            unset($_SESSION['fr_numer_domu']);
                                     }
                                     else
                                     {
@@ -193,7 +196,7 @@
                                     if(isset($_SESSION['e_numer_domu']))
                                     {
                                         echo '<div class="error">'.$_SESSION['e_numer_domu'].'</div>';
-                                        unset($_SESSION['e_numer_domu']);
+                                            unset($_SESSION['e_numer_domu']);
                                     }
                                 ?>
                             </label>
@@ -209,7 +212,7 @@
                                     if(isset($_SESSION['fr_kod_pocztowy']))
                                     {
                                         echo $_SESSION['fr_kod_pocztowy'];
-                                        unset($_SESSION['fr_kod_pocztowy']);
+                                            unset($_SESSION['fr_kod_pocztowy']);
                                     }
                                     else {
                                         echo "64-600";
@@ -220,7 +223,7 @@
                                     if(isset($_SESSION['e_kod_pocztowy']))
                                     {
                                         echo '<div class="error">'.$_SESSION['e_kod_pocztowy'].'</div>';
-                                        unset($_SESSION['e_kod_pocztowy']);
+                                            unset($_SESSION['e_kod_pocztowy']);
                                     }
                                 ?>
                             </label>
@@ -232,7 +235,7 @@
                                     if(isset($_SESSION['fr_kod_miejscowosc']))
                                     {
                                         echo $_SESSION['fr_kod_miejscowosc'];
-                                        unset($_SESSION['fr_kod_miejscowosc']);
+                                            unset($_SESSION['fr_kod_miejscowosc']);
                                     }
                                     else {
                                         echo "Dębno";
@@ -243,7 +246,7 @@
                                     if(isset($_SESSION['e_kod_miejscowosc']))
                                     {
                                         echo '<div class="error">'.$_SESSION['e_kod_miejscowosc'].'</div>';
-                                        unset($_SESSION['e_kod_miejscowosc']);
+                                            unset($_SESSION['e_kod_miejscowosc']);
                                     }
                                 ?>
                             </label>
@@ -349,7 +352,7 @@
                             if(isset($_SESSION['fr_regulamin']))
                             {
                                 echo "checked";
-                                unset($_SESSION['fr_regulamin']);
+                                    unset($_SESSION['fr_regulamin']);
                             }
                             else
                             {
@@ -360,10 +363,11 @@
                         </label>
 
                         <?php
-                            if(isset($_SESSION['e_regulamin'])) // błąd z akceptacją regulaminu (checkbox);
+                            if(isset($_SESSION['e_regulamin']))
                             {
+                                // błąd z akceptacją regulaminu (checkbox);
                                 echo '<div class="error">'.$_SESSION['e_regulamin'].'</div>';
-                                unset($_SESSION['e_regulamin']);
+                                    unset($_SESSION['e_regulamin']);
                             }
                         ?>
 
@@ -374,7 +378,7 @@
                         if(isset($_SESSION['e_bot'])) // błąd z reCaptcha;
                         {
                             echo '<div class="error">'.$_SESSION['e_bot'].'</div>';
-                            unset($_SESSION['e_bot']);
+                                unset($_SESSION['e_bot']);
                         }
                     ?>
 
@@ -382,11 +386,11 @@
                     <input type="submit" value="Zarejestruj się">
 
                     <?php
-                    if(isset($_SESSION['e_fields'])) // nie wypełniono wszystkich pol;
-                    {
-                        echo '<div class="error">'.$_SESSION['e_fields'].'</div>';
-                        unset($_SESSION['e_fields']);
-                    }
+                        if(isset($_SESSION['e_fields'])) // nie wypełniono wszystkich pol;
+                        {
+                            echo '<div class="error">'.$_SESSION['e_fields'].'</div>';
+                                unset($_SESSION['e_fields']);
+                        }
                     ?>
 
                     <!-- reCAPTCHA (v2) - jan.nowak.6820@gmail.com

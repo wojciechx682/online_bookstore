@@ -24,11 +24,13 @@
 
                 <!-- Formularz rejestracji -->
 
-                <form method="post" action="rejestracja.php">
+                <form method="post"
+                      action="rejestracja.php">
 
                     Stwórz nowe konto klienta<br><hr>
 
                     <div class="form-section">
+
                         Imię: <br> <input type="text" name="imie" required value="<?php
                         if(isset($_SESSION['fr_imie']))
                         {

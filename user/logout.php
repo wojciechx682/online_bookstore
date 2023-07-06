@@ -17,16 +17,16 @@
 	// Wylogowanie użytkownika, niszczenie sesji :
 		
 
-	if(isset($_SESSION['zalogowany']) && isset($_SESSION['udanarejestracja'])) /// jeśli stworzyliśmy konto, będąc zalogowanym na inne
+	if( isset($_SESSION['zalogowany']) && isset($_SESSION['udanarejestracja']) ) // jeśli stworzyliśmy konto, będąc zalogowanym na inne;
 	{
-		session_unset();   // unset all session variables
-		session_destroy(); // destroy the session
+			session_unset();   // unset all session variables
+			session_destroy(); // destroy the session
 		session_start();
 		$_SESSION['udanarejestracja'] = true;
 		header('Location: ___zaloguj.php');
 		exit();
 	}
-	elseif(isset($_SESSION["password_confirmed"])) { // redirect from remove_password.php
+	elseif( isset($_SESSION["password_confirmed"]) ) { // redirect from remove_password.php
 		session_unset();
 		session_destroy();
 		session_start();

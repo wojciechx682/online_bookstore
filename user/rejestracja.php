@@ -44,7 +44,22 @@
             // if the data is correct, a new user account is created;
             // (inserting a new record into the customers table);
 
-		$_SESSION['wszystko_OK'] = true; // validation flag;
+        // imie: Adam
+        // nazwisko: Nowak
+        // email: adam.nowak@wp.pl
+            // haslo1: PassJacob33#
+            // haslo2: PassJacob33#
+        // miejscowosc: Dolna odra
+        // ulica: Słoneczna
+        // numer_domu: 61
+        // kod_pocztowy: 64-600
+        // kod_miejscowosc: Dębno
+        // telefon: 505101303
+            // regulamin: on
+            // g-recaptcha-response:
+
+		//$_SESSION['wszystko_OK'] = true; // validation flag; // $valid
+		$_SESSION['valid'] = true; // validation flag; // $valid
 
 		$imie = $_POST['imie'];
 		$nazwisko = $_POST['nazwisko'];
@@ -102,13 +117,15 @@
 
 		if(!preg_match($name_regex, $imie))
 		{		
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_imie'] = "Imię może składać się tylko z liter alfabetu, pierwsza litera powinna być wielka";
 		}
 
 		if (strlen($imie)<3 || strlen($imie)>20)
         {
-            $_SESSION['wszystko_OK'] = false;
+            //$_SESSION['wszystko_OK'] = false;
+            $_SESSION['valid'] = false;
             $_SESSION['e_imie'] = "Podaj poprawne imię";
         }
 
@@ -116,7 +133,8 @@
 
 		if(!preg_match($name_regex, $nazwisko))
 		{		
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_nazwisko'] = "Nazwisko może składać się tylko z liter alfabetu, pierwsza litera powinna być wielka";
 		}
 
@@ -139,7 +157,8 @@
 		{
                 // ensures that the email input is sanitized and valid;
                 // to avoid any potential XSS attacks and other vulnerabilities;
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_email'] = "Podaj poprawny adres e-mail";
 		}
 
@@ -148,6 +167,7 @@
                                         // if((strlen($haslo1)<8) || (strlen($haslo1)>20)) // sprawdzenie długości hasła
                                         // {
                                         //     $wszystko_OK = false;
+                                        //     $valid = false;
                                         //     $_SESSION['e_haslo'] = "Hasło musi posiadać od 8 do 20 znaków!";
                                         // }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -165,9 +185,9 @@
 
 		if( ! preg_match($pass_regex, $haslo1) )
 		{		
-			$_SESSION['wszystko_OK'] = false;
-			$_SESSION['e_haslo'] = "
-			Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&*_-\/\?)";
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
+			$_SESSION['e_haslo'] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&*_-\/\?)";
 		}	
 		
 		// Verifying that both passwords are the same;
@@ -177,7 +197,8 @@
 
 		if($haslo1 !== $haslo2)
 		{
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_haslo'] = "Podane hasła są różne";
 		}
 
@@ -205,7 +226,8 @@
 
 		if( ! (preg_match($address_regex, $miejscowosc)) )
 		{		
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_miejscowosc'] = "Podaj poprawną nazwę miejscowości";
 		}
 
@@ -225,7 +247,8 @@
 
                 if( ! (preg_match($street_regex, $ulica)) )
                 {
-                    $_SESSION['wszystko_OK'] = false;
+                    //$_SESSION['wszystko_OK'] = false;
+                    $_SESSION['valid'] = false;
                     $_SESSION['e_ulica'] = "Podaj poprawną nazwę ulicy";
                 }
             }
@@ -250,7 +273,8 @@
 
 		if( ! (preg_match($house_number_regex, $numer_domu)) )
 		{		
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_numer_domu'] = "Podaj poprawny numer domu";
 		}
 
@@ -263,7 +287,8 @@
 
 		if( ! (preg_match($zip_regex, $kod_pocztowy)) )
 		{		
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_kod_pocztowy'] = "Podaj poprawny kod pocztowy";
 		}
 
@@ -274,7 +299,8 @@
 
 		if( ! (preg_match($address_regex, $kod_miejscowosc)) )
 		{		
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_kod_miejscowosc'] = "Podaj poprawną miejscowość";
 		}
 
@@ -297,7 +323,8 @@
 
 		if( ! (preg_match($phone_regex, $telefon)) )
 		{		
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_telefon'] = "Podaj poprawny numer telefonu";
 		}
 
@@ -309,7 +336,8 @@
 		if( ! isset($_POST['regulamin']) )
 		{
             // if checkbox was not checked, it will not exist in $_POST[] variable
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_regulamin'] = "Potwierdź akceptację regulaminu";
 		}
 
@@ -339,7 +367,8 @@
 
         if( ! $response->success ) //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
 		{
-			$_SESSION['wszystko_OK'] = false;
+			//$_SESSION['wszystko_OK'] = false;
+			$_SESSION['valid'] = false;
 			$_SESSION['e_bot'] = "<h3>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>";
 		}
 
@@ -380,7 +409,7 @@
 		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_sanitized);
         // przestawi mi zmienną $_SESSION['wszystko_OK'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest!;
 
-		if($_SESSION['wszystko_OK']) // udana walidacja;
+		if($_SESSION['valid']) // udana walidacja;        // $_SESSION['wszystko_OK']
 		{
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			// Zrealizowanie zapytania INSERT : 
@@ -403,7 +432,8 @@
             query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
             // add new user to database,   $_SESSION['last_client_id'] --> id nowo wstawionego klienta;
 
-            unset($_SESSION['wszystko_OK']);
+            //unset($_SESSION['wszystko_OK']);
+            unset($_SESSION['valid']);
 
             header('Location: ___zaloguj.php');
             exit();
