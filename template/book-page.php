@@ -10,7 +10,8 @@
     <div id="book-page-details">
 
         <div id="book-page-title">
-            <span class="book-page-details">Tytuł</span>%s
+            <span class="book-page-details">Tytuł</span>
+            <span id="book-page-details-title">%s</span>
         </div>
         <div id="book-page-author">
             <span class="book-page-details">Autor</span>%s %s

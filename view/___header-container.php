@@ -20,17 +20,20 @@
                         <div class="btn from-center">Zarejestruj</div>
                     </a>
 
-                    <div id="div-cart-header">
+                    <!--<div id="div-cart-header">-->
                         <!-- <a class="top-nav-right" href="___koszyk.php" >Koszyk</a> -->
-                        <a class="top-nav-right" href="___koszyk.php">Koszyk
-                            <?php
-                                if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
-                                    query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
-                                    echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
-                                }
-                            ?>
+                        <a class="top-nav-right" href="___koszyk.php">
+                            <div class="btn from-center">
+                                Koszyk
+                                <?php
+                                    if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
+                                        query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
+                                        echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
+                                    }
+                                ?>
+                            </div>
                         </a>
-                    </div>
+                    <!--</div>-->
 
                 </div> <!-- #btn-parent -->
 
@@ -51,17 +54,21 @@
                 <img id="main-logo" src="../assets/logo4.png" alt="logo">
             </div>-->
 
-            <!--<div id="div-cart">-->
-            <div class="div-cart">
-                <a class="top-nav-right" href="___koszyk.php">Koszyk
-                    <?php
-                    if(isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true") {
-                        query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
-                        echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
-                    }
-                    ?>
-                </a>
-            </div>
+                <!--<div id="div-cart">-->
+            <!--<div class="div-cart">-->
+            <a class="top-nav-right" href="___koszyk.php">
+                <div class="btn from-center btn-cart-main">
+                    Koszyk
+                        <?php
+                        if(isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true") {
+                            query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
+                            echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
+                        }
+                        ?>
+
+                </div>
+            </a>
+            <!--</div>-->
 
         </div>
 

@@ -209,9 +209,9 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 <?php require "../view/___head.php"; ?>
 
 <style>
-    div#add-to-cart {
+    /*div#add-to-cart {
         border: 1px solid #286dff;
-    }
+    }*/
 </style>
 
 <body>
@@ -542,7 +542,11 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 console.log("\n 193 rateOuterWidth ->", typeof rateOuterWidth);
 
                 document.querySelector('.rate-inner-base').style.position = "relative";
-                document.querySelector('.rate-inner-base').style.left = `${rateOuterWidth *  (Math.round(percentageRate / 10) * 10) / 100}px`; // -> 100 * (0,7) --> 70 (px) ;
+                //document.querySelector('.rate-inner-base').style.left = `${rateOuterWidth *  (Math.round(percentageRate / 10) * 10) / 100}px`; // -> 100 * (0,7) --> 70 (px) ;
+
+                document.querySelector('.rate-inner-base').style.left = percentageRateRounded; // -> 100 * (0,7) --> 70 (px) ;
+                // ROZWIĄZANIE PROBLEMU IMPLEMENTACYJNEGO - zamiana position left z px na wartość % (!) - podczas resizowania nastąpiło błędne kalkulowanie tej pozycji, od teraz przy zmianie rozmiaru pozycja szarych gwiazdek względem złotych jest OK (!)
+
                 // tutał był problem (ponieważ po Ctrl+F5 - szerokość rateOuterWidth była źle kalkulowana" - problemy implementacyjne - SD " ;
 
                 document.querySelector('.rating-num').innerHTML = rating ; // zaokrąglenie --> pomnożyć przez 10, zaokrąglić, podzielić przez 10 ;

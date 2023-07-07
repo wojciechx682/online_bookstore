@@ -31,18 +31,18 @@
         echo "<br> session -> " . print_r($_SESSION) . "<br>"; exit();*/
 
 		// ✓ Usuwanie zmiennych pamiętających wartości wpisane do formularza - ponieważ ISTNIEJĄ one po pomyślnym stowrzeniu nowego konta !
-		if (isset($_SESSION['fr_imie'])) unset($_SESSION['fr_imie']);
-		if (isset($_SESSION['fr_nazwisko'])) unset($_SESSION['fr_nazwisko']);
-		if (isset($_SESSION['fr_email'])) unset($_SESSION['fr_email']);
+		if (isset($_SESSION['register_imie'])) unset($_SESSION['register_imie']);
+		if (isset($_SESSION['register_nazwisko'])) unset($_SESSION['register_nazwisko']);
+		if (isset($_SESSION['register_email'])) unset($_SESSION['register_email']);
 //		if (isset($_SESSION['fr_haslo1'])) unset($_SESSION['fr_haslo1']);
 //		if (isset($_SESSION['fr_haslo2'])) unset($_SESSION['fr_haslo2']);
-		if (isset($_SESSION['fr_miejscowosc'])) unset($_SESSION['fr_miejscowosc']);
-		if (isset($_SESSION['fr_ulica'])) unset($_SESSION['fr_ulica']);
-		if (isset($_SESSION['fr_numer_domu'])) unset($_SESSION['fr_numer_domu']);
-		if (isset($_SESSION['fr_kod_pocztowy'])) unset($_SESSION['fr_kod_pocztowy']);
-		if (isset($_SESSION['fr_kod_miejscowosc'])) unset($_SESSION['fr_kod_miejscowosc']);
-		if (isset($_SESSION['fr_telefon'])) unset($_SESSION['fr_telefon']);
-		if (isset($_SESSION['fr_regulamin'])) unset($_SESSION['fr_regulamin']);
+		if (isset($_SESSION['register_miejscowosc'])) unset($_SESSION['register_miejscowosc']);
+		if (isset($_SESSION['register_ulica'])) unset($_SESSION['register_ulica']);
+		if (isset($_SESSION['register_numer_domu'])) unset($_SESSION['register_numer_domu']);
+		if (isset($_SESSION['register_kod_pocztowy'])) unset($_SESSION['register_kod_pocztowy']);
+		if (isset($_SESSION['register_kod_miejscowosc'])) unset($_SESSION['register_kod_miejscowosc']);
+		if (isset($_SESSION['register_telefon'])) unset($_SESSION['register_telefon']);
+		if (isset($_SESSION['register_regulamin'])) unset($_SESSION['register_regulamin']);
 
         // (?) ewentualnie - zamiast tego -> wylogowanie - usuwa wszystkie zmienne sesyjne
 

@@ -30,6 +30,11 @@
 
     margin-right: 42px;
     margin-bottom: 15px;
+
+   /* background-color: lightskyblue;*/
+    /*max-width: 65%;
+    width:48%;*/
+
 }
 
 #book-page-details span.book-page-details {
@@ -39,6 +44,11 @@
     min-width: 120px;
     display: block;
 
+    float: left;
+
+}
+#book-page-details span.book-page-details-title {
+    display: block;
     float: left;
 
 }
@@ -58,6 +68,11 @@
 #book-page-nopg {
     /*border: 1px dashed black;*/
     margin-bottom: 5px;
+}
+
+#book-page-title {
+    height: 19px;
+    overflow: hidden;
 }
 
 #book-page-rate {

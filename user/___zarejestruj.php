@@ -13,6 +13,7 @@
 <style>
     div.error {
         color: red !important;
+        /*margin-top: 10px;*/
         /*font-weight: bold;*/
     }
 </style>
@@ -42,10 +43,10 @@
                         <span class="row">
                             <label>
                                 Imię: <input type="text" name="imie" required value="<?php
-                                    if(isset($_SESSION['fr_imie']))
+                                    if(isset($_SESSION['register_imie']))
                                     {
-                                        echo $_SESSION['fr_imie'];
-                                        unset($_SESSION['fr_imie']);
+                                        echo $_SESSION['register_imie'];
+                                        unset($_SESSION['register_imie']);
                                     }
                                 else {
                                     echo "Adam";
@@ -63,10 +64,10 @@
                         <span class="row">
                             <label>
                                 Nazwisko: <input type="text" name="nazwisko" required value="<?php
-                                    if(isset($_SESSION['fr_nazwisko']))
+                                    if(isset($_SESSION['register_nazwisko']))
                                     {
-                                        echo $_SESSION['fr_nazwisko'];
-                                            unset($_SESSION['fr_nazwisko']);
+                                        echo $_SESSION['register_nazwisko'];
+                                            unset($_SESSION['register_nazwisko']);
                                     }
                                 else {
                                     echo "Nowak";
@@ -85,10 +86,10 @@
                         <span class="row">
                             <label>
                                 E-mail: <input type="email" name="email" required value="<?php
-                                    if(isset($_SESSION['fr_email']))
+                                    if(isset($_SESSION['register_email']))
                                     {
-                                        echo $_SESSION['fr_email'];
-                                            unset($_SESSION['fr_email']);
+                                        echo $_SESSION['register_email'];
+                                            unset($_SESSION['register_email']);
                                     }
                                 else {
                                     echo "adam.nowak@wp.pl";
@@ -106,7 +107,7 @@
 
                         <span class="row">
                             <label>
-                                Hasło: <input type="password" maxlength="30" id="haslo1" name="haslo1"
+                                Hasło: <input type="password" name="haslo1" maxlength="30" id="haslo1"
                                                    required value="PassJacob33#" >
 
                                 <div id="feedback" style="color:red;"></div>
@@ -123,22 +124,22 @@
 
                         <span class="row">
                             <label>
-                                Powtórz hasło: <input type="password" maxlength="30" name="haslo2"
+                                Powtórz hasło: <input type="password" name="haslo2" maxlength="30"
                                                            required value="PassJacob33#">
                             </label>
                         </span>
 
-                    </div>
+                    </div> <!-- .form-section -->
 
                     <div class="form-section"> <!-- Dane adresowe -->
 
                         <span class="row">
                             <label>
-                                Miejscowość: <input type="text" name="miejscowosc" value="<?php
-                                    if(isset($_SESSION['fr_miejscowosc']))
+                                Miejscowość: <input type="text" name="miejscowosc" required value="<?php
+                                    if(isset($_SESSION['register_miejscowosc']))
                                     {
-                                        echo $_SESSION['fr_miejscowosc'];
-                                            unset($_SESSION['fr_miejscowosc']);
+                                        echo $_SESSION['register_miejscowosc'];
+                                            unset($_SESSION['register_miejscowosc']);
                                     }
                                     else {
                                         echo "Dolna odra";
@@ -158,10 +159,10 @@
                         <span class="row">
                             <label>
                                 Ulica: <input type="text" name="ulica" value="<?php
-                                    if(isset($_SESSION['fr_ulica']))
+                                    if(isset($_SESSION['register_ulica']))
                                     {
-                                        echo $_SESSION['fr_ulica'];
-                                            unset($_SESSION['fr_ulica']);
+                                        echo $_SESSION['register_ulica'];
+                                            unset($_SESSION['register_ulica']);
                                     }
                                     else {
                                         echo "Słoneczna";
@@ -181,10 +182,10 @@
                         <span class="row">
                             <label>
                                 Numer domu: <input type="text" name="numer_domu" value="<?php
-                                    if(isset($_SESSION['fr_numer_domu']))
+                                    if(isset($_SESSION['register_numer_domu']))
                                     {
-                                        echo $_SESSION['fr_numer_domu'];
-                                            unset($_SESSION['fr_numer_domu']);
+                                        echo $_SESSION['register_numer_domu'];
+                                            unset($_SESSION['register_numer_domu']);
                                     }
                                     else
                                     {
@@ -209,10 +210,10 @@
                         <span class="row">
                             <label>
                                 Kod pocztowy: <input type="text" name="kod_pocztowy" value="<?php
-                                    if(isset($_SESSION['fr_kod_pocztowy']))
+                                    if(isset($_SESSION['register_kod_pocztowy']))
                                     {
-                                        echo $_SESSION['fr_kod_pocztowy'];
-                                            unset($_SESSION['fr_kod_pocztowy']);
+                                        echo $_SESSION['register_kod_pocztowy'];
+                                            unset($_SESSION['register_kod_pocztowy']);
                                     }
                                     else {
                                         echo "64-600";
@@ -232,10 +233,10 @@
                         <span class="row">
                             <label>
                                 Miejscowość: <input type="text" name="kod_miejscowosc" value="<?php
-                                    if(isset($_SESSION['fr_kod_miejscowosc']))
+                                    if(isset($_SESSION['register_kod_miejscowosc']))
                                     {
-                                        echo $_SESSION['fr_kod_miejscowosc'];
-                                            unset($_SESSION['fr_kod_miejscowosc']);
+                                        echo $_SESSION['register_kod_miejscowosc'];
+                                            unset($_SESSION['register_kod_miejscowosc']);
                                     }
                                     else {
                                         echo "Dębno";
@@ -319,10 +320,10 @@
                         <span class="row">
                             <label>
                                 Telefon (PL +48): <input type="tel" name="telefon" value="<?php
-                                    if(isset($_SESSION['fr_telefon']))
+                                    if(isset($_SESSION['register_telefon']))
                                     {
-                                        echo $_SESSION['fr_telefon'];
-                                        unset($_SESSION['fr_telefon']);
+                                        echo $_SESSION['register_telefon'];
+                                        unset($_SESSION['register_telefon']);
                                     }
                                     else
                                     {
@@ -349,10 +350,10 @@
                         <label>
                             <input type="checkbox" name="regulamin" <?php
 
-                            if(isset($_SESSION['fr_regulamin']))
+                            if(isset($_SESSION['register_regulamin']))
                             {
                                 echo "checked";
-                                    unset($_SESSION['fr_regulamin']);
+                                    unset($_SESSION['register_regulamin']);
                             }
                             else
                             {
@@ -366,7 +367,7 @@
                             if(isset($_SESSION['e_regulamin']))
                             {
                                 // błąd z akceptacją regulaminu (checkbox);
-                                echo '<div class="error">'.$_SESSION['e_regulamin'].'</div>';
+                                echo '<div class="error" style="margin-top: 10px;">'.$_SESSION['e_regulamin'].'</div>';
                                     unset($_SESSION['e_regulamin']);
                             }
                         ?>
@@ -375,10 +376,10 @@
                     <div class="g-recaptcha" data-sitekey="6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1"></div>
 
                     <?php
-                        if(isset($_SESSION['e_bot'])) // błąd z reCaptcha;
+                        if(isset($_SESSION['e_recaptcha'])) // błąd z reCaptcha;
                         {
-                            echo '<div class="error">'.$_SESSION['e_bot'].'</div>';
-                                unset($_SESSION['e_bot']);
+                            echo '<div class="error">'.$_SESSION['e_recaptcha'].'</div>';
+                                unset($_SESSION['e_recaptcha']);
                         }
                     ?>
 
@@ -448,7 +449,7 @@
             function removeMsg(e) {
                 let elMsg = document.getElementById("feedback");
 
-                let eventElement = e.target;
+                let eventElement = e.target; // <input type="password">
                     console.log("eventElement = ", eventElement);
 
                 if(elMsg.textContent !== "") {

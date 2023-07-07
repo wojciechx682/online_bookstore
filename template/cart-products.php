@@ -24,7 +24,7 @@
         </form>
 
             <!-- dane o książce -> "tytuł", "cena", "rok_wydania, autor (imie, nazwisko) -->
-        <div class="book-description" >
+        <div class="book-description"  >
 
             <!-- ✓ ZAMIENIĆ NA FORMULARZ -->
             <!-- <div class="title">
@@ -48,15 +48,17 @@
             <div class="author">%s %s</div>
         </div> <!-- .book-description -->
 
-        <form action="change_cart_quantity.php" method="post"
-              class="change_quantity_form" id="change_quantity_form%s">
+    <div id="form-cart-container" style="min-width: 260px;  float: left; ">
 
-            <input type="hidden" name="id_ksiazki" value="%s"> <!-- id_ksiazki -->
-            <b>Ilość</b>
-            <input type="text" id="koszyk_ilosc%s" class="koszyk_ilosc" name="koszyk_ilosc" value="%s">
-            <button type="button" onclick="increase(%s)">+</button>
-            <button type="button" onclick="decrease(%s)"><span>-</span></button>
-        </form>
+    <form action="change_cart_quantity.php" method="post"
+          class="change_quantity_form" id="change_quantity_form%s">
+
+        <input type="hidden" name="id_ksiazki" value="%s"> <!-- id_ksiazki -->
+        <b>Ilość</b>
+        <input type="text" id="koszyk_ilosc%s" class="koszyk_ilosc" name="koszyk_ilosc" value="%s">
+        <button type="button" onclick="increase(%s)">+</button>
+        <button type="button" onclick="decrease(%s)"><span>-</span></button>
+    </form>
 
     <form action="remove_book.php" method="post"
                                    class="remove_book_form">
@@ -66,6 +68,8 @@
         <input type="hidden" name="id_ksiazki" value="%s">
         <input type="submit" value="Usuń">
     </form>
+
+        </div>
 
     </span>
 

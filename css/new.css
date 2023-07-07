@@ -323,7 +323,7 @@ body {
         padding-left: 8px !important;
     }
 
-    .book-title {
+    #content-books .book-title {
         margin: 8px 0 0 0 !important;
     }
 
@@ -344,6 +344,11 @@ body {
 
         margin-bottom: 10px !important;
     }
+
+    /*.book-info > form:first-child {
+        min-height: unset !important;
+
+    }*/
 
     .book .btn-link {
         width: 135px !important;
@@ -391,6 +396,8 @@ body {
         width: 45% !important;
     }
 }
+
+
 
 
 @media only screen and (max-width: 845px) {
@@ -442,7 +449,7 @@ body {
     }
 }
 
-@media only screen and (max-width: 825px) {
+@media only screen and (max-width: 885px) {
 
     /* ___bok-page.php */
 
@@ -487,6 +494,12 @@ body {
     div#add-to-cart form button[type="button"] {
 
         margin-right: 4px !important;
+    }
+
+    div#book-page-details {
+        margin-right: 0;
+        width: 65%;
+
     }
 
 
@@ -546,7 +559,8 @@ body {
     }*/
 }
 
-@media only screen and (max-width: 705px) {
+/*@media only screen and (max-width: 705px) {*/
+@media only screen and (max-width: 780px) {
 
     /* koszyk --> */
 
@@ -718,13 +732,13 @@ body {
         margin-right: 4px !important;
     }
 
-    div.rate-inner-base {
+    /*div.rate-inner-base {
         position: relative !important;
         left: 73.4px !important;
-    }
+    }*/
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 545px) {
 
     /*div#price-range > label input[type="number"] {
         !*margin-top: 15px;
@@ -780,10 +794,27 @@ body {
         left: 65.5px !important;
     }*/
 
+    div#n-top-header > div#header-title {
+        margin-right: 15%;
+    }
+
+    /* Koszyk(15) - top-nav */
+    #btn-parent a:nth-child(3) .btn.from-center {
+
+        margin-top: 8px;
+        margin-bottom: 4px;
+    }
+
+
+}
+
+/*
+@media only screen and (max-width: 580px) {
 
 
 
 }
+*/
 
 @media only screen and (max-width: 550px) {
 
@@ -815,6 +846,23 @@ body {
     }*/
 }
 
+
+@media only screen and (max-width: 730px) {
+
+    .cart-book > span.book-details {
+        height: 215px;
+    }
+
+    div.book-description {
+        /*min-width: 300px !important;*/
+        width: 65%;
+    }
+
+    div#form-cart-container form {
+        margin-top: 18px;
+    }
+
+}
 
 
 
@@ -917,12 +965,18 @@ body {
         display: none;
     }*/
 
-    #div-cart-header {
+    /*#div-cart-header {*/
+    #btn-parent a:nth-child(3) .btn.from-center {
         display: block !important;
         padding-right: 5% !important;
     }
 
-    .div-cart {
+    #btn-parent a:nth-child(3):hover .btn.from-center {
+        color: #551a8b;
+    }
+
+    /*.div-cart {*/
+    .btn-cart-main {
         display: none;
     }
 
@@ -1109,6 +1163,14 @@ body {
     padding-bottom: 7px;
 }
 
+/*div#n-top-header .from-center:nth-of-type(1) {
+    color: red !important;
+}*/
+
+#btn-parent a:nth-child(3) .btn.from-center {
+    display: none;
+}
+
 .from-center:before {
     top: 0;
     left: 50%;
@@ -1210,6 +1272,10 @@ body {
                 /* width: 33.3333%; */
                 /* padding-top: 5px; */
     line-height: 29px;
+
+    padding-right: 10px;
+
+    /*background-color: lightblue;*/
 }
 
         /* end top header -------------------------------------------------------------------------- */
@@ -1332,6 +1398,24 @@ body {
     line-height: 29px;
 
     padding-right: 30px;
+}
+
+.btn-cart-main {
+    /*float: right;*/
+    text-align: right;
+    /*line-height: 29px;
+    padding-right: 30px;*/
+
+    margin-top: 26px;
+
+    text-decoration: none;
+    color: black;
+}
+
+.btn-cart-main:hover {
+    /*text-decoration: underline;*/
+    color: #551a8b;
+
 }
 
 .div-cart {
@@ -2173,6 +2257,8 @@ div#content-books {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     transition: all 0.05s ease-in-out;
 
+    /*min-height: 420px;*/
+
    /* position: relative;*/
 }
 
@@ -2400,6 +2486,10 @@ button#confirm-message {
 
 
 
+/* .book-info > form:first-child {
+    min-height: 50px;
+} */
+
 
                     .book-info > form button.submit-book-form,
                     div.book-url > form button.book-img-button, /* \user\orders.php */
@@ -2442,14 +2532,20 @@ button#confirm-message {
                     }
 
 .book-title {
-    margin: 12px 0 0 0;
+    /*margin: 15px 0 15px 0;*/
+    margin: 15px 0 5px 0;
     font-size: 0.9rem;
 
-    overflow: hidden;
+    overflow: hidden !important;
     max-height: 17px;
 
 
+
+
     color: #551a8b;
+
+    /*height: 40px;*/
+    /*overflow: visible !important;*/
 
    /* position: relative;
     top: 0;
@@ -2490,6 +2586,7 @@ button#confirm-message {
     font-size: 0.9rem;
 
     margin-top: 2px;
+    /*margin-top: 25px;*/
 
     /*z-index: 1 !important;*/
 }
@@ -2977,7 +3074,7 @@ span.book-details img:hover {
 span.book-details {
     display: block;
 
-/*overflow: hidden !important;*/
+overflow: hidden !important;
 
     /*width: 300px;*/
 
@@ -2985,9 +3082,11 @@ span.book-details {
 
     /*background-color: #a2c3f6;*/
 
-    min-width: 730px !important;
+   /* min-width: 730px !important;*/ /* (!) */
 
     height: 150px;
+
+    /*background-color: lightblue;*/
 
 
 }
@@ -3023,7 +3122,8 @@ min-width: 300px;
         /*width: 50%;*/
     transition: margin .3s;
 
-    min-height: 135px;
+    /*min-height: 135px;*/
+    min-height: 150px;
 
 /*overflow: hidden;*/
 }

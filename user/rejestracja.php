@@ -3,14 +3,14 @@
 	session_start();
 	include_once "../functions.php";
 
-    // sprawdzenie czy zmienne w żądaniu POST istnieją, i nie mają pustych wartości,
+    // sprawdzenie czy zmienne w żądaniu POST ISTNIEJĄ, i nie mają PUSTYCH wartości,
         // jeśli wszystkie zmienne formularza rejestracji posiadają wartość,
             // następuje przetworzenie tych danych, w tym walidacja oraz sanityzacja;
-                // walidacja odbywa się z ustanowieniej flagi logicznej posiadającej wartość "true", określającą, że wszystkie dane są poprawne,
+                // walidacja odbywa się z ustanowieniem flagi logicznej posiadającej wartość "true", określającą, że wszystkie dane są poprawne,
                 // w momencie gdy okaże się że zmienne pochodzące z formularza rejestracji nie przeszły walidacji, zmienna logiczna przyjmuje wartość "false" - co oznacza że dane nie były prawidłowe (nie przeszły walidacji);
 
                 // Walidacja odbywa się z użycieme szeregu różych metod walidacyjnych oraz wyrażeń regularnych;
-                // Proces ten polega m.in na sprawdzeniu poprawności Imienia i Nazwiska (czy składa się tylko z liter alfabetu, czy nie zawiera znaków specjalnych itp...), sprawdzenia poprawności adresu e-mail (czy jest to poprawny składniowo e-mail ? czy zawiera znak małpy ? Czy posiada w sobie ewentualny niebezpieczny kod który należało by sanityzować itp ...),sprawdzeniu poprawności hasła (Czy zawiera conajmniej jedną dużą, jedną małą literę, jeden znak specjalny oraz jedną cyfrę, czy posiada odpowiednią długość itp ...), Czy podano prawidłową nazwę miejscowości (czy nie zawiera w sobie cyfr, znaków specjalnych ?, ... )
+                // Proces ten polega m.in na sprawdzeniu poprawności Imienia i Nazwiska (czy składa się tylko z liter alfabetu, czy nie zawiera znaków specjalnych itp...), sprawdzenia poprawności adresu e-mail (czy jest to poprawny składniowo e-mail ? czy zawiera znak małpy ? Czy posiada w sobie ewentualny niebezpieczny kod który należało by sanityzować itp ...), sprawdzeniu poprawności hasła (Czy zawiera conajmniej jedną dużą, jedną małą literę, jeden znak specjalny oraz jedną cyfrę, czy posiada odpowiednią długość itp ...), Czy podano prawidłową nazwę miejscowości (czy nie zawiera w sobie cyfr, znaków specjalnych ?, ... )
 
 
                 // jeśli dane są poprawne, następuje stworzenie nowego konta uzytkownika, (dodanie nowego rekordu do bazy danych - do tabeli "klienci" oraz "adres");
@@ -19,7 +19,7 @@
                    // dane adresowe zostają zapisane w tablie "adres"
 
                 // jeśli dane nie były prawidłowe (nie przeszły walidacji) -
-                   // następuje przejście na stronę rejestracji i wyświetlenie odpowiednich komunikatów;
+                   // następuje przejście na stronę rejestracji i wyświetlenie odpowiednich komunikatów błędów;
 
         // jeśli conajmniej jedna zmienna była pusta,
             // następuje wyświetlenie komunikatu "Uzupełnij wszystkie pola", oraz przekierowanie na z powrotem na stronę rejestracji (zarejestruj.php);
@@ -68,12 +68,16 @@
         $haslo2 = $_POST['haslo2'];
 
 		$miejscowosc = $_POST['miejscowosc']; 
-		if(isset($_POST["ulica"]) && !empty($_POST["ulica"])) { $ulica = $_POST['ulica']; }
+		//if( isset($_POST["ulica"]) && ! empty($_POST["ulica"]) ) { $ulica = $_POST['ulica']; }
+        $ulica = isset($_POST["ulica"]) && ! empty($_POST["ulica"]) ? $_POST["ulica"] : ''; // set empty string if ulica is not set
 		$numer_domu = $_POST['numer_domu'];
 
 		$kod_pocztowy = $_POST['kod_pocztowy'];
 		$kod_miejscowosc = $_POST['kod_miejscowosc'];
 		$telefon = $_POST['telefon'];
+
+
+        //if( isset($_POST["ulica"]) && ! empty($_POST["ulica"]) ) { $ulica = $_POST['ulica']; }
 
 
             //$wojewodztwo = $_POST['wojewodztwo'];
@@ -115,7 +119,7 @@
 
         // preg_match() - sprawdza dopasowanie wzorca do ciągu, TRUE/FALSE
 
-		if(!preg_match($name_regex, $imie))
+		if( ! preg_match($name_regex, $imie) )
 		{		
 			//$_SESSION['wszystko_OK'] = false;
 			$_SESSION['valid'] = false;
@@ -131,7 +135,7 @@
 
 		$nazwisko = ucfirst(strtolower(trim($nazwisko, " "))); // => "Nowak";
 
-		if(!preg_match($name_regex, $nazwisko))
+		if( ! preg_match($name_regex, $nazwisko) )
 		{		
 			//$_SESSION['wszystko_OK'] = false;
 			$_SESSION['valid'] = false;
@@ -168,7 +172,7 @@
                                         // {
                                         //     $wszystko_OK = false;
                                         //     $valid = false;
-                                        //     $_SESSION['e_haslo'] = "Hasło musi posiadać od 8 do 20 znaków!";
+                                        //     $_SESSION['e_ haslo'] = "Hasło musi posiadać od 8 do 20 znaków!";
                                         // }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -225,7 +229,7 @@
         //           $@!#$@#$
 
 		if( ! (preg_match($address_regex, $miejscowosc)) )
-		{		
+		{
 			//$_SESSION['wszystko_OK'] = false;
 			$_SESSION['valid'] = false;
 			$_SESSION['e_miejscowosc'] = "Podaj poprawną nazwę miejscowości";
@@ -239,8 +243,9 @@
 
         // $street_regex = '/^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]*(\s[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+){0,2}$/';
 
-        if(isset($ulica)) {
-            if(!empty($ulica)){
+        if( isset($ulica) ) {
+            if( ! empty($ulica) ) {
+
                 $street_regex = '/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s.-]{3,35}$/';
                 //    Passing:
                 //          "ul. Warszawska"  "al. Jana Pawła II"  "Plac Grunwaldzki"
@@ -257,7 +262,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Numer domu;
 
-		    $numer_domu = str_replace(str_split(' '), '', $numer_domu);
+		    $numer_domu = str_replace(str_split(' '), '', $numer_domu); // remove all white spaces;   ' ' => '';
 
 		// $house_number_regex = '/^[0-9]{1,3}+\s?[\/-]?+\s?+[A-Za-z0-9]{0,3}$/';
 
@@ -281,7 +286,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// kod pocztowy
 
-		$kod_pocztowy = str_replace(str_split(' '), '', $kod_pocztowy);
+		$kod_pocztowy = str_replace(str_split(' '), '', $kod_pocztowy); // remove all white spaces;   ' ' => '';
 
 		$zip_regex = "/^[0-9]{2}[\-]{1}[0-9]{3}$/";
 
@@ -331,7 +336,8 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Checkbox - Have the terms and conditions been accepted ?
 		// Checkbox - checked ? not checked ?
-        //echo "<br> regulamin -> " . $_POST['regulamin'] . "<br>"; exit(); // on - zaznaczony; niezaznaczony -> (zmienna nie istnieje);
+        //echo "<br> regulamin -> " . $_POST['regulamin'] . "<br>"; exit();
+        // // on - zaznaczony;      niezaznaczony -> (zmienna nie istnieje);
 
 		if( ! isset($_POST['regulamin']) )
 		{
@@ -369,7 +375,7 @@
 		{
 			//$_SESSION['wszystko_OK'] = false;
 			$_SESSION['valid'] = false;
-			$_SESSION['e_bot'] = "<h3>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>";
+			$_SESSION['e_recaptcha'] = "<h3 style='font-weight: unset; margin-bottom: 5px;'>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>";
 		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -377,28 +383,27 @@
 		// Zapamiętanie danych z formularza - Formularz pamiętający wprowadzone dane;
 		
             //$_SESSION['fr_nick'] = $nick; // fr - formularz rejestracji
-		$_SESSION['fr_imie'] = $imie; 
-		$_SESSION['fr_nazwisko'] = $nazwisko;
-		$_SESSION['fr_email'] = $email; 
-		//$_SESSION['fr_haslo1'] = $haslo1;   // nie przechowujemy haseł w zmiennych sesyjnych !
-		//$_SESSION['fr_haslo2'] = $haslo2;
-
-		$_SESSION['fr_miejscowosc'] = $miejscowosc; 
+		$_SESSION['register_imie'] = $imie;
+		$_SESSION['register_nazwisko'] = $nazwisko;
+		$_SESSION['register_email'] = $email;
+            //$_SESSION['fr_haslo1'] = $haslo1;   // nie przechowujemy haseł w zmiennych sesyjnych !
+            //$_SESSION['fr_haslo2'] = $haslo2;
+		$_SESSION['register_miejscowosc'] = $miejscowosc;
 		if(isset($ulica)) {
-            $_SESSION['fr_ulica'] = $ulica;
+            $_SESSION['register_ulica'] = $ulica;
         }
-		$_SESSION['fr_numer_domu'] = $numer_domu; 
-		$_SESSION['fr_kod_pocztowy'] = $kod_pocztowy; 
-		$_SESSION['fr_kod_miejscowosc'] = $kod_miejscowosc; 
+		$_SESSION['register_numer_domu'] = $numer_domu;
+		$_SESSION['register_kod_pocztowy'] = $kod_pocztowy;
+		$_SESSION['register_kod_miejscowosc'] = $kod_miejscowosc;
             //$_SESSION['fr_wojewodztwo'] = $wojewodztwo;
             //$_SESSION['fr_kraj'] = $kraj;
             //$_SESSION['fr_PESEL'] = $PESEL;
             //$_SESSION['fr_data_urodzenia'] = $data_urodzenia;
-		$_SESSION['fr_telefon'] = $telefon; 
+		$_SESSION['register_telefon'] = $telefon;
 
 		if(isset($_POST['regulamin'])) // remembering the checkbox selection
 		{
-			$_SESSION['fr_regulamin'] = true;
+			$_SESSION['register_regulamin'] = true;
 		}
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -407,16 +412,16 @@
         // var_dump($_SESSION); exit();
 
 		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_sanitized);
-        // przestawi mi zmienną $_SESSION['wszystko_OK'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest!;
+        // przestawi mi zmienną $_SESSION['valid'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest!;
 
 		if($_SESSION['valid']) // udana walidacja;        // $_SESSION['wszystko_OK']
 		{
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			// Zrealizowanie zapytania INSERT : 
+			// Zrealizowanie zapytania INSERT :
 
             $address = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc];
             // należy pobrać id ostatnio wstawionego wiersza w tabeli klienci !
-            query("INSERT INTO adres (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address); // funkcja "register" - pobiera ID ostatnio wstawioneo adresu (wiersza);
+            query("INSERT INTO adres (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address); // funkcja "register" - $_SESSION['udanarejestracja'] = true,  $_SESSION['last_adres_id'] - pobiera ID ostatnio wstawioneo adresu (wiersza);
 
             $user = [$imie, $nazwisko, $email, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
                 // print_r($user);
@@ -433,7 +438,11 @@
             // add new user to database,   $_SESSION['last_client_id'] --> id nowo wstawionego klienta;
 
             //unset($_SESSION['wszystko_OK']);
-            unset($_SESSION['valid']);
+
+            /*echo "<br> SESSION -> <br>";
+            print_r($_SESSION); exit();*/
+
+            unset($_SESSION['valid'], $_SESSION["last_adres_id"]);
 
             header('Location: ___zaloguj.php');
             exit();

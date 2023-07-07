@@ -23,9 +23,9 @@
         border: 1px solid pink;
     }*/
 
-    form.change_quantity_form {
+   /* form.change_quantity_form {
         border: 1px solid red;
-    }
+    }*/
 </style>
 
 <body>
