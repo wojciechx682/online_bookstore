@@ -26,6 +26,14 @@
 
         // pole "Ulica" - jest opcjonalne. Użytkownik nie musi go uzupełniać, lecz jeśli to zrobi, również podlega ono walidacji;
 
+        /////////////////////////////////////////////////////////////////
+        // Walidacja danych formularza - (schemat postępowania) :
+        // 1. Ustanowienie flagi, która ma wartość true --> $valid = "true";
+        // 2. Przeprowadzenie szeregu testów (z użyciem instrukcji if) - wyrazeń regularnych! .
+        //    Niespełnienie dowolnego z nich przestawi flagę -> $valid = false;
+        // 3. Jeśli po wszystkich testach, flaga $valid ma wartość "true", to walidacja się udała.
+
+
 	if(
         isset($_POST['email']) && !empty($_POST['email']) &&
         isset($_POST['imie']) && !empty($_POST['imie']) &&
@@ -126,7 +134,7 @@
 			$_SESSION['e_imie'] = "Imię może składać się tylko z liter alfabetu, pierwsza litera powinna być wielka";
 		}
 
-		if (strlen($imie)<3 || strlen($imie)>20)
+		if ( strlen($imie)<3 || strlen($imie)>20 )
         {
             //$_SESSION['wszystko_OK'] = false;
             $_SESSION['valid'] = false;
@@ -206,9 +214,9 @@
 			$_SESSION['e_haslo'] = "Podane hasła są różne";
 		}
 
-        // Hashing the password, using the latest encryption method in "PASSWORD_DEFAULT"
+// (!) Hashing the password, using the latest encryption method in "PASSWORD_DEFAULT"
 
-		$haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
+$haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Miejscowosc;
@@ -348,12 +356,12 @@
 		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// Sprawdzenie zaznaczenie checkbox'a CAPTCHA
+                // Sprawdzenie zaznaczenie checkbox'a CAPTCHA
 
-		// $secret = "6LcW48gfAAAAALDhZZERPDMpGD5aYMcLJ3s_IszG"; // secret key for recaptcha API, used to authenticate and verify that the reCAPTCHA response sent from your website to Google's servers is valid and coming from your website
+                // $secret = "6LcW48gfAAAAALDhZZERPDMpGD5aYMcLJ3s_IszG"; // secret key for recaptcha API, used to authenticate and verify that the reCAPTCHA response sent from your website to Google's servers is valid and coming from your website
 
-        require('C:\xampp\apache\conf\config.php');
-        $secret = RECAPTCHA_SECRET_KEY;
+        //require('C:\xampp\apache\conf\config.php');
+        //$secret = RECAPTCHA_SECRET_KEY; // secret-key / klucz tajny;
 
         // sprawdzenie odpowiedzi googla, czy weryfikacja CAPTCHA się udała;
         // pobranie zawartości pliku do zmiennej;
@@ -361,8 +369,9 @@
                     //$sprawdz = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
                     //$response = json_decode($sprawdz);
 
-        // make HTTP request to Google reCAPTCHA API to verify the user's response; returns encoded JSON string, that needs to be decoded;
-        $response = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response'])); // $response - decoded PHP object;
+                    // make HTTP request to Google reCAPTCHA API to verify the user's response; returns encoded JSON string, that needs to be decoded;
+                        // pobierz zawartość pliku z odpowiedzią Google;
+        //$response = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response'])); // $response - decoded PHP object;
 
                     //if(!($odpowiedz->success))        // można także użyć takiego zapisu
                     //if($odpowiedz->success == false)  // właściwość success
@@ -371,12 +380,13 @@
                     //	$_SESSION['e_bot'] = "Potwierdź, że nie jesteś botem!";
                     //}
 
-        if( ! $response->success ) //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
+       /* if( ! $response->success )
 		{
-			//$_SESSION['wszystko_OK'] = false;
+                    //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
+
 			$_SESSION['valid'] = false;
 			$_SESSION['e_recaptcha'] = "<h3 style='font-weight: unset; margin-bottom: 5px;'>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>";
-		}
+		}*/
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -406,46 +416,106 @@
 			$_SESSION['register_regulamin'] = true;
 		}
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+
+        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();*/
+
+        /*
+            POST -> Array
+            (
+                [imie] => Adam
+                [nazwisko] => Nowak
+                [email] => adam.nowak@wp.pl
+                [haslo1] => PassJacob33#
+                [haslo2] => PassJacob33#
+                [miejscowosc] => Dolna odra
+                [ulica] => Słoneczna
+                [numer_domu] => 61
+                [kod_pocztowy] => 64-600
+                [kod_miejscowosc] => Dębno
+                [telefon] => 505101303
+                [regulamin] => on
+                [g-recaptcha-response] => 03AAYGu2S24Fm478...LShKtC5g0wXrabO0wSdvgfX-UC0PbE4WFrjXc
+            )
+
+            SESSION -> Array
+            (
+                [valid] =>
+                [register_imie] => Adam
+                [register_nazwisko] => Nowak
+                [register_email] => adam.nowak@wp.pl
+                [register_miejscowosc] => Dolna odra
+                [register_ulica] => Słoneczna
+                [register_numer_domu] => 61
+                [register_kod_pocztowy] => 64-600
+                [register_kod_miejscowosc] => Dębno
+                [register_telefon] => 505101303
+                [register_regulamin] => 1
+                [e_recaptcha] => <h3 style='font-weight: unset; margin-bottom: 5px;'>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>
+            )
+        */
+
+        //$email_sanitized = "kamil.litwin@wp.pl";
+
 		// Sprawdzenie czy taki user (email i hasło) istnieje już w bazie;
-
-        // var_dump($_SESSION); exit();
-
 		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_sanitized);
-        // przestawi mi zmienną $_SESSION['valid'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest!;
+        // przestawi mi zmienną $_SESSION['valid'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest !;
 
-		if($_SESSION['valid']) // udana walidacja;        // $_SESSION['wszystko_OK']
+        //exit();
+
+		if($_SESSION['valid'])      // udana walidacja;    // $_SESSION['valid']
 		{
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			// Zrealizowanie zapytania INSERT :
 
             $address = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc];
             // należy pobrać id ostatnio wstawionego wiersza w tabeli klienci !
-            query("INSERT INTO adres (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address); // funkcja "register" - $_SESSION['udanarejestracja'] = true,  $_SESSION['last_adres_id'] - pobiera ID ostatnio wstawioneo adresu (wiersza);
 
-            $user = [$imie, $nazwisko, $email, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
-                // print_r($user);
-                // exit();
-                // query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database;
+            query("INSERT INTO adres (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address); // funkcja "register" - $_SESSION['udanarejestracja'] = true,  $_SESSION['last_adres_id'] - pobiera ID ostatnio wstawioneo adresu (wiersza) - z właściwości obiektu "$polaczenie";
 
-            $address = $_SESSION["last_adres_id"];
+            //exit();
 
-            $user[] = $address;
+            if( isset($_SESSION['udanarejestracja']) && // jeśli udało się wstawić wiersz do tabeli "adres";
+                      $_SESSION['udanarejestracja'] &&
+                isset($_SESSION['last_adres_id']) ) {
 
-            // print_r($user); exit();
+                    //$user = [$imie, $nazwisko, $email, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
+                $user = [$imie, $nazwisko, $email, $telefon, $haslo_hash];
+                    // print_r($user);
+                    // exit();
+                    // query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database;
 
-            query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
-            // add new user to database,   $_SESSION['last_client_id'] --> id nowo wstawionego klienta;
+                $address = $_SESSION["last_adres_id"];
+                    // register() --> $_SESSION['last_adres_id'] = $polaczenie->insert_id;
 
-            //unset($_SESSION['wszystko_OK']);
+                $user[] = $address;
 
-            /*echo "<br> SESSION -> <br>";
-            print_r($_SESSION); exit();*/
+                // print_r($user); exit();
 
-            unset($_SESSION['valid'], $_SESSION["last_adres_id"]);
+                echo "<br> 495 <br> ";
 
-            header('Location: ___zaloguj.php');
-            exit();
+                query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
+                //query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
+                // add new user to database, ̶$̶_̶S̶E̶S̶S̶I̶O̶N̶[̶'̶l̶a̶s̶t̶_̶c̶l̶i̶e̶n̶t̶_̶i̶d̶'̶] ̶-̶>̶ ̶i̶d̶ ̶n̶o̶w̶o̶ ̶w̶s̶t̶a̶w̶i̶o̶n̶e̶g̶o̶ ̶k̶l̶i̶e̶n̶t̶a̶;̶
+                //exit();
+                //unset($_SESSION['wszystko_OK']);
+
+                /*echo "<br> SESSION -> <br>";
+                print_r($_SESSION); exit();*/
+
+                unset($_SESSION['valid'], $_SESSION["last_adres_id"]);
+
+                header('Location: ___zaloguj.php'); // $_SESSION["udana-rejestracja"]
+                exit();
+
+            } else {
+                // nie udało się wstawić wierszy do tabeli "adres" ;
+
+                $_SESSION["register-error"] = true;
+                header('Location: ___zarejestruj.php'); // $_SESSION["udana-rejestracja"]
+                exit();
+            }
 
         }
 		else // nieudana walidacja;

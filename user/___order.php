@@ -44,8 +44,8 @@
                 if( isset($_POST['zamowienie-typ-dostawy']) &&    // "value" attribute from input radio
                     isset($_POST['zamowienie-typ-platnosci']) &&
 
-                    !empty($_POST['zamowienie-typ-dostawy']) &&
-                    !empty($_POST['zamowienie-typ-platnosci'])
+                    ! empty($_POST['zamowienie-typ-dostawy']) &&
+                    ! empty($_POST['zamowienie-typ-platnosci'])
                 )
                 {
 
@@ -273,7 +273,8 @@
                     $order = [$id_klienta, $data_zlozenia_zamowienia, $termin_dostawy, $data_wyslania_zamowienia, $data_dostarczenia_zamowienia, $forma_dostawy, $status, $id_pracownika]; // an array that stores order data informations;
 
                     query("INSERT INTO zamowienia (id_zamowienia, id_klienta, data_zlozenia_zamowienia, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia, status, id_pracownika) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "get_last_order_id", $order);
-                    // adds a new order - inserts data into the "orders" table, // gets the ID of the newly added order (row) -> $_SESSION['last_order_id']
+                    // adds a new order - inserts data into the "orders" table,
+                    // gets the ID of the newly added order (row) -> $_SESSION['last_order_id']
 
                     unset($order);
 
@@ -296,7 +297,8 @@
 
                     query("SELECT id_klienta, id_ksiazki, ilosc 
                                  FROM koszyk 
-                                 WHERE id_klienta='%s'", "insert_order_details", $_SESSION['id']); // wstawia dane do tabeli "szczegóły_zamowienia" - na podstawie tabeli koszyk - (zawartości koszyka danego klienta)
+                                 WHERE id_klienta='%s'", "insert_order_details", $_SESSION['id']);
+                                 // wstawia dane do tabeli "szczegóły_zamowienia" - na podstawie tabeli koszyk - (zawartości koszyka danego klienta)
 
                     ////////////////////////////////////////////////////////////////////////////////////////////////////
 

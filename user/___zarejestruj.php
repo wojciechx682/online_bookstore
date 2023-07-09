@@ -2,7 +2,7 @@
 	session_start();
 	include_once "../functions.php";
 
-    // reCaptcha - sitekey -> linia 337
+    // reCaptcha - site-key -> linia 376
 ?>
 
 <!DOCTYPE HTML>
@@ -323,7 +323,7 @@
                                     if(isset($_SESSION['register_telefon']))
                                     {
                                         echo $_SESSION['register_telefon'];
-                                        unset($_SESSION['register_telefon']);
+                                            unset($_SESSION['register_telefon']);
                                     }
                                     else
                                     {
@@ -373,7 +373,7 @@
                         ?>
 
 
-                    <div class="g-recaptcha" data-sitekey="6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1"></div>
+                    <!--<div class="g-recaptcha" data-sitekey="6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1"></div>-->
 
                     <?php
                         if(isset($_SESSION['e_recaptcha'])) // błąd z reCaptcha;
@@ -384,7 +384,7 @@
                     ?>
 
 
-                    <input type="submit" value="Zarejestruj się">
+                    <input type="submit" value="Zarejestruj się" id="register-button">
 
                     <?php
                         if(isset($_SESSION['e_fields'])) // nie wypełniono wszystkich pol;
@@ -393,6 +393,16 @@
                                 unset($_SESSION['e_fields']);
                         }
                     ?>
+
+                    <?php
+                        if(isset($_SESSION["register-error"]) && $_SESSION["register-error"]) // nie udało się wstawić wierszy do tabeli "adres";
+                        {
+                        echo '<div class="error">Wystąpił błąd. Spróbuj jeszcze raz</div>';
+                        unset($_SESSION["register-error"]);
+                        }
+                    ?>
+
+
 
                     <!-- reCAPTCHA (v2) - jan.nowak.6820@gmail.com
 
@@ -485,7 +495,7 @@
     </script>
 
 
-    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
 
 </body>
 </html>

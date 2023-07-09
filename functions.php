@@ -33,7 +33,7 @@
 
     function get_authors($result)
     {
-        // tworzy linki - w których kazdy wyświetli imie i nazwisko autora;
+        // tworzy linki - w których kazdy wyświetli imie i nazwisko autora ;
 
         echo '<h3>Autorzy </h3>';
         echo '<ul id="ul-authors">';
@@ -318,7 +318,7 @@
 
 	function check_email($result)
 	{
-        // validate_user_data.php - sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną; (zmiana danych konta);
+        // validate_user_data.php - (zmiana danych usera), sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną; (zmiana danych konta);
         // remove_account.php     - sprawdza, -----------||--------------  ---------||-----------;  (resetowanie hasła);
 		$_SESSION['email_exists'] = true;
 
@@ -946,29 +946,51 @@ EOT;
 	function register_verify_email($result)
 	{
         // rejestracja (rejestracja.php) - weryfikacja, czy istnieje taki email (czy jest zajęty);
-		    // $_SESSION['wszystko_OK'] = false;
 		$_SESSION['valid'] = false;
 		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
 	}
 
-    function register($result)
+    function register($result, $polaczenie) // $polaczenie object - to receive last insert id;
     {
-                    /*// dodanie nowego użytkownika - rejestracja.php
-                    $_SESSION['udanarejestracja'] = true;
-                    // pobranie ID ostatnio wstawionego klienta ->
-                    query("SELECT id_klienta FROM klienci ORDER BY id_klienta DESC LIMIT 1", "get_client_id", ""); // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
-                    //unset($_SESSION['wszystko_OK']); $_SESSION["valid"]
-                    header('Location: ___zaloguj.php');*/
+                        /*// dodanie nowego użytkownika - rejestracja.php
+                        $_SESSION['udanarejestracja'] = true;
+                        // pobranie ID ostatnio wstawionego klienta ->
+                            query("SELECT id_klienta FROM klienci ORDER BY id_klienta DESC LIMIT 1", "get_client_id", ""); // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
+                        //unset($_SESSION['wszystko_OK']); $_SESSION["valid"]
+                        header('Location: ___zaloguj.php');*/
+
+        /*echo "<br> result --> " . "<br>";       // 1
+        print_r($result);
+        echo "<br> result --> " . "<br>";         // bool(true)
+        var_dump($result);
+        echo "<br> gettype result --> " . "<br>"; // boolean
+        echo gettype($result);
+
+        echo "<br> polaczenie --> " . "<br>";     // MySQL connection object;
+        print_r($polaczenie);
+        echo "<br><br>";
+        print_r($polaczenie->insert_id);          // "134" / integer
+        echo "<br>". gettype($polaczenie->insert_id);*/
 
         // dodanie nowego użytkownika - rejestracja.php
         $_SESSION['udanarejestracja'] = true;
-        // pobranie ID ostatnio wstawionego adresu  ->
-        query("SELECT adres_id FROM adres ORDER BY adres_id DESC LIMIT 1", "get_address_id", "");
+
+            // pobranie ID ostatnio wstawionego adresu  ->
+            //query("SELECT adres_id FROM adres ORDER BY adres_id DESC LIMIT 1", "get_address_id", "");
             // $_SESSION['last_adres_id'] -> id ostatnio dodanego adresu;
 
-        // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
-        //unset($_SESSION['wszystko_OK']); $_SESSION["valid"]
-        //header('Location: ___zaloguj.php');
+        // pobranie ID ostatnio wstawionego adresu  ->
+        $_SESSION['last_adres_id'] = $polaczenie->insert_id;
+
+        //echo "<br> $ SESSION['last_adres_id'] --> " . "<br>";         // 1
+        //print_r($_SESSION['last_adres_id']); exit();
+
+
+                // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
+                //unset($_SESSION['wszystko_OK']); $_SESSION["valid"]
+                //header('Location: ___zaloguj.php');
+
+        echo "<br> 993 <br>";
     }
 
 	function cart_verify_book($result)
@@ -995,26 +1017,30 @@ EOT;
 	    return false;
 	}
 
-    function get_id($result)
+    /*function get_id($result)
     {
         // order.php -> get_last_order_id($result) -> ustawia id ostatniego zamówienia w zmiennej sesyjnej
             $row = $result->fetch_assoc();
         $_SESSION['last_order_id'] = $row["id_zamowienia"];
             $result->free_result();
-    }
+    }*/
 
-    function get_last_order_id($result)
+    function get_last_order_id($result, $polaczenie)
     {
-        // order.php - dodawanie zamówień (tabela zamówienia) - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
-        query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
+                // order.php - dodawanie zamówień (tabela zamówienia)
+                // - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
+                // query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
+
+        // - pobranie id nowo wstawionego wiersza (nowo wstawianego zamówienia);
+        $_SESSION['last_order_id'] = $polaczenie->insert_id;
     }
 
-    function get_address_id($result) // wywołanie w funkcji register(); // rejestracja.php;
+    /*function get_address_id($result) // wywołanie w funkcji register(); // rejestracja.php;
     {
         $row = $result->fetch_assoc();
             $_SESSION['last_adres_id'] = $row["adres_id"];
         $result->free_result();
-    }
+    }*/
 
     /*function display_order_details($result) {
 
@@ -1306,6 +1332,20 @@ EOT;
 
     // $fun - nazwa funkcji, która będzie obsługiwać wynik zapytania.
 
+    function getClients($result) {
+
+        while ( $row = $result->fetch_row() ) {
+            foreach ($row as $value) {
+                if($value != ' ') {
+                    echo $value . "<br>";
+                }
+
+            }
+
+        }
+
+    }
+
     function query($query, $fun, $value)
     {
         require "connect.php";
@@ -1325,40 +1365,57 @@ EOT;
 
                     $value = [$value];            // zrób z niej tablicę
                 }
-
                 //if (!is_array($value)) {
                 //	$values = [$values];
                 //}
-
-                for($i = 0; $i < count($value); $i++) {
+                for($i = 0; $i < count($value); $i++) { // sanitization;
 
                     $value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
                 }
 
-                if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie, $value - tablica parametrów do vsprintf
-                {
-                    //print_r($result); echo "<br><br>";
-                    //echo "<br><hr><br> query ( ) -> " . $query . "<br><hr>";
+                if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie,
+                {                                                          // $value - tablica parametrów do vsprintf
 
                     // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
-                    if(gettype($result) != "object") { // brak zwróconych wyników
+                    if(gettype($result) != "object") { // ̶b̶r̶a̶k̶ ̶z̶w̶r̶ó̶c̶o̶n̶y̶c̶h̶ ̶w̶y̶n̶i̶k̶ó̶w̶
 
-                                    // echo "\n type of result -> <br> gettype($result) <br>";
+                        // $result nie jest obiektem, jest to wartość logiczna "1" ;
+                                    // result print_r -->
+                                        //    1
+                                    // result var_dump-->
+                                        //    bool(true)
+                                    //gettype(result) -->
+                                        //    boolean
+                        // ✓✓✓ INSERT, UPDATE ... (bez dodatkowej funkcji) ;
 
-                        // (!) $result = "1";    // "boolean"
-                        //echo "\n => " . gettype($result) . "\n\n <br>"; // "boolean"
+                       //echo "<br>1390 - result NIE jest obiektem ! (jest true/false) - boolean <br>";
 
-                        /*exit();*/
-
-                        //echo "<br>613<br>"; exit();
-
-                        // INSERT, UPDATE ...
+                        //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n'.$query.'\n\n")</script>';
+                        echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n")</script>';
+                        echo '<script>console.log("'.$query.'\n\n")</script>';
 
                         if($fun != "") {
-                            $fun($result);
+
+                            // pytanie -> czy każda funkcja typu INSERT/UPDATE (korzystająca z + dod.funkcji) wymaga $polaczenie w jakimś celu ?
+
+                            // ✓✓✓ INSERT, UPDATE  + dodatkowa_funkcja;
+
+                            echo '<script>console.log("INSERT, UPDATE + dodatkowa_funkcja - 1385 - result NIE jest obiektem - \n\n")</script>';
+                            echo '<script>console.log("'.$query.'\n\n")</script>';
+
+                            //echo "<br>1394<br>";;
+
+                            //echo "<br> 1388 <br>"; exit();
+
+                            $fun($result, $polaczenie);
                         }
 
                     } else {  // $result jest obiektem
+
+                            //echo "<br>1403 - result jest obiektem<br>";
+
+                        echo '<script>console.log("SELECT - 1397 - result jest obiektem - \n\n")</script>';
+                        echo '<script>console.log("'.$query.'\n\n")</script>';
 
                         //echo "<br>623<br>"; //exit();
                         // SELECT
@@ -1368,6 +1425,10 @@ EOT;
 
                         if($num_of_rows > 0) // znaleziono rekordy
                         {
+
+                            echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 - \n\n")</script>';
+                            echo '<script>console.log("'.$query.'\n\n")</script>';
+                            //echo "<br>1416 - znaleziono rekordy - num_rows >  0 <br>"; exit();
 
                             //echo "<br>625<br>"; //exit();
 
@@ -1379,14 +1440,29 @@ EOT;
 //
 //                            echo "<br><hr><br> num_of_rows -> " . $num_of_rows . "<br><hr>";
 
+                            if($fun != "") {
 
-                            $fun($result); //
+                                echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 + dodatkowa funkcja - \n\n")</script>';
+
+                                $fun($result); // register_verify_email (rejestracja - sprawdzenie czy email jest zajęty ?),
+                            }
+
                         }
                         else { // brak zwróconych rekordów
 
                             //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
 
+                            //echo "<br>1435 - brak zwróconych rekordów - num_rows == 0 <br>"; exit();
+
+                            echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0 - \n\n")</script>';
+                            echo '<script>console.log("'.$query.'\n\n")</script>';
+
+
                             if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "cart_verify_book" && $fun != "verify_rate_exists") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
+
+                                echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0\n\n wywołanie dodatkowej funkcji - \n\n")</script>';
+                                echo '<script>console.log("'.$query.'\n\n")</script>';
+
                                 $fun($result);
                             }
 
@@ -1420,6 +1496,8 @@ EOT;
             echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - dla deweloperów
             exit(); // (?)
         }
+
+        //exit();
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         //return "<br> query = ".$query.", type = ".$type."<br>";

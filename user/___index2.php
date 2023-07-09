@@ -126,12 +126,13 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
         // check if category exists in db ... ;
 
         if( $category === false || $category === null || ($_SESSION["kategoria"] !== $_POST["kategoria"]) ) {
-            // validation failed - redirect to main page (index.php);   // echo "<br>error<br>";
+            // validation failed - redirect to main page (index.php);
+             //echo "<br>error 130<br>"; exit();
 
             // $_SESSION["kategoria"] = "Wszystkie";
 
             //unset($_POST, $category, $_SESSION["kategoria"]);
-            unset($_POST, $category); // , $_SESSION["kategoria"]
+            unset($_POST, $category, $_SESSION["kategoria"]); // , $_SESSION["kategoria"]
                 header('Location: ___index2.php');
                     exit();
         } else {
@@ -150,9 +151,8 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
         $_SESSION["kategoria"] = "Wszystkie"; // ?
 
         if( $search_value === false || $search_value === null || ($_SESSION["input-search"] !== $_POST["input-search"]) ) {
-            // validation failed - redirect to main page (index.php);   // echo "<br>error<br>";
-
-
+            // validation failed - redirect to main page (index.php);
+            //echo "<br>155 error<br>"; exit();
 
             //unset($_POST, $category, $_SESSION["kategoria"]);
             unset($_POST, $search_value, $_SESSION["input-search"]); // , $_SESSION["kategoria"]
@@ -189,6 +189,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
 
         $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING); // input-search-nav - sanitized ;
         $_SESSION["adv-search-category"] = $category;
+        $_SESSION["kategoria"] = $category;
 
 
         if( $category === false || $category === null || ($_SESSION["adv-search-category"] !== $_POST["adv-search-category"]) ) {
@@ -287,6 +288,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
         // $_SESSION["adv-search-category"]
         // $_SESSION["adv-search-title"]
         // $_SESSION["adv-search-author"]
+        // ...
 
         ////////////////////////////////////////////////////////////////////////////
 
@@ -298,7 +300,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
 
             // $_SESSION["kategoria"] = "Wszystkie"; // ? - testowałem i - i tak jest ustawiana ;
 
-            unset($_POST, $category, $_SESSION["adv-search-category"], $title, $_SESSION["adv-search-title"], $author, $_SESSION["adv-search-author"], $_SESSION["adv-search-query"], $year_min, $year_max, $_SESSION["year-min"], $_SESSION["year-max"]);
+            unset($_POST, $category, $_SESSION["adv-search-category"], $_SESSION["kategoria"], $title, $_SESSION["adv-search-title"], $author, $_SESSION["adv-search-author"], $_SESSION["adv-search-query"], $year_min, $year_max, $_SESSION["year-min"], $_SESSION["year-max"]);
 
                 header('Location: ___index2.php');
                     exit();
@@ -475,9 +477,9 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                 <?php
 
-                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>"*/
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>"
 
                     // nie ma sensu sprawdzać czy kategoria jest ustawiona, ponieważ zawsze jest (w zmiennej $_SESSION['kat']);
                         // (z wyjątkiem gdy wprowadzono tytuł w input-search-nav);
@@ -681,12 +683,12 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                             $query .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where);
                         }*/
 
-                        // execute the query
+                        // execute the query - advanced-search;
                         query($_SESSION["adv-search-query"], "get_books", $_SESSION["adv-search-values"]);
 
                         unset($_SESSION["adv-search-query"], $_SESSION["adv-search-values"]);
 
-                        unset($_SESSION["adv-search-title"], $_SESSION["adv-search-category"], $_SESSION["adv-search-author"]);
+                        unset($_SESSION["adv-search-title"], $_SESSION["adv-search-category"], $_SESSION["adv-search-author"], $_SESSION["year-min"], $_SESSION["year-max"]);
 
                     }
 

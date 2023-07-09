@@ -2740,6 +2740,8 @@ form#register-form input:not([type="checkbox"])
 
 }
 
+
+
 form#register-form input:not([type="checkbox"]):hover {
     cursor: pointer;
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
@@ -2775,6 +2777,8 @@ form#register-form label {
 
 form#register-form input[type="submit"] {
     width: 15%;
+
+    margin-bottom: 15px;
 }
 
 
@@ -3976,7 +3980,11 @@ div#advanced-search {
     /*display: none;*/
     /*height: 350px;*/
 
-    width: 1375px;
+    /*width: 1375px;*/
+
+    max-width: 1375px;
+    min-width:500px;
+    width: 100%;
 
 
     border-left: 1px ridge rgba(166, 166, 166, 0.38);

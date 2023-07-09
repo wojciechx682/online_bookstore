@@ -28,7 +28,7 @@ function updateYear(min, max) {                     // update content-books
 
 function initFun() {                            // Tasks when script first runs
     $('#adv-search-year-slider').noUiSlider({                   // Set up the slide control
-        range: [1990, 2023], start: [1995, 2018], handles: 2, margin: 1, connect: true,
+        range: [1990, 2023], start: [1992, 2018], handles: 2, margin: 1, connect: true,
         serialization: {to: [$year_min, $year_max], resolution: 1}
     }).change(function() {
         updateYear($year_min.val(), $year_max.val());

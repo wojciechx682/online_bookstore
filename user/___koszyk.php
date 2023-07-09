@@ -56,27 +56,14 @@
 
                     // $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING); // id_klienta ;
 
-                    query("SELECT kl.id_klienta, 
-                                        ko.id_ksiazki, ko.ilosc, 
-                                        ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, 
-                                        au.imie, au.nazwisko 
-                                  FROM klienci AS kl, 
-                                       koszyk AS ko, 
-                                       ksiazki AS ks, 
-                                       autor AS au 
-                                  WHERE kl.id_klienta = ko.id_klienta AND 
-                                        ko.id_ksiazki = ks.id_ksiazki AND 
-                                        ks.id_autora = au.id_autora AND 
-                                        kl.id_klienta='%s'", "get_product_from_cart", $_SESSION['id']);
+                    query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, au.imie, au.nazwisko FROM klienci AS kl, koszyk AS ko, ksiazki AS ks, autor AS au WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND kl.id_klienta='%s'", "get_product_from_cart", $_SESSION['id']);
                                   // książki które zamówił klient o danym ID;
                                          //  220	1	5	Symfonia C++ wydanie V	65.55	2008	csymfoni_wyd_V.png	Jerzy	Grębosz
                                   // get_product_from_cart() --> $_SESSION['suma_zamowienia'] ;   "285.45" ;
                                      // \template\cart-products.php;
 
 
-                    query("SELECT SUM(ilosc) AS suma 
-                                 FROM koszyk 
-                                 WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
+                    query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
                                 // po to, aby przy zmianie ilości książek w koszyku aktualizowała się liczba w headerze przy "Koszyk (3)" ;
                                 // count_cart_quantity() --> $_SESSION['koszyk_ilosc_ksiazek'] ;  "4" ;
 

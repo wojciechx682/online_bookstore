@@ -45,7 +45,7 @@
         $id = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT); // id_klienta;
 
 		query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verify_password", $id); // ta funkcja ustawia zmienna sesyjna $_SESSION['stare_haslo'] - ktora przechowuje haslo (hash hasła) z BD - klienta który chce zmienić swoje hasło;
-        //CZY TO BEZPIECZNE ABY ZMIENNA SESYJNA PRZECHOWYWALA ZAHASHOWANE HASLO - no tak ... oczywiście że tak - ponieważ hasło jest zahashowane...;
+        // CZY TO BEZPIECZNE ABY ZMIENNA SESYJNA PRZECHOWYWALA ZAHASHOWANE HASLO - no tak ... oczywiście że tak - ponieważ hasło jest zahashowane...;
 
 		if(password_verify($stare_haslo, $_SESSION['stare_haslo'])) // czy haslo z inputa (bez hasha) jest równe haśle w bazie danych (zahashowane)
 		{
