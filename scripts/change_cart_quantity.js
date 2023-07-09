@@ -1,5 +1,5 @@
 
-// okienko archiwizowania zamówienia - admin/orders.php
+// AJAX - zmiana lixby egzemplarzy koszyka;
 
 /*$("input.koszyk_ilosc").on("change", function(e) { // after changing <option> element in <select> list;
 
