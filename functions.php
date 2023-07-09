@@ -247,7 +247,7 @@
         // file_put_contents("../template/book-page-tabs-modified.php", $modified);
     }
 
-    function get_ratings($result) { // "ocena", "liczba_ocen" ;
+    function get_ratings($result) { // user\book.php   // "ocena", "liczba_ocen" ;
 
         // wstawia do tablicy sesyjnej - ilości poszczególnych ocen dla książki ->   5 -> 4, 4 -> 26, 3 -> 15, ....
         // $_SESSION["ratings"] -> [5] => 2 [4] => 1, ... ;
@@ -313,7 +313,7 @@
         // get highest book-id from db to apply max-range filter in ..\book.php (POST);
             $row = $result->fetch_assoc();
 
-        $_SESSION["max-book-id"] = $row["id_ksiazki"];
+        $_SESSION["max-book-id"] = $row["id_ksiazki"]; // "36"
     }
 
 	function check_email($result)
@@ -843,7 +843,7 @@ EOT;
         }
     }
 
-	function verify_password($result) // validate_password.php (zmiana hasła); confirm_password.php (usuwanie konta);
+	function verify_password($result) // validate_password.php (zmiana hasła); // confirm_password.php (usuwanie konta);
 	{
 		/*while ($row = $result->fetch_assoc())
 		{
@@ -1391,8 +1391,8 @@ EOT;
                        //echo "<br>1390 - result NIE jest obiektem ! (jest true/false) - boolean <br>";
 
                         //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n'.$query.'\n\n")</script>';
-                        echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n")</script>';
-                        echo '<script>console.log("'.$query.'\n\n")</script>';
+                        //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n")</script>';
+                       // echo '<script>console.log("'.$query.'\n\n")</script>';
 
                         if($fun != "") {
 
@@ -1400,8 +1400,8 @@ EOT;
 
                             // ✓✓✓ INSERT, UPDATE  + dodatkowa_funkcja;
 
-                            echo '<script>console.log("INSERT, UPDATE + dodatkowa_funkcja - 1385 - result NIE jest obiektem - \n\n")</script>';
-                            echo '<script>console.log("'.$query.'\n\n")</script>';
+                            //echo '<script>console.log("INSERT, UPDATE + dodatkowa_funkcja - 1385 - result NIE jest obiektem - \n\n")</script>';
+                            //echo '<script>console.log("'.$query.'\n\n")</script>';
 
                             //echo "<br>1394<br>";;
 
@@ -1414,8 +1414,8 @@ EOT;
 
                             //echo "<br>1403 - result jest obiektem<br>";
 
-                        echo '<script>console.log("SELECT - 1397 - result jest obiektem - \n\n")</script>';
-                        echo '<script>console.log("'.$query.'\n\n")</script>';
+                        //echo '<script>console.log("SELECT - 1397 - result jest obiektem - \n\n")</script>';
+                        //echo '<script>console.log("'.$query.'\n\n")</script>';
 
                         //echo "<br>623<br>"; //exit();
                         // SELECT
@@ -1426,8 +1426,8 @@ EOT;
                         if($num_of_rows > 0) // znaleziono rekordy
                         {
 
-                            echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 - \n\n")</script>';
-                            echo '<script>console.log("'.$query.'\n\n")</script>';
+                            //echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 - \n\n")</script>';
+                            //echo '<script>console.log("'.$query.'\n\n")</script>';
                             //echo "<br>1416 - znaleziono rekordy - num_rows >  0 <br>"; exit();
 
                             //echo "<br>625<br>"; //exit();
@@ -1442,7 +1442,7 @@ EOT;
 
                             if($fun != "") {
 
-                                echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 + dodatkowa funkcja - \n\n")</script>';
+                               // echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 + dodatkowa funkcja - \n\n")</script>';
 
                                 $fun($result); // register_verify_email (rejestracja - sprawdzenie czy email jest zajęty ?),
                             }
@@ -1454,17 +1454,24 @@ EOT;
 
                             //echo "<br>1435 - brak zwróconych rekordów - num_rows == 0 <br>"; exit();
 
-                            echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0 - \n\n")</script>';
-                            echo '<script>console.log("'.$query.'\n\n")</script>';
+                            //echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0 - \n\n")</script>';
+                            //echo '<script>console.log("'.$query.'\n\n")</script>';
 
 
                             if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "cart_verify_book" && $fun != "verify_rate_exists") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
 
-                                echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0\n\n wywołanie dodatkowej funkcji - \n\n")</script>';
-                                echo '<script>console.log("'.$query.'\n\n")</script>';
+                               // echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0\n\n wywołanie dodatkowej funkcji - \n\n")</script>';
+                                //echo '<script>console.log("'.$query.'\n\n")</script>';
+
+
 
                                 $fun($result);
                             }
+
+                            // check_email - (zmiana danych użytkownika) - validate_user_data.php - SPRAWDZA, CZY ISTNIEJE TAKI EMAIL
+                                // - jeśli istnieje ($result zwrócił rekordy) - ✓ przestawia zmienną $_SESSION['email_exists'] na "true"
+                                // - jeśli NIE istnieje ($result NIE zwrócił rekordów) - NIE POWINNA WYWOŁAĆ SIĘ TA FUNKCJA ($fun - check_email);
+
 
                             /*if($fun == "log_in" || $fun == "get_product_from_cart") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
 

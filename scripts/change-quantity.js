@@ -1,22 +1,45 @@
 
-function changeQuantity(id_ksiazki, amount) {
+function changeQuantity(button, id_ksiazki, amount) {
 
-	const el = document.querySelector(`#koszyk_ilosc${id_ksiazki}`);
+	//const el = document.querySelector(`#koszyk_ilosc${id_ksiazki}`);
+
+	let form = button.parentNode;
+
+	console.log("\n form -> ", form);
+
+	let el = form.querySelector('input[type="text"]')
+
+	//const el = button.previousElementSibling; // <input type text> - przechowuje ilość książek
+	console.log("\n el (input type text) -> ", el);
+
 	const newQuantity = parseInt(el.value) + amount;
+	console.log("\n newQuantity -> ", newQuantity);
+	//let form = ??? ;
+
 
 	if (newQuantity >= 1) {
 		el.value = newQuantity;													 // koszyk.php,	book.php
-		let form = document.querySelector(`#change_quantity_form${id_ksiazki}`); // (tylko dla) koszyk.php
-		form.submit();															 // -----||---- koszyk.php
+		//let form = document.querySelector(`#change_quantity_form${id_ksiazki}`); // (tylko dla) koszyk.php
+
+
+		//console.log("\n form -> ", form);
+		//console.log("\n typeof form -> ", typeof form);
+
+		//form.submit();
+
+		// Trigger the change event
+		$(el).trigger("change");
+
+														 // -----||---- koszyk.php
 	}
 }
 
-function increase(id_ksiazki) {
-	changeQuantity(id_ksiazki, 1);
+function increase(button, id_ksiazki) {
+	changeQuantity(button, id_ksiazki, 1);
 }
 
-function decrease(id_ksiazki) {
-	changeQuantity(id_ksiazki, -1);
+function decrease(button, id_ksiazki) {
+	changeQuantity(button, id_ksiazki, -1);
 }
 
 /*function increase(id_ksiazki) {

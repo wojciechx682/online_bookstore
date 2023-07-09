@@ -12,9 +12,9 @@
         isset($_POST['stare_haslo_edit']) &&
         isset($_POST['nowe_haslo_edit']) &&
         isset($_POST['powtorz_haslo_edit']) &&
-        !empty($_POST['stare_haslo_edit']) &&
-        !empty($_POST['nowe_haslo_edit']) &&
-        !empty($_POST['powtorz_haslo_edit'])
+        ! empty($_POST['stare_haslo_edit']) &&
+        ! empty($_POST['nowe_haslo_edit']) &&
+        ! empty($_POST['powtorz_haslo_edit'])
     )
 	{
 		//$stare_haslo =  md5($_POST['stare_haslo_edit']);
@@ -44,11 +44,14 @@
 
         $id = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT); // id_klienta;
 
-		query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verify_password", $id); // ta funkcja ustawia zmienna sesyjna $_SESSION['stare_haslo'] - ktora przechowuje haslo (hash hasła) z BD - klienta który chce zmienić swoje hasło;
+		query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verify_password", $id);
+		// ta funkcja ustawia zmienna sesyjna $_SESSION['stare_haslo'] - ktora przechowuje haslo (hash hasła) z BD - klienta który chce zmienić swoje hasło;
         // CZY TO BEZPIECZNE ABY ZMIENNA SESYJNA PRZECHOWYWALA ZAHASHOWANE HASLO - no tak ... oczywiście że tak - ponieważ hasło jest zahashowane...;
 
-		if(password_verify($stare_haslo, $_SESSION['stare_haslo'])) // czy haslo z inputa (bez hasha) jest równe haśle w bazie danych (zahashowane)
+		if(password_verify($stare_haslo, $_SESSION['stare_haslo'])) // czy haslo z inputa (bez hasha) jest równe haśle w bazie danych (zahashowane) ?
 		{
+			// podano poprawne hasło ;
+
             $pass_regex = '/^((?=.*[!@#$%^_&*-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/ ;
 
             if( ! (preg_match($pass_regex, $nowe_haslo)) ) // ✓ testowane;
@@ -63,10 +66,12 @@
 //                $_SESSION['error_form_password'] = "Hasło musi posiadać conajmniej 5 znaków";
 //            }
 
-            if( (strlen($nowe_haslo)<5) ) // ✖ ten warunek się nigdy nie spełni ponieważ wyżej w kodzie używam wyrażenia regularnego które żąda conajmniej 10 znaków;
+            if( (strlen($nowe_haslo)<10) ) //
 			{
+				// ✖ ten warunek się nigdy nie spełni ponieważ wyżej w kodzie używam wyrażenia regularnego które żąda conajmniej 10 znaków;
+				// ̶t̶e̶n̶ ̶w̶a̶r̶u̶n̶e̶k̶ ̶s̶i̶ę̶ ̶n̶i̶g̶d̶y̶ ̶n̶i̶e̶ ̶s̶p̶e̶ł̶n̶i̶ ̶ - spełni się ;
 				$_SESSION['validation_password'] = false;
-				$_SESSION['error_form_password'] = "Hasło musi posiadać conajmniej 5 znaków";
+				$_SESSION['error_form_password'] = "Hasło musi posiadać conajmniej 10 znaków";
 			}
 
 			if($nowe_haslo != $powtorz_haslo) // sprawdzenie czy oba hasła są identyczne; // ✓ testowane;

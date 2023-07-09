@@ -56,7 +56,9 @@
 
                     // $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING); // id_klienta ;
 
-                    query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, au.imie, au.nazwisko FROM klienci AS kl, koszyk AS ko, ksiazki AS ks, autor AS au WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND kl.id_klienta='%s'", "get_product_from_cart", $_SESSION['id']);
+                    query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, au.imie, au.nazwisko 
+                                  FROM klienci AS kl, koszyk AS ko, ksiazki AS ks, autor AS au 
+                                  WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND kl.id_klienta='%s'", "get_product_from_cart", $_SESSION['id']);
                                   // książki które zamówił klient o danym ID;
                                          //  220	1	5	Symfonia C++ wydanie V	65.55	2008	csymfoni_wyd_V.png	Jerzy	Grębosz
                                   // get_product_from_cart() --> $_SESSION['suma_zamowienia'] ;   "285.45" ;
@@ -101,6 +103,30 @@
     <?php require "../view/footer.php"; ?>
 
 <!-- <script src="../scripts/set-span-width.js"></script>-->
+
+    <script>
+
+        // DO WYRZUCENIA KOD PONIŻEJ !
+        // zmiana wartości w <input type="text"> przechowującym ilość książek - powoduje wysłanie formularza;
+        /*let inputs = document.querySelectorAll(".koszyk_ilosc");
+        console.log("\n inputs --> ", inputs );
+        console.log("\n typeof inputs --> ", typeof inputs );
+        console.log("\n length inputs --> ", inputs.length );
+        for(let i = 0; i < inputs.length; i++) {
+            let input = inputs[i];
+            // add event listener to each input element
+            input.addEventListener("change", () => {
+                // Handle the input event
+                    //console.log(event.target.value);
+                let form = input.parentElement;
+                console.log("\n form --> ", form);
+                            //form.submit();
+            });
+        }*/
+
+    </script>
+
+    <script src="../scripts/change_cart_quantity.js"></script> <!-- Ajax - zmiany ilości książek w koszyku -->
 
 </body>
 </html>

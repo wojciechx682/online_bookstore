@@ -3398,6 +3398,10 @@ h3#order-summary-header + p {
     height: 25px;
 }
 
+.edit_data_left {
+    padding-top: 5px;
+}
+
 .edit_data_button {
     text-align: right;
 

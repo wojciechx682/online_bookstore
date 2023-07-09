@@ -26,7 +26,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
         //echo "<br><hr><br> POST array is SET and not Empty<br><hr><br>";
         //var_dump($_POST);
 
-        if ( isset(array_keys($_POST)[0]) && ! empty(array_keys($_POST)[0]) ) { // check if POST value exists and is not empty;
+        if ( isset(array_keys($_POST)[0]) && ! empty(array_keys($_POST)[0]) ) { // check if POST value (id_ksiazki) exists and is not empty;
 
             // "35" ;
 
@@ -55,6 +55,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
             // check if there is really a book with that id ;
             $_SESSION['book_exists'] = false;
+
             query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
                 // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0 -> przestawi
             // $_SESSION['book_exists'] -> na true ;
@@ -90,8 +91,8 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 header('Location: ___index2.php');
                 exit();
 
-            } else { // input is OK
-
+            } else { // input is OK - book-id passed validation,    there is a book with that ID;
+                     //               Valid book-id           and           book exist
                 // Execute code (such as database updates) here;
                 // Perform any required actions with the form data (e.g., database update)
 
@@ -231,30 +232,44 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                 <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_SESSION["book-id"]) ) : ?>
 
-                        <?php query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
-                        kt.nazwa, sb.id_kategorii,
-                        (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
-                        (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
-                        (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
-                        au.imie, au.nazwisko, au.id_autora,
-                        ks.id_wydawcy, wd.nazwa_wydawcy
-                        FROM ksiazki AS ks
-                        JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
-                        JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
-                        LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
-                        LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                        WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]);
 
-                        query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings
-                                        WHERE id_ksiazki = '%s'
-                                        GROUP BY ocena
-                                        ORDER BY ocena DESC", "get_ratings", $_SESSION["book-id"]);
+                    <!--query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, kt.nazwa, sb.id_kategorii, (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy, (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen, (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy, au.imie, au.nazwisko, au.id_autora, ks.id_wydawcy, wd.nazwa_wydawcy FROM ksiazki AS ks JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii LEFT JOIN autor AS au ON ks.id_autora = au.id_autora LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]);-->
+
+
+                        <?php
+
+                        if(isset($_SESSION["avg_rating"])) {
+                            unset($_SESSION["avg_rating"]);
+                        }
+
+        query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, kt.nazwa, sb.id_kategorii, (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy, (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen, (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy, au.imie, au.nazwisko, au.id_autora, ks.id_wydawcy, wd.nazwa_wydawcy FROM ksiazki AS ks JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii LEFT JOIN autor AS au ON ks.id_autora = au.id_autora LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]);
+
+                        if( isset($_SESSION["liczba_ocen"]) && $_SESSION["liczba_ocen"] == "0" ) {
+                            query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $_SESSION["book-id"]);
+                        }
+
+                        query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "get_ratings", $_SESSION["book-id"]);
                             // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen;
                             // $_SESSION["ratings"] -> [5] => 2 [4] => 1 ;
                         $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]);
                             // funstions -> get_ratings() -> to pass that array (PHP) to JS
                             //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
                             // The json_encode() function is used to encode a PHP value into a JSON string;
+
+
+                        echo "<hr><br><br>";
+                            echo "ratings array --> <br><br>";
+                            print_r($_SESSION["ratings"]);
+
+                            echo "<br><br>ratings array --> <br><br>";
+                            print_r($_SESSION["raings_array"] );
+                        echo "<hr><br><br>";
+
+                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>"
+
+
                         ?>
 
 
@@ -476,7 +491,10 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
         <script>
 
 
-            const rating = document.getElementById("book-rate").textContent; // "4.5" - type "string";
+            const rating = document.getElementById("book-rate").textContent; // "4.5" - type "string";    type "hidden" - "4.5",  lub   null
+
+            console.log("\n\n rating -->", rating);
+            console.log("\n\n typeof rating -->", typeof rating);
 
             let circleTest = document.getElementById("rating-circle");
             let circumferenceTest = parseFloat(circleTest.getAttribute('r')) * 2 * Math.PI;
@@ -515,6 +533,10 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                 //const rating = 4.25;
 
+                /*if(rating != "") {
+
+                }*/
+
                 const totalRate = 5;
                 // 4.5 / 5 * 100 => "90" - (!) Ocena wyrażona w procentach ;
                 const percentageRate = (rating / totalRate) * 100; // "number" -> "93.3339" ;
@@ -549,7 +571,13 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                 // tutał był problem (ponieważ po Ctrl+F5 - szerokość rateOuterWidth była źle kalkulowana" - problemy implementacyjne - SD " ;
 
-                document.querySelector('.rating-num').innerHTML = rating ; // zaokrąglenie --> pomnożyć przez 10, zaokrąglić, podzielić przez 10 ;
+
+                if(rating !== "") {
+                    document.querySelector('.rating-num').innerHTML = rating ; // zaokrąglenie --> pomnożyć przez 10, zaokrąglić, podzielić przez 10 ;
+                } else {
+                    document.querySelector('.rating-num').innerHTML = "0" ; // zaokrąglenie --> pomnożyć przez 10, zaokrąglić, podzielić przez 10 ;
+                }
+
 
 
 
@@ -670,7 +698,8 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
             // ---------------------------------------------------------------------------------------------------------
             // ---------------------------------------------------------------------------------------------------------
 
-            const bookRatingDetails = document.querySelectorAll(".book-rating-details"); // Kolekcja divów z żółtymi paskami ;
+            const bookRatingDetails = document.querySelectorAll(".book-rating-details");
+                // Kolekcja divów z żółtymi paskami ;
 
             // ratings from DB - JS -->
             // kolekcja divów -> <div class="book-rating-details" ...>
@@ -678,7 +707,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
             console.log("\n 288 bookRatingDetails -> ", bookRatingDetails); // Kolekcja typu NodeList ;
             console.log("\n 288 bookRatingDetails.length -> ", bookRatingDetails.length); // 5 elementów (tyle ile jest pasków z ocenami) ;
-            console.log("\n 288 typeof bookRatingDetails -> ", typeof bookRatingDetails);
+            console.log("\n 288 typeof bookRatingDetails -> ", typeof bookRatingDetails); // object;
 
             $ratings = <?= $_SESSION["raings_array"] ?>;                 // tablica z ocenami (key - ocena,     value - ilosc ocen);
 
@@ -689,7 +718,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
             console.log("\n 298 $ratings -> ", $ratings);               // [5] => 2 [4] => 1 ;
             console.log("\n 298 typeof $ratings -> ", typeof $ratings); // "Object"
 
-            console.log("\n 298 $no_ratings -> ", $no_ratings);     // "12" ;
+            console.log("\n 298 $no_ratings -> ", $no_ratings);     // "12" lub np "0" ;    // liczba_ocen
             console.log("\n 298 btypeof $no_ratings -> ", typeof $no_ratings); // String ;
 
             //$ratings = array_reverse($ratings, true);
@@ -721,7 +750,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 let rated = line.querySelector(".rated");                      // ✓ żółty pasek ;
                 let norates = bookRatingDetails[j].querySelector(".no-rates"); // ✓ pojemnik na ilość_ocen ;
 
-                console.log("\n321 norates -> ", norates);
+                console.log("\n321 norates -> ", norates); // <div class="no-rates">
 
                 //console.log("rated -> ", rated);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
                 //console.log("norates -> ", norates);
@@ -740,7 +769,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                 console.log("\n351 -- width --> ", width); // 125 - type "number ";      - szerokość żółteo paska ✓
                 console.log("\n351 width --> ", typeof width);
-                console.log("$ratings --> ", $ratings); // "object" - tablica z ocenami i ilością tych ocen dla danej książki;
+                console.log("\n $ratings --> ", $ratings); // "object" - tablica z ocenami i ilością tych ocen dla danej książki;
 
                 //          5
                 if($ratings[i] === undefined) { // ✓ jeśli dana ocena nie wystąpiła ani razu ;
@@ -818,9 +847,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                             //goldStars--;
                         }
                     }
-
                     // keepStars = false; // ?
-
                 }
 
                 // to poniżej - zmienić lub usunac --->
@@ -848,7 +875,6 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                     removeNameAttribute(stars);
 
-
                     // click
                     for (let i = 0; i < stars.length; i++) {
 
@@ -870,15 +896,6 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                             star.classList.add('gold');
 
                             if(number === starNumber) {
-
-
-
-
-
-
-
-
-
 
                                 // dodanie atrubutu name="{id-gwiazdki}" do gwiazdki, która została kliknięta  ;
 
@@ -903,20 +920,20 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 console.log("\n 486 keepStars -> ", keepStars);
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            function hasGoldStars(stars) {  // stars - NodeList collection (spany z gwiazdkami)
+/*function hasGoldStars(stars) {  // stars - NodeList collection (spany z gwiazdkami)
 
-                // CHECK, IF THERE IS ANY GOLD STAR ;
+    // CHECK, IF THERE IS ANY GOLD STAR ;
 
-                // ̶ ̶S̶D̶ ̶-̶ ̶p̶r̶o̶b̶l̶e̶m̶ ̶i̶m̶p̶l̶e̶m̶e̶n̶t̶a̶y̶j̶n̶y̶ ̶-̶ ̶r̶o̶z̶w̶i̶ą̶z̶a̶n̶i̶e̶ ̶;̶
+    // ̶ ̶S̶D̶ ̶-̶ ̶p̶r̶o̶b̶l̶e̶m̶ ̶i̶m̶p̶l̶e̶m̶e̶n̶t̶a̶y̶j̶n̶y̶ ̶-̶ ̶r̶o̶z̶w̶i̶ą̶z̶a̶n̶i̶e̶ ̶;̶
 
-                for (let i = 0; i < stars.length; i++) { // NodeList Collection ;
+    for (let i = 0; i < stars.length; i++) { // NodeList Collection ;
 
-                    if(stars[i].classList.contains("gold")) {
-                        return true;
-                    }
-                }
-                return false;
-            }
+        if(stars[i].classList.contains("gold")) {
+            return true;
+        }
+    }
+    return false;
+}*/
 
             function removeNameAttribute(stars) {
 
@@ -964,41 +981,64 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
             // set the "name" attribute for input type hidden, that was selected
 
-            let commentRate = document.querySelector(".comment-rate").textContent.trim(); // 1, 2, ..., 5
-            //console.log("commentRate -> ", commentRate);
-            let commentRateInner = document.querySelector(".comment-rate-inner");
-            // <div class="comment-rate-inner">
-            commentRateInner.style.width = (commentRate / 5) * 100 + "%"; // ustawienie szerokości pojemnika na gwiazdki - zależnie od ilości gwiazdek ;
+            let commentRate = document.querySelector(".comment-rate"); // \template\book-comment.php;
 
-            let commentRates = document.querySelectorAll(".comment-rate") // kolekcja NodeList - pojemników (całych !) na wszystkie gwiazdki *przy komentarzach) ;
-            // console.log("commentRate -> ", commentRates);
+            if(commentRate) {
 
-            for (let i = 0; i < commentRates.length; i++) { // dla każdego pojemnika na gwiazdki (przy komentarzach) ;
-                let rate = commentRates[i].textContent.trim(); // "4"
-                commentRates[i].querySelector(".comment-rate-inner").style.width = ((rate / 5) * 100) + "%";
+                console.log("\n\n 1002 commentRate -> ", commentRate);
+
+                commentRate = commentRate.textContent.trim(); // 1, 2, ..., 5
+
+                console.log("\n\n 986 commentRate -> ", commentRate);
+
+                //let commentRate = document.querySelector(".comment-rate").textContent.trim(); // 1, 2, ..., 5
+
+                console.log("\n\n 986 commentRate -> ", commentRate);
+
+                let commentRateInner = document.querySelector(".comment-rate-inner");
+                // <div class="comment-rate-inner">
+                commentRateInner.style.width = (commentRate / 5) * 100 + "%"; // ustawienie szerokości pojemnika na gwiazdki - zależnie od ilości gwiazdek ;
+
+                let commentRates = document.querySelectorAll(".comment-rate") // kolekcja NodeList - pojemników (całych !) na wszystkie gwiazdki *przy komentarzach) ;
+                // console.log("commentRate -> ", commentRates);
+
+                for (let i = 0; i < commentRates.length; i++) { // dla każdego pojemnika na gwiazdki (przy komentarzach) ;
+                    let rate = commentRates[i].textContent.trim(); // "4"
+                    commentRates[i].querySelector(".comment-rate-inner").style.width = ((rate / 5) * 100) + "%";
+                }
+
+                //let commentRateInner = document.querySelector(".comment-rate-inner"); // <div class="comment-rate-inner">
+                //commentRateInner.style.width = (commentRate / 5) * 100 + "%";
+
+                // book-page-tabs -->
+
+                /* el = document.getElementById("tab-2");
+
+                el.addEventListener("click", setSpanWidthv2);*/
+
+            } else {
+
             }
 
-            //let commentRateInner = document.querySelector(".comment-rate-inner"); // <div class="comment-rate-inner">
-            //commentRateInner.style.width = (commentRate / 5) * 100 + "%";
 
-            // book-page-tabs -->
 
-            /* el = document.getElementById("tab-2");
 
-            el.addEventListener("click", setSpanWidthv2);*/
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Karty - zapis ostatnio wybranej w localStorage ;
 
-            let ul = document.querySelector('ul.tab-list');
-            // <ul clsas="tab-list">
+            let ul = document.querySelector('ul.tab-list'); // <ul clsas="tab-list">
+                console.log("\nul -> ", ul);
+
             let divs = document.querySelectorAll('div.tab-panel');
+                console.log("\ndivs -> ", divs);
             // <div clsas="tab-panel"> - ✓ pojemniki na karty
             // Kolekcja NodeList - elementów (kart) które można przełączać
             //console.log("divs -->", divs) ;
 
             let liEls = ul.querySelectorAll('li');
+                console.log("\nliEls -> ", liEls);
             // Kolekcja NoideList(3) --> li, li, li.active
 
             //console.log("<li> elements --> ", liEls);
@@ -1014,9 +1054,11 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 liEl.addEventListener('click', function(event) {
                     // dla każdego elementu listy - <li> ; - PO KLIKNIĘCIU ;
 
-                    // Check if the class attribute has changed
+                            // Check if the class attribute has changed
 
-                    // jeśli kliknięty <li> element nie ma klasy "active", trzeba mu ją nadać (bo został kliknięty, i powinien ją mieć) - ale tutaj - ZAPISUJE TYLKO indeks TEJ KARTY w Local Storage ! ;
+                            // jeśli kliknięty <li> element nie ma klasy "active", trzeba mu ją nadać (bo został kliknięty, i powinien ją mieć) - ale tutaj - ZAPISUJE TYLKO indeks TEJ KARTY w Local Storage ! ;
+
+
 
                     if ( ! this.classList.contains('active') ) { // <li>
                         //console.log('Class attribute has changed');
@@ -1033,38 +1075,58 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 });
             });
 
+
+
             function getCurrentIndex() {
                 // return index of currently selected tab ;
                 for (let i = 0; i < liEls.length; i++) {
                     if (liEls[i].classList.contains('active')) {
+                        console.log("\n\n liEls class List contains index --> ", i);
                         return i;
                     }
                 }
+                //return 0;
             }
 
             if(window.localStorage) {
 
-                // change active <li> tab based on localStorage value ;
+                // Check if the value for key "liIndex" exists in local storage
+                if (localStorage.getItem("liIndex") !== null) {
+                    // Value exists
+                    console.log("Value exists for key 'liIndex'");
 
-                // remove class "active" from all <li> elements, and <div>'s with class "tab-panel" (tzn. wyświetlane poniżej karty z zawartością) ;
+                    // change active <li> tab based on localStorage value ;
+                    // remove class "active" from all <li> elements, and <div>'s with class "tab-panel" (tzn. wyświetlane poniżej karty z zawartością) ;
+                    // "usunięcie klasy active wszędzie gdzie tylko się da" ;
+                    for (let i = 0; i < liEls.length; i++) {
+                        if (liEls[i].classList.contains('active')) {
+                            liEls[i].classList.remove('active');
+                        }
+                        if (divs[i].classList.contains('active')) {
+                            // ponieważ on też zmienia klasę "active";
+                            divs[i].classList.remove('active');
+                        }
+                    }
 
-                // "usunięcie klasy active wszędzie gdzie tylko się da" ;
-                for (let i = 0; i < liEls.length; i++) {
-                    if (liEls[i].classList.contains('active')) {
-                        liEls[i].classList.remove('active');
-                    }
-                    if (divs[i].classList.contains('active')) {
-                        // ponieważ on też zmienia klasę "active";
-                        divs[i].classList.remove('active');
-                    }
+                    // pobierz indeks aktywnej karty (tej która jako ostatnia została kliknięta);
+                    liIndex = localStorage.getItem("liIndex"); // "0", "1", "2"
+
+
+                    liEls[liIndex].classList.add('active'); // dodanie klasy "active" do elementu listy zgodnie z tym jaki był zapisany w LS (ostatnio kliknięty)
+                    divs[liIndex].classList.add('active'); // to samo dla karty z zawartością - <div class="tab-panel" ... > ;
+
+
+
+
+
+
+                } else {
+                    // Value does not exist
+                    console.log("Value does not exist for key 'liIndex'");
                 }
 
-                // pobierz indeks aktywnej karty (tej która jako ostatnia została kliknięta);
-                liIndex = localStorage.getItem("liIndex"); // "0", "1", "2"
 
 
-                liEls[liIndex].classList.add('active'); // dodanie klasy "active" do elementu listy zgodnie z tym jaki był zapisany w LS (ostatnio kliknięty)
-                divs[liIndex].classList.add('active'); // to samo dla karty z zawartością - <div class="tab-panel" ... > ;
             }
 
             // ---------------------------------------------------------------------------------------------------------

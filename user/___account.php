@@ -3,7 +3,7 @@
 	session_start();
     include_once "../functions.php";
 
-    if( ! isset($_SESSION['zalogowany']) ) {
+    if ( ! isset($_SESSION['zalogowany']) ) {
 
         $_SESSION["login-error"] = true;
             header("Location: ___zaloguj.php");
@@ -66,7 +66,7 @@
                             </form>
                         </div>
                         <div style="clear: both;"></div>
-                        <!--<div class="edit-data-button-left"></div>-->
+                            <!--<div class="edit-data-button-left"></div>-->
                     </div> <!-- .edit_data_container -->
                 </div> <!-- .dane_konta -->
 

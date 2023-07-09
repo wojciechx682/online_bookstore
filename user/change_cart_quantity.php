@@ -31,11 +31,13 @@ if( ! isset($_SESSION['zalogowany']) ) {
         $id_ksiazki = filter_input(INPUT_POST, "id_ksiazki", FILTER_SANITIZE_NUMBER_INT);
         $ilosc = filter_input(INPUT_POST, "koszyk_ilosc", FILTER_SANITIZE_NUMBER_INT);
 
-        echo "<br> id_ksiazki (sanitized) --> " . $id_ksiazki . "<br>";
+        /*echo "<br> id_ksiazki (sanitized) --> " . $id_ksiazki . "<br>";
         echo "<br> ilosc (sanitized) --> " . $ilosc . "<br>";
 
         echo "<br> id_ksiazki (sanitized) --> " . gettype($id_ksiazki) . "<br>"; // "string";
-        echo "<br> ilosc (sanitized) --> " . gettype($ilosc) . "<br>"; // "string";
+        echo "<br> ilosc (sanitized) --> " . gettype($ilosc) . "<br>"; // "string";*/
+
+        //exit();
 
 		if($ilosc < 0 || !is_numeric($ilosc) || $ilosc == false)
 		{
@@ -59,13 +61,18 @@ if( ! isset($_SESSION['zalogowany']) ) {
 		unset($_POST['koszyk_ilosc']);
 		unset($book);
 
-		query("SELECT SUM(ilosc) AS suma 
+		/* ✓ AJAX zamiast tego -> query("SELECT SUM(ilosc) AS suma
                      FROM koszyk 
-                     WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']); // funkcja count_cart_quantity() - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczby książek)
+                     WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);*/ // funkcja count_cart_quantity() - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczby książek)
+
+
 	}
 
-	header('Location: ___koszyk.php');
+	//header('Location: ___koszyk.php');
 	//echo '<a href="index.php?kategoria='.$_SESSION['kategoria'].'">Wróć</a>';
 	//header('Location: index.php?kategoria='.$_SESSION['kategoria'].'');
-	exit();
+
+// echo $_SESSION['suma_zamowienia'];
+
+exit();
 ?>

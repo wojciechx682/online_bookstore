@@ -16,6 +16,7 @@
         </form>-->
 
             <!-- kliknięcie na obrazek przechodzi na stronę "book.php" -> (z książką której dane zawarte są w tym formularzu)-->
+        <!--<form method="post" action="../user/___book.php">-->
         <form method="post" action="../user/___book.php">
             <input type="hidden" name="%s"> <!-- id_ksiazki -->
             <button type="submit" class="book-img-button">
@@ -50,14 +51,15 @@
 
     <div id="form-cart-container" style="min-width: 260px;  float: left; ">
 
-    <form action="change_cart_quantity.php" method="post"
-          class="change_quantity_form" id="change_quantity_form%s">
+    <!--<form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form s">-->
+
+    <form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form%s"> <!-- AJAX -->
 
         <input type="hidden" name="id_ksiazki" value="%s"> <!-- id_ksiazki -->
         <b>Ilość</b>
         <input type="text" id="koszyk_ilosc%s" class="koszyk_ilosc" name="koszyk_ilosc" value="%s">
-        <button type="button" onclick="increase(%s)">+</button>
-        <button type="button" onclick="decrease(%s)"><span>-</span></button>
+        <button type="button" onclick="increase(this, %s)">+</button>
+        <button type="button" onclick="decrease(this, %s)"><span>-</span></button>
     </form>
 
     <form action="remove_book.php" method="post"

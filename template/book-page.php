@@ -55,11 +55,11 @@
                 <input type="text" id="koszyk_ilosc%s" name="koszyk_ilosc" value="1"> <!-- id = " koszyk_ilosc { id książki } " -->
             </label>
 
-            <button type="button" onclick="increase(%s)"> <!-- id książki -->
+            <button type="button" onclick="increase(this, %s)"> <!-- id książki -->
                 +
             </button>
 
-            <button type="button" onclick="decrease(%s)"> <!-- id książki -->
+            <button type="button" onclick="decrease(this, %s)"> <!-- id książki -->
                 <span>-</span>
             </button>
 

@@ -7,7 +7,7 @@
     if(
         ( isset($_POST['imie_edit']) && isset($_POST['nazwisko_edit']) && isset($_POST['email_edit']) && isset($_POST['telefon_edit'] ) )
         && (
-            ($_POST['imie_edit'] != $_SESSION['imie']) || ($_POST['nazwisko_edit'] != $_SESSION['nazwisko']) || ($_POST['email_edit'] != $_SESSION['email']) || ($_POST['telefon_edit'] != $_SESSION['telefon'])
+            ($_POST['imie_edit'] != $_SESSION['imie']) || ($_POST['nazwisko_edit'] != $_SESSION['nazwisko']) || ($_POST['email_edit'] != $_SESSION['email']) || ($_POST['telefon_edit'] != $_SESSION['telefon']) // przynajmniej jedno pole jest inne - od już istniejących wartości
         )
     )
     {   // Edycja danych użytkownika -> Imię, Nazwisko, E-mail, Telefon;
@@ -79,7 +79,7 @@
 			{
 				$_SESSION['email_exists'] = false;
 
-				query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_sanitized); // to przełączy zmienną $_SESSION['email_exists'] na true, jeśli taki email będzie istnieć;
+				query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_sanitized); // to przełączy zmienną $_SESSION['email_exists'] na true, jeśli taki email będzie istnieć (jeśli $result zwróci rekordy);
 
 				if( isset($_SESSION['email_exists']) && $_SESSION["email_exists"]) // <-- działa, testowałem :)
 				{
@@ -132,13 +132,13 @@
 			unset($_SESSION['error_form']);
 
 			header('Location: ___account.php');
-            exit();
+                exit();
 		}
 		else // dane nie przeszły walidacji;
 		{
 			    //echo '<script> alert("Niepoprawne dane") </script>';
 			header('Location: ___account.php');
-            exit();
+                exit();
 		}
 	}
 	else // nie było danych w żądaniu POST lub były one te same co już istniejące w Sesji;
@@ -146,7 +146,7 @@
 		    // echo '<script> alert("Uzupełnij wszystkie pola") </script>';
 
         $_SESSION['error_form'] = "Podaj dane które różnią się od istniejących";
-		header('Location: ___account.php');
-        exit();
+		    header('Location: ___account.php');
+                exit();
 	}
 ?>

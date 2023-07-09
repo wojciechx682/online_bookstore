@@ -22,7 +22,11 @@
 
         // jeśli podano dane (POST), i są one różne od tych które były aktualnie ustawione (w Sesji);
 
-        // Edycja danych adresowych -> Miejscowość, Ulica, NUmer_domu, Kod_pocztowy, Miasto;
+        // Edycja danych adresowych -> Miejscowość,
+                                    // Ulica,
+                                    // Numer_domu,
+                                    // Kod_pocztowy,
+                                    // Miasto;
 
         // sanitize address input;
         $miejscowosc = filter_input(INPUT_POST, "miejscowosc_edit", FILTER_SANITIZE_STRING);
@@ -82,7 +86,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Numer domu
 
-        $numer_domu = str_replace(str_split(' '), '', $numer_domu);
+        $numer_domu = str_replace(str_split(' '), '', $numer_domu); // remove all white spaces; ' ' => '';
 
         $house_number_regex = '/^[0-9]{1,3}+[A-Z]{0,3}+\s?[\/-]?+\s?+[A-Za-z0-9]{0,3}$/';
 
@@ -124,6 +128,7 @@
             $validation = false;
             $_SESSION['a_error'] = "Podaj poprawną miejscowość";
         }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if( $validation )
@@ -146,16 +151,16 @@
             unset($_POST['ulica_edit']);
             unset($_POST['numer_domu_edit']);
             unset($_POST['kod_poczt_edit']);
-            unset($_SESSION['miasto_edit']);
+            unset($_POST['miasto_edit']);
 
             header('Location: ___account.php');
-            exit();
+                exit();
         }
         else // dane nie przeszły walidacji;
         {
                 //echo '<script> alert("Niepoprawne dane") </script>';
             header('Location: ___account.php');
-            exit();
+                exit();
         }
 	}
 	else // nie było danych w żądaniu POST lub były one te same co już istniejące w Sesji;
@@ -163,8 +168,8 @@
 		    // echo '<script> alert("Uzupełnij wszystkie pola") </script>';
 
         $_SESSION['a_error'] = "Podaj dane które różnią się od istniejących";
-        header('Location: ___account.php');
-        exit();
+            header('Location: ___account.php');
+                exit();
 	}
 
 ?>
