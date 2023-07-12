@@ -415,7 +415,7 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                         <?= "<h3>".$_SESSION["kategoria"]."</h3>"; ?>
 
-<h3>Sortowanie</h3>
+                        <h3><label for="sortuj_wg">Sortowanie</label></h3>
 
 <select id="sortuj_wg">
     <option value="1">ceny rosnąco</option>
@@ -465,8 +465,13 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                         </div>
 
+
+
+
+
                         <?php
-                            query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // <ul> authors list;
+                            query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", "");
+                            // filtrowanie autorów - <ul> authors list;
                         ?>
 
                         <button id="filter-authors">Zastosuj</button>
@@ -760,9 +765,22 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
             selectElement.value = selectedValue;
 
             sortBooks();
-
+            filterAuthors();
         }
+
+        // ---------------------------------------------
+
+
+
+
+
     });
+
+
+    //
+
+
+
 
 </script>
 

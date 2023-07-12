@@ -24,11 +24,15 @@ $(document).ready(function() {
 
     const ul = document.querySelector("ul.tab-list");
 
-    ul.addEventListener('DOMSubtreeModified', function() {
-        const li = ul.querySelector('li:nth-child(2)');
+    if(ul) {
+        ul.addEventListener('DOMSubtreeModified', function() {
+            const li = ul.querySelector('li:nth-child(2)');
 
-        if (li.classList.contains('active')) {
-            setSpanWidthv2();
-        }
-    });
+            if (li.classList.contains('active')) {
+                setSpanWidthv2();
+            }
+        });
+    }
+
+
 });

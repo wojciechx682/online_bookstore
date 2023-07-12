@@ -14,14 +14,14 @@
     btnParent = document.getElementById("btn-parent");
 
     if(content) {
-        console.log("content -> ", content);
+        /*console.log("content -> ", content);*/
     }
 
 
 
 function setBlackTheme() {
 
-    console.log("books -> ", books);
+    /*console.log("books -> ", books);*/
 
     header.style.backgroundColor = "#565656FF";
     header.style.color = "white";

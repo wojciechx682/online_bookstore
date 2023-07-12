@@ -6,11 +6,11 @@ $max = $('#value-max');                          // minimum text input
 
 let books = document.querySelectorAll("#content-books .book");
 
-console.log("\n books -> ", books);
-console.log("\n typeof books -> ", typeof books);
+/*console.log("\n books -> ", books);
+console.log("\n typeof books -> ", typeof books);*/
 
 
-console.log("\n fl books -> ", books);
+/*console.log("\n books -> ", books);*/
 
 function update(min, max) {                     // update content-books
 
