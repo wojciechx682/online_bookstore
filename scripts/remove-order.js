@@ -22,7 +22,7 @@ function removeOrder(order_id) { // po kliknięciu przycisku "Archiwizuj"
 
         let allContainer = document.getElementById("main-container");
 
-    if(!allContainer.classList.contains("bright")) {
+    if( ! allContainer.classList.contains("bright")) {
         allContainer.classList.toggle("bright");
     }
 
@@ -42,7 +42,7 @@ function removeOrder(order_id) { // po kliknięciu przycisku "Archiwizuj"
 
         console.log("\n 42 order_id --> ", order_id);
 
-        if(!removeBox.classList.contains("hidden")) {
+        if( ! removeBox.classList.contains("hidden")) {
             removeBox.classList.toggle("hidden");
         }
 

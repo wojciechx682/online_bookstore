@@ -403,7 +403,7 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
     <div id="main-container">
 
-        <?php require "../view/___header-container.php"; ?>
+            <?php require "../view/___header-container.php"; ?>
 
         <div id="container">
 

@@ -10,7 +10,7 @@ $("form.remove-order").on("submit", function(e) { // po wysłaniu formularza;
     e.preventDefault();
 
     let data = $(this); // obiekt zawierający dane formularza;
-    let postData = $(this).serialize();
+    let postData = $(this).serialize(); // pobranie danych z formularza;
 
     let orderId = data[0][0].value;        // id-zamówienia (string);
         console.log("\norderId => ", orderId);
@@ -44,7 +44,7 @@ $("form.remove-order").on("submit", function(e) { // po wysłaniu formularza;
         $.ajax({
             type: "POST",                    // GET or POST;
             url: "remove-order.php",         // Path to file (that process the <form> data);
-            data: postData,                  // serialized <form> data;
+            data: postData,                  // serialized <form> data; -   dane formularza;
             timeout: 2000,                   // Waiting time;
             beforeSend: function() {         // Before Ajax - function called before sending the request;
                 // (?)
@@ -57,7 +57,7 @@ $("form.remove-order").on("submit", function(e) { // po wysłaniu formularza;
                     $(div).html("Zarchiwizowane");     // <table> -> div.order-status;
                 confirmButton.hide();                  // "Potwierdź";
                 cancelButton.hide();                   // "Anuluj";
-                $("div.delivery-date").append(data);   // data - dane zwrócone z serwera;
+                $("div.delivery-date").append(data);   // data - (!) dane zwrócone z serwera;
                 // finishArchive();
             },
             error: function(formData) {                                     // Show error msg

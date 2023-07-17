@@ -3,12 +3,30 @@
 
 // admin/order-details.php ;
 
+// .success(), .error(), complete() - przestarzałe, zamiast nich, użyć -->
+//                                                                .done(), .fail(), .always()
+
+// https://api.jquery.com/jquery.ajax/
+
+//   " ... Deprecation Notice: The jqXHR.success(), jqXHR.error(), and jqXHR.complete() callbacks are removed as of jQuery 3.0. You can use jqXHR.done(), jqXHR.fail(), and jqXHR.always() instead. ... "
+
+// metody -> .done(), .fial(), always(), - nie będą wewnątrz funkcji $.ajax() - lecz doklejane ZA NIĄ (poza nią);
+
+// $.ajax({
+//   method: "POST",
+//   url: "some.php",
+//   data: { name: "John", location: "Boston" }
+// })
+//   .done(function( msg ) {
+//     alert( "Data Saved: " + msg );
+//   });
+
 $("form#update-order-date").on("submit", function(e) {
 
     // use DOMPurify for date sanitization here ?
 
     e.preventDefault();
-
+    //                this
     let formData = $("form#update-order-date").serialize(); // serializacja danych formularza;  pobranie danych z formularza;
     let data = $(this);                                                                 // dane w postaci tekstowej (String);
 
@@ -57,23 +75,51 @@ $("form#update-order-date").on("submit", function(e) {
             }
             else {
                 $.ajax({
-                    type: "POST",                    // GET or POST;
-                    url: "update-order-date.php",    // Path to file (that process the <form> data);
-                    data: formData,                  // serialized <form> data;
-                    timeout: 2000,                   // Waiting time;
-                    beforeSend: function() {         // Before Ajax - function called before sending the request;
+                    type: "POST",                    // GET or POST;    type of HTTP method;
+                    url: "update-order-date.php",    // Path to file (that process the <form> data);    // "Strona, do której kierowane jest żądanie";
+                    data: formData,                  // serialized <form> data; // "dane wysłane do serwera wraz z żądaniem";
+                    timeout: 2000,                   // Waiting time; - liczba sekund zanim nastąpi niepowodzenie;
+
+                    beforeSend: function() {         // Bbfore ajax - function called before sending the request;
+
+                        // funkcja (anonimowa / nazwana) - uruchamiana PRZED wykonaniem żądania Ajax;
+                            // np. wyświetlenie ikony wczytywania danych - (kręcące się kółko) ;
+
+                        // $content.append('<div id="load"> Wczytywanie </div>');
+
                         $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
                     },
-                    complete: function() {          // Once finished - function called always after sending request;
+                    complete: function() {          // once finished - function called ALWAYS after sending request;
+
+                        // funkcja uruchamiana PO WYKONANIU żądania - niezależnie od jego STANU (sukces / niepowodzenie) ;
+
+                            // np. usunięcie ikony wczytywania danych - (kręcące się kółko) ;
+
+                        // .always();   // .always( function() { // ... { )
+
                         $("img#loading-icon").toggleClass("not-visible");
                     },
-                    success: function(formData) {   // Show content;
-                        finishUpdate();
-                        $("div.delivery-date").append(formData);
+                    success: function(formData) {   // show content;    - wyświetlenie zawartości ;
+
+                        // funkcja uruchamiana, gdy wykonanie żądania Ajax zakończy się POWODZENIEM ;
+
+                            // .done();     // .done( function(data) { // ... } )
+
+                        // $content.html( $(data).find('#container') ) . hide().fadeIn(500);
+
+                        finishUpdate();             // formData - dane otrzymane z serwera (response - odpowiedź);
+                            $("div.delivery-date").append(formData);
                     },
-                    error: function(formData) {     // Show error msg;
+                    error: function(formData) {     // show error msg;
+
+                        // funkcja uruchamiana, gdy wykonanie żądania Ajax zakończy się NIEPOWODZENIEM ;
+
+                            // .fail();     // .fail( function() { // ... } )
+
+                        // wyświetlenie komunikatu o błędzie ;
+
                         finishUpdate();
-                        $("div.delivery-date").append(formData);
+                            $("div.delivery-date").append(formData);
                     }
                 });
             }

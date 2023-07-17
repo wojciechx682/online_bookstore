@@ -103,6 +103,39 @@
 
     console.log("\n tab2 -> ", tab2);
 
+    ///////////////////////////////////////////////////////////////
+    console.log("\n\n");
+
+    // object - obiekt JS;
+    // events - tablica obiektów
+
+    let object = {
+        "events": [
+            { "location": "Szczecin", "date": "8 kwietnia" },
+            { "location": "Kraków", "date": "12 maja" },
+            { "location": "Poznań", "date": "6 września" }
+        ]
+    };
+
+    console.log("\n object -> ", object);
+
+    console.log("\n\n object[events] -> ", object["events"]);
+
+    console.log("\n\n object[events][0] -> ", object["events"][0]);
+
+    console.log("\n\n object[events][0] -> ", object["events"][0].location);
+
+    console.log("\n\n object[events] -> ", object.events[1]["location"]);
+
+    console.log("\n\n object[events] -> ", object.events[2].location);
+
+    console.log("\n\n object[events] -> ", object.events[1].date);
+
+
+
+
+
+
 </script>
 
 

@@ -2,9 +2,9 @@
     session_start();
     include_once "../functions.php";
 
-    if(!(isset($_SESSION['zalogowany']))) {
+    if ( ! isset($_SESSION['zalogowany']) ) {
         header("Location: ../user/___index2.php?login-error");
-        exit();
+            exit();
     }
 ?>
 
@@ -33,7 +33,9 @@
 
         </div> <!-- #container -->
 
-    </div> <!-- #all-container -->
+        <!-- brauke footer'a w tym miejscu ? -->
+
+    </div> <!-- #main-container -->
 
 </body>
 </html>

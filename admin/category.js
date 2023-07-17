@@ -6,10 +6,23 @@ function getSubcategories(categorySelect) {
     //let categoryId = document.getElementById('edit-book-category').value;
     let categoryId = categorySelect.value; // "2" - string;
 
+    // create XMLHttpRequest Object ; --> wysyłanie żądań AJAX  +  obsługa odpowiedzi ;
+    // meotdy -->   .open()
+    //              .send()
+
     let xhr = new XMLHttpRequest(); // send an AJAX request to fetch the subcategories based on the selected category;
-    xhr.onreadystatechange = function() {           // xhr.onload = function();
+
+    xhr.onreadystatechange = function() {           // xhr.onload = function(); - Otrzymanie i wczytanie odpowiedzi z serwera ;
+                                                    //              wywołanie funkcji anonimowej;
+
         if (xhr.readyState === XMLHttpRequest.DONE) {
+
             if (xhr.status === 200) {              // after response from server;
+
+                // sprawdzenie właściwości "status" obiektu xhr - w celu sprawdzenia, czy odpowiedź otrzymana z serwera jest prawidłowa - 200 OK) ;
+
+                // Poniżej kod odpowiedzialny za Przetworzenie odpowiedzi - udzielonej przez serwer ;
+
                 let subcategories = JSON.parse(xhr.responseText); // object
                 // update the subcategories select list;
                 let subcategorySelect = document.getElementById('edit-book-subcategory');
@@ -27,8 +40,10 @@ function getSubcategories(categorySelect) {
         }
     };
 
-    xhr.open('GET', 'get-subcategories.php?category_id=' + categoryId, true);
-    xhr.send();
+    xhr.open('GET', 'get-subcategories.php?category_id=' + categoryId, true);  // przygotowanie Żądania (Ajax);
+    //               adres strony Obsługującej żądanie;                async ? (true/false)
+
+    xhr.send(); // Wysłanie do serwera przygotowanego wcześniej Żądania;    (Informacje dodatkowe w nawiasach);
 }
 
 $("form.edit-book-data").on("submit", function(e) {

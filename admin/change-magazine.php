@@ -3,7 +3,7 @@
 session_start();
 include_once "../functions.php";
 
-    if(isset($_POST["change-magazine"]) && !empty($_POST["change-magazine"])) {
+    if(isset($_POST["change-magazine"]) && ! empty($_POST["change-magazine"])) {
 
         $warehouseId = filter_var($_POST["change-magazine"], FILTER_VALIDATE_INT); // returns - filtered_value - or - false;
 
