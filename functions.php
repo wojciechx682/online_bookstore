@@ -1061,6 +1061,7 @@ EOT;
 	// admin -->
 
     function get_all_orders($result) {
+
         while($row = $result->fetch_assoc()) {
             //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
             // load the content from the external template file into string
@@ -1083,7 +1084,8 @@ EOT;
 
     function get_orders_boxes($result) {
         while($row = $result->fetch_assoc()) {
-                    //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
+                        //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
+
             // load the content from the external template file into string
             $order = file_get_contents("../template/admin/orders-boxes.php");
             // replace fields in $order string to author data from $result, display result content as HTML
@@ -1091,6 +1093,10 @@ EOT;
         }
         $result->free_result();
     }
+
+
+
+
 
     function get_order_details_admin($result) {
         $i = 0;

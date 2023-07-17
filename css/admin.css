@@ -12,6 +12,12 @@ body > div#main-container {
     z-index: 100;
 }
 
+body {
+    /*background-color: var(--content);*/
+    /*background-image: url("../assets/1.png");*/
+    background-image: linear-gradient(#4d4d4d, #4d4d4d);
+}
+
 div#container {
     border: none;
     background-color: var(--content);
@@ -681,13 +687,14 @@ span.update-failed, span.update-failed
 {
     font-weight: bold;
     /*color: #3fce3f;*/
-    color: #ac0000;
+    /*color: #ac0000;*/
+    color: #FF0000;
     user-select: none;
 }
 
 span.archive-success, span.update-failed {
     display: block;
-    margin-top: 10px;
+    margin-top: 18px;
 }
 
 /* archiwizowanie zamówienia -> */

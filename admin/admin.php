@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once "../functions.php";
+        include_once "../functions.php";
 
     if ( ! isset($_SESSION['zalogowany']) ) {
         header("Location: ../user/___index2.php?login-error");

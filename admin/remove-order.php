@@ -18,6 +18,8 @@ include_once "../functions.php";
         query("UPDATE zamowienia SET komentarz='%s', status='%s' WHERE id_zamowienia = '%s'", "archiveOrder", [$_POST["comment"], "Zarchiwizowane", $_POST["order-id"]]); // $_SESSION["archive-successful"] --> false;
     }
 
+
+
     if( isset($_SESSION["archive-successful"]) && $_SESSION["archive-successful"] === false ) {
         unset($_SESSION["archive-successful"]);
         echo "<span class='archive-success'>Udało się zmienić zarchiwizować zamówienie</span>";

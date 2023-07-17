@@ -21,11 +21,11 @@
 //     alert( "Data Saved: " + msg );
 //   });
 
-$("form#update-order-date").on("submit", function(e) {
+$("form#update-order-date").on("submit", function(e) { // funkcja anonimowa ; // e - obiekt zdarzenia ;
 
     // use DOMPurify for date sanitization here ?
 
-    e.preventDefault();
+    e.preventDefault(); // e - obiekt zdarzenia ;
     //                this
     let formData = $("form#update-order-date").serialize(); // serializacja danych formularza;  pobranie danych z formularza;
     let data = $(this);                                                                 // dane w postaci tekstowej (String);
@@ -76,9 +76,9 @@ $("form#update-order-date").on("submit", function(e) {
             else {
                 $.ajax({
                     type: "POST",                    // GET or POST;    type of HTTP method;
-                    url: "update-order-date.php",    // Path to file (that process the <form> data);    // "Strona, do której kierowane jest żądanie";
+                    url: "update-order-date.php",    // Path to file (that process the <form> data); // "Strona, do której kierowane jest żądanie";
                     data: formData,                  // serialized <form> data; // "dane wysłane do serwera wraz z żądaniem";
-                    timeout: 2000,                   // Waiting time; - liczba sekund zanim nastąpi niepowodzenie;
+                    timeout: 2000,                   // Waiting time; - liczba mili-sekund - zanim nastąpi zdarzenie oznaczające niepowodzenie;
 
                     beforeSend: function() {         // Bbfore ajax - function called before sending the request;
 
@@ -91,7 +91,7 @@ $("form#update-order-date").on("submit", function(e) {
                     },
                     complete: function() {          // once finished - function called ALWAYS after sending request;
 
-                        // funkcja uruchamiana PO WYKONANIU żądania - niezależnie od jego STANU (sukces / niepowodzenie) ;
+                        // funkcja uruchamiana PO WYKONANIU (zakończeniu) żądania - niezależnie od jego STANU (sukces / niepowodzenie) ;
 
                             // np. usunięcie ikony wczytywania danych - (kręcące się kółko) ;
 
@@ -109,6 +109,8 @@ $("form#update-order-date").on("submit", function(e) {
 
                         finishUpdate();             // formData - dane otrzymane z serwera (response - odpowiedź);
                             $("div.delivery-date").append(formData);
+
+                            // $content . html ( $(formData).find('#container') ) .hide().fadeIn(400);
                     },
                     error: function(formData) {     // show error msg;
 
