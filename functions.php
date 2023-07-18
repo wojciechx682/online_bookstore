@@ -920,6 +920,9 @@ EOT;
 			                        //$_SESSION['login'] = $row['login'];
 
             if($id === "id_klienta") {
+
+                $_SESSION['user-type'] = "klient";
+
                 query("SELECT SUM(ilosc) AS suma 
                              FROM koszyk 
                              WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);
@@ -934,6 +937,7 @@ EOT;
                 header('Location: ___index2.php');      // przekierowanie do strony index.php
             } else {
                 $_SESSION["stanowisko"] = $row["stanowisko"];
+                    $_SESSION['user-type'] = "admin";
                 header('Location: ../admin/admin.php'); // pracownik - przekierowanie do strony admin.php
             }
 			exit(); // we should use exit() after header_location instruction;
@@ -1384,6 +1388,8 @@ EOT;
 
                 if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie,
                 {                                                          // $value - tablica parametrów do vsprintf
+
+                    // zamiana na switch ?
 
                     // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
                     if(gettype($result) != "object") { // ̶b̶r̶a̶k̶ ̶z̶w̶r̶ó̶c̶o̶n̶y̶c̶h̶ ̶w̶y̶n̶i̶k̶ó̶w̶

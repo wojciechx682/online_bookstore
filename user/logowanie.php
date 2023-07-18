@@ -18,12 +18,10 @@
             // logowanie - warto użyć  HTTPS / SSL;
             // "Limit login attempts: Prevent brute force attacks by limiting the number of login attempts allowed within a certain time period.";
 
-	session_start(); // a function that allows a document to use a session ; every document that uses a session must have this entry at the beginning.
+	//session_start(); // a function that allows a document to use a session ; every document that uses a session must have this entry at the beginning.
+	//include_once "../functions.php";
 
-    // print_r($_SESSION); echo "<br>";
-    // print_r($_POST);
-
-	include_once "../functions.php";
+    require_once "../start-session.php";
 
 	if(
             ( ! isset($_POST['email']) || ! isset($_POST['haslo']) ) ||                  // jeśli nie ustawiono loginu/hasła;
@@ -66,8 +64,8 @@
 		if( ! filter_var($email_sanitized, FILTER_VALIDATE_EMAIL) || ($email_sanitized != $_POST["email"]) )
 		{
 			$_SESSION['blad'] = '<span class="error">Podaj poprawny adres e-mail</span>'; // email nie przeszedł walidacji;
-			header('Location: ___zaloguj.php');
-			exit();
+			    header('Location: ___zaloguj.php');
+			        exit();
 		}
 		else // email is correct; (email is valid);
 		{

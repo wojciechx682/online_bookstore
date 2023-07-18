@@ -1,10 +1,12 @@
 <?php
-	session_start();
+	/*session_start();
 	include_once "../functions.php";
 	if(!(isset($_SESSION['zalogowany']))) {
         header("Location: index.php?login-error");
 		exit();
-	}
+	}*/
+
+
 ?>
 
 <!DOCTYPE HTML>

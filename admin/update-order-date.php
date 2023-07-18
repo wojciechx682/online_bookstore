@@ -1,11 +1,14 @@
 <?php
 
-session_start();
-include_once "../functions.php";
+/*session_start();
+include_once "../functions.php";*/
+
+// check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
+require_once "../authenticate-admin.php";
 
     // plik obsługujący żądanie POST aktualizujące termin dostawy zamówienia;
         // $date = $_POST["order-date"]; // termin dostawy
-        // $dispDate = $_POST["dispatch-date"]; // data wysyłki
+        // $dispDate = $_POST["dispatch-date"]; // data swysyłki
         // data serialized (string) =>  order-date=2023-05-17&dispatch-date=2023-05-18;
             // walidacja + sanityzacja danych ?
 

@@ -4,8 +4,10 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-session_start();
-include_once "../functions.php";
+    /*session_start();
+    include_once "../functions.php";*/
+
+    require_once "../start-session.php";
 
 use PHPMailer\PHPMailer\PHPMailer; // In PHP, the "use" statement is used to import external classes or namespaces into the current PHP file;
 use PHPMailer\PHPMailer\Exception; // This line imports the "Exception" class from the PHPMailer\PHPMailer namespace;

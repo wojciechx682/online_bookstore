@@ -1,11 +1,14 @@
 <?php
-    session_start();
+    /*session_start();
     include_once "../functions.php";
 
     if(!(isset($_SESSION['zalogowany']))) {
         header("Location: ../user/___index2.php?login-error");
         exit();
-    }
+    }*/
+
+    // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
+    require_once "../authenticate-admin.php";
 ?>
 
 <!DOCTYPE HTML>

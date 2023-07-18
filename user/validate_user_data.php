@@ -1,8 +1,9 @@
 <?php
 
-	session_start();
+	/*session_start();
+	include_once "../functions.php";*/
 
-	include_once "../functions.php";
+    require_once "../start-session.php";
 
     if(
         ( isset($_POST['imie_edit']) && isset($_POST['nazwisko_edit']) && isset($_POST['email_edit']) && isset($_POST['telefon_edit'] ) )

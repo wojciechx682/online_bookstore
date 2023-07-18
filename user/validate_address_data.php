@@ -1,8 +1,9 @@
 <?php
 
-	session_start();
+	/*session_start();
+	include_once "../functions.php";*/
 
-	include_once "../functions.php";
+    require_once "../start-session.php";
 
     // logika tego skryptu jest bardzo prosta, więc myślę że nie będziesz mieć problemu z opisaniem co ten plik robi i jak działa;
 

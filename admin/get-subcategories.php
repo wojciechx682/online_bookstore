@@ -1,9 +1,13 @@
 <?php
-session_start();
-include_once "../functions.php";
+/*session_start();
+include_once "../functions.php";*/
+
     // get-subcategories.php;
     // retrieve the category_id from the query string;
     // perform database query to fetch the subcategories based on the category_id;
+
+// check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
+require_once "../authenticate-admin.php";
 
 if (isset($_GET['category_id']) && !empty($_GET['category_id'])) {
 

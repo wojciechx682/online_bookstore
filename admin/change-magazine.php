@@ -1,7 +1,10 @@
 <?php
 // admin/books.php;
-session_start();
-include_once "../functions.php";
+/*session_start();
+include_once "../functions.php";*/
+
+// check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
+require_once "../authenticate-admin.php";
 
     if(isset($_POST["change-magazine"]) && ! empty($_POST["change-magazine"])) {
 

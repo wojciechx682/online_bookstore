@@ -1,7 +1,9 @@
 <?php
 
-	session_start();
-	include_once "../functions.php";
+	/*session_start();
+	include_once "../functions.php";*/
+
+    require_once "../start-session.php";
 
     // sprawdzenie czy zmienne w żądaniu POST ISTNIEJĄ, i nie mają PUSTYCH wartości,
         // jeśli wszystkie zmienne formularza rejestracji posiadają wartość,

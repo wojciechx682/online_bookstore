@@ -1,8 +1,9 @@
 <?php
 
-	session_start();
+	/*session_start();
+	include_once "../functions.php";*/
 
-	include_once "../functions.php";
+	require_once "../start-session.php";
 
 	// Do czego służy ten plik ? Z̶m̶i̶e̶n̶i̶ć̶ ̶j̶e̶g̶o̶ ̶n̶a̶z̶w̶ę̶ ̶n̶a̶ ̶c̶h̶a̶n̶g̶e̶ ̶p̶a̶s̶s̶w̶o̶r̶d̶ ?
 

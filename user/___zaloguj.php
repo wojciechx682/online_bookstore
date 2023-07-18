@@ -1,10 +1,14 @@
 <?php
 
-	session_start();
+	/*session_start();*/
+
+    require_once "../start-session.php";
 	
 	if ( isset($_SESSION['zalogowany']) &&
                $_SESSION['zalogowany'] == "true" &&
-        ! isset($_SESSION['udanarejestracja']) )
+        ! isset($_SESSION['udanarejestracja']) &&
+
+        ! isset($_SESSION["login-error"]) ) // authenticate-user.php
 	{
         // ✓ "jeśli weszliśmy na zaloguj.php będąc wcześniej zalogowanym" ;
         // - (i nie było to przekierowanie po zakończeniu pomyślnej rejestracji /będąc zalogowanym na inne konto);
@@ -15,13 +19,17 @@
 	elseif ( isset($_SESSION['zalogowany']) &&
                    $_SESSION['zalogowany'] == "true" &&
              isset($_SESSION['udanarejestracja']) &&
-                   $_SESSION['udanarejestracja'] == "true" )
+                   $_SESSION['udanarejestracja'] == "true" &&
+
+             ! isset($_SESSION["login-error"]) ) // authenticate-user.php
 	{   // ✓ jeśli (pomyślnie) stworzyliśmy konto, będąc zalogowanym na inne ;
 		header("Location: logout.php"); // ustawi zmienną $_SESSION['udanarejestracja'] = true, przekieruje z powrotem do zaloguj.php (spełni się 3-ci warunek w zaloguj.php);
 		exit();
 	}
 	elseif ( ! isset($_SESSION['zalogowany']) &&
-               isset($_SESSION['udanarejestracja'])
+               isset($_SESSION['udanarejestracja']) &&
+
+             ! isset($_SESSION["login-error"]) // authenticate-user.php
     ) // ✓ jeśli stworzyliśmy konto (normalnie - nie będąc zalogowanym w tym czasie na inne);
 	{
 		// unset($_SESSION['udanarejestracja']);
@@ -64,7 +72,7 @@
 		if (isset($_SESSION['blad'])) unset($_SESSION['blad']);
 	}
 
-	include_once "../functions.php";
+	/*include_once "../functions.php";*/
 
 	//query("", "", "");
 ?>
@@ -215,7 +223,8 @@
 
     <?php if ( isset($_SESSION["login-error"]) && $_SESSION["login-error"] ) : ?>
 
-        <?php unset($_SESSION["login-error"]) ?>
+        <?php //unset($_SESSION["login-error"]) ?>
+        <?php session_unset(); ?>
 
         <script>
             let statusBox = document.getElementById("login-error-message");

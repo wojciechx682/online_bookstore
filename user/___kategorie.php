@@ -2,8 +2,10 @@
 
     // user/index.php?kategoria=Wszystkie
 
-session_start();
-include_once "../functions.php";
+/*session_start();
+include_once "../functions.php";*/
+
+require_once "../start-session.php";
 
     if( ! isset($_SESSION["kategoria"])  ) {
 

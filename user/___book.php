@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    include_once "../functions.php";
+
+    require_once "../start-session.php";
 
 /*$book = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT);
 

@@ -2,9 +2,10 @@
 
     /* The code checks whether the password entered by the user in the "haslo_confirm" and "powtorz_haslo_confirm" fields match, and then checks whether the password matches the one stored in the database by calling the "password_verify" function. If the password does not match, or the password isn't correct - the user is redirected to the "remove_account.php" page.*/
 
-	session_start();
+	/*session_start();
+	include_once "../functions.php";*/
 
-	include_once "../functions.php";
+    require_once "../start-session.php";
 
 	// Do czego służy ten plik ? Zmienić jego nazwę na change password ?
 

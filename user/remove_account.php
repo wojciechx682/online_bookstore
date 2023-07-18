@@ -1,10 +1,15 @@
 <?php
-	session_start();
+	/*session_start();
 	include_once "../functions.php";
 	if(!(isset($_SESSION['zalogowany']))) {
         header("Location: index.php?login-error");
 		exit();
-	}
+	}*/
+
+    // check if user is logged-in, and user-type is "client" - if not, redirect to login page ;
+    require_once "../authenticate-user.php";
+
+
     if(isset($_SESSION["password_confirmed"]) && $_SESSION["password_confirmed"]) {
         // podano poprawne hasło
         query("DELETE FROM klienci WHERE id_klienta='%s'", "", $_SESSION["id"]); // usunięcie konta klienta (+ jego zamówień, szczegółów zamówień, płatności, + koszyka)

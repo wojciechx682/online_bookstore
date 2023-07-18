@@ -2,16 +2,21 @@
 <!-- koszyk - zmiana liczby egzemplarzy -->
 
 <?php
-	session_start();
+/*	session_start();
 	include_once "../functions.php";
 
 
 if( ! isset($_SESSION['zalogowany']) ) {
 
     $_SESSION["login-error"] = true;
-    header("Location: ___zaloguj.php");
-    exit();
-}
+        header("Location: ___zaloguj.php");
+            exit();
+}*/
+
+    // check if user is logged-in, and user-type is "client" - if not, redirect to login page ;
+    require_once "../authenticate-user.php";
+
+
 ?>
 
 <?php

@@ -1,6 +1,8 @@
 <?php
-	session_start();
-	include_once "../functions.php";
+	/*session_start();
+	include_once "../functions.php";*/
+
+    require_once "../start-session.php";
 
     // reCaptcha - site-key -> linia 376
 ?>
