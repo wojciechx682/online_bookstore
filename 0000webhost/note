@@ -86,3 +86,6 @@ BD -> nie przechowuje już informacji o "Województwie", "Kraju", "PESELu" - !!!
 ------------------------------------------------------------------------------------------------------------------------
 
 wymagania funkcjonalne -> kontrola dostępu (admin nie może wejść na pliki usera,    User nie może wejść na pliki admina)
+
+"Na czym polega kontrola dostępu?
+ Kontrola dostępu to podstawowy element zabezpieczeń, który formalizuje to, kto może uzyskać dostęp do określonych aplikacji, danych i zasobów, oraz określa warunki wymagane do uzyskania tego dostępu."
