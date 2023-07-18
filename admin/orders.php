@@ -86,7 +86,9 @@
 
 <script>
 
-    function resetError(textarea) {                  // archiwizowanie zamówienia - kliknięcie (focus) na <textarea> usuwa komunikat o błędzie (jeśli był on widoczny);
+    function resetError(textarea) {
+        // archiwizowanie zamówienia - kliknięcie (focus) na <textarea> usuwa komunikat o błędzie (jeśli był on widoczny);
+
         let spanError = textarea.nextElementSibling; // span z komunikatem o błędzie;
         if(spanError.style.display === "block") {
             spanError.style.display = "none";

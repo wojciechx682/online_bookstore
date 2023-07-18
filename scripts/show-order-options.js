@@ -1,16 +1,16 @@
 
-function showOptions(id) { // admin/orders.php - kliknięcie "Zarządzaj";
+function showOptions(id) { // admin/orders.php - kliknięcie "Zarządzaj";   -->  ✓ wyświetlenie / ukrycie listy opcji ;
 
     let orderActionOptions = document.querySelectorAll('div.order-action'); // kolekcja pojemników z przyciskiem "Zarządzaj";
 
-    for(let i = 1; i < orderActionOptions.length; i++) {
-        //console.log(i+1 + "-ty element ",  orderActionOptions[i]);
+    for(let i = 1; i < orderActionOptions.length; i++) {    // dla każdego <div>'a   -->   <div class="order-action">
 
-        let orderActionButton = orderActionOptions[i].querySelector('.order-action-button'); // przycisk "Zarządzaj" - <div> ;
+        let orderActionButton = orderActionOptions[i].querySelector('.order-action-button'); // przycisk "Zarządzaj" - </div> ;
+        // <div class="order-action-button" id="order-action-button1121" onclick="showOptions(this.id)"> "Zarządzaj" . </div>
 
         //console.log("\n\n orderActionButton -> ",  orderActionButton);
 
-        // ukrycie wszystkich pozostałych listy opcji, jeśli były widoczne (poza tym, który został aktualnie kliknięty !) ;
+        // ukrycie wszystkich pozostałych listy opcji, jeśli były widoczne (tzn. poza tym, który został aktualnie kliknięty !) ;
 
         if(orderActionButton.id !== id) {
 
@@ -29,9 +29,9 @@ function showOptions(id) { // admin/orders.php - kliknięcie "Zarządzaj";
         }
     }
 
-    console.log(`#${id}`); // id-elementu - który został kliknięty -->
-                           // "#order-action-button1121"
-    const button = document.querySelector(`#${id}`);    // <div> "Zarządzaj" </div> ;
+    console.log(`#${id}`); // id-elementu - który został kliknięty --> "#order-action-button1121"
+
+    const button = document.querySelector(`#${id}`);    // template literal - <div> "Zarządzaj" </div> ;
     // <div class="order-action-button"
     //      id="order-action-button1121"
     //      onclick="showOptions(this.id)">
@@ -47,7 +47,7 @@ function showOptions(id) { // admin/orders.php - kliknięcie "Zarządzaj";
 
     /*console.log("8 i -> ", icon)*/
 
-    if(options.style.display === "block") {
+    if(options.style.display === "block") {      // jeśli lista opcji była widoczna;
         options.style.display = "none";          // ukrycie listy opcji
         icon.classList.remove('icon-up-open');
         icon.classList.add('icon-down-open');    // zmiana ikony na przeciwną
@@ -57,5 +57,4 @@ function showOptions(id) { // admin/orders.php - kliknięcie "Zarządzaj";
         icon.classList.add('icon-up-open');      // zmiana ikony na przeciwną
     }
 
-    //////////////////////////////////////////////////////////////////////////////////
 }

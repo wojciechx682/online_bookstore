@@ -176,6 +176,9 @@
 			$_SESSION['e_email'] = "Podaj poprawny adres e-mail";
 		}
 
+        // sprawdzenie, czy email nie jest zajęty -->
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                         // Sprawdzenie poprawności hasła :
                                         // if((strlen($haslo1)<8) || (strlen($haslo1)>20)) // sprawdzenie długości hasła
@@ -463,6 +466,12 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 		// Sprawdzenie czy taki user (email i hasło) istnieje już w bazie;
 		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_sanitized);
         // przestawi mi zmienną $_SESSION['valid'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest !;
+
+        // jeśli pracownik posiada taki email ->
+
+        query("SELECT id_pracownika  FROM pracownicy WHERE email='%s'", "register_verify_email", $email_sanitized);
+        // przestawi mi zmienną $_SESSION['valid'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);
+
 
         //exit();
 

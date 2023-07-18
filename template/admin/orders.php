@@ -23,7 +23,7 @@
 
     <div class="order-action">
 
-        <div class="order-action-button" id="order-action-button%s" onclick="showOptions(this.id)">
+        <div class="order-action-button" id="order-action-button%s" onclick="showOptions(this.id)"> <!-- ✓ wyświetlenie / ukrycie listy opcji -->
             <!-- scripts\show-order-options.js -->
             Zarządzaj <i class="icon-down-open"></i></div>
 

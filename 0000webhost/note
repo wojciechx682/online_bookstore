@@ -82,3 +82,7 @@ natomiast
 ------------------------------------------------------------------------------------------------------------------------
 
 BD -> nie przechowuje już informacji o "Województwie", "Kraju", "PESELu" - !!! - usunąć te pola z bazy danych ?
+
+------------------------------------------------------------------------------------------------------------------------
+
+wymagania funkcjonalne -> kontrola dostępu (admin nie może wejść na pliki usera,    User nie może wejść na pliki admina)
