@@ -25,20 +25,54 @@
 
         <div class="order-action-button" id="order-action-button%s" onclick="showOptions(this.id)"> <!-- ✓ wyświetlenie / ukrycie listy opcji -->
             <!-- scripts\show-order-options.js -->
-            Zarządzaj <i class="icon-down-open"></i></div>
+            Zarządzaj <i class="icon-down-open"></i>
+        </div>
 
         <div class="order-options-container">
+
             <div class="order-action-options">
+
                 <div class="order-option">
-                    <a href="order-details.php?%s">Przeglądaj</a>
+                    <!-- <a href="order-details.php? s">Przeglądaj</a> -->
+                        <!-- PRG - GET -> na POST <form> <-- ------------------ -->
+
+                    <!--<form method="post" action="order-details.php">
+                        <input type="hidden" name="s">
+                        <button type="submit" class="book-img-button">
+                            <img src="../assets/books/s" alt="s" title="s">
+                        </button>
+                    </form>-->
+
+                    <form method="post" action="order-details.php"> <!-- POST -> orderId -->
+                        <input type="hidden" name="%s"> <!-- orderId -->
+                        <button class="submit-book-form" type="submit">
+                            <!--<h3 class="book-title">Przeglądaj</h3>-->
+                            Przeglądaj
+                        </button>
+                    </form>
+
                 </div>
+
                 <div class="order-option">
-                    <a href="order-details.php?%s&status=true" onclick="">Zmień status</a>
+                    <!--<a href="order-details.php?s status=true" onclick="">Zmień status</a>-->
+
+                    <form method="post" action="order-details.php"> <!-- POST -> orderId -->
+                        <input type="hidden" name="%s"> <!-- orderId -->
+                        <input type="hidden" name="true"> <!-- "Zmień status" -> true -->
+                        <button class="submit-book-form" type="submit">
+                            <!--<h3 class="book-title">Przeglądaj</h3>-->
+                            Zmień status
+                        </button>
+                    </form>
+
                 </div>
+
                 <div class="order-option">
                     <a href="#" onclick="removeOrder(%s)">Archiwizuj</a> <!-- scripts\remove-order.js -->
                 </div>
+
             </div>
+
         </div>
 
     </div> <!-- .order-action -->

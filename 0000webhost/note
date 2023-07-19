@@ -87,5 +87,16 @@ BD -> nie przechowuje już informacji o "Województwie", "Kraju", "PESELu" - !!!
 
 wymagania funkcjonalne -> kontrola dostępu (admin nie może wejść na pliki usera,    User nie może wejść na pliki admina)
 
+~ ~ Admin nie może być zalogowany jako klient - i korzystać z "moje konto" w panelu klienta.
+   Klient nie może wejść do panelu administratora będąc zalogowanym jako klient.
+   w plikach admina -->
+   Sprawdzenie czy jest ustawiona zmienna $_SESSION["stanowisko"]
+   - jeśli tak, to znaczy że zalogowany jest pracownik/admin.
+   - jeśli nie jest ustawiona, to znaczy że to nie jest pracownik.
+
 "Na czym polega kontrola dostępu?
  Kontrola dostępu to podstawowy element zabezpieczeń, który formalizuje to, kto może uzyskać dostęp do określonych aplikacji, danych i zasobów, oraz określa warunki wymagane do uzyskania tego dostępu."
+
+ ------------------------------------------------------------------------------------------------------------------------
+
+ MPA -

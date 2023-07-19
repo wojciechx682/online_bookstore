@@ -2497,7 +2497,8 @@ button#confirm-message {
                         /* index.php - <form> - button/submit - (prg) */
                     .book-details > form button.book-img-button, /* koszyk.php */
                 .cart-book > span.book-details form button.submit-book-form, /* koszyk.php - tytuł książki (!) */
-                    div#n-top-nav-content ol li ul li form button.submit-book-form /* index - lista <ul> z kategoriami - button */
+                    div#n-top-nav-content ol li ul li form button.submit-book-form, /* index - lista <ul> z kategoriami - button */
+                    div.order div.order-action div.order-options-container > div.order-action-options form button.submit-book-form  /* \admin\orders.php - przycisk "Przeglądaj" -> order-id - PRG */
 
 
                     {

@@ -1010,6 +1010,12 @@ EOT;
 		$result->free_result();
 	}
 
+    function orderDetailsVerifyOrderExists($result) { // zwrócono rekordy a więc jest takie zamówienie (admin\order-details.php);
+        echo "\n 1014 - function -> orderDetailsVerifyOrderExists \n\n";
+
+        $_SESSION['order-exists'] = true;
+    }
+
 	function get_var_name($var)
     {
         // do usunięcia
@@ -1098,11 +1104,7 @@ EOT;
         $result->free_result();
     }
 
-
-
-
-
-    function get_order_details_admin($result) {
+    function get_order_details_admin($result) { // \admin\order-details.php
         $i = 0;
         // $row = $result->fetch_assoc();
         while($row = $result->fetch_assoc()) {
@@ -1125,7 +1127,7 @@ EOT;
         $result->free_result();
     }
 
-    function get_order_sum_admin($result) {
+    function get_order_sum_admin($result) { // \admin\order-details.php
         $row = $result->fetch_assoc();
 
         $orderSum = file_get_contents("../template/order-sum.php");
@@ -1137,7 +1139,7 @@ EOT;
 
     }
 
-    function get_order_summary($result) {
+    function get_order_summary($result) { // \admin\order-details.php
         $row = $result->fetch_assoc();
 
         $_SESSION["status"] = $row["status"];
@@ -1365,153 +1367,156 @@ EOT;
         mysqli_report(MYSQLI_REPORT_STRICT);
 
         try
-        {
-            $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-
-            if($polaczenie->connect_errno) {
-
-                throw new Exception(mysqli_connect_errno());
-            }
-            else {
-
-                if(gettype($value) !== "array") { // jeśli to nie jest tablica
-
-                    $value = [$value];            // zrób z niej tablicę
+            {
+                $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+    
+                if($polaczenie->connect_errno) {
+    
+                    throw new Exception(mysqli_connect_errno());
                 }
-                //if (!is_array($value)) {
-                //	$values = [$values];
-                //}
-                for($i = 0; $i < count($value); $i++) { // sanitization;
-
-                    $value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
-                }
-
-                if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie,
-                {                                                          // $value - tablica parametrów do vsprintf
-
-                    // zamiana na switch ?
-
-                    // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
-                    if(gettype($result) != "object") { // ̶b̶r̶a̶k̶ ̶z̶w̶r̶ó̶c̶o̶n̶y̶c̶h̶ ̶w̶y̶n̶i̶k̶ó̶w̶
-
-                        // $result nie jest obiektem, jest to wartość logiczna "1" ;
-                                    // result print_r -->
-                                        //    1
-                                    // result var_dump-->
-                                        //    bool(true)
-                                    //gettype(result) -->
-                                        //    boolean
-                        // ✓✓✓ INSERT, UPDATE ... (bez dodatkowej funkcji) ;
-
-                       //echo "<br>1390 - result NIE jest obiektem ! (jest true/false) - boolean <br>";
-
-                        //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n'.$query.'\n\n")</script>';
-                        //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n")</script>';
-                       // echo '<script>console.log("'.$query.'\n\n")</script>';
-
-                        if($fun != "") {
-
-                            // pytanie -> czy każda funkcja typu INSERT/UPDATE (korzystająca z + dod.funkcji) wymaga $polaczenie w jakimś celu ?
-
-                            // ✓✓✓ INSERT, UPDATE  + dodatkowa_funkcja;
-
-                            //echo '<script>console.log("INSERT, UPDATE + dodatkowa_funkcja - 1385 - result NIE jest obiektem - \n\n")</script>';
-                            //echo '<script>console.log("'.$query.'\n\n")</script>';
-
-                            //echo "<br>1394<br>";;
-
-                            //echo "<br> 1388 <br>"; exit();
-
-                            $fun($result, $polaczenie);
-                        }
-
-                    } else {  // $result jest obiektem
-
-                            //echo "<br>1403 - result jest obiektem<br>";
-
-                        //echo '<script>console.log("SELECT - 1397 - result jest obiektem - \n\n")</script>';
-                        //echo '<script>console.log("'.$query.'\n\n")</script>';
-
-                        //echo "<br>623<br>"; //exit();
-                        // SELECT
-                        $num_of_rows = $result->num_rows; // ilość zwróconych wierszy
-
-                        //echo "<br>num_of_rows --> " . $num_of_rows . "<br>";
-
-                        if($num_of_rows > 0) // znaleziono rekordy
-                        {
-
-                            //echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 - \n\n")</script>';
-                            //echo '<script>console.log("'.$query.'\n\n")</script>';
-                            //echo "<br>1416 - znaleziono rekordy - num_rows >  0 <br>"; exit();
-
-                            //echo "<br>625<br>"; //exit();
-
-//                            if ( isset($_POST["year-min"]) && !empty($_POST["year-min"]) && isset($_POST["year-max"]) && !empty($_POST["year-max"])
-//                            ) {
-//                                echo "<br><hr><br> query ( ) -> " . $query . "<br><hr>"; // testowanie wyszukiwania zaawansowanego
-//                                //exit();
-//                            }
-//
-//                            echo "<br><hr><br> num_of_rows -> " . $num_of_rows . "<br><hr>";
-
+                else {
+    
+                    if(gettype($value) !== "array") { // jeśli to nie jest tablica
+    
+                        $value = [$value];            // zrób z niej tablicę
+                    }
+                    //if (!is_array($value)) {
+                    //	$values = [$values];
+                    //}
+                    for($i = 0; $i < count($value); $i++) { // sanitization;
+    
+                        $value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
+                    }
+    
+                    if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie,
+                    {                                                          // $value - tablica parametrów do vsprintf
+    
+                        // zamiana na switch ?
+    
+                        // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
+                        if(gettype($result) != "object") { // ̶b̶r̶a̶k̶ ̶z̶w̶r̶ó̶c̶o̶n̶y̶c̶h̶ ̶w̶y̶n̶i̶k̶ó̶w̶
+    
+                            // $result nie jest obiektem, jest to wartość logiczna "1" ;
+                                        // result print_r -->
+                                            //    1
+                                        // result var_dump-->
+                                            //    bool(true)
+                                        //gettype(result) -->
+                                            //    boolean
+                            // ✓✓✓ INSERT, UPDATE ... (bez dodatkowej funkcji) ;
+    
+                           //echo "<br>1390 - result NIE jest obiektem ! (jest true/false) - boolean <br>";
+    
+                            //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n'.$query.'\n\n")</script>';
+                            //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n")</script>';
+                           // echo '<script>console.log("'.$query.'\n\n")</script>';
+    
                             if($fun != "") {
-
-                               // echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 + dodatkowa funkcja - \n\n")</script>';
-
-                                $fun($result); // register_verify_email (rejestracja - sprawdzenie czy email jest zajęty ?),
-                            }
-
-                        }
-                        else { // brak zwróconych rekordów
-
-                            //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
-
-                            //echo "<br>1435 - brak zwróconych rekordów - num_rows == 0 <br>"; exit();
-
-                            //echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0 - \n\n")</script>';
-                            //echo '<script>console.log("'.$query.'\n\n")</script>';
-
-
-                            if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "cart_verify_book" && $fun != "verify_rate_exists") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
-
-                               // echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0\n\n wywołanie dodatkowej funkcji - \n\n")</script>';
+    
+                                // pytanie -> czy każda funkcja typu INSERT/UPDATE (korzystająca z + dod.funkcji) wymaga $polaczenie w jakimś celu ?
+    
+                                // ✓✓✓ INSERT, UPDATE  + dodatkowa_funkcja;
+    
+                                //echo '<script>console.log("INSERT, UPDATE + dodatkowa_funkcja - 1385 - result NIE jest obiektem - \n\n")</script>';
                                 //echo '<script>console.log("'.$query.'\n\n")</script>';
-
-
-
-                                $fun($result);
+    
+                                //echo "<br>1394<br>";;
+    
+                                //echo "<br> 1388 <br>"; exit();
+    
+                                $fun($result, $polaczenie);
                             }
-
-                            // check_email - (zmiana danych użytkownika) - validate_user_data.php - SPRAWDZA, CZY ISTNIEJE TAKI EMAIL
-                                // - jeśli istnieje ($result zwrócił rekordy) - ✓ przestawia zmienną $_SESSION['email_exists'] na "true"
-                                // - jeśli NIE istnieje ($result NIE zwrócił rekordów) - NIE POWINNA WYWOŁAĆ SIĘ TA FUNKCJA ($fun - check_email);
-
-
-                            /*if($fun == "log_in" || $fun == "get_product_from_cart") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
-
-                                $fun($result);
-                            }*/
-
-                            // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
-
-                             // dla register_verify_email (rejestracja) nie powinna wykonać się funkcja $fun !
-
-                            // Kiedy jest potrzeba aby wywołać funkcję $fun gdy nie zwrócono żadnych rekordw ?
-                            // -> dla logowanie.php (patrz wyżej)
-
-                            // (!) dla dodawania książek NIE DZIAŁA !
+    
+                        } else {  // $result jest obiektem
+    
+                                //echo "<br>1403 - result jest obiektem<br>";
+    
+                            //echo '<script>console.log("SELECT - 1397 - result jest obiektem - \n\n")</script>';
+                            //echo '<script>console.log("'.$query.'\n\n")</script>';
+    
+                            //echo "<br>623<br>"; //exit();
+                            // SELECT
+                            $num_of_rows = $result->num_rows; // ilość zwróconych wierszy
+    
+                            //echo "<br>num_of_rows --> " . $num_of_rows . "<br>";
+    
+                            if($num_of_rows > 0) // znaleziono rekordy
+                            {
+    
+                                //echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 - \n\n")</script>';
+                                //echo '<script>console.log("'.$query.'\n\n")</script>';
+                                //echo "<br>1416 - znaleziono rekordy - num_rows >  0 <br>"; exit();
+    
+                                //echo "<br>625<br>"; //exit();
+    
+    //                            if ( isset($_POST["year-min"]) && !empty($_POST["year-min"]) && isset($_POST["year-max"]) && !empty($_POST["year-max"])
+    //                            ) {
+    //                                echo "<br><hr><br> query ( ) -> " . $query . "<br><hr>"; // testowanie wyszukiwania zaawansowanego
+    //                                //exit();
+    //                            }
+    //
+    //                            echo "<br><hr><br> num_of_rows -> " . $num_of_rows . "<br><hr>";
+    
+                                if($fun != "") {
+    
+                                   // echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 + dodatkowa funkcja - \n\n")</script>';
+    
+                                    $fun($result); // register_verify_email (rejestracja - sprawdzenie czy email jest zajęty ?),
+                                }
+    
+                            }
+                            else { // brak zwróconych rekordów
+    
+                                //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
+    
+                                //echo "<br>1435 - brak zwróconych rekordów - num_rows == 0 <br>"; exit();
+    
+                                //echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0 - \n\n")</script>';
+                                //echo '<script>console.log("'.$query.'\n\n")</script>';
+    
+    
+                                if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "cart_verify_book" && $fun != "verify_rate_exists"
+                                && $fun != "orderDetailsVerifyOrderExists"
+    
+                                ) {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
+    
+                                   // echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0\n\n wywołanie dodatkowej funkcji - \n\n")</script>';
+                                    //echo '<script>console.log("'.$query.'\n\n")</script>';
+        
+                                    // orderDetailsVerifyOrderExists - admin/order-details.php - PRG
+    
+                                    $fun($result);
+                                }
+    
+                                // check_email - (zmiana danych użytkownika) - validate_user_data.php - SPRAWDZA, CZY ISTNIEJE TAKI EMAIL
+                                    // - jeśli istnieje ($result zwrócił rekordy) - ✓ przestawia zmienną $_SESSION['email_exists'] na "true"
+                                    // - jeśli NIE istnieje ($result NIE zwrócił rekordów) - NIE POWINNA WYWOŁAĆ SIĘ TA FUNKCJA ($fun - check_email);
+    
+    
+                                /*if($fun == "log_in" || $fun == "get_product_from_cart") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
+    
+                                    $fun($result);
+                                }*/
+    
+                                // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
+    
+                                 // dla register_verify_email (rejestracja) nie powinna wykonać się funkcja $fun !
+    
+                                // Kiedy jest potrzeba aby wywołać funkcję $fun gdy nie zwrócono żadnych rekordw ?
+                                // -> dla logowanie.php (patrz wyżej)
+    
+                                // (!) dla dodawania książek NIE DZIAŁA !
+                            }
                         }
                     }
+                    else // nie udało się zrealizować zapytania
+                    {
+                        throw new Exception($polaczenie->error);
+                    }
+    
+                    $polaczenie->close();
                 }
-                else // nie udało się zrealizować zapytania
-                {
-                    throw new Exception($polaczenie->error);
-                }
-
-                $polaczenie->close();
             }
-        }
         catch(Exception $e) // exception - wyjątek; przechwycenie i obsługa wyjątku;
         {
             echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności ] </div>'; // użycie "return" zamisat echo

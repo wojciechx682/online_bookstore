@@ -9,6 +9,134 @@
 
     // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
     require_once "../authenticate-admin.php";
+
+    // PRG --> orders.php --> POST (order-id) --> order-details.php ;
+
+    if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST) && ! empty($_POST)  (?)
+
+        if ( isset(array_keys($_POST)[0]) && ! empty(array_keys($_POST)[0]) ) { // check if POST value (order-id) exists and is not empty;
+
+            unset($_SESSION["change-status"]);
+
+            if ( isset(array_keys($_POST)[1]) && ! empty(array_keys($_POST)[1]) && array_keys($_POST)[1]) { // orders.php -> "Zmień status"
+
+                $_SESSION["change-status"] = true;
+            }
+
+            // "1125" ;
+
+            // Process the form data and perform necessary validations ;
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // $_SESSION["max-book-id"] = "35" - set variable to be applied in book-id filter below;
+            // (if book-id is higher than maximum id number in db - manage the error);
+
+            // sanitize input - order-id ;
+            $orderId = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT);
+                // 	Sanitization -> remove all characters except digits, plus and minus sign.
+                    // array_keys($_POST)[0] - book-id (id_książki);
+                    // "35"
+                    /*echo "<br><hr><br>";
+                    echo "<br> book -> " . $book . "<br>";
+                    echo "<br><hr><br>"; exit();*/
+
+            // validate order-id - ✓ valid integer ;
+            $_SESSION["order-id"] = filter_var($orderId, FILTER_VALIDATE_INT); // ✓ It ensures that the value is an integer - order-id ;
+
+            // check if there is really a order with that id ;
+            $_SESSION['order-exists'] = false;
+
+            //query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
+            // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0 -> przestawi
+            // $_SESSION['book_exists'] -> na true ;
+
+            // check if there is really an order with that id (post - order-id);
+            query("SELECT zm.id_zamowienia
+                            FROM zamowienia AS zm
+                         WHERE zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
+            // przestawi zmienną - $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie
+
+            if($orderId === false || $_SESSION["order-id"] === false || $_SESSION['order-exists'] === false || ($_SESSION["order-id"] != array_keys($_POST)[0]) ) {
+                // tutaj trzeba odpowiednio obsłużyć błąd ;
+                //
+                // ✓ id-zamówienia (order-id) nie przeszło walidacji, LUB ✓ nie istnieje zamówienie o takim id;
+                // handle error !;
+                //echo "\n error - invalid (didnt pass validation !) book-id (POST) of that book doesnt exist ! \n";
+                // create and make logic for handling error about not valid book-id ;
+
+                //unset($_SESSION["book-id"]);
+                // obsługa błędu ;
+
+                // musi być komunikat o błędzie (np okienko) + exit() ! ;
+
+                echo "<br><hr> 43 invalid order-id OR order doesnt exist ! <br><hr>";
+
+                // obsługa błędu - np przekierowanie na poprzednią stronę (index.php) + wyświetlenie okienka z okmunikatem
+                // na stronie index.php można sprawdzić, czy np ustawiona wartość $_SESSION["error_costam"] ma wartosc true, i wtedy wyswietlic okienko
+
+                // $_SESSION["error"] = true ;
+
+                unset($_POST, $orderId, $_SESSION["order-id"], $_SESSION['order-exists']);
+
+                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+
+                header('Location: orders.php');
+                exit();
+
+            } else { // input is OK - order-id passed validation,    there is a order with that ID;
+                //               Valid order-id           and           order exist
+                // Execute code (such as database updates) here;
+                // Perform any required actions with the form data (e.g., database update)
+
+                // ✓✓✓ valid book-id, book exist in db;
+                echo "\n 49 SESSION order-id -> " . $_SESSION["order-id"];
+                echo "<br> 51 Valid order-id and order exist ! <br><hr>";
+                //exit();
+
+                unset($_POST, $orderId, $_SESSION["order-exists"]);
+
+                // redirect to the page itself
+                //header('Location: ___book.php', true, 303);
+
+                // Redirect to prevent form resubmission
+                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
+                exit();
+
+            }
+            /////////////////////////////////////////////////////////////////////////////
+
+        } else {
+
+            // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/user/___book.php bez podania wartości w POST[] ;
+
+            echo "<br> POST value (order-id) doesnt exist ! <br>" ;
+
+            header('Location: orders.php');
+            exit();
+
+            // $_SESSION["error"] = true ;
+
+            /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+            echo "GET ->"; print_r($_GET); echo "<hr><br>";
+            echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+
+            //exit();
+
+
+        }
+
+        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+        echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+
+    } elseif (
+        $_SERVER['REQUEST_METHOD'] === "GET" && ( ! isset($_SESSION["order-id"]) || empty($_SESSION["order-id"]) )
+    ) {
+        header('Location: orders.php'); exit();
+    }
+
 ?>
 
 <!DOCTYPE HTML>
@@ -30,69 +158,126 @@
 
             <div id="content">
 
+                <?php echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr>" ?>
+
                 <h3 class="section-header">Szczegóły zamówienia</h3>
 
                 <?php require "../view/admin/order-details-header.php"; // first row, header of columns ?>
 
+                <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_SESSION["order-id"]) ) : ?>
+                    <!-- prg -> orders.php -> POST - (order-id) -> order-details.php -->
+
                 <?php
-                    $_SESSION["order-id"] = array_keys($_GET)[0]; // $_GET -> id_zamówienia - "1038";
+                    query("SELECT zm.id_zamowienia, 
+                                        ks.tytul, 
+                                        sz.ilosc, 
+                                        ks.cena,                                         
+                                        pl.kwota 
+                                 FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm 
+                                 WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'",
+                                "get_order_details_admin", $_SESSION["order-id"]);
+                    // content of table;  $_SESSION['order_details_books_id'];
+                                       // (content) id_zamowienia,  tytul,   cena, ilosc, kwota;
+                                           //  1121   Symfonia C++ wydanie V   5     10   327.75
 
-                    /*
-                        $array = array(
-                            "name" => "John",
-                            "age" => 30,
-                            "city" => "New York",
-                            "gender" => "Male"
-                        );
-
-                        $keys = array_keys($array);
-                        print_r($keys);
-
-                        // output -->
-                        Array
-                        (
-                            [0] => name
-                            [1] => age
-                            [2] => city
-                            [3] => gender
-                        )
-                    */
-
-                    // var_dump($_SESSION);
-
-                    query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'",
-                        "get_order_details_admin", $_SESSION["order-id"]); // content of table;  $_SESSION['order_details_books_id'];
-                                                                                // (content) id_zamowienia, tytul, cena, ilosc, kwota;
-
-                    query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
-                        "get_order_sum_admin", $_SESSION["order-id"]); // footer of table;
-                                                                           // kwota (suma) zamówienia;
+                    query("SELECT pl.kwota 
+                                 FROM platnosci AS pl, zamowienia AS zm 
+                                 WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
+                                "get_order_sum_admin", $_SESSION["order-id"]);
+                    // footer of table;
+                        // kwota (suma) zamówienia; // "SUMA 279.3 PLN";
 
                     echo '<div id="order-det-container">';
 
-                    query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
-                        "get_order_summary", $_SESSION["order-id"]); // sposób_płatności, data_platnosci, forma_dostarczenia, status;
+                    query("SELECT pl.sposob_platnosci, pl.data_platnosci, 
+                                        zm.forma_dostarczenia, zm.status 
+                                 FROM zamowienia AS zm, platnosci AS pl 
+                                 WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
+                                "get_order_summary", $_SESSION["order-id"]);
+                    // sposób_płatności, data_platnosci, forma_dostarczenia, status;
                 ?>
 
                 <div id="order-status">
 
                     <span>Status :</span>
 
-                    <?php echo '<span class="order-status-name">' . $_SESSION["status"] . '</span>'; ?> <br>
+                    <?php echo '<span class="order-status-name">' . $_SESSION["status"] . '</span>'; ?> <!-- <br> -->
 
                     <button class="update-order-status btn-link btn-link-static">Aktualizuj</button>
 
                 </div>
 
-                </div> <!-- <div#order-det-container> -->
+                    <!--</div>--> <!-- #content -->
 
-                <div style="clear: both"></div>
+                <!--<div style="clear: both"></div>-->
+
+                <?php endif; ?>
+
+                <?php
+
+                    // przed zastosowaniem prg -->
+
+                        // $_SESSION["order-id"] = array_keys($_GET)[0]; // $_GET -> id_zamówienia - "1038";
+                    // $_SESSION["order-id"] = array_keys($_POST)[0]; // PRG
+
+                        /*  $array = array(
+                                "name" => "John",
+                                "age" => 30,
+                                "city" => "New York",
+                                "gender" => "Male"
+                            );
+
+                            $keys = array_keys($array);
+                            print_r($keys);
+
+                            // output -->
+                            Array
+                            (
+                                [0] => name
+                                [1] => age
+                                [2] => city
+                                [3] => gender
+                            )
+                        */
+
+                        // var_dump($_SESSION);
+
+                   /* query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'",
+                        "get_order_details_admin", $_SESSION["order-id"]); // content of table;  $_SESSION['order_details_books_id'];
+                                                                                // (content) id_zamowienia, tytul, cena, ilosc, kwota;
+                    query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
+                        "get_order_sum_admin", $_SESSION["order-id"]); // footer of table;
+                                                                           // kwota (suma) zamówienia;
+                    echo '<div id="order-det-container">';
+                    query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
+                        "get_order_summary", $_SESSION["order-id"]); // sposób_płatności, data_platnosci, forma_dostarczenia, status;*/
+                ?>
+
+                <!--<div id="order-status">
+
+                    <span>Status :</span>
+
+                    <?php /*echo '<span class="order-status-name">' . $_SESSION["status"] . '</span>'; */?> <br>
+
+                    <button class="update-order-status btn-link btn-link-static">Aktualizuj</button>
+
+                </div>
+
+                </div>
+
+                <div style="clear: both"></div>-->
+
+            </div> <!-- order-det-container -->
 
             </div> <!-- content -->
+
         </main>
+
     </div> <!-- container -->
 
-</div> <!-- all-container -->
+</div> <!-- main-container -->
 
 <div id="update-status" class="hidden"> <!-- okno zmiany statusu zamówienia -->
 
@@ -114,6 +299,7 @@
     <div class="delivery-date">
 
         <form id="update-order-date" action="update-order-date.php" method="post">
+
             <label>
                 <span class="order-label">Termin dostawy</span><input type="date" name="order-date">
             </label>
@@ -130,18 +316,22 @@
                 <div style="clear: both;"></div>
 
                 <span class="date-error">Podaj poprawną datę</span><div style="clear: both;"></div>
+
             <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
+
         </form>
 
         <button class="update-order-status cancel-order btn-link btn-link-static">Anuluj</button>
 
-    </div> <!-- div delivery-date -->
+    </div> <!-- div . delivery-date -->
 
-</div> <!-- div update-status -->
+</div> <!-- div # update-status -->
 
 <script>
 
-    btn = document.querySelector('button.update-order-status');  // button - "Aktualizuj" zmianę statusu;
+    btn = document.querySelector('button.update-order-status');  // button - "Aktualizuj" zmianę statusu
+    console.log("\nbtn --> ", btn);
+
     let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu; div #update-status.hidden;
     let allContainer = document.getElementById("main-container");
     icon = document.querySelector('.icon-cancel');               // <i class="icon-cancel">
@@ -379,7 +569,9 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
 ?>
 
 <?php
-    if(isset($_GET["status"]) && ($_GET["status"] == "true")) { // admin/orders - kliknięcie "Zmień status";
+    //if(isset($_GET["status"]) && ($_GET["status"] == "true")) { // admin/orders - kliknięcie "Zmień status";
+    if(isset($_SESSION["change-status"]) && ($_SESSION["change-status"] == true)) { // admin/orders - kliknięcie "Zmień status";
+        //unset($_SESSION["change-status"]);
         echo '<script>toggleBox();</script>';
         echo '<script>resetUrl();</script>'; // (aktualnie wyłączone z użycia - zakomentowana linia kodu wewnątrz funkcji)
     }

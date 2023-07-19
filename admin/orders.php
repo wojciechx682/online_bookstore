@@ -1,12 +1,4 @@
 <?php
-    /*session_start();
-        include_once "../functions.php";
-
-    if( ! isset($_SESSION['zalogowany']) ) {
-        header("Location: ../user/___index2.php?login-error");
-            exit();
-    }*/
-
     // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
     require_once "../authenticate-admin.php";
 ?>
@@ -16,7 +8,7 @@
 
 <?php require "../view/head-admin.php"; ?>
 
-<!-- !!!!!!!! Zamówienia (orders) -> admin/orders.php --- POWINNY WYŚWEITLAĆ TYLKO TE ZAMÓWIENIA, KTÓRE SĄ PRZYPISANE DLA DANEGO PRACOWNIKA! -->
+<!-- ✓✓✓ Zamówienia (orders) -> admin/orders.php --- POWINNY WYŚWEITLAĆ TYLKO TE ZAMÓWIENIA, KTÓRE SĄ PRZYPISANE DLA DANEGO (zalogowanego) PRACOWNIKA! -->
 
 <body>
 
@@ -44,17 +36,15 @@
                                         zm.status 
                                     FROM zamowienia AS zm, klienci AS kl, platnosci AS pl 
                                     WHERE zm.id_zamowienia = pl.id_zamowienia AND
-                                    zm.id_klienta = kl.id_klienta", "get_all_orders", ""); // content of the table - wszystkie zamówienia złożone przez klientów;
+                                    zm.id_klienta = kl.id_klienta AND zm.id_pracownika = '%s'", "get_all_orders", $_SESSION["id"]); // content of the table - wszystkie zamówienia złożone przez klientów - (przypisane do zalogowanego pracownika) ;
 
                         // |1121| 2023-07-08 18:23:58 | Jakub | Wojciechowski | 327.75 | Blik     | Zarchiwizowane
-                        // |1122| 2023-07-08 18:29:20 | Jakub | Wojciechowski | 222.5  | Pobranie | Oczekujące na potwierdzenie
                         // |1123| 2023-07-08 18:29:42 | Jakub | Wojciechowski | 222.5  | Pobranie | Oczekujące na potwierdzenie
                         // |1125| 2023-07-08 21:25:53 | Jakub | Wojciechowski | 128.3  | Blik     | Oczekujące na potwierdzenie
                         // |1126| 2023-07-08 22:25:13 | Adam  | Nowak         | 222.5  | Blik     | Dostarczono
                         // |1127| 2023-07-09 16:19:38 | Jakub | Wojciechowski | 377.5  | Blik     | Oczekujące na potwierdzenie
-                        // |1128| 2023-07-09 21:33:59 | Jakub | Wojciechowski | 279.3  | Pobranie | Zarchiwizowane
                         // |1129| 2023-07-10 00:11:49 | Jakub | Wojciechowski | 700    | Blik     | Oczekujące na potwierdzenie
-                        // |1130| 2023-07-14 03:00:56 | Jakub | Wojciechowski | 1695.5 | Blik     | Oczekujące na potwierdzenie
+
                     ?>
 
                 </div> <!-- content -->
