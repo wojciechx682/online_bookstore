@@ -27,18 +27,23 @@ $("form#update-order-date").on("submit", function(e) { // funkcja anonimowa ; //
 
     e.preventDefault(); // e - obiekt zdarzenia ;
     //                this
-    let formData = $("form#update-order-date").serialize(); // serializacja danych formularza;  pobranie danych z formularza;
-    let data = $(this);                                                                 // dane w postaci tekstowej (String);
+    //let dataSerialized = $("form#update-order-date").serialize(); // serializacja danych formularza;  pobranie danych z formularza;
+    let dataSerialized = $(this).serialize(); // serializacja danych formularza;  pobranie danych z formularza;  // dane w postaci tekstowej (String);
+    let data = $(this);
 
     let expDeliveryDate = data[0][0].value; // "2023-01-01" - termin dostawy;
     let sentDate = data[0][1].value; // "2023-01-01" - data wysłania;
     let dateDelivered = data[0][2].value; // "2023-01-01" - data dostarczenia;
 
-    /*console.log("\nformData (String) => ", formData);
+    console.log("\ndataSerialized (String) => ", dataSerialized);
     console.log("\ndata (Object) => ", data);
-    console.log("\ndateValue => ", expDeliveryDate);
+    console.log("\nexpDeliveryDate => ", expDeliveryDate);
+    console.log("\ntypeof expDeliveryDate => ", typeof expDeliveryDate);
+    //console.log("\netypeof expDeliveryDate => ",  expDeliveryDate);
     console.log("\ndispDate => ", sentDate);
-    console.log("\ndelDate => ", dateDelivered);*/
+    console.log("\ndelDate => ", dateDelivered);
+
+    //return;
 
     const date = new Date(); // walidacja daty; // obiekt Date;
 
@@ -46,84 +51,116 @@ $("form#update-order-date").on("submit", function(e) { // funkcja anonimowa ; //
         let month = date.getMonth() + 1;  // 05;
         let day = date.getDate();         // 11;
 
-        if(month < 10) {
+        if(month < 10) {                  // Add leading zeros to month and day if needed.
             month = "0" + month;
         } if(day < 10) {
             day = "0" + day;
         }
 
-    let todayDate = [year, month, day].join('-'); // 👉️ "2023-1-4";
+    let todayDate = [year, month, day].join('-'); // 👉️ "2023-1-4"; // 2023-07-20
 
-    let list = document.getElementById("status-list"); // <select>
+    console.log("\ntodayDate => ", todayDate);
+    console.log("\ntypeof todayDate => ", typeof todayDate);
+    //return;
+
+    let list = document.getElementById("status-list"); // <select> list;
     const selectedOption = list.options[list.selectedIndex]; // aktualnie wybrany element listy;
 
             if( // walidacja daty - kontrola błędów (js);
                 (selectedOption.innerHTML === "W trakcie realizacji") &&
-                (expDeliveryDate < todayDate) || (expDeliveryDate === undefined) || (expDeliveryDate == null) ) // przeszła data, lub pusta ->
+                (expDeliveryDate < todayDate) || (expDeliveryDate === undefined) || (expDeliveryDate === null) ) // przeszła data, lub pusta
             {
                 error(12);
             } else if (
                 (selectedOption.innerHTML === "Wysłano") &&
-                ((sentDate < todayDate) || (expDeliveryDate < todayDate) || (expDeliveryDate < sentDate)) )
+                ((sentDate < todayDate) || (expDeliveryDate < todayDate) || (expDeliveryDate < sentDate) || (sentDate === undefined) || (sentDate === null) || (expDeliveryDate === undefined) || (expDeliveryDate === null))
+            )
             {
-                error(37);
+                error(40);
             } else if (
                 (selectedOption.innerHTML === "Dostarczono") &&
-                (dateDelivered < todayDate) )
+                (dateDelivered < todayDate) || (dateDelivered === undefined) || (dateDelivered === null) )
             {
                 error(12);
             }
             else {
-                $.ajax({
+                /*$.ajax({
                     type: "POST",                    // GET or POST;    type of HTTP method;
                     url: "update-order-date.php",    // Path to file (that process the <form> data); // "Strona, do której kierowane jest żądanie";
-                    data: formData,                  // serialized <form> data; // "dane wysłane do serwera wraz z żądaniem";
+                    data: dataSerialized,                  // serialized <form> data; // "dane wysłane do serwera wraz z żądaniem";
                     timeout: 2000,                   // Waiting time; - liczba mili-sekund - zanim nastąpi zdarzenie oznaczające niepowodzenie;
 
-                    beforeSend: function() {         // Bbfore ajax - function called before sending the request;
+                    beforeSend: function() {         // Before ajax - function called before sending the request;
 
                         // funkcja (anonimowa / nazwana) - uruchamiana PRZED wykonaniem żądania Ajax;
                             // np. wyświetlenie ikony wczytywania danych - (kręcące się kółko) ;
-
                         // $content.append('<div id="load"> Wczytywanie </div>');
-
                         $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
                     },
-                    complete: function() {          // once finished - function called ALWAYS after sending request;
+                        complete: function() {          // once finished - function called ALWAYS after sending request;
+                            // funkcja uruchamiana PO WYKONANIU (zakończeniu) żądania - niezależnie od jego STANU (sukces / niepowodzenie) ;
+                                // np. usunięcie ikony wczytywania danych - (kręcące się kółko) ;
+                            // .always();   // .always( function() { // ... { )
+                            $("img#loading-icon").toggleClass("not-visible");
+                        },
+                        success: function(formData) {   // show content;    - wyświetlenie zawartości ;
+                            // funkcja uruchamiana, gdy wykonanie żądania Ajax zakończy się POWODZENIEM ;
+                                // .done();     // .done( function(data) { // ... } )
+                            // $content.html( $(data).find('#container') ) . hide().fadeIn(500);
+                            finishUpdate();             // dataSerialized - dane otrzymane z serwera (response - odpowiedź);
+                                $("div.delivery-date").append(formData);
+                                // $content . html ( $(dataSerialized).find('#container') ) .hide().fadeIn(400);
+                        },
+                        error: function(formData) {     // show error msg;
+                            // funkcja uruchamiana, gdy wykonanie żądania Ajax zakończy się NIEPOWODZENIEM ;
+                                // .fail();     // .fail( function() { // ... } )
+                            // wyświetlenie komunikatu o błędzie ;
+                            finishUpdate();
+                                $("div.delivery-date").append(formData);
+                        }
+                });*/
 
-                        // funkcja uruchamiana PO WYKONANIU (zakończeniu) żądania - niezależnie od jego STANU (sukces / niepowodzenie) ;
+                // zamiana na użycie metod .done(), .fail(), always() - ponieważ    success, error, complete    - są przestarzałe (deprecated) -->
 
-                            // np. usunięcie ikony wczytywania danych - (kręcące się kółko) ;
-
-                        // .always();   // .always( function() { // ... { )
-
-                        $("img#loading-icon").toggleClass("not-visible");
-                    },
-                    success: function(formData) {   // show content;    - wyświetlenie zawartości ;
-
-                        // funkcja uruchamiana, gdy wykonanie żądania Ajax zakończy się POWODZENIEM ;
-
-                            // .done();     // .done( function(data) { // ... } )
-
-                        // $content.html( $(data).find('#container') ) . hide().fadeIn(500);
-
-                        finishUpdate();             // formData - dane otrzymane z serwera (response - odpowiedź);
-                            $("div.delivery-date").append(formData);
-
-                            // $content . html ( $(formData).find('#container') ) .hide().fadeIn(400);
-                    },
-                    error: function(formData) {     // show error msg;
-
-                        // funkcja uruchamiana, gdy wykonanie żądania Ajax zakończy się NIEPOWODZENIEM ;
-
-                            // .fail();     // .fail( function() { // ... } )
-
-                        // wyświetlenie komunikatu o błędzie ;
-
-                        finishUpdate();
-                            $("div.delivery-date").append(formData);
+                $.ajax({
+                    type: "POST",
+                    url: "update-order-date.php",
+                    data: dataSerialized,
+                    timeout: 2000,
+                    beforeSend: function() {                              // before ajax - function called before sending the request;
+                        $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
                     }
+                }).done(function(data) {
+                    // Success handler; // Handle the response data;
+
+                    finishUpdate(); // data - dane otrzymane z serwera (response - odpowiedź);
+                        $("div.delivery-date").append(data);
+
+                }).fail(function(data) { // (xhr, status, error)
+                    finishUpdate();
+                        $("div.delivery-date").append(data);
+                }).always(function() {
+                        $("img#loading-icon").toggleClass("not-visible");
                 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             }
 });
 

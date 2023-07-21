@@ -12,20 +12,28 @@ require_once "../authenticate-admin.php";
     // $comment = $_POST["comment"];  // komentarz <textarea>
     // data serialized (string) =>  order-id=1039 & comment=test123;
 
+    $_SESSION["archive-successful"] = true;
+
     if(isset($_POST["comment"])  && !empty($_POST["comment"]) && isset($_POST["order-id"]) && !empty($_POST["order-id"])) {
 
-        $_SESSION["update-successful"] = true;
-
         $comment = filter_var($_POST["comment"],FILTER_SANITIZE_STRING); // sanityzacja (back-end);
+        $orderId = filter_var($_POST["order-id"],FILTER_SANITIZE_NUMBER_INT);
 
-        query("UPDATE zamowienia SET komentarz='%s', status='%s' WHERE id_zamowienia = '%s'", "archiveOrder", [$_POST["comment"], "Zarchiwizowane", $_POST["order-id"]]); // $_SESSION["archive-successful"] --> false;
+        if($comment === false || $orderId === false || $comment !== $_POST["comment"] || $orderId !== $_POST["order-id"]) {
+            $_SESSION["archive-successful"] = true;
+        } else {
+            //query("UPDATE zamowienia SET komentarz='%s', status='%s' WHERE id_zamowienia = '%s'", "archiveOrder", [$_POST["comment"], "Zarchiwizowane", $_POST["order-id"]]); // $_SESSION["archive-successful"] --> false;
+            query("UPDATE zamowienia SET komentarz='%s', status='%s' WHERE id_zamowienia = '%s'", "archiveOrder", [$comment, "Zarchiwizowane", $orderId]); // $_SESSION["archive-successful"] --> false;
+        }
     }
 
+/*$_SESSION["archive-successful"] = true;*/
+
     if( isset($_SESSION["archive-successful"]) && $_SESSION["archive-successful"] === false ) {
-        unset($_SESSION["archive-successful"]);
+            unset($_SESSION["archive-successful"]);
         echo "<span class='archive-success'>Udało się zmienić zarchiwizować zamówienie</span>";
     } else { // ture ;
-        echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić zarchiwizować zamówienia</span>";
+        echo "<span class='update-failed'>Wystąpił problem. Nie udało się zarchiwizować zamówienia</span>";
     }
 
 ?>

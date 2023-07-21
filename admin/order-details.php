@@ -167,51 +167,52 @@
                 <?php require "../view/admin/order-details-header.php"; // first row, header of columns ?>
 
                 <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_SESSION["order-id"]) ) : ?>
-                    <!-- prg -> orders.php -> POST - (order-id) -> order-details.php -->
+                        <!-- prg -> orders.php -> POST - (order-id) -> order-details.php -->
 
-                <?php
-                    query("SELECT zm.id_zamowienia, 
-                                        ks.tytul, 
-                                        sz.ilosc, 
-                                        ks.cena,                                         
-                                        pl.kwota 
-                                 FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm 
-                                 WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'",
-                                "get_order_details_admin", $_SESSION["order-id"]);
-                    // content of table;  $_SESSION['order_details_books_id'];
-                                       // (content) id_zamowienia,  tytul,   cena, ilosc, kwota;
-                                           //  1121   Symfonia C++ wydanie V   5     10   327.75
+                    <?php
+                        query("SELECT zm.id_zamowienia, 
+                                            ks.tytul, 
+                                            sz.ilosc, 
+                                            ks.cena,                                         
+                                            pl.kwota 
+                                     FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm 
+                                     WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'",
+                                    "get_order_details_admin", $_SESSION["order-id"]);
+                        // content of table;  $_SESSION['order_details_books_id'];
+                                           // (content) id_zamowienia,  tytul,   cena, ilosc, kwota;
+                                               //  1121   Symfonia C++ wydanie V   5     10   327.75
 
-                    query("SELECT pl.kwota 
-                                 FROM platnosci AS pl, zamowienia AS zm 
-                                 WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
-                                "get_order_sum_admin", $_SESSION["order-id"]);
-                    // footer of table;
-                        // kwota (suma) zamówienia; // "SUMA 279.3 PLN";
+                        query("SELECT pl.kwota 
+                                     FROM platnosci AS pl, zamowienia AS zm 
+                                     WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
+                                    "get_order_sum_admin", $_SESSION["order-id"]);
+                        // footer of table;
+                            // kwota (suma) zamówienia; // "SUMA 279.3 PLN";
 
-                    echo '<div id="order-det-container">';
+                        echo '<div id="order-det-container">';
 
-                    query("SELECT pl.sposob_platnosci, pl.data_platnosci, 
-                                        zm.forma_dostarczenia, zm.status 
-                                 FROM zamowienia AS zm, platnosci AS pl 
-                                 WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
-                                "get_order_summary", $_SESSION["order-id"]);
-                    // sposób_płatności, data_platnosci, forma_dostarczenia, status;
-                ?>
+                        query("SELECT pl.sposob_platnosci, pl.data_platnosci, 
+                                            zm.forma_dostarczenia, zm.status 
+                                     FROM zamowienia AS zm, platnosci AS pl 
+                                     WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
+                                    "get_order_summary", $_SESSION["order-id"]);
 
-                <div id="order-status">
+                        // sposób_płatności, data_platnosci, forma_dostarczenia, status;
+                    ?>
 
-                    <span>Status :</span>
+                    <div id="order-status">
 
-                    <?php echo '<span class="order-status-name">' . $_SESSION["status"] . '</span>'; ?> <!-- <br> -->
+                        <span>Status :</span>
 
-                    <button class="update-order-status btn-link btn-link-static">Aktualizuj</button>
+                        <?php echo '<span class="order-status-name">' . $_SESSION["status"] . '</span>'; ?> <!-- <br> -->
 
-                </div>
+                        <button class="update-order-status btn-link btn-link-static">Aktualizuj</button>
 
-                    <!--</div>--> <!-- #content -->
+                    </div>
 
-                <!--<div style="clear: both"></div>-->
+                        <!--</div>--> <!-- #content -->
+
+                    <!--<div style="clear: both"></div>-->
 
                 <?php endif; ?>
 
@@ -261,7 +262,7 @@
 
                     <?php /*echo '<span class="order-status-name">' . $_SESSION["status"] . '</span>'; */?> <br>
 
-                    <button class="update-order-status btn-link btn-link-static">Aktualizuj</button>
+                    <button class="update-order-status updateBtn-link updateBtn-link-static">Aktualizuj</button>
 
                 </div>
 
@@ -269,7 +270,7 @@
 
                 <div style="clear: both"></div>-->
 
-            </div> <!-- order-det-container -->
+            </div>
 
             </div> <!-- content -->
 
@@ -296,7 +297,7 @@
 
     <div style="clear: both;"></div>
 
-    <div class="delivery-date">
+    <div class="delivery-date hidden">
 
         <form id="update-order-date" action="update-order-date.php" method="post">
 
@@ -329,15 +330,15 @@
 
 <script>
 
-    btn = document.querySelector('button.update-order-status');  // button - "Aktualizuj" zmianę statusu
-    console.log("\nbtn --> ", btn);
+    let updateBtn = document.querySelector('button.update-order-status');  // button - "Aktualizuj" zmianę statusu
+        console.log("\nupdateBtn --> ", updateBtn);
 
-    let statusBox = document.getElementById("update-status");    // całe okiento zmiany statusu; div #update-status.hidden;
-    let allContainer = document.getElementById("main-container");
-    icon = document.querySelector('.icon-cancel');               // <i class="icon-cancel">
-    cancelBtn = document.querySelector('.cancel-order');         // przycisk "Anuluj"; button.cancel-order;
+    let statusBox = document.getElementById("update-status");    // okiento zmiany statusu; div #update-status . hidden;
+    let mainContainer = document.getElementById("main-container");
+    let icon = document.querySelector('.icon-cancel');               // <i class="icon-cancel">
+    let cancelBtn = document.querySelector('.cancel-order');         // przycisk "Anuluj"; button.cancel-order;
 
-            /* /!* v1 --> *!/ btn.addEventListener("click", function() {
+            /* /!* v1 --> *!/ updateBtn.addEventListener("click", function() {
                 toggleBox(); // pojawienie się okienka po kliknięciu przycisku "Aktualizuj";  <div id="update-status">;
                              // toggle class="hidden"; + resetBox();
             });
@@ -348,23 +349,33 @@
                 toggleBox(); // przycisk "Anuluj";
             });*/
 
-    /* /!* v2 --> *!/ btn.addEventListener("click", toggleBox);
+    /* /!* v2 --> *!/ updateBtn.addEventListener("click", toggleBox);
     icon.addEventListener("click", toggleBox);
     cancelBtn.addEventListener("click", toggleBox);*/
 
-    let buttons = [btn, icon, cancelBtn]; // "Aktualizuj", "X", "Anuluj"
+    let buttons = [updateBtn, icon, cancelBtn];
+    //             Aktualizuj  "X"   "Anuluj"
+
+    /*for(let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", toggleBox);
+    }*/
 
     buttons.forEach(function(button) {
         button.addEventListener("click", toggleBox);
     });
 
     function toggleBox() {
-        statusBox.classList.toggle("hidden");    // div update-status okienko;
-        allContainer.classList.toggle("bright");
-        resetBox();
+        // after clicking the button --> Aktualizuj  "X"   "Anuluj"
+        statusBox.classList.toggle("hidden");
+            // przełączenie widoczności okna;
+            mainContainer.classList.toggle("bright");
+                mainContainer.classList.toggle("unreachable");
+        resetBox(); // po pomyślnej zmianie statusu - "Udało się zmienić ..."
     }
 
-    function resetUrl() {
+    // po kliknięciu dowolnego przycisku z tablicy `buttons` (zakładając, że tablica została poprawnie wypełniona elementami przycisków), zostanie wywołana funkcja `toggleBox`. Ta funkcja przełącza widoczność elementu `statusBox`, zmienia wygląd `mainContainer` i potencjalnie wykonuje dodatkowe działania, jeśli `resetBox` jest zdefiniowane i wywołane w ramach funkcji.
+
+   /* function resetUrl() {
         // Get the current URL without the query parameters
         // let urlWithoutParams = window.location.href.split('?')[0];
         // Replace the current URL without query parameters in the browser's history
@@ -385,18 +396,22 @@
         //window.location.href = modifiedURL; // ta linia zmienia URL na taki, aby nie wyskakiwało okno zmiany statusu po odświeżeniu;
                                               // można to przenieść (?) gdzie indziej, np po kliknięciu (zamknięciu) okna zmiany statusu - tak aby po odświeżeniu storny nie pojawiało się ono ponownie;
     }
-
+*/
     function resetBox() {
-        let form = document.querySelector("#update-order-date"); // zresetowanie zawartości okna - po jego zamknięciu;
+        // after clicking the button --> Aktualizuj  "X"   "Anuluj"
+            // when changing status was succesfull - "Udało się zmienić ..."
+        let form = document.getElementById("update-order-date");
+        // zresetowanie zawartości okna - po jego zamknięciu;
         if(form.style.display === "none") {
             form.style.display = "block";
         }
-
         let cancelBtn = document.querySelector('.cancel-order'); // "Anuluj";
         if(cancelBtn.style.display === "none") {
             cancelBtn.style.display = "block";
         }
-        $('.update-success').remove();                           // tekst "Udało się zmienić status zamówienia";
+        $('.update-success').remove(); // "Udało się zmienić status zamówienia";
+            $("span.date-error").hide(); // "Podaj poprawną datę"
+                $("span.update-failed").remove(); // "Wystąpił problem. Nie udało się zmienić statusu zamówienia"
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -407,7 +422,7 @@
     dateInputs.forEach(function(dateInput) { // loop through each input element;
         dateInput.addEventListener("focus", function() { // add the event listener to each input element;
             $("span.date-error").hide(); // perform your desired actions when the input is focused;
-            $("div.delivery-date button").css('margin-top', '70px'); // (?)
+                //$("div.delivery-date button").css('margin-top', '70px'); // (?)
         });
     });
 
@@ -417,19 +432,22 @@
 
     list.addEventListener("change", function() {
 
+        $("span.date-error").hide();
+
         //resetBox();
 
         const selectedOption = this.options[this.selectedIndex]; // <option> ELEMENT that was selected - after "change" event;
         const deliveryDate = document.querySelector(".delivery-date"); // div class="delivery-date" --> form id="update-order-date";
 
-        const expDeliveryDate = document.querySelector("form#update-order-date label:nth-of-type(1)"); // <label> - input - termin dostawy;
-        const sentDate = document.querySelector("form#update-order-date label:nth-of-type(2)"); // <label> - input - data wysłania zamówienia;
-        const dateDelivered = document.querySelector("form#update-order-date label:nth-of-type(3)"); // <label> - input - data dostarczenia;
+        const expDeliveryDate = document.querySelector("form#update-order-date label:nth-of-type(1)"); // <label> - input - termin_dostawy;
+        const sentDate = document.querySelector("form#update-order-date label:nth-of-type(2)"); // <label> - input - data_wysłania_zamówienia;
+        const dateDelivered = document.querySelector("form#update-order-date label:nth-of-type(3)"); // <label> - input - data_dostarczenia;
             // const div = document.querySelector("div.delivery-date"); // div > form
             // const btns = document.querySelectorAll("div.delivery-date button");
         const dateError = document.querySelector('span.date-error');
 
-        deliveryDate.style.display = "block"; // <div class="delivery-date">
+        //deliveryDate.style.display = "block"; // <div class="delivery-date">
+        deliveryDate.classList.toggle("hidden", false);
 
         if(selectedOption.innerHTML === "W trakcie realizacji") {
 
@@ -437,36 +455,36 @@
 
             dateError.style.marginTop = "12px";
 
-            if(expDeliveryDate.style.display === "none") { // termin_dostawy
-                expDeliveryDate.style.display = "block";
-            }
+                    if(expDeliveryDate.style.display === "none") { // termin_dostawy
+                        expDeliveryDate.style.display = "block";
+                    }
 
-            if(sentDate.style.display === "block") { // data_wysłania_zamowienia
-                sentDate.style.display = "none";
-            }
-            if(dateDelivered.style.display === "block") { // data_dostarczenia
-                dateDelivered.style.display = "none";
-            }
+                    if(sentDate.style.display === "block") { // data_wysłania_zamowienia
+                        sentDate.style.display = "none";
+                    }
+                    if(dateDelivered.style.display === "block") { // data_dostarczenia
+                        dateDelivered.style.display = "none";
+                    }
 
-if(deliveryDate.style.paddingTop !== "15px") { // (?)
-    deliveryDate.style.paddingTop = "15px";
-}
+                    if(deliveryDate.style.paddingTop !== "20px") { // (?)
+                        deliveryDate.style.paddingTop = "20px";
+                    }
 
-            $('.update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) "Aktualizuj";
+            $('div#update-status .update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!)
                 $(element).css('margin-top', '70px');
             });
 
         } else if (selectedOption.innerHTML === "Wysłano") {
 
-            dateError.style.marginTop = "37px";
+            dateError.style.marginTop = "40px";
 
             // form.style.display = "block"; // termin dostawy
             // console.log("\ndeliveryDate => ", deliveryDate);
 
             sentDate.style.display = "block"; // data_wysłania
-sentDate.style.marginBottom = "15px"; // (!)
+sentDate.style.marginBottom = "20px"; // (!)
 
-            deliveryDate.style.paddingTop = "15px"; // div.delivery-date --> form
+            deliveryDate.style.paddingTop = "20px"; // div.delivery-date --> form
 
             if(dateDelivered.style.display === "block") { // data_dostarczenia
                 dateDelivered.style.display = "none";
@@ -477,14 +495,14 @@ sentDate.style.marginBottom = "15px"; // (!)
             }
 
 /*for(let i=0; i<btns.length; i++) {
-btn[i].style.marginTop = "50px";
+updateBtn[i].style.marginTop = "50px";
 }*/
 /*$('.update-order-status').each(function(element) {
 $(element).css('margin-top', '50px'); // Set margin-top for each element
 console.log("183");
 });*/
 
-            $('.update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) "Aktualizuj";
+            $('div#update-status .update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) "Aktualizuj";
                 $(element).css('margin-top', '70px');
             });
 
@@ -493,7 +511,7 @@ $('.my-class').each(function(index, element) {
 $(element).css('margin-top', index * 10); // Set margin-top for each element
 });
 }); */
-//btn.style.marginTop = "50px";
+//updateBtn.style.marginTop = "50px";
 /* deliveryDate.setAttribute('type', 'date');
 deliveryDate.setAttribute('name', 'delivery-date'); */
 // newInput.setAttribute('', 'Enter your new input here');
@@ -513,16 +531,17 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
 
             dateDelivered.style.display = "block"; // data_dostarczenia;
 
-            if(deliveryDate.style.paddingTop !== "15px") { // (?)
-                deliveryDate.style.paddingTop = "15px";
+            if(deliveryDate.style.paddingTop !== "20px") { // (?)
+                deliveryDate.style.paddingTop = "20px";
             }
 
-            $('.update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) "Aktualizuj";
+            $('div#update-status .update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) "Aktualizuj";
                 $(element).css('margin-top', '70px');
             });
 
         } else {
-            deliveryDate.style.display = "none";
+            //deliveryDate.style.display = "none";
+            deliveryDate.classList.toggle("hidden", true);
             sentDate.style.display = "none";
         }
     });
@@ -573,7 +592,7 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
     if(isset($_SESSION["change-status"]) && ($_SESSION["change-status"] == true)) { // admin/orders - kliknięcie "Zmień status";
         //unset($_SESSION["change-status"]);
         echo '<script>toggleBox();</script>';
-        echo '<script>resetUrl();</script>'; // (aktualnie wyłączone z użycia - zakomentowana linia kodu wewnątrz funkcji)
+        //echo '<script>resetUrl();</script>'; // (aktualnie wyłączone z użycia - zakomentowana linia kodu wewnątrz funkcji)
     }
 ?>
 

@@ -1070,10 +1070,10 @@ EOT;
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// admin -->
 
-    function get_all_orders($result) {
+    function get_all_orders($result) { // \admin\orders.php - wszystkie zamówienia złożone przez klientów, przypisane do zalogowanego pracownika;
 
         while($row = $result->fetch_assoc()) {
-            //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
+                        //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
             // load the content from the external template file into string
             $order = file_get_contents("../template/admin/orders.php");
             // replace fields in $order string to author data from $result, display result content as HTML
@@ -1097,7 +1097,7 @@ EOT;
                         //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
 
             // load the content from the external template file into string
-            $order = file_get_contents("../template/admin/orders-boxes.php");
+            $order = file_get_contents("../template/admin/archive-order-box.php");
             // replace fields in $order string to author data from $result, display result content as HTML
             echo sprintf($order, $row['id_zamowienia'], $row['id_zamowienia'], $row['id_zamowienia'], $row['id_zamowienia'], $row['id_zamowienia']);
         }
@@ -1170,13 +1170,13 @@ EOT;
         }
     }
 
-    function updateOrder($result) {
+    function updateOrder($result) { // \admin\order-details.php
 
         $_SESSION["update-successful"] = false;
 
     }
 
-    function archiveOrder($result) {
+    function archiveOrder($result) { // \admin\orders.php
 
         $_SESSION["archive-successful"] = false;
 

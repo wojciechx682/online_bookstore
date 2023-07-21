@@ -1,9 +1,9 @@
 
 // filtering - <ul> author's list ;
 
-let btn = document.getElementById("filter-authors"); // <button id="filter-authors"> Zastosuj </button>
+let updateBtn = document.getElementById("filter-authors"); // <button id="filter-authors"> Zastosuj </button>
 
-    btn.addEventListener("click", filterAuthors);
+    updateBtn.addEventListener("click", filterAuthors);
 
     //let all = document.querySelector('#ul-authors > li input[type="checkbox"][id="all-authors"]');
     // <input type="checkbox" id="all-authors" name="author-checkbox" class="..."> "Wszyscy"

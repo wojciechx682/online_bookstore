@@ -14,18 +14,20 @@ require_once "../authenticate-admin.php";
 
     $_SESSION["update-successful"] = true;
 
-    if(isset($_POST["order-date"]) && !empty($_POST["order-date"]) ) { // termin_dostawy
+    if(isset($_POST["order-date"]) && ! empty($_POST["order-date"])) { // termin_dostawy
 
-        query("UPDATE zamowienia SET termin_dostawy='%s', status='W trakcie realizacji' WHERE id_zamowienia = '%s'", "updateOrder", [$_POST["order-date"], $_SESSION["order-id"]]);  // "W trakcie realizacji" -> termin_dostawy;
+        query("UPDATE zamowienia SET termin_dostawy='%s', data_wysłania_zamowienia='', data_dostarczenia='', status='W trakcie realizacji' WHERE id_zamowienia = '%s'", "updateOrder", [$_POST["order-date"], $_SESSION["order-id"]]);  // "W trakcie realizacji" -> termin_dostawy;
     }
-    if(isset($_POST["dispatch-date"]) && !empty($_POST["dispatch-date"])) { // data_wysłania
+    if(isset($_POST["dispatch-date"]) && ! empty($_POST["dispatch-date"])) { // data_wysłania
 
         query("UPDATE zamowienia SET data_wysłania_zamowienia='%s', status='Wysłano' WHERE id_zamowienia = '%s'", "updateOrder", [$_POST["dispatch-date"], $_SESSION["order-id"]] );  // "Wysłano" -> data_wyslania_zamowienia;
     }
-    if(isset($_POST["delivered-date"]) && !empty($_POST["delivered-date"]) ) { // data_dostarczenia;
+    if(isset($_POST["delivered-date"]) && ! empty($_POST["delivered-date"])) { // data_dostarczenia;
 
-        query("UPDATE zamowienia SET data_dostarczenia='%s', status='Dostarczono' WHERE id_zamowienia = '%s'", "updateOrder", [$_POST["delivered-date"], $_SESSION["order-id"]] );  // "Dostarczono" -> data_dostarczenia;
+        query("UPDATE zamowienia SET data_dostarczenia='%s', termin_dostawy='', data_wysłania_zamowienia='', status='Dostarczono' WHERE id_zamowienia = '%s'", "updateOrder", [$_POST["delivered-date"], $_SESSION["order-id"]] );  // "Dostarczono" -> data_dostarczenia;
     }
+
+/*$_SESSION["update-successful"] = true;*/
 
     if(isset($_SESSION["update-successful"]) && $_SESSION["update-successful"] === false) {
             unset($_SESSION["update-successful"]);

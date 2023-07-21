@@ -10,7 +10,7 @@ function removeOrder(orderId) { // po kliknięciu przycisku "Archiwizuj";    ord
     // let removeBox = document.querySelector(".update-status"+orderId);
     let removeBox = document.querySelector(".update-status");
         // pojawienie się okienka po kliknięciu "Zarchiwizuj";
-    console.log("\nremoveBox (okno archiwizowania zamówienia) --> ", removeBox);
+        console.log("\nremoveBox (okno archiwizowania zamówienia) --> ", removeBox);
 
     // dodanie atrybutu "id" (order-id) do pól formularza (input type="hidden") -->
 
@@ -30,8 +30,10 @@ function removeOrder(orderId) { // po kliknięciu przycisku "Archiwizuj";    ord
     }*/
 
     mainContainer.classList.toggle("bright");
-    mainContainer.style.pointerEvents = "none";
-    mainContainer.style.userSelect = "none";
+    /*mainContainer.style.pointerEvents = "none";
+    mainContainer.style.userSelect = "none";*/
+    mainContainer.classList.toggle("unreachable");
+
 
     //let icon = document.querySelector(".icon-cancel" + orderId);
     let icon = document.querySelector(".icon-cancel");  // ikona "✖"
@@ -42,20 +44,25 @@ function removeOrder(orderId) { // po kliknięciu przycisku "Archiwizuj";    ord
         console.log("\ncancelBtn --> ", cancelBtn);
 
     // zamknięcie okna po kliknięciu "✖";
-
-    icon.addEventListener("click", function() {
+    /*icon.addEventListener("click", function() {
         closeRemoveBox();
     });
-
     // zamknięcie okna po kliknięciu "Anuluj";
-
     cancelBtn.addEventListener("click", function() {
         closeRemoveBox();
+    });*/
+
+    buttons = [icon, cancelBtn];
+
+    buttons.forEach(function(button) {
+        button.addEventListener("click", closeRemoveBox);
     });
 
     function closeRemoveBox() {
 
-        mainContainer.removeAttribute("style");
+        //mainContainer.removeAttribute("style");
+
+        mainContainer.classList.toggle("unreachable", false); // remove class;
         let textarea = removeBox.querySelector("textarea"); // <textarea> w tym okienku (removeBox);
         resetError(textarea); // usuwa komunikat o błędzie jeśli jest on widoczny;
         textarea.value = "";
@@ -112,7 +119,10 @@ function removeOrder(orderId) { // po kliknięciu przycisku "Archiwizuj";    ord
         cancelButton.style.display = "initial";
     }
 
-    $('.delivery-date').css("display", "block"); // wyświetlenie formularza (domyślnie był ukryty
+    //$('.delivery-date').css("display", "block"); // wyświetlenie formularza (domyślnie był ukryty
                                                  // let div = document.querySelector(".delivery-date");
                                                  // div.classList.toggle("hidden");
+    let deliveryDate = document.querySelector(".delivery-date");
+    deliveryDate.classList.toggle("hidden", false);
+
 }

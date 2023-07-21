@@ -1,6 +1,12 @@
 
 <!-- template used on admin page (admin.php) to display nav -->
 
-<div id="top-nav">
+<!-- <header> ? -->
 
-</div>
+<header>
+    <div id="top-nav">
+
+    </div>
+</header>
+
+

@@ -28,7 +28,7 @@
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
                     echo "SESSION ->"; print_r($_SESSION); echo "<hr>" ?>
 
-                </div>
+                </div> <!-- #content -->
 
             </main>
 
