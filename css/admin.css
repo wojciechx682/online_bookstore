@@ -379,11 +379,42 @@ div.book-option form label {
     border-bottom: none;
     font-weight: normal;
     min-height: 30px;
-    height: 45px;
+    /*height: 45px;*/
+    height: 60px;
     overflow: hidden;
-    padding-top: 12px;
+    padding-top: 20px;
     z-index: 0;
-    width: 25%;
+    /*width: 25%;*/
+    width: 30%;
+}
+
+.order-det-lp {
+    width: 10%;
+}
+
+.order-det-product {
+    width: 60%;
+}
+
+.order-content .order-det-product:not(:first-of-type) {
+    text-align: left;
+    padding-left: 15px;
+    padding-top: 12px;
+}
+
+.order-det-product span {
+    display: block;
+}
+
+.order-det-product span:not(:first-of-type) {
+    font-style: italic;
+    font-size: .9rem;
+    margin-top: 4px;
+}
+
+
+.order-det-quan, .order-det-price {
+    width: 15%;
 }
 
 .order-det-sum {
@@ -414,7 +445,7 @@ div.book-option form label {
     border: 1px ridge rgba(166, 166, 166, 0.38);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    padding-right: 5%;
+    /*padding-right: 5%;*/
 
     margin-bottom: 10px;
 }
@@ -584,6 +615,7 @@ div#order-status button.update-order-status {
 
 .status-title > label {
     user-select: none;
+    cursor: pointer;
 }
 
 div.delivery-date {
@@ -698,6 +730,11 @@ span.update-success, span.archive-success {
     /*color: #3fce3f;*/
     color: #00ac00;
     user-select: none;
+}
+
+span.update-success, span.update-failed {
+    position: relative;
+    left: -4px;
 }
 
 span.update-failed, span.update-failed

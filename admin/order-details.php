@@ -12,15 +12,15 @@
 
     // PRG --> orders.php --> POST (order-id) --> order-details.php ;
 
-    if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST) && ! empty($_POST)  (?)
+    if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶   GET / POST ...
 
         if ( isset(array_keys($_POST)[0]) && ! empty(array_keys($_POST)[0]) ) { // check if POST value (order-id) exists and is not empty;
 
-            unset($_SESSION["change-status"]);
+            unset($_SESSION["change-status"]); // reset boolean flag;
 
             if ( isset(array_keys($_POST)[1]) && ! empty(array_keys($_POST)[1]) && array_keys($_POST)[1]) { // orders.php -> "Zmień status"
 
-                $_SESSION["change-status"] = true;
+                $_SESSION["change-status"] = true; // show update-status box (if there was second post parameter --> true);
             }
 
             // "1125" ;
@@ -28,48 +28,43 @@
             // Process the form data and perform necessary validations ;
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            // $_SESSION["max-book-id"] = "35" - set variable to be applied in book-id filter below;
-            // (if book-id is higher than maximum id number in db - manage the error);
-
-            // sanitize input - order-id ;
+                // sanitize input - order-id ;
             $orderId = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT);
                 // 	Sanitization -> remove all characters except digits, plus and minus sign.
-                    // array_keys($_POST)[0] - book-id (id_książki);
-                    // "35"
-                    /*echo "<br><hr><br>";
-                    echo "<br> book -> " . $book . "<br>";
-                    echo "<br><hr><br>"; exit();*/
+                    // array_keys($_POST)[0] - order-id (id_zamówienia);
+                    // "1135"
 
-            // validate order-id - ✓ valid integer ;
+                // validate order-id - ✓ valid integer ;
             $_SESSION["order-id"] = filter_var($orderId, FILTER_VALIDATE_INT); // ✓ It ensures that the value is an integer - order-id ;
 
             // check if there is really a order with that id ;
             $_SESSION['order-exists'] = false;
 
-            //query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
-            // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0 -> przestawi
-            // $_SESSION['book_exists'] -> na true ;
+                //query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
+                // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0 -> przestawi
+                // $_SESSION['book_exists'] -> na true ;
 
             // check if there is really an order with that id (post - order-id);
             query("SELECT zm.id_zamowienia
                             FROM zamowienia AS zm
                          WHERE zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
-            // przestawi zmienną - $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie
+            // przestawi zmienną - $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie (o takim id) ;
 
             if($orderId === false || $_SESSION["order-id"] === false || $_SESSION['order-exists'] === false || ($_SESSION["order-id"] != array_keys($_POST)[0]) ) {
+
                 // tutaj trzeba odpowiednio obsłużyć błąd ;
                 //
                 // ✓ id-zamówienia (order-id) nie przeszło walidacji, LUB ✓ nie istnieje zamówienie o takim id;
-                // handle error !;
-                //echo "\n error - invalid (didnt pass validation !) book-id (POST) of that book doesnt exist ! \n";
-                // create and make logic for handling error about not valid book-id ;
+                    // handle error !;
+                    //echo "\n error - invalid (didnt pass validation !) book-id (POST) of that book doesnt exist ! \n";
+                    // create and make logic for handling error about not valid book-id ;
 
-                //unset($_SESSION["book-id"]);
+                // unset($_SESSION["book-id"]);
                 // obsługa błędu ;
 
                 // musi być komunikat o błędzie (np okienko) + exit() ! ;
 
-                echo "<br><hr> 43 invalid order-id OR order doesnt exist ! <br><hr>";
+                //echo "<br><hr> 43 invalid order-id OR order doesnt exist ! <br><hr>";
 
                 // obsługa błędu - np przekierowanie na poprzednią stronę (index.php) + wyświetlenie okienka z okmunikatem
                 // na stronie index.php można sprawdzić, czy np ustawiona wartość $_SESSION["error_costam"] ma wartosc true, i wtedy wyswietlic okienko
@@ -82,8 +77,7 @@
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
                 echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
-                header('Location: orders.php');
-                exit();
+                header('Location: orders.php'); exit();
 
             } else { // input is OK - order-id passed validation,    there is a order with that ID;
                 //               Valid order-id           and           order exist
@@ -91,9 +85,9 @@
                 // Perform any required actions with the form data (e.g., database update)
 
                 // ✓✓✓ valid book-id, book exist in db;
-                echo "\n 49 SESSION order-id -> " . $_SESSION["order-id"];
-                echo "<br> 51 Valid order-id and order exist ! <br><hr>";
-                //exit();
+                    //echo "\n 49 SESSION order-id -> " . $_SESSION["order-id"];
+                    //echo "<br> 51 Valid order-id and order exist ! <br><hr>";
+                    //exit();
 
                 unset($_POST, $orderId, $_SESSION["order-exists"]);
 
@@ -101,20 +95,19 @@
                 //header('Location: ___book.php', true, 303);
 
                 // Redirect to prevent form resubmission
-                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
-                exit();
-
+                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
+                // to prevent resubmitting the form
             }
-            /////////////////////////////////////////////////////////////////////////////
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         } else {
 
-            // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/user/___book.php bez podania wartości w POST[] ;
+            // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/admin/order-details.php bez podania wartości w POST[] ;
 
-            echo "<br> POST value (order-id) doesnt exist ! <br>" ;
+            //echo "<br> POST value (order-id) doesnt exist ! <br>" ;
 
-            header('Location: orders.php');
-            exit();
+            header('Location: orders.php'); exit();
 
             // $_SESSION["error"] = true ;
 
@@ -123,8 +116,6 @@
             echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
             //exit();
-
-
         }
 
         /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
@@ -158,11 +149,13 @@
 
             <div id="content">
 
-                <?php echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                <?php /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr>" ?>
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr>"*/ ?>
 
-                <h3 class="section-header">Szczegóły zamówienia</h3>
+                <header>
+                    <h3 class="section-header">Szczegóły zamówienia</h3>
+                </header>
 
                 <?php require "../view/admin/order-details-header.php"; // first row, header of columns ?>
 
@@ -172,13 +165,16 @@
                     <?php
                         query("SELECT zm.id_zamowienia, 
                                             ks.tytul, 
+                                            au.imie, au.nazwisko,
                                             sz.ilosc, 
-                                            ks.cena,                                         
+                                            ks.cena, ks.rok_wydania,                                       
                                             pl.kwota 
-                                     FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm 
-                                     WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'",
+                                     FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm,
+                                          autor AS au
+                                     WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND zm.id_zamowienia = '%s'",
                                     "get_order_details_admin", $_SESSION["order-id"]);
                         // content of table;  $_SESSION['order_details_books_id'];
+                        // szczegóły danego zamówienia;
                                            // (content) id_zamowienia,  tytul,   cena, ilosc, kwota;
                                                //  1121   Symfonia C++ wydanie V   5     10   327.75
 
@@ -288,7 +284,7 @@
 
     <h4 class="section-header-update-order status-title"><label for="status-list">Status:</label></h4>
 
-    <select id="status-list"> <!-- label (?) -  name="status-list" - nie działa ... -->
+    <select id="status-list">
         <option>Oczekujące na potwierdzenie</option>
         <option>W trakcie realizacji</option>
         <option>Wysłano</option>
@@ -412,6 +408,15 @@
         $('.update-success').remove(); // "Udało się zmienić status zamówienia";
             $("span.date-error").hide(); // "Podaj poprawną datę"
                 $("span.update-failed").remove(); // "Wystąpił problem. Nie udało się zmienić statusu zamówienia"
+
+        resetDateInputs();
+    }
+
+    function resetDateInputs() {
+        let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"]');
+        dateInputs.forEach(function(dateInput) { // zmiana elementu listy wyboru resetuje zawartość inputów typu date;
+            dateInput.value = "";
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -433,6 +438,8 @@
     list.addEventListener("change", function() {
 
         $("span.date-error").hide();
+
+        resetDateInputs();
 
         //resetBox();
 
@@ -550,7 +557,8 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
 
 <script>
 
-    function finishUpdate() { // ukrycie formularza + buttona "Anuluj" - po pomyślnym zrealizowaniu zapytania typu update;
+    function finishUpdate() {
+        // ukrycie formularza + buttona "Anuluj" - po pomyślnym zrealizowaniu zapytania typu update (.done(), .fail());
         const form = document.getElementById("update-order-date"); // ukrycie formularza (zawiera przycisk "Potwierdź") - <form #update-order-date>
         const btn = document.querySelector(".cancel-order");       // ukrycie przycisku "Anuluj"
         form.style.display = "none";

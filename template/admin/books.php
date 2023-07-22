@@ -16,7 +16,7 @@
         <div class="book-action-button" id="book-action-button%s" onclick="showBooksOptions(this.id)">Zarządzaj <i class="icon-down-open"></i></div>
 
         <div class="book-options-container">
-            <div class="book-action-options">
+            <div class="book-action-options hidden">
                 <div class="book-option">
                     <a href="book-details.php?book=%s&warehouse=%s">Przeglądaj</a>
                 </div>

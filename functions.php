@@ -1011,7 +1011,7 @@ EOT;
 	}
 
     function orderDetailsVerifyOrderExists($result) { // zwrócono rekordy a więc jest takie zamówienie (admin\order-details.php);
-        echo "\n 1014 - function -> orderDetailsVerifyOrderExists \n\n";
+        //echo "\n 1014 - function -> orderDetailsVerifyOrderExists \n\n";
 
         $_SESSION['order-exists'] = true;
     }
@@ -1114,7 +1114,7 @@ EOT;
             $order = file_get_contents("../template/admin/order-details.php");
 
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, $i, $row["tytul"], $row["ilosc"], $row["cena"]);
+            echo sprintf($order, $i, $row["tytul"], $row["imie"],$row["nazwisko"],$row["rok_wydania"],$row["ilosc"], $row["cena"]);
 
             /* if($i === 0) {
                 $order_f = file_get_contents("../template/admin/order-details-footer.php");

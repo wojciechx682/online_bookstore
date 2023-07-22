@@ -21,7 +21,7 @@ exit();*/
 echo "GET ->"; print_r($_GET); echo "<hr><br>";
 echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
-    if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST) && ! empty($_POST)
+    if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶
 
         //echo "<br><hr><br> POST array is SET and not Empty<br><hr><br>";
         //var_dump($_POST);

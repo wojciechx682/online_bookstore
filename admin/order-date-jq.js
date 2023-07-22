@@ -1,6 +1,4 @@
 
-// This file is fucked up; I could do it better;
-
 // admin/order-details.php ;
 
 // .success(), .error(), complete() - przestarzałe, zamiast nich, użyć -->
@@ -21,69 +19,68 @@
 //     alert( "Data Saved: " + msg );
 //   });
 
-$("form#update-order-date").on("submit", function(e) { // funkcja anonimowa ; // e - obiekt zdarzenia ;
+//$("form#update-order-date").on("submit", function(e) { // funkcja anonimowa ; // e - obiekt zdarzenia ;
+
+document.querySelector('form#update-order-date').addEventListener("submit", function(e) {
 
     // use DOMPurify for date sanitization here ?
 
-    e.preventDefault(); // e - obiekt zdarzenia ;
-    //                this
-    //let dataSerialized = $("form#update-order-date").serialize(); // serializacja danych formularza;  pobranie danych z formularza;
-    let dataSerialized = $(this).serialize(); // serializacja danych formularza;  pobranie danych z formularza;  // dane w postaci tekstowej (String);
-    let data = $(this);
+    e.preventDefault(); // e - obiekt zdarzenia;
 
-    let expDeliveryDate = data[0][0].value; // "2023-01-01" - termin dostawy;
-    let sentDate = data[0][1].value; // "2023-01-01" - data wysłania;
-    let dateDelivered = data[0][2].value; // "2023-01-01" - data dostarczenia;
+    let data = $(this); // obiekt jQuery zawierający formularz - <form>;
 
-    console.log("\ndataSerialized (String) => ", dataSerialized);
-    console.log("\ndata (Object) => ", data);
-    console.log("\nexpDeliveryDate => ", expDeliveryDate);
-    console.log("\ntypeof expDeliveryDate => ", typeof expDeliveryDate);
-    //console.log("\netypeof expDeliveryDate => ",  expDeliveryDate);
-    console.log("\ndispDate => ", sentDate);
-    console.log("\ndelDate => ", dateDelivered);
 
-    //return;
 
-    const date = new Date(); // walidacja daty; // obiekt Date;
+    const todayDate = new Date(); // utworzenie obiektu klasy Date w calu walidacji daty;
 
-        const year = date.getFullYear();  // 2023;
-        let month = date.getMonth() + 1;  // 05;
-        let day = date.getDate();         // 11;
+    let hours = todayDate.getHours();
+    let minutes = todayDate.getMinutes();
+    let seconds = todayDate.getSeconds();
+    /*if(seconds !== 0) {
+        seconds -= 1;
+    }*/
 
-        if(month < 10) {                  // Add leading zeros to month and day if needed.
-            month = "0" + month;
-        } if(day < 10) {
-            day = "0" + day;
-        }
-
-    let todayDate = [year, month, day].join('-'); // 👉️ "2023-1-4"; // 2023-07-20
-
-    console.log("\ntodayDate => ", todayDate);
-    console.log("\ntypeof todayDate => ", typeof todayDate);
-    //return;
-
-    let list = document.getElementById("status-list"); // <select> list;
+    let list = document.getElementById("status-list");       // <select> list;
     const selectedOption = list.options[list.selectedIndex]; // aktualnie wybrany element listy;
 
-            if( // walidacja daty - kontrola błędów (js);
-                (selectedOption.innerHTML === "W trakcie realizacji") &&
-                (expDeliveryDate < todayDate) || (expDeliveryDate === undefined) || (expDeliveryDate === null) ) // przeszła data, lub pusta
-            {
-                error(12);
-            } else if (
-                (selectedOption.innerHTML === "Wysłano") &&
-                ((sentDate < todayDate) || (expDeliveryDate < todayDate) || (expDeliveryDate < sentDate) || (sentDate === undefined) || (sentDate === null) || (expDeliveryDate === undefined) || (expDeliveryDate === null))
-            )
-            {
-                error(40);
-            } else if (
-                (selectedOption.innerHTML === "Dostarczono") &&
-                (dateDelivered < todayDate) || (dateDelivered === undefined) || (dateDelivered === null) )
-            {
-                error(12);
-            }
-            else {
+    // walidacja daty - kontrola błędów, czy data jest poprawna i znajduje się w odpowiednim przedziale (js);
+
+    let expDeliveryDate = new Date(data[0][0].value); // termin_dostawy
+    let sentDate = new Date(data[0][1].value);        // data_wysłania
+    let dateDelivered = new Date(data[0][2].value);   // data_dostarczenia
+
+    if(seconds < 60) {
+        seconds += 1;
+    }
+
+    expDeliveryDate.setHours(hours, minutes, seconds);
+    sentDate.setHours(hours, minutes, seconds);
+    dateDelivered.setHours(hours, minutes, seconds);
+
+    console.log("\n\n todayDate -> ", todayDate);
+    console.log("\n\n hours -> ", hours);
+    console.log("\n\n minutes -> ", minutes);
+    console.log("\n\n seconds -> ", seconds);
+    console.log("\n\n expDeliveryDate -> ", expDeliveryDate);
+    console.log("\n\n sentDate -> ", sentDate);
+    console.log("\n\n dateDelivered -> ", dateDelivered);
+
+    console.log("\n\n isNaN(expDeliveryDate.getTime() -> ", isNaN(expDeliveryDate.getTime()));
+    console.log("\n\n expDeliveryDate < todayDate -> ", expDeliveryDate < todayDate );
+
+    if ( selectedOption.innerHTML === "W trakcie realizacji" && (isNaN(expDeliveryDate.getTime()) || expDeliveryDate < todayDate) ) {
+            // przeszła data, lub pusta
+        error(12);
+
+    } else if ( selectedOption.innerHTML === "Wysłano" && (isNaN(expDeliveryDate.getTime()) || isNaN(sentDate.getTime()) || expDeliveryDate < todayDate || sentDate < todayDate || expDeliveryDate < sentDate) ) {
+            // przeszła data, pusta, lub data_wysłania późniejsza niż termin_dostawy
+        error(40);
+
+    } else if ( selectedOption.innerHTML === "Dostarczono" && (isNaN(dateDelivered.getTime()) || dateDelivered < todayDate) ) {
+            // przeszła data, lub pusta
+        error(12);
+    }
+    else {
                 /*$.ajax({
                     type: "POST",                    // GET or POST;    type of HTTP method;
                     url: "update-order-date.php",    // Path to file (that process the <form> data); // "Strona, do której kierowane jest żądanie";
@@ -120,7 +117,11 @@ $("form#update-order-date").on("submit", function(e) { // funkcja anonimowa ; //
                         }
                 });*/
 
-                // zamiana na użycie metod .done(), .fail(), always() - ponieważ    success, error, complete    - są przestarzałe (deprecated) -->
+                // zamiana na użycie metod .done(), .fail(), always() - ponieważ    success, error, complete    - są przestarzałe (deprecated);
+
+                let dataSerialized = $(this).serialize(); // serializacja danych formularza;  pobranie danych z formularza;  // dane w postaci tekstowej (string);
+
+                    console.log("\n\n dataSerialized --> \n\n", dataSerialized);
 
                 $.ajax({
                     type: "POST",
@@ -131,47 +132,17 @@ $("form#update-order-date").on("submit", function(e) { // funkcja anonimowa ; //
                         $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
                     }
                 }).done(function(data) {
-                    // Success handler; // Handle the response data;
-
+                    // success handler; // handle the response data;
                     finishUpdate(); // data - dane otrzymane z serwera (response - odpowiedź);
                         $("div.delivery-date").append(data);
-
-                }).fail(function(data) { // (xhr, status, error)
+                }).fail(function(data) {
                     finishUpdate();
                         $("div.delivery-date").append(data);
                 }).always(function() {
                         $("img#loading-icon").toggleClass("not-visible");
                 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
 });
-
-/* function validateDate(date) { // "2023-01-01"
-    const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/; // Define a regular expression to match the date format (YYYY-MM-DD);
-    if (!dateRegex.test(date)) { // Check if the date (String) matches the date format
-        return null;             // Return null if the date (string) is not a valid date format
-    } else {
-        return date;
-    }
-} */
 
 function error(px) {
     $('.date-error').css({
