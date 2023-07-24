@@ -3,5 +3,5 @@
 
 
     <span class="order-in-progress">Data dostarczenia - %s</span>
-    <span>SUMA</span>    <b><u>%s</u></b> PLN
+    <span>SUMA</span> %s PLN <!--<b><u></u></b>-->
 </div>

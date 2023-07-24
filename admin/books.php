@@ -1,12 +1,4 @@
 <?php
-    /*session_start();
-    include_once "../functions.php";
-
-    if(!(isset($_SESSION['zalogowany']))) {
-        header("Location: ../user/___index2.php?login-error");
-        exit();
-    }*/
-
     // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
     require_once "../authenticate-admin.php";
 ?>
@@ -34,19 +26,19 @@
 
                     <h3 class="section-header section-header-books">Książki</h3>
 
-                    <form id="change-magazine-form" action="change-magazine.php" method="post">
+<form id="change-magazine-form" action="change-magazine.php" method="post">
 
-                        <select id="change-magazine" name="change-magazine">
+    <select id="change-magazine" name="change-magazine">
 
-                            <!-- js manage "change" event for <select> list, and then sends the <form>; -->
+        <!-- js manage "change" event for <select> list, and then sends the <form>; -->
 
-                            <?php
-                                query("SELECT mg.id_magazynu, mg.nazwa FROM magazyn AS mg", "createMagazineSelectList", "");
-                            ?>
+        <?php
+            query("SELECT mg.id_magazynu, mg.nazwa FROM magazyn AS mg", "createMagazineSelectList", "");
+        ?>
 
-                        </select>
+    </select>
 
-                    </form>
+</form>
 
                 </div> <!-- #admin-books-header-container -->
 

@@ -1010,6 +1010,8 @@ EOT;
 		$result->free_result();
 	}
 
+
+
     function orderDetailsVerifyOrderExists($result) { // zwrócono rekordy a więc jest takie zamówienie (admin\order-details.php);
         //echo "\n 1014 - function -> orderDetailsVerifyOrderExists \n\n";
 
@@ -1211,16 +1213,18 @@ EOT;
 
     }
 
-    function get_book_details($result) {
-        // admin/book-details.php?%s
+    function get_book_details($result) { // ̶ ̶a̶d̶m̶i̶n̶/̶b̶o̶o̶k̶-̶d̶e̶t̶a̶i̶l̶s̶.̶p̶h̶p̶?̶%̶s̶
+
+        // \admin\book-details.php  $_SESSION["book-id"],
+        //                          $_SESSION["warehouse-id"];
 
         $row = $result->fetch_assoc();
 
-        //$_SESSION["status"] = $row["status"];
+            // $_SESSION["status"] = $row["status"];
 
         $book = file_get_contents("../template/admin/book-details.php");
 
-        /*echo sprintf($book, $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["cena"], $row["nazwa_wydawcy"], $row["opis"], $row["wymiary"], $row["ilosc_stron"], $row["oprawa"], $row["stan"], $row["srednia_ocen"], $row["image_url"], $row["liczba_ocen"], $row["ile_razy_sprzedana"], $row["nazwa_kategorii"], $row["nazwa_subkategorii"], $row["ilosc_dostepnych_egzemplarzy"], $row["nazwa"], $row["miejscowosc"], $row["numer_ulicy"], $row["kod_pocztowy"] );*/
+            /*echo sprintf($book, $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["cena"], $row["nazwa_wydawcy"], $row["opis"], $row["wymiary"], $row["ilosc_stron"], $row["oprawa"], $row["stan"], $row["srednia_ocen"], $row["image_url"], $row["liczba_ocen"], $row["ile_razy_sprzedana"], $row["nazwa_kategorii"], $row["nazwa_subkategorii"], $row["ilosc_dostepnych_egzemplarzy"], $row["nazwa"], $row["miejscowosc"], $row["numer_ulicy"], $row["kod_pocztowy"] );*/
 
         echo sprintf($book, $row["image_url"], $row["image_url"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["cena"], $row["nazwa_wydawcy"], $row["wymiary"], $row["ilosc_stron"], $row["oprawa"], $row["stan"], $row["opis"], $row["nazwa_kategorii"], $row["nazwa_subkategorii"], $row["srednia_ocen"], $row["liczba_ocen"], $row["ilosc_zamowien_w_ktorych_wystapila"], $row["liczba_klientow_posiadajacych_w_koszyku"], $row["liczba_sprzedanych_egzemplarzy"], $row["nazwa_magazynu"], $row["kraj"], $row["wojewodztwo"], $row["miejscowosc"], $row["ulica"], $row["numer_ulicy"], $row["kod_pocztowy"], $row["kod_miejscowosc"], $row["ilosc_dostepnych_egzemplarzy"]    );
 
@@ -1229,13 +1233,14 @@ EOT;
         $result->free_result();
     }
 
-    function createMagazineSelectList($result) {
+    function createMagazineSelectList($result) { // \admin\books.php
+
         // create <option> elements inside <select> list based on warehouse names in database;
             // <option> elementy - są generowane dynamicznie na podstawie BD i danych o magazynach;
         while($row = $result->fetch_assoc()) {
             echo '<option value="'.$row["id_magazynu"].'">'.$row["nazwa"].'</option>';
         }
-        echo '<option value="asdasd"></option>'; // remove thhat line in the future;
+            echo '<option value="asdasd"></option>'; // remove thhat line in the future;
         $result->free_result();
     }
 

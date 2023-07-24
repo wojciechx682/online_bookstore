@@ -13,22 +13,42 @@ $("select#change-magazine").on("change", function(e) { // after changing <option
 
 $("form#change-magazine-form").on("submit", function(e) { // after submitting form;
 
-    e.preventDefault();
+    e.preventDefault(); // prevent form submission (default behaviour)
 
-    let data = $(this).serialize(); // dane formularza do przesłania metodą post; // let data = $(this);
-    let postData = parseInt($(this).serialize().slice(16).trim()); // "change-magazine=1" => "1" (id_maazynu);
+        //let data = $(this).serialize(); // dane formularza do przesłania metodą post; // let data = $(this);
+        //let postData = parseInt($(this).serialize().slice(16).trim()); // "change-magazine=1" => "1" (id_maazynu);
 
-    console.log("\ndata => ", data); // String;
-    console.log("\ntypeof(data) =>", typeof(data)); // String;
-    console.log("\npost_data (id_magazynu) =>", postData); // atrybut value elementu <option> (jest to id_magazynu);
-    console.log("\ntypeof(post data) (id_magazynu) =>", typeof(postData)); // number;
+    let data = $(this); // obiekt jQ - <form>;
+    const selectElement = data.find('select#change-magazine'); // find <select> list inside the form;
+    const warehouseId = parseInt(selectElement.val()); // get value attribute of <select> list - this is warehouse-id (id-magazynu);
 
-    if((data !== '') && (typeof(postData) === 'number') && (!isNaN(postData))) { // nie pusta, liczba, nie jest to "NaN";
+    console.log("\ndata => ", data); // jQ object;
+    console.log("\ntypeof(data) =>", typeof(data));
+    console.log("\nselectElement => ", selectElement); // object jq - <select>;
+    console.log("\ntypeof selectElement => ", typeof selectElement); // object jq - <select>;
+    console.log("\nwarehouseId => ", warehouseId); // object jq - warehouseId;
+    console.log("\n typeof warehouseId => ", typeof warehouseId); // object jq - warehouseId;
 
-        $.ajax({
+
+    //console.log("\npost_data (id_magazynu) =>", postData); // atrybut value elementu <option> (jest to id_magazynu);
+    //console.log("\ntypeof(post data) (id_magazynu) =>", typeof(postData)); // number;
+
+    //if((data !== '') && (typeof(postData) === 'number') && (!isNaN(postData))) { // nie pusta, liczba, nie jest to "NaN";
+
+    // !isNaN(warehouseId) && Number.isInteger(parseFloat(warehouseId)) && parseInt(warehouseId) > 0\
+
+    console.log("\n\n warehouseId > 0 --> ", warehouseId > 0);
+    console.log("\n\n Number.isInteger(warehouseId) --> ", Number.isInteger(warehouseId));
+    console.log("\n\n !isNaN(warehouseId) --> ", !isNaN(warehouseId));
+
+    if((warehouseId > 0) && Number.isInteger(warehouseId) && !isNaN(warehouseId)) {  // nie pusta (>0), liczba (int), nie jest to "NaN";
+
+        let dataSerialized = data.serialize();
+
+        /*$.ajax({
             type: "POST",                    // GET or POST;
             url: "change-magazine.php",      // Path to file (that process the <form> data);
-            data: data,                      // serialized <form> data;
+            data: dataSerialized,                      // serialized <form> data;
             timeout: 2000,                   // Waiting time;
             beforeSend: function() {         // Before Ajax - function called before sending the request;
                 $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
@@ -48,9 +68,36 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
                 // (!) Error - obsługa błędów;
                 $("#books-content").html(data);
             }
+        });*/
+
+        // zamiana na użycie metod .done(), .fail(), always() - ponieważ success, error, complete - są przestarzałe (deprecated) -->
+
+        $.ajax({
+            type: "POST",                    // GET or POST;
+            url: "change-magazine.php",      // Path to file (that process the <form> data);
+            data: dataSerialized,                      // serialized <form> data;
+            timeout: 2000,                   // Waiting time;
+            beforeSend: function () {         // Before Ajax - function called before sending the request;
+                $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
+            }
+        }).done(function(data) {
+            // Success handler; // Handle the response data;
+
+            let booksHeader = document.querySelector('.admin-books'); // table header;
+            if(booksHeader.style.display === 'none') {
+                booksHeader.style.display = "block";
+            }
+            $("#books-content").html(data); // Show content (data returned from server);
+
+        }).fail(function(data) { // (xhr, status, error)
+            // Error handler // Handle the error condition;
+            $("#books-content").html(data);
+
+        }).always(function() {
+            $("img#loading-icon").toggleClass("not-visible");
         });
 
-    } else {  // błąd z id-magazynu (!) ;
+    } else {  // błąd z id-magazynu;
 
         $("div.admin-books").css('display', 'none');
         $("div#books-content").html('<span class="admin-books-error" style="display: block;">Wystąpił błąd. Serwer nie zwrócił poprawnych danych. Spróbuj ponownie później</span>');

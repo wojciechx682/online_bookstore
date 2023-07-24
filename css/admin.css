@@ -178,6 +178,8 @@ h3.section-header-books {
 
     /*float: left;*/
     display: inline-block;
+    margin-top: 14px;
+    padding-bottom: 7px;
 }
 
 h4.section-header {
@@ -539,6 +541,11 @@ div#order-status button.update-order-status {
     z-index: 90;
     border-radius: 5px;
 }
+
+div.update-status button {
+    margin-top: 70px !important;
+}
+
 #update-status > h2, .update-status > h2 {
     margin-left: 20px;
     margin-top: 25px;
@@ -793,7 +800,7 @@ div#update-status div.delivery-date span.update-failed {
     font-weight: bold;
     color: red;
     position: absolute;
-    top: 240px;
+    top: 255px;
     /*margin-top: 15px;
     margin-left: 129px;*/
 }

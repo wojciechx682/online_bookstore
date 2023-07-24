@@ -18,7 +18,20 @@
         <div class="book-options-container">
             <div class="book-action-options hidden">
                 <div class="book-option">
-                    <a href="book-details.php?book=%s&warehouse=%s">Przeglądaj</a>
+                    <!--<a href="book-details.php ? book=s & warehouse=s ">Przeglądaj</a>-->
+
+                    <!-- book -->
+                    <!-- warehouse -->
+
+                    <form method="post" action="book-details.php"> <!-- POST -> orderId -->
+                        <input type="hidden" name="book-id" value="%s"> <!-- bookId -->
+                        <input type="hidden" name="warehouse-id" value="%s"> <!-- warehouseId -->
+                        <button class="submit-book-form" type="submit">
+                            <!--<h3 class="book-title">Przeglądaj</h3>-->
+                            Przeglądaj
+                        </button>
+                    </form>
+
                 </div>
                 <div class="book-option">
 

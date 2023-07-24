@@ -39,7 +39,6 @@ require_once "../authenticate-admin.php";
 
         $dispatchDate = DateTime::createFromFormat($format, $_POST["dispatch-date"]);
 
-
         // check if the date was parsed successfully and if it's a valid date
         if ( ! $dispatchDate || $dispatchDate->format($format) !== $_POST["dispatch-date"]
              || $_POST["dispatch-date"] < $todaysDate) {
