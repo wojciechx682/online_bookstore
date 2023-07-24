@@ -6,40 +6,47 @@
         //$data = date("2023-07-30");
 
 
-$todayDate = new DateTime();
-$todayDate->format('Y-m-d');
+echo "<br><hr><br>";
 
-$_POST["order-date"] = "2023-07-24";
+$_POST["dispatch-date"] = "2021-01-01";
+$_POST["dispatch-time"] = "12:54";
 
-$orderDate = DateTime::createFromFormat('Y-m-d', $_POST["order-date"]);
-
-
+$res = $_POST["dispatch-date"] . " " . $_POST["dispatch-time"] ;
 
 
-echo "<br><br>";
-
-    echo "\n\n\n\ntodayDate --> \n\n<br>";
-
-    print_r($todayDate);
-
-echo "\n\n\norderDate --> \n\n<br>";
-
-print_r($orderDate);
-
-echo "\n\n\n\ncomparison --> \n\n<br>";
 
 
-echo "\n\n\n obliczanie różnicy czasu --> \n\n\n";
 
-echo "<br>" . date('Y-m-d'); echo "<br>";
 
-echo $_POST["order-date"]; echo "<br>";
 
-if($_POST["order-date"] < date('Y-m-d')) {
-    echo "\n\n\npodano przeszłą datę\n\n\n";
-} else {
-    echo "\n\n\ndata OK\n\n\n";
-}
+// Now you have $dateTimeObject as a DateTime object with both date and time components
+// You can use $dateTimeObject to perform date and time operations
+
+echo "\n\n\n dispatch-date -> " . $_POST["dispatch-date"] . "<br>\n\n";
+echo "\n\n\n dispatch-time -> " . $_POST["dispatch-time"]. "<br>\n\n";
+
+echo "\n\n\n res -> " . $res. "<br>\n\n";
+
+
+
+echo "<br><br><br>";
+echo "<br><br><br>";
+
+$dispatchDate = new DateTime('2021-01-01');
+
+
+
+
+
+
+
+
+
+print_r($dispatchDate);
+
+
+echo "<br><br><br>";
+echo "<br><br><br>";
 
 
 

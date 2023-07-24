@@ -35,22 +35,14 @@ document.querySelector('form#update-order-date').addEventListener("submit", func
     let minutes = todayDate.getMinutes();
     let seconds = todayDate.getSeconds();
     let miliseconds = todayDate.getMilliseconds();
-    /*if(seconds !== 0) {
-        seconds -= 1;
-    }*/
 
     let list = document.getElementById("status-list");       // <select> list;
     const selectedOption = list.options[list.selectedIndex]; // aktualnie wybrany element listy;
 
-
-
     let expDeliveryDate = new Date(date[0][0].value); // termin_dostawy
     let sentDate = new Date(date[0][1].value);        // data_wysłania
-    let dateDelivered = new Date(date[0][2].value);   // data_dostarczenia
-
-    /*if(seconds < 60) {
-        seconds += 1;
-    }*/
+    let sentTime = new Date(date[0][1].value);        // godzina wysłania
+    let dateDelivered = new Date(date[0][3].value);   // data_dostarczenia
 
     expDeliveryDate.setHours(hours, minutes, seconds, miliseconds);
     sentDate.setHours(hours, minutes, seconds, miliseconds);
@@ -62,27 +54,31 @@ document.querySelector('form#update-order-date').addEventListener("submit", func
     console.log("\n\n seconds -> ", seconds);
     console.log("\n\n expDeliveryDate -> ", expDeliveryDate);
     console.log("\n\n sentDate -> ", sentDate);
+    console.log("\n\n sentTime -> ", sentDate);
     console.log("\n\n dateDelivered -> ", dateDelivered);
 
     console.log("\n\n expDeliveryDate.getTime() -> ", expDeliveryDate.getTime());
     console.log("\n\n todayDate.getTime() -> ", todayDate.getTime());
     console.log("\n\n expDeliveryDate < todayDate -> ", expDeliveryDate.getTime() < todayDate.getTime() );
 
-    // isNaN(expDeliveryDate.getTime() - służy do sprawdzenia, czy udało się poprawnie utworzyć datę poprzez użycie konstruktora (linia 47);
+    console.log("\n\n\n\n dateDelivered < todayDate -> ", dateDelivered.getTime() < todayDate.getTime() );
+    console.log("\n\n\n\n isNaN(dateDelivered.getTime() -> ", isNaN(dateDelivered.getTime()) );
+
+    // isNaN(expDeliveryDate.getTime() - służy do sprawdzenia, czy udało się poprawnie utworzyć datę poprzez użycie konstruktora (linia 42);
 
     // walidacja daty - kontrola błędów, czy data jest poprawna i znajduje się w odpowiednim przedziale (js);
 
     if ( selectedOption.innerHTML === "W trakcie realizacji" && (isNaN(expDeliveryDate.getTime()) || expDeliveryDate < todayDate) ) {
             // przeszła data, lub pusta
-        error(12);
+        error(5);
 
     } else if ( selectedOption.innerHTML === "Wysłano" && (isNaN(expDeliveryDate.getTime()) || isNaN(sentDate.getTime()) || expDeliveryDate < todayDate || sentDate < todayDate || expDeliveryDate < sentDate) ) {
             // przeszła data, pusta, lub data_wysłania późniejsza niż termin_dostawy
-        error(40);
+        error(20);
 
     } else if ( selectedOption.innerHTML === "Dostarczono" && (isNaN(dateDelivered.getTime()) || dateDelivered < todayDate) ) {
             // przeszła data, lub pusta
-        error(12);
+        error(5);
     }
     else {
                 /*$.ajax({
@@ -139,42 +135,22 @@ document.querySelector('form#update-order-date').addEventListener("submit", func
                     // success handler; // handle the response data;
                     finishUpdate(); // data - dane otrzymane z serwera (response - odpowiedź);
                     $("div.delivery-date").append(data);
-
                         let list = document.getElementById("status-list");
                         const option = list.options[list.selectedIndex];
-
                         let orderStatus = document.querySelector('#order-status #order-details-status');
-                        /*orderStatus.classList.remove("hidden");
-                        orderStatus.classList.add("visible");*/
-
-                        //console.log("\n\n orderStatus --> \n\n", orderStatus);
-                        //console.log("\n\n option --> \n\n", option);
-
-
                         switch (option.innerHTML) {
-                            case 'W trakcie realizacji':
-                                orderStatus.innerHTML = 'Termin dostawy: <span>' + date[0][0].value + '</span>';
-                                break;
-                            case 'Wysłano':
-                                orderStatus.innerHTML = 'Termin dostawy: <span>' + date[0][0].value + "</span><br>" +
-                                                        'Data wysłania: <span>' + date[0][1].value + '</span>';
-                                break;
-                            case 'Dostarczono':
-                                orderStatus.innerHTML = 'Data dostarczenia: <span>' + date[0][2].value + '</span>';
-                                break;
+                                case 'W trakcie realizacji':
+                                    orderStatus.innerHTML = '<div>Termin dostawy: <span>' + date[0][0].value + '</span></div>';
+                                    break;
+                                case 'Wysłano':
+                                    orderStatus.innerHTML = '<div>Termin dostawy: <span>' + date[0][0].value + "</span></div>" +
+                                                            '<div>Data wysłania: <span>' + date[0][1].value + " " + date[0][2].value + '</span></div>';
+                                    break;
+                                case 'Dostarczono':
+                                    orderStatus.innerHTML = '<div>Data dostarczenia: <span>' + date[0][3].value + '</span></div>';
+                                    break;
 
-                        }
-
-
-
-
-
-
-
-
-
-
-
+                            }
                     }).fail(function(data) {
                     finishUpdate();
                         $("div.delivery-date").append(data);

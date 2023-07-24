@@ -525,7 +525,7 @@ div#order-status button.update-order-status {
 
 #update-status, .update-status {
     /*height: 310px;*/
-    height: 340px;
+    height: 360px;
     width: 660px;
     background-color: #545454;
     /*position: fixed;
@@ -666,7 +666,7 @@ div.delivery-date input[type="time"] {
 }
 
 div.delivery-date input[type="time"] {
-    width: 90px;
+    width: 110px;
 }
 
 
@@ -676,7 +676,7 @@ div.delivery-date label {
 
 }
 div.delivery-date label:nth-of-type(1) {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 div.delivery-date label:nth-of-type(2) {
@@ -744,7 +744,7 @@ span.date-error {
     color: red !important;
     position: absolute;
     margin-top: 12px;
-    margin-left: 145px;
+    margin-left: 143px;
 }
 
 span.admin-books-error {

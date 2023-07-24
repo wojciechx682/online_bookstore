@@ -284,7 +284,7 @@
                 <div style="clear: both;"></div>
 
             <label>
-                <span class="order-label">Godzina wysłania</span><input type="time" name="dispatch-time">
+                <span class="order-label">Godzina wysłania</span><input type="time" name="dispatch-time" step="1">
             </label>
             <div style="clear: both;"></div>
 
@@ -446,7 +446,7 @@
 
             //form.style.display = "block"; // <div class="delivery-date">
 
-            dateError.style.marginTop = "12px";
+            dateError.style.marginTop = "-2px";
 
                     if(expDeliveryDate.style.display === "none") { // termin_dostawy
                         expDeliveryDate.style.display = "block";
@@ -467,12 +467,12 @@
                     }
 
             $('div#update-status .update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!)
-                $(element).css('margin-top', '70px');
+                $(element).css('margin-top', '90px');
             });
 
         } else if (selectedOption.innerHTML === "Wysłano") {
 
-            dateError.style.marginTop = "40px";
+            dateError.style.marginTop = "20px";
 
             // form.style.display = "block"; // termin dostawy
             // console.log("\ndeliveryDate => ", deliveryDate);
@@ -500,7 +500,7 @@ console.log("183");
 });*/
 
             $('div#update-status .update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) X "Aktualizuj";
-                $(element).css('margin-top', '40px');
+                $(element).css('margin-top', '60px');
             });
 
 /* $(document).ready(function() {
@@ -516,7 +516,7 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
 
         } else if (selectedOption.innerHTML === "Dostarczono") {
 
-            dateError.style.marginTop = "12px";
+            dateError.style.marginTop = "-2px";
 
             // form.style.display = "block";
 
@@ -536,7 +536,7 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
             }
 
             $('div#update-status .update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) "Aktualizuj";
-                $(element).css('margin-top', '70px');
+                $(element).css('margin-top', '95px');
             });
 
         } else {

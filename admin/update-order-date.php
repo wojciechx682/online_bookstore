@@ -39,6 +39,7 @@ require_once "../authenticate-admin.php";
 
         $dispatchDate = DateTime::createFromFormat($format, $_POST["dispatch-date"]);
 
+
         // check if the date was parsed successfully and if it's a valid date
         if ( ! $dispatchDate || $dispatchDate->format($format) !== $_POST["dispatch-date"]
              || $_POST["dispatch-date"] < $todaysDate) {
@@ -47,9 +48,10 @@ require_once "../authenticate-admin.php";
         } else {
             // valid date
 
-            $_SESSION["dispatch-date"] = $_POST["dispatch-date"];
+            //$_SESSION["dispatch-date"] = $_POST["dispatch-date"];
+            $_SESSION["dispatch-date"] = $_POST["dispatch-date"] . " " . $_POST["dispatch-time"];
 
-            query("UPDATE zamowienia SET data_wysłania_zamowienia='%s', data_dostarczenia='', status='Wysłano' WHERE id_zamowienia = '%s'", "updateOrder", [$_POST["dispatch-date"], $_SESSION["order-id"]] );
+            query("UPDATE zamowienia SET data_wysłania_zamowienia='%s', data_dostarczenia='', status='Wysłano' WHERE id_zamowienia = '%s'", "updateOrder", [$_SESSION["dispatch-date"], $_SESSION["order-id"]] );
             // "Wysłano" -> data_wyslania_zamowienia;
         }
     }
