@@ -1,7 +1,7 @@
 <?php
 
-    // Uwierzytelnienie administratora, przed dostępem do panelu admina - Czy jest zalogowany ? Czy jest to pracownik ?
-    // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
+        // Uwierzytelnienie administratora, przed dostępem do panelu admina - Czy jest zalogowany ? Czy jest to pracownik ?
+        // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
     require_once "../authenticate-admin.php";
 ?>
 

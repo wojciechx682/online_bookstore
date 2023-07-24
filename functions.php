@@ -1073,7 +1073,7 @@ EOT;
     function get_all_orders($result) { // \admin\orders.php - wszystkie zamówienia złożone przez klientów, przypisane do zalogowanego pracownika;
 
         while($row = $result->fetch_assoc()) {
-                        //echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
+                        // echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
             // load the content from the external template file into string
             $order = file_get_contents("../template/admin/orders.php");
             // replace fields in $order string to author data from $result, display result content as HTML
@@ -1106,9 +1106,9 @@ EOT;
 
     function get_order_details_admin($result) { // \admin\order-details.php
         $i = 0;
-        // $row = $result->fetch_assoc();
+                        // $row = $result->fetch_assoc();
         while($row = $result->fetch_assoc()) {
-            // echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
+                        // echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
 
             // load the content from the external template file into string
             $order = file_get_contents("../template/admin/order-details.php");
@@ -1116,11 +1116,11 @@ EOT;
             // replace fields in $order string to author data from $result, display result content as HTML
             echo sprintf($order, $i, $row["tytul"], $row["imie"],$row["nazwisko"],$row["rok_wydania"],$row["ilosc"], $row["cena"]);
 
-            /* if($i === 0) {
-                $order_f = file_get_contents("../template/admin/order-details-footer.php");
-                // replace fields in $order string to author data from $result, display result content as HTML
-                echo sprintf($order_f, $row["kwota"]);
-            } */
+                        /* if($i === 0) {
+                            $order_f = file_get_contents("../template/admin/order-details-footer.php");
+                            // replace fields in $order string to author data from $result, display result content as HTML
+                            echo sprintf($order_f, $row["kwota"]);
+                        } */
             $i++;
         }
 
@@ -1128,6 +1128,7 @@ EOT;
     }
 
     function get_order_sum_admin($result) { // \admin\order-details.php
+
         $row = $result->fetch_assoc();
 
         $orderSum = file_get_contents("../template/order-sum.php");
@@ -1136,11 +1137,11 @@ EOT;
         echo sprintf($orderSum, $row["kwota"]);
 
         $result->free_result();
-
     }
 
     function get_order_summary($result) { // \admin\order-details.php
-        $row = $result->fetch_assoc();
+
+            $row = $result->fetch_assoc();
 
         $_SESSION["status"] = $row["status"];
 
@@ -1173,6 +1174,34 @@ EOT;
     function updateOrder($result) { // \admin\order-details.php
 
         $_SESSION["update-successful"] = false;
+
+    }
+
+    function showOrderStatusDate($result) {
+
+        $row = $result->fetch_assoc();
+
+        $orderStatus = array_keys($row)[0]; // "termin_dostawy" || "data_dostarczenia"
+
+        switch ($orderStatus) {
+
+            case "termin_dostawy":
+
+                $orderDate = file_get_contents("../template/admin/order-status-date.php");
+                echo sprintf($orderDate, "Termin dostawy: ", $row["termin_dostawy"]);
+
+                if(isset(array_keys($row)[1]) & !empty(array_keys($row)[1])) { // "Data wysłania"
+                    $sentDate = file_get_contents("../template/admin/order-status-date.php");
+                    echo sprintf($sentDate, "Data wysłania: ", $row["data_wysłania_zamowienia"]);
+                }
+                break;
+
+            case "data_dostarczenia":
+                $orderDate = file_get_contents("../template/admin/order-status-date.php");
+                echo sprintf($orderDate, "Data dostarczenia: ", $row["data_dostarczenia"]);
+
+                break;
+        }
 
     }
 

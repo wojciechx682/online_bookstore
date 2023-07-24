@@ -23,7 +23,8 @@ require_once "../authenticate-admin.php";
             $_SESSION["archive-successful"] = true;
         } else {
             //query("UPDATE zamowienia SET komentarz='%s', status='%s' WHERE id_zamowienia = '%s'", "archiveOrder", [$_POST["comment"], "Zarchiwizowane", $_POST["order-id"]]); // $_SESSION["archive-successful"] --> false;
-            query("UPDATE zamowienia SET komentarz='%s', status='%s' WHERE id_zamowienia = '%s'", "archiveOrder", [$comment, "Zarchiwizowane", $orderId]); // $_SESSION["archive-successful"] --> false;
+            query("UPDATE zamowienia SET komentarz='%s', status='%s' WHERE id_zamowienia = '%s'", "archiveOrder", [$comment, "Zarchiwizowane", $orderId]);
+            // $_SESSION["archive-successful"] --> false;
         }
     }
 

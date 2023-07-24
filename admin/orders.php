@@ -1,5 +1,5 @@
 <?php
-    // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
+        // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
     require_once "../authenticate-admin.php";
 ?>
 
@@ -28,7 +28,10 @@
                         <h3 class="section-header">Zamówienia</h3>
                     </header>
 
-                    <?php require "../view/admin/order-header.php"; // table header; ?>
+                    <?php
+                        require "../view/admin/order-header.php";
+                          // table header;
+                    ?>
 
                     <?php
                         query("SELECT zm.id_zamowienia,
@@ -38,17 +41,18 @@
                                         pl.kwota, pl.sposob_platnosci                                        
                                     FROM zamowienia AS zm, klienci AS kl, platnosci AS pl 
                                     WHERE zm.id_zamowienia = pl.id_zamowienia AND
-                                    zm.id_klienta = kl.id_klienta AND zm.id_pracownika = '%s'", "get_all_orders", $_SESSION["id"]); // content of the table;
+                                    zm.id_klienta = kl.id_klienta AND zm.id_pracownika = '%s'", "get_all_orders", $_SESSION["id"]);
+                        // content of the table;
                         // wszystkie zamówienia złożone przez klientów - (przypisane do zalogowanego pracownika) ;
 
                         // ..\template\admin\orders.php
 
-                        // |1121| 2023-07-08 18:23:58 | Jakub | Wojciechowski | 327.75 | Blik     | Zarchiwizowane
-                        // |1123| 2023-07-08 18:29:42 | Jakub | Wojciechowski | 222.5  | Pobranie | Oczekujące na potwierdzenie
-                        // |1125| 2023-07-08 21:25:53 | Jakub | Wojciechowski | 128.3  | Blik     | Oczekujące na potwierdzenie
-                        // |1126| 2023-07-08 22:25:13 | Adam  | Nowak         | 222.5  | Blik     | Dostarczono
-                        // |1127| 2023-07-09 16:19:38 | Jakub | Wojciechowski | 377.5  | Blik     | Oczekujące na potwierdzenie
-                        // |1129| 2023-07-10 00:11:49 | Jakub | Wojciechowski | 700    | Blik     | Oczekujące na potwierdzenie
+                        // | 1121 | 2023-07-08 18:23:58 | Jakub | Wojciechowski | 327.75 | Blik     | Zarchiwizowane
+                        // | 1123 | 2023-07-08 18:29:42 | Jakub | Wojciechowski | 222.5  | Pobranie | Oczekujące na potwierdzenie
+                        // | 1125 | 2023-07-08 21:25:53 | Jakub | Wojciechowski | 128.3  | Blik     | Oczekujące na potwierdzenie
+                        // | 1126 | 2023-07-08 22:25:13 | Adam  | Nowak         | 222.5  | Blik     | Dostarczono
+                        // | 1127 | 2023-07-09 16:19:38 | Jakub | Wojciechowski | 377.5  | Blik     | Oczekujące na potwierdzenie
+                        // | 1129 | 2023-07-10 00:11:49 | Jakub | Wojciechowski | 700    | Blik     | Oczekujące na potwierdzenie
 
                     ?>
 
@@ -91,6 +95,8 @@
         if(spanError.style.display === "block") {    // jeśli komunikat jest widoczny
             spanError.style.display = "none";        // usuń komunikat
         }
+
+        textarea.value = ""; // usuwa zawartość tekstową która znajdowałą się w <textarea>
     }
 
     /*function finishArchive(textarea) {
@@ -156,7 +162,7 @@
                     //cancelButton.css("display", "block");
                 cancelButton.style.display = "initial";
                     //textarea.val("");
-                textarea.value = "";
+
 
             }
         }

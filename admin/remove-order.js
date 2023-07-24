@@ -30,9 +30,9 @@ document.querySelector('form.remove-order').addEventListener("submit", function(
         console.log("\ncomment => ", typeof comment);
 
     //let textarea = data.find('textarea[name="comment"]'); // <textarea>;
-    let confirmButton = data.find('button[type="submit"]'); // <button type="submit">;
+    let confirmButton = data.find('button[type="submit"]'); // "Potwierdź" - <button type="submit">;
     let deliveryDateDiv = data.closest(".delivery-date"); // przodek formularza, <div class="delivery-date">;
-    let cancelButton = deliveryDateDiv.find(".cancel-order");
+    let cancelButton = deliveryDateDiv.find(".cancel-order"); // "Anuluj"
 
     // Sanityzacja danych wejściowych - Wyczyszczenie niebezpiecznych zapisów - Komentarz;
 
@@ -152,8 +152,6 @@ document.querySelector('form.remove-order').addEventListener("submit", function(
         }).always(function() {
             $("img#loading-icon").toggleClass("not-visible");
         });
-
-
     }
 
 });

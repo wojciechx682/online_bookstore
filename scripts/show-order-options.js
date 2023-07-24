@@ -1,7 +1,7 @@
 
-function showOptions(id) { // admin/orders.php - kliknięcie "Zarządzaj";   -->  ✓ wyświetlenie / ukrycie listy opcji ;
+function showOptions(id) {   // admin/orders.php - kliknięcie "Zarządzaj";   -->  ✓ wyświetlenie / ukrycie listy opcji ;
 
-    // po kliknięciu "Zarządzaj" - w danym pole - ukrycie pozostałych list opcji, jeśłi były widoczne;
+    // po kliknięciu "Zarządzaj" - w danym polu - ukrycie pozostałych list opcji, jeśłi były widoczne;
 
     let orderActionOptions = document.querySelectorAll('div.order-action'); // kolekcja pojemników z przyciskiem "Zarządzaj";
 
@@ -10,8 +10,6 @@ function showOptions(id) { // admin/orders.php - kliknięcie "Zarządzaj";   -->
         let orderActionButton = orderActionOptions[i].querySelector('.order-action-button'); // przycisk "Zarządzaj" - </div> ;
         // <div class="order-action-button" id="order-action-button1121" onclick="showOptions(this.id)"> "Zarządzaj" . </div>
 
-            // console.log("\n\n orderActionButton -> ",  orderActionButton);
-
         // ukrycie wszystkich pozostałych listy opcji, jeśli były widoczne (tzn. poza tym, który został aktualnie kliknięty !) ;
 
         if(orderActionButton.id !== id) {
@@ -19,22 +17,15 @@ function showOptions(id) { // admin/orders.php - kliknięcie "Zarządzaj";   -->
             let icon = orderActionOptions[i].querySelector('i'); // ikona strzałki
             let options = orderActionOptions[i].querySelector('.order-action-options'); // lista opcji w danym wierszu - "Przelądaj", "Zmień status", "Archiwizuj"
 
-            //console.log(i+1 + "-ty element - icon ",  icon);
-
-            if(icon.classList.contains('icon-up-open')) { // jeśli opcje były widoczne -> (ikona w górę)
+            if(icon.classList.contains('icon-up-open')) { // jeśli opcje były WIDOCZNE -> (ikona w górę)
                 icon.classList.replace('icon-up-open', 'icon-down-open'); // zmień ikonę (w dół)
             }
 
-            /*if(options.style.display === "block") { // jeśli opcje były widoczne (lista opcji)
-                options.style.display = "none"; // ukryj listę opcji
-            }*/
-
-            options.classList.toggle("hidden", true); // add "hidden" class
-
+            options.classList.toggle("hidden", true); // add "hidden" class;
         }
     }
 
-    console.log(`#${id}`); // id-elementu - który został kliknięty --> "#order-action-button1121"
+    console.log(`\n\nid klikniętego elementu --> #${id}\n\n`); // id-elementu - który został kliknięty --> "#order-action-button1121"
 
     const button = document.querySelector(`#${id}`);    // template literal - <div> "Zarządzaj" </div> ;
     // <div class="order-action-button"
@@ -62,15 +53,15 @@ function showOptions(id) { // admin/orders.php - kliknięcie "Zarządzaj";   -->
         icon.classList.add('icon-up-open');      // zmiana ikony na przeciwną
     }*/
 
-    if(!options.classList.contains("hidden")) {      // jeśli lista opcji była widoczna;
+    if(!options.classList.contains("hidden")) {    // jeśli lista opcji była widoczna;
         //options.style.display = "none";          // ukrycie listy opcji
-        options.classList.add("hidden");          // ukrycie listy opcji
+        options.classList.add("hidden");           // ukrycie listy opcji
         //icon.classList.remove('icon-up-open');
         //icon.classList.add('icon-down-open');    // zmiana ikony na przeciwną
         icon.classList.replace('icon-up-open', 'icon-down-open'); // zmień ikonę na przeciwną (w dół)
     } else {
         //options.style.display = "block";         // wyświetlenie listy opcji
-        options.classList.remove("hidden");         // wyświetlenie listy opcji
+        options.classList.remove("hidden");        // wyświetlenie listy opcji
         //icon.classList.remove('icon-down-open');
         //icon.classList.add('icon-up-open');      // zmiana ikony na przeciwną
         icon.classList.replace('icon-down-open', 'icon-up-open');

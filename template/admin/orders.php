@@ -1,5 +1,5 @@
 
-<!-- template used on order page (order.php) to display ALL orders made by clients -->
+<!-- template used on order page (order.php) to display ALL orders made by clients (which are assigned to the logged-in employee !) -->
 
     <!-- echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>"; -->
 
@@ -70,7 +70,7 @@
 
                 </div>
 
-                <div class="order-option">     <!-- orderId -->
+                <div class="order-option">    <!-- orderId -->
                     <a href="#" onclick="removeOrder(%s)">Archiwizuj</a> <!-- scripts\remove-order.js -->
                 </div>
 

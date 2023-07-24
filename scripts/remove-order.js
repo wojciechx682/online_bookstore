@@ -2,55 +2,54 @@
 // order.php - usunięcie / zarchwizowanie / zamknięcie zamówienia
     // admin podaje powód (notatkę) - którą potem może wyświetlić klient;
 
-function removeOrder(orderId) { // po kliknięciu przycisku "Archiwizuj";    orderId -> "1130";
+function removeOrder(orderId) { // po kliknięciu przycisku "Archiwizuj";  orderId -> "1130";
 
-// Refactor - zamiana na tylko jedno okno Archiwizowania zamówienia ;
+// ✓ refactor - zamiana na tylko jedno okno Archiwizowania zamówienia ;
 
-    // let removeBox = document.getElementById("update-status");
-    // let removeBox = document.querySelector(".update-status"+orderId);
+        // let removeBox = document.getElementById("update-status");
+        // let removeBox = document.querySelector(".update-status"+orderId);
     let removeBox = document.querySelector(".update-status");
         // pojawienie się okienka po kliknięciu "Zarchiwizuj";
-        console.log("\nremoveBox (okno archiwizowania zamówienia) --> ", removeBox);
+        console.log("\nremoveBox (okno archiwizowania zamówienia) --> ", removeBox); // <div class="update-status"></div>
 
     // dodanie atrybutu "id" (order-id) do pól formularza (input type="hidden") -->
-
     let input = removeBox.querySelector('form.remove-order > input[type="hidden"]'); // input type="hidden";
     input.value = orderId;
 
-    /*if(removeBox.classList.contains("hidden")) {
-        removeBox.classList.toggle("hidden");
-    }*/
+        /*if(removeBox.classList.contains("hidden")) {
+            removeBox.classList.toggle("hidden");
+        }*/
 
-    removeBox.classList.toggle("hidden"); // pojawienie się okenka po kliknięciu "Usuń";
+    removeBox.classList.toggle("hidden"); // pojawienie się okenka po kliknięciu "Zarchiwizuj";
 
     let mainContainer = document.getElementById("main-container");
 
-    /*if( ! mainContainer.classList.contains("bright")) {
-        mainContainer.classList.toggle("bright");
-    }*/
+        /*if( ! mainContainer.classList.contains("bright")) {
+            mainContainer.classList.toggle("bright");
+        }*/
 
-    mainContainer.classList.toggle("bright");
+    mainContainer.classList.toggle("bright"); // ✓ zmiana tła strony na ciemne (#main-container)
     /*mainContainer.style.pointerEvents = "none";
     mainContainer.style.userSelect = "none";*/
-    mainContainer.classList.toggle("unreachable");
+    mainContainer.classList.toggle("unreachable"); // ✓ wyłączenie możliwości kliknięcia czegokolwiek (w tle) poza okieniem archiwizowania;
 
 
-    //let icon = document.querySelector(".icon-cancel" + orderId);
+        //let icon = document.querySelector(".icon-cancel" + orderId);
     let icon = document.querySelector(".icon-cancel");  // ikona "✖"
-    //let cancelBtn = document.querySelector(".cancel-order"+orderId);
+        //let cancelBtn = document.querySelector(".cancel-order"+orderId);
     let cancelBtn = document.querySelector(".cancel-order"); // przycisk "Anuluj"
 
         console.log("\nicon --> ", icon);
         console.log("\ncancelBtn --> ", cancelBtn);
 
-    // zamknięcie okna po kliknięciu "✖";
-    /*icon.addEventListener("click", function() {
-        closeRemoveBox();
-    });
-    // zamknięcie okna po kliknięciu "Anuluj";
-    cancelBtn.addEventListener("click", function() {
-        closeRemoveBox();
-    });*/
+        // zamknięcie okna po kliknięciu "✖";
+        /*icon.addEventListener("click", function() {
+            closeRemoveBox();
+        });
+        // zamknięcie okna po kliknięciu "Anuluj";
+        cancelBtn.addEventListener("click", function() {
+            closeRemoveBox();
+        });*/
 
     buttons = [icon, cancelBtn];
 
@@ -62,10 +61,10 @@ function removeOrder(orderId) { // po kliknięciu przycisku "Archiwizuj";    ord
 
         //mainContainer.removeAttribute("style");
 
-        mainContainer.classList.toggle("unreachable", false); // remove class;
+        mainContainer.classList.toggle("unreachable", false); // remove "unreachable" class from #main-container ;
         let textarea = removeBox.querySelector("textarea"); // <textarea> w tym okienku (removeBox);
         resetError(textarea); // usuwa komunikat o błędzie jeśli jest on widoczny;
-        textarea.value = "";
+        //textarea.value = "";
 
         // removeBox.classList.toggle("hidden");
 

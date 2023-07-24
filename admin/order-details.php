@@ -1,11 +1,5 @@
 <?php
-    /*session_start();
-    include_once "../functions.php";
 
-    if(!(isset($_SESSION['zalogowany']))) {
-        header("Location: ../user/___index2.php?login-error");
-        exit();
-    }*/
 
     // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
     require_once "../authenticate-admin.php";
@@ -23,60 +17,38 @@
                 $_SESSION["change-status"] = true; // show update-status box (if there was second post parameter --> true);
             }
 
-            // "1125" ;
-
             // Process the form data and perform necessary validations ;
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 // sanitize input - order-id ;
             $orderId = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT);
-                // 	Sanitization -> remove all characters except digits, plus and minus sign.
+                // Sanitization -> remove all characters except digits, plus and minus sign.
                     // array_keys($_POST)[0] - order-id (id_zamówienia);
                     // "1135"
 
                 // validate order-id - ✓ valid integer ;
-            $_SESSION["order-id"] = filter_var($orderId, FILTER_VALIDATE_INT); // ✓ It ensures that the value is an integer - order-id ;
+            $_SESSION["order-id"] = filter_var($orderId, FILTER_VALIDATE_INT); // ✓ it ensures that the value is an integer - order-id ;
 
             // check if there is really a order with that id ;
             $_SESSION['order-exists'] = false;
-
-                //query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
-                // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0 -> przestawi
-                // $_SESSION['book_exists'] -> na true ;
 
             // check if there is really an order with that id (post - order-id);
             query("SELECT zm.id_zamowienia
                             FROM zamowienia AS zm
                          WHERE zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
-            // przestawi zmienną - $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie (o takim id) ;
+            // przestawi zmienną - $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie (o takim id), jeśli num_rows > 0 ;
 
-            if($orderId === false || $_SESSION["order-id"] === false || $_SESSION['order-exists'] === false || ($_SESSION["order-id"] != array_keys($_POST)[0]) ) {
-
-                // tutaj trzeba odpowiednio obsłużyć błąd ;
-                //
+            if($orderId === false || $_SESSION["order-id"] === false || $_SESSION['order-exists'] === false || ($_SESSION["order-id"] !== array_keys($_POST)[0]) ) {
+                    // tutaj trzeba odpowiednio obsłużyć błąd ;
                 // ✓ id-zamówienia (order-id) nie przeszło walidacji, LUB ✓ nie istnieje zamówienie o takim id;
-                    // handle error !;
-                    //echo "\n error - invalid (didnt pass validation !) book-id (POST) of that book doesnt exist ! \n";
-                    // create and make logic for handling error about not valid book-id ;
-
-                // unset($_SESSION["book-id"]);
-                // obsługa błędu ;
-
-                // musi być komunikat o błędzie (np okienko) + exit() ! ;
-
+                    // musi być komunikat o błędzie (np okienko) + exit() ! ;
                 //echo "<br><hr> 43 invalid order-id OR order doesnt exist ! <br><hr>";
-
-                // obsługa błędu - np przekierowanie na poprzednią stronę (index.php) + wyświetlenie okienka z okmunikatem
+                // obsługa błędu - np przekierowanie na poprzednią stronę (orders.php) + wyświetlenie okienka z okmunikatem
                 // na stronie index.php można sprawdzić, czy np ustawiona wartość $_SESSION["error_costam"] ma wartosc true, i wtedy wyswietlic okienko
-
-                // $_SESSION["error"] = true ;
-
+                    // $_SESSION["error"] = true ;
                 unset($_POST, $orderId, $_SESSION["order-id"], $_SESSION['order-exists']);
-
-                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
-
+                        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 header('Location: orders.php'); exit();
 
             } else { // input is OK - order-id passed validation,    there is a order with that ID;
@@ -86,11 +58,8 @@
 
                 // ✓✓✓ valid book-id, book exist in db;
                     //echo "\n 49 SESSION order-id -> " . $_SESSION["order-id"];
-                    //echo "<br> 51 Valid order-id and order exist ! <br><hr>";
-                    //exit();
-
+                    //echo "<br> 51 Valid order-id and order exist ! <br><hr>"; exit();
                 unset($_POST, $orderId, $_SESSION["order-exists"]);
-
                 // redirect to the page itself
                 //header('Location: ___book.php', true, 303);
 
@@ -99,28 +68,19 @@
                 // to prevent resubmitting the form
             }
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         } else {
-
             // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/admin/order-details.php bez podania wartości w POST[] ;
-
-            //echo "<br> POST value (order-id) doesnt exist ! <br>" ;
-
+                //echo "<br> POST value (order-id) doesnt exist ! <br>" ;
             header('Location: orders.php'); exit();
-
-            // $_SESSION["error"] = true ;
-
-            /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-            echo "GET ->"; print_r($_GET); echo "<hr><br>";
-            echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
-
-            //exit();
+                // $_SESSION["error"] = true ;
+                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+                //exit();
         }
-
-        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-        echo "GET ->"; print_r($_GET); echo "<hr><br>";
-        echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
     } elseif (
         $_SERVER['REQUEST_METHOD'] === "GET" && ( ! isset($_SESSION["order-id"]) || empty($_SESSION["order-id"]) )
@@ -148,10 +108,6 @@
             <?php require "../template/admin/top-nav.php"; ?>
 
             <div id="content">
-
-                <?php /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr>"*/ ?>
 
                 <header>
                     <h3 class="section-header">Szczegóły zamówienia</h3>
@@ -201,6 +157,26 @@
                         <span>Status :</span>
 
                         <?php echo '<span class="order-status-name">' . $_SESSION["status"] . '</span>'; ?> <!-- <br> -->
+
+                        <div id="order-details-status">
+
+                            <?php if(isset($_SESSION["status"]) && ! empty($_SESSION["status"]) && $_SESSION["status"] === "W trakcie realizacji") : ?>
+
+                                <?php query("SELECT zm.termin_dostawy FROM zamowienia AS zm WHERE zm.id_zamowienia='%s'", "showOrderStatusDate",  $_SESSION["order-id"]); ?>
+
+                            <?php elseif(isset($_SESSION["status"]) && ! empty($_SESSION["status"]) && $_SESSION["status"] === "Wysłano") : ?>
+
+                                <?php query("SELECT zm.termin_dostawy, zm.data_wysłania_zamowienia FROM zamowienia AS zm WHERE zm.id_zamowienia='%s'", "showOrderStatusDate",  $_SESSION["order-id"]); ?>
+
+                            <?php elseif(isset($_SESSION["status"]) && ! empty($_SESSION["status"]) && $_SESSION["status"] === "Dostarczono") : ?>
+
+                                <?php query("SELECT zm.data_dostarczenia FROM zamowienia AS zm WHERE zm.id_zamowienia='%s'", "showOrderStatusDate",  $_SESSION["order-id"]); ?>
+
+                            <?php endif; ?>
+
+                        </div>
+
+
 
                         <button class="update-order-status btn-link btn-link-static">Aktualizuj</button>
 
@@ -266,15 +242,15 @@
 
                 <div style="clear: both"></div>-->
 
-            </div>
+            </div> <!-- ✓ #order-det-container -->
 
-            </div> <!-- content -->
+            </div> <!-- ✓ #content -->
 
         </main>
 
-    </div> <!-- container -->
+    </div> <!-- ✓ #container -->
 
-</div> <!-- main-container -->
+</div> <!-- ✓ #main-container -->
 
 <div id="update-status" class="hidden"> <!-- okno zmiany statusu zamówienia -->
 
@@ -306,6 +282,13 @@
                 <span class="order-label">Data wysłania</span><input type="date" name="dispatch-date">
             </label>
                 <div style="clear: both;"></div>
+
+            <label>
+                <span class="order-label">Godzina wysłania</span><input type="time" name="dispatch-time">
+            </label>
+            <div style="clear: both;"></div>
+
+
 
             <label>
                 <span class="order-label">Data dostarczenia</span><input type="date" name="delivered-date">
@@ -448,10 +431,13 @@
 
         const expDeliveryDate = document.querySelector("form#update-order-date label:nth-of-type(1)"); // <label> - input - termin_dostawy;
         const sentDate = document.querySelector("form#update-order-date label:nth-of-type(2)"); // <label> - input - data_wysłania_zamówienia;
-        const dateDelivered = document.querySelector("form#update-order-date label:nth-of-type(3)"); // <label> - input - data_dostarczenia;
+        const sentTime = document.querySelector("form#update-order-date label:nth-of-type(3)"); // <label> - input - data_dostarczenia;
+        const dateDelivered = document.querySelector("form#update-order-date label:nth-of-type(4)"); // <label> - input - data_dostarczenia;
             // const div = document.querySelector("div.delivery-date"); // div > form
             // const btns = document.querySelectorAll("div.delivery-date button");
         const dateError = document.querySelector('span.date-error');
+
+        console.log("\nsentTime --> \n", sentTime);
 
         //deliveryDate.style.display = "block"; // <div class="delivery-date">
         deliveryDate.classList.toggle("hidden", false);
@@ -468,6 +454,9 @@
 
                     if(sentDate.style.display === "block") { // data_wysłania_zamowienia
                         sentDate.style.display = "none";
+                    }
+                    if(sentTime.style.display === "block") {
+                        sentTime.style.display = "none";
                     }
                     if(dateDelivered.style.display === "block") { // data_dostarczenia
                         dateDelivered.style.display = "none";
@@ -489,7 +478,7 @@
             // console.log("\ndeliveryDate => ", deliveryDate);
 
             sentDate.style.display = "block"; // data_wysłania
-sentDate.style.marginBottom = "20px"; // (!)
+            sentDate.style.marginBottom = "20px"; // (!)
 
             deliveryDate.style.paddingTop = "20px"; // div.delivery-date --> form
 
@@ -500,6 +489,7 @@ sentDate.style.marginBottom = "20px"; // (!)
             if(expDeliveryDate.style.display === "none") { // termin dostawy;  <input type="date" ...>
                 expDeliveryDate.style.display = "block";
             }
+            sentTime.style.display = "block";
 
 /*for(let i=0; i<btns.length; i++) {
 updateBtn[i].style.marginTop = "50px";
@@ -509,8 +499,8 @@ $(element).css('margin-top', '50px'); // Set margin-top for each element
 console.log("183");
 });*/
 
-            $('div#update-status .update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) "Aktualizuj";
-                $(element).css('margin-top', '70px');
+            $('div#update-status .update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!) X "Aktualizuj";
+                $(element).css('margin-top', '40px');
             });
 
 /* $(document).ready(function() {
@@ -534,6 +524,9 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
 
             if(sentDate.style.display === "block") { // data_wysłania;
                 sentDate.style.display = "none";
+            }
+            if(sentTime.style.display === "block") { // data_wysłania;
+                sentTime.style.display = "none";
             }
 
             dateDelivered.style.display = "block"; // data_dostarczenia;

@@ -486,6 +486,21 @@ div.book-option form label {
     font-weight: normal;
 }
 
+#order-status > div#order-details-status {
+    margin-top: 15px;
+}
+
+#order-status > div#order-details-status span {
+    margin-left: 15px;
+    /*display: block;*/
+}
+
+#order-status > div#order-details-status div {
+    margin-top: 15px;
+}
+
+
+
 #order-status > span {
     margin-right: 35px;
 }
@@ -633,7 +648,8 @@ div#update-status div.delivery-date {
     padding-top: 20px;
 }
 
-div.delivery-date input[type="date"] {
+div.delivery-date input[type="date"],
+div.delivery-date input[type="time"] {
     margin-left: 26px;
     width: 140px;
     height: 30px;
@@ -648,6 +664,11 @@ div.delivery-date input[type="date"] {
     font-family: 'Lato', sans-serif;
     letter-spacing: .5px;
 }
+
+div.delivery-date input[type="time"] {
+    width: 90px;
+}
+
 
 div.delivery-date label {
     float: left;
@@ -668,6 +689,16 @@ div.delivery-date label:nth-of-type(2) {
 }
 
 div.delivery-date label:nth-of-type(3) {
+
+    display: none;
+
+    position: relative;
+    /*top: 10px;*/
+    left: 330px;
+}
+
+
+div.delivery-date label:nth-of-type(4) { /* 3 */
     display: none;
     /* label - data dostawy - delivery date */
     margin-bottom: 20px;
