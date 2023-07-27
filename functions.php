@@ -1309,6 +1309,7 @@ EOT;
         // return array as JSON-encoded response;
 
         $bookData = []; // array();
+
         while($row = $result->fetch_assoc()) {
             $data = [
                 'id_ksiazki' => $row['id_ksiazki'],

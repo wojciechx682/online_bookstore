@@ -258,9 +258,9 @@
 
 <script>
     // input type file - validation and sanitization;
-        // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file;
+        // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file ;
 
-    let input = document.querySelector('#edit-book-image');
+    let input = document.querySelector('#edit-book-image'); // input type="file"
     let div = document.querySelector('.preview');
 
     // input.style.opacity = "0"; // display: none; ? visibility: hidden; ?

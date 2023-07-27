@@ -225,7 +225,7 @@ require_once "../authenticate-admin.php";
                                                 ["type"]=> string(9) "image/bmp"
                                                 ["tmp_name"]=> string(24) "C:\xampp\tmp\php8CD9.tmp"
                                                 ["error"]=> int(0)
-                                                ["size"]=> int(7806006)
+                                                ["size"]=> int(7806006) - bytes
                                               }
              }
 

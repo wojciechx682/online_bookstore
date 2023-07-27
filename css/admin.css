@@ -1385,15 +1385,15 @@ form#edit-book-data div p span,
 form#add-book-data div p span /* \admin\add-book.php */
 {
     display: inline-block;
-    min-width: 125px;
+    min-width: 150px;
 
     /*border: 1px solid lightblue;*/
 }
 
-form#add-book-data div p span /* \admin\add-book.php */
+/*form#add-book-data div p span !* \admin\add-book.php *!
 {
     min-width: 150px;
-}
+}*/
 
 form#edit-book-data div p span label:hover,
 form#add-book-data div p span label:hover /* \admin\add-book.php */
