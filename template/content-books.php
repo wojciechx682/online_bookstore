@@ -35,6 +35,8 @@
             <div class="book-author">%s %s</div>
             <!-- <div class="book-rating">%s</div>-->
 
+            <div class="book-status">%s</div>
+
             <!--<button class="add-to-cart">Add to Cart</button>-->
             <form action="add_to_cart.php" method="post">
                 <input type="hidden" name="id_ksiazki" value="%s"> <!-- <-------------------- -->

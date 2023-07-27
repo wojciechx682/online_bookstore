@@ -90,7 +90,9 @@
                     </div>
                 </aside>
                 <div id="content">
-                    <?php print_r($_SESSION); ?>
+                    <?php
+                        //print_r($_SESSION);
+                    ?>
 
                     <h3 class="account-header">Usuń konto</h3>
 

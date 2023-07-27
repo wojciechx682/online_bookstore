@@ -33,7 +33,6 @@
     </form>
 </div>-->
 
-
                 <form id="change-magazine-form" action="change-magazine.php" method="post"> <!-- list <select> z wyborem magazynu -->
 
                     <select id="change-magazine" name="change-magazine">
@@ -63,11 +62,7 @@
                         <!--<input type="submit" value=" ">-->
                     </form>
 
-                    <button class="add-book-button btn-link btn-link-static">
-                        <a href="add-book.php">
-                            Dodaj
-                        </a>
-                    </button>
+                    <button class="add-book-button btn-link btn-link-static">Dodaj</button>
                 </div>
 
                 <div style="clear:both;"></div>

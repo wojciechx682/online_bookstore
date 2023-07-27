@@ -176,8 +176,17 @@
                 // load the content from the external template file into string
                 $book = file_get_contents("../template/content-books.php");
 
+                    /*if($row["ilosc_egzemplarzy"] == null) {
+                        $row["ilosc_egzemplarzy"] = 'niedostępna';
+                    } else {
+                        if($row["ilosc_egzemplarzy"] > 0) {
+                            $row["ilosc_egzemplarzy"] = 'dostępna';
+                        }
+                    }*/
+                $row["ilosc_egzemplarzy"] = ($row["ilosc_egzemplarzy"] === null) ? 'niedostępna' : ($row["ilosc_egzemplarzy"] > 0 ? 'dostępna' : 'niedostępna');
+
                 // replace fields in $book string to book data from $result, display result content as HTML
-                echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["id_ksiazki"]);
+                echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"]);
 
                 $i++;
             }
@@ -1240,7 +1249,7 @@ EOT;
         while($row = $result->fetch_assoc()) {
             echo '<option value="'.$row["id_magazynu"].'">'.$row["nazwa"].'</option>';
         }
-            echo '<option value="asdasd"></option>'; // remove thhat line in the future;
+            /*echo '<option value="asdasd"></option>';*/ // remove thhat line in the future;
         $result->free_result();
     }
 
@@ -1359,20 +1368,62 @@ EOT;
                                     ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora", "get_books", "");/*
                                     //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);*/
 
-            query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+            /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
                                      kt.nazwa, sb.id_kategorii, 
                                         au.imie, au.nazwisko 
                                      FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
                                      WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
-                                     ", "get_books", "");
+                                     ", "get_books", "");*/
+
+            // dodanie statusu - "dostępna / niedostępna" -->
+
+            query("SELECT
+                            ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+                            kt.nazwa, sb.id_kategorii, 
+                            au.imie, au.nazwisko,
+                            SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                        FROM 
+                            ksiazki AS ks
+                        JOIN 
+                            autor AS au ON ks.id_autora = au.id_autora
+                        JOIN 
+                            subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                        JOIN 
+                            kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                        LEFT JOIN 
+                            magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                        GROUP BY ks.id_ksiazki", "get_books", ""); // dane o ksiażce + ilość egzemplarzy na stanie
         }
         else
         {
             //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);
-            query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, kt.nazwa, sb.id_kategorii, au.imie, au.nazwisko 
+            /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, kt.nazwa, sb.id_kategorii, au.imie, au.nazwisko
                          FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
                          WHERE kt.nazwa LIKE '%s' AND ks.id_autora = au.id_autora 
-                         AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii", "get_books",  $_SESSION['kategoria']);
+                         AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii", "get_books",  $_SESSION['kategoria']);*/
+
+            // dodanie statusu - "dostępna / niedostępna" -->
+
+            query("SELECT
+                            ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+                            kt.nazwa, sb.id_kategorii, 
+                            au.imie, au.nazwisko,
+                            SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                        FROM 
+                            ksiazki AS ks
+                        JOIN 
+                            autor AS au ON ks.id_autora = au.id_autora
+                        JOIN 
+                            subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                        JOIN 
+                            kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                        LEFT JOIN 
+                            magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                        WHERE kt.nazwa LIKE '%s'                                   
+                        GROUP BY ks.id_ksiazki", "get_books", $_SESSION['kategoria']); // dane o ksiażce + ilość egzemplarzy na stanie
+
+        // WHERE kt.nazwa LIKE '%s'
+
         }
     }
 

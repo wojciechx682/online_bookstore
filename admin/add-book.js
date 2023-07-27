@@ -1,70 +1,22 @@
 
-// admin/edit-books.php;
+// \admin\add-book.php - add new book;
 
-function getSubcategories(categorySelect) {
-
-    // <select id="edit-book-category"
-    //             name="edit-book-category"
-    //     --> onchange="getSubcategories(this)">
-
-        //let categoryId = document.getElementById('edit-book-category').value;
-    let categoryId = categorySelect.value; // "2" - string;
-
-    // create XMLHttpRequest Object ; --> wysyłanie żądań AJAX  +  obsługa odpowiedzi ;
-    // meotdy -->   .open()
-    //              .send()
-
-    let xhr = new XMLHttpRequest(); // send an AJAX request to fetch the subcategories based on the selected category;
-
-    xhr.onreadystatechange = function() {           // xhr.onload = function(); - Otrzymanie i wczytanie odpowiedzi z serwera ;
-                                                    //              wywołanie funkcji anonimowej;
-
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-
-            if (xhr.status === 200) {              // after response from server;
-
-                // sprawdzenie właściwości "status" obiektu xhr - w celu sprawdzenia, czy odpowiedź otrzymana z serwera jest prawidłowa - 200 OK) ;
-
-                // Poniżej kod odpowiedzialny za Przetworzenie odpowiedzi - udzielonej przez serwer ;
-
-                let subcategories = JSON.parse(xhr.responseText); // object
-                // update the subcategories select list;
-            //let subcategorySelect = document.getElementById('edit-book-subcategory');
-                let subcategorySelect = document.getElementById('book-subcategory');
-                subcategorySelect.innerHTML = ''; // clear previous options
-
-                for (let i = 0; i < subcategories.length; i++) {
-                    let option = document.createElement('option');
-                    option.value = subcategories[i].id; // object
-                    option.textContent = subcategories[i].name;
-                    subcategorySelect.appendChild(option);
-                }
-            } else {
-                console.error('Error:', xhr.status);
-            }
-        }
-    };
-
-    xhr.open('GET', 'get-subcategories.php?category_id=' + categoryId, true);  // przygotowanie Żądania (Ajax);
-    //               adres strony Obsługującej żądanie;                async ? (true/false)
-
-    xhr.send(); // Wysłanie do serwera przygotowanego wcześniej Żądania;    (Informacje dodatkowe w nawiasach);
-}
-
-$("form.edit-book-data").on("submit", function(e) {
+$("form.add-book-data").on("submit", function(e) {
 
     e.preventDefault(); // prevent default <form> action which is submitted;
 
     let data = $(this); // object that holds <form> data;
-        //let postData = $(this).serialize(); // serialized <form> data;
+    //let postData = $(this).serialize(); // serialized <form> data;
     let formData = new FormData(this); // Create a new FormData object
     // need to use the FormData object to send the form data, including the image file.
     let result = document.querySelector('div.result');
 
-    /*console.log("\n46 data -> ", data);
+    console.log("\n46 data -> ", data);
     console.log("\n46 typeof data -> ", typeof data);
     console.log("\n46 formData -> ", formData);
-    console.log("\n46 typeof formData -> ", typeof formData);*/
+    console.log("\n46 typeof formData -> ", typeof formData);
+
+    // return;
 
     // front-end validation;
 
@@ -82,19 +34,19 @@ $("form.edit-book-data").on("submit", function(e) {
     let bookSubcat = DOMPurify.sanitize(data[0][11].value); // podkategoria / number / select#edit-book-subcategory;
     let bookId = DOMPurify.sanitize(data[0][12].value); // id_ksiazki / number / input#edit-book-id
 
-console.log("\nbookTitle -> ", bookTitle);
-console.log("\nbookAuthor -> ", bookAuthor);
-console.log("\nbookYear -> ", bookYear);
-console.log("\nbookPrice -> ", bookPrice);
-console.log("\npublisher -> ", publisher);
-console.log("\nbookImage -> ", bookImage);
-console.log("\nbookDesc -> ", bookDesc);
-console.log("\nbookCover -> ", bookCover);
-console.log("\nbookPages -> ", bookPages);
-console.log("\nbookDims -> ", bookDims);
-console.log("\nbookCat -> ", bookCat);
-console.log("\nbookSubcat -> ", bookSubcat);
-console.log("\nbookId -> ", bookId); // <script>alert()</script>
+    console.log("\nbookTitle -> ", bookTitle);
+    console.log("\nbookAuthor -> ", bookAuthor);
+    console.log("\nbookYear -> ", bookYear);
+    console.log("\nbookPrice -> ", bookPrice);
+    console.log("\npublisher -> ", publisher);
+    console.log("\nbookImage -> ", bookImage);
+    console.log("\nbookDesc -> ", bookDesc);
+    console.log("\nbookCover -> ", bookCover);
+    console.log("\nbookPages -> ", bookPages);
+    console.log("\nbookDims -> ", bookDims);
+    console.log("\nbookCat -> ", bookCat);
+    console.log("\nbookSubcat -> ", bookSubcat);
+    console.log("\nbookId -> ", bookId); // <script>alert()</script>
 
     if (
         bookTitle !== data[0][0].value ||   // check, if values were correct (if passed validation);
@@ -121,8 +73,8 @@ console.log("\nbookId -> ", bookId); // <script>alert()</script>
             type: "POST",                    // GET or POST;
             url: "edit-book-data.php",       // Path to file (that process the <form> data);
             data: formData,                  //  ̶s̶e̶r̶i̶a̶l̶i̶z̶e̶d̶ ̶<̶f̶o̶r̶m̶>̶ ̶d̶a̶t̶a̶;̶ // Use the FormData object instead of serialized data;
-                processData: false,              // (?) Prevent jQ from processing the data;
-                contentType: false,              // (?) Let the browser set the content type automatically;
+            processData: false,              // (?) Prevent jQ from processing the data;
+            contentType: false,              // (?) Let the browser set the content type automatically;
             timeout: 2000,                   // Waiting time;
             beforeSend: function() {         // Before Ajax - function called before sending the request;
                 $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
@@ -132,17 +84,17 @@ console.log("\nbookId -> ", bookId); // <script>alert()</script>
             },
             success: function(data) {        // Show content; // data - dane zwrócone z serwera !;
                 $('div.result').html(data); // ✓ tutaj należy zastąpić tą linię danymi zwróconymi z serwera - to serwer udziela odpiwedzi czy udało się zaktualizować dane !;
-                    //confirmButton.hide();                  // "Potwierdź";
-                    //cancelButton.hide();                   // "Anuluj";
-                    //$("div.delivery-date").append(data);   // data - dane zwrócone z serwera;
-                        // finishArchive();
+                //confirmButton.hide();                  // "Potwierdź";
+                //cancelButton.hide();                   // "Anuluj";
+                //$("div.delivery-date").append(data);   // data - dane zwrócone z serwera;
+                // finishArchive();
             },
             error: function(data) { /*postData*/                      // Show error msg;
                 $('div.result').html(data); // tutaj należy zastąpić tą linię danymi zwróconymi z serwera - to serwer udziela odpiwedzi czy udało się zaktualizować dane !;
-                        //$content.html('<div id="container">Please try again soon.</div>');
-                    //confirmButton.hide(); // "Potwierdź";
-                    //cancelButton.hide();  // "Anuluj";
-                    //$("div.delivery-date").append(data).fadeIn(1000); // data - dane zwrócone z serwera;
+                //$content.html('<div id="container">Please try again soon.</div>');
+                //confirmButton.hide(); // "Potwierdź";
+                //cancelButton.hide();  // "Anuluj";
+                //$("div.delivery-date").append(data).fadeIn(1000); // data - dane zwrócone z serwera;
             }
         });
     }

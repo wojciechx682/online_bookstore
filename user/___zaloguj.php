@@ -94,9 +94,11 @@
 
                 <div id="content">
 
-                    <?php echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; ?>
+                    <?php
+                        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; */
+                    ?>
 
                     <!-- Formularz Logowania -->
 
@@ -105,6 +107,8 @@
                     <form action="logowanie.php"
                             method="post"
                             id="login-form">
+
+                        Zaloguj się na swoje konto <hr class="register-form-hr-line">
 
                         <div class="login-form-section">
 
@@ -126,6 +130,8 @@
                         </div> <!-- .login-form-section -->
 
                     </form>
+
+                    <hr class="register-form-hr-line">
 
                     <a href="___reset_password.php" class="a-login-page-link">Przypomnij hasło</a>
 

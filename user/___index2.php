@@ -193,7 +193,6 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
         $_SESSION["adv-search-category"] = $category;
         $_SESSION["kategoria"] = $category;
 
-
         if( $category === false || $category === null || ($_SESSION["adv-search-category"] !== $_POST["adv-search-category"]) ) {
             // category empty or failed validation ;
             $valid = false;
@@ -216,11 +215,31 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
 
         // set up the initial query string
             // $query = "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki";
-        $_SESSION["adv-search-query"] = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, 
+
+       /* $_SESSION["adv-search-query"] = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
                           ks.rating,
                           kt.nazwa, sb.id_kategorii,  
                            au.imie, au.nazwisko 
-                          FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb";
+                          FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb";*/
+
+        // dodanie statusu - "dostępna / niedostępna" -->
+
+        $_SESSION["adv-search-query"] = "SELECT
+                            ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
+                            kt.nazwa, sb.id_kategorii,
+                            au.imie, au.nazwisko,
+                            SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                        FROM
+                            ksiazki AS ks
+                        JOIN
+                            autor AS au ON ks.id_autora = au.id_autora
+                        JOIN
+                            subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                        JOIN
+                            kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                        LEFT JOIN
+                            magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                        ";
 
         if ( ! empty($_POST["adv-search-title"]) ) {
             // sanitize adv-seatch-title;
@@ -363,7 +382,7 @@ if ( ! empty($_SESSION['year-max']) ) {
             if ( ! empty($where) ) {
                 // Combine the conditions into a single WHERE clause
                 //$query .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where);
-                $_SESSION["adv-search-query"] .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where);
+                $_SESSION["adv-search-query"] .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where) . " GROUP BY ks.id_ksiazki ";
 
                 $_SESSION["adv-search-values"] = $values;
 
@@ -376,12 +395,7 @@ if ( ! empty($_SESSION['year-max']) ) {
             header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
             exit();
         }
-
-
-
     }
-
-
 }
 
 if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
@@ -390,9 +404,6 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
     $_SESSION["kategoria"] = "Wszystkie";
 }
-
-
-
 
 ?>
 
@@ -452,7 +463,6 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
         </div>
 
-
                         <div id="input-search-nav-div">
 
                             <label for="input-search-nav">
@@ -467,10 +477,6 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                         </div>
 
-
-
-
-
                         <?php
                             query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", "");
                             // filtrowanie autorów - <ul> authors list;
@@ -478,15 +484,32 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                         <button id="filter-authors">Zastosuj</button>
 
+                        <h3>Status</h3>
+
+                        <ul id="ul-book-status-list">
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="available" class="book-status-checkbox" value="dostępna">dostępna
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="not-available" class="book-status-checkbox" value="niedostępna">niedostępna
+                                </label>
+                            </li>
+                        </ul>
+
+                        <button id="filter-book-status">Zastosuj</button>
+
                     </div> <!-- #nav -->
 
                 </aside> <!-- #book-filters -->
 
                 <?php
 
-                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                  /*  echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                     // nie ma sensu sprawdzać czy kategoria jest ustawiona, ponieważ zawsze jest (w zmiennej $_SESSION['kat']);
                         // (z wyjątkiem gdy wprowadzono tytuł w input-search-nav);
@@ -519,15 +542,38 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                                 unset($_SESSION["input-search"]);
 
 
-                            echo " 180 input-seach (sanitized) -> " . $search_value . "<br>";
+                    //echo " 180 input-seach (sanitized) -> " . $search_value . "<br>";
 
                             // ew warunek jeśli jest różne od oryginalnej wartości wejściowej -> wyświetlić komunikat "podaj poprawne dane";
-                            query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+
+                            /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
                                                      kt.nazwa, sb.id_kategorii, 
                                                         au.imie, au.nazwisko 
                                                      FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
                                                      WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
-                                                     AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii;
+                                                     AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);*/ // kategorie => nazwa, id_kategorii;
+
+                            // dodanie statusu - "dostępna / niedostępna" -->
+
+                            query("SELECT
+                                            ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+                                            kt.nazwa, sb.id_kategorii, 
+                                            au.imie, au.nazwisko,
+                                            SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                                        FROM 
+                                            ksiazki AS ks
+                                        JOIN 
+                                            autor AS au ON ks.id_autora = au.id_autora
+                                        JOIN 
+                                            subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                                        JOIN 
+                                            kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                                        LEFT JOIN 
+                                            magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                                        WHERE ks.tytul LIKE '%%%s%%' 
+                                        GROUP BY ks.id_ksiazki", "get_books", $search_value); // kategorie => nazwa, id_kategorii;
+
+
                         /*} else { // puste pole wyszukiwania;
 
                             echo '<h3>Brak wyników</h3>'; // (!) ewentualnie można to zrobić wewnątrz funkcji query (?);
@@ -552,14 +598,15 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                         $title = $_SESSION["input-search-nav"];
                             unset($_SESSION["input-search-nav"]);
 
-                        echo "198 input-seach-nav -> " . $title . "<br>";
+                //echo "198 input-seach-nav -> " . $title . "<br>";
 
                         $values = [$title];
 
                         //echo '<script> displayNav(); </script>'; // do usunięcia - to funkcja tutaj NIC NIE ROBI ale zostawiam jakby coś;
 
                         // budowanie kwerendy w zależności od tego czy kategoria == "Wszystkie" czy jest to konkretna kategoria;
-                        $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, 
+
+                        /*$query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
                                                  ks.rating,
                                                  kt.nazwa, sb.id_kategorii, 
                                                   au.imie, au.nazwisko 
@@ -567,9 +614,27 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                                                       autor AS au, 
                                                       kategorie AS kt, 
                                                       subkategorie AS sb 
-                                                 WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
-                                                   
-                                                 AND ks.tytul LIKE '%%%s%%'";
+                                                 WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii                                                   
+                                                 AND ks.tytul LIKE '%%%s%%'";*/
+
+                        // dodanie statusu - "dostępna / niedostępna" -->
+
+                        $query = "SELECT
+                                    ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+                                    kt.nazwa, sb.id_kategorii, 
+                                    au.imie, au.nazwisko,
+                                    SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                                FROM 
+                                    ksiazki AS ks
+                                JOIN 
+                                    autor AS au ON ks.id_autora = au.id_autora
+                                JOIN 
+                                    subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                                JOIN 
+                                    kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                                LEFT JOIN 
+                                    magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                                WHERE ks.tytul LIKE '%%%s%%'";
 
                         if($_SESSION["kategoria"] != "Wszystkie") { // kategoria zawsze jest ustawiona wsześniej, przyjmuje wartość "Wszystkie" lub dowolną inną z istniejących;
 
@@ -589,6 +654,11 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                             /*echo "<br>283<br>";*/
                         }
 
+                        $query .= " GROUP BY ks.id_ksiazki";
+
+                        echo "<br><hr><br> query --> <br><br>";
+                            echo $query . "<br><br><hr><br>";
+
                         query($query, "get_books", $values);
 
                     }
@@ -600,6 +670,12 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                     else if ( isset($_SESSION["adv-search-query"])
 
                     ) {
+
+                        echo "<br><hr><br>";
+                            echo "<br> adv-search-query --> <br><br>";
+                            echo $_SESSION["adv-search-query"];
+                        echo "<br><hr><br>";
+
                         /*// set up the initial query string
                             // $query = "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki";
                         $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, 
@@ -708,7 +784,7 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                     else {
                         // domyślnie - strona główna - LUB - GET kategoria ?????? NA PEWNO ? DODAŁEM WIĘCEJ WARUNKÓW WYŻEJ
 
-                        echo "<br>strona główna - LUB - GET kategoria<br>";
+                // echo "<br>strona główna - LUB - GET kategoria<br>";
 
                         // echo '<script> console.log("170 --> \n\n"); displayNav(); </script>'; // odpala funkcję ale nie widać zmian z nav'em;
 
@@ -785,6 +861,8 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
 
 </script>
+
+    <script src="../scripts/filter-book-status.js"></script>
 
 </body>
 </html>

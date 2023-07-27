@@ -228,9 +228,11 @@ if ( isset($_POST["email"]) && ! empty($_POST["email"]) ) { // if email was in P
 
             <div id="content">
 
-                <?php echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                <?php
+                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>" ?>
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
+                ?>
 
                 <!-- Formularz Resetowania hasła -->
 

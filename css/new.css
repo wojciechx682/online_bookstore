@@ -1288,22 +1288,18 @@ body {
     position: relative;
 }
 
-#div-search {
+#div-search
+{
     /*width: 33.33333%*/
     width: calc(100% * 0.4); /* 1/1.5 szerokości rodzica -> #n-header */
-
-/*    border: 1px dashed black;*/
-
+    /*border: 1px dashed black;*/
     float: left;
-
     padding: 5px;
-
-
-
     min-width: 250px;
 }
 
-#div-search > form#search-form > input[type="submit"] {
+#div-search > form#search-form > input[type="submit"]
+{
     padding: 8px 32px 8px 2px;
     margin-left: 8px;
     border: 1px solid #a9a9a9;
@@ -1316,6 +1312,20 @@ body {
    /* padding-right: 32px;*/
 }
 
+/*#main-container > #container > main div#content > div#admin-books-header-container div#div-search-admin > form#search-form > input[type="submit"] !* admin/books.php *!
+{
+    padding: 8px 32px 8px 2px;
+    margin-left: 8px;
+    border: 1px solid #a9a9a9;
+    border-radius: 2px;
+    !* Add search icon as background image *!
+    background-image: url('../assets/search-icon.png');
+    background-repeat: no-repeat;
+    background-position: right 10px top 8px;
+    background-size: 16px;
+    !* padding-right: 32px;*!
+}*/
+
 #div-search > form#search-form > input[type="submit"]:hover {
 
     border-color: #818181;
@@ -1327,12 +1337,9 @@ body {
         background-position: right 8px center;
         background-size: 16px;*/
     /*padding-right: 32px;*/
-
-
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
-
 }
 
 #div-search > form#search-form > input#input-search {
@@ -2104,82 +2111,91 @@ div#input-search-nav-div form > input[type="submit"]:hover {
 
 
 div#nav > h3:nth-of-type(4) { /* "Autorzy" */
-
     padding-top: 15px;
     padding-bottom: 11px;
-
     margin-top: 15px;
-
     border-top: 1px ridge rgba(166, 166, 166, 0.38);
-
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
-
     /*color: blue;*/
-
     margin-bottom: 17px;
-
 }
 
-ul#ul-authors  {
+div#nav > h3:nth-of-type(5) { /* "Status" (dostępna/niedostępna) */
+    padding-top: 15px;
+    padding-bottom: 11px;
+    margin-top: 15px;
+    border-top: 1px ridge rgba(166, 166, 166, 0.38);
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
+    margin-bottom: 17px;
+    /*color: blue;*/
+}
+
+
+
+ul#ul-authors,
+ul#ul-book-status-list /* "Stasus" - dostępna/niedostępna */ {
     list-style-type: none;
     padding-left: 0;
-
     height: 125px;
     overflow-y: scroll;
-
     /*border-top: 1px ridge rgba(166, 166, 166, 0.38);*/
-
     background-color: rgba(199, 199, 199, 0.1);
-
     border-radius: 4px;
-
     overflow-x: hidden !important;
-
 }
 
-ul#ul-authors li {
+ul#ul-book-status-list {
+    height: unset;
+    overflow-y: unset;
+}
+
+
+ul#ul-authors li,
+ul#ul-book-status-list li {
     min-width: 145px !important;
-
     overflow-x: hidden !important;
 }
 
-ul#ul-authors::-webkit-scrollbar {
+ul#ul-authors::-webkit-scrollbar/*,
+ul#ul-book-status-list::-webkit-scrollbar*/ {
     width: 12px;               /* width of the entire scrollbar */
 }
 
-ul#ul-authors::-webkit-scrollbar-track {
+ul#ul-authors::-webkit-scrollbar-track/*,
+ul#ul-book-status-list::-webkit-scrollbar-track*/
+{
     background: #c9c9c9;        /* color of the tracking area */
     border-radius: 10px;
 }
 
-ul#ul-authors::-webkit-scrollbar-thumb {
+ul#ul-authors::-webkit-scrollbar-thumb/*,
+ul#ul-book-status-list::-webkit-scrollbar-thumb*/
+{
     background: #727272;     /* color of the scroll thumb */
     border-radius: 20px;       /* roundness of the scroll thumb */
     /*border: 3px solid orange;*/  /* creates padding around scroll thumb */
 }
 
-ul#ul-authors > li > label > input {
+ul#ul-authors > li > label > input,
+ul#ul-book-status-list  > li > label > input
+{
 
     margin-right: 10px;
-
-
-
     position: relative;
     top: 2px
-
 }
 
-ul#ul-authors > li > label  {
-
-   line-height: 125%;
-
+ul#ul-authors > li > label,
+ul#ul-book-status-list  > li > label  {
+    line-height: 125%;
     cursor: pointer;
-
 }
 
 /* ul - przycisk zastosuj */
 
-button#filter-authors {
+button#filter-authors,
+button#filter-book-status
+{
     /* margin-left: 5px; */
     /* width: 200px; */
     min-width: 85px;
@@ -2199,7 +2215,9 @@ button#filter-authors {
 }
 
 
-button#filter-authors:hover {
+button#filter-authors:hover,
+button#filter-book-status:hover
+{
     cursor: pointer;
     -webkit-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);

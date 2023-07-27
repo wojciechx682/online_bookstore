@@ -136,6 +136,15 @@ div#top-nav {
     background-color: var(--top-nav);
 }
 
+#main-container > #container > main header > div#top-nav button.btn-link {
+    width: 110px !important;
+    background-color: #2f2f2f4a !important;
+    border-radius: 6px;
+    float: right;
+    margin-right: 15px;
+    margin-top: 29px;
+}
+
 h3 {
     /*border: 1px solid red;*/
 }
@@ -176,11 +185,126 @@ h3.section-header-books {
     /*border: 1px solid red;*/
     /*width: 300px;*/
 
-    /*float: left;*/
+/*float: left;*/
     display: inline-block;
     margin-top: 14px;
     padding-bottom: 7px;
 }
+
+div#admin-search-books-div {
+    /*border: 1px solid lightcoral;*/
+
+    overflow: auto;
+
+    min-width: 430px;
+
+    margin-bottom: 15px;
+}
+
+div#admin-search-books-div form#admin-search-books-form {
+    font-weight: normal;
+    /*margin-bottom: 15px;*/
+
+    float: left;
+
+/*position: relative;
+top: -10px;*/
+
+    /*border: 1px solid lightskyblue;*/
+    width: 265px;
+}
+
+div#admin-search-books-div form#admin-search-books-form > span {
+    display: block;
+    float: left;
+    padding-top: 17px;
+}
+
+div#admin-search-books-div form#admin-search-books-form > input[type="search"] {
+    margin-left: 10px;
+    background-color: transparent;
+    /*border: none;*/
+        /*min-width: 165px;
+        width: calc(100% * 0.75);*/
+            /*background-color: rgb(255, 255, 255);*/
+    color: #ffffff;
+    border: 1px ridge rgba(210, 210, 210, 0.38);
+    border-radius: 4px;
+    /*font-size: 20px;*/
+    /*font-weight: bold;*/
+    padding: 8px;
+    box-sizing: border-box;
+    outline: none;
+    margin-top: 10px;
+    /*transition: all 0.125s ease-in-out;*/
+}
+
+
+
+/*#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin !* admin/books.php *!
+{
+    width: 100px;
+    display: inline;
+    border: 1px solid lightskyblue;
+    position: relative;
+    top: -3px;
+    margin-left: 15px;
+}
+
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin form !* admin/books.php *!
+{
+    display: inline;
+}
+
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin > form#search-books-form-admin > input#input-search-books-admin:focus,
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin > form#search-books-form-admin  > input#input-search-books-admin:hover {
+    cursor: pointer !important;
+    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+}
+
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin > form#search-books-form-admin > input[type="submit"]
+{
+    padding: 8px 32px 8px 2px;
+    margin-left: 8px;
+    border: 1px solid #a9a9a9;
+    border-radius: 2px;
+    background-image: url('../assets/search-icon.png');
+    background-repeat: no-repeat;
+    background-position: right 10px top 8px;
+    background-size: 16px;
+
+}
+
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin > form#search-books-form-admin > input[type="submit"]:hover {
+
+    border-color: #818181;
+    background-color: #f3f3f3;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+}
+
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin > form#search-books-form-admin > input#input-search-books-admin {
+    color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 8px;
+    box-sizing: border-box;
+    outline: none;
+    margin-top: 10px;
+}*/
+
+
+
+
+
+
+
+
 
 h4.section-header {
     margin-top: 5px;
@@ -521,7 +645,10 @@ div#content button.add-book-button
 }
 
 div#content button.add-book-button {
-    margin-top: 30px;
+    margin-top: 7px;
+
+    float: right;
+
 }
 
 div#order-status button.update-order-status {
@@ -985,7 +1112,7 @@ hr#book-details-hr-books {
     background-color: rgba(166, 166, 166, 0.53);
     border: none;
     height: 1px;
-    margin: -5px 0 25px 0;
+    margin: -5px 0 10px 0;
     /*max-width: 255px;*/
 }
 
@@ -1042,7 +1169,9 @@ select#change-magazine option:hover {
     cursor: pointer;
 }
 
-form#change-magazine-form {
+form#change-magazine-form,
+form.change-magazine-form
+{
     float: right;
     margin-top: 15px;
 }
@@ -1081,7 +1210,9 @@ img#loading-icon {
 
 /* admin\edit-book ---------------------------------------------------------------------- */
 
-#content form#edit-book-data input#input-submit-edit-book-data {
+#content form#edit-book-data input#input-submit-edit-book-data,
+#content form#add-book-data input#input-submit-add-book-data
+{
         /*width: 15%;*/
     margin-left: 0;
     margin-top: 5px;
@@ -1090,7 +1221,7 @@ img#loading-icon {
         /*width: 200px;*/
     /*min-width: 150px;*/
         /*width: calc(100% * 0.218);*/
-    width: 175px;
+    width: 135px;
 
     /*background-color: rgb(255, 255, 255);*/
     color: #707070;
@@ -1113,29 +1244,47 @@ img#loading-icon {
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
 }
 
-
-
-
-
-
 #content form#edit-book-data input[type="text"],
-#content form#edit-book-data input[type="number"] {
-    /*margin-left: 5px;*/
-    /*width: 200px;*/
+#content form#edit-book-data input[type="number"],
+
+#content form#add-book-data input[type="text"],
+#content form#add-book-data input[type="number"] /* \admin\add-book.php */ {
+                    /*!*margin-left: 5px;*!
+                    !*width: 200px;*!
+                    min-width: 150px;
+                    !*width: calc(100% * 0.218);*!
+                    width: 235px;
+                    !*background-color: rgb(255, 255, 255);*!
+                    color: #707070;
+                    border: 1px ridge #b7b7b7;
+                    border-radius: 5px;
+                    !*font-size: 20px;*!
+                    font-weight: bold;
+                    padding: 8px;
+                    box-sizing: border-box;
+                    outline: none;
+                    !*margin-top: 10px;*!
+                    !*margin-left: 15px;*! !* (?) *!*/
+
     min-width: 150px;
-    /*width: calc(100% * 0.218);*/
     width: 235px;
+    /*margin-left: 10px;*/
+    background-color: transparent;
+    /*border: none;*/
+    /*min-width: 165px;
+    width: calc(100% * 0.75);*/
     /*background-color: rgb(255, 255, 255);*/
-    color: #707070;
-    border: 1px ridge #b7b7b7;
+    color: #ffffff;
+    border: 1px ridge rgba(210, 210, 210, 0.38);
     border-radius: 5px;
-    /*font-size: 20px;*/
     font-weight: bold;
+    /*font-size: 20px;*/
+    /*font-weight: bold;*/
     padding: 8px;
     box-sizing: border-box;
     outline: none;
     /*margin-top: 10px;*/
-    /*margin-left: 15px;*/ /* (?) */
+    /*transition: all 0.125s ease-in-out;*/
 }
 
 #content form#edit-book-data input[type="text"]:hover,
@@ -1146,47 +1295,123 @@ img#loading-icon {
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
 }
 
-#content form#edit-book-data select {
-    /*margin-top: 15px;
-    margin-bottom: 15px;*/
+#content form#edit-book-data select,
+#content form#add-book-data select
+{
+                   /* !*margin-top: 15px;
+                    margin-bottom: 15px;*!
+                    outline: none;
+                    !* background-color: rgb(255, 255, 255); *!
+                    color: #494949;
+                    border: 1px ridge #cbcbcb;
+                    border-radius: 5px;
+                    !* font-size: 20px; *!
+                    !*font-weight: bold;*!
+                    padding: 3px 5px 3px 5px;
+                    box-sizing: border-box;
+                    !*outline: none;*!
+                    !*margin-top: 10px;*!
+                    !* transition: all 0.125s ease-in-out;*!
+                    !*width: 50%;*!*/
+
+    background-color: transparent;
+    position: relative;
+    top: -3px;
+    border: 1px ridge rgba(166, 166, 166, 0.38);
+    border-radius: 3px;
+    width: 120px;
+        /*padding: 3px 3px 4px 10px;*/
+    /*padding: 3px 5px 3px 5px;*/
+    padding: 8px;
+    margin: 0 auto 0 auto;
+    user-select: none;
     outline: none;
-    /* background-color: rgb(255, 255, 255); */
-    color: #494949;
-    border: 1px ridge #cbcbcb;
-    border-radius: 5px;
-    /* font-size: 20px; */
-    /*font-weight: bold;*/
-    padding: 3px 5px 3px 5px;
-    box-sizing: border-box;
-    /*outline: none;*/
-    /*margin-top: 10px;*/
-    /* transition: all 0.125s ease-in-out;*/
-    /*width: 50%;*/
+    color: var(--text-color);
 }
+
+#content form#edit-book-data select:hover,
+#content form#add-book-data select:hover {
+    cursor: pointer;
+    border: 1px ridge rgba(210, 210, 210, 0.38);
+    user-select: none;
+}
+
+#content form#edit-book-data select option,
+#content form#add-book-data select option
+{
+    /*background-color: var(--content);*/
+    background-color: #656565;
+}
+#content form#edit-book-data select option:hover,
+#content form#add-book-data select option:hover
+{
+    cursor: pointer;
+}
+
+
+/*
+!* Style the scrollbar track *!
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+!* Style the scrollbar handle (thumb) *!
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+    height: 2px;
+}
+
+!* Style the scrollbar handle when hovered *!
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+*/
+
+
+
+
+
+
+
+
 
 div.result {
     margin-top: 5px;
     padding-top: 8px;
 }
 
-form#edit-book-data div p span {
+form#edit-book-data div p span,
+form#add-book-data div p span /* \admin\add-book.php */
+{
     display: inline-block;
     min-width: 125px;
 
     /*border: 1px solid lightblue;*/
 }
 
-form#edit-book-data div p span label:hover {
+form#add-book-data div p span /* \admin\add-book.php */
+{
+    min-width: 150px;
+}
+
+form#edit-book-data div p span label:hover,
+form#add-book-data div p span label:hover /* \admin\add-book.php */
+{
     cursor: pointer;
 }
 
 div.preview {
     position: relative;
-    top: -15px;
+    top: -5px;
 }
 
-.edit-book-image {
-    margin-top: 33px !important;
+.edit-book-image,
+.add-book-image
+{
+    margin-top: 5px !important;
+
+    display: inline-block;
 }
 
 /*

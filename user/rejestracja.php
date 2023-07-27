@@ -365,8 +365,8 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 
                 // $secret = "6LcW48gfAAAAALDhZZERPDMpGD5aYMcLJ3s_IszG"; // secret key for recaptcha API, used to authenticate and verify that the reCAPTCHA response sent from your website to Google's servers is valid and coming from your website
 
-        //require('C:\xampp\apache\conf\config.php');
-        //$secret = RECAPTCHA_SECRET_KEY; // secret-key / klucz tajny;
+        require('C:\xampp\apache\conf\config.php');
+        $secret = RECAPTCHA_SECRET_KEY; // secret-key / klucz tajny;
 
         // sprawdzenie odpowiedzi googla, czy weryfikacja CAPTCHA się udała;
         // pobranie zawartości pliku do zmiennej;
@@ -376,7 +376,7 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 
                     // make HTTP request to Google reCAPTCHA API to verify the user's response; returns encoded JSON string, that needs to be decoded;
                         // pobierz zawartość pliku z odpowiedzią Google;
-        //$response = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response'])); // $response - decoded PHP object;
+        $response = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response'])); // $response - decoded PHP object;
 
                     //if(!($odpowiedz->success))        // można także użyć takiego zapisu
                     //if($odpowiedz->success == false)  // właściwość success
@@ -385,13 +385,13 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
                     //	$_SESSION['e_bot'] = "Potwierdź, że nie jesteś botem!";
                     //}
 
-       /* if( ! $response->success )
+        if( ! $response->success )
 		{
                     //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
 
 			$_SESSION['valid'] = false;
 			$_SESSION['e_recaptcha'] = "<h3 style='font-weight: unset; margin-bottom: 5px;'>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>";
-		}*/
+		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		

@@ -5,9 +5,10 @@ $min = $('#value-min');                          // minimum text input
 $max = $('#value-max');                          // minimum text input
 
 let books = document.querySelectorAll("#content-books .book");
+//let books = document.querySelectorAll("#content-books .book:not(.hidden)");
 
-/*console.log("\n books -> ", books);
-console.log("\n typeof books -> ", typeof books);*/
+console.log("\n 9 - books -> ", books);
+console.log("\n 9 - typeof books -> ", typeof books);
 
 
 /*console.log("\n books -> ", books);*/

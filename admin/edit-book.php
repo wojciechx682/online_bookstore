@@ -42,7 +42,8 @@
 
                         //let bookId = '<?php //echo $_POST["book-id"]; ?>'; // walidacja / sanityzacja ?
 
-                    let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt WHERE ks.id_ksiazki = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii", "getBookData", $_POST["book-id"]); ?>'; // $_POST value is retrieved from admin\books.php -> "Edytuj" button (input type="submit");
+                    let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt WHERE ks.id_ksiazki = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii", "getBookData", $_POST["book-id"]); ?>';
+                    // $_POST value is retrieved from admin\books.php -> "Edytuj" button (input type="submit");
 
                     bookData = JSON.parse(bookData);
                         console.log("\nbookData -> ", bookData);
@@ -53,7 +54,11 @@
 
                 <!-- Edytowanie danych o książce -->
 
-                <form action="edit-book-data.php" method="post" id="edit-book-data" class="edit-book-data" name="edit-book-data"
+                <form action="edit-book-data.php"
+                      method="post"
+                          id="edit-book-data"
+                          class="edit-book-data"
+                          name="edit-book-data"
                       enctype="multipart/form-data">
 
                     <div> <!-- tytuł - varchar(255) -->
@@ -131,6 +136,7 @@
                         <label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
                             Wybierz plik
                         </label>
+
                         <input
                                 style="opacity: 0;"
                                 type="file" name="edit-book-image" id="edit-book-image"> <!-- accept="image/*" -->
@@ -141,6 +147,7 @@
                         <div class="preview">
                             <p>No files currently selected for upload</p>
                         </div>
+
                     <hr id="book-details-hr">
 
                     <div> <!-- opis - varchar(1000) -->
@@ -223,7 +230,8 @@
                                 </label>
                             </span>
 
-                            <select id="edit-book-subcategory"
+                            <!--<select id="edit-book-subcategory"-->
+                            <select id="book-subcategory"
                                     name="edit-book-subcategory">
                                 <?php
                                     query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subkategorie AS subkt", "createSubcategorySelectList", "");
@@ -243,6 +251,7 @@
             </div> <!-- #content -->
 
         </main>
+
     </div> <!-- #container -->
 
 </div> <!-- #all-container -->

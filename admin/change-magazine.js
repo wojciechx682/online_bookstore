@@ -3,6 +3,7 @@
 
 $(document).ready(function() {               // after page load/reload - send <form>;
 
+    //$("form#change-magazine-form").submit(); // submit the <form>;
     $("form#change-magazine-form").submit(); // submit the <form>;
 });
 
@@ -23,6 +24,7 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
     const warehouseId = parseInt(selectElement.val()); // get value attribute of <select> list - this is warehouse-id (id-magazynu);
 
     console.log("\ndata => ", data); // jQ object;
+console.log("\ndata val => ", data[0][0].value); // jQ object;
     console.log("\ntypeof(data) =>", typeof(data));
     console.log("\nselectElement => ", selectElement); // object jq - <select>;
     console.log("\ntypeof selectElement => ", typeof selectElement); // object jq - <select>;
@@ -46,6 +48,11 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
     if((warehouseId > 0) && Number.isInteger(warehouseId) && !isNaN(warehouseId)) {  // nie pusta (>0), liczba (int), nie jest to "NaN";
 
         let dataSerialized = data.serialize(); // serializacja danych formularza (id-magazynu);
+
+        //$('div#admin-search-books-div > form#admin-search-books-form input[type="hidden"][name="change-magazine"]').val(warehouseId);
+
+        $('div#admin-search-books-div > form#admin-search-books-form input[type="hidden"][name="change-magazine"]').val(warehouseId); // set warehouseId for input type hiodden in admin-search-book form in \admin.books.php
+
 
         /*$.ajax({
             type: "POST",                    // GET or POST;

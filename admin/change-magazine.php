@@ -6,18 +6,43 @@ include_once "../functions.php";*/
 // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
 require_once "../authenticate-admin.php";
 
-    // POST --> change-magazine: 2
-
     if(isset($_POST["change-magazine"]) && ! empty($_POST["change-magazine"])) {
 
         $warehouseId = filter_var($_POST["change-magazine"], FILTER_VALIDATE_INT); // returns - filtered_value - or - false;
 
+        $values = []; //   VALUES USED AS ARGUMENTS;
+
         if($warehouseId) { // $warehouseId passed the filter and is a valid integer;
 
-            query("SELECT ks.id_ksiazki, ks.tytul, ks.cena,
+            $values[] = $warehouseId;
+
+            $query = "SELECT ks.id_ksiazki, ks.tytul, ks.cena,
                      kt.nazwa AS nazwa_kategorii, mgk.ilosc_dostepnych_egzemplarzy, au.imie, au.nazwisko, mg.nazwa AS nazwa_magazynu, mg.id_magazynu
                      FROM ksiazki AS ks, subkategorie AS sbk, kategorie AS kt, autor AS au, magazyn_ksiazki AS mgk, magazyn AS mg
-                     WHERE ks.id_subkategorii = sbk.id_subkategorii AND sbk.id_kategorii = kt.id_kategorii AND ks.id_autora = au.id_autora AND mgk.id_ksiazki = ks.id_ksiazki AND mgk.id_magazynu = mg.id_magazynu AND mg.id_magazynu='%s'", "get_all_books", $warehouseId); // content of the table;
+                     WHERE ks.id_subkategorii = sbk.id_subkategorii AND sbk.id_kategorii = kt.id_kategorii AND ks.id_autora = au.id_autora AND mgk.id_ksiazki = ks.id_ksiazki AND mgk.id_magazynu = mg.id_magazynu AND mg.id_magazynu='%s'";
+
+            if(isset($_POST["admin-search-books-input"]) && ! empty($_POST["admin-search-books-input"])) {
+
+                $bookTitle = filter_var($_POST["admin-search-books-input"], FILTER_SANITIZE_STRING);
+
+                if($bookTitle) {
+                    $where[] = " AND ks.tytul LIKE '%%%s%%'";
+                    $values[] = $bookTitle;
+                }
+            }
+
+            if ( ! empty($where) ) {
+                $query .= implode(" AND ", $where);
+            }
+
+            /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena,
+                     kt.nazwa AS nazwa_kategorii, mgk.ilosc_dostepnych_egzemplarzy, au.imie, au.nazwisko, mg.nazwa AS nazwa_magazynu, mg.id_magazynu
+                     FROM ksiazki AS ks, subkategorie AS sbk, kategorie AS kt, autor AS au, magazyn_ksiazki AS mgk, magazyn AS mg
+                     WHERE ks.id_subkategorii = sbk.id_subkategorii AND sbk.id_kategorii = kt.id_kategorii AND ks.id_autora = au.id_autora AND mgk.id_ksiazki = ks.id_ksiazki AND mgk.id_magazynu = mg.id_magazynu AND mg.id_magazynu='%s'", "get_all_books", $warehouseId);*/
+
+            query($query, "get_all_books", $values);
+
+                     // content of the table;
                      // książki, które znajdują się w tym magazynie;
                          // id_ksiazki	tytul	cena	nazwa_kategorii	ilosc_dostepnych_egzemplarzy	imie	nazwisko	nazwa_magazynu	id_magazynu
 
