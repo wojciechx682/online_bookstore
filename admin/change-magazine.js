@@ -19,7 +19,7 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
         //let postData = parseInt($(this).serialize().slice(16).trim()); // "change-magazine=1" => "1" (id_maazynu);
 
     let data = $(this); // obiekt jQ - <form>;
-    const selectElement = data.find('select#change-magazine'); // find <select> list inside the form;
+    const selectElement = data.find('select#change-magazine'); // find <select> list inside the <form>;
     const warehouseId = parseInt(selectElement.val()); // get value attribute of <select> list - this is warehouse-id (id-magazynu);
 
     console.log("\ndata => ", data); // jQ object;
@@ -41,9 +41,11 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
     console.log("\n\n Number.isInteger(warehouseId) --> ", Number.isInteger(warehouseId));
     console.log("\n\n !isNaN(warehouseId) --> ", !isNaN(warehouseId));
 
+    // walidacja czy przesłano poprawne id-magazynu -->
+
     if((warehouseId > 0) && Number.isInteger(warehouseId) && !isNaN(warehouseId)) {  // nie pusta (>0), liczba (int), nie jest to "NaN";
 
-        let dataSerialized = data.serialize();
+        let dataSerialized = data.serialize(); // serializacja danych formularza (id-magazynu);
 
         /*$.ajax({
             type: "POST",                    // GET or POST;
@@ -84,14 +86,14 @@ $("form#change-magazine-form").on("submit", function(e) { // after submitting fo
             // Success handler; // Handle the response data;
 
             let booksHeader = document.querySelector('.admin-books'); // table header;
-            if(booksHeader.style.display === 'none') {
+            if(booksHeader.style.display === 'none') {                // show table header (if was not-visible)
                 booksHeader.style.display = "block";
             }
-            $("#books-content").html(data); // Show content (data returned from server);
+            $("#books-content").html(data); // show content (data returned from server) - books;
 
         }).fail(function(data) { // (xhr, status, error)
             // Error handler // Handle the error condition;
-            $("#books-content").html(data);
+            $("#books-content").html(data); // data returned from server
 
         }).always(function() {
             $("img#loading-icon").toggleClass("not-visible");

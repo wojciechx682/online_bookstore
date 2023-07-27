@@ -23,7 +23,7 @@
                     <!-- book -->
                     <!-- warehouse -->
 
-                    <form method="post" action="book-details.php"> <!-- POST -> orderId -->
+                    <form method="post" action="book-details.php"> <!-- prg - POST -> orderId -->
                         <input type="hidden" name="book-id" value="%s"> <!-- bookId -->
                         <input type="hidden" name="warehouse-id" value="%s"> <!-- warehouseId -->
                         <button class="submit-book-form" type="submit">

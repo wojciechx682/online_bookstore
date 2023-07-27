@@ -513,8 +513,15 @@ div.book-option form label {
 
 /* button --> --------------------------------------------------------------------------------- */
 
-.update-order-status {
+.update-order-status,
+div#content button.add-book-button
+/* \admin\book.php - przycisk dodawania ksiązki */
+{
     width: 135px !important;
+}
+
+div#content button.add-book-button {
+    margin-top: 30px;
 }
 
 div#order-status button.update-order-status {
@@ -1191,3 +1198,4 @@ div#update-status  * {
     pointer-events: none;
     user-select: none;
 }
+

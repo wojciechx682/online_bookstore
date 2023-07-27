@@ -6,6 +6,8 @@ include_once "../functions.php";*/
 // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
 require_once "../authenticate-admin.php";
 
+    // POST --> change-magazine: 2
+
     if(isset($_POST["change-magazine"]) && ! empty($_POST["change-magazine"])) {
 
         $warehouseId = filter_var($_POST["change-magazine"], FILTER_VALIDATE_INT); // returns - filtered_value - or - false;
@@ -17,13 +19,19 @@ require_once "../authenticate-admin.php";
                      FROM ksiazki AS ks, subkategorie AS sbk, kategorie AS kt, autor AS au, magazyn_ksiazki AS mgk, magazyn AS mg
                      WHERE ks.id_subkategorii = sbk.id_subkategorii AND sbk.id_kategorii = kt.id_kategorii AND ks.id_autora = au.id_autora AND mgk.id_ksiazki = ks.id_ksiazki AND mgk.id_magazynu = mg.id_magazynu AND mg.id_magazynu='%s'", "get_all_books", $warehouseId); // content of the table;
                      // książki, które znajdują się w tym magazynie;
-        } else {  // $warehouseId didn't pass the filter - something went wrong - error (!);
+                         // id_ksiazki	tytul	cena	nazwa_kategorii	ilosc_dostepnych_egzemplarzy	imie	nazwisko	nazwa_magazynu	id_magazynu
 
+                         // 1	Symfonia C++ wydanie V	10	Informatyka	0	Jerzy	Grębosz	magazyn nr 1	1
+                         // 2	PHP i MySQL. Od podstaw. Wydanie IV	75.5	Informatyka	235	Adam	Nowak	magazyn nr 1	1
+                         // 7	Duchy i lisy	58.82	Dla dzieci	15	Radosław	Walczak	magazyn nr 1	1
+                         // 36	CSS Nieoficjalny podręcznik	20	Informatyka	265	Cezary	Sokołowski	magazyn nr 1	1
+        } else {
+                        // $warehouseId didn't pass the filter - something went wrong - error (!);
             echo '<span class="admin-books-error" style="display: block;">Wystąpił błąd. Serwer nie zwrócił poprawnych danych. Spróbuj ponownie później</span>';
         }
     } else {
         echo '<span class="admin-books-error" style="display: block;">Wystąpił błąd. Serwer nie zwrócił poprawnych danych. Spróbuj ponownie później</span>';
-   // ✓else (?) ;   // ✓ z tego co widzę to jeśli wystąpił błąd z id-magazynu, JS obsługuje to wcześniej i wyswietla błąd;
-   // ✓ co prawda można to dalej rozbudowywać ale po co ?
+        // ✓else (?) ;   // ✓ z tego co widzę to jeśli wystąpił błąd z id-magazynu, JS obsługuje to wcześniej i wyswietla błąd;
+        // ✓ co prawda można to dalej rozbudowywać ale po co ?
     }
 ?>

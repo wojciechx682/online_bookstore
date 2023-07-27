@@ -1,6 +1,10 @@
 
 function showOptions(id) {   // admin/orders.php - kliknięcie "Zarządzaj";   -->  ✓ wyświetlenie / ukrycie listy opcji ;
 
+    // <div class="order-action-button"
+    //      id="order-action-button1121"
+    //      onclick="showOptions(this.id)">
+
     // po kliknięciu "Zarządzaj" - w danym polu - ukrycie pozostałych list opcji, jeśłi były widoczne;
 
     let orderActionOptions = document.querySelectorAll('div.order-action'); // kolekcja pojemników z przyciskiem "Zarządzaj";

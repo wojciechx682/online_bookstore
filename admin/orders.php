@@ -29,8 +29,8 @@
                     </header>
 
                     <?php
-                        require "../view/admin/order-header.php";
-                          // table header;
+                        require "../view/admin/order-header.php"; // table header;
+
                     ?>
 
                     <?php
@@ -169,7 +169,6 @@
 
         /*for (let i = 0; i < removeBoxes.length; i++) { // dla każdego okienka;
             let removeBox = removeBoxes[i]; // perform actions on each element;
-
         }*/
     });
 

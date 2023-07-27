@@ -1,5 +1,5 @@
 
-<!-- template used on order page (order.php) to display orders remove box ( ̶o̶n̶e̶ ̶f̶o̶r̶ ̶e̶v̶e̶r̶y̶ ̶r̶o̶w̶ ) -->
+<!-- template used on order page (admin\orders.php) to display orders remove box ( ̶o̶n̶e̶ ̶f̶o̶r̶ ̶e̶v̶e̶r̶y̶ ̶r̶o̶w̶ ) -->
 
 <div class="update-status hidden"> <!-- class -> update-status%s--> <!-- id_zamowienia -->
 

@@ -26,7 +26,7 @@
 
                     <h3 class="section-header section-header-books">Książki</h3>
 
-<form id="change-magazine-form" action="change-magazine.php" method="post">
+<form id="change-magazine-form" action="change-magazine.php" method="post"> <!-- list <select> z wyborem magazynu -->
 
     <select id="change-magazine" name="change-magazine">
 
@@ -34,6 +34,9 @@
 
         <?php
             query("SELECT mg.id_magazynu, mg.nazwa FROM magazyn AS mg", "createMagazineSelectList", "");
+            // id_magazynu	   nazwa
+            //      1	    magazyn nr 1
+            //      2	    magazyn nr 2
         ?>
 
     </select>
@@ -47,6 +50,8 @@
                 <?php require "../view/admin/books-header.php"; // table header ?>
 
                 <div id="books-content"></div> <!-- here are inserted rows with information about books; - change-magazine.js - change-magazine.php - data from server; -->
+
+                <button class="add-book-button btn-link btn-link-static">Dodaj</button>
 
             </div> <!-- #content -->
 
