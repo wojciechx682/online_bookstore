@@ -9,11 +9,19 @@ include_once "../functions.php";*/
 // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
 require_once "../authenticate-admin.php";
 
-if (isset($_GET['category_id']) && !empty($_GET['category_id'])) {
+/*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+echo "GET ->"; print_r($_GET); echo "<hr><br>";
+echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
-    if($category_id = filter_var($_GET['category_id'], FILTER_VALIDATE_INT)) { // cat-id or false;
+if (isset($_GET['category_id']) && ! empty($_GET['category_id'])) {
 
-        query("SELECT sb.id_subkategorii, sb.nazwa, sb.id_kategorii FROM subkategorie AS sb, kategorie AS kt WHERE sb.id_kategorii = kt.id_kategorii AND sb.id_kategorii = '%s'", "getSubcategories", $category_id); // fetched subcategories;
+    if($category_id = filter_var($_GET['category_id'], FILTER_VALIDATE_INT)) { // category-id or false;
+
+        query("SELECT sb.id_subkategorii, sb.nazwa, sb.id_kategorii FROM subkategorie AS sb, kategorie AS kt WHERE sb.id_kategorii = kt.id_kategorii AND sb.id_kategorii = '%s'", "getSubcategories", $category_id);
+        //              fetched subcategories;
+        // id_subkategorii	    nazwa	     id_kategorii
+        //     1	        Programowanie	     4
+        //     2	        Web development	     4
     }
 }
 // Prepare the subcategories data as an array (e.g., from the database query result)

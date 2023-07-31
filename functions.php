@@ -328,6 +328,35 @@
         $_SESSION["max-book-id"] = $row["id_ksiazki"]; // "36"
     }
 
+    // ..\admin\add-book-data.php - POST ;
+    function get_author_id($result) {
+        // get highest author-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
+        $row = $result->fetch_assoc();
+
+        $_SESSION["max-author-id"] = $row["id_autora"]; // "25"
+    }
+
+    function get_publisher_id($result) {
+        // get highest publisher-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
+        $row = $result->fetch_assoc();
+
+        $_SESSION["max-publisher-id"] = $row["id_wydawcy"]; // "5"
+    }
+
+    function get_category_id($result) {
+        // get highest publisher-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
+        $row = $result->fetch_assoc();
+
+        $_SESSION["max-category-id"] = $row["id_kategorii"]; // "7"
+    }
+
+    function get_magazine_id($result) {
+        // get highest publisher-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
+        $row = $result->fetch_assoc();
+
+        $_SESSION["max-magazine-id"] = $row["id_magazynu"]; // "2"
+    }
+
 	function check_email($result)
 	{
         // validate_user_data.php - (zmiana danych usera), sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną; (zmiana danych konta);
@@ -1242,7 +1271,7 @@ EOT;
         $result->free_result();
     }
 
-    function createMagazineSelectList($result) { // \admin\books.php
+    function createMagazineSelectList($result) { // \admin\add-book.php
 
         // create <option> elements inside <select> list based on warehouse names in database;
             // <option> elementy - są generowane dynamicznie na podstawie BD i danych o magazynach;
@@ -1267,7 +1296,7 @@ EOT;
         $result->free_result();
     }
 
-    function createCategorySelectList($result) {
+    function createCategorySelectList($result) { // \admin\add-book.php, edit-book.php;
         while($row = $result->fetch_assoc()) {
             echo '<option value="'.$row["id_kategorii"].'">'.$row["nazwa"].'</option>';
         }
@@ -1284,22 +1313,46 @@ EOT;
     // powyższe kilka funkcji można zoptymalizować tak, aby była to jedna (np używając tablicy num. a nie assocjacyjnych);
 
     function getSubcategories($result) {
+
         // returns data in JSON format - instead text/html (as all other functions in this code);
             // subcategories - array();
             // add each subcategory - as an object to the array;
             // return array as JSON-encoded response;
 
+        //                     $result ->
+        // id_subkategorii	    nazwa	     id_kategorii
+        //     1	        Programowanie	     4
+        //     2	        Web development	     4
+
         $subcategories = []; // array();
+
         while($row = $result->fetch_assoc()) {
+            // define an associative array (key-value pairs)
             $subcategory = [
                 'id' => $row['id_subkategorii'],
                 'name' => $row['nazwa'],
                 'category_id' => $row['id_kategorii']
             ];
-            $subcategories[] = $subcategory; // what does that line do ? how does it do ?
+            $subcategories[] = $subcategory; // This line appends the $subcategory array as a new element to the end of the $subcategories array during each iteration of the loop.
         }
-        header('Content-Type: application/json');
-        echo json_encode($subcategories);
+
+        header('Content-Type: application/json'); // return DATA as JSON ;
+        echo json_encode($subcategories); // show result data (JSON) ;
+
+        //  json -->
+        //
+        //  [
+        //     {
+        //         "id": 1,
+        //         "name": "Programowanie",
+        //         "category_id": 4
+        //     },
+        //     {
+        //         "id": 2,
+        //         "name": "Web development",
+        //         "category_id": 4
+        //     }
+        // ]
     }
 
     function getBookData($result) {

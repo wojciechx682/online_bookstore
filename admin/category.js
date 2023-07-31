@@ -1,62 +1,107 @@
 
 // admin/edit-books.php;
 
-function getSubcategories(categorySelect) {
+function getSubcategories(categorySelect) {      // categorySelect --> <select> element (kategoria);
 
-    // <select id="edit-book-category"
-    //             name="edit-book-category"
-    //     --> onchange="getSubcategories(this)">
+        // returns subcategories for given category (category-id);
+
+        // <select id="edit-book-category"
+        //             name="edit-book-category"
+        //  ! ---> onchange="getSubcategories(this)">
+                // <option value={id-kategorii} > "28"
+                // <option value={id-kategorii} > "34"
+                // <option value={id-kategorii} > "26"
+
+    // <select id="add-book-category" name="add-book-category"
+    //
+    // 		onchange="getSubcategories(this)">
+    //
+    // 	        <option value="1">Dla dzieci</option>
+    // 	        <option value="2">Fantastyka</option>
+    // 	        <option value="3">Horror</option>
+    // 	        <option value="4">Informatyka</option>
+    // 	        <option value="5">Komiks</option>
+    // 	        <option value="6">Kryminał</option>
+    // 	        <option value="7">Poezja</option>
+    // </select>
 
         //let categoryId = document.getElementById('edit-book-category').value;
-    let categoryId = categorySelect.value; // "2" - string;
+    let categoryId = categorySelect.value;
+    // "2" - string; - (!) id_kategorii;
 
     // create XMLHttpRequest Object ; --> wysyłanie żądań AJAX  +  obsługa odpowiedzi ;
     // meotdy -->   .open()
     //              .send()
 
-    let xhr = new XMLHttpRequest(); // send an AJAX request to fetch the subcategories based on the selected category;
+    console.log("\n\n categoryId --> ", categoryId);
+    console.log("\n\n typeof categoryId --> ", typeof categoryId);
 
-    xhr.onreadystatechange = function() {           // xhr.onload = function(); - Otrzymanie i wczytanie odpowiedzi z serwera ;
+    //return;
+
+    // send an AJAX request to fetch the subcategories based on the selected category;
+
+    let xhr = new XMLHttpRequest(); // create XMLHttpRequest object, store it in "xhr" variable;
+
+    xhr.onreadystatechange = function() {           // xhr.onload = function(); - otrzymanie i wczytanie odpowiedzi z serwera;
                                                     //              wywołanie funkcji anonimowej;
 
-        if (xhr.readyState === XMLHttpRequest.DONE) {
+    // po zmianie właściwośći "readyState" obiektu XMLHttpRequest ;
 
-            if (xhr.status === 200) {              // after response from server;
+        // "xhr.onreadystatechange" - This event handler is triggered whenever the "readyState" property of the XMLHttpRequest object changes.
+        // The "readyState" property represents the current state of the request
+
+            // "readyState" - (property) - possible values :
+                // 0: UNSENT - The request has not been initialized.
+                // 1: OPENED - The request has been set up (the open() method has been called).
+                // 2: HEADERS_RECEIVED - The request has been sent, and the headers and status are available.
+                // 3: LOADING - The response is being received (usually some data is being transferred).
+                // 4: DONE - The operation is complete.
+
+        if (xhr.readyState === XMLHttpRequest.DONE) { // "DONE" == 4 - Complete (request)
+
+            if (xhr.status === 200) {              // after response from server, if response is correct;
 
                 // sprawdzenie właściwości "status" obiektu xhr - w celu sprawdzenia, czy odpowiedź otrzymana z serwera jest prawidłowa - 200 OK) ;
 
                 // Poniżej kod odpowiedzialny za Przetworzenie odpowiedzi - udzielonej przez serwer ;
 
                 let subcategories = JSON.parse(xhr.responseText); // object
+
+                    console.log("\nxhr.responseText -> \n", xhr.responseText, "\n");
+                    console.log("\nsubcategories -> \n", subcategories, "\n");
+
                 // update the subcategories select list;
-            //let subcategorySelect = document.getElementById('edit-book-subcategory');
-                let subcategorySelect = document.getElementById('book-subcategory');
+
+                    //let subcategorySelect = document.getElementById('edit-book-subcategory');
+                let subcategorySelect = document.getElementById('book-subcategory'); // <select> list (POD-kategorie)
                 subcategorySelect.innerHTML = ''; // clear previous options
 
-                for (let i = 0; i < subcategories.length; i++) {
+                for (let i = 0; i < subcategories.length; i++) { // for every sub-category (every element in object);
                     let option = document.createElement('option');
-                    option.value = subcategories[i].id; // object
-                    option.textContent = subcategories[i].name;
+                    option.value = subcategories[i].id; // object - id pod-kategorii;
+                    option.textContent = subcategories[i].name; // nazwa pod-kategorii;
                     subcategorySelect.appendChild(option);
                 }
             } else {
-                console.error('Error:', xhr.status);
+                console.error('Error: ', xhr.status);
             }
         }
     };
 
-    xhr.open('GET', 'get-subcategories.php?category_id=' + categoryId, true);  // przygotowanie Żądania (Ajax);
-    //               adres strony Obsługującej żądanie;                async ? (true/false)
-
-    xhr.send(); // Wysłanie do serwera przygotowanego wcześniej Żądania;    (Informacje dodatkowe w nawiasach);
+    xhr.open('GET', 'get-subcategories.php?category_id=' + categoryId, true);
+        // przygotowanie Żądania (Ajax);
+        //           adres strony Obsługującej żądanie;                async ? (true/false)
+        //    nazwa metody HTTP
+    xhr.send();
+        // wysłanie do serwera przygotowanego wcześniej Żądania; (informacje dodatkowe w nawiasach);
 }
 
 $("form.edit-book-data").on("submit", function(e) {
 
     e.preventDefault(); // prevent default <form> action which is submitted;
 
-    let data = $(this); // object that holds <form> data;
-        //let postData = $(this).serialize(); // serialized <form> data;
+    let data = $(this); // jQ object that holds <form> data;
+        // let postData = $(this).serialize(); // serialized <form> data;
     let formData = new FormData(this); // Create a new FormData object
     // need to use the FormData object to send the form data, including the image file.
     let result = document.querySelector('div.result');

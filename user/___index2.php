@@ -218,8 +218,8 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
 
        /* $_SESSION["adv-search-query"] = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
                           ks.rating,
-                          kt.nazwa, sb.id_kategorii,  
-                           au.imie, au.nazwisko 
+                          kt.nazwa, sb.id_kategorii,
+                           au.imie, au.nazwisko
                           FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb";*/
 
         // dodanie statusu - "dostępna / niedostępna" -->
@@ -507,7 +507,7 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                 <?php
 
-                  /*  echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                   /* echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
                     echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
@@ -547,10 +547,10 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                             // ew warunek jeśli jest różne od oryginalnej wartości wejściowej -> wyświetlić komunikat "podaj poprawne dane";
 
                             /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
-                                                     kt.nazwa, sb.id_kategorii, 
-                                                        au.imie, au.nazwisko 
-                                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
-                                                     WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
+                                                     kt.nazwa, sb.id_kategorii,
+                                                        au.imie, au.nazwisko
+                                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb
+                                                     WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
                                                      AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);*/ // kategorie => nazwa, id_kategorii;
 
                             // dodanie statusu - "dostępna / niedostępna" -->
@@ -608,13 +608,13 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                         /*$query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
                                                  ks.rating,
-                                                 kt.nazwa, sb.id_kategorii, 
-                                                  au.imie, au.nazwisko 
-                                                 FROM ksiazki AS ks, 
-                                                      autor AS au, 
-                                                      kategorie AS kt, 
-                                                      subkategorie AS sb 
-                                                 WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii                                                   
+                                                 kt.nazwa, sb.id_kategorii,
+                                                  au.imie, au.nazwisko
+                                                 FROM ksiazki AS ks,
+                                                      autor AS au,
+                                                      kategorie AS kt,
+                                                      subkategorie AS sb
+                                                 WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
                                                  AND ks.tytul LIKE '%%%s%%'";*/
 
                         // dodanie statusu - "dostępna / niedostępna" -->
@@ -678,10 +678,10 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                         /*// set up the initial query string
                             // $query = "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki";
-                        $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, 
+                        $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
                           ks.rating,
-                          kt.nazwa, sb.id_kategorii,  
-                           au.imie, au.nazwisko 
+                          kt.nazwa, sb.id_kategorii,
+                           au.imie, au.nazwisko
                           FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb";
 
                         // validate and sanitize input data (advanced search);

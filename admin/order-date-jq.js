@@ -41,7 +41,7 @@ document.querySelector('form#update-order-date').addEventListener("submit", func
 
     let expDeliveryDate = new Date(date[0][0].value); // termin_dostawy
     let sentDate = new Date(date[0][1].value);        // data_wysłania
-    let sentTime = new Date(date[0][1].value);        // godzina wysłania
+    let sentTime = new Date(date[0][1].value);        // date[0][2] - godzina wysłania
     let dateDelivered = new Date(date[0][3].value);   // data_dostarczenia
 
     expDeliveryDate.setHours(hours, minutes, seconds, miliseconds);

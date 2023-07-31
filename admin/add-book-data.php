@@ -9,21 +9,22 @@ include_once "../functions.php";*/
 require_once "../authenticate-admin.php";
 
     if (
-            isset($_POST['edit-book-id']) && !empty($_POST['edit-book-id']) &&
-        isset($_POST['edit-book-title']) && !empty($_POST['edit-book-title']) &&
-        isset($_POST['edit-book-change-author']) && !empty($_POST['edit-book-change-author']) &&
-        isset($_POST['edit-book-release-year']) && !empty($_POST['edit-book-release-year']) &&
-        isset($_POST['edit-book-price']) && !empty($_POST['edit-book-price']) &&
-        isset($_POST['edit-book-change-publisher']) && !empty($_POST['edit-book-change-publisher']) &&
-            isset($_FILES['edit-book-image']) &&
-        isset($_POST['edit-book-desc']) && !empty($_POST['edit-book-desc']) &&
-        isset($_POST['edit-book-cover']) && !empty($_POST['edit-book-cover']) &&
-        isset($_POST['edit-book-pages']) && !empty($_POST['edit-book-pages']) &&
-        isset($_POST['edit-book-dims']) && !empty($_POST['edit-book-dims']) &&
-        isset($_POST['edit-book-category']) && !empty($_POST['edit-book-category']) &&
-        isset($_POST['edit-book-subcategory']) && !empty($_POST['edit-book-subcategory'])
+        isset($_POST['add-book-title']) && !empty($_POST['add-book-title']) &&
+        isset($_POST['add-book-author']) && !empty($_POST['add-book-author']) &&
+        isset($_POST['add-book-release-year']) && !empty($_POST['add-book-release-year']) &&
+        isset($_POST['add-book-price']) && !empty($_POST['add-book-price']) &&
+        isset($_POST['add-book-publisher']) && !empty($_POST['add-book-publisher']) &&
+        isset($_FILES['add-book-image']) &&
+        isset($_POST['add-book-desc']) && !empty($_POST['add-book-desc']) &&
+        isset($_POST['add-book-cover']) && !empty($_POST['add-book-cover']) &&
+        isset($_POST['add-book-pages']) && !empty($_POST['add-book-pages']) &&
+        isset($_POST['add-book-dims']) && !empty($_POST['add-book-dims']) &&
+        isset($_POST['add-book-category']) && !empty($_POST['add-book-category']) &&
+        isset($_POST['add-book-subcategory']) && !empty($_POST['add-book-subcategory']) &&
+        isset($_POST['add-book-select-magazine']) && !empty($_POST['dd-book-select-magazine']) &&
+        isset($_POST['add-book-quantity']) && !empty($_POST['add-book-quantity'])
     ) {
-        // All required fields are set and not empty; Perform the necessary actions or validations here; // For example, update the book data in the database;
+        // All required fields are set and not empty; Perform the necessary actions or validations here; // For example, add the book data in the database;
 
                 /* echo "<br> success <br><br>";
                     echo "<br> tytuł - " . $_POST['edit-book-title'];
@@ -40,18 +41,75 @@ require_once "../authenticate-admin.php";
 
         // back-end validation;
 
-                $bookId = filter_var($_POST['edit-book-id'], FILTER_VALIDATE_INT);
-            $title = filter_var($_POST['edit-book-title'], FILTER_SANITIZE_STRING);
-            $author = filter_var($_POST['edit-book-change-author'], FILTER_VALIDATE_INT);
-            $year = filter_var($_POST['edit-book-release-year'], FILTER_VALIDATE_INT);
-            $price = filter_var($_POST['edit-book-price'], FILTER_VALIDATE_FLOAT);
-            $publisher = filter_var($_POST['edit-book-change-publisher'], FILTER_VALIDATE_INT);
-        $desc = filter_var($_POST['edit-book-desc'], FILTER_SANITIZE_STRING);
-        $cover = filter_var($_POST['edit-book-cover'], FILTER_SANITIZE_STRING);
-        $pages = filter_var($_POST['edit-book-pages'], FILTER_VALIDATE_INT);
-        $dims = filter_var($_POST['edit-book-dims'], FILTER_SANITIZE_STRING);
-        $category = filter_var($_POST['edit-book-category'], FILTER_VALIDATE_INT);
-        $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
+        // get highest author-id from db;
+        query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "get_author_id", "");
+        // $_SESSION["max-author-id"] => "35";
+
+        // get highest publisher-id from db;
+        query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "get_publisher_id", "");
+        // $_SESSION["max-publisher-id"] => "5";
+
+        // get highest category-id from db;
+        query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "get_category_id", "");
+        // $_SESSION["max-category-id"] => "7";
+
+        // get highest magazine-id from db;
+        query("SELECT id_magazynu FROM magazyn ORDER BY id_magazynu DESC LIMIT 1", "get_magazine_id", "");
+        // $_SESSION["max-magazine-id"] => "2";
+
+            $title = filter_var($_POST['add-book-title'], FILTER_SANITIZE_STRING);
+            $author = filter_var($_POST['add-book-author'], FILTER_VALIDATE_INT, [
+                'options' => [
+                    'min_range' => 1,                          // minimum allowed value;
+                    'max_range' => $_SESSION["max-author-id"]  // maximum allowed value;
+                ]
+            ]);
+            $year = filter_var($_POST['add-book-release-year'], FILTER_VALIDATE_INT, [
+                'options' => [
+                    'min_range' => 1900, // minimum allowed value;
+                    'max_range' => 2023  // maximum allowed value;
+                ]
+            ]);
+            $price = filter_var($_POST['add-book-price'], FILTER_VALIDATE_FLOAT, [
+                'options' => [
+                    'min_range' => 1,    // minimum allowed value;
+                    'max_range' => 1000  // maximum allowed value;
+                ]
+            ]);
+            $publisher = filter_var($_POST['add-book-publisher'], FILTER_VALIDATE_INT, [
+                'options' => [
+                    'min_range' => 1,                             // minimum allowed value;
+                    'max_range' => $_SESSION["max-publisher-id"]  // maximum allowed value;
+                ]
+            ]);
+            $desc = filter_var($_POST['add-book-desc'], FILTER_SANITIZE_STRING);
+            $cover = filter_var($_POST['add-book-cover'], FILTER_SANITIZE_STRING);
+            $pages = filter_var($_POST['add-book-pages'], FILTER_VALIDATE_INT, [
+                'options' => [
+                    'min_range' => 1,    // minimum allowed value;
+                    'max_range' => 1500  // maximum allowed value;
+                ]
+            ]);
+            $dims = filter_var($_POST['add-book-dims'], FILTER_SANITIZE_STRING);
+        $category = filter_var($_POST['add-book-category'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,                           // minimum allowed value;
+                'max_range' => $_SESSION["max-category-id"] // maximum allowed value;
+            ]
+        ]);
+        $subcategory = filter_var($_POST['add-book-subcategory'], FILTER_VALIDATE_INT);
+        $magazine = filter_var($_POST['add-book-select-magazine'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,                           // minimum allowed value;
+                'max_range' => $_SESSION["max-magazine-id"] // maximum allowed value;
+            ]
+        ]);
+        $quantity = filter_var($_POST['add-book-quantity'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,    // minimum allowed value;
+                'max_range' => 5000  // maximum allowed value;
+            ]
+        ]);
 
         /* check -->
             $title !== $_POST['edit-book-title']
@@ -70,21 +128,22 @@ require_once "../authenticate-admin.php";
 
         // Check if values pass the tests;
         if (
-            $bookId === false ||
-            $title !== $_POST['edit-book-title'] ||
+            $title !== $_POST['add-book-title'] || strlen($title) > 255 ||
             $author === false ||
-            $year === false || $year < 1900 || $year > 2023 ||
-            $price === false || $price < 1 || $price > 500 ||
+            $year === false ||
+            $price === false ||
             $publisher === false ||
-            $pages === false || $pages < 1 || $pages > 1500 ||
-            $cover !== $_POST['edit-book-cover'] ||
-            $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 1000 ||
-            $dims !== $_POST['edit-book-dims'] || strlen($dims) > 15 ||
+            $pages === false ||
+            $cover !== $_POST['add-book-cover'] ||
+            $desc !== $_POST['add-book-desc'] || strlen($desc) < 10 || strlen($desc) > 1000 ||
+            $dims !== $_POST['add-book-dims'] || strlen($dims) < 5 || strlen($dims) > 15 ||
             $category === false ||
-            $subcategory === false
-        ) {
+            $subcategory === false ||
+            $magazine === false ||
+            $quantity === false
 
-            echo "POST Error: Invalid or missing values"; // fieldnt didn't pass validation;
+        ) {
+            echo "<br>POST Error: Invalid or missing values<br>"; // fields didn't pass validation;
 
         } else {                                          // all values are valid; - fields PASSED validation;
                                                           // perform the necessary actions or validations here;

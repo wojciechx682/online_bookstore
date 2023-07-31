@@ -45,6 +45,8 @@
                     let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt WHERE ks.id_ksiazki = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii", "getBookData", $_POST["book-id"]); ?>';
                     // $_POST value is retrieved from admin\books.php -> "Edytuj" button (input type="submit");
 
+                    // 1 | Symfonia C++ wydanie V | 1 | 2009 | 10 | 2 | Lorem ipsum dolor sit amet, consectetur adipiscing... | twarda | 585	| 411 x 382 x 178 | 1 | 4
+
                     bookData = JSON.parse(bookData);
                         console.log("\nbookData -> ", bookData);
 
@@ -54,8 +56,8 @@
 
                 <!-- Edytowanie danych o książce -->
 
-                <form action="edit-book-data.php"
-                      method="post"
+                <form method="post"
+                      action="edit-book-data.php"
                           id="edit-book-data"
                           class="edit-book-data"
                           name="edit-book-data"
@@ -68,8 +70,9 @@
                                     Tytuł książki
                                 </label>
                             </span>
-                            <input type="text"
-                                   name="edit-book-title" id="edit-book-title">
+                            <input type="text" required
+                                   name="edit-book-title"
+                                   id="edit-book-title">
                         </p>
                     </div>
 
@@ -98,7 +101,7 @@
                                 </label>
                             </span>
                             <input type="number" min="1900" max="2023"
-                                   name="edit-book-release-year" id="edit-book-release-year">
+                                   name="edit-book-release-year" id="edit-book-release-year" required>
                         </p>
                     </div>
 
@@ -110,7 +113,7 @@
                                 </label>
                             </span>
                             <input type="number" min="1" max="500" step="0.01"
-                                   name="edit-book-price" id="edit-book-price">
+                                   name="edit-book-price" id="edit-book-price" required>
                         </p>
                     </div>
 
@@ -133,32 +136,58 @@
 
                     <hr id="book-details-hr">
 
-                        <label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
+                    <div>
+                        <p>
+                             <span>
+                                <label> <!-- for="add-book-image" -->
+                                    Zdjęcie książki
+                                </label>
+                            </span>
+
+                            <label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
+                                Wybierz plik
+                            </label>
+
+                            <input
+                                    style="/*opacity: 0;*/ display: none;"
+                                    type="file"
+                                    name="edit-book-image"
+                                    id="edit-book-image"
+                                    accept="image/*">
+
+                            <div class="preview">
+                                <p>Nie wybrano żadnego pliku</p>
+                            </div>
+                        </p>
+                    </div>
+
+                        <!--<label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
                             Wybierz plik
                         </label>
 
                         <input
-                                style="opacity: 0;"
-                                type="file" name="edit-book-image" id="edit-book-image"> <!-- accept="image/*" -->
-                                    <!-- accept=".jpg, .jpeg, .png" -->
-                        <!-- <button class="update-order-status btn-link btn-link-static">Aktualizuj</button> -->
-                        <!-- <input type="file" name="edit-book-image" id="edit-book-image"
-                                           class="btn-link btn-link-static"> -->
+                                style="/*opacity: 0;*/ display: none;"
+                                type="file"
+                                name="edit-book-image"
+                                id="edit-book-image">
+
                         <div class="preview">
-                            <p>No files currently selected for upload</p>
-                        </div>
+                            <p>Nie wybrano żadnego pliku</p>
+                        </div>-->
 
                     <hr id="book-details-hr">
 
                     <div> <!-- opis - varchar(1000) -->
                         <p>
-                            <span>
+                            <span id="span-book-desc">
                                 <label for="edit-book-desc">
                                     Opis
                                 </label>
                             </span>
-                            <input type="text"
-                                   name="edit-book-desc" id="edit-book-desc">
+                                <!--<input type="text" required
+                                       name="edit-book-desc" id="edit-book-desc">-->
+
+                                <textarea name="edit-book-desc" id="edit-book-desc" rows="5" minlength="10" maxlength="1000" required></textarea>
                         </p>
                     </div>
 
@@ -186,7 +215,7 @@
                                 </label>
                             </span>
                             <input type="number" min="1" max="1500" step="1"
-                                   name="edit-book-pages" id="edit-book-pages">
+                                   name="edit-book-pages" id="edit-book-pages" required>
                         </p>
                     </div>
 
@@ -197,8 +226,8 @@
                                     Wymiary
                                 </label>
                             </span>
-                            <input type="text"
-                                   name="edit-book-dims" id="edit-book-dims">
+                            <input type="text" maxlength="15"
+                                   name="edit-book-dims" id="edit-book-dims" required>
                         </p>
                     </div>
 
@@ -217,6 +246,10 @@
                                     onchange="getSubcategories(this)">
                                 <?php
                                     query("SELECT kt.id_kategorii, kt.nazwa FROM kategorie AS kt", "createCategorySelectList", "");
+
+                                    // <option value={id-kategorii} > "28"
+                                    // <option value={id-kategorii} > "34"
+                                    // <option value={id-kategorii} > "26"
                                 ?>
                             </select>
                         </p>
@@ -235,6 +268,10 @@
                                     name="edit-book-subcategory">
                                 <?php
                                     query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subkategorie AS subkt", "createSubcategorySelectList", "");
+
+                                    // <option value={id-PODkategorii} > "28"
+                                    // <option value={id-PODkategorii} > "34"
+                                    // <option value={id-PODkategorii} > "26"
                                 ?>
                             </select>
                         </p>
@@ -257,11 +294,14 @@
 </div> <!-- #all-container -->
 
 <script>
-    // input type file - validation and sanitization;
+    // input type file - validation and sanitization (JS);
         // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file ;
 
-    let input = document.querySelector('#edit-book-image'); // input type="file"
+        //let input = document.querySelector('#edit-book-image');
+    /*let input = document.querySelector('input[type="file"]'); // get input by type "file", to make it work more universal (there is only one input type file on the page!);
     let div = document.querySelector('.preview');
+
+    console.log('\n input type="file" --> \n', input)
 
     // input.style.opacity = "0"; // display: none; ? visibility: hidden; ?
         // Note: opacity is used to hide the file input instead of visibility: hidden or display: none, because assistive technology interprets the latter two styles to mean the file input isn't interactive;
@@ -274,23 +314,23 @@
             div.removeChild(div.firstChild);
         }
 
-        const curFiles = input.files; // FileList object;
+        let curFiles = input.files; // FileList object;
 
         if (curFiles.length === 0) { // check if any file was selected;
             const p = document.createElement('p');
-            p.textContent = 'No files currently selected for upload';
+            p.textContent = 'Nie wybrano żadnego pliku';
             div.appendChild(p);
         } else { // file was selected;
             const ol = document.createElement('ol');
             ol.style.listStyleType = "none";
             ol.style.paddingLeft = "0";
-            div.appendChild(ol); // ?
+            div.appendChild(ol);
 
             for (const file of curFiles) {
                 const li = document.createElement('li');
                 const p = document.createElement('p');
                 if (validFileType(file)) { // CHECK IF FILE IS IN PROPER IMG TYPE !
-                    p.textContent = `File name - ${file.name}, file size - ${returnFileSize(file.size)}.`;
+                    p.textContent = `Nazwa pliku - ${file.name}, rozmiar - ${returnFileSize(file.size)}.`;
                     //const image = document.createElement('img');
                     //image.src = URL.createObjectURL(file); // generate a thumbnail preview of the image;
                     //li.appendChild(image);
@@ -304,7 +344,7 @@
         }
     }
 
-    /*const fileTypes = [ // https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types;
+    /!*const fileTypes = [ // https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types;
         "image/apng",
         "image/bmp",
         "image/gif",
@@ -315,7 +355,7 @@
         "image/tiff",
         "image/webp",
         "image/x-icon"
-    ];*/
+    ];*!/
 
     const fileTypes = [ // https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types;
         "image/jpeg",
@@ -337,7 +377,7 @@
         } else if (number >= 1048576) {
             return `${(number / 1048576).toFixed(1)} MB`;
         }
-    }
+    }*/
 
     // other fields validation; - in "category.js" file;
 
@@ -358,6 +398,7 @@
 <img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
 
 <script src="category.js"></script> <!-- (!) nazwa robocza !!! -->
+    <script src="validate-file.js"></script> <!-- js input file validation -->
 
 </body>
 </html>

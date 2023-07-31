@@ -1215,7 +1215,7 @@ img#loading-icon {
 {
         /*width: 15%;*/
     margin-left: 0;
-    margin-top: 5px;
+    /*margin-top: 5px;*/
 
         /*margin-left: 5px;*/
         /*width: 200px;*/
@@ -1234,21 +1234,45 @@ img#loading-icon {
     outline: none;
     /*margin-top: 10px;*/
 
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
-#content form#edit-book-data input#input-submit-edit-book-data:hover {
+#content form#edit-book-data input#input-submit-edit-book-data:hover,
+#content form#add-book-data input#input-submit-add-book-data:hover
+{
     cursor: pointer;
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
 }
 
-#content form#edit-book-data input[type="text"],
+#content form#edit-book-data textarea,
+#content form#add-book-data textarea {
+    resize: none;
+    overflow: hidden;
+
+    width: 425px !important;
+    height: 145px!important;
+    /*margin: 10px 0 10px 0;*/
+    margin: 0;
+    border: 1px solid #4d4d4d;
+    outline: none;
+    padding: 5px 5px;
+}
+
+span#span-book-desc {
+    float: left;
+    margin-top: 2px;
+}
+
+#content form#edit-book-data input[type="text"],  /* \admin\edit-book.php */
 #content form#edit-book-data input[type="number"],
+#content form#edit-book-data textarea,
 
 #content form#add-book-data input[type="text"],
-#content form#add-book-data input[type="number"] /* \admin\add-book.php */ {
+#content form#add-book-data input[type="number"], /* \admin\add-book.php */
+#content form#add-book-data textarea              /* \admin\add-book.php */
+{
                     /*!*margin-left: 5px;*!
                     !*width: 200px;*!
                     min-width: 150px;
@@ -1277,9 +1301,9 @@ img#loading-icon {
     color: #ffffff;
     border: 1px ridge rgba(210, 210, 210, 0.38);
     border-radius: 5px;
-    font-weight: bold;
-    /*font-size: 20px;*/
     /*font-weight: bold;*/
+    /*font-size: 20px;*/
+    font-weight: normal;
     padding: 8px;
     box-sizing: border-box;
     outline: none;
@@ -1287,12 +1311,35 @@ img#loading-icon {
     /*transition: all 0.125s ease-in-out;*/
 }
 
-#content form#edit-book-data input[type="text"]:hover,
-#content form#edit-book-data input[type="number"]:hover {
+/* remove the default arrow styling (that appears in input type number)*/
+#content form#edit-book-data input[type="number"]::-webkit-inner-spin-button,
+#content form#edit-book-data input[type="number"]::-webkit-outer-spin-button,
+#content form#add-book-data input[type="number"]::-webkit-inner-spin-button,
+#content form#add-book-data input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* Ensure arrows don't create extra space */
+}
+
+/*#content form#add-book-data input[type="text"],
+#content form#add-book-data input[type="number"], !* \admin\add-book.php *!
+#content form#add-book-data textarea*/
+
+
+#content form#edit-book-data input[type="text"]:hover,  /* \admin\edit-book.php */
+#content form#edit-book-data input[type="number"]:hover,
+#content form#edit-book-data textarea:hover,
+#content form#edit-book-data select:hover,
+
+#content form#add-book-data input[type="text"]:hover,
+#content form#add-book-data input[type="number"]:hover, /* \admin\add-book.php */
+#content form#add-book-data textarea:hover,              /* \admin\add-book.php */
+#content form#add-book-data select:hover
+{
     cursor: pointer;
-    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    /*-webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
-    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);*/
+    border: 1px ridge rgba(224, 224, 224, 0.47);
 }
 
 #content form#edit-book-data select,
@@ -1315,11 +1362,13 @@ img#loading-icon {
                     !*width: 50%;*!*/
 
     background-color: transparent;
-    position: relative;
-    top: -3px;
-    border: 1px ridge rgba(166, 166, 166, 0.38);
+/*position: relative;
+top: -3px;*/
+    /*border: 1px ridge rgba(166, 166, 166, 0.38);*/
+    border: 1px ridge rgba(210, 210, 210, 0.38);
     border-radius: 3px;
-    width: 120px;
+/*width: 120px;*/
+    width: 235px;
         /*padding: 3px 3px 4px 10px;*/
     /*padding: 3px 5px 3px 5px;*/
     padding: 8px;
@@ -1331,9 +1380,9 @@ img#loading-icon {
 
 #content form#edit-book-data select:hover,
 #content form#add-book-data select:hover {
-    cursor: pointer;
+    /*cursor: pointer;
     border: 1px ridge rgba(210, 210, 210, 0.38);
-    user-select: none;
+    user-select: none;*/
 }
 
 #content form#edit-book-data select option,
@@ -1381,6 +1430,11 @@ div.result {
     padding-top: 8px;
 }
 
+div.preview ol img {
+    width: 150px;
+    border-radius: 5px;
+}
+
 form#edit-book-data div p span,
 form#add-book-data div p span /* \admin\add-book.php */
 {
@@ -1388,6 +1442,9 @@ form#add-book-data div p span /* \admin\add-book.php */
     min-width: 150px;
 
     /*border: 1px solid lightblue;*/
+
+    position: relative;
+    top: 2px;
 }
 
 /*form#add-book-data div p span !* \admin\add-book.php *!
@@ -1404,6 +1461,8 @@ form#add-book-data div p span label:hover /* \admin\add-book.php */
 div.preview {
     position: relative;
     top: -5px;
+    margin-left: 150px;
+    font-weight: normal;
 }
 
 .edit-book-image,
