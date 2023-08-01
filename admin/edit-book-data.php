@@ -23,7 +23,7 @@ require_once "../authenticate-admin.php";
         isset($_POST['edit-book-category']) && !empty($_POST['edit-book-category']) &&
         isset($_POST['edit-book-subcategory']) && !empty($_POST['edit-book-subcategory'])
     ) {
-        // All required fields are set and not empty; Perform the necessary actions or validations here; // For example, update the book data in the database;
+        // all required fields are set and not empty; Perform the necessary actions or validations here; // For example, update the book data in the database;
 
                 /* echo "<br> success <br><br>";
                     echo "<br> tytuł - " . $_POST['edit-book-title'];
@@ -40,8 +40,8 @@ require_once "../authenticate-admin.php";
 
         // back-end validation;
 
-                $bookId = filter_var($_POST['edit-book-id'], FILTER_VALIDATE_INT);
-            $title = filter_var($_POST['edit-book-title'], FILTER_SANITIZE_STRING);
+       $bookId = filter_var($_POST['edit-book-id'], FILTER_VALIDATE_INT);
+             /*$title = filter_var($_POST['edit-book-title'], FILTER_SANITIZE_STRING);
             $author = filter_var($_POST['edit-book-change-author'], FILTER_VALIDATE_INT);
             $year = filter_var($_POST['edit-book-release-year'], FILTER_VALIDATE_INT);
             $price = filter_var($_POST['edit-book-price'], FILTER_VALIDATE_FLOAT);
@@ -51,6 +51,58 @@ require_once "../authenticate-admin.php";
         $pages = filter_var($_POST['edit-book-pages'], FILTER_VALIDATE_INT);
         $dims = filter_var($_POST['edit-book-dims'], FILTER_SANITIZE_STRING);
         $category = filter_var($_POST['edit-book-category'], FILTER_VALIDATE_INT);
+        $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);*/
+
+        query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "get_author_id", ""); // get highest author-id from db;
+        // $_SESSION["max-author-id"] => "35";
+        query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "get_publisher_id", ""); // get highest publisher-id from db;
+        // $_SESSION["max-publisher-id"] => "5";
+        query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "get_category_id", ""); // get highest category-id from db;
+        // $_SESSION["max-category-id"] => "7";
+            /*query("SELECT id_magazynu FROM magazyn ORDER BY id_magazynu DESC LIMIT 1", "get_magazine_id", ""); // get highest magazine-id from db;
+            // $_SESSION["max-magazine-id"] => "2";*/
+
+
+        $title = filter_var($_POST['edit-book-title'], FILTER_SANITIZE_STRING);
+        $author = filter_var($_POST['edit-book-change-author'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,                          // minimum allowed value;
+                'max_range' => $_SESSION["max-author-id"]  // maximum allowed value;
+            ]
+        ]);
+        $year = filter_var($_POST['edit-book-release-year'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1900, // minimum allowed value;
+                'max_range' => 2023  // maximum allowed value;
+            ]
+        ]);
+        $price = filter_var($_POST['edit-book-price'], FILTER_VALIDATE_FLOAT, [
+            'options' => [
+                'min_range' => 1,    // minimum allowed value;
+                'max_range' => 1000  // maximum allowed value;
+            ]
+        ]);
+        $publisher = filter_var($_POST['edit-book-change-publisher'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,                             // minimum allowed value;
+                'max_range' => $_SESSION["max-publisher-id"]  // maximum allowed value;
+            ]
+        ]);
+        $desc = filter_var($_POST['edit-book-desc'], FILTER_SANITIZE_STRING);
+        $cover = filter_var($_POST['edit-book-cover'], FILTER_SANITIZE_STRING);
+        $pages = filter_var($_POST['edit-book-pages'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,    // minimum allowed value;
+                'max_range' => 1500  // maximum allowed value;
+            ]
+        ]);
+        $dims = filter_var($_POST['edit-book-dims'], FILTER_SANITIZE_STRING);
+        $category = filter_var($_POST['edit-book-category'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,                           // minimum allowed value;
+                'max_range' => $_SESSION["max-category-id"] // maximum allowed value;
+            ]
+        ]);
         $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
 
         /* check -->
@@ -84,121 +136,30 @@ require_once "../authenticate-admin.php";
             $subcategory === false
         ) {
 
-            echo "POST Error: Invalid or missing values"; // fieldnt didn't pass validation;
+            //echo "POST Error: Invalid or missing values"; // fieldnt didn't pass validation;
+            //echo "<span class='update-failed'>Wystąpił problem. Dodanie nowej książki nie powiodło się</span>";
 
         } else {                                          // all values are valid; - fields PASSED validation;
                                                           // perform the necessary actions or validations here;
                                                           // for example, update the book data in the database;
-
-            $file = $_FILES['edit-book-image'];           // validate file;
-
-            if (
-                isset($file["name"]) && !empty($file["name"]) &&
-                isset($file["full_path"]) && !empty($file["full_path"]) &&
-                isset($file["type"]) && !empty($file["type"]) &&
-                isset($file["tmp_name"]) && !empty($file["tmp_name"]) &&
-                $file['error'] === UPLOAD_ERR_OK
-            ) {
-                // file exists - has been sent;
-
-                $filename = $file["name"];
-                $tmpPath = $file["tmp_name"];
-                $destPath = "../assets/books/" . $filename;
-
-                // file validation and sanitization;
-
-                // source of the code (try {} catch - block) --> https://www.php.net/manual/en/features.file-upload.php;
-
-                try {
-                    // Undefined | Multiple Files | $_FILES Corruption Attack
-                    // If this request falls under any of them, treat it invalid.
-                    if (
-                        !isset($_FILES['edit-book-image']['error']) ||
-                        is_array($_FILES['edit-book-image']['error'])
-                    ) {
-                        throw new RuntimeException('Invalid parameters');
-                    }
-
-                    // Check $_FILES['upfile']['error'] value.
-                    switch ($_FILES['edit-book-image']['error']) {
-                        case UPLOAD_ERR_OK:
-                            break;
-                        case UPLOAD_ERR_NO_FILE:
-                            throw new RuntimeException('No file sent.');
-                        case UPLOAD_ERR_INI_SIZE:  // file exceeds the upload_max_filesize directive in php.ini.
-                        case UPLOAD_ERR_FORM_SIZE: //  file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form
-                            throw new RuntimeException('Exceeded filesize limit.');
-                        default:
-                            throw new RuntimeException('Unknown errors.');
-                    }
-
-                    // You should also check filesize here.
-                    if ($_FILES['edit-book-image']['size'] > 5000000) { // 5 MB
-                        throw new RuntimeException('Exceeded filesize limit.');
-                    }
-
-                    // DO NOT TRUST $_FILES['upfile']['mime'] VALUE;
-                    // Check MIME Type by yourself.
-                    $finfo = new finfo(FILEINFO_MIME_TYPE);
-                    if (false === $ext = array_search(
-                            $finfo->file($_FILES['edit-book-image']['tmp_name']),
-                            array(
-                                'jpg' => 'image/jpeg',
-                                'png' => 'image/png',
-                                'gif' => 'image/gif',
-                            ),
-                            true
-                        )) {
-                        throw new RuntimeException('Invalid file format.');
-                    }
-
-                    // You should name it uniquely.
-                    // DO NOT USE $_FILES['upfile']['name'] WITHOUT ANY VALIDATION !!
-                    // On this example, obtain safe unique name from its binary data.
-                    /*if (!move_uploaded_file($_FILES['upfile']['tmp_name'],
-                                            sprintf('./uploads/%s.%s', sha1_file($_FILES['upfile']['tmp_name']), // ?
-                            $ext
-                        )
-                    )) {
-                        throw new RuntimeException('Failed to move uploaded file.');
-                    }*/
-
-                                    /*if (!move_uploaded_file($tmpPath, $destPath)) {  // A CO Z SANITYZACJĄ NAZWY PLIKU (?)
-                                        echo '<br>File uploaded successfully.';
-                                    } else {
-                                        echo '<br>Error moving uploaded file.';
-                                    }*/
-
-                    if (!move_uploaded_file($tmpPath, $destPath)) {
-                        throw new RuntimeException('Failed to move uploaded file.');
-                    }
-
-                    //echo 'File is uploaded successfully.';
-
-                    query("UPDATE ksiazki SET tytul='%s', id_autora='%s', rok_wydania='%s', cena='%s', id_wydawcy='%s', image_url='%s', opis='%s', oprawa='%s', ilosc_stron='%s', wymiary='%s', id_subkategorii='%s' WHERE ksiazki.id_ksiazki='%s'", "updateBookData", [$title, $author, $year, $price, $publisher, $filename, $desc, $cover, $pages, $dims, $subcategory, $bookId]);
-
-                } catch (RuntimeException $e) {
-
-                    echo $e->getMessage();
-
-                }
-
-            } else {                                   // file was not send (not uploaded);
-                                                       // error code (0 if no error occurred);
-                echo 'Error uploading file. (file NOT uploaded) - Error code: ' . $file['error'];
-                                                       // https://www.php.net/manual/en/features.file-upload.errors.php;
+            if(!validateFile("edit-book-image")) {
+                //echo "<br>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz<br>";
+                echo "<span class='update-failed'>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz</span>";
+            } else {
+                query("UPDATE ksiazki SET tytul='%s', id_autora='%s', rok_wydania='%s', cena='%s', id_wydawcy='%s', image_url='%s', opis='%s', oprawa='%s', ilosc_stron='%s', wymiary='%s', id_subkategorii='%s' WHERE ksiazki.id_ksiazki='%s'", "updateBookData", [$title, $author, $year, $price, $publisher, $_FILES["edit-book-image"]["name"], $desc, $cover, $pages, $dims, $subcategory, $bookId]);
             }
         }
+
     } else {                                           // some required fields are missing or empty; isset(), empty();
                                                        // handle the error or display an error message to the user;
-        echo "error - data were NOT set in $ _ POST";  // pola nie były ustawione (nie istniały) - lub były puste;
+        echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić danych</span>";  // pola nie były ustawione (nie istniały) - lub były puste;
     }
 
     if( isset($_SESSION["update-book-successful"]) && $_SESSION["update-book-successful"] === false ) {
         unset($_SESSION["update-book-successful"]);
-        echo "<span class='archive-success'>Udało się zmienić zaktualizować dane</span>";
+        echo "<span class='archive-success'>Udało się zaktualizować dane</span>";
     } else {                                           // ture ;
-        echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić danych</span>";
+        //echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić danych</span>";
     }
 
 

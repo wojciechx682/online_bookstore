@@ -42,7 +42,7 @@
 
                         //let bookId = '<?php //echo $_POST["book-id"]; ?>'; // walidacja / sanityzacja ?
 
-                    let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt WHERE ks.id_ksiazki = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii", "getBookData", $_POST["book-id"]); ?>';
+                    let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.image_url, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt WHERE ks.id_ksiazki = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii", "getBookData", $_POST["book-id"]); ?>';
                     // $_POST value is retrieved from admin\books.php -> "Edytuj" button (input type="submit");
 
                     // 1 | Symfonia C++ wydanie V | 1 | 2009 | 10 | 2 | Lorem ipsum dolor sit amet, consectetur adipiscing... | twarda | 585	| 411 x 382 x 178 | 1 | 4
@@ -278,12 +278,13 @@
                     </div>
 
                     <input type="hidden" value="" name="edit-book-id" id="edit-book-id"> <!-- id_ksiązki - int(11) -->
+                    <input type="hidden" value="" name="edit-book-image_url" id="edit-book-image_url"> <!-- image_url -->
 
                     <input type="submit" id="input-submit-edit-book-data">
 
                 </form>
 
-                <div class="result"></div>
+                <div class="result edit-book-result"></div>
 
             </div> <!-- #content -->
 
@@ -392,6 +393,7 @@
     $("#edit-book-dims").val(bookData[0]["wymiary"]);
     $("#edit-book-category").val(bookData[0]["id_kategorii"]);
     $("#edit-book-subcategory").val(bookData[0]["id_subkategorii"]);
+    $("#edit-book-image_url").val(bookData[0]["image_url"]);
 
 </script>
 

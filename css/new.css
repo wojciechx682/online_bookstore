@@ -2449,6 +2449,7 @@ button#confirm-message {
     width: 95%; /* 100% (?) !!!!!!! */
 
     margin-top: 2px;
+    max-width: 160px;
 
 }
 

@@ -52,7 +52,7 @@
                                         Tytuł książki
                                     </label>
                                 </span>
-                                    <input type="text" required maxlength="255" size="255" autofocus
+                                    <input type="text" required maxlength="255" size="255" autofocus value="Symfonia C++"
                                            name="add-book-title" id="add-book-title">
                             </p>
                         </div>
@@ -81,7 +81,7 @@
                                         Rok wydania
                                     </label>
                                 </span>
-                                    <input type="number" min="1900" max="2023"
+                                    <input type="number" min="1900" max="2023" value="2015"
                                            name="add-book-release-year" id="add-book-release-year" required>
                             </p>
                         </div>
@@ -93,7 +93,7 @@
                                         Cena
                                     </label>
                                 </span>
-                                <input type="number" min="1" max="1000" step="1"
+                                <input type="number" min="1" max="1000" step="0.01" value="65.55"
                                        name="add-book-price" id="add-book-price" required>
                             </p>
                         </div>
@@ -200,7 +200,7 @@
                                         Ilość stron
                                     </label>
                                 </span>
-                                <input type="number" min="1" max="1500" step="1"
+                                <input type="number" min="1" max="1500" step="1" value="425"
                                            name="add-book-pages" id="add-book-pages" required>
                             </p>
                         </div>
@@ -212,7 +212,7 @@
                                         Wymiary
                                     </label>
                                 </span>
-                                    <input type="text" maxlength="15"
+                                    <input type="text" maxlength="15" value="125 x 730 x 310"
                                            name="add-book-dims" id="add-book-dims" required>
                             </p>
                         </div>
@@ -295,7 +295,7 @@
                                         Ilość egzemplarzy
                                     </label>
                                 </span>
-                                <input type="number" step="1" min="1" max="5000"
+                                <input type="number" step="1" min="1" max="5000" value="125"
                                        name="add-book-quantity" id="add-book-quantity">
                             </p>
                         </div>
@@ -306,7 +306,7 @@
 
                     </form>
 
-                    <div class="result"></div> <!-- response message from server -->
+                    <div class="result add-book-result"></div> <!-- response message from server -->
 
                 </div> <!-- #content -->
 
@@ -318,10 +318,18 @@
 
     </div> <!-- #main-container -->
 
+        <img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
+
     <script src="category.js"></script> <!-- (!) nazwa robocza !!! -->
 
     <script src="add-book.js"></script> <!-- JS -> AJAX -> add-book-data.php -->
         <script src="validate-file.js"></script> <!-- js input file validation -->
+
+    <script>
+        document.querySelector('textarea').value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
+    </script>
+
+
 
 </body>
 </html>

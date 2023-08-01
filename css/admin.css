@@ -923,6 +923,11 @@ span.archive-success, span.update-failed {
     margin-top: 18px;
 }
 
+div.add-book-result span,
+div.edit-book-result span {
+    margin-top: 3px !important;
+}
+
 div#update-status div.delivery-date span.update-failed {
     margin-top: 0;
 }
@@ -996,6 +1001,10 @@ figure#book-details-figure {
     margin: 0 25px 0 0;
     float: left;
     /*margin-right: 25px;*/
+}
+
+div#content article#book-details > div#section-container > figure > img {
+    max-width: 160px;
 }
 
 section#basic-data {

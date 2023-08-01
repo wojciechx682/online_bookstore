@@ -1048,8 +1048,6 @@ EOT;
 		$result->free_result();
 	}
 
-
-
     function orderDetailsVerifyOrderExists($result) { // zwrócono rekordy a więc jest takie zamówienie (admin\order-details.php);
         //echo "\n 1014 - function -> orderDetailsVerifyOrderExists \n\n";
 
@@ -1086,6 +1084,14 @@ EOT;
 
         // - pobranie id nowo wstawionego wiersza (nowo wstawianego zamówienia);
         $_SESSION['last_order_id'] = $polaczenie->insert_id;
+    }
+
+    function get_last_book_id($result, $polaczenie) { // admin\add-book-data.php;
+        $_SESSION["last-book-id"] = $polaczenie->insert_id;
+    }
+
+    function addBookIntoWarehouse() {
+        $_SESSION["add-book-successful"] = true;
     }
 
     /*function get_address_id($result) // wywołanie w funkcji register(); // rejestracja.php;
@@ -1355,6 +1361,134 @@ EOT;
         // ]
     }
 
+    function validateFile($fileName) { // $fileName - name attribute of input type="file";
+
+        $file = $_FILES[$fileName]; // validate and upload file; // sprawdzanie poprawności przesłanych plików
+
+        if (
+            isset($file["name"]) && !empty($file["name"]) &&
+            isset($file["full_path"]) && !empty($file["full_path"]) &&
+            isset($file["type"]) && !empty($file["type"]) &&
+            isset($file["tmp_name"]) && !empty($file["tmp_name"]) &&
+            $file['error'] === UPLOAD_ERR_OK &&
+            $file['size'] !== 0
+        ) { // file exists - has been sent (uploaded successfully);
+
+            $filename = $file["name"];    // "001.png";
+            $tmpPath = $file["tmp_name"]; // name of temp directory in server that store uploaded file;
+                                          // C:\xampp\tmp\php39AB.tmp
+            $destPath = "../assets/books/" . $filename; // ../assets/books/001.png;
+            // file validation and sanitization;
+            try {
+                // validate file name
+                if(!filter_var($file["name"], FILTER_SANITIZE_STRING)) {
+                    throw new RuntimeException('Invalid file name');
+                    //return false;
+                }
+                //   Undefined | Multiple Files | $_FILES Corruption Attack
+                //   If this request falls under any of them, treat it invalid.
+                // --> (Checking for invalid parameters or corrupted $_FILES array)
+                if (
+                    !isset($file['error']) ||
+                    is_array($file['error'])
+                ) {
+                    throw new RuntimeException('Invalid parameters');
+                    //return false;
+                }
+                switch ($file['error']) { // Check $_FILES['name']['error'] value.
+                    case UPLOAD_ERR_OK:
+                        break;
+                    case UPLOAD_ERR_NO_FILE:
+                        throw new RuntimeException('No file was uploaded'); // 4 - No file was uploaded;
+                    case UPLOAD_ERR_INI_SIZE:  // file exceeds the upload_max_filesize directive in php.ini.
+                    case UPLOAD_ERR_FORM_SIZE: //  file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form
+                        throw new RuntimeException('Exceeded filesize limit');
+                    default:
+                        throw new RuntimeException('Unknown errors');
+                        //return false;
+                }
+
+                // check size of file
+                if ($file['size'] > 5000000) { // 5 MB
+                    throw new RuntimeException('Exceeded filesize limit');
+                    //return false;
+                }
+
+                // check the file MIME type (only allows "image/jpeg" and "image/png")
+                $finfo = new finfo(FILEINFO_MIME_TYPE);
+                if (false === $ext = array_search(
+                        $finfo->file($file['tmp_name']),
+                        array(
+                            'jpg' => 'image/jpeg',
+                            'png' => 'image/png',
+                        ),
+                        true
+                    )) {
+                    throw new RuntimeException('Invalid file format (type)');
+                    //return false;
+                }
+
+                // Move the uploaded file to the destination path
+                    // You should name it uniquely.
+                    // On this example, obtain safe unique name from its binary data.
+
+                /*if(substr($fileName, 0, 3) === "add") {
+                   // add new book image with unique name
+                    if (!move_uploaded_file($tmpPath,
+                        sprintf('../assets/books/%s.%s', sha1_file($file['tmp_name']), $ext)
+                    )) {
+                        throw new RuntimeException('Failed to move uploaded file');
+                        //return false;
+                    } else {
+                        return true;
+                    }
+                } else { // "edit" - edit book;
+
+                    //$destPath = "../assets/books/" . $_POST["edit-book-image_url"]; // ../assets/books/001.png;
+
+                    if (!move_uploaded_file($tmpPath, $destPath)) {
+                        throw new RuntimeException('Failed to move uploaded file');
+                        //return false;
+                    } else {
+                        return true;
+                    }
+                }*/
+
+
+                /*if (!move_uploaded_file($tmpPath, $destPath)) {  // A CO Z SANITYZACJĄ NAZWY PLIKU (?)
+                    echo '<br>File uploaded successfully.';
+                } else {
+                    echo '<br>Error moving uploaded file.';
+                }*/
+
+                if (!move_uploaded_file($tmpPath, $destPath)) {
+                    throw new RuntimeException('Failed to move uploaded file.');
+                } else {
+                    return true; // file uploaded successfully;
+                }
+
+                //echo 'File is uploaded successfully.';
+
+                /*query("UPDATE ksiazki SET tytul='%s', id_autora='%s', rok_wydania='%s', cena='%s', id_wydawcy='%s', image_url='%s', opis='%s', oprawa='%s', ilosc_stron='%s', wymiary='%s', id_subkategorii='%s' WHERE ksiazki.id_ksiazki='%s'", "updateBookData", [$title, $author, $year, $price, $publisher, $filename, $desc, $cover, $pages, $dims, $subcategory, $bookId]);*/
+
+            } catch (RuntimeException $e) {
+                //echo $e->getMessage();
+                // return false;
+            }
+
+        } else {                                   // file was not send (not uploaded);
+            // error code (0 if no error occurred);
+            //echo 'Error uploading file. (file NOT uploaded) - Error code: ' . $file['error'];
+            return false;
+
+        }
+    }
+
+
+    function addBook() {
+
+    }
+
     function getBookData($result) {
         // returns data in JSON format - instead text/html (as all other functions in this code);
         // subcategories - array();
@@ -1371,6 +1505,7 @@ EOT;
                 'rok_wydania' => $row['rok_wydania'],
                 'cena' => $row['cena'],
                 'id_wydawcy' => $row['id_wydawcy'],
+                'image_url' => $row['image_url'],
                 'opis' => $row['opis'],
                 'oprawa' => $row['oprawa'],
                 'ilosc_stron' => $row['ilosc_stron'],
@@ -1423,10 +1558,10 @@ EOT;
                                     //query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.rating, au.imie, au.nazwisko FROM ksiazki AS ks, autor AS au WHERE kategoria LIKE '%s' AND ks.id_autora = au.id_autora", "get_books",  $_SESSION['kategoria']);*/
 
             /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
-                                     kt.nazwa, sb.id_kategorii, 
-                                        au.imie, au.nazwisko 
-                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
-                                     WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
+                                     kt.nazwa, sb.id_kategorii,
+                                        au.imie, au.nazwisko
+                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb
+                                     WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
                                      ", "get_books", "");*/
 
             // dodanie statusu - "dostępna / niedostępna" -->
@@ -1452,8 +1587,8 @@ EOT;
         {
             //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE kategoria LIKE '%s'", "get_books", $kategoria);
             /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, kt.nazwa, sb.id_kategorii, au.imie, au.nazwisko
-                         FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
-                         WHERE kt.nazwa LIKE '%s' AND ks.id_autora = au.id_autora 
+                         FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb
+                         WHERE kt.nazwa LIKE '%s' AND ks.id_autora = au.id_autora
                          AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii", "get_books",  $_SESSION['kategoria']);*/
 
             // dodanie statusu - "dostępna / niedostępna" -->
@@ -1505,36 +1640,42 @@ EOT;
         require "connect.php";
         mysqli_report(MYSQLI_REPORT_STRICT);
 
+
+
         try
             {
                 $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-    
+
                 if($polaczenie->connect_errno) {
-    
+
                     throw new Exception(mysqli_connect_errno());
                 }
                 else {
-    
+
                     if(gettype($value) !== "array") { // jeśli to nie jest tablica
-    
+
                         $value = [$value];            // zrób z niej tablicę
                     }
                     //if (!is_array($value)) {
                     //	$values = [$values];
                     //}
                     for($i = 0; $i < count($value); $i++) { // sanitization;
-    
+
                         $value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
                     }
-    
+
                     if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie,
                     {                                                          // $value - tablica parametrów do vsprintf
-    
+
                         // zamiana na switch ?
-    
+
+                        //echo "<br><br> query() --> " . $query . "<br><br>";
+
+
+
                         // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
                         if(gettype($result) != "object") { // ̶b̶r̶a̶k̶ ̶z̶w̶r̶ó̶c̶o̶n̶y̶c̶h̶ ̶w̶y̶n̶i̶k̶ó̶w̶
-    
+
                             // $result nie jest obiektem, jest to wartość logiczna "1" ;
                                         // result print_r -->
                                             //    1
@@ -1543,51 +1684,51 @@ EOT;
                                         //gettype(result) -->
                                             //    boolean
                             // ✓✓✓ INSERT, UPDATE ... (bez dodatkowej funkcji) ;
-    
+
                            //echo "<br>1390 - result NIE jest obiektem ! (jest true/false) - boolean <br>";
-    
+
                             //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n'.$query.'\n\n")</script>';
                             //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n")</script>';
                            // echo '<script>console.log("'.$query.'\n\n")</script>';
-    
+
                             if($fun != "") {
-    
+
                                 // pytanie -> czy każda funkcja typu INSERT/UPDATE (korzystająca z + dod.funkcji) wymaga $polaczenie w jakimś celu ?
-    
+
                                 // ✓✓✓ INSERT, UPDATE  + dodatkowa_funkcja;
-    
+
                                 //echo '<script>console.log("INSERT, UPDATE + dodatkowa_funkcja - 1385 - result NIE jest obiektem - \n\n")</script>';
                                 //echo '<script>console.log("'.$query.'\n\n")</script>';
-    
+
                                 //echo "<br>1394<br>";;
-    
+
                                 //echo "<br> 1388 <br>"; exit();
-    
+
                                 $fun($result, $polaczenie);
                             }
-    
+
                         } else {  // $result jest obiektem
-    
+
                                 //echo "<br>1403 - result jest obiektem<br>";
-    
+
                             //echo '<script>console.log("SELECT - 1397 - result jest obiektem - \n\n")</script>';
                             //echo '<script>console.log("'.$query.'\n\n")</script>';
-    
+
                             //echo "<br>623<br>"; //exit();
                             // SELECT
                             $num_of_rows = $result->num_rows; // ilość zwróconych wierszy
-    
+
                             //echo "<br>num_of_rows --> " . $num_of_rows . "<br>";
-    
+
                             if($num_of_rows > 0) // znaleziono rekordy
                             {
-    
+
                                 //echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 - \n\n")</script>';
                                 //echo '<script>console.log("'.$query.'\n\n")</script>';
                                 //echo "<br>1416 - znaleziono rekordy - num_rows >  0 <br>"; exit();
-    
+
                                 //echo "<br>625<br>"; //exit();
-    
+
     //                            if ( isset($_POST["year-min"]) && !empty($_POST["year-min"]) && isset($_POST["year-max"]) && !empty($_POST["year-max"])
     //                            ) {
     //                                echo "<br><hr><br> query ( ) -> " . $query . "<br><hr>"; // testowanie wyszukiwania zaawansowanego
@@ -1595,55 +1736,55 @@ EOT;
     //                            }
     //
     //                            echo "<br><hr><br> num_of_rows -> " . $num_of_rows . "<br><hr>";
-    
+
                                 if($fun != "") {
-    
+
                                    // echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 + dodatkowa funkcja - \n\n")</script>';
-    
+
                                     $fun($result); // register_verify_email (rejestracja - sprawdzenie czy email jest zajęty ?),
                                 }
-    
+
                             }
                             else { // brak zwróconych rekordów
-    
+
                                 //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
-    
+
                                 //echo "<br>1435 - brak zwróconych rekordów - num_rows == 0 <br>"; exit();
-    
+
                                 //echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0 - \n\n")</script>';
                                 //echo '<script>console.log("'.$query.'\n\n")</script>';
-    
-    
+
+
                                 if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "cart_verify_book" && $fun != "verify_rate_exists"
                                 && $fun != "orderDetailsVerifyOrderExists"
-    
+
                                 ) {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
-    
+
                                    // echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0\n\n wywołanie dodatkowej funkcji - \n\n")</script>';
                                     //echo '<script>console.log("'.$query.'\n\n")</script>';
-        
+
                                     // orderDetailsVerifyOrderExists - admin/order-details.php - PRG
-    
+
                                     $fun($result);
                                 }
-    
+
                                 // check_email - (zmiana danych użytkownika) - validate_user_data.php - SPRAWDZA, CZY ISTNIEJE TAKI EMAIL
                                     // - jeśli istnieje ($result zwrócił rekordy) - ✓ przestawia zmienną $_SESSION['email_exists'] na "true"
                                     // - jeśli NIE istnieje ($result NIE zwrócił rekordów) - NIE POWINNA WYWOŁAĆ SIĘ TA FUNKCJA ($fun - check_email);
-    
-    
+
+
                                 /*if($fun == "log_in" || $fun == "get_product_from_cart") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
-    
+
                                     $fun($result);
                                 }*/
-    
+
                                 // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
-    
+
                                  // dla register_verify_email (rejestracja) nie powinna wykonać się funkcja $fun !
-    
+
                                 // Kiedy jest potrzeba aby wywołać funkcję $fun gdy nie zwrócono żadnych rekordw ?
                                 // -> dla logowanie.php (patrz wyżej)
-    
+
                                 // (!) dla dodawania książek NIE DZIAŁA !
                             }
                         }
@@ -1652,7 +1793,7 @@ EOT;
                     {
                         throw new Exception($polaczenie->error);
                     }
-    
+
                     $polaczenie->close();
                 }
             }
