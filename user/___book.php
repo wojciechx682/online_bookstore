@@ -74,7 +74,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                             // musi być komunikat o błędzie (np okienko) + exit() ! ;
 
-                echo "<br><hr> 43 invalid book-id OR book doesnt exist ! <br><hr>";
+                echo "<br><hr> 43 invalid book-id OR book doesnt exist ! <br><hr>"; //exit();
 
                 // obsługa błędu - np przekierowanie na poprzednią stronę (index.php) + wyświetlenie okienka z okmunikatem
                                                                                         // na stronie index.php można sprawdzić, czy np ustawiona wartość $_SESSION["error_costam"] ma wartosc true, i wtedy wyswietlic okienko

@@ -49,9 +49,11 @@ console.log("\ndata val => ", data[0][0].value); // jQ object;
 
         let dataSerialized = data.serialize(); // serializacja danych formularza (id-magazynu);
 
+        console.log("\n\n\ndataSerialized --> \n\n\n", dataSerialized, "\n\n\n");
+
         //$('div#admin-search-books-div > form#admin-search-books-form input[type="hidden"][name="change-magazine"]').val(warehouseId);
 
-        $('div#admin-search-books-div > form#admin-search-books-form input[type="hidden"][name="change-magazine"]').val(warehouseId); // set warehouseId for input type hiodden in admin-search-book form in \admin.books.php
+        $('div#admin-search-books-div > form#admin-search-books-form input[type="hidden"][name="change-magazine"]').val(warehouseId); // set warehouseId for input type hidden in admin-search-book form in \admin.books.php
 
 
         /*$.ajax({

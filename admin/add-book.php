@@ -1,4 +1,5 @@
 <?php
+    // check if user is logged-in, and user-type is "admin" - if not, redirect to login page;
     require_once "../authenticate-admin.php";
 ?>
 
@@ -6,17 +7,6 @@
 <html lang="pl">
 
 <?php require "../view/head-admin.php"; ?>
-
-<style>
-    /*form#add-book-data div {
-        !*border: 1px solid lightcoral;*!
-        background-color: rgba(124, 124, 124, 0.53);
-    }
-    form#add-book-data span {
-        !*border: 1px solid lightcoral;*!
-        background-color: rgba(161, 161, 161, 0.53);
-    }*/
-</style>
 
 <body>
 
@@ -38,6 +28,8 @@
 
                     <!-- Dodanie nowej książki do magazynu -->
 
+                    <!-- usunąć atrybuty value z inputów -->
+
                     <form method="post"
                           action="add-book-data.php"
                               id="add-book-data"
@@ -52,8 +44,9 @@
                                         Tytuł książki
                                     </label>
                                 </span>
-                                    <input type="text" required maxlength="255" size="255" autofocus value="Symfonia C++"
-                                           name="add-book-title" id="add-book-title">
+                                <input type="text" required maxlength="255" size="255" autofocus
+                                   value="Symfonia C++"
+                                       name="add-book-title" id="add-book-title"> <!-- value - usunąć ten atrybut ! -->
                             </p>
                         </div>
 
@@ -81,8 +74,9 @@
                                         Rok wydania
                                     </label>
                                 </span>
-                                    <input type="number" min="1900" max="2023" value="2015"
-                                           name="add-book-release-year" id="add-book-release-year" required>
+                                <input type="number" min="1900" max="2023"
+                                       name="add-book-release-year" id="add-book-release-year" required
+                                       value="2015">
                             </p>
                         </div>
 
@@ -93,8 +87,9 @@
                                         Cena
                                     </label>
                                 </span>
-                                <input type="number" min="1" max="1000" step="0.01" value="65.55"
-                                       name="add-book-price" id="add-book-price" required>
+                                <input type="number" min="1" max="1000" step="0.01" autocomplete="off"
+                                       name="add-book-price" id="add-book-price" required
+                                       value="65.55">
                             </p>
                         </div>
 
@@ -106,12 +101,12 @@
                                     </label>
                                 </span>
 
-                                    <select id="add-book-publisher" required
-                                            name="add-book-publisher">
-                                        <?php
-                                            query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM wydawcy AS wd", "createPublisherSelectList", "");
-                                        ?>
-                                    </select>
+                                <select id="add-book-publisher" required
+                                        name="add-book-publisher">
+                                    <?php
+                                        query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM wydawcy AS wd", "createPublisherSelectList", "");
+                                    ?>
+                                </select>
                             </p>
                         </div>
 
@@ -119,8 +114,8 @@
 
                         <div>
                             <p>
-                                 <span>
-                                    <label> <!-- for="add-book-image" -->
+                                <span>
+                                    <label>     <!-- for="add-book-image" -->
                                         Zdjęcie książki
                                     </label>
                                 </span>
@@ -130,11 +125,11 @@
                                 </label>
 
                                 <input
-                                        style="/*opacity: 0;*/ display: none;"
-                                        type="file"
-                                            name="add-book-image"
-                                            id="add-book-image"
-                                        accept="image/*">
+                                    style="/*opacity: 0;*/ display: none;"
+                                    type="file"
+                                        name="add-book-image"
+                                        id="add-book-image"
+                                    accept="image/*">
 
                                 <div class="preview">
                                     <p>Nie wybrano żadnego pliku</p>
@@ -142,9 +137,9 @@
                             </p>
                         </div>
 
-                                                <!--<label for="add-book-image" class="add-book-image btn-link btn-link-static">
-                                                    Wybierz plik
-                                                </label>-->
+                            <!--<label for="add-book-image" class="add-book-image btn-link btn-link-static">
+                                Wybierz plik
+                            </label>-->
 
                         <!--<input
                                 style="/*opacity: 0;*/ display: none;"
@@ -159,8 +154,7 @@
 
                         <hr id="book-details-hr">
 
-                        <!-- opis - varchar(1000) -->
-                        <div>
+                        <div> <!-- opis - varchar(1000) -->
                             <p>
                                 <span id="span-book-desc">
                                     <label for="add-book-desc">
@@ -172,18 +166,17 @@
 
                                 <textarea name="add-book-desc" id="add-book-desc"
                                           rows="5"
-                                          minlength="10" maxlength="1000"
-                                          required></textarea>
+                                          minlength="10" maxlength="1000" required></textarea>
                             </p>
                         </div>
 
                         <div> <!-- oprawa - varchar(255) -->
                             <p>
-                            <span>
-                                <label for="add-book-cover">
-                                    Oprawa
-                                </label>
-                            </span>
+                                <span>
+                                    <label for="add-book-cover">
+                                        Oprawa
+                                    </label>
+                                </span>
 
                                 <select id="add-book-cover" required
                                         name="add-book-cover">
@@ -232,7 +225,6 @@
                                         onchange="getSubcategories(this)">
                                     <?php
                                         query("SELECT kt.id_kategorii, kt.nazwa FROM kategorie AS kt", "createCategorySelectList", "");
-
                                         // <option value={id-kategorii}> "28"
                                         // <option value={id-kategorii}> "34"
                                         // <option value={id-kategorii}> "26"

@@ -9,21 +9,24 @@ include_once "../functions.php";*/
 require_once "../authenticate-admin.php";
 
     if (
-            isset($_POST['edit-book-id']) && !empty($_POST['edit-book-id']) &&
+        isset($_POST['edit-book-id']) && !empty($_POST['edit-book-id']) &&
         isset($_POST['edit-book-title']) && !empty($_POST['edit-book-title']) &&
         isset($_POST['edit-book-change-author']) && !empty($_POST['edit-book-change-author']) &&
         isset($_POST['edit-book-release-year']) && !empty($_POST['edit-book-release-year']) &&
         isset($_POST['edit-book-price']) && !empty($_POST['edit-book-price']) &&
         isset($_POST['edit-book-change-publisher']) && !empty($_POST['edit-book-change-publisher']) &&
-            isset($_FILES['edit-book-image']) &&
+        isset($_FILES['edit-book-image']) &&
         isset($_POST['edit-book-desc']) && !empty($_POST['edit-book-desc']) &&
         isset($_POST['edit-book-cover']) && !empty($_POST['edit-book-cover']) &&
         isset($_POST['edit-book-pages']) && !empty($_POST['edit-book-pages']) &&
         isset($_POST['edit-book-dims']) && !empty($_POST['edit-book-dims']) &&
         isset($_POST['edit-book-category']) && !empty($_POST['edit-book-category']) &&
-        isset($_POST['edit-book-subcategory']) && !empty($_POST['edit-book-subcategory'])
+        isset($_POST['edit-book-subcategory']) && !empty($_POST['edit-book-subcategory']) &&
+        isset($_POST['edit-book-select-magazine']) && !empty($_POST['edit-book-select-magazine']) &&
+        isset($_POST['edit-book-quantity']) && !empty($_POST['edit-book-quantity'])
     ) {
-        // all required fields are set and not empty; Perform the necessary actions or validations here; // For example, update the book data in the database;
+
+        // all required fields are SET and NOT EMPTY; Perform the necessary actions or validations here; // For example, update the book data in the database;
 
                 /* echo "<br> success <br><br>";
                     echo "<br> tytuł - " . $_POST['edit-book-title'];
@@ -53,14 +56,19 @@ require_once "../authenticate-admin.php";
         $category = filter_var($_POST['edit-book-category'], FILTER_VALIDATE_INT);
         $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);*/
 
-        query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "get_author_id", ""); // get highest author-id from db;
-        // $_SESSION["max-author-id"] => "35";
-        query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "get_publisher_id", ""); // get highest publisher-id from db;
-        // $_SESSION["max-publisher-id"] => "5";
-        query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "get_category_id", ""); // get highest category-id from db;
-        // $_SESSION["max-category-id"] => "7";
-            /*query("SELECT id_magazynu FROM magazyn ORDER BY id_magazynu DESC LIMIT 1", "get_magazine_id", ""); // get highest magazine-id from db;
-            // $_SESSION["max-magazine-id"] => "2";*/
+        query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "get_author_id", "");
+        // get highest author-id from db; // $_SESSION["max-author-id"] => "36";
+
+        // check if there is really author with that id ;
+        $_SESSION['author-exists'] = false;
+
+        query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "get_publisher_id", "");
+        // get highest publisher-id from db; // $_SESSION["max-publisher-id"] => "2";
+        query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "get_category_id", "");
+        // get highest category-id from db; // $_SESSION["max-category-id"] => "7";
+        query("SELECT id_magazynu FROM magazyn ORDER BY id_magazynu DESC LIMIT 1", "get_magazine_id", "");
+        // get highest magazine-id from db; // $_SESSION["max-magazine-id"] => "2";
+
 
 
         $title = filter_var($_POST['edit-book-title'], FILTER_SANITIZE_STRING);
@@ -104,6 +112,18 @@ require_once "../authenticate-admin.php";
             ]
         ]);
         $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
+        $magazine = filter_var($_POST['edit-book-select-magazine'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,                           // minimum allowed value;
+                'max_range' => $_SESSION["max-magazine-id"] // maximum allowed value;
+            ]
+        ]);
+        $quantity = filter_var($_POST['edit-book-quantity'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,    // minimum allowed value;
+                'max_range' => 5000  // maximum allowed value;
+            ]
+        ]);
 
         /* check -->
             $title !== $_POST['edit-book-title']
@@ -133,33 +153,64 @@ require_once "../authenticate-admin.php";
             $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 1000 ||
             $dims !== $_POST['edit-book-dims'] || strlen($dims) > 15 ||
             $category === false ||
-            $subcategory === false
+            $subcategory === false ||
+            $magazine === false || $magazine !== $_SESSION["warehouseId"] ||
+            $quantity === false
         ) {
 
+            /*echo "<br><hr><br>";
+                echo "<br> bookId-> " . $bookId;
+                echo "<br> title-> " . $title;
+                echo "<br> author-> " . $author;
+                echo "<br> year -> " . $year;
+                echo "<br> price -> " . $price;
+                echo "<br> publisher -> " . $publisher;
+                echo "<br> pages -> " . $pages;
+                echo "<br> cover -> " . $cover;
+                echo "<br> desc -> " . $desc;
+                echo "<br> dims -> " . $dims;
+                echo "<br> category -> " . $category;
+                echo "<br> subcategory -> " . $subcategory;
+                echo "<br> magazine -> " . $magazine;
+                echo "<br> quantity -> " . $quantity;
+            echo "<br><hr><br>";*/
+
+
             //echo "POST Error: Invalid or missing values"; // fieldnt didn't pass validation;
-            //echo "<span class='update-failed'>Wystąpił problem. Dodanie nowej książki nie powiodło się</span>";
+            echo "<span class='update-failed'>Wystąpił problem. Podaj poprawne dane</span>"; exit();
 
         } else {                                          // all values are valid; - fields PASSED validation;
                                                           // perform the necessary actions or validations here;
                                                           // for example, update the book data in the database;
+
+
             if(!validateFile("edit-book-image")) {
                 //echo "<br>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz<br>";
-                echo "<span class='update-failed'>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz</span>";
+                echo "<span class='update-failed'>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz</span>"; exit();
             } else {
                 query("UPDATE ksiazki SET tytul='%s', id_autora='%s', rok_wydania='%s', cena='%s', id_wydawcy='%s', image_url='%s', opis='%s', oprawa='%s', ilosc_stron='%s', wymiary='%s', id_subkategorii='%s' WHERE ksiazki.id_ksiazki='%s'", "updateBookData", [$title, $author, $year, $price, $publisher, $_FILES["edit-book-image"]["name"], $desc, $cover, $pages, $dims, $subcategory, $bookId]);
+
+                // update book-quantity (in-stock) in warehouse;
+
+                if($_SESSION["update-book-successful"] === false) { // jeśli udało się zrealizować powyższe zapytanie (update książki);
+                    unset($_SESSION["update-book-successful"]);
+                    query("UPDATE magazyn_ksiazki SET ilosc_dostepnych_egzemplarzy='%s' WHERE magazyn_ksiazki.id_ksiazki='%s' AND magazyn_ksiazki.id_magazynu='%s'", "updateBookData", [$quantity, $bookId, $magazine]);
+                }
+
+
             }
         }
 
     } else {                                           // some required fields are missing or empty; isset(), empty();
                                                        // handle the error or display an error message to the user;
-        echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić danych</span>";  // pola nie były ustawione (nie istniały) - lub były puste;
+        echo "<span class='update-failed'>Wystąpił problem. Nie udało się zaktualizować danych</span>"; exit();  // pola nie były ustawione (nie istniały) - lub były puste;
     }
 
     if( isset($_SESSION["update-book-successful"]) && $_SESSION["update-book-successful"] === false ) {
         unset($_SESSION["update-book-successful"]);
         echo "<span class='archive-success'>Udało się zaktualizować dane</span>";
     } else {                                           // ture ;
-        //echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić danych</span>";
+        echo "<span class='update-failed'>188 Wystąpił problem. Nie udało się zmienić danych</span>";
     }
 
 

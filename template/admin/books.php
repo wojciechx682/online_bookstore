@@ -37,6 +37,7 @@
 
                     <form action="edit-book.php" method="post">
                             <input type="hidden" value="%s" name="book-id">
+                            <input type="hidden" value="%s" name="warehouse-id">
                         <!--<label for="submit-form">Edytuj</label>-->
                         <input type="submit" value="Edytuj"> <!-- id="submit-form" -->
                     </form>

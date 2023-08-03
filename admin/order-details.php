@@ -243,7 +243,7 @@
                 <div style="clear: both"></div>-->
 
             </div> <!-- ✓ #order-det-container -->
-
+<span style="color: lightskyblue; font-weight: normal;">dodać tutaj informacje o tym, czy wybrane produkty są dostępne w magazynie.</span>
             </div> <!-- ✓ #content -->
 
         </main>

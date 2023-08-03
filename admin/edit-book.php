@@ -1,14 +1,15 @@
 <?php
-    /*session_start();
-    include_once "../functions.php";
-
-    if(!(isset($_SESSION['zalogowany']))) {
-        header("Location: ../user/___index2.php?login-error");
-        exit();
-    }*/
-
-    // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
+    // check if user is logged-in, and user-type is "admin" - if not, redirect to login page;
     require_once "../authenticate-admin.php";
+
+    $bookId = filter_var($_POST["book-id"], FILTER_VALIDATE_INT); // validate book-id and warehouse-id (POST);
+    $_SESSION["warehouseId"] = filter_var($_POST["warehouse-id"], FILTER_VALIDATE_INT);
+
+    if ($bookId === false || $_SESSION["warehouseId"] === false) {
+        header('Location: books.php');
+        exit();
+    }
+
 ?>
 
 <!DOCTYPE HTML>
@@ -18,281 +19,339 @@
 
 <body>
 
-<div id="main-container">
+    <div id="main-container">
 
-    <div id="container">
+        <div id="container">
 
-        <main>
+            <main>
 
-            <?php require "../template/admin/nav.php"; ?>
+                <?php require "../template/admin/nav.php"; ?>
 
-            <?php require "../template/admin/top-nav.php"; ?>
+                <?php require "../template/admin/top-nav.php"; ?>
 
-            <div id="content">
+                <div id="content">
 
-                <div id="admin-books-header-container">
+                        <!--<div id="admin-books-header-container">
+                            <h3 class="section-header section-header-books">Edytuj książkę</h3>
+                        </div>-->
 
-                    <h3 class="section-header section-header-books">Edytuj książkę</h3>
+                    <header>
+                        <h3 class="section-header">Edytuj książkę</h3>
+                    </header>
 
-                </div>
+                    <!--<hr id="book-details-hr-edit-books">-->
 
-                <hr id="book-details-hr-edit-books">
+                    <script>
 
-                <script>
+                            //let bookId = '<?php //echo $_POST["book-id"]; ?>'; // walidacja / sanityzacja ?
 
-                        //let bookId = '<?php //echo $_POST["book-id"]; ?>'; // walidacja / sanityzacja ?
 
-                    let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.image_url, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt WHERE ks.id_ksiazki = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii", "getBookData", $_POST["book-id"]); ?>';
-                    // $_POST value is retrieved from admin\books.php -> "Edytuj" button (input type="submit");
+                        let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.image_url, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii, mgk.id_magazynu, mgk.ilosc_dostepnych_egzemplarzy AS ilosc_egzemplarzy FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt, magazyn_ksiazki AS mgk WHERE ks.id_ksiazki = '%s' AND mgk.id_magazynu = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii AND ks.id_ksiazki = mgk.id_ksiazki", "getBookData", [$bookId, $_SESSION["warehouseId"]]); ?>';
+                        // $_POST value is retrieved from admin\books.php -> "Edytuj" button (input type="submit");
 
-                    // 1 | Symfonia C++ wydanie V | 1 | 2009 | 10 | 2 | Lorem ipsum dolor sit amet, consectetur adipiscing... | twarda | 585	| 411 x 382 x 178 | 1 | 4
+                        // 1 | Symfonia C++ wydanie V | 1 | 2009 | 10 | 2 | Lorem ipsum dolor sit amet, consectetur adipiscing... | twarda | 585	| 411 x 382 x 178 | 1 | 4
 
-                    bookData = JSON.parse(bookData);
-                        console.log("\nbookData -> ", bookData);
+                        bookData = JSON.parse(bookData);
+                            console.log("\nbookData -> ", bookData);
 
-                </script>
+                    </script>
 
-                    <!-- <div id="books-content"> </div> -->
+                        <!-- <div id="books-content"> </div> -->
 
-                <!-- Edytowanie danych o książce -->
+                    <!-- Edytowanie danych o książce -->
 
-                <form method="post"
-                      action="edit-book-data.php"
-                          id="edit-book-data"
-                          class="edit-book-data"
-                          name="edit-book-data"
-                      enctype="multipart/form-data">
+                    <form method="post"
+                          action="edit-book-data.php"
+                              id="edit-book-data"
+                              class="edit-book-data"
+                              name="edit-book-data"
+                          enctype="multipart/form-data">
 
-                    <div> <!-- tytuł - varchar(255) -->
-                        <p>
-                            <span>
-                                <label for="edit-book-title">
-                                    Tytuł książki
+                        <div> <!-- tytuł - varchar(255) -->
+                            <p>
+                                <span>
+                                    <label for="edit-book-title">
+                                        Tytuł książki
+                                    </label>
+                                </span>
+                                <input type="text" required maxlength="255" size="255" autofocus
+                                       name="edit-book-title"
+                                       id="edit-book-title">
+                            </p>
+                        </div>
+
+                        <div> <!-- autor - int(11) -->
+                            <p>
+                                <span>
+                                    <label for="edit-book-change-author">
+                                        Autor
+                                    </label>
+                                </span>
+
+                                <select id="edit-book-change-author" required
+                                        name="edit-book-change-author">
+                                    <?php
+                                        query("SELECT au.id_autora, au.imie, au.nazwisko FROM autor AS au", "createAuthorSelectList", "");
+                                    ?>
+                                </select>
+                            </p>
+                        </div>
+
+                        <div> <!-- rok_wydania - year(4) -->
+                            <p>
+                                <span>
+                                    <label for="edit-book-release-year">
+                                        Rok wydania
+                                    </label>
+                                </span>
+                                <input type="number" min="1900" max="2023"
+                                       name="edit-book-release-year" id="edit-book-release-year" required>
+                            </p>
+                        </div>
+
+                        <div> <!-- cena - float-->
+                            <p>
+                                <span>
+                                    <label for="edit-book-price">
+                                        Cena
+                                    </label>
+                                </span>
+                                <input type="number" min="1" max="1000" step="0.01" autocomplete="off"
+                                       name="edit-book-price" id="edit-book-price" required>
+                            </p>
+                        </div>
+
+                        <div> <!-- wydawnictwo - int(11) -->
+                            <p>
+                                <span>
+                                    <label for="edit-book-change-publisher">
+                                        Wydawnictwo
+                                    </label>
+                                </span>
+
+                                <select id="edit-book-change-publisher" required
+                                        name="edit-book-change-publisher">
+                                    <?php
+                                        query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM wydawcy AS wd", "createPublisherSelectList", "");
+                                    ?>
+                                </select>
+                            </p>
+                        </div>
+
+                        <hr id="book-details-hr">
+
+                        <div>
+                            <p>
+                                <span>
+                                    <label>     <!-- for="add-book-image" -->
+                                        Zdjęcie książki
+                                    </label>
+                                </span>
+
+                                <label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
+                                    Wybierz plik
                                 </label>
-                            </span>
-                            <input type="text" required
-                                   name="edit-book-title"
-                                   id="edit-book-title">
-                        </p>
-                    </div>
 
-                    <div> <!-- autor - int(11) -->
-                        <p>
-                            <span>
-                                <label for="edit-book-change-author">
-                                    Autor
+                                <input
+                                    style="/*opacity: 0;*/ display: none;"
+                                    type="file"
+                                        name="edit-book-image"
+                                        id="edit-book-image"
+                                    accept="image/*">
+
+                                <div class="preview">
+                                    <p>Nie wybrano żadnego pliku</p>
+                                </div>
+                            </p>
+                        </div>
+
+                                <!--<label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
+                                    Wybierz plik
                                 </label>
-                            </span>
-
-                            <select id="edit-book-change-author"
-                                    name="edit-book-change-author">
-                                <?php
-                                    query("SELECT au.id_autora, au.imie, au.nazwisko FROM autor AS au", "createAuthorSelectList", "");
-                                ?>
-                            </select>
-                        </p>
-                    </div>
-
-                    <div> <!-- rok_wydania - year(4) -->
-                        <p>
-                            <span>
-                                <label for="edit-book-release-year">
-                                    Rok wydania
-                                </label>
-                            </span>
-                            <input type="number" min="1900" max="2023"
-                                   name="edit-book-release-year" id="edit-book-release-year" required>
-                        </p>
-                    </div>
-
-                    <div> <!-- cena - float-->
-                        <p>
-                            <span>
-                                <label for="edit-book-price">
-                                    Cena
-                                </label>
-                            </span>
-                            <input type="number" min="1" max="500" step="0.01"
-                                   name="edit-book-price" id="edit-book-price" required>
-                        </p>
-                    </div>
-
-                    <div> <!-- wydawnictwo - int(11) -->
-                        <p>
-                            <span>
-                                <label for="edit-book-change-publisher">
-                                    Wydawnictwo
-                                </label>
-                            </span>
-
-                            <select id="edit-book-change-publisher"
-                                    name="edit-book-change-publisher">
-                                <?php
-                                    query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM wydawcy AS wd", "createPublisherSelectList", "");
-                                ?>
-                            </select>
-                        </p>
-                    </div>
-
-                    <hr id="book-details-hr">
-
-                    <div>
-                        <p>
-                             <span>
-                                <label> <!-- for="add-book-image" -->
-                                    Zdjęcie książki
-                                </label>
-                            </span>
-
-                            <label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
-                                Wybierz plik
-                            </label>
 
                             <input
                                     style="/*opacity: 0;*/ display: none;"
                                     type="file"
                                     name="edit-book-image"
-                                    id="edit-book-image"
-                                    accept="image/*">
+                                    id="edit-book-image">
 
                             <div class="preview">
                                 <p>Nie wybrano żadnego pliku</p>
-                            </div>
-                        </p>
-                    </div>
+                            </div>-->
 
-                        <!--<label for="edit-book-image" class="edit-book-image btn-link btn-link-static">
-                            Wybierz plik
-                        </label>
+                        <hr id="book-details-hr">
 
-                        <input
-                                style="/*opacity: 0;*/ display: none;"
-                                type="file"
-                                name="edit-book-image"
-                                id="edit-book-image">
+                        <div> <!-- opis - varchar(1000) -->
+                            <p>
+                                <span id="span-book-desc">
+                                    <label for="edit-book-desc">
+                                        Opis
+                                    </label>
+                                </span>
+                                    <!--<input type="text" required
+                                           name="edit-book-desc" id="edit-book-desc">-->
 
-                        <div class="preview">
-                            <p>Nie wybrano żadnego pliku</p>
-                        </div>-->
+                                    <textarea name="edit-book-desc" id="edit-book-desc"
+                                              rows="5"
+                                              minlength="10"
+                                              maxlength="1000" required></textarea>
+                            </p>
+                        </div>
 
-                    <hr id="book-details-hr">
+                        <div> <!-- oprawa - varchar(255) -->
+                            <p>
+                                <span>
+                                    <label for="edit-book-cover">
+                                        Oprawa
+                                    </label>
+                                </span>
 
-                    <div> <!-- opis - varchar(1000) -->
-                        <p>
-                            <span id="span-book-desc">
-                                <label for="edit-book-desc">
-                                    Opis
-                                </label>
-                            </span>
-                                <!--<input type="text" required
-                                       name="edit-book-desc" id="edit-book-desc">-->
+                                <select id="edit-book-cover" required
+                                        name="edit-book-cover">
+                                    <option value="twarda">Twarda</option>
+                                    <option value="miekka">Miękka</option>
+                                </select>
+                            </p>
+                        </div>
 
-                                <textarea name="edit-book-desc" id="edit-book-desc" rows="5" minlength="10" maxlength="1000" required></textarea>
-                        </p>
-                    </div>
+                        <div> <!-- ilość_stron - int(11) -->
+                            <p>
+                                <span>
+                                    <label for="edit-book-pages">
+                                        Ilość stron
+                                    </label>
+                                </span>
+                                <input type="number" min="1" max="1500" step="1"
+                                       name="edit-book-pages" id="edit-book-pages" required>
+                            </p>
+                        </div>
 
-                    <div> <!-- oprawa - varchar(255) -->
-                        <p>
-                            <span>
-                                <label for="edit-book-cover">
-                                    Oprawa
-                                </label>
-                            </span>
+                        <div> <!-- Wymiary - varchar(25) -->
+                            <p>
+                                <span>
+                                    <label for="edit-book-dims">
+                                        Wymiary
+                                    </label>
+                                </span>
+                                <input type="text" maxlength="15"
+                                       name="edit-book-dims" id="edit-book-dims" required>
+                            </p>
+                        </div>
 
-                            <select id="edit-book-cover"
-                                    name="edit-book-cover">
-                                <option value="twarda">Twarda</option>
-                                <option value="miekka">Miękka</option>
-                            </select>
-                        </p>
-                    </div>
+                        <hr id="book-details-hr">
 
-                    <div> <!-- ilość_stron - int(11) -->
-                        <p>
-                            <span>
-                                <label for="edit-book-pages">
-                                    Ilość stron
-                                </label>
-                            </span>
-                            <input type="number" min="1" max="1500" step="1"
-                                   name="edit-book-pages" id="edit-book-pages" required>
-                        </p>
-                    </div>
+                        <div> <!-- kategoria - (to pole nie istnieje w tablie książki) -->
+                            <p>
+                                <span>
+                                    <label for="edit-book-category">
+                                        Kategoria
+                                    </label>
+                                </span>
 
-                    <div> <!-- Wymiary - varchar(25) -->
-                        <p>
-                            <span>
-                                <label for="edit-book-dims">
-                                    Wymiary
-                                </label>
-                            </span>
-                            <input type="text" maxlength="15"
-                                   name="edit-book-dims" id="edit-book-dims" required>
-                        </p>
-                    </div>
+                                <select id="edit-book-category" required
+                                        name="edit-book-category"
+                                        onchange="getSubcategories(this)">
+                                    <?php
+                                        query("SELECT kt.id_kategorii, kt.nazwa FROM kategorie AS kt", "createCategorySelectList", "");
+                                        // <option value={id-kategorii} > "28"
+                                        // <option value={id-kategorii} > "34"
+                                        // <option value={id-kategorii} > "26"
+                                    ?>
+                                </select>
+                            </p>
+                        </div>
 
-                    <hr id="book-details-hr">
+                        <div> <!-- podkategoria -->
+                            <p>
+                                <span>
+                                    <label for="book-subcategory">
+                                        Podkategoria
+                                    </label>
+                                </span>
 
-                    <div> <!-- kategoria - (to pole nie istnieje w tablie książki) -->
-                        <p>
-                            <span>
-                                <label for="edit-book-category">
-                                    Kategoria
-                                </label>
-                            </span>
+                                <!--<select id="edit-book-subcategory"-->
+                                <select id="book-subcategory" required
+                                        name="edit-book-subcategory">
+                                    <?php
+                                        query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subkategorie AS subkt", "createSubcategorySelectList", "");
+                                        // <option value={id-PODkategorii} > "28"
+                                        // <option value={id-PODkategorii} > "34"
+                                        // <option value={id-PODkategorii} > "26"
+                                    ?>
+                                </select>
+                            </p>
+                        </div>
 
-                            <select id="edit-book-category"
-                                    name="edit-book-category"
-                                    onchange="getSubcategories(this)">
-                                <?php
-                                    query("SELECT kt.id_kategorii, kt.nazwa FROM kategorie AS kt", "createCategorySelectList", "");
+                        <hr id="book-details-hr">
 
-                                    // <option value={id-kategorii} > "28"
-                                    // <option value={id-kategorii} > "34"
-                                    // <option value={id-kategorii} > "26"
-                                ?>
-                            </select>
-                        </p>
-                    </div>
+                        <div>
+                            <p>
+                                <span>
+                                    <label for="edit-book-select-magazine">
+                                        Magazyn
+                                    </label>
+                                </span>
+                                <input type="number" disabled readonly id="edit-book-select-magazine-readonly">
+                                <input type="hidden" value="" name="edit-book-select-magazine" id="edit-book-select-magazine">
 
-                    <div> <!-- podkategoria -->
-                        <p>
-                            <span>
-                                <label for="edit-book-subcategory">
-                                    Podkategoria
-                                </label>
-                            </span>
 
-                            <!--<select id="edit-book-subcategory"-->
-                            <select id="book-subcategory"
-                                    name="edit-book-subcategory">
-                                <?php
-                                    query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subkategorie AS subkt", "createSubcategorySelectList", "");
 
-                                    // <option value={id-PODkategorii} > "28"
-                                    // <option value={id-PODkategorii} > "34"
-                                    // <option value={id-PODkategorii} > "26"
-                                ?>
-                            </select>
-                        </p>
-                    </div>
+                                <!--<select  id="edit-book-select-magazine" name="edit-book-select-magazine">-->
 
-                    <input type="hidden" value="" name="edit-book-id" id="edit-book-id"> <!-- id_ksiązki - int(11) -->
-                    <input type="hidden" value="" name="edit-book-image_url" id="edit-book-image_url"> <!-- image_url -->
+                                    <?php
+                                        //query("SELECT mg.id_magazynu, mg.nazwa FROM magazyn AS mg", "createMagazineSelectList", "");
+                                            // id_magazynu	   nazwa
+                                            //      1	    magazyn nr 1
+                                            //      2	    magazyn nr 2
 
-                    <input type="submit" id="input-submit-edit-book-data">
+                                            // <option value={id-magazynu}> "1"
+                                            // <option value={id-magazynu}> "2"
+                                    ?>
+                                <!--</select>-->
+                            </p>
+                        </div>
 
-                </form>
+                        <div> <!-- 	ilosc_dostepnych_egzemplarzy - varchar(255) -->
+                            <p>
+                                <span>
+                                    <label for="edit-book-quantity">
+                                        Ilość egzemplarzy
+                                    </label>
+                                </span>
+                                <input type="number" step="1" min="1" max="5000"
+                                       name="edit-book-quantity" id="edit-book-quantity">
+                            </p>
+                        </div>
 
-                <div class="result edit-book-result"></div>
 
-            </div> <!-- #content -->
 
-        </main>
 
-    </div> <!-- #container -->
 
-</div> <!-- #all-container -->
+
+
+
+
+
+
+
+
+
+                        <input type="hidden" value="" name="edit-book-id" id="edit-book-id"> <!-- id_ksiązki - int(11) -->
+                        <input type="hidden" value="" name="edit-book-image_url" id="edit-book-image_url"> <!-- image_url -->
+
+                        <input type="submit" id="input-submit-edit-book-data">
+
+                    </form>
+
+                    <div class="result edit-book-result"></div>
+
+                </div> <!-- #content -->
+
+            </main>
+
+        </div> <!-- #container -->
+
+    </div> <!-- #all-container -->
 
 <script>
     // input type file - validation and sanitization (JS);
@@ -393,7 +452,11 @@
     $("#edit-book-dims").val(bookData[0]["wymiary"]);
     $("#edit-book-category").val(bookData[0]["id_kategorii"]);
     $("#edit-book-subcategory").val(bookData[0]["id_subkategorii"]);
-    $("#edit-book-image_url").val(bookData[0]["image_url"]);
+        $("#edit-book-image_url").val(bookData[0]["image_url"]); // ?
+
+    $("#edit-book-select-magazine").val(bookData[0]["id_magazynu"]); // input type hidden
+    $("#edit-book-select-magazine-readonly").val(bookData[0]["id_magazynu"]);
+    $("#edit-book-quantity").val(bookData[0]["ilosc_egzemplarzy"]);
 
 </script>
 

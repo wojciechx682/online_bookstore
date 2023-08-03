@@ -63,11 +63,19 @@
                         <!--<input type="submit" value=" ">-->
                     </form>
 
-                    <button class="add-book-button btn-link btn-link-static">
+                    <!--<button class="add-book-button btn-link btn-link-static">
                         <a href="add-book.php">
                             Dodaj
                         </a>
-                    </button>
+                    </button>-->
+
+                    <a href="add-book.php">
+                        <button class="add-book-button btn-link btn-link-static">
+                            Dodaj
+                        </button>
+                   </a>
+
+
                 </div>
 
                 <div style="clear:both;"></div>

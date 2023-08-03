@@ -174,7 +174,12 @@ h3.section-header {
     border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
     margin-bottom: 20px;
     padding-bottom: 15px;
+        user-select: none;
 }
+
+/*h3.section-header:hover {
+   cursor: pointer;
+}*/
 
 h3.book-details-section-header {
     margin-bottom: 25px;
@@ -1335,20 +1340,25 @@ span#span-book-desc {
 
 
 #content form#edit-book-data input[type="text"]:hover,  /* \admin\edit-book.php */
-#content form#edit-book-data input[type="number"]:hover,
+#content form#edit-book-data input[type="number"]:not([disabled]):hover,
 #content form#edit-book-data textarea:hover,
-#content form#edit-book-data select:hover,
+#content form#edit-book-data select:not([disabled]):hover,
 
 #content form#add-book-data input[type="text"]:hover,
-#content form#add-book-data input[type="number"]:hover, /* \admin\add-book.php */
+#content form#add-book-data input[type="number"]:not([disabled]):hover, /* \admin\add-book.php */
 #content form#add-book-data textarea:hover,              /* \admin\add-book.php */
-#content form#add-book-data select:hover
+#content form#add-book-data select:not([disabled]):hover
 {
     cursor: pointer;
     /*-webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);*/
     border: 1px ridge rgba(224, 224, 224, 0.47);
+}
+
+#content form#edit-book-data label[for="edit-book-select-magazine"] {
+    user-select: none;
+    cursor: unset;
 }
 
 #content form#edit-book-data select,

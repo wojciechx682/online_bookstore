@@ -1,4 +1,4 @@
-
+<!--
 <style>
     body {
         margin: 20px;
@@ -49,8 +49,6 @@
     </div>
 </form>
 <br><hr><br>
-<!-- ---------------------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------------------- -->
 
 <script>
     let inputs = document.querySelectorAll('input[type="file"]');
@@ -67,3 +65,11 @@
 
 </script>
 
+-->
+
+<?php
+include "../functions.php";
+session_start();
+
+    query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", "1");
+?>

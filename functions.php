@@ -324,36 +324,31 @@
     function get_book_id($result) {
         // get highest book-id from db to apply max-range filter in ..\book.php (POST);
             $row = $result->fetch_assoc();
-
         $_SESSION["max-book-id"] = $row["id_ksiazki"]; // "36"
     }
 
-    // ..\admin\add-book-data.php - POST ;
+    // ..\admin\add-book-data, \edit-book-data - POST ;
     function get_author_id($result) {
-        // get highest author-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
-        $row = $result->fetch_assoc();
-
+        // get highest author-id from db to apply max-range filter in ..\admin\add-book-data, \edit-book-data (POST);
+            $row = $result->fetch_assoc();
         $_SESSION["max-author-id"] = $row["id_autora"]; // "25"
     }
 
     function get_publisher_id($result) {
         // get highest publisher-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
-        $row = $result->fetch_assoc();
-
+            $row = $result->fetch_assoc();
         $_SESSION["max-publisher-id"] = $row["id_wydawcy"]; // "5"
     }
 
     function get_category_id($result) {
-        // get highest publisher-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
-        $row = $result->fetch_assoc();
-
+        // get highest category-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
+            $row = $result->fetch_assoc();
         $_SESSION["max-category-id"] = $row["id_kategorii"]; // "7"
     }
 
     function get_magazine_id($result) {
-        // get highest publisher-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
-        $row = $result->fetch_assoc();
-
+        // get highest publisher-id from db to apply max-range filter in ..\admin\add-book-data.php, \edit-book-data.php (POST);
+            $row = $result->fetch_assoc();
         $_SESSION["max-magazine-id"] = $row["id_magazynu"]; // "2"
     }
 
@@ -1040,12 +1035,30 @@ EOT;
 
 	function cart_verify_book($result)
 	{
-        // \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
+        /*echo "<br>1038 -> cart_verify_book <br><hr> -->";
+        print_r($result); //exit();*/
+
+        if($result->num_rows) {
+                //echo "<br>yes<br>";
+
+            // \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
+            // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
+            $_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
+            /*echo "<br>448<br>";*/
+            //echo $_SESSION['book_exists']; exit();
+            $result->free_result();
+
+        } else {
+                //echo "<br>no<br>";
+            // do nothing !
+        }
+
+        /*// \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
         // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
 		$_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
-        /*echo "<br>448<br>";*/
+        //echo "<br>448<br>";
         //echo $_SESSION['book_exists']; exit();
-		$result->free_result();
+		$result->free_result();*/
 	}
 
     function orderDetailsVerifyOrderExists($result) { // zwrócono rekordy a więc jest takie zamówienie (admin\order-details.php);
@@ -1133,7 +1146,7 @@ EOT;
             // load the content from the external template file into string
             $book = file_get_contents("../template/admin/books.php");
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($book, $row['id_ksiazki'], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row['nazwa_magazynu'], $row["ilosc_dostepnych_egzemplarzy"], $row['id_ksiazki'],  $row['id_ksiazki'], $row['id_magazynu'], $row['id_ksiazki'], $row['id_ksiazki']);
+            echo sprintf($book, $row['id_ksiazki'], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row['nazwa_magazynu'], $row["ilosc_dostepnych_egzemplarzy"], $row['id_ksiazki'],  $row['id_ksiazki'], $row['id_magazynu'], $row['id_ksiazki'], $row['id_magazynu'], $row['id_ksiazki']);
         }
         $result->free_result();
     }
@@ -1288,14 +1301,14 @@ EOT;
         $result->free_result();
     }
 
-    function createAuthorSelectList($result) {
+    function createAuthorSelectList($result) { // \admin\add-book.php, \edit-book.php
         while($row = $result->fetch_assoc()) {
             echo '<option value="'.$row["id_autora"].'">'.$row["imie"]. " " . $row["nazwisko"] .'</option>';
         }
         $result->free_result();
     }
 
-    function createPublisherSelectList($result) {
+    function createPublisherSelectList($result) { // \admin\add-book, \edit-book.php
         while($row = $result->fetch_assoc()) {
             echo '<option value="'.$row["id_wydawcy"].'">'.$row["nazwa_wydawcy"].'</option>';
         }
@@ -1309,7 +1322,7 @@ EOT;
         $result->free_result();
     }
 
-    function createSubcategorySelectList($result) {
+    function createSubcategorySelectList($result) { // \admin\add-book, \edit-book.php
         while($row = $result->fetch_assoc()) {
             echo '<option value="'.$row["id_subkategorii"].'">'.$row["nazwa"].'</option>';
         }
@@ -1511,7 +1524,9 @@ EOT;
                 'ilosc_stron' => $row['ilosc_stron'],
                 'wymiary' => $row['wymiary'],
                 'id_subkategorii' => $row['id_subkategorii'],
-                'id_kategorii' => $row['id_kategorii']
+                'id_kategorii' => $row['id_kategorii'],
+                'id_magazynu' => $row['id_magazynu'],
+                'ilosc_egzemplarzy' => $row['ilosc_egzemplarzy']
             ];
             $bookData[] = $data; // what does that line do ? how does it do ?
         }
@@ -1747,6 +1762,8 @@ EOT;
                             }
                             else { // brak zwróconych rekordów
 
+                                echo "<br>1747<br>"; // exit();
+
                                 //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
 
                                 //echo "<br>1435 - brak zwróconych rekordów - num_rows == 0 <br>"; exit();
@@ -1755,7 +1772,7 @@ EOT;
                                 //echo '<script>console.log("'.$query.'\n\n")</script>';
 
 
-                                if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "cart_verify_book" && $fun != "verify_rate_exists"
+                                if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "aaa" && $fun != "verify_rate_exists"
                                 && $fun != "orderDetailsVerifyOrderExists"
 
                                 ) {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
@@ -1764,6 +1781,16 @@ EOT;
                                     //echo '<script>console.log("'.$query.'\n\n")</script>';
 
                                     // orderDetailsVerifyOrderExists - admin/order-details.php - PRG
+
+                                    echo "<br>1767<br>";
+                                    echo "<br>result --> <br>";
+
+
+                                    echo "<br><hr><br>";
+                                    print_r($result); echo "<br><hr><br>";
+                                    var_dump($result);
+
+                                    //exit();
 
                                     $fun($result);
                                 }
