@@ -58,10 +58,6 @@ require_once "../authenticate-admin.php";
 
         query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "get_author_id", "");
         // get highest author-id from db; // $_SESSION["max-author-id"] => "36";
-
-        // check if there is really author with that id ;
-        $_SESSION['author-exists'] = false;
-
         query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "get_publisher_id", "");
         // get highest publisher-id from db; // $_SESSION["max-publisher-id"] => "2";
         query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "get_category_id", "");
@@ -78,6 +74,10 @@ require_once "../authenticate-admin.php";
                 'max_range' => $_SESSION["max-author-id"]  // maximum allowed value;
             ]
         ]);
+        // check if there is really author with that id ;
+        $_SESSION['author-exists'] = false;
+        query("SELECT id_autora FROM autor WHERE id_autora = '%s'", "verifyAuthorExists", $author);
+            // sprawdzenie, czy ten autor istnieje w bd ; check if there is any author with given POST id; jeśli num_rows > 0 -> przestawi // $_SESSION['author-exists'] -> na true ;
         $year = filter_var($_POST['edit-book-release-year'], FILTER_VALIDATE_INT, [
             'options' => [
                 'min_range' => 1900, // minimum allowed value;
@@ -96,6 +96,11 @@ require_once "../authenticate-admin.php";
                 'max_range' => $_SESSION["max-publisher-id"]  // maximum allowed value;
             ]
         ]);
+
+        // check if there is really publisher with that id ;
+            $_SESSION['publisher-exists'] = false;
+        query("SELECT id_wydawcy FROM wydawcy WHERE id_wydawcy = '%s'", "verifyPublisherExists", $publisher);
+
         $desc = filter_var($_POST['edit-book-desc'], FILTER_SANITIZE_STRING);
         $cover = filter_var($_POST['edit-book-cover'], FILTER_SANITIZE_STRING);
         $pages = filter_var($_POST['edit-book-pages'], FILTER_VALIDATE_INT, [
@@ -111,6 +116,12 @@ require_once "../authenticate-admin.php";
                 'max_range' => $_SESSION["max-category-id"] // maximum allowed value;
             ]
         ]);
+
+        // check if there is really category with that id ;
+        $_SESSION['category-exists'] = false;
+        query("SELECT id_kategorii FROM kategorie WHERE id_kategorii = '%s'", "verifyCategoryExists", $category);
+        // $_SESSION['category-exists'] = true;
+
         $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
         $magazine = filter_var($_POST['edit-book-select-magazine'], FILTER_VALIDATE_INT, [
             'options' => [
@@ -144,15 +155,15 @@ require_once "../authenticate-admin.php";
         if (
             $bookId === false ||
             $title !== $_POST['edit-book-title'] ||
-            $author === false ||
+            $author === false || $_SESSION['author-exists'] === false ||
             $year === false || $year < 1900 || $year > 2023 ||
             $price === false || $price < 1 || $price > 500 ||
-            $publisher === false ||
+            $publisher === false || $_SESSION['publisher-exists'] === false ||
             $pages === false || $pages < 1 || $pages > 1500 ||
             $cover !== $_POST['edit-book-cover'] ||
             $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 1000 ||
             $dims !== $_POST['edit-book-dims'] || strlen($dims) > 15 ||
-            $category === false ||
+            $category === false || $_SESSION['category-exists'] === false ||
             $subcategory === false ||
             $magazine === false || $magazine !== $_SESSION["warehouseId"] ||
             $quantity === false
@@ -196,8 +207,6 @@ require_once "../authenticate-admin.php";
                     unset($_SESSION["update-book-successful"]);
                     query("UPDATE magazyn_ksiazki SET ilosc_dostepnych_egzemplarzy='%s' WHERE magazyn_ksiazki.id_ksiazki='%s' AND magazyn_ksiazki.id_magazynu='%s'", "updateBookData", [$quantity, $bookId, $magazine]);
                 }
-
-
             }
         }
 
@@ -210,7 +219,7 @@ require_once "../authenticate-admin.php";
         unset($_SESSION["update-book-successful"]);
         echo "<span class='archive-success'>Udało się zaktualizować dane</span>";
     } else {                                           // ture ;
-        echo "<span class='update-failed'>188 Wystąpił problem. Nie udało się zmienić danych</span>";
+        echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić danych</span>";
     }
 
 
