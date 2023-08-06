@@ -1100,6 +1100,20 @@ EOT;
         }
     }
 
+    function verifyWarehouseExists($result) {
+        // \admin\add-book-data.php
+        if($result->num_rows) {
+            // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
+            $_SESSION['warehouse-exists'] = true;
+            $result->free_result();
+
+        } else { // można nawet to zakomentować;
+            //echo "<br>no<br>";
+            // do nothing !
+        }
+
+    }
+
     function orderDetailsVerifyOrderExists($result) { // zwrócono rekordy a więc jest takie zamówienie (admin\order-details.php);
         //echo "\n 1014 - function -> orderDetailsVerifyOrderExists \n\n";
 

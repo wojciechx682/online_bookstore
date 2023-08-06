@@ -23,7 +23,7 @@ require_once "../authenticate-admin.php";
         isset($_POST['edit-book-category']) && !empty($_POST['edit-book-category']) &&
         isset($_POST['edit-book-subcategory']) && !empty($_POST['edit-book-subcategory']) &&
         isset($_POST['edit-book-select-magazine']) && !empty($_POST['edit-book-select-magazine']) &&
-        isset($_POST['edit-book-quantity']) && !empty($_POST['edit-book-quantity'])
+        isset($_POST['edit-book-quantity']) /*&& !empty($_POST['edit-book-quantity'])*/
     ) {
 
         // all required fields are SET and NOT EMPTY; Perform the necessary actions or validations here; // For example, update the book data in the database;
@@ -131,7 +131,7 @@ require_once "../authenticate-admin.php";
         ]);
         $quantity = filter_var($_POST['edit-book-quantity'], FILTER_VALIDATE_INT, [
             'options' => [
-                'min_range' => 1,    // minimum allowed value;
+                'min_range' => 0,    // minimum allowed value;
                 'max_range' => 5000  // maximum allowed value;
             ]
         ]);
@@ -154,22 +154,22 @@ require_once "../authenticate-admin.php";
         // Check if values pass the tests;
         if (
             $bookId === false ||
-            $title !== $_POST['edit-book-title'] ||
+            $title === false || $title !== $_POST['edit-book-title'] || strlen($title) > 255 ||
             $author === false || $_SESSION['author-exists'] === false ||
             $year === false || $year < 1900 || $year > 2023 ||
             $price === false || $price < 1 || $price > 500 ||
             $publisher === false || $_SESSION['publisher-exists'] === false ||
             $pages === false || $pages < 1 || $pages > 1500 ||
-            $cover !== $_POST['edit-book-cover'] ||
-            $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 1000 ||
-            $dims !== $_POST['edit-book-dims'] || strlen($dims) > 15 ||
+            $cover === false || $cover !== $_POST['edit-book-cover'] ||
+            $desc === false || $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 1000 ||
+            $dims === false || $dims !== $_POST['edit-book-dims'] || strlen($dims) > 15 ||
             $category === false || $_SESSION['category-exists'] === false ||
             $subcategory === false ||
             $magazine === false || $magazine !== $_SESSION["warehouseId"] ||
             $quantity === false
         ) {
 
-            /*echo "<br><hr><br>";
+            echo "<br><hr><br>";
                 echo "<br> bookId-> " . $bookId;
                 echo "<br> title-> " . $title;
                 echo "<br> author-> " . $author;
@@ -184,7 +184,7 @@ require_once "../authenticate-admin.php";
                 echo "<br> subcategory -> " . $subcategory;
                 echo "<br> magazine -> " . $magazine;
                 echo "<br> quantity -> " . $quantity;
-            echo "<br><hr><br>";*/
+            echo "<br><hr><br>";
 
 
             //echo "POST Error: Invalid or missing values"; // fieldnt didn't pass validation;

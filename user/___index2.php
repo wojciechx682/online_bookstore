@@ -76,10 +76,6 @@
                 $_SESSION["kategoria"] = "Wszystkie";
             }*/
 
-
-
-
-
 if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
 
     if( isset($_POST["input-search-nav"]) ) {        // && ! empty($_POST["input-search-nav"])
@@ -92,9 +88,11 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
 
         $_SESSION["input-search-nav"] = $title;
 
-        if( $title === false || $title === null || ($_SESSION["input-search-nav"] !== $_POST["input-search-nav"]) ) {
+        if( $title === false ||
+            $title === null ||
+            ($_SESSION["input-search-nav"] !== $_POST["input-search-nav"]) ) {
 
-            // validation failed - redirect to main page (index.php);   // echo "<br>error<br>";
+                // validation failed - redirect to main page (index.php);
 
             unset($_POST, $title, $_SESSION["input-search-nav"]);
                 header('Location: ___index2.php');

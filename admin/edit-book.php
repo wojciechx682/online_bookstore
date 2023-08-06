@@ -318,7 +318,7 @@
                                         Ilość egzemplarzy
                                     </label>
                                 </span>
-                                <input type="number" step="1" min="1" max="5000"
+                                <input type="number" step="1" min="0" max="5000"
                                        name="edit-book-quantity" id="edit-book-quantity">
                             </p>
                         </div>
