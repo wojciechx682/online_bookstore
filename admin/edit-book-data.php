@@ -28,7 +28,7 @@ require_once "../authenticate-admin.php";
 
         // all required fields are SET and NOT EMPTY; Perform the necessary actions or validations here; // For example, update the book data in the database;
 
-                /* echo "<br> success <br><br>";
+                echo "<br> success <br><br>";
                     echo "<br> tytuł - " . $_POST['edit-book-title'];
                     echo "<br> autor (id) - " . $_POST['edit-book-change-author'];
                     echo "<br> rok_wydania - " . $_POST['edit-book-release-year'];
@@ -39,7 +39,7 @@ require_once "../authenticate-admin.php";
                     echo "<br> liczba_stron - " .$_POST['edit-book-pages'];
                     echo "<br> wymiary - " . $_POST['edit-book-dims'];
                 echo "<br> kategoria (id) - " . $_POST['edit-book-category'] ;
-                echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'] . "<br>"; */
+                echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'] . "<br>";
 
         // back-end validation;
 
@@ -184,6 +184,12 @@ require_once "../authenticate-admin.php";
                 echo "<br> subcategory -> " . $subcategory;
                 echo "<br> magazine -> " . $magazine;
                 echo "<br> quantity -> " . $quantity;
+
+                if($quantity === false) {
+                    echo "<br> quantity -> FALSE";
+                } else {
+                    echo "<br> quantity -> TRUE";
+                }
             echo "<br><hr><br>";
 
 

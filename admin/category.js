@@ -4,8 +4,8 @@
 // DOMContentLoaded
 // load
 
-let select = document.querySelector('select[id$="book-category"]');
-window.addEventListener("load", getSubcategories(select));
+let select = document.querySelector('select[id$="book-category"]'); // subcategory select list;
+window.addEventListener("load", getSubcategories(select)); // init load;
 
 function getSubcategories(categorySelect) {      // categorySelect --> <select> element (kategoria);
 
@@ -74,7 +74,7 @@ function getSubcategories(categorySelect) {      // categorySelect --> <select> 
                 let subcategories = JSON.parse(xhr.responseText); // object
 
                     console.log("\nxhr.responseText -> \n", xhr.responseText, "\n");
-                    console.log("\nsubcategories -> \n", subcategories, "\n");
+                    console.log("\n77 subcategories -> \n", subcategories, "\n");
 
                 // update the subcategories select list;
 
@@ -84,8 +84,11 @@ function getSubcategories(categorySelect) {      // categorySelect --> <select> 
 
                 for (let i = 0; i < subcategories.length; i++) { // for every sub-category (every element in object);
                     let option = document.createElement('option');
-                    option.value = subcategories[i].id; // object - id pod-kategorii;
-                    option.textContent = subcategories[i].name; // nazwa pod-kategorii;
+                    //option.value = subcategories[i].id; // object - id pod-kategorii;
+                    //option.textContent = subcategories[i].name; // nazwa pod-kategorii;
+
+                    option.value = subcategories[i][0]; // object - id pod-kategorii;
+                    option.textContent = subcategories[i][1]; // nazwa pod-kategorii;
                     subcategorySelect.appendChild(option);
                 }
             } else {

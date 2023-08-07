@@ -663,8 +663,6 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                     }
 
-
-
                     // wyszukiwanie zaawansowane - advanced search result (POST);
 
                     else if ( isset($_SESSION["adv-search-query"])
@@ -866,7 +864,6 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
 <script>
 
-
     function showCategories() {
 
         //console.log("\nshowCategories :)\n");
@@ -882,8 +879,6 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
         //console.log("\nlist.style.display -> ", list.style.display);
         //list.classList.toggle('hidden');
-
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -891,7 +886,6 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
     let categoryButton = document.getElementById("a-categories-top-nav");
         console.log("\ncategoryButton -> ", categoryButton); // "Kategorie";
-
 
     function isMobileDevice() {
         return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -902,11 +896,10 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
         categoryButton.addEventListener("click", showCategories);
     }
 
+</script>
 
-
-
-
-
+<script>
+    /*let bookData = '<?php //query("SELECT sb.id_subkategorii, sb.nazwa, kt.nazwa FROM subkategorie AS sb, kategorie AS kt WHERE sb.id_kategorii = kt.id_kategorii", "getSubcategories", ""); ?>';*/
 </script>
 
 </body>

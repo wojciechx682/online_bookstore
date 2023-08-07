@@ -104,6 +104,9 @@
                            </form>                          
                 </li>';
 
+        /*echo '<span style="float: left;">abc</span>';*/
+        echo '<div style="clear: both;"></div>';
+
 		while ($row = $result->fetch_assoc())
 		{
 		  	                    // echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
@@ -116,6 +119,9 @@
                        </li>';
             // <a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a>
             /*<!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->*/
+
+            //echo '<span style="float: left;">abc</span>';
+            echo '<div style="clear: both;"></div>';
 		}
         $result->free_result();
 	}
@@ -1391,9 +1397,9 @@ EOT;
         //     2	        Web development	     4
 
         //          $result for \user\index.php ->
-        // id_subkategorii	    nazwa	     id_kategorii
-        //     1	        Programowanie	     4
-        //     2	        Web development	     4
+        // id_subkategorii	    nazwa	     nazwa_kategorii AS id_kategorii
+        //     1	        Programowanie	                 4
+        //     2	        Web development	                 4
 
 
 
@@ -1401,11 +1407,18 @@ EOT;
 
         while($row = $result->fetch_assoc()) {
             // define an associative array (key-value pairs)
+/*$subcategory = [
+    'id' => $row['id_subkategorii'],
+    'name' => $row['nazwa'],
+    'category_id' => $row['id_kategorii']
+];*/
+
             $subcategory = [
-                'id' => $row['id_subkategorii'],
-                'name' => $row['nazwa'],
-                'category_id' => $row['id_kategorii']
+                0 => $row['id_subkategorii'],
+                1 => $row['nazwa'],
+                2 => $row['id_kategorii']
             ];
+
             $subcategories[] = $subcategory; // This line appends the $subcategory array as a new element to the end of the $subcategories array during each iteration of the loop.
         }
 
