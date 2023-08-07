@@ -23,5 +23,6 @@
     <script src="../scripts/change-quantity.js"></script>
     <script src="../scripts/load-theme.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js" integrity="sha512-KqUc2WMPF/gxte9xVjVE4TIt1LMUTidO3BrcItFg0Ro24I7pGNzgcXdnWdezNY+8T0/JEmdC79MuwYn+8UdOqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> <!-- dom purify -->
 
 </head>

@@ -33,4 +33,4 @@
         tab2.addEventListener("click", setSpanWidthv2);*/
     </script>
 
-
+    <script src="../scripts/get-subcategories.js"></script> <!-- ajax - top-nav - get-subcategories -->

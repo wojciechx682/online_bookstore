@@ -1378,7 +1378,7 @@ EOT;
 
     // powyższe kilka funkcji można zoptymalizować tak, aby była to jedna (np używając tablicy num. a nie assocjacyjnych);
 
-    function getSubcategories($result) {
+    function getSubcategories($result) { //  \admin\edit-book.php,  \user\index.php (!)
 
         // returns data in JSON format - instead text/html (as all other functions in this code);
             // subcategories - array();
@@ -1389,6 +1389,13 @@ EOT;
         // id_subkategorii	    nazwa	     id_kategorii
         //     1	        Programowanie	     4
         //     2	        Web development	     4
+
+        //          $result for \user\index.php ->
+        // id_subkategorii	    nazwa	     id_kategorii
+        //     1	        Programowanie	     4
+        //     2	        Web development	     4
+
+
 
         $subcategories = []; // array();
 

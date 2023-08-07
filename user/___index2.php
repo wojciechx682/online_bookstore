@@ -403,6 +403,8 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
     $_SESSION["kategoria"] = "Wszystkie";
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ?>
 
 <!DOCTYPE HTML>
@@ -890,19 +892,19 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
     let categoryButton = document.getElementById("a-categories-top-nav");
         console.log("\ncategoryButton -> ", categoryButton); // "Kategorie";
 
-    categoryButton.addEventListener("click", showCategories);
-/*    categoryButton.addEventListener("mouseover", showCategories);
-let list = document.getElementById("categories-list");
-    list.addEventListener("mouseout", showCategories);*/
+
+    function isMobileDevice() {
+        return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    if (isMobileDevice()) {
+        console.log("This website is being accessed from a mobile device.");
+        categoryButton.addEventListener("click", showCategories);
+    }
 
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // najechanie na kategorię wyświetla listę podkategorii -->
-        // AJAX
 
-    let items = document.querySelectorAll("#n-top-nav-content ol li ul#categories-list li");
-    console.log("\nitems -> ", items);
 
 
 </script>
