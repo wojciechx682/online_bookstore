@@ -136,7 +136,24 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
                 header('Location: ___index2.php');
                     exit();
         } else {
-            // validation passed ;
+            // validation passed (category) ;
+
+            if ( isset($_POST['subcategory']) ) { // && ! empty($_POST['subcategory'])
+
+                $subcategory = filter_input(INPUT_POST, "subcategory", FILTER_SANITIZE_STRING); // podkategoria - sanitized ;
+                $_SESSION["subcategory"] = $subcategory;
+
+                if( $subcategory === false || $subcategory === null || ($_SESSION["subcategory"] !== $_POST["subcategory"]) ) {
+                    // validation failed - redirect to main page (index.php);
+
+                    unset($_POST, $category, $subcategory, $_SESSION["kategoria"], $_SESSION["subcategory"]);
+                        header('Location: ___index2.php');
+                            exit();
+                }
+            } else {
+                unset($_SESSION["subcategory"]);
+            }
+
             header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
             exit();
         }
@@ -426,7 +443,11 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
                     <div id="nav" class="nav-visible">
 
-                        <?= "<h3>".$_SESSION["kategoria"]."</h3>"; ?>
+
+                        <?= "<h3>".$_SESSION["kategoria"]; ?>
+
+                        <?= isset($_SESSION["subcategory"]) ? " \ " . $_SESSION["subcategory"] . "</h3>" : ""; ?>
+
 
                         <h3><label for="sortuj_wg">Sortowanie</label></h3>
 
@@ -794,7 +815,13 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
                         /*echo '<div id="content">';
                             echo '<div id="content-books">';*/
 
-                            displayBooks($_SESSION['kategoria']);
+                            if(isset($_SESSION["subcategory"])) {
+                                displayBooksWithSubcategory($_SESSION['kategoria'], $_SESSION["subcategory"]);
+                            } else {
+                                displayBooks($_SESSION['kategoria']);
+                            }
+
+                            //displayBooks($_SESSION['kategoria']);
                             //                            if($_SESSION['kategoria'] == "Wszystkie")
                             //                            {
                             //                                displayBooks($_SESSION['kategoria']);
@@ -900,6 +927,40 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
 <script>
     /*let bookData = '<?php //query("SELECT sb.id_subkategorii, sb.nazwa, kt.nazwa FROM subkategorie AS sb, kategorie AS kt WHERE sb.id_kategorii = kt.id_kategorii", "getSubcategories", ""); ?>';*/
+</script>
+
+
+<script>
+
+    // set height of the <ul> (categories) list based on how many categories are there
+
+    /*let liItems = document.querySelectorAll('#categories-list li');
+    console.log("\n\n\n liczb kategori --> ", liItems.length);
+
+    let categoryList = document.getElementById("categories-list")
+    let height = liItems[0];
+    let a = height
+    //categoryList.style.setProperty("--ul-list-height", "yellow");
+    console.log("\n\n height --> ", height)*/
+
+    let liItems = document.querySelectorAll('#categories-list li');
+    console.log("\n\n Number of list items: ", liItems.length);
+
+    let firstListItem = liItems[0];
+    let height = firstListItem.offsetHeight; // 36
+    console.log("\n\n Height of the first list item: ", height, "px");
+
+    let ulListHeight = height * liItems.length;
+
+    let categoryList = document.getElementById("categories-list");
+    categoryList.style.setProperty("--ul-list-height", ulListHeight + "px");
+
+
+    let secondList = document.getElementById("second-list");
+    secondList.style.top = "-"+ulListHeight+"px";
+    secondList.style.minHeight = ulListHeight+"px";
+
+
 </script>
 
 </body>

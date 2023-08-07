@@ -46,27 +46,20 @@ console.log("\nlistItems -> ", listItems);
 /*document.querySelectorAll('#n-top-nav-content ol li ul#categories-list li').addEventListener("mouseover", function(e) {
 });*/
 
-let firstLi = document.querySelector('ul#categories-list > li');
-console.log("\nfirstLi -> ", firstLi);
-console.log("\nfirstLi -> ", firstLi);
-console.log("\nfirstLi -> ", firstLi);
-console.log("\nfirstLi -> ", firstLi);
-console.log("\nfirstLi -> ", firstLi);
-console.log("\nfirstLi -> ", firstLi);
-console.log("\nfirstLi -> ", firstLi);
-console.log("\nfirstLi -> ", firstLi);
-console.log("\nfirstLi -> ", firstLi);
-
+let secondUl = document.querySelector('ul#second-list');
+console.log("\nsecondUl -> ", secondUl);
 
 listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "Wszystkie"
 
     //console.log("\n item --> ", item, "\n");
 
-    item.addEventListener("mouseenter", function() {  // after hover on that listItem;  // po najechaniu na niego kursorem !
+    let button = item.querySelector('button');
+
+    button.addEventListener("mouseenter", function() {  // after hover on that listItem;  // po najechaniu na niego kursorem !
         //console.log("\n item --> ", item, "\n");
         //let data = item.querySelector('form > input[type="hidden"]').value;
 
-        let subcategoryItems = document.querySelectorAll('ul#categories-list span.subcategory-item');
+        let subcategoryItems = secondUl.querySelectorAll('li');
         subcategoryItems.forEach((item) => {
             item.remove();
         });
@@ -84,21 +77,54 @@ listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "
 
                 //result.push(subcategory[1]); // add subcategory to new array;
 
-                let span = document.createElement('span');
-                    span.classList.add("subcategory-item");
-                span.textContent = subcategory[1];
+                let li = document.createElement('li');
+                    //span.classList.add("subcategory-item"); // li
+                //li.textContent = subcategory[1];
 
-                let row = document.createElement('div');
+                // to ma być wewnątrz <li> -->
+
+                /*<form method="post" action="___index2.php">
+                    <input type="hidden" name="kategoria" value="'.$row[" nazwa"].'">
+                        <button className="submit-book-form" type="submit">'.$row["nazwa"].'</button>
+                </form>*/
+
+                let form = document.createElement('form');
+                    form.method = "post";
+                    form.action = "___index2.php";
+
+                let category = document.createElement('input');
+                    category.type = "hidden";
+                    category.name = "kategoria";
+                    category.value = subcategory[2];
+
+                let subcategoryInput = document.createElement('input');
+                    subcategoryInput.type = "hidden";
+                    subcategoryInput.name = "subcategory";
+                    subcategoryInput.value = subcategory[1];
+
+                let button = document.createElement('button');
+                    button.className = "submit-book-form";
+                    button.type = "submit";
+                    button.innerHTML = subcategory[1];
+                    button.style.width = "90%";
+
+                form.append(category, subcategoryInput, button);
+
+                li.append(form);
+
+
+
+
+
+                //secondUl.append(li);
+                secondUl.append(li);
+
+                //let row = document.createElement('div');
                 //row.classList.add("break-row");
-
-                item.after(span);
-
+                //firstLi.after(span, row);
                 // echo '<span style="float: left;">abc</span>';
                 // echo '<div style="clear: both;"></div>';
-
-
-
-                result.push(span); // add element to the result array
+                result.push(li); // add element to the result array
             }
         })
 

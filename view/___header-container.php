@@ -114,6 +114,22 @@
                                     </ul>*/
                                 ?>
                             </ul>
+
+                            <ul id="second-list">
+                                <!--<li>
+                                    <form method="post" action="___index2.php">
+                                        <input type="hidden" name="kategoria" value="Wszystkie">
+                                        <button class="submit-book-form" type="submit">Wszystkie</button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form method="post" action="___index2.php">
+                                        <input type="hidden" name="kategoria" value="Dla dzieci">
+                                        <button class="submit-book-form" type="submit">Dla dzieci</button>
+                                    </form>
+                                </li>-->
+                            </ul>
+
                         </li>
                         <li class="btn from-center"><span id="search-arrow">Wyszukiwanie zaawansowane</span>
                             <!--<ul>

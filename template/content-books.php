@@ -41,7 +41,7 @@
             <form action="add_to_cart.php" method="post">
                 <input type="hidden" name="id_ksiazki" value="%s"> <!-- <-------------------- -->
                 <input type="hidden" name="koszyk_ilosc" class="koszyk_ilosc"  value="1">
-                <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>
+                <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj do koszyka</button>
             </form>
         </div>
     </div>

@@ -1628,7 +1628,7 @@ EOT;
     //        nazwa funkcji, która zostanie wywołana, gdy zapytanie zostanie wykonane pomyślnie.
     // $value - wartość będąca parametrem funkcji sprintf / vsprintf (pojedyncza zmienna lub TABLICA)
 
-    function displayBooks($kategoria)
+    function displayBooks($kategoria) // nazwa kategorii (string)
     {
         // alias dla funkcji query() -> index.php
         if($kategoria == "Wszystkie")
@@ -1697,6 +1697,30 @@ EOT;
 
         }
     }
+
+    function displayBooksWithSubcategory($kategoria, $subcategory) // nazwa kategorii (string), nazwa podkategorii (string)
+    {
+        // dodanie statusu - "dostępna / niedostępna" -->
+
+        query("SELECT
+                        ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+                        kt.nazwa, sb.id_kategorii, 
+                        au.imie, au.nazwisko,
+                        SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                    FROM 
+                        ksiazki AS ks
+                    JOIN 
+                        autor AS au ON ks.id_autora = au.id_autora
+                    JOIN 
+                        subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                    JOIN 
+                        kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                    LEFT JOIN 
+                        magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                    WHERE kt.nazwa LIKE '%s' AND sb.nazwa LIKE '%s'                                  
+                    GROUP BY ks.id_ksiazki", "get_books", [$_SESSION['kategoria'], $_SESSION["subcategory"]]); // dane o ksiażce + ilość egzemplarzy na stanie
+    }
+
 
     // Model - odpowiedzialny za reprezentację danych biznesowych, logikę aplikacji oraz dostęp do bazy danych.
     // W kontekście kodu, który podałeś, funkcja query() odpowiada za wykonanie zapytań do bazy danych, co oznacza, że pełni rolę modelu.
