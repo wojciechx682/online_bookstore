@@ -1452,56 +1452,36 @@ header {
 
     margin: 0 auto 0 auto;
     width: 1375px;
-
-
         background-color: #ffffff;
         border-bottom:  1px ridge rgba(166, 166, 166, 0.38);
-
-   /* overflow: auto;
-    padding-bottom: 2px;*/
-
+        /*overflow: auto;
+        padding-bottom: 2px;*/
     position: relative;
     z-index: 90 !important;
-
-    border-left: 1px ridge rgba(166, 166, 166, 0.38);;
-    border-right: 1px ridge rgba(166, 166, 166, 0.38);;
-
-    /*border-top: 1px ridge rgba(166, 166, 166, 0.38);*/
-
+        border-left: 1px ridge rgba(166, 166, 166, 0.38);;
+        border-right: 1px ridge rgba(166, 166, 166, 0.38);;
+        /*border-top: 1px ridge rgba(166, 166, 166, 0.38);*/
     box-sizing: border-box;
-
-
-
     /*overflow: auto;
     height: 275px;*/
 }
 
-
 #n-top-nav-content {
-    /*width: 1000px;*/
-   /* height: 35px;
-    margin-left: auto;
-    margin-right: auto;*/
-
+        /*width: 1000px;*/
+        /*height: 35px;
+        margin-left: auto;
+        margin-right: auto;*/
     text-align: center;
-
-    /*overflow: hidden;
-    padding-left: 14px;*/
-
-
+        /*overflow: hidden;
+        padding-left: 14px;*/
     /*padding-right: 15px;*/
            /* border-left: 1px ridge black;
             border-right: 1px ridge black;*/
-
-
-   /* overflow: auto;
+    /*overflow: auto;
     height: 275px;*/
-
-
-/*    -webkit-box-shadow: -11px 5px 22px -14px rgba(66, 68, 90, 1);
-    -moz-box-shadow: -11px 5px 22px -14px rgba(66, 68, 90, 1);
-    box-shadow: -11px 5px 22px -14px rgba(66, 68, 90, 1);*/
-
+        /*-webkit-box-shadow: -11px 5px 22px -14px rgba(66, 68, 90, 1);
+        -moz-box-shadow: -11px 5px 22px -14px rgba(66, 68, 90, 1);
+        box-shadow: -11px 5px 22px -14px rgba(66, 68, 90, 1);*/
     min-height: 36px;
 }
 
@@ -1509,8 +1489,8 @@ header {
     padding: 0;
     margin: 0;
     list-style-type: none;
-    /* font-size: 18px; */
-    /* display: inline-block; */
+        /* font-size: 18px; */
+        /* display: inline-block; */
     height: 35px;
     line-height: 200%;
     float: left;
@@ -1518,11 +1498,10 @@ header {
 }
 
 #n-top-nav-content ol li {
-    float: left;
+        float: left;
     width: 125px;
     height: 36px;
-    /*transition: all 175ms cubic-bezier(0.77, 0, 0.175, 1);*/
-
+        /*transition: all 175ms cubic-bezier(0.77, 0, 0.175, 1);*/
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
@@ -1532,9 +1511,6 @@ header {
     width: 250px !important;
 }
 
-
-
-
 #n-top-nav-content ol li a {
     color: #333333;
     text-decoration: none;
@@ -1543,13 +1519,28 @@ header {
 }
 
 #n-top-nav-content ol li ul {
+
     list-style-type: none;
     padding: 0;
     margin: 0;
-    height: 40px;
+        /*height: 40px;*/
     display: none;
 
 
+}
+
+#n-top-nav-content ol li ul#categories-list {
+    background-color: lightskyblue !important;
+
+    width: 500px;
+    /*overflow-y: visible;*/
+    overflow: auto;
+    border-radius: 5px;
+}
+
+#n-top-nav-content ol li ul#categories-list li {
+
+    float: unset !important;
 }
 
 #n-top-nav-content ol li ul li {
@@ -1558,25 +1549,12 @@ header {
     z-index: 100;
     border-top: 1px ridge rgba(166, 166, 166, 0.38);
     /*box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);*/
-
-
-
-
 }
 
 #n-top-nav-content ol li.btn, #n-top-nav-content ol li.from-center {
-
     padding: 0;
     text-align: center;
-
 }
-
-
-
-
-
-
-
 
 #n-top-nav ol a
 {
@@ -1599,21 +1577,29 @@ header {
     /*color: #797979;*/
 }
 
-#n-top-nav ol > li:hover > ul
+
+
+
+#n-top-nav ol > li:hover > ul  /* najechanie na element listy 'Kategorie', wyświetla listę kategorii); */
 {
-    display: block !important;
-
-
-
+    display: block;
 }
 
-#n-top-nav ol > li:nth-child(3):hover > ul
+.hidden {
+    display: none !important;
+}
+
+
+
+/*#n-top-nav ol > li:nth-child(2) a {
+    color: blue !important;
+}*/
+
+
+/*#n-top-nav ol > li:nth-child(3):hover > ul
 {
     display: none !important;
-
-
-
-}
+}*/
 
 
 #n-top-nav ol > li > ul > li:hover
@@ -2293,9 +2279,7 @@ div#content-books {
 /* --------------------------------------------------------------------------------------------------- */
 /* zaloguj.php - komunikat o błędzie logowania - "Musisz być zalogowany" */
 
-.hidden {
-    display: none;
-}
+
 
 .bright {
     /*filter: brightness(50%);*/

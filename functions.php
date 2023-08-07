@@ -107,23 +107,17 @@
 		while ($row = $result->fetch_assoc())
 		{
 		  	                    // echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
-
             // echo "\n".'<li><a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
-
             echo "\n".'<li>
                            <form method="post" action="___index2.php">
                                 <input type="hidden" name="kategoria" value="'.$row["nazwa"].'">
                                 <button class="submit-book-form" type="submit">'.$row["nazwa"].'</button>
                            </form>
                        </li>';
-
             // <a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a>
-
             /*<!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->*/
-
-
 		}
-		    $result->free_result();
+        $result->free_result();
 	}
 
     function get_categories_adv_search($result)

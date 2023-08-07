@@ -862,5 +862,50 @@ if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
 
     <script src="../scripts/filter-book-status.js"></script>
 
+<script>
+
+
+    function showCategories() {
+
+        //console.log("\nshowCategories :)\n");
+
+        let list = document.getElementById("categories-list"); // ul
+            console.log("\nlist -> ", list);
+
+       if(list.style.display === "block") {
+            list.removeAttribute("style");
+        } else {
+            list.style.display = "block";
+        }
+
+        //console.log("\nlist.style.display -> ", list.style.display);
+        //list.classList.toggle('hidden');
+
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // kliknięcie na "Kategorie" wyświetla listę kategorii - click on "Kategorie" in top nav -> hiding/displaying <ul> list;
+
+    let categoryButton = document.getElementById("a-categories-top-nav");
+        console.log("\ncategoryButton -> ", categoryButton); // "Kategorie";
+
+    categoryButton.addEventListener("click", showCategories);
+/*    categoryButton.addEventListener("mouseover", showCategories);
+let list = document.getElementById("categories-list");
+    list.addEventListener("mouseout", showCategories);*/
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // najechanie na kategorię wyświetla listę podkategorii -->
+        // AJAX
+
+    let items = document.querySelectorAll("#n-top-nav-content ol li ul#categories-list li");
+    console.log("\nitems -> ", items);
+
+
+</script>
+
 </body>
 </html>

@@ -84,20 +84,44 @@
                             <a href="___index2.php">Strona główna</a>
                             <div id="test-div"></div>
                         </li>
-                        <li class="btn from-center"><a href="___kategorie.php">Kategorie</a>
-                            <ul>
+                        <li class="btn from-center">
+                            <!--<a href="___kategorie.php">Kategorie</a>-->
+                            <a href="#" id="a-categories-top-nav">Kategorie</a>
+                            <ul id="categories-list">
                                 <?php
                                     query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories", "");
+
+                                    /*<ul>
+                                        <li>
+                                            <form method="post" action="___index2.php">
+                                                <input type="hidden" name="kategoria" value="Wszystkie">
+                                                <button class="submit-book-form" type="submit">Wszystkie</button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form method="post" action="___index2.php">
+                                                <input type="hidden" name="kategoria" value="Dla dzieci">
+                                                <button class="submit-book-form" type="submit">Dla dzieci</button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form method="post" action="___index2.php">
+                                                <input type="hidden" name="kategoria" value="Fantastyka">
+                                                <button class="submit-book-form" type="submit">Fantastyka</button>
+                                            </form>
+                                        </li>
+                                        // ...
+                                    </ul>*/
                                 ?>
                             </ul>
                         </li>
                         <li class="btn from-center"><span id="search-arrow">Wyszukiwanie zaawansowane</span>
-                            <ul>
+                            <!--<ul>
                                 <li><a href="#">...</a></li>
                                 <li><a href="#">...</a></li>
                                 <li><a href="#">...</a></li>
                                 <li><a href="#">...</a></li>
-                            </ul>
+                            </ul>-->
                         </li>
                     </ol>
 
