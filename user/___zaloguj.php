@@ -114,13 +114,13 @@
 
                             <span class="login-row">
                                     <label>
-                                        E-mail <input type="email" name="email" required value="jan.nowak@wp.pl"> <!-- jakub.wojciechowski.682@gmail.com -->
+                                        E-mail <input type="email" name="email" required value="adam.nowak1@wp.pl"> <!-- jakub.wojciechowski.682@gmail.com -->
                                     </label>
                             </span>
 
                             <span class="login-row">
                                     <label>
-                                        Hasło <input type="password" name="haslo" required value="jan1"
+                                        Hasło <input type="password" name="haslo" required value="PassJacob33#"
                                                            autocomplete="off"> <!-- jan -> jan1 -->     <!-- PassJacob33# -->
                                     </label>
                             </span>

@@ -1,36 +1,26 @@
 <?php
-    /*session_start();
-    include_once "../functions.php";*/
+    // session_start();
+    // include_once "../functions.php";
 
     require_once "../start-session.php";
 
         //	sprawdź połączenie z BD
-        //	$value = array();
+        //	$value = array(); // []
         //	array_push($value, "1");
         //	query("", "", ""); // w przypadku błędu połączenia z BD, wyświetli komunikat rzuconego wyjątku.
         //	należy dodać to do każdej podstrony, która korzysta z połączenia z BD
-        //	echo $_SESSION['login'] . '<br>';
-        //	if(isset($_SESSION['zalogowany']))
-        //	{
-        //		    //echo '<br>'.$_SESSION['account_error'];
-        //		unset($_SESSION['account_error']);
-        //		    //exit();
-        //	}
-        //	if(isset($_SESSION['blad'])) {
-        //		echo $_SESSION['blad'];
-        //		exit();
-        //	}
 
-    /*if(isset($_GET["login-error"])) {
-        echo '
-                    <script>
-                        alert("Musisz być zalogowany !")
-                        let url = new URL(window.location.href);
-                        url.searchParams.delete("login-error");
-                        window.location.href = url.toString();
-                    </script>
-                 ';
-    }*/
+        /*if(isset($_GET["login-error"])) {
+            echo '
+                        <script>
+                            alert("Musisz być zalogowany !")
+                            let url = new URL(window.location.href);
+                            url.searchParams.delete("login-error");
+                            window.location.href = url.toString();
+                        </script>
+                     ';
+        }*/
+
 
     // (?) można lepiej zapisać -->
 
@@ -80,7 +70,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ) {        // Post - Redirect - Get ;
 
     if( isset($_POST["input-search-nav"]) ) {        // && ! empty($_POST["input-search-nav"])
 
-        /* PRG - input-search-nav */
+                                                     // PRG - input-search-nav ;
 
         // input-search-nav - nie pusty, posiada wartość ;
 
