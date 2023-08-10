@@ -3,7 +3,7 @@
 	/*session_start();*/
 
     require_once "../start-session.php";
-	
+
 	if ( isset($_SESSION['zalogowany']) &&
                $_SESSION['zalogowany'] == "true" &&
         ! isset($_SESSION['udanarejestracja']) &&
@@ -55,6 +55,8 @@
         // (?) ewentualnie - zamiast tego -> wylogowanie - usuwa wszystkie zmienne sesyjne
 
 		// Usuwanie błędów rejestracji - Te zmienne nie istnieją jeśli udało się stworzyć konto !;  A co jeśli udało się stworzyć konto, ale wcześniej ktoś wywołałe te błędy ... ?
+        // Usunąć poniższe zakomentowane linie, te zmienne nie istnieją, jeśli udało się stworzyć konto (nie ważne czy user był zalogowany, czy nie);
+
 //		if (isset($_SESSION['e_imie'])) unset($_SESSION['e_imie']);
 //		if (isset($_SESSION['e_nazwisko'])) unset($_SESSION['e_nazwisko']);
 //		if (isset($_SESSION['e_email'])) unset($_SESSION['e_email']);

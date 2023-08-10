@@ -327,7 +327,7 @@
         $_SESSION["max-book-id"] = $row["id_ksiazki"]; // "36"
     }
 
-    // ..\admin\add-book-data, \edit-book-data - POST ;
+    // ..\admin\add-book-data, \edit-book-data - POST ;     \user\index.php - advanced-search - prg;
     function get_author_id($result) {
         // get highest author-id from db to apply max-range filter in ..\admin\add-book-data, \edit-book-data (POST);
             $row = $result->fetch_assoc();
@@ -1061,7 +1061,7 @@ EOT;
 		$result->free_result();*/
 	}
 
-    function verifyAuthorExists($result) { // \admin\edit-book-data
+    function verifyAuthorExists($result) { // \admin\edit-book-data,    \user\index.php - advanced-search (prg)
 
         if($result->num_rows) {
             // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
@@ -1087,18 +1087,29 @@ EOT;
         }
     }
 
-    function verifyCategoryExists($result) { // \admin\edit-book-data
-
+    function verifyCategoryExists($result) { // \admin\edit-book-data,
+                                             // \user\index.php - prg - spr, czy istnieje kategoria o takiej nazwie;
         if($result->num_rows) {
             // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
                 $_SESSION['category-exists'] = true;
             $result->free_result();
 
         } else { // można nawet to zakomentować;
-            //echo "<br>no<br>";
+            //echo "<br>no<br>"; // \user\index.php - można usunąć warunek else, ponieważ $_SESSION['category-exists'] == false;
             // do nothing !
         }
     }
+
+function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy istnieje pod-kategoria o takiej nazwie;
+    if($result->num_rows) {
+        $_SESSION['subcategory-exists'] = true;
+        $result->free_result();
+
+    } else { // można nawet to zakomentować;
+        //echo "<br>no<br>"; // \user\index.php - można usunąć warunek else, ponieważ $_SESSION['subcategory-exists'] == false;
+        // do nothing !
+    }
+}
 
     function verifyWarehouseExists($result) {
         // \admin\add-book-data.php
