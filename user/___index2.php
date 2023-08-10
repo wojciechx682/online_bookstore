@@ -211,7 +211,8 @@
             if($_SESSION["adv-search-category"] != "Wszystkie") {
                 // check if that category exists in db ;
                 $_SESSION["category-exists"] = false;
-                query("SELECT nazwa FROM kategorie WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]); // ✓ przestawi $_SESSION["category-exists"] na true, jeśli taka kategoria (nazwa) istnieje;
+                query("SELECT nazwa FROM kategorie WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
+                // ✓ przestawi $_SESSION["category-exists"] na true, jeśli taka kategoria (nazwa) istnieje;
 
                 if( $category === false || $category === null || ($_SESSION["adv-search-category"] !== $_POST["adv-search-category"]) || $_SESSION["category-exists"] === false ) {
                     // category empty ("") or failed validation ;
@@ -307,9 +308,10 @@
 
                 // $_SESSION["adv-search-author"] = $author; // DO USUNIĘCIA;
 
-                    // check if that author (id) exists in db ... ;
-                    $_SESSION["author-exists"] = false;
-                    query("SELECT id_autora FROM autor WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]); // ✓ przestawi $_SESSION["author-exists"] na true, jeśli taki autor (id) istnieje
+                // check if that author (id) exists in db ... ;
+                $_SESSION["author-exists"] = false;
+                query("SELECT id_autora FROM autor WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]);
+                // ✓ przestawi $_SESSION["author-exists"] na true, jeśli taki autor (id) istnieje
 
                 if( $author === false || $_SESSION["adv-search-author"] === false || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || $_SESSION["author-exists"] === false ) {
 
@@ -410,7 +412,7 @@
 
                 // Initialize an array to store the conditions for the WHERE clause;
 
-                //echo "<br> 351 <br>"; exit();
+                // echo "<br> 351 <br>"; exit();
 
                 $where = [];  //   WHERE CONDITION
                 $values = []; //   VALUES USED AS ARGUMENTS
@@ -461,7 +463,12 @@
                 if ( ! empty($where) ) {
                     // Combine the conditions into a single WHERE clause
                     //$query .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where);
-                    $_SESSION["adv-search-query"] .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where) . " GROUP BY ks.id_ksiazki ";
+
+                    // $_SESSION["adv-search-query"] .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where) . " GROUP BY ks.id_ksiazki ";
+
+                    // nie trzeba względniać relacji po WHERE, ponieważ użyto wsześniej klauzuli JOIN;
+
+                    $_SESSION["adv-search-query"] .= " WHERE " . implode(" AND ", $where) . " GROUP BY ks.id_ksiazki ";
 
                     $_SESSION["adv-search-values"] = $values;
 
