@@ -122,7 +122,7 @@
                                     <label>
                                         Hasło <input type="password" name="haslo" required value="PassJacob33#"
                                                            autocomplete="off"> <!-- jan -> jan1 -->     <!-- PassJacob33# -->
-                                    </label>
+                                    </label> <!-- name inputa zamienić na --> "password" -->
                             </span>
 
                             <input type="submit" value="Zaloguj się">
