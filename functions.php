@@ -63,9 +63,9 @@
 
     function get_authors_adv_search($result)
     {
-        // header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
+        // \user\index.php - header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
 
-        /*echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';*/
+            /*echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';*/
         while ($row = $result->fetch_assoc()) {
             //echo "\n".'<option value="'.$row['id_autora'].'">'.$row['imie']." ".$row['nazwisko'].'</option>';
 
@@ -73,7 +73,7 @@
             $author = file_get_contents("../template/adv-search-authors.php");
 
             // replace fields in $author string to author data from $result, display result content as HTML
-            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"]);
+            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
         }
         $result->free_result();
 
@@ -90,9 +90,9 @@
 //        $result->free_result();
     }
 
-	function get_categories($result)
+	function get_categories($result) // \user\index.php - top-nav - ol;
 	{
-        // header -> top-nav-content - wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav);
+        // header -> n-top-nav-content - wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
 
 		    $category_name = "Wszystkie";
 		/*echo "\n".'<li><a href="___index2.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
@@ -105,9 +105,9 @@
                 </li>';
 
         /*echo '<span style="float: left;">abc</span>';*/
-        echo '<div style="clear: both;"></div>';
+        /*echo '<div style="clear: both;"></div>';*/
 
-		while ($row = $result->fetch_assoc())
+		while ($row = $result->fetch_assoc()) // tyle ile jest kategorii;
 		{
 		  	                    // echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
             // echo "\n".'<li><a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
@@ -121,16 +121,16 @@
             /*<!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->*/
 
             //echo '<span style="float: left;">abc</span>';
-            echo '<div style="clear: both;"></div>';
+            /*echo '<div style="clear: both;"></div>';*/
 		}
         $result->free_result();
 	}
 
-    function get_categories_adv_search($result)
+    function get_categories_adv_search($result) // \user\index.php
     {
-        // header -> advanced_search -> <select> - lista kategorii
+            // header -> advanced_search -> <select> - lista kategorii;
         $category_name = "Wszystkie";
-        echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';
+            echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';
         while ($row = $result->fetch_assoc()) {
             echo "\n".'<option value="'.$row['nazwa'].'">'.$row['nazwa'].'</option>';
         }
@@ -329,7 +329,7 @@
 
     // ..\admin\add-book-data, \edit-book-data - POST ;     \user\index.php - advanced-search - prg;
     function get_author_id($result) {
-        // get highest author-id from db to apply max-range filter in ..\admin\add-book-data, \edit-book-data (POST);
+        // get highest author-id from db to apply max-range filter in ..\admin\add-book-data, \edit-book-data (POST), \user\index.php - adv-search - prg;
             $row = $result->fetch_assoc();
         $_SESSION["max-author-id"] = $row["id_autora"]; // "25"
     }
@@ -401,7 +401,7 @@
 //		$result->free_result();
 //	}
 
-	function count_cart_quantity($result) // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku; index.php - pobiera ilość książek w koszyku klienta;
+	function count_cart_quantity($result) // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku; \user\index.php - pobiera ilość książek klienta w koszyku;
 	{
 		$row = $result->fetch_assoc();
 
@@ -1088,7 +1088,7 @@ EOT;
     }
 
     function verifyCategoryExists($result) { // \admin\edit-book-data,
-                                             // \user\index.php - prg - spr, czy istnieje kategoria o takiej nazwie;
+                                             // \user\index.php - PRG - spr, czy istnieje kategoria o takiej nazwie;
         if($result->num_rows) {
             // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
                 $_SESSION['category-exists'] = true;

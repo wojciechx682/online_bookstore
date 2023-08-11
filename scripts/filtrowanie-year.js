@@ -1,6 +1,8 @@
 
 // advanced-search ;
 
+// year range - noUISlider (jQ) ;  // książka jQuery - strona 544 - 549;
+
 $year_min = $('#year-min');                          // minimum text input
 $year_max = $('#year-max');                          // minimum text input
 

@@ -71,6 +71,8 @@ body {
     /*opacity: .75;*/
     --inv: #f1f1f1; /* top-header - zaloguj btn - hover animation */
     --def: #000000;
+
+    --placeholder-font-weight: normal; /* input search (top-nav) - placeholder font-weight */
 }
 /* header ------------------------------------------------------------------------------ */
 
@@ -1356,6 +1358,11 @@ body {
     outline: none;
     margin-top: 10px;
     /*transition: all 0.125s ease-in-out;*/
+}
+
+#div-search > form#search-form > input#input-search::placeholder {
+    /* Set the default font-weight for the placeholder */
+    font-weight: var(--placeholder-font-weight);
 }
 
 #div-search > form#search-form > input#input-search:focus,
@@ -3051,7 +3058,9 @@ form#login-form input
     margin-left: 15px;
 }
 
-form#login-form input:hover {
+form#login-form input:hover,
+form#login-form input:focus
+{
     cursor: pointer;
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
@@ -4125,6 +4134,20 @@ div#advanced-search {
 span.adv-search {
     display: inline-block;
     min-width: 100px !important;
+
+    position: relative;
+    top: 1px;
+}
+
+
+
+/*div#year-range label {
+    position: relative;
+    top: 10px;
+}*/
+
+input#year-min {
+    margin-right: 5px;
 }
 
 #advanced-search .adv-search:hover {
@@ -4134,6 +4157,11 @@ span.adv-search {
 #adv-search-year-slider {
     margin-top: 30px;
     width: 250px;
+}
+
+#slider { /* year-min, year-max */
+    margin-top: 40px;
+    margin-bottom: 15px;
 }
 
 div#advanced-search form#advanced-search-form input[type="text"],
@@ -4161,7 +4189,8 @@ div#advanced-search form#advanced-search-form input[type="number"] {
     /*width: 50%;*/
     position: relative;
     top: .42px;
-    height: 24px !important;
+    /*height: 24px !important;*/
+    height: 28px !important;
 
     cursor: pointer;
 
@@ -4172,7 +4201,27 @@ div#advanced-search form#advanced-search-form input[type="number"] {
     -webkit-box-shadow: 0px 0px 2px -1px rgba(0, 0, 0, 1);
     -moz-box-shadow: 0px 0px 2px -1px rgba(0, 0, 0, 1);
     box-shadow: 0px 0px 2px -1px rgba(0, 0, 0, 1);
+
+    border-radius: 3px;
 }
+
+div#advanced-search form#advanced-search-form input[type="text"]:hover,
+div#advanced-search form#advanced-search-form input[type="text"]:focus,
+div#advanced-search form#advanced-search-form input[type="number"]:hover,
+div#advanced-search form#advanced-search-form input[type="number"]:focus,
+div#advanced-search form#advanced-search-form select:hover,
+div#advanced-search form#advanced-search-form select:focus {
+    -webkit-box-shadow: inset 0px 0px 10px -8px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 10px -8px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 10px -8px rgba(66, 68, 90, 1);
+}
+
+div#advanced-search form#advanced-search-form input[type="text"],
+div#advanced-search form#advanced-search-form select {
+    width: 193px;
+    margin-bottom: 5px;
+}
+
 
 div#advanced-search form#advanced-search-form input[type="number"] {
     max-width: 66px;
@@ -4194,6 +4243,8 @@ div#advanced-search form#advanced-search-form select {
     /*margin-top: 10px;*/
     /* transition: all 0.125s ease-in-out;*/
     /*width: 50%;*/
+    height: 28px;
+    cursor: pointer;
 }
 
 div#advanced-search #year-range input[type="number"] {

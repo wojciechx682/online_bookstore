@@ -8,6 +8,7 @@
             <div id="n-top-header">
 
                 <div id="header-title"> Księgarnia internetowa </div> <!-- top-header -->
+
                 <div id="btn-parent">
                     <!-- <div class="btn from-center">Zaloguj</div> -->
                     <?php if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) { echo '
@@ -28,7 +29,7 @@
                                 <?php
                                     if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
                                         query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
-                                        echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
+                                        echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "3"
                                     }
                                 ?>
                             </div>
@@ -37,16 +38,15 @@
 
                 </div> <!-- #btn-parent -->
 
-            </div>
+            </div> <!-- #n-top-header -->
 
             <div id="div-search">
-                <!--<form id="search-form" action="___index2.php" method="get" >-->
+                    <!--<form id="search-form" action="___index2.php" method="get" >-->
                 <form id="search-form" action="___index2.php" method="post" > <!-- -> POST -->
-                    <input type="search" name="input-search" id="input-search" > <!-- placeholder="tytuł książki" -->
-
+                    <input type="search" name="input-search" id="input-search" placeholder="Tytuł książki">
+                        <!-- placeholder="tytuł książki" -->
                     <input type="submit" value=" ">
-
-                    <!--<img id="search-arrow" src="../assets/arrow.png" alt="advanced filtering">--> <!-- advanced search -->
+                        <!--<img id="search-arrow" src="../assets/arrow.png" alt="advanced filtering">--> <!-- advanced search -->
                 </form>
             </div>
 
@@ -60,21 +60,19 @@
                 <div class="btn from-center btn-cart-main">
                     Koszyk
                         <?php
-                        if(isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true") {
-                            query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
-                            echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
-                        }
+                            if(isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true") {
+                                query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
+                                echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "3"
+                            }
                         ?>
-
                 </div>
             </a>
             <!--</div>-->
 
-        </div>
-
-        <!-- advanced search (!) -->
+        </div> <!-- #n-header -->
 
         <nav id="main-nav">
+
             <div id="n-top-nav">
 
                 <div id="n-top-nav-content">
@@ -82,14 +80,13 @@
                     <ol>
                         <li class="btn from-center">
                             <a href="___index2.php">Strona główna</a>
-                            <div id="test-div"></div>
                         </li>
                         <li class="btn from-center">
-                            <!--<a href="___kategorie.php">Kategorie</a>-->
+                                <!--<a href="___kategorie.php">Kategorie</a>-->
                             <a href="#" id="a-categories-top-nav">Kategorie</a>
                             <ul id="categories-list">
                                 <?php
-                                    query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories", "");
+                                    query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories", ""); // wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz <ul>
 
                                     /*<ul>
                                         <li>
@@ -111,6 +108,7 @@
                                             </form>
                                         </li>
                                         // ...
+                                        // ...
                                     </ul>*/
                                 ?>
                             </ul>
@@ -131,7 +129,11 @@
                             </ul>
 
                         </li>
-                        <li class="btn from-center"><span id="search-arrow">Wyszukiwanie zaawansowane</span>
+
+                        <!-- advanced search (!) -->
+
+                        <li class="btn from-center">
+                            <span id="search-arrow">Wyszukiwanie zaawansowane</span>
                             <!--<ul>
                                 <li><a href="#">...</a></li>
                                 <li><a href="#">...</a></li>
@@ -141,10 +143,8 @@
                         </li>
                     </ol>
 
-                    <!-- advanced search -->
-
-                </div>
-            </div>
+                </div> <!-- #n-top-nav-content -->
+            </div> <!-- #n-top-nav -->
         </nav>
 
         <div id="advanced-search" class="advanced-search-invisible">
@@ -153,6 +153,7 @@
                  https://www.kirupa.com/html5/creating_a_smooth_sliding_menu.htm# -->
 
             <form method="post" action="___index2.php" id="advanced-search-form">
+
                 <div>
                     <p>
                         <span class="adv-search">
@@ -160,7 +161,7 @@
                                 Tytuł
                             </label>
                         </span>
-                            <input type="text" name="adv-search-title" id="adv-search-title"> <!-- id="dostawa_kurier_dpd" value="Kurier DPD" -->
+                            <input type="text" name="adv-search-title" id="adv-search-title">
                     </p>
                 </div>
 
@@ -199,9 +200,9 @@
                     <p>
                         <div id="year-range">
                             <span class="adv-search">
-                                <!--<label for="adv-search-year">-->
+                                <label for="year-min">
                                     Rok wydania
-                                <!--</label>-->
+                                </label>
                             </span>
                                 <label>
                                     od <input type="number" id="year-min" name="year-min">
@@ -209,15 +210,15 @@
                             <label>
                                 do <input type="number" id="year-max" name="year-max">
                             </label>
-                                <div id="adv-search-year-slider"></div>
+                                <div id="adv-search-year-slider"></div> <!-- jQuery NoUISlider -->
                         </div>
                     </p>
                 </div>
 
                 <input type="submit" value="Szukaj">
 
-                <span id="advanced-search-error">
-                    <!-- display error message from JS HERE -> -->
+                <!--<span id="advanced-search-error">
+                    display error message from JS HERE
                 </span>
 
                 <script>
@@ -234,10 +235,10 @@
                     function isNumeric(value) {
                         return /^\d+$/.test(value);
                     }
-                </script>
+                </script>-->
 
             </form>
 
-        </div>
+        </div> <!-- #advanced-search -->
 
     </header>

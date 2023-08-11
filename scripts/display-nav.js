@@ -26,7 +26,7 @@ function displayNav() {
 		//console.log("main content -> ", mcontent);
 
 	nav.classList.add("nav-visible");
-	content.classList.add("content-short");
+	content.classList.add("content-short"); // ?
 	if(mcontent) {
 		mcontent.classList.add("content-invisible");
 	}
