@@ -41,8 +41,8 @@
             </div> <!-- #n-top-header -->
 
             <div id="div-search">
-                    <!--<form id="search-form" action="___index2.php" method="get" >-->
-                <form id="search-form" action="___index2.php" method="post" > <!-- -> POST -->
+                    <!--<form id="search-form" action="index.php" method="get" >-->
+                <form id="search-form" action="index.php" method="post" > <!-- -> POST -->
                     <input type="search" name="input-search" id="input-search" placeholder="Tytuł książki">
                         <!-- placeholder="tytuł książki" -->
                     <input type="submit" value=" ">
@@ -79,7 +79,7 @@
 
                     <ol>
                         <li class="btn from-center">
-                            <a href="___index2.php">Strona główna</a>
+                            <a href="index.php">Strona główna</a>
                         </li>
                         <li class="btn from-center">
                                 <!--<a href="___kategorie.php">Kategorie</a>-->
@@ -90,19 +90,19 @@
 
                                     /*<ul>
                                         <li>
-                                            <form method="post" action="___index2.php">
+                                            <form method="post" action="index.php">
                                                 <input type="hidden" name="kategoria" value="Wszystkie">
                                                 <button class="submit-book-form" type="submit">Wszystkie</button>
                                             </form>
                                         </li>
                                         <li>
-                                            <form method="post" action="___index2.php">
+                                            <form method="post" action="index.php">
                                                 <input type="hidden" name="kategoria" value="Dla dzieci">
                                                 <button class="submit-book-form" type="submit">Dla dzieci</button>
                                             </form>
                                         </li>
                                         <li>
-                                            <form method="post" action="___index2.php">
+                                            <form method="post" action="index.php">
                                                 <input type="hidden" name="kategoria" value="Fantastyka">
                                                 <button class="submit-book-form" type="submit">Fantastyka</button>
                                             </form>
@@ -115,13 +115,13 @@
 
                             <ul id="second-list">
                                 <!--<li>
-                                    <form method="post" action="___index2.php">
+                                    <form method="post" action="index.php">
                                         <input type="hidden" name="kategoria" value="Wszystkie">
                                         <button class="submit-book-form" type="submit">Wszystkie</button>
                                     </form>
                                 </li>
                                 <li>
-                                    <form method="post" action="___index2.php">
+                                    <form method="post" action="index.php">
                                         <input type="hidden" name="kategoria" value="Dla dzieci">
                                         <button class="submit-book-form" type="submit">Dla dzieci</button>
                                     </form>
@@ -152,7 +152,7 @@
             <!-- animacja płynnego przejścia menu
                  https://www.kirupa.com/html5/creating_a_smooth_sliding_menu.htm# -->
 
-            <form method="post" action="___index2.php" id="advanced-search-form">
+            <form method="post" action="index.php" id="advanced-search-form">
 
                 <div>
                     <p>

@@ -88,7 +88,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
                 echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
-                header('Location: ___index2.php');
+                header('Location: index.php');
                 exit();
 
             } else { // input is OK - book-id passed validation,    there is a book with that ID;
@@ -120,7 +120,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
             echo "<br> POST value (book-id) doesnt exist <br>" ;
 
-            header('Location: ___index2.php');
+            header('Location: index.php');
             exit();
 
             // $_SESSION["error"] = true ;
@@ -141,7 +141,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
     } elseif (
         $_SERVER['REQUEST_METHOD'] === "GET" && ( ! isset($_SESSION["book-id"]) || empty($_SESSION["book-id"]) )
     ) {
-        header('Location: ___index2.php'); exit();
+        header('Location: index.php'); exit();
     }
 
 
@@ -314,7 +314,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
                 echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
-                //echo '<a href="___index2.php?kategoria=' . $_SESSION['kategoria'] . '">&larr; Wróć </a>'; // tymczasowe (!) ;
+                //echo '<a href="index.php?kategoria=' . $_SESSION['kategoria'] . '">&larr; Wróć </a>'; // tymczasowe (!) ;
 
                 /*echo 'Informatyka \ '*/
 

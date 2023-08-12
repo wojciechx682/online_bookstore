@@ -83,14 +83,14 @@ listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "
 
                 // to ma być wewnątrz <li> -->
 
-                /*<form method="post" action="___index2.php">
+                /*<form method="post" action="index.php">
                     <input type="hidden" name="kategoria" value="'.$row[" nazwa"].'">
                         <button className="submit-book-form" type="submit">'.$row["nazwa"].'</button>
                 </form>*/
 
                 let form = document.createElement('form');
                     form.method = "post";
-                    form.action = "___index2.php";
+                    form.action = "index.php";
 
                 let category = document.createElement('input');
                     category.type = "hidden";

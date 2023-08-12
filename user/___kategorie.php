@@ -70,7 +70,7 @@ require_once "../start-session.php";
                             <label for="input-search-nav">
                                 <h3>Tytyuł</h3>
                             </label>
-                            <form action="___index2.php" method="get"> <!-- (szukaj tytułu w tej kategorii) -->
+                            <form action="index.php" method="get"> <!-- (szukaj tytułu w tej kategorii) -->
                                 <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
                                 <input type="submit" value="">
                             </form>

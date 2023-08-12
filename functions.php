@@ -95,10 +95,10 @@
         // header -> n-top-nav-content - wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
 
 		    $category_name = "Wszystkie";
-		/*echo "\n".'<li><a href="___index2.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
+		/*echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
 
 		echo "\n".'<li>                
-                 <form method="post" action="___index2.php">
+                 <form method="post" action="index.php">
                                 <input type="hidden" name="kategoria" value="'.$category_name.'">
                                 <button class="submit-book-form" type="submit">'.$category_name.'</button>
                            </form>                          
@@ -110,14 +110,14 @@
 		while ($row = $result->fetch_assoc()) // tyle ile jest kategorii;
 		{
 		  	                    // echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
-            // echo "\n".'<li><a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
+            // echo "\n".'<li><a href="index.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
             echo "\n".'<li>
-                           <form method="post" action="___index2.php">
+                           <form method="post" action="index.php">
                                 <input type="hidden" name="kategoria" value="'.$row["nazwa"].'">
                                 <button class="submit-book-form" type="submit">'.$row["nazwa"].'</button>
                            </form>
                        </li>';
-            // <a href="___index2.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a>
+            // <a href="index.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a>
             /*<!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->*/
 
             //echo '<span style="float: left;">abc</span>';
@@ -967,7 +967,7 @@ EOT;
 			$result->free_result();   // pozbywamy się z pamięci rezultatu zapytania; free(); close();
 
             if($id === "id_klienta") {
-                header('Location: ___index2.php');      // przekierowanie do strony index.php
+                header('Location: index.php');      // przekierowanie do strony index.php
             } else {
                 $_SESSION["stanowisko"] = $row["stanowisko"];
                     $_SESSION['user-type'] = "admin";

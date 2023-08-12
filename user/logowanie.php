@@ -7,7 +7,7 @@
     // plik ten obsługuje proces logowania, zajmuje się przekierowaniem kierowanym do klienta, (serwer wysyła odpowiedź przekierowania do klienta - kod stanu 302 - HTTP);
     //  Gdy klient wysyła żądanie do „logowanie.php” (z pliku zaloguj.php - POST request z danymi formularza logowania) - kod PHP w pliku sprawdza różne warunki i stwierdza, czy przekierowanie konieczne. Następnie serwer wysyła kod stanu 302 wraz z nagłówkiem „Lokalizacja” (header), wskazując nową lokalizację, do której klient powinien zostać przekierowany.
 
-    // Kod w pliku "logowanie.php" -  zawiera logikę sprawdzającą, czy użytkownik jest już zalogowany lub czy brakuje niezbędnych danych logowania. Jeśli spełniony jest którykolwiek z tych warunków, plik przekierowuje użytkownika na inną stronę, np. stronę logowania ("___zaloguj.php") lub stronę główną ("___index2.php").
+    // Kod w pliku "logowanie.php" -  zawiera logikę sprawdzającą, czy użytkownik jest już zalogowany lub czy brakuje niezbędnych danych logowania. Jeśli spełniony jest którykolwiek z tych warunków, plik przekierowuje użytkownika na inną stronę, np. stronę logowania ("___zaloguj.php") lub stronę główną ("index.php").
 
     // Kiedy widzisz kod stanu 302 w narzędziach deweloperskich przeglądarki dla żądania „logowanie.php”, oznacza to, że serwer instruuje klienta, aby przekierował na inną stronę w oparciu o warunki zdefiniowane w kodzie PHP. Przeglądarka klienta powinna automatycznie podążać za przekierowaniem i wysłać nowe żądanie do określonej lokalizacji;
 
@@ -42,7 +42,7 @@
             // ✓ nie podaliśmy loginu i hasła,
             // ✓ jeśli byliśmy już zalogowani
 
-		header('Location: ___index2.php');
+		header('Location: index.php');
 		exit();
 	}
 	else {

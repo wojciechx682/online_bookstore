@@ -138,7 +138,7 @@ if(isset($_GET["input-search"]))
                         </label>
                         <!-- (szukaj tytułu w tej kategorii) -->
                         <!-- <div id="div-search">-->
-                        <form action="___index2.php" method="get">
+                        <form action="index.php" method="get">
                             <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
                             <input type="submit" value="">
                         </form>

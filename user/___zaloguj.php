@@ -13,7 +13,7 @@
         // ✓ "jeśli weszliśmy na zaloguj.php będąc wcześniej zalogowanym" ;
         // - (i nie było to przekierowanie po zakończeniu pomyślnej rejestracji /będąc zalogowanym na inne konto);
             // zmienna $_SESSION['zaloogwany'] jest ustawiana na wartość "true" wewnątrz funkcji log_in() - tylko wtedy, jeśli podano poprawne dane logowania;
-		header("Location: ___index2.php"); // przekierowanie na strone główną;
+		header("Location: index.php"); // przekierowanie na strone główną;
 		exit();
 	}
 	elseif ( isset($_SESSION['zalogowany']) &&
