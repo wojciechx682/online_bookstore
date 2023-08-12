@@ -1099,7 +1099,6 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
     if($result->num_rows) {
         $_SESSION['subcategory-exists'] = true;
         $result->free_result();
-
     } else { // można nawet to zakomentować;
         //echo "<br>no<br>"; // \user\index.php - można usunąć warunek else, ponieważ $_SESSION['subcategory-exists'] == false;
         // do nothing !

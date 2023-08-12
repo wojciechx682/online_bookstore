@@ -6,7 +6,7 @@
 
     // ✓ sprawdź połączenie z BD;
 
-    /*$value = array(); // [] ;
+    /* $value = array(); // [] ;
     array_push($value, "1");
     query("SELECT * FROM kkklienci", "", $value); exit();*/
 
@@ -962,22 +962,14 @@
             selectElement.value = selectedValue;
 
             sortBooks();
-            filterAuthors();
+            //filterAuthors();
         }
 
         // ---------------------------------------------
 
-
-
-
-
     });
 
-
     //
-
-
-
 
 </script>
 
@@ -989,13 +981,18 @@
 
         //console.log("\nshowCategories :)\n");
 
-        let list = document.getElementById("categories-list"); // ul
+        let list = document.getElementById("categories-list"); // <ul>
             console.log("\nlist -> ", list);
+        let sublist = document.getElementById("second-list");
 
        if(list.style.display === "block") {
-            list.removeAttribute("style");
+            //list.removeAttribute("style");
+           list.style.display = "none";
+           //sublist.removeAttribute("style");
+           sublist.style.visibility = "hidden";
         } else {
             list.style.display = "block";
+            sublist.style.visibility = "visible";
         }
 
         //console.log("\nlist.style.display -> ", list.style.display);
@@ -1049,11 +1046,9 @@
     let categoryList = document.getElementById("categories-list");
     categoryList.style.setProperty("--ul-list-height", ulListHeight + "px");
 
-
     let secondList = document.getElementById("second-list");
     secondList.style.top = "-"+ulListHeight+"px";
     secondList.style.minHeight = ulListHeight+"px";
-
 
     let books = document.querySelectorAll("#content-books .book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
     console.log("\n 1046 books -> ", books);
