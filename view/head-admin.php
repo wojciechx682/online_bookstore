@@ -38,5 +38,7 @@
     <!-- <script type="module" src="../assets/DOMPurify/src/purify.js"></script>-->         <!-- admin/orders - archiwizacja zamówienia - DOM Purify -->
         <!--<script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.2/dist/purify.min.js"></script> --> <!-- admin/orders - archiwizacja zamówienia - DOM Purify -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js" integrity="sha512-KqUc2WMPF/gxte9xVjVE4TIt1LMUTidO3BrcItFg0Ro24I7pGNzgcXdnWdezNY+8T0/JEmdC79MuwYn+8UdOqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js" integrity="sha512-KqUc2WMPF/gxte9xVjVE4TIt1LMUTidO3BrcItFg0Ro24I7pGNzgcXdnWdezNY+8T0/JEmdC79MuwYn+8UdOqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+
+    <script src="../node_modules/dompurify/dist/purify.min.js"></script> <!-- dom purify --> <!-- zainstalowany za pomocą npm -> npm install dompurify -->
 </head>

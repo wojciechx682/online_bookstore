@@ -8,7 +8,7 @@
     <title>Online bookstore</title>
             <link rel="stylesheet" href="../css/book-page-tabs.css">  <!-- \user\book.php -->
             <link rel="stylesheet" href="../css/book-page.css">       <!-- \user\book.php -->
-        <link rel="stylesheet" href="../css/new.css">
+        <link rel="stylesheet" href="../css/new2.css">
             <link rel="stylesheet" href="../css/jquery-outsider.css"> <!-- (CSS) ! - wtyczka\biblioteka jQuery - NoUISlider -->
 
         <link rel="preconnect" href="https://fonts.googleapis.com">      <!-- Google Fonts -->

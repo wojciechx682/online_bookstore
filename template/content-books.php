@@ -7,7 +7,6 @@
             <!--<a href="../user/___book.php?book=s">
                 <img src="../assets/books/s" alt="s" title="s">
             </a>--> <!-- GET -> na POST <form> <-------------------- -->
-
             <form method="post" action="../user/___book.php">
                 <input type="hidden" name="%s">
                 <button type="submit" class="book-img-button">
@@ -16,11 +15,9 @@
             </form>
         </div>
         <div class="book-info">
-
             <!--<a href="../user/___book.php?book">
                 <h3 class="book-title">Java - Techniki zaawansowane Wydanie V</h3>
             </a>-->            <!-- GET -> na POST <form> <-------------------- -->
-
             <!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->
             <form method="post" action="../user/___book.php">
                 <input type="hidden" name="%s">
@@ -40,8 +37,8 @@
             <!--<button class="add-to-cart">Add to Cart</button>-->
             <form action="add_to_cart.php" method="post">
                 <input type="hidden" name="id_ksiazki" value="%s"> <!-- <-------------------- -->
-                <input type="hidden" name="koszyk_ilosc" class="koszyk_ilosc"  value="1">
-                <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj do koszyka</button>
+                <input type="hidden" name="koszyk_ilosc" class="koszyk_ilosc" value="1">
+                <button type="submit" name="your_name" value="your_value" class="btn-link" %s>Dodaj do koszyka</button>
             </form>
         </div>
     </div>

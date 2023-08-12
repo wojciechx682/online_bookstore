@@ -156,7 +156,7 @@
 
             let $tbody = $('<tbody></tbody>'); // ciało tabeli;
 
-            for (let i=0; i<result.length; i++) { // iteracja przez tablicę result;
+            for (let i=0; i < result.length; i++) { // iteracja przez tablicę result;
 
                 let person = result[i]; // obiekt;
 

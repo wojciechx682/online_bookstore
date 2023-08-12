@@ -5,26 +5,29 @@
 	sortBooks();
 });*/
 
-$('#sortuj_wg').on('change', () => {	// arrow function ;
+// wywołaj funkcję po zmianie elementu listy (<select>);
+$('#sortuj_wg').on('change', () => { 	// arrow function ;
 	sortBooks();
 });
 
 // define a function to sort books ;
 const sortBooks = () => { // function is defined using arrow function syntax ;
-						  	 // let myFunction = (a, b) => a * b;
+	                      // let myFunction = (a, b) => a * b;
 	// inside function / function body ;
 
-	// set the <select> element, selected option value, and book content element ;
+	// get the <select> element,
+	// get selected option value
+	// get book content element ;
 	const selectElement = document.getElementById("sortuj_wg"); // <select> list ;
 	const selectedValue = selectElement.options[selectElement.selectedIndex].text; // "Nazwy A-Z";
-	const contentBooks = document.getElementById("content-books");
+	const contentBooks = document.getElementById("content-books"); // <div id="content-books">
 
-	console.log("\n selectElement (select) -> ", selectElement);
-	console.log("\n typeof selectElement (select) -> ", typeof selectElement);
-	console.log("\n selectedValue (text)-> ", selectedValue);
-	console.log("\n typeof selectedValue (text)-> ", typeof selectedValue);
-	console.log("\n contentBooks (div) -> ", contentBooks);
-	console.log("\n typeof contentBooks (div) -> ", typeof contentBooks);
+		console.log("\n selectElement (select) -> ", selectElement);
+		console.log("\n typeof selectElement (select) -> ", typeof selectElement);
+		console.log("\n selectedValue (text)-> ", selectedValue); // DOMPurify (!)
+		console.log("\n typeof selectedValue (text)-> ", typeof selectedValue);
+		console.log("\n contentBooks (div) -> ", contentBooks);
+		console.log("\n typeof contentBooks (div) -> ", typeof contentBooks);
 
 	// const books = [...contentBooks.children]; // get an array of book elements ;
 
@@ -37,15 +40,15 @@ const sortBooks = () => { // function is defined using arrow function syntax ;
 
 	//let books = Array.from($('#content-books > .outer-book:not(:has(.book.hidden))'));
 
-	let books = Array.from( document.querySelectorAll("#content-books > .outer-book:not(:has(.book.hidden))") );
+	//let books = Array.from( document.querySelectorAll("#content-books > .outer-book:not(:has(.book.hidden))") );
 	// wybierz tylko te elementy, które nie są ukryte (nie zawierają klasy "book hidden") - aby sortować tylko widoczne elementy
+	let books = Array.from( document.querySelectorAll("#content-books > .outer-book") );
 
-	console.log("books ->", books);
+	console.log("\n\n 43 books ->", books);
 	console.log("typeof books ->", typeof books); // object;
 	// console.log("books2 ->", books2);
 	// console.log("books3 ->", books3);
 
-	console.log("books -> ", books);
 	console.log("books.length -> ", books.length);
 	console.log("typeof(books) -> ", typeof(books));
 	// 4
@@ -77,9 +80,6 @@ const sortBooks = () => { // function is defined using arrow function syntax ;
 	// 	return 0; // a must be equal to b
 	// }
 
-
-
-
 	// Sort the books array based on the selected option
 	switch (selectedValue) {
 		case "nazwy A-Z":
@@ -103,6 +103,8 @@ const sortBooks = () => { // function is defined using arrow function syntax ;
 		default:
 			return;
 	}
+
+	console.log("\n\n -- books ->", books);
 
 	// Append the sorted book elements to the book content element
 	books.forEach((book) => contentBooks.appendChild(book));

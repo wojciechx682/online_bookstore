@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/wojciechx682/online_bookstore/issues"
   },
-  "homepage": "https://github.com/wojciechx682/online_bookstore#readme"
+  "homepage": "https://github.com/wojciechx682/online_bookstore#readme",
+  "dependencies": {
+    "dompurify": "^3.0.5"
+  }
 }

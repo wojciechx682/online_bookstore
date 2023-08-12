@@ -33,12 +33,7 @@
 
     function get_authors($result)
     {
-        // tworzy linki - w których kazdy wyświetli imie i nazwisko autora ;
-
-        echo '<h3>Autorzy </h3>';
-
-        echo '<ul id="ul-authors">';
-
+        // tworzy elementy listy <li> - w których kazdy wyświetli imie i nazwisko autora ;
 
             echo '<li>
                       <label>
@@ -55,8 +50,6 @@
                 // replace fields in $author string to author data from $result, display result content as HTML
                 echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"]);
             }
-
-        echo '</ul>';
 
         $result->free_result();
     }
@@ -185,8 +178,10 @@
                     }*/
                 $row["ilosc_egzemplarzy"] = ($row["ilosc_egzemplarzy"] === null) ? 'niedostępna' : ($row["ilosc_egzemplarzy"] > 0 ? 'dostępna' : 'niedostępna');
 
+                $button = ($row["ilosc_egzemplarzy"] === 'dostępna') ? '' : 'disabled'; // "Dodaj do koszyka" button;
+
                 // replace fields in $book string to book data from $result, display result content as HTML
-                echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"]);
+                echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"], $button);
 
                 $i++;
             }
