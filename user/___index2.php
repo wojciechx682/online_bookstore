@@ -540,23 +540,19 @@
         <h3>Cena</h3>
 
         <div id="price-range">
-
             <label>
                 <span>
                     Min
                 </span>
-                    <input type="number" id="value-min">
+                    <input type="number" id="value-min" step="1" min="5">
             </label>
-
             <label>
                 <span>
                     Max
                 </span>
-                    <input type="number" id="value-max">
+                    <input type="number" id="value-max" step="1" max="150">
             </label>
-
-            <div id="slider"></div>
-
+            <div id="slider"></div> <!-- noUiSlider -->
         </div>
 
                         <div id="input-search-nav-div">
