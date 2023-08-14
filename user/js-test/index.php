@@ -69,6 +69,10 @@
     <h3>Filtrowanie, Wyszukiwanie, Sortowanie</h3><hr>
 
     <p>
+        <p>Filtrowanie - zmniejszenie zbioru danych przez wybór tych wartości, któe spełniają zdefiniowane kryteria</p>
+        <p>Wyszukiwanie - wyświetlenie elementów dopasowanych do conajmniej jednego słowa podanego przez użytkownika</p>
+        <p>Sortowanie - zmiana kolejności elementó na stronie w oparciu o pewne kryteria (na przykład ułożenie ich w kolejności alfabetycznej)</p>
+
         <h4>Metody JavaScript służące do pracy z tablicami <span>(Metody tablic)</span></h4>
 
         <p><span>Metody obiektu Array</span></p>
@@ -117,7 +121,7 @@
             { name: "Celina", rate: 80 },
             { name: "Grzegorz", rate: 75 },
             { name: "Nikodem", rate: 120 }
-        ]
+        ];
 
         console.log("\n people -> \n\n", people);
         console.log("\n people[0] -> \n\n", people[0]);
