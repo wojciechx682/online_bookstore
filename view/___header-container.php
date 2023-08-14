@@ -25,17 +25,17 @@
 
                     <!--<div id="div-cart-header">-->
                         <!-- <a class="top-nav-right" href="___koszyk.php" >Koszyk</a> -->
-                        <a class="top-nav-right" href="___koszyk.php">
-                            <div class="btn from-center">
-                                Koszyk
-                                    <?php
-                                        if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
-                                            query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
-                                            echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "3"
-                                        }
-                                    ?>
-                            </div>
-                        </a>
+                    <a class="top-nav-right" href="___koszyk.php">
+                        <div class="btn from-center">
+                            Koszyk
+                                <?php
+                                    if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
+                                        query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
+                                        echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "(3)"
+                                    }
+                                ?>
+                        </div>
+                    </a>
                     <!--</div>-->
 
                 </div> <!-- #btn-parent -->
@@ -44,7 +44,7 @@
 
             <div id="div-search">
                     <!--<form id="search-form" action="index.php" method="get" >-->
-                <form id="search-form" action="index.php" method="post"> <!-- -> POST -->
+                <form id="search-form" method="post">       <!-- -> POST -->
                     <input type="search" name="input-search" id="input-search" placeholder="Tytuł książki">
                         <!-- placeholder="tytuł książki" -->
                     <input type="submit" value=" ">
@@ -65,7 +65,7 @@
                         <?php
                             if(isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true") {
                                 query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
-                                echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "3"
+                                echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "(3)"
                             }
                         ?>
                 </div>
@@ -151,28 +151,26 @@
                 </div> <!-- #n-top-nav-content -->
             </div> <!-- #n-top-nav -->
 
-        </nav> <!-- #main-nav -->
+            <div id="advanced-search" class="advanced-search-invisible">
 
-        <div id="advanced-search" class="advanced-search-invisible">
+                <!-- animacja płynnego przejścia menu
+                     https://www.kirupa.com/html5/creating_a_smooth_sliding_menu.htm# -->
 
-            <!-- animacja płynnego przejścia menu
-                 https://www.kirupa.com/html5/creating_a_smooth_sliding_menu.htm# -->
+                <form method="post" action="index.php" id="advanced-search-form">
 
-            <form method="post" action="index.php" id="advanced-search-form">
-
-                <div>
-                    <p>
+                    <div>
+                        <p>
                         <span class="adv-search">
                             <label for="adv-search-title">
                                 Tytuł
                             </label>
                         </span>
                             <input type="text" name="adv-search-title" id="adv-search-title">
-                    </p>
-                </div>
+                        </p>
+                    </div>
 
-                <div>
-                    <p>
+                    <div>
+                        <p>
                         <span class="adv-search">
                             <label for="adv-search-category">
                                 Kategoria
@@ -180,14 +178,14 @@
                         </span>
                             <select id="adv-search-category" name="adv-search-category">
                                 <?php
-                                    query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories_adv_search", ""); // <option value="...">...</option>-->
+                                query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories_adv_search", ""); // <option value="...">...</option>-->
                                 ?>
                             </select>
-                    </p>
-                </div>
+                        </p>
+                    </div>
 
-                <div>
-                    <p>
+                    <div>
+                        <p>
                         <span class="adv-search">
                             <label for="adv-search-author">
                                 Autor
@@ -195,56 +193,61 @@
                         </span>
                             <select id="adv-search-author" name="adv-search-author">
                                 <option value=""></option>
-                                    <?php
-                                        query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie ASC", "get_authors_adv_search", "");
-                                    ?>
+                                <?php
+                                query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie ASC", "get_authors_adv_search", "");
+                                ?>
                             </select>
-                    </p>
-                </div>
+                        </p>
+                    </div>
 
-                <div>
-                    <!--<p>-->
+                    <div>
+                        <!--<p>-->
                         <div id="year-range">
                             <span class="adv-search">
                                 <label for="year-min">
                                     Rok wydania
                                 </label>
                             </span>
-                                <label>
-                                    od <input type="number" id="year-min" name="year-min">
-                                </label>
-                                    <label>
-                                        do <input type="number" id="year-max" name="year-max">
-                                    </label>
-                                <div id="adv-search-year-slider"></div> <!-- jQuery NoUISlider -->
+                            <label>
+                                od <input type="number" id="year-min" name="year-min">
+                            </label>
+                            <label>
+                                do <input type="number" id="year-max" name="year-max">
+                            </label>
+                            <div id="adv-search-year-slider"></div> <!-- jQuery NoUISlider -->
                         </div>
-                    <!--</p>-->
-                </div>
+                        <!--</p>-->
+                    </div>
 
-                <input type="submit" value="Szukaj">
+                    <input type="submit" value="Szukaj">
 
-                <!--<span id="advanced-search-error">
-                    display error message from JS HERE
-                </span>
+                    <!--<span id="advanced-search-error">
+                        display error message from JS HERE
+                    </span>
 
-                <script>
-                    const form = document.getElementById("advanced-search-form");
-                    const input = document.getElementById("adv-search-author");
-                    const errorMessage = document.getElementById("advanced-search-error");
+                    <script>
+                        const form = document.getElementById("advanced-search-form");
+                        const input = document.getElementById("adv-search-author");
+                        const errorMessage = document.getElementById("advanced-search-error");
 
-                    form.addEventListener("submit", function (event) {
-                        if (!isNumeric(input.value) && input.value) {
-                            event.preventDefault();
-                            errorMessage.innerText = "Podaj poprawne dane";
+                        form.addEventListener("submit", function (event) {
+                            if (!isNumeric(input.value) && input.value) {
+                                event.preventDefault();
+                                errorMessage.innerText = "Podaj poprawne dane";
+                            }
+                        });
+                        function isNumeric(value) {
+                            return /^\d+$/.test(value);
                         }
-                    });
-                    function isNumeric(value) {
-                        return /^\d+$/.test(value);
-                    }
-                </script>-->
+                    </script>-->
 
-            </form> <!-- #advanced-search-form -->
+                </form> <!-- #advanced-search-form -->
 
-        </div> <!-- #advanced-search -->
+            </div> <!-- #advanced-search -->
+
+
+        </nav> <!-- #main-nav -->
+
+
 
     </header>

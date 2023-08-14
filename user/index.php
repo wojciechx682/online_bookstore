@@ -474,7 +474,7 @@
                     //                   [4] => ks.rok_wydania <= '%s' )
 
                     //$_SESSION["adv-search-query"] .= " WHERE " . implode(" AND ", $where) . " GROUP BY ks.id_ksiazki "; // implode() - połącz elementy tablicy jako string z separatorem "AND";
-                    $_SESSION["adv-search-query"] .= " WHERE " . implode(" AND ", $where); // implode() - połącz elementy tablicy jako string z separatorem "AND";
+                    $_SESSION["adv-search-query"] .= " WHERE " . implode(" AND ", $where) . " GROUP BY ks.id_ksiazki ";; // implode() - połącz elementy tablicy jako string z separatorem "AND";
 
                     // $_SESSION["adv-search-query"] => SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, kt.nazwa, sb.id_kategorii, au.imie, au.nazwisko, SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy FROM ksiazki AS ks JOIN autor AS au ON ks.id_autora = au.id_autora JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii LEFT JOIN magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki WHERE ks.tytul LIKE '%%%s%%' AND kt.nazwa = '%s' AND ks.id_autora = '%s' AND ks.rok_wydania >= '%s' AND ks.rok_wydania <= '%s' GROUP BY ks.id_ksiazki
 
