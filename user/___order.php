@@ -375,6 +375,7 @@
             console.log(i);
         }
     }
+
     setSpanWidth();
 
     function clear_result() {

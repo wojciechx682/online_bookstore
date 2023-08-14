@@ -1417,8 +1417,6 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
         //     1	        Programowanie	                 4
         //     2	        Web development	                 4
 
-
-
         $subcategories = []; // array();
 
         while($row = $result->fetch_assoc()) {
@@ -1586,6 +1584,7 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
     }
 
     function getBookData($result) {
+
         // returns data in JSON format - instead text/html (as all other functions in this code);
         // subcategories - array();
         // add each subcategory - as an object to the array;
@@ -1761,8 +1760,6 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
     {
         require "connect.php";
         mysqli_report(MYSQLI_REPORT_STRICT);
-
-
 
         try
             {
