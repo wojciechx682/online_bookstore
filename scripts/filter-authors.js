@@ -3,8 +3,6 @@
 
 (function() {
 
-
-
     let updateBtn = document.getElementById("filter-authors"); // <button id="filter-authors"> Zastosuj </button>
 updateBtn.addEventListener("click", filterAuthors);
 
@@ -79,9 +77,14 @@ function filterAuthors()  {
     */
 
     // pokazanie tylko książek z dopasowanymi autorami ->
-    let books = document.querySelectorAll("#content-books .book");  // NodeList - kolekcja - divy z książkami ;
-    console.log("\n58 books => ", books);
-    //console.log("\n58 typeof books => ", typeof books); // object;
+    //let books = document.querySelectorAll("#content-books .book");  // NodeList - kolekcja - divy z książkami ;
+    let books = document.querySelectorAll("#content-books > .outer-book:not(.hidden)");  // NodeList - kolekcja - divy z książkami ;
+        console.log("\n58 books => ", books);
+        //console.log("\n58 typeof books => ", typeof books); // object;
+
+    //document.querySelectorAll("#content-books > .outer-book:not(.hidden)")
+
+
 
 // (!) Ukrycie WSZYSTKICH książek -> dodanie klasy "hidden"
 for(let i = 0; i< books.length; i++) {

@@ -137,54 +137,54 @@
         echo '<div id="content">';
             echo '<div id="content-books">';
 
-        $i = 0;
+                $i = 0;
 
-            while ($row = $result->fetch_assoc())
-            {
+                while ($row = $result->fetch_assoc())
+                {
 
-            //		  	echo '<div id="book'.$i.'" class="book">';
-            //			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
-            //			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
-            //			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';
-            //			  	echo '<form action="add_to_cart.php" method="post">';
-            //			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
-            //			  		echo '<input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">';
-            //			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
-            //			  	echo '</form>';
-            //		  	echo '</div>';
+                //		  	echo '<div id="book'.$i.'" class="book">';
+                //			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
+                //			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
+                //			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';
+                //			  	echo '<form action="add_to_cart.php" method="post">';
+                //			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
+                //			  		echo '<input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">';
+                //			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
+                //			  	echo '</form>';
+                //		  	echo '</div>';
 
-            //            $book = '
-            //                <div id="book%s" class="book">
-            //                    <div class="title">%s</div><br>
-            //                    <div class="price">%s</div><br>
-            //                    <div class="year">%s</div><br>
-            //                    <form action="add_to_cart.php" method="post">
-            //                        <input type="hidden" name="id_ksiazki" value="%s">
-            //                        <input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">
-            //                        <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>
-            //                    </form>
-            //                </div>
-            //            ';
+                //            $book = '
+                //                <div id="book%s" class="book">
+                //                    <div class="title">%s</div><br>
+                //                    <div class="price">%s</div><br>
+                //                    <div class="year">%s</div><br>
+                //                    <form action="add_to_cart.php" method="post">
+                //                        <input type="hidden" name="id_ksiazki" value="%s">
+                //                        <input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">
+                //                        <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>
+                //                    </form>
+                //                </div>
+                //            ';
 
-                // load the content from the external template file into string
-                $book = file_get_contents("../template/content-books.php");
+                    // load the content from the external template file into string
+                    $book = file_get_contents("../template/content-books.php");
 
-                    /*if($row["ilosc_egzemplarzy"] == null) {
-                        $row["ilosc_egzemplarzy"] = 'niedostępna';
-                    } else {
-                        if($row["ilosc_egzemplarzy"] > 0) {
-                            $row["ilosc_egzemplarzy"] = 'dostępna';
-                        }
-                    }*/
-                $row["ilosc_egzemplarzy"] = ($row["ilosc_egzemplarzy"] === null) ? 'niedostępna' : ($row["ilosc_egzemplarzy"] > 0 ? 'dostępna' : 'niedostępna');
+                        /*if($row["ilosc_egzemplarzy"] == null) {
+                            $row["ilosc_egzemplarzy"] = 'niedostępna';
+                        } else {
+                            if($row["ilosc_egzemplarzy"] > 0) {
+                                $row["ilosc_egzemplarzy"] = 'dostępna';
+                            }
+                        }*/
+                    $row["ilosc_egzemplarzy"] = ($row["ilosc_egzemplarzy"] === null) ? 'niedostępna' : ($row["ilosc_egzemplarzy"] > 0 ? 'dostępna' : 'niedostępna');
 
-                $button = ($row["ilosc_egzemplarzy"] === 'dostępna') ? '' : 'disabled'; // "Dodaj do koszyka" button;
+                    $button = ($row["ilosc_egzemplarzy"] === 'dostępna') ? '' : 'disabled'; // "Dodaj do koszyka" - <button> ;
 
-                // replace fields in $book string to book data from $result, display result content as HTML
-                echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"], $button);
+                    // replace fields in $book string to book data from $result, display result content as HTML
+                    echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"], $button);
 
-                $i++;
-            }
+                    $i++;
+                }
 
             echo '</div>'; // #content-books;
         echo '</div>'; // #content;
@@ -1636,7 +1636,7 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
     //        nazwa funkcji, która zostanie wywołana, gdy zapytanie zostanie wykonane pomyślnie.
     // $value - wartość będąca parametrem funkcji sprintf / vsprintf (pojedyncza zmienna lub TABLICA)
 
-    function displayBooks($kategoria) // nazwa kategorii (string)
+    function displayBooks($kategoria) // $_SESSION["kategoria"] - nazwa kategorii (string)
     {
         // alias dla funkcji query() -> index.php
         if($kategoria == "Wszystkie")

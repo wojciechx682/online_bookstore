@@ -49,21 +49,81 @@ console.log("\nlistItems -> ", listItems);
 let secondUl = document.querySelector('ul#second-list');
 console.log("\nsecondUl -> ", secondUl);
 
+//let secondUlfirstItem = secondUl.querySelector("li:first-child");
+//console.log("\nsecondUlfirstItem -> ", secondUlfirstItem);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+/*if (isMobileDevice()) {
+    console.log("This website is being accessed from a mobile device.");
+    categoryButton.addEventListener("click", showCategories);
+}*/
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "Wszystkie"
 
     //console.log("\n item --> ", item, "\n");
 
     let button = item.querySelector('button');
+    let eventType = "mouseenter";
 
-    button.addEventListener("mouseenter", function() {  // after hover on that listItem;  // po najechaniu na niego kursorem !
+    if (isMobileDevice()) {
+        eventType = "click";
+    }
+
+    button.addEventListener(eventType, function(e) {  // after hover on that listItem;  // po najechaniu na niego kursorem !
         //console.log("\n item --> ", item, "\n");
         //let data = item.querySelector('form > input[type="hidden"]').value;
+
+
 
         let subcategoryItems = secondUl.querySelectorAll('li');
         subcategoryItems.forEach((item) => {
             item.remove();
         });
 
+        if(isMobileDevice()) {
+            e.preventDefault(); // Zatrzymaj domyślną akcję (wysłanie formularza)
+
+            let secondULLi = document.createElement('li');
+
+            let secondUlForm = document.createElement('form');
+                secondUlForm.setAttribute("method", "post");
+                secondUlForm.setAttribute("action", "index.php");
+
+            let secondUlInput = document.createElement('input');
+                secondUlInput.setAttribute("type", "hidden");
+                secondUlInput.setAttribute("name", "kategoria");
+                secondUlInput.setAttribute("value", item.querySelector("input").value);
+
+            let secondUlButton = document.createElement('button');
+                secondUlButton.setAttribute("class", "submit-book-form");
+                secondUlButton.setAttribute("style", "width: 90%;");
+                secondUlButton.setAttribute("type", "submit");
+                secondUlButton.textContent = item.querySelector("input").value;
+
+            secondUlForm.appendChild(secondUlInput);
+            secondUlForm.appendChild(secondUlButton);
+            secondULLi.appendChild(secondUlForm);
+
+            /*<li>
+                <form method="post" action="index.php">
+                    <input type="hidden" name="kategoria" value="Informatyka">
+                        <button className="submit-book-form" type="submit">Informatyka</button>
+                </form>
+            </li>*/
+
+            console.log("\n new secondULLi --> \n\n", secondULLi);
+
+            secondUl.appendChild(secondULLi);
+
+            //return;
+
+        }
 
         let data = DOMPurify.sanitize(item.querySelector('form > input[type="hidden"]').value); // get name of the category (string) rom listItem;
             console.log("\n data --> ", data, "\n"); // nazwa kategorii (string);
@@ -111,10 +171,6 @@ listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "
                 form.append(category, subcategoryInput, button);
 
                 li.append(form);
-
-
-
-
 
                 //secondUl.append(li);
                 secondUl.append(li);
@@ -175,3 +231,26 @@ listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "
 for(let i = 0; i < result.length; i++) {
     console.log("\n result[", i, "] = ", result[i]);
 }
+
+/*
+    <ul id="second-list">
+        <!-- tutaj chcę wstawić nowy element listy ! -->
+        <li>
+            <form method="post" action="index.php"><input type="hidden" name="kategoria" value="Informatyka"><input
+                type="hidden" name="subcategory" value="Programowanie">
+                <button className="submit-book-form" type="submit" style="width: 90%;">Programowanie</button></form>
+        </li>
+    </ul>
+*/
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,8 +4,8 @@
 // advanced-search <div>
 // search-arrow <img>
 
-const searchArrow = document.getElementById("search-arrow"); // <img> arrow
-const advancedSearchDiv = document.getElementById("advanced-search"); // advanced-search <div>
+const searchArrow = document.getElementById("search-arrow"); // <span id="search-arrow"> Wyszukiwanie zaawansowane </span>
+const advancedSearchDiv = document.getElementById("advanced-search"); // advanced-search <div> // <div id="advanced-search" class="advanced-search-invisible"> -->
 
 searchArrow.addEventListener("click", () => {
 

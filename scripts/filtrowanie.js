@@ -10,7 +10,10 @@
         console.log("\n#value-max --> ", $max);
     //let books = document.querySelectorAll("#content-books .book:not(.hidden)");
 
-     let books = document.querySelectorAll("#content-books .outer-book"); // kolekcja elementów DOM (NodeList) - divy z książkami;
+    //let books = document.querySelectorAll("#content-books .outer-book"); // kolekcja elementów DOM (NodeList) - divy z książkami;
+
+    let books = document.querySelectorAll("#content-books .outer-book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
+
     //let books = document.querySelectorAll("#content-books .book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
 
 

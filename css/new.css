@@ -1562,25 +1562,38 @@ header {
 
 #n-top-nav-content ol li ul {
 
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    /*height: 40px;*/
-    /*display: none;*/
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        /*height: 40px;*/
+        /*display: none;*/
     visibility: hidden;
-
-
 }
+
+#n-top-nav ol > li:hover > ul  /* najechanie na element listy 'Kategorie', wyświetla listę kategorii); */
+{
+        /*display: block;*/
+    visibility: visible;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.hidden-author {
+    display: none !important;
+}
+
 
 
 #n-top-nav-content ol li ul#categories-list {
     background-color: lightskyblue !important;
-    /*width: 500px;*/
-    /*height: 500px;*/
-    /*overflow-y: visible;*/
+        /*width: 500px;*/
+        /*height: 500px;*/
+        /*overflow-y: visible;*/
     overflow: auto;
     border-bottom-left-radius: 5px;
-    /*border-bottom-radius: 5px;*/
+        /*border-bottom-radius: 5px;*/
     float: left;
 
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
@@ -1632,19 +1645,7 @@ header {
 
 
 
-#n-top-nav ol > li:hover > ul  /* najechanie na element listy 'Kategorie', wyświetla listę kategorii); */
-{
-    /*display: block;*/
-    visibility: unset;
-}
 
-.hidden {
-    display: none !important;
-}
-
-.hidden-author {
-    display: none !important;
-}
 
 
 
@@ -2014,6 +2015,10 @@ div#price-range > label {
     margin-bottom: 8px;
 }
 
+div#price-range > label:hover {
+    cursor: pointer;
+}
+
 div#price-range > label > span {
     display: block;
     float: left;
@@ -2298,6 +2303,7 @@ ul#ul-authors li,
 ul#ul-book-status-list li {
     min-width: 145px !important;
     overflow-x: hidden !important;
+    user-select: none;
 }
 
 ul#ul-authors::-webkit-scrollbar,
@@ -2394,6 +2400,8 @@ div#content {
 
     width: 75%; /* 75% szerokości rodzica -> #container */
     /* class="content-short" */
+
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
 

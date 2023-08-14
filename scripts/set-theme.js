@@ -1,9 +1,10 @@
+/*
 
     whiteBtn = document.getElementById("white");
     blackBtn = document.getElementById("black");
 
     body = document.body
-    /*header = document.getElementById("header");*/
+        // header = document.getElementById("header");
     header = document.getElementById("n-header");
     divCart = document.getElementsByClassName("top-nav-right");
     content = document.getElementById("content");
@@ -14,14 +15,14 @@
     btnParent = document.getElementById("btn-parent");
 
     if(content) {
-        /*console.log("content -> ", content);*/
+        //console.log("content -> ", content);
     }
 
 
 
 function setBlackTheme() {
 
-    /*console.log("books -> ", books);*/
+    //console.log("books -> ", books);
 
     header.style.backgroundColor = "#565656FF";
     header.style.color = "white";
@@ -37,7 +38,7 @@ function setBlackTheme() {
     }
 
     body.style.backgroundImage = "url('../assets/3.png')";
-    //sticky.style.color = "#ffffff";
+        //sticky.style.color = "#ffffff";
 
     for (let i = 0; i < books.length; i++) {
 
@@ -72,3 +73,4 @@ function setWhiteTheme() {
     localStorage.setItem("theme", "white");
 }
 
+*/

@@ -224,6 +224,8 @@
 
             } else { // category - passed validation;
 
+                unset($_SESSION["subcategory"]);
+
                 if($_SESSION["adv-search-category"] != "Wszystkie") { // "Informatyka",  "Dla dzieci",  "Fantastyka", ...
 
                     $_SESSION["category-exists"] = false;
@@ -552,6 +554,7 @@
                         </h3>
 
                         <div id="price-range">
+
                             <label>
                                 <span>
                                     Min
@@ -564,7 +567,9 @@
                                 </span>
                                     <input type="number" id="value-max" step="1" max="150">
                             </label>
+
                             <div id="slider"></div> <!-- jQuery NoUISlider --> <!-- noUiSlider -->
+
                         </div>
 
                         <div id="input-search-nav-div">
@@ -616,16 +621,12 @@
                 </aside> <!-- #book-filters -->
 
                 <?php
-
                     /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
                     echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                     // nie ma sensu sprawdzać czy kategoria jest ustawiona, ponieważ zawsze jest (w zmiennej $_SESSION['kategoria']);
                         // (z wyjątkiem gdy wprowadzono tytuł w input-search-nav);
-                ?>
-
-                <?php
 
                     //   $_GET['kategoria'] --> $_SESSION["kategoria"] --> "Horror"    (zapis do ZS)
                     // ! $_GET['kategoria'] --> $_SESSION["kategoria"] --> "Wszystkie" (domyślnie)
@@ -636,7 +637,8 @@
                         //  ̶ ̶k̶a̶t̶e̶g̶o̶r̶i̶a̶ ̶n̶i̶e̶ ̶b̶y̶ł̶a̶ ̶w̶ ̶p̶a̶r̶a̶m̶e̶t̶r̶z̶e̶ ̶G̶E̶T̶,̶ ̶w̶i̶ę̶c̶ ̶p̶r̶z̶y̶j̶m̶i̶e̶ ̶w̶a̶r̶t̶o̶ś̶ć̶ ̶"̶W̶s̶z̶y̶s̶t̶k̶i̶e̶"̶ ̶-̶ ̶l̶i̶n̶i̶a̶ ̶5̶2̶;̶
 
                         // $_SESSION["input-search"]
-                    if ( isset($_SESSION["input-search"]) ) {
+                    if ( isset($_SESSION["input-search"]) )
+                    {
 
                         // PRG -> jeśli jest ustawiona Z.S. input-search, to tutaj kategoria zawsze będzie wynosić "Wszyskie"
                         // ponieważ input-search szuka książek we wszystkich kategoriach ;
@@ -651,8 +653,10 @@
                             $search_value = $_SESSION["input-search"];
                             unset($_SESSION["input-search"]);
 
+                            echo "<br> search_value --> " . $search_value . "<br>";
 
-                    //echo " 180 input-seach (sanitized) -> " . $search_value . "<br>";
+
+                            //echo " 180 input-seach (sanitized) -> " . $search_value . "<br>";
 
                             // ew warunek jeśli jest różne od oryginalnej wartości wejściowej -> wyświetlić komunikat "podaj poprawne dane";
 
@@ -695,7 +699,7 @@
                     /*elseif ( isset($_POST["input-search-nav"]) && !empty($_POST["input-search-nav"]) ) {*/
 
                     elseif ( isset($_SESSION["input-search-nav"]) ) { //  && ! empty($_SESSION["input-search-nav"])
-                                                                      // wystarczy sprawdzić czy istnieje, be sprawdaenie czy jest puste odbywa się wcześniej ;
+                                                                      // wystarczy sprawdzić czy istnieje, bo sprawdaenie czy jest puste odbywa się wcześniej ;
 
                         // ✓ tutaj zmienna sesyjna "kategoria" przyjmuje wartość "Wszystkie" lub dowolną inną kategorią z istniejących - ponieważ wsześniej zostaje ustawiona;
 
@@ -708,11 +712,9 @@
                         $title = $_SESSION["input-search-nav"];
                         unset($_SESSION["input-search-nav"]);
 
-                //echo "198 input-seach-nav -> " . $title . "<br>";
+                        //echo "198 input-seach-nav -> " . $title . "<br>";
 
-                        $values = [$title];
-
-                        //echo '<script> displayNav(); </script>'; // do usunięcia - to funkcja tutaj NIC NIE ROBI ale zostawiam jakby coś;
+                        $values = [$title]; // VALUES USED AS ARGUMENTS
 
                         // budowanie kwerendy w zależności od tego czy kategoria == "Wszystkie" czy jest to konkretna kategoria;
 
@@ -754,8 +756,8 @@
 
                             // jeśli kategoria to np. "Informatyka", "Horror", "Fantastyka";
 
-                            $where = array(); // [] ?
-                                //$where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
+                            $where = []; // WHERE CONDITION
+                                // $where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
                             $where[] = " AND kt.nazwa LIKE '%%%s%%'"; //%%%s%% // "Informatyka", "Horror", "Fantastyka";
                             $values[] = $_SESSION['kategoria']; // dodanie do tablicy argumentów zmiennej kategoria - do użycia w funkcji query(); // od teraz values = ["input-search-nav" (tytul), "kategoria"];
 
@@ -784,7 +786,7 @@
 
                     // wyszukiwanie zaawansowane - advanced search result (POST);
 
-                    else if ( isset($_SESSION["adv-search-query"])
+                    elseif ( isset($_SESSION["adv-search-query"])
 
                     ) {
 
@@ -903,9 +905,9 @@
 
                     }*/
                     else {
-                        // domyślnie - strona główna - LUB - GET kategoria ?????? NA PEWNO ? DODAŁEM WIĘCEJ WARUNKÓW WYŻEJ
+                        // domyślnie - strona główna - LUB - POST kategoria
 
-                // echo "<br>strona główna - LUB - GET kategoria<br>";
+                        //echo "<br>strona główna - LUB - POST kategoria<br>";
 
                         // echo '<script> console.log("170 --> \n\n"); displayNav(); </script>'; // odpala funkcję ale nie widać zmian z nav'em;
 
@@ -954,53 +956,54 @@
 
 <script>
 
-    // save selected sorting option after page reload;
+    // save selected sorting option IN LOCAL STORAGE - after page reload ;
 
     var selectElement = document.getElementById("sortuj_wg");
 
     selectElement.addEventListener("change", function() {
         var selectedValue = selectElement.value;
-        localStorage.setItem("selectedValue", selectedValue);
+        localStorage.setItem("selectedValue", selectedValue); // "1" / "2" / "3" / ... / "6";
     });
 
     window.addEventListener("load", function() {
+
         var selectedValue = localStorage.getItem("selectedValue");
 
         if (selectedValue && selectElement) {
+
             selectElement.value = selectedValue;
 
-            sortBooks();
+            sortBooks(); // execute sorting function;
             //filterAuthors();
         }
-
-        // ---------------------------------------------
-
     });
-
-    //
 
 </script>
 
-    <script src="../scripts/filter-book-status.js"></script>
+    <script src="../scripts/filter-book-status.js"></script>  <!-- filtrowanie - status -> "dostępna" / "niedostępna" -->
 
 <script>
 
-    function showCategories() {
+    function showCategories() { // dla widoku mobilnego ;
 
         //console.log("\nshowCategories :)\n");
 
-        let list = document.getElementById("categories-list"); // <ul>
+        // pokazanie / ukrycie list kategorii, pod-kateorii;
+
+        let list = document.getElementById("categories-list"); // lista <ul> - Kategorie;
             console.log("\nlist -> ", list);
-        let sublist = document.getElementById("second-list");
+        let sublist = document.getElementById("second-list");  // lista <ul> - pod-kategorie;
 
        if(list.style.display === "block") {
-            //list.removeAttribute("style");
+                //list.removeAttribute("style");
            list.style.display = "none";
-           //sublist.removeAttribute("style");
-           sublist.style.visibility = "hidden";
+                //sublist.removeAttribute("style");
+           //sublist.style.visibility = "hidden";
+           sublist.style.display = "none";
         } else {
             list.style.display = "block";
-            sublist.style.visibility = "visible";
+            //sublist.style.visibility = "visible";
+            sublist.style.display = "block";
         }
 
         //console.log("\nlist.style.display -> ", list.style.display);
@@ -1018,7 +1021,7 @@
     }
 
     if (isMobileDevice()) {
-        console.log("This website is being accessed from a mobile device.");
+            console.log("This website is being accessed from a mobile device.");
         categoryButton.addEventListener("click", showCategories);
     }
 
@@ -1043,13 +1046,13 @@
     console.log("\n\n height --> ", height)*/
 
     let liItems = document.querySelectorAll('#categories-list li');
-    console.log("\n\n Number of list items: ", liItems.length);
+        console.log("\n\n Number of list items: ", liItems.length); // "9" - kategorii;
 
     let firstListItem = liItems[0];
     let height = firstListItem.offsetHeight; // 36
-    console.log("\n\n Height of the first list item: ", height, "px");
+        console.log("\n\n Height of the first list item: ", height, "px"); // "36 px";
 
-    let ulListHeight = height * liItems.length;
+    let ulListHeight = height * liItems.length; // 36 * 9 =  324    // "324"
 
     let categoryList = document.getElementById("categories-list");
     categoryList.style.setProperty("--ul-list-height", ulListHeight + "px");
@@ -1058,10 +1061,54 @@
     secondList.style.top = "-"+ulListHeight+"px";
     secondList.style.minHeight = ulListHeight+"px";
 
-    let books = document.querySelectorAll("#content-books .book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
+    /*let books = document.querySelectorAll("#content-books .book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
     console.log("\n 1046 books -> ", books);
     console.log("\n 1046 typeof books -> ", typeof books);
-    console.log("\n 1046 books instanceof NodeList -> ", books instanceof NodeList); // true
+    console.log("\n 1046 books instanceof NodeList -> ", books instanceof NodeList); // true*/
+
+</script>
+
+<script>
+    /*let styleSheet = document.styleSheets[0];
+
+    console.log("\n\n styleSheet --> ", styleSheet);
+
+    // Pobierz regułę CSS z arkusza stylów
+    //var cssRule = null;
+    for (let i = 0; i < styleSheet.cssRules.length; i++) {
+        let rule = styleSheet.cssRules[i];
+        if (rule.selectorText === "#n-top-nav-content ol li ul") {
+                //cssRule = rule;
+                //break;
+            rule.style.visibility = "unset";
+        } else if (rule.selectorText === "#n-top-nav ol > li:hover > ul") {
+            rule.style.visibility = "unset";
+        }
+    }*/
+
+    // Jeśli znaleziono regułę, usuń właściwość visibility
+    /*if (cssRule) {
+        cssRule.style.visibility = "visible"; // Zmień na "visible", aby wyłączyć właściwość
+    }*/
+
+    if(isMobileDevice()) {
+        let styleSheet = document.styleSheets[0];
+        console.log("\n\n styleSheet --> ", styleSheet);
+        // Pobierz regułę CSS z arkusza stylów
+        //var cssRule = null;
+        for (let i = 0; i < styleSheet.cssRules.length; i++) {
+            let rule = styleSheet.cssRules[i];
+            if (rule.selectorText === "#n-top-nav-content ol li ul") {
+                //cssRule = rule;
+                //break;
+                rule.style.visibility = "unset";
+                rule.style.display = "none";
+            } else if (rule.selectorText === "#n-top-nav ol > li:hover > ul") {
+                rule.style.visibility = "visible";
+            }
+        }
+    }
+
 
 </script>
 

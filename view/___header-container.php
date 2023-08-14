@@ -44,7 +44,7 @@
 
             <div id="div-search">
                     <!--<form id="search-form" action="index.php" method="get" >-->
-                <form id="search-form" method="post">       <!-- -> POST -->
+                <form id="search-form" method="post" action="index.php">       <!-- -> POST -->
                     <input type="search" name="input-search" id="input-search" placeholder="Tytuł książki">
                         <!-- placeholder="tytuł książki" -->
                     <input type="submit" value=" ">
