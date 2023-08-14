@@ -130,7 +130,7 @@
                     // $_SESSION["kategoria"] = "Wszystkie";
 
                 //unset($_POST, $category, $_SESSION["kategoria"]);
-                unset($_POST, $category, $_SESSION["kategoria"], $_SESSION["category-exists"]); // , $_SESSION["kategoria"]
+                unset($_POST, $category, $_SESSION["kategoria"], $_SESSION["category-exists"], $_SESSION["subcategory"]); // , $_SESSION["kategoria"]
                     header('Location: index.php', true,303);
                         exit();
             } else {

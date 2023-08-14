@@ -160,12 +160,12 @@
 
                     <div>
                         <p>
-                        <span class="adv-search">
-                            <label for="adv-search-title">
-                                Tytuł
-                            </label>
-                        </span>
-                            <input type="text" name="adv-search-title" id="adv-search-title">
+                            <span class="adv-search">
+                                <label for="adv-search-title">
+                                    Tytuł
+                                </label>
+                            </span>
+                                <input type="text" name="adv-search-title" id="adv-search-title">
                         </p>
                     </div>
 
@@ -178,7 +178,8 @@
                         </span>
                             <select id="adv-search-category" name="adv-search-category">
                                 <?php
-                                query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories_adv_search", ""); // <option value="...">...</option>-->
+                                    query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories_adv_search", "");
+                                    // <option value=" nazwa_kategorii "> nazwa_kategorii </option>-->
                                 ?>
                             </select>
                         </p>
@@ -186,36 +187,40 @@
 
                     <div>
                         <p>
-                        <span class="adv-search">
-                            <label for="adv-search-author">
-                                Autor
-                            </label>
-                        </span>
-                            <select id="adv-search-author" name="adv-search-author">
-                                <option value=""></option>
-                                <?php
-                                query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie ASC", "get_authors_adv_search", "");
-                                ?>
-                            </select>
+                            <span class="adv-search">
+                                <label for="adv-search-author">
+                                    Autor
+                                </label>
+                            </span>
+                                <select id="adv-search-author" name="adv-search-author">
+                                    <option value=""></option>
+                                        <?php
+                                            query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie ASC", "get_authors_adv_search", "");
+                                            // <option value=" id_autora "> imie nazwisko </option>-->
+                                        ?>
+                                </select>
                         </p>
                     </div>
 
                     <div>
                         <!--<p>-->
-                        <div id="year-range">
-                            <span class="adv-search">
-                                <label for="year-min">
-                                    Rok wydania
+                            <div id="year-range">
+
+                                <span class="adv-search">
+                                    <label for="year-min">
+                                        Rok wydania
+                                    </label>
+                                </span>
+                                <label>
+                                    od <input type="number" id="year-min" name="year-min">
                                 </label>
-                            </span>
-                            <label>
-                                od <input type="number" id="year-min" name="year-min">
-                            </label>
-                            <label>
-                                do <input type="number" id="year-max" name="year-max">
-                            </label>
-                            <div id="adv-search-year-slider"></div> <!-- jQuery NoUISlider -->
-                        </div>
+                                <label>
+                                    do <input type="number" id="year-max" name="year-max">
+                                </label>
+
+                                <div id="adv-search-year-slider"></div> <!-- !!! jQuery NoUISlider -->
+
+                            </div>
                         <!--</p>-->
                     </div>
 
@@ -247,7 +252,5 @@
 
 
         </nav> <!-- #main-nav -->
-
-
 
     </header>
