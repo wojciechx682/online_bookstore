@@ -20,7 +20,7 @@
     <title>Filtrowanie, Sortowanie, Wyszukiwanie</title>
     <style>
         body {
-            background-color: #0f395d;
+            background-color: rgb(134, 134, 134);
             color: white;
             font-family: 'Lato', sans-serif;
             /*border: 1px solid white;*/
@@ -60,13 +60,18 @@
             margin: 0;
         }
 
+        circle {
+            stroke-dasharray: 0;
+            stroke-dashoffset: 0;
+        }
+
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 </head>
 <body>
 
-    <h3>Filtrowanie, Wyszukiwanie, Sortowanie</h3><hr>
+    <!--<h3>Filtrowanie, Wyszukiwanie, Sortowanie</h3><hr>
 
     <p>
         <p>Filtrowanie - zmniejszenie zbioru danych przez wybór tych wartości, któe spełniają zdefiniowane kryteria</p>
@@ -108,7 +113,7 @@
         <p>.filter() - (Filtrowanie) - Zmniejszenie liczby elementów w dopasowanym zbiorze do jedynie tych, które zostały dopasowane do selektora lub przechodzą test wskazany w funkcji</p>
         <p>.toArray() - (Konwersja) - konwersja kolekcji jQuery na Tablicą elementów modelu DOM, co pozwala na użycie metod tablicy</p>
 
-    </p><hr><br>
+    </p><hr><br>-->
 
     <table id="result-table"></table>
 
@@ -123,14 +128,14 @@
             { name: "Nikodem", rate: 120 }
         ];
 
-        console.log("\n people -> \n\n", people);
+        /*console.log("\n people -> \n\n", people);
         console.log("\n people[0] -> \n\n", people[0]);
 
         console.log("\n people[0].name -> \n\n", people[0].name);
             console.log('\n people[0]["name"] -> \n\n', people[0]["name"]);
 
         console.log("\n people[0].rate -> \n\n", people[0].rate);
-            console.log('\n people[0]["rate"] -> \n\n', people[0]["rate"]);
+            console.log('\n people[0]["rate"] -> \n\n', people[0]["rate"]);*/
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Filtrowanie
@@ -148,7 +153,7 @@
             }
         }
 
-        console.log("\n result -> \n\n", result); // tablica
+        //console.log("\n result -> \n\n", result); // tablica
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +176,7 @@
                 $tbody.append($row); // wstawienie wiersza do tabeli (<tbody>);
             }
 
-            $('table#result-table').append($tbody);
+            //$('table#result-table').append($tbody);
 
         });
 
@@ -191,7 +196,7 @@
                 }
             });
 
-            console.log("\n results -> \n\n", results); // tablica;
+            //console.log("\n results -> \n\n", results); // tablica;
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,8 +216,58 @@
             results = people.filter(priceRange); // funkcja filter() wywołuje priceRange();
 
 
-            console.log("\n results -> \n\n", results); // tablica;
+            //console.log("\n results -> \n\n", results); // tablica;
         });
+
+
+
+    </script>
+
+    <br><hr><br>
+
+    <style>
+        svg {
+            border: 1px solid black;
+        }
+    </style>
+
+    <svg height="210" width="210">
+
+
+        <circle id="gray-circle" cx="105" cy="105" r="100" stroke="#c0c0c0" stroke-width="3" fill="none" />
+
+        <circle id="gold-circle" cx="105" cy="105" r="100" stroke="#ffc400" stroke-width="3" fill="none" />
+    </svg>
+
+    <br><hr><br>
+    <div id="result">
+
+    </div>
+
+    <script>
+
+        let goldCircle = document.getElementById("gold-circle");
+            console.log("\n gold-circle -> ", goldCircle);
+
+        let grayCircle = document.getElementById("gray-circle");
+            console.log("\n gray-circle -> ", grayCircle);
+
+
+        let yellowCircumference = parseFloat(goldCircle.getAttribute('r')) * 2 * Math.PI; // obód żółtego koła;
+        console.log("\n yellow Circumference -> ", yellowCircumference);
+        console.log("\n yellow Circumference -> ", typeof yellowCircumference);
+
+        //goldCircle.style.strokeDasharray = "200";
+
+        // Ustaw koło jako całkowicie wypełnione
+        goldCircle.style.strokeDasharray = `${yellowCircumference}, ${yellowCircumference}`;
+        goldCircle.style.strokeDashoffset = `${yellowCircumference}`;
+
+        // Teraz, dla zmniejszenia wypełnienia o 100
+
+        let value = 400;
+        let newStrokeDashoffset = yellowCircumference - (yellowCircumference-value);
+        goldCircle.style.strokeDashoffset = `${newStrokeDashoffset}`;
 
 
 

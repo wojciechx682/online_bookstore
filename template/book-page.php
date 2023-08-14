@@ -4,7 +4,7 @@
 <div id="book-page">
 
     <div id="book-page-image">
-        <img src="../assets/books/%s" alt="%s" title="%s">
+        <img src="../assets/books/%s" alt="%s" title="%s"> <!-- $row["image_url"],  $row["tytul"],  $row["tytul"] -->
     </div>
 
     <div id="book-page-details">
@@ -20,8 +20,10 @@
             <span class="book-page-details">Rok wydania</span>%s
         </div>
 
+        <!-- (!) -------------------------------------------------------------------------- -->
+
         <div id="book-page-rate">
-            <span id="book-rate" style="display: none;">%s</span> <!-- $row["rating"] -->
+            <span id="book-rate" style="display: none;">%s</span> <!-- $row["rating"] - "4" -->
 
             <div id="rate-container">
                 <div class="rate-outer">
@@ -29,9 +31,12 @@
                     <div class="rate-inner"></div>      <!-- pojemnik na Żółte gwiazdki -->
                 </div>
             </div>
-            <span class="rating-num" id="rating-num"></span>
+
+            <span class="rating-num" id="rating-num"></span> <!-- JS -> "4" -->
             <span class="rating-num">%s ocen, %s komentarzy</span>
         </div>
+
+        <!-- (!) -------------------------------------------------------------------------- -->
 
         <div id="book-page-publ">
             <span class="book-page-details">Wydawnictwo</span>%s
@@ -41,6 +46,7 @@
         </div>
 
     </div> <!-- #book-page-details -->
+
 
     <div id="add-to-cart">
 
@@ -66,7 +72,7 @@
                 <div style="clear: both;"></div>
 
             <div id="book-status">
-                %s
+                %s <!-- "dostępna/niedostępna" -->
             </div>
 
             <button type="submit" class="btn-link" %s> <!-- enabled/disabled -->
@@ -80,4 +86,5 @@
     <div style="clear: both;"></div>
     <!--<header><h1>Lorem ipsum</h1></header>-->
     <!--<script src="js/tabs.js"></script>-->
+
 </div>

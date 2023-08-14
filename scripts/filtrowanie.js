@@ -18,6 +18,13 @@
 
 
         console.log("\n 17 books -> ", books);
+        console.log("\n 17 books -> ", books);
+        console.log("\n 17 books -> ", books);
+        console.log("\n 17 books -> ", books);
+        console.log("\n 17 books -> ", books);
+        console.log("\n 17 books -> ", books);
+        console.log("\n 17 books -> ", books);
+        console.log("\n 17 books -> ", books);
         console.log("\n 17 typeof books -> ", typeof books);
         console.log("\n 17 books instanceof NodeList -> ", books instanceof NodeList); // true
 

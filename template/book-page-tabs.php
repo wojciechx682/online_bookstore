@@ -5,23 +5,23 @@
 
     <div class="book-tabs">
 
-    <ul class="tab-list"> <!-- .tab-list -->
-        <li class="active">
-            <a class="tab-control" href="#tab-1">
-                <h3>Opis</h3>
-            </a>
-        </li>
-        <li>
-            <a class="tab-control" href="#tab-2" id="tab-2-li">
-                <h3>Dane szczegółowe</h3>
-            </a>
-        </li>
-        <li>
-            <a class="tab-control" href="#tab-3">
-                <h3>Recenzje</h3>
-            </a>
-        </li>
-    </ul> <!-- ul.tab-list -->
+        <ul class="tab-list"> <!-- .tab-list -->
+            <li class="active">
+                <a class="tab-control" href="#tab-1">
+                    <h3>Opis</h3>
+                </a>
+            </li>
+            <li>
+                <a class="tab-control" href="#tab-2" id="tab-2-li">
+                    <h3>Dane szczegółowe</h3>
+                </a>
+            </li>
+            <li>
+                <a class="tab-control" href="#tab-3">
+                    <h3>Recenzje</h3>
+                </a>
+            </li>
+        </ul> <!-- ul.tab-list -->
 
         <div class="tab-panel active" id="tab-1"> <!-- tab-panel -->
             <p>Java jest dojrzałym językiem programowania, który pozwala na pisanie kodu dla wielu rodzajów komputerów służących do różnych celów i działających na różnych platformach. Jest świetnym wyborem dla programistów, którym zależy na tworzeniu bezpiecznych aplikacji o wyjątkowej jakości. Wokół Javy skupia się duża społeczność, dzięki której język ten wciąż się rozwija, unowocześnia i wzbogaca o nowe elementy. Osoby, które swoje zawodowe życie wiążą z pisaniem programów w Javie, muszą poznać zaawansowane zagadnienia i mniej oczywiste funkcjonalności Javy, również te niedawno zaimplementowane. To konieczność dla każdego profesjonalnego programisty Javy.</p>
@@ -50,20 +50,22 @@
                 </div>
             </div> -->
 
-            <div id="circle-plot">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="15" cy="17" r="10" stroke="#D3D3D3" stroke-width="1" fill="none" />
-                    <circle id="rating-circle" cx="15" cy="17" r="10" stroke="#ffc107" stroke-width="1" fill="none"
-                             > <!-- stroke-dasharray="100"
-                            stroke-dashoffset="100"  -->
-                    </circle>
-                    <text x="15" y="18.5" text-anchor="middle" font-size="3">
-                        <tspan x="15" dy="-0.5em">średnia</tspan>
-                        <tspan x="15" dy="1.2em">%s</tspan>
-                    </text>
-                </svg>
+<div id="circle-plot">
 
-            </div>
+    <svg viewBox="0 0 100 100">
+        <circle cx="15" cy="17" r="10" stroke="#D3D3D3" stroke-width="1" fill="none" /> <!-- szare kółko -->
+
+        <circle id="rating-circle" cx="15" cy="17" r="10" stroke="#ffc107" stroke-width="1" fill="none"
+                 > <!-- stroke-dasharray="100"
+                stroke-dashoffset="100"  -->
+        </circle>
+        <text x="15" y="18.5" text-anchor="middle" font-size="3">
+            <tspan x="15" dy="-0.5em">średnia</tspan>
+            <tspan x="15" dy="1.2em">%s</tspan> <!-- $row["rating"] -->
+        </text>
+    </svg>
+
+</div>
 
 
            <!-- <svg>

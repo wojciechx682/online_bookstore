@@ -2,47 +2,22 @@
 
     require_once "../start-session.php";
 
-/*$book = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT);
-
-echo "<br><hr><br>";
-
-    echo "<br> book -> " . $book . "<br>";
-
-echo "<br><hr><br>";
-
-exit();*/
-
-// Check if the book ID is set in the session
-/*if (isset($_SESSION["book-id"])) {
-    $book = $_SESSION["book-id"];
-}*/
-
-/*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-echo "GET ->"; print_r($_GET); echo "<hr><br>";
-echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
-
     if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶
 
-        //echo "<br><hr><br> POST array is SET and not Empty<br><hr><br>";
-        //var_dump($_POST);
-
-        if ( isset(array_keys($_POST)[0]) && ! empty(array_keys($_POST)[0]) ) { // check if POST value (id_ksiazki) exists and is not empty;
-
+        if ( isset($_POST["book-id"]) && ! empty($_POST["book-id"]) ) { // check if POST value (id_ksiazki) exists and is not empty;
             // "35" ;
-
             // Process the form data and perform necessary validations ;
-            /////////////////////////////////////////////////////////////////////////////
+            //
             // get highest book-id from database ;
             query("SELECT id_ksiazki FROM ksiazki ORDER BY id_ksiazki DESC LIMIT 1", "get_book_id", "");
-            // $_SESSION["max-book-id"] = "35" - set variable to be applied in book-id filter below;
+            // $_SESSION["max-book-id"] = "35"
+                // - set variable to be applied in book-id filter below;
                 // (if book-id is higher than maximum id number in db - manage the error);
 
             // sanitize input - book-id ;
-            $book = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT); // array_keys($_POST)[0] - book-id (id_książki);
+            $book = filter_var($_POST["book-id"], FILTER_SANITIZE_NUMBER_INT);
+            // $_POST["book-id"]     - book-id (id_książki);
                                     // "35"
-            /*echo "<br><hr><br>";
-            echo "<br> book -> " . $book . "<br>";
-            echo "<br><hr><br>"; exit();*/
 
             // validate book-id - ✓ valid integer in specific range ;
             $_SESSION["book-id"] = filter_var($book, FILTER_VALIDATE_INT, [
@@ -61,10 +36,11 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
             // $_SESSION['book_exists'] -> na true ;
 
             if($book === false || $_SESSION["book-id"] === false || $_SESSION['book_exists'] === false || empty($_SESSION["max-book-id"])
-                               || ($_SESSION["book-id"] != array_keys($_POST)[0])) {
+                               || ($_SESSION["book-id"] != $_POST["book-id"]))
+            {
                             // tutaj trzeba odpowiednio obsłużyć błąd ;
                             //
-                            // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
+                // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
                                 // handle error !;
                                 //echo "\n error - invalid (didnt pass validation !) book-id (POST) of that book doesnt exist ! \n";
                                 // create and make logic for handling error about not valid book-id ;
@@ -74,21 +50,20 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                             // musi być komunikat o błędzie (np okienko) + exit() ! ;
 
-                echo "<br><hr> 43 invalid book-id OR book doesnt exist ! <br><hr>"; //exit();
+                //echo "<br><hr> 43 invalid book-id OR book doesnt exist ! <br><hr>"; //exit();
 
                 // obsługa błędu - np przekierowanie na poprzednią stronę (index.php) + wyświetlenie okienka z okmunikatem
                                                                                         // na stronie index.php można sprawdzić, czy np ustawiona wartość $_SESSION["error_costam"] ma wartosc true, i wtedy wyswietlic okienko
 
                 // $_SESSION["error"] = true ;
 
-                unset($_SESSION["max-book-id"], $book, $_SESSION["book-id"], $_SESSION["book_exists"],
-                      $_POST);
+                unset($_POST, $book, $_SESSION["book-id"], $_SESSION["max-book-id"], $_SESSION["book_exists"]);
 
                 /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
                 echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
-                header('Location: index.php');
+                header('Location: index.php', true, 303);
                 exit();
 
             } else { // input is OK - book-id passed validation,    there is a book with that ID;
@@ -97,12 +72,11 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 // Perform any required actions with the form data (e.g., database update)
 
                 // ✓✓✓ valid book-id, book exist in db;
-                echo "\n 49 SESSION book-id -> " . $_SESSION["book-id"];
-                echo "<br> 51 Valid book-id and book exist ! <br><hr>";
-                //exit();
+                //echo "\n 49 SESSION book-id -> " . $_SESSION["book-id"];
+                //echo "<br> 51 Valid book-id and book exist ! <br><hr>"; //exit();
 
-                    unset($_SESSION["max-book-id"], $book, $_SESSION["book_exists"],
-                          $_POST);
+
+                    unset($_POST, $_SESSION["max-book-id"], $book, $_SESSION["book_exists"]);
 
                 // redirect to the page itself
                     //header('Location: ___book.php', true, 303);
@@ -118,9 +92,9 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
             // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/user/___book.php bez podania wartości w POST[] ;
 
-            echo "<br> POST value (book-id) doesnt exist <br>" ;
+            //echo "<br> POST value (book-id) doesnt exist <br>" ;
 
-            header('Location: index.php');
+            header('Location: index.php', true, 303);
             exit();
 
             // $_SESSION["error"] = true ;
@@ -131,7 +105,6 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
             //exit();
 
-
         }
 
         /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
@@ -141,7 +114,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
     } elseif (
         $_SERVER['REQUEST_METHOD'] === "GET" && ( ! isset($_SESSION["book-id"]) || empty($_SESSION["book-id"]) )
     ) {
-        header('Location: index.php'); exit();
+        header('Location: index.php', true, 303); exit();
     }
 
 
@@ -209,12 +182,6 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
 <?php require "../view/___head.php"; ?>
 
-<style>
-    /*div#add-to-cart {
-        border: 1px solid #286dff;
-    }*/
-</style>
-
 <body>
 
 <div id="main-container">
@@ -226,7 +193,6 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
         <main>
 
             <!-- <aside> <div id="nav"></div> </aside> -->
-            <!-- Thank you for your donation of $--> <!-- id książki -->
 
             <div id="content">
 
@@ -242,37 +208,46 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                             unset($_SESSION["avg_rating"]);
                         }
 
-        query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, kt.nazwa, sb.id_kategorii, (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy, (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen, (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy, au.imie, au.nazwisko, au.id_autora, ks.id_wydawcy, wd.nazwa_wydawcy FROM ksiazki AS ks JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii LEFT JOIN autor AS au ON ks.id_autora = au.id_autora LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]);
+                        query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, kt.nazwa, sb.id_kategorii, 
+                                         (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy, 
+                                         (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen, 
+                                         (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy, 
+                                         au.imie, au.nazwisko, au.id_autora, ks.id_wydawcy, wd.nazwa_wydawcy 
+                                     FROM ksiazki AS ks 
+                                         JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii 
+                                         JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii 
+                                         JOIN autor AS au ON ks.id_autora = au.id_autora 
+                                         LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy 
+                                     WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]); // \template\book-page.php ;
 
                         if( isset($_SESSION["liczba_ocen"]) && $_SESSION["liczba_ocen"] == "0" ) {
                             query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $_SESSION["book-id"]);
                         }
 
                         query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "get_ratings", $_SESSION["book-id"]);
-                            // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen;
-                            // $_SESSION["ratings"] -> [5] => 2 [4] => 1 ;
+                            // $_SESSION['ratings'] -> key => ocena,  value => ilosc_ocen;
+
+                            // $_SESSION["ratings"] -> [5] => 2
+                            //                         [4] => 1 ;
+
                         $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]);
                             // funstions -> get_ratings() -> to pass that array (PHP) to JS
                             //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
                             // The json_encode() function is used to encode a PHP value into a JSON string;
 
-
                         echo "<hr><br><br>";
-                            echo "ratings array --> <br><br>";
+                            echo "ratings array (PHP) --> <br><br>";
                             print_r($_SESSION["ratings"]);
 
-                            echo "<br><br>ratings array --> <br><br>";
+                            echo "<br><br>ratings array (JS) --> <br><br>";
                             print_r($_SESSION["raings_array"] );
                         echo "<hr><br><br>";
 
-                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>"
-
+                        echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr>"
 
                         ?>
-
-
 
                 <?php endif; ?>
 
@@ -490,23 +465,25 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
         <script>
 
+            const rating = document.getElementById("book-rate").textContent; // <span id="book-rate" style="display: none;">%s</span>
+            // "4.5" - type "string";    type "hidden" - "4.5",  lub   null ;
 
-            const rating = document.getElementById("book-rate").textContent; // "4.5" - type "string";    type "hidden" - "4.5",  lub   null
+                console.log("\n\n 471 rating -->", rating);
+                console.log("\n\n typeof rating -->", typeof rating);
 
-            console.log("\n\n rating -->", rating);
-            console.log("\n\n typeof rating -->", typeof rating);
 
-            let circleTest = document.getElementById("rating-circle");
-            let circumferenceTest = parseFloat(circleTest.getAttribute('r')) * 2 * Math.PI;
-            console.log("\n250 circumferenceTest -> ", circumferenceTest); // "62.83185307179586" - type = "number";
-            console.log("\n250 typeof circumferenceTest -> ", typeof circumferenceTest);
-            //console.log("\n250 circumferenceTest -> ", circumferenceTest);
-            //circleTest.style.strokeDasharray = `circumferenceTest`;
-            //circleTest.style.strokeDashoffset = `circumferenceTest`;
+            /*let circleTest = document.getElementById("rating-circle"); // <circle id="rating-circle" ...>
+            let circumferenceTest = parseFloat(circleTest.getAttribute('r')) * 2 * Math.PI; // obwód koła;
+                console.log("\n250 circumferenceTest -> ", circumferenceTest); // "62.83185307179586" - type = "number";
+                console.log("\n250 typeof circumferenceTest -> ", typeof circumferenceTest);
+                //console.log("\n250 circumferenceTest -> ", circumferenceTest);
+                //circleTest.style.strokeDasharray = `circumferenceTest`;
+                //circleTest.style.strokeDashoffset = `circumferenceTest`;
             circleTest.style.strokeDasharray = circumferenceTest;
-            circleTest.style.strokeDashoffset  = circumferenceTest;
+            circleTest.style.strokeDashoffset  = circumferenceTest;*/
 
-            // (!) właściwość  stroke-dashoffset definiuje długość złotej linii, oraz odstępy pomiędzy przerwami, a więc aby początkowo ukryć złoty okrąg, należy ustawić  stroke-dashoffset=" " wartość na równą OBWODOWI KOŁA - dzięki czemu przerwa pomiędyz wzorem wyniesie dokładnie tyle co obwód koła, czyli złoty okrąg będzie niewidoczny
+
+            // (!) właściwość  stroke-dashoffset - definiuje długość złotej linii, oraz odstępy pomiędzy przerwami, a więc aby początkowo ukryć złoty okrąg, należy ustawić  stroke-dashoffset=" " wartość na równą OBWODOWI KOŁA - dzięki czemu przerwa pomiędyz wzorem wyniesie dokładnie tyle co obwód koła, czyli złoty okrąg będzie niewidoczny
             // " it creates a dash pattern with a dash length equal to the circumference ";
 
             // poniżej troche o właściwościach stronke-dasharray i stroke-dashoffest, oraz dlaczego ustawienie obu tych wartości na wartość równą obwodowi koła - ukrywa początkowo złoty okrąg ;
@@ -540,12 +517,13 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 const totalRate = 5;
                 // 4.5 / 5 * 100 => "90" - (!) Ocena wyrażona w procentach ;
                 const percentageRate = (rating / totalRate) * 100; // "number" -> "93.3339" ;
+
                 const percentageRateRounded = `${Math.round(percentageRate / 10) * 10}%`;
                 // "String" -> "90%"    // Zaokrąglona wartość oceny książki
                 const percentageRateBase = `${100 - Math.round(percentageRate / 10) * 10}%`;
                 // "String" -> "10%" // to będzie szerokość diva z Szarymi gwiazdkami ;
 
-                console.log("\npercentageRate -> ", percentageRate);
+                console.log("\n525 percentageRate -> ", percentageRate);
                 console.log("\npercentageRateRounded -> ", percentageRateRounded);
                 console.log("\npercentageRateBase -> ", percentageRateBase);
 
@@ -603,15 +581,19 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                  const circle = document.getElementById('rating-circle');
                 //const circumference = 2 * Math.PI * circle.getAttribute('r'); // obwód koła
                 const circumference = parseFloat(circle.getAttribute('r')) * 2 * Math.PI; // obwód ; calculate the circumference
-                    console.log("\n\n\n\n circumference (obwód) koła)->", circumference); // "62,8318"
+                    console.log("\n\n\n\n 584 circumference (obwód) koła)->", circumference); // "62,8318"
                             //const offset = circumference * (1 - (rating / 5));
                             // zmienna określająca stopień wypełnienia koła ;
                             // "31,4159" (dla średniej_oceny 2.5)
                 const offset = circumference * (1 - (rating / 5)); // Calculate the stroke dash offset ; "Przesunięcie kreski obrysu " ;
                 console.log("\n circumference -> ", circumference);
                 console.log("\n offset -> ", offset);
+
+
                 circle.style.strokeDashoffset = `${offset}`;
-                //circle.style.strokeDasharray = `${circumference}`;
+                        //circle.style.strokeDasharray = `${circumference}`;
+
+
 
 
                 //////////////////////////////////////////////////////////////////////////////////////
@@ -705,7 +687,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
             // kolekcja divów -> <div class="book-rating-details" ...>
             // "Object" - 5  4  3  2  1
 
-            console.log("\n 288 bookRatingDetails -> ", bookRatingDetails); // Kolekcja typu NodeList ;
+            console.log("\n 288 bookRatingDetails -> ", bookRatingDetails); // Kolekcja typu NodeList - "live" ;
             console.log("\n 288 bookRatingDetails.length -> ", bookRatingDetails.length); // 5 elementów (tyle ile jest pasków z ocenami) ;
             console.log("\n 288 typeof bookRatingDetails -> ", typeof bookRatingDetails); // object;
 

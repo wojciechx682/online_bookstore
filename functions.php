@@ -194,7 +194,7 @@
 
     function get_book($result) {
 
-        // get book details on book.php page ;
+        // get book-details on book.php - page ;
 
         $row = $result->fetch_assoc();
 
@@ -243,9 +243,9 @@
         echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["cena"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $status, $submit);
         // ../template/book-page.php ;
 
-        // pobranie komentarzy (treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
-        query("SELECT km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]);
-        // (!) $_SESSION["comments"]; - ta zmienna zawiera wykorzystany szablon HTML (przechowuje wszystkie komentarze danej książki !);
+            // pobranie komentarzy (treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
+            query("SELECT km.id_klienta, km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]);
+            // (!) $_SESSION["comments"]; - ta zmienna zawiera wykorzystany szablon HTML (przechowuje wszystkie komentarze danej książki !);
 
         $book_page_tabs = file_get_contents("../template/book-page-tabs.php"); // wczytanie szablonu na sekcje (karty) z dodatkowymi informacjami o książce ;
 
@@ -256,7 +256,7 @@
 
     function get_ratings($result) { // user\book.php   // "ocena", "liczba_ocen" ;
 
-        // wstawia do tablicy sesyjnej - ilości poszczególnych ocen dla książki ->   5 -> 4, 4 -> 26, 3 -> 15, ....
+        // wstawia do tablicy sesyjnej - ilości poszczególnych ocen dla książki ->   5 -> 4,  4 -> 26,  3 -> 15, ....
         // $_SESSION["ratings"] -> [5] => 2 [4] => 1, ... ;
 
         //    ocena      liczba_ocen
@@ -275,7 +275,10 @@
             $_SESSION['ratings'][$book_rating] = $num_of_ratings;
 
         }  //  ̶$̶_̶S̶E̶S̶S̶I̶O̶N̶[̶"̶r̶a̶t̶i̶n̶g̶s̶"̶]̶ ̶-̶>̶ ̶[̶5̶]̶ ̶=̶>̶ ̶2̶ ̶[̶4̶]̶ ̶=̶>̶ ̶1̶,̶ ̶.̶.̶.̶ ̶;̶
-           // $_SESSION["ratings"] -> Array ( [5] => 2 [4] => 1 [3] => 3 [2] => 2 ) ;
+           // $_SESSION["ratings"] -> Array ( [5] => 2
+           //                                 [4] => 1
+           //                                 [3] => 3
+           //                                 [2] => 2 ) ;
 
         $result->free_result();
     }
@@ -288,7 +291,7 @@
         $_SESSION["rate_exists"] = true;
     }
 
-    function get_comments($result) { // "km.treść", "km.data", "km.imie", "km.ocena" ;
+    function get_comments($result) { // "km.id_klienta",    "km.treść", "km.data", "km.imie", "km.ocena" ;
 
         // ̶$̶i̶ ̶=̶ ̶0̶;̶
 
@@ -301,7 +304,7 @@
 
         $_SESSION["comments"] = []; // stworzenie nowej pustej tablicy ;
 
-        while ( $row = $result->fetch_assoc() )
+        while ( $row = $result->fetch_assoc() ) // tyle ile jest komentarzy do tej książki;
         {
             // load the content from the external template file into string ;
             $comment = file_get_contents("../template/book-comment.php");
@@ -311,6 +314,9 @@
 
             //$̶i̶+̶+̶;̶
         }
+
+        //echo "<br> comments --> <br><hr><br>";
+        //print_r($_SESSION["comments"]); exit();
 
         $result->free_result();
     }
@@ -1037,7 +1043,9 @@ EOT;
                 //echo "<br>yes<br>";
 
             // \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
+
             // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
+
             $_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
             /*echo "<br>448<br>";*/
             //echo $_SESSION['book_exists']; exit();

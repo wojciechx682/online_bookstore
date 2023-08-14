@@ -183,22 +183,24 @@ body {
     }
 }
 
-@media only screen and (max-width: 1250px) {
+/*@media only screen and (max-width: 1250px) {*/
+@media only screen and (max-width: 1260px) {
 
     /* "dodaj do koszyka" - button */
     #content-books .outer-book .btn-link {
         /* margin: 10px 118px 15px 118px !important;*/
-        font-size: 75%;
+        font-size: 75% !important;
     }
 }
 
-@media only screen and (max-width: 1164px) {
+@media only screen and (max-width: 1175px) {
 
     /* "dodaj do koszyka" - button */
 
-    .book .btn-link {
+    /*.book .btn-link {*/
+    #content-books .outer-book .btn-link {
         /* margin: 10px 118px 15px 118px !important;*/
-        font-size: 70%;
+        font-size: 70% !important;
         /* color: red !important;*/
         padding: 10px 10% 10px 10% !important;
     }
@@ -222,7 +224,8 @@ body {
 
     /* strona główna */
 
-    .book .btn-link {
+    /*.book .btn-link {*/
+    #content-books .outer-book .btn-link {
         font-size: 65% !important;
     }
 }
@@ -284,6 +287,15 @@ body {
     /* ___my-orders.php */
     .book-desc {
         width: 49% !important;
+    }
+}
+
+@media only screen and (max-width: 984px) {
+
+    /* ___my-orders.php */
+    #content-books .outer-book .btn-link {
+        /* margin: 10px 118px 15px 118px !important;*/
+        font-size: 58% !important;
     }
 }
 
@@ -386,7 +398,8 @@ body {
 
     }*/
 
-    .book .btn-link {
+    /*.book .btn-link {*/
+    #content-books .outer-book .btn-link {
         width: 135px !important;
 
         padding: 10px 4px 10px 10px !important;

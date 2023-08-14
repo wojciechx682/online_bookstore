@@ -8,7 +8,7 @@
                 <img src="../assets/books/s" alt="s" title="s">
             </a>--> <!-- GET -> na POST <form> <-------------------- -->
             <form method="post" action="../user/___book.php">
-                <input type="hidden" name="%s"> <!-- id_ksiazki -->
+                <input type="hidden" name="book-id" value="%s"> <!-- id_ksiazki -->
                 <button type="submit" class="book-img-button">
                     <img src="../assets/books/%s" alt="%s" title="%s">
                 </button>
@@ -20,7 +20,7 @@
             </a>-->            <!-- GET -> na POST <form> <-------------------- -->
             <!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->
             <form method="post" action="../user/___book.php">
-                <input type="hidden" name="%s"> <!-- id_ksiazki -->
+                <input type="hidden" name="book-id" value="%s"> <!-- id_ksiazki -->
                 <button class="submit-book-form" type="submit">
                     <h3 class="book-title">%s</h3> <!-- tytuł -->
                 </button>
