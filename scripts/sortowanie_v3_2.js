@@ -94,7 +94,7 @@ function sortBooks() { // define a function to sort books ;
 
 	books.forEach(function(book) {
 		contentBooks.appendChild(book);
-	})
+	});
 
 }
 
