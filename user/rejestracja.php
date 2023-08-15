@@ -385,6 +385,8 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
                     //	$_SESSION['e_bot'] = "Potwierdź, że nie jesteś botem!";
                     //}
 
+        // $response => stdClass Object ( [success] => 1 [challenge_ts] => 2023-08-15T15:41:42Z [hostname] => localhost )
+
         if( ! $response->success )
 		{
                     //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.

@@ -1,5 +1,5 @@
 
-<!-- // template used on the book page (book.php) to display the book details -->
+<!-- // template used on the book page (book.php) to display the book-details -->
 
 <div id="book-page">
 
@@ -11,13 +11,13 @@
 
         <div id="book-page-title">
             <span class="book-page-details">Tytuł</span>
-            <span id="book-page-details-title">%s</span>
+            <span id="book-page-details-title">%s</span> <!-- $row["tytul"] -->
         </div>
         <div id="book-page-author">
-            <span class="book-page-details">Autor</span>%s %s
+            <span class="book-page-details">Autor</span>%s %s <!-- $row["imie"], $row["nazwisko"] -->
         </div>
         <div id="book-page-year">
-            <span class="book-page-details">Rok wydania</span>%s
+            <span class="book-page-details">Rok wydania</span>%s <!-- $row["rok_wydania"] -->
         </div>
 
         <!-- (!) -------------------------------------------------------------------------- -->
@@ -39,10 +39,10 @@
         <!-- (!) -------------------------------------------------------------------------- -->
 
         <div id="book-page-publ">
-            <span class="book-page-details">Wydawnictwo</span>%s
+            <span class="book-page-details">Wydawnictwo</span>%s <!-- $row["nazwa_wydawcy"] -->
         </div>
         <div id="book-page-nopg">
-            <span class="book-page-details">Ilość stron</span>%s
+            <span class="book-page-details">Ilość stron</span>%s <!-- $row["ilosc_stron"] -->
         </div>
 
     </div> <!-- #book-page-details -->
@@ -50,29 +50,29 @@
 
     <div id="add-to-cart">
 
-        <span class="book-page-details">Cena</span>%s PLN
+        <span class="book-page-details">Cena</span>%s PLN <!-- $row["cena"] -->
 
         <form action="add_to_cart.php" method="post">
 
-            <input type="hidden" name="id_ksiazki" value="%s"> <!-- id książki -->
+            <input type="hidden" name="id_ksiazki" value="%s"> <!-- $row["id_ksiazki"] -->
 
             <label>
                 <b>Ilość: </b>
-                <input type="text" id="koszyk_ilosc%s" name="koszyk_ilosc" value="1"> <!-- id = " koszyk_ilosc { id książki } " -->
+                <input type="text" id="koszyk_ilosc%s" name="koszyk_ilosc" value="1"> <!-- $row["id_ksiazki"] -->
             </label>
 
-            <button type="button" onclick="increase(this, %s)"> <!-- id książki -->
+            <button type="button" onclick="increase(this, %s)"> <!-- $row["id_ksiazki"] -->
                 +
             </button>
 
-            <button type="button" onclick="decrease(this, %s)"> <!-- id książki -->
+            <button type="button" onclick="decrease(this, %s)"> <!-- $row["id_ksiazki"] -->
                 <span>-</span>
             </button>
 
                 <div style="clear: both;"></div>
 
             <div id="book-status">
-                %s <!-- "dostępna/niedostępna" -->
+                %s <!-- "dostępna" / "niedostępna" -->
             </div>
 
             <button type="submit" class="btn-link" %s> <!-- enabled/disabled -->
@@ -84,6 +84,7 @@
     </div> <!-- # add-to-cart -->
 
     <div style="clear: both;"></div>
+
     <!--<header><h1>Lorem ipsum</h1></header>-->
     <!--<script src="js/tabs.js"></script>-->
 

@@ -198,16 +198,36 @@
 
         $row = $result->fetch_assoc();
 
-       /* echo "<br><br> row --> <br><br>";
-        print_r($row);*/
+        // id_ksiazki         | 1
+        // tytul              | Symfonia C++ wydanie V
+        // cena               | 55.55
+        // rok_wydania        | 2010
+        // id_autora          | 1
+        // oprawa             | twarda
+        // ilosc_stron        | 520
+        // image_url          | csymfoni_wyd_V.png
+        // rating             | 4.5
+        // wymiary            | 138 x 928 x 281
+        // stan               | nowa
+        // nazwa              | Informatyka
+        // id_kategorii       | 4
+        // liczba_komentarzy  | 1
+        // liczba_ocen        | 2
+        // liczba_egzemplarzy | 15
+        // imie               | Jerzy
+        // nazwisko           | Grębosz
+        // id_autora          | 1
+        // id_wydawcy         | 1
+        // nazwa_wydawcy      | Helion
 
         // load the content from the external template file into string
         $book = file_get_contents("../template/book-page.php");
 
                 // wstaw do Z.S wartości zwrócone z Bazy (!);
-                $_SESSION["avg_rating"] = $row["rating"]; // average book rating - "4.25" ;
-                $_SESSION["liczba_ocen"] = $row["liczba_ocen"]; // number of reviews ;
-                    $_SESSION["rating"] = $row["rating"];     // average book rating - "4.25" ;
+                    $_SESSION["avg_rating"] = $row["rating"];   // average book rating - "4.25" ;
+                $_SESSION["rating"] = $row["rating"];           // average book rating - "4.25" ;
+
+                $_SESSION["liczba_ocen"] = $row["liczba_ocen"]; // number of reviews - "2";
                 $_SESSION["id_ksiazki"] = $row["id_ksiazki"];
 
         if ( isset($_SESSION["rate-error"]) ) { // komunikat - błąd przy dodawaniu oceny przez klienta ;
@@ -243,13 +263,42 @@
         echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["cena"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $status, $submit);
         // ../template/book-page.php ;
 
-            // pobranie komentarzy (treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
+            // pobranie komentarzy (id_klienta, treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
             query("SELECT km.id_klienta, km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]);
             // (!) $_SESSION["comments"]; - ta zmienna zawiera wykorzystany szablon HTML (przechowuje wszystkie komentarze danej książki !);
 
+/*        $_SESSION["comments"] => Array
+          (
+                [0] =>
+
+                  <section class="comment">
+                      <div class="comment-author">Adam</div>  <!-- $row["imie"] - autor komentarza (imie) -->
+                      <div class="comment-date">2023-08-15 16:20:16</div>    <!-- $row["data"] - 2021-01-01 15:22:34 -->
+                      <div class="comment-rate">
+                          <span>4</span>                   <!-- $row["ocena"] - "4" -->
+                          <div class="comment-rate-inner"></div> <!-- (!!!) - JS - width -> 80 procent -->
+                      </div>
+                      <div style="clear: both;"></div>
+                      <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit 1</div> <!--  $row["tresc"] - "abc..." -->
+                  </section>
+
+                  [1] =>
+
+                  <section class="comment">
+                      <div class="comment-author">Adam</div>  <!-- $row["imie"] - autor komentarza (imie) -->
+                      <div class="comment-date">2023-08-15 16:20:29</div>    <!-- $row["data"] - 2021-01-01 15:22:34 -->
+                      <div class="comment-rate">
+                          <span>5</span>                   <!-- $row["ocena"] - "4" -->
+                          <div class="comment-rate-inner"></div> <!-- (!!!) - JS - width -> 80 procent -->
+                      </div>
+                      <div style="clear: both;"></div>
+                      <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit 2</div> <!--  $row["tresc"] - "abc..." -->
+                  </section>
+        )*/
+
         $book_page_tabs = file_get_contents("../template/book-page-tabs.php"); // wczytanie szablonu na sekcje (karty) z dodatkowymi informacjami o książce ;
 
-        echo sprintf($book_page_tabs, $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], $row["oprawa"], $row["stan"], $row["id_ksiazki"], $row["rating"], $message, implode($_SESSION["comments"]));
+        echo sprintf($book_page_tabs, $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], ucfirst($row["oprawa"]), ucfirst($row["stan"]), $row["id_ksiazki"], $row["rating"], $message, implode($_SESSION["comments"]));
 
         // file_put_contents("../template/book-page-tabs-modified.php", $modified);
     }
@@ -257,13 +306,14 @@
     function get_ratings($result) { // user\book.php   // "ocena", "liczba_ocen" ;
 
         // wstawia do tablicy sesyjnej - ilości poszczególnych ocen dla książki ->   5 -> 4,  4 -> 26,  3 -> 15, ....
+
         // $_SESSION["ratings"] -> [5] => 2 [4] => 1, ... ;
 
         //    ocena      liczba_ocen
+
         //      5 	         2
         //      4 	         1
-        //      3 	         3
-        //      2 	         2
+        //     ... 	        ...
 
         $_SESSION["ratings"] = []; // create new empty array ;
 
@@ -280,27 +330,32 @@
            //                                 [3] => 3
            //                                 [2] => 2 ) ;
 
+        /*echo "<br><hr><br>".'$_SESSION["ratings"] --> '."<br>";
+            print_r($_SESSION["ratings"]);
+            echo "<br><br>";
+        exit();*/
+
         $result->free_result();
     }
 
     function verify_rate_exists($result) {
 
-        // function for cheking if comment / or rate already exists for that book made by that clinet
+        // function for cheking if comment / or rate already exists (for that book) made by that clinet
             //$row = $result->fetch_assoc();
 
         $_SESSION["rate_exists"] = true;
     }
 
-    function get_comments($result) { // "km.id_klienta",    "km.treść", "km.data", "km.imie", "km.ocena" ;
+    function get_comments($result) { // "km.id_klienta", "km.treść", "km.data", "kl.imie", "rt.ocena" ;
 
         // ̶$̶i̶ ̶=̶ ̶0̶;̶
 
-        // Mauris venenatis quis metus non faucibus. Duis id ... 	2023-06-23 00:30:04 	Adam 	3
-        // Maecenas nulla est, semper vestibulum bibendum ac,... 	2023-06-23 00:30:46 	Adam 	4
-        // Lorem ipsum dolor sit amet, consectetur adipiscing... 	2023-06-23 00:32:29 	Adam 	5
-        // Fusce a laoreet est. Pellentesque habitant morbi t... 	2023-06-23 00:33:11 	Adam 	5
-        // Super książka polecam :) 	                            2023-06-23 09:56:58 	Adam 	3
-        // Super książka polecam :) 	                            2023-06-23 09:57:34 	Adam 	3
+        // 342   Mauris venenatis quis metus non faucibus. Duis id ... 	2023-06-23 00:30:04 	Adam 	3
+        // 343   Maecenas nulla est, semper vestibulum bibendum ac,... 	2023-06-23 00:30:46 	Adam 	4
+        // 343   Lorem ipsum dolor sit amet, consectetur adipiscing... 	2023-06-23 00:32:29 	Adam 	5
+        // 345   Fusce a laoreet est. Pellentesque habitant morbi t... 	2023-06-23 00:33:11 	Adam 	5
+        // 346   Super książka polecam :) 	                            2023-06-23 09:56:58 	Adam 	3
+        // 347   Super książka polecam :) 	                            2023-06-23 09:57:34 	Adam 	3
 
         $_SESSION["comments"] = []; // stworzenie nowej pustej tablicy ;
 
@@ -315,17 +370,14 @@
             //$̶i̶+̶+̶;̶
         }
 
-        //echo "<br> comments --> <br><hr><br>";
-        //print_r($_SESSION["comments"]); exit();
-
         $result->free_result();
     }
 
-    // ..\user\book - POST ;
+    // ..\user\book.php - POST ;
     function get_book_id($result) {
         // get highest book-id from db to apply max-range filter in ..\book.php (POST);
             $row = $result->fetch_assoc();
-        $_SESSION["max-book-id"] = $row["id_ksiazki"]; // "36"
+        $_SESSION["max-book-id"] = $row["id_ksiazki"]; // "35"
     }
 
     // ..\admin\add-book-data, \edit-book-data - POST ;     \user\index.php - advanced-search - prg;

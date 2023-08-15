@@ -6,6 +6,7 @@
     <div class="book-tabs">
 
         <ul class="tab-list"> <!-- .tab-list -->
+
             <li class="active">
                 <a class="tab-control" href="#tab-1">
                     <h3>Opis</h3>
@@ -30,15 +31,15 @@
         </div>
 
         <div class="tab-panel" id="tab-2">
-            <p><span class="book-details-tab">Tytuł</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">Autor</span><strong>%s %s</strong></p>
-            <p><span class="book-details-tab">Wydawnictwo</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">Ilość stron</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">Rok wydania</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">Wymiary</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">Oprawa</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">Stan</span><strong>%s</strong></p>
-            <p><span class="book-details-tab">Numer (id) książki</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Tytuł</span><strong>%s</strong></p> <!-- $row["tytul"] -->
+            <p><span class="book-details-tab">Autor</span><strong>%s %s</strong></p> <!--  $row["imie"], $row["nazwisko"] -->
+            <p><span class="book-details-tab">Wydawnictwo</span><strong>%s</strong></p> <!-- $row["nazwa_wydawcy"] -->
+            <p><span class="book-details-tab">Ilość stron</span><strong>%s</strong></p> <!-- $row["ilosc_stron"] -->
+            <p><span class="book-details-tab">Rok wydania</span><strong>%s</strong></p> <!-- $row["rok_wydania"] -->
+            <p><span class="book-details-tab">Wymiary</span><strong>%s</strong></p> <!-- $row["wymiary"] -->
+            <p><span class="book-details-tab">Oprawa</span><strong>%s</strong></p> <!-- $row["oprawa"] -->
+            <p><span class="book-details-tab">Stan</span><strong>%s</strong></p> <!-- $row["stan"] -->
+            <p><span class="book-details-tab">Numer (id) książki</span><strong>%s</strong></p> <!-- $row["id_ksiazki"] -->
         </div>
 
         <div class="tab-panel" id="tab-3">
@@ -55,9 +56,8 @@
     <svg viewBox="0 0 100 100">
         <circle cx="15" cy="17" r="10" stroke="#D3D3D3" stroke-width="1" fill="none" /> <!-- szare kółko -->
 
-        <circle id="rating-circle" cx="15" cy="17" r="10" stroke="#ffc107" stroke-width="1" fill="none"
-                 > <!-- stroke-dasharray="100"
-                stroke-dashoffset="100"  -->
+        <circle id="rating-circle" cx="15" cy="17" r="10" stroke="#ffc107" stroke-width="1" fill="none"> <!-- stroke-dasharray="100"
+                           stroke-dashoffset="100" -->
         </circle>
         <text x="15" y="18.5" text-anchor="middle" font-size="3">
             <tspan x="15" dy="-0.5em">średnia</tspan>
@@ -66,13 +66,10 @@
     </svg>
 
 </div>
-
-
            <!-- <svg>
                 <circle cx="50" cy="50" r="40" stroke="black" stroke-width="1" fill="none"
                         stroke-dasharray="20" />
-
-            </svg>-->
+            </svg> -->
 
             <div id="book-rating-details">
 
@@ -81,7 +78,7 @@
 
                     <div class="line">
                         <div class="rated"></div>   <!-- żółty pasek -->
-                        <div class="unrated"></div> <!-- cały pasek -->
+                        <div class="unrated"></div> <!-- cały pasek (szary) -->
                     </div>
                     <div class="no-rates"></div>
                 </div>
@@ -148,6 +145,7 @@
                     <!--<hr>-->
 
                     <div id="add-rate">              <!-- pojemnik na gwiazdki (przy dodawaniu nowej opinii) -->
+
                         <div class="add-rate-outer">
                                 <!-- <div class="rate-inner-base"></div> -->
                             <span class="star" id="star-1">
@@ -167,6 +165,7 @@
 									5 <input type="hidden" value="5">
 								</span>
                         </div> <!-- .add-rate-outer -->
+
                     </div> <!-- #add-rate -->
 
                     <input type="submit" value="wyślij" id="add-rate-button">
@@ -181,7 +180,7 @@
             <article id="book-comments"> <!-- article - html5 -->
                 <!--<hr>-->
                     %s
-                <!--<hr>-->             <!-- /template/book-comment.php -->
+                <!--<hr>-->             <!-- /template/book-comment.php <-- $_SESSION["comments"]  -->
             </article>
 
         </div> <!-- .tab-panel #tab-3 -->

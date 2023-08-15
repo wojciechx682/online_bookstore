@@ -364,6 +364,8 @@ span.star {
     text-align: center;
     width: 45px;
     cursor: pointer;
+
+    user-select: none;
 }
 
 span.star::before {
