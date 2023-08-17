@@ -63,6 +63,7 @@
                     query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, au.imie, au.nazwisko 
                                   FROM klienci AS kl, koszyk AS ko, ksiazki AS ks, autor AS au 
                                   WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND kl.id_klienta='%s'", "get_product_from_cart", $_SESSION['id']);
+
                                   // książki które zamówił klient o danym ID;
                                          //  220	1	5	Symfonia C++ wydanie V	65.55	2008	csymfoni_wyd_V.png	Jerzy	Grębosz
                                   // get_product_from_cart() --> $_SESSION['suma_zamowienia'] ;   "285.45" ;
@@ -103,7 +104,7 @@
         content.style.width = "100%";
     </script>
 
-    <?php require "../view/footer.php"; ?>
+    <?php require "../view/___footer.php"; ?>
 
 <!-- <script src="../scripts/set-span-width.js"></script>-->
 

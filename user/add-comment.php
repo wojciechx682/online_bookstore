@@ -1,25 +1,17 @@
 <?php
 
-		/*session_start();
-		include_once "../functions.php";
-		if( ! isset($_SESSION['zalogowany']) ) {
-
-			$_SESSION["login-error"] = true;
-			header("Location: ___zaloguj.php");
-			exit();
-		}*/
+	// --> \user\book.php --> POST --> (treść, ocena) -->
 
 	// check if user is logged-in, and user-type is "client" - if not, redirect to login page ;
 	require_once "../authenticate-user.php";
 
-	if( isset($_POST["comment"]) &&
-        !empty($_POST["comment"]) &&
-		isset($_POST["star"]) &&
-		!empty($_POST["star"])
-	  ) {
+	if ( isset($_POST["comment"]) && !empty($_POST["comment"]) &&
+		 isset($_POST["star"]) && !empty($_POST["star"]) ) {
 
-		$comment = filter_input(INPUT_POST, "comment", FILTER_SANITIZE_STRING); // tresc
-		$rate = filter_var(filter_input(INPUT_POST, 'star', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT); // ocena (1 - ... - 5)
+		$comment = filter_input(INPUT_POST, "comment", FILTER_SANITIZE_STRING); // tresc_komentarza;
+		$rate = filter_var(filter_input(INPUT_POST, 'star', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT); // ocena;
+
+
 
 		$comment_data = [$_SESSION["id"], $_SESSION["id_ksiazki"]];
 

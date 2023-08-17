@@ -7,6 +7,7 @@
     <div class="comment-rate">
         <span>%s</span>                   <!-- $row["ocena"] - "4" -->
         <div class="comment-rate-inner"></div> <!-- (!!!) - JS - width -> 80 procent -->
+        <div class="comment-rate-inner-base"></div>
     </div>
     <div style="clear: both;"></div>
     <div class="comment-content">%s</div> <!--  $row["tresc"] - "abc..." -->

@@ -30,6 +30,8 @@
 
     <script src="../scripts/book-page-tabs.js"></script>
 
+    <script src="../scripts/change-quantity.js"></script> <!-- koszyk.php -->
+
     <script>
        /* const tab2 = document.getElementById("tab-2-li");
         tab2.addEventListener("click", setSpanWidthv2);*/

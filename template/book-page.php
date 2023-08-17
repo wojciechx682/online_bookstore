@@ -33,7 +33,7 @@
             </div>
 
             <span class="rating-num" id="rating-num"></span> <!-- JS -> "4" -->
-            <span class="rating-num">%s ocen, %s komentarzy</span>
+            <span class="rating-num">%s ocen, %s komentarzy</span> <!-- $row["liczba_ocen"], $row["liczba_komentarzy"] -->
         </div>
 
         <!-- (!) -------------------------------------------------------------------------- -->
@@ -47,39 +47,39 @@
 
     </div> <!-- #book-page-details -->
 
-
     <div id="add-to-cart">
 
-        <span class="book-page-details">Cena</span>%s PLN <!-- $row["cena"] -->
+        <span class="book-page-details">Cena</span>
+            <span id="book-price">%s</span> PLN <!-- $row["cena"] -->
 
-        <form action="add_to_cart.php" method="post">
+<form action="add_to_cart.php" method="post">
 
-            <input type="hidden" name="id_ksiazki" value="%s"> <!-- $row["id_ksiazki"] -->
+    <input type="hidden" name="book-id" value="%s"> <!-- $row["id_ksiazki"] -->
 
-            <label>
-                <b>Ilość: </b>
-                <input type="text" id="koszyk_ilosc%s" name="koszyk_ilosc" value="1"> <!-- $row["id_ksiazki"] -->
-            </label>
+    <label>
+        <b>Ilość: </b>
+        <input type="text" id="book-amount%s" name="book-amount" value="1"> <!-- $row["id_ksiazki"] -->
+    </label>
 
-            <button type="button" onclick="increase(this, %s)"> <!-- $row["id_ksiazki"] -->
-                +
-            </button>
+    <button type="button" value="%s" class="increase-btn"> <!-- $row["id_ksiazki"] --> <!-- onclick="increase(this, s)" -->
+        +
+    </button>
 
-            <button type="button" onclick="decrease(this, %s)"> <!-- $row["id_ksiazki"] -->
-                <span>-</span>
-            </button>
+    <button type="button" value="%s" class="decrease-btn"> <!-- $row["id_ksiazki"] --> <!-- onclick="decrease(this, s)" -->
+        <span>-</span>
+    </button>
 
-                <div style="clear: both;"></div>
+        <div style="clear: both;"></div>
 
-            <div id="book-status">
-                %s <!-- "dostępna" / "niedostępna" -->
-            </div>
+    <div id="book-status">
+        %s <!-- "dostępna" / "niedostępna" -->
+    </div>
 
-            <button type="submit" class="btn-link" %s> <!-- enabled/disabled -->
-                Dodaj ko koszyka
-            </button> <!-- name="your_name" value="your_value" -->
+    <button type="submit" class="btn-link" %s> <!-- enabled/disabled -->
+        Dodaj ko koszyka
+    </button> <!-- name="your_name" value="your_value" -->
 
-        </form> <!-- add_to_cart.php -->
+</form> <!-- add_to_cart.php -->
 
     </div> <!-- # add-to-cart -->
 

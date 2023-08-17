@@ -235,8 +235,8 @@
         <?php session_unset(); ?>
 
         <script>
-            let statusBox = document.getElementById("login-error-message");
-            let container = document.querySelector(".background");
+                let statusBox = document.getElementById("login-error-message");
+                let container = document.querySelector(".background");
             statusBox.classList.toggle("hidden");
             container.classList.toggle("bright");
             let confirmBtn = document.getElementById("confirm-message");

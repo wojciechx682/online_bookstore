@@ -36,8 +36,8 @@
 
             <!--<button class="add-to-cart">Add to Cart</button>-->
             <form action="add_to_cart.php" method="post">
-                <input type="hidden" name="id_ksiazki" value="%s"> <!-- id_ksiazki -->
-                <input type="hidden" name="koszyk_ilosc" class="koszyk_ilosc" value="1">
+                <input type="hidden" name="book-id" value="%s"> <!-- id_ksiazki -->
+                <input type="hidden" name="book-amount" class="book-amount" value="1">
                 <button type="submit" class="btn-link" %s>Dodaj do koszyka</button> <!-- "" / "disabled" -->
             </form>
         </div> <!-- .book-info -->

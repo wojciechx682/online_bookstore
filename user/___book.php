@@ -90,14 +90,18 @@
 
                         <?php
 
+                            echo '<a href="index.php">&larr; Wróć </a>'; // tymczasowe (!) ;
+
                             if(isset($_SESSION["avg_rating"])) {
-                                unset($_SESSION["avg_rating"]);
+                                unset($_SESSION["avg_rating"]); // $row["rating"];
                             }
 
-                            query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, kt.nazwa, sb.id_kategorii, 
+                            query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, ks.opis, kt.nazwa, sb.id_kategorii,
+       
                                              (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki) AS liczba_komentarzy, 
                                              (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki) AS liczba_ocen, 
                                              (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki) AS liczba_egzemplarzy, 
+                                             
                                              au.imie, au.nazwisko, au.id_autora, ks.id_wydawcy, wd.nazwa_wydawcy 
                                          FROM ksiazki AS ks 
                                              JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii 
@@ -112,6 +116,8 @@
 
                             query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "get_ratings", $_SESSION["book-id"]);
 
+                                // ✓ potrzebne w widoku w sekcji "Recenzje" ; poziome paski z ocenami (żółte/szare) ;
+
                                 // $_SESSION['ratings'] -> key => ocena,  value => ilosc_ocen;
 
                                 // ocena  liczba_ocen
@@ -120,17 +126,22 @@
 
                                                              // $_SESSION["ratings"] -> [5] => 2
                                                              //                         [4] => 1 ;
-                            $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]);
+                            $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]); // JSON string;
+
                                 // funstions -> get_ratings() -> to pass that array (PHP) to JS
                                 //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
                                 // The json_encode() function is used to encode a PHP value into a JSON string;
 
-                            /*echo "<hr><br><br>";
-                                echo "ratings array (PHP) --> <br><br>";
-                                print_r($_SESSION["ratings"]);
-                                echo "<br><br>ratings array (JS) --> <br><br>";
+                            echo "<hr><br>";
+                                echo "<b>".'$_SESSION["ratings"] - ratings array (PHP) -->'."</b><br><br>";
+                                print_r($_SESSION["ratings"]); echo "<br><br>";
+                                var_dump($_SESSION["ratings"]);
+                                echo "<br><br><b>".'$_SESSION["raings_array"] - ratings array (JS) -->'."</b><br><br>";
                                 print_r($_SESSION["raings_array"] );
-                            echo "<hr><br><br>"; */
+                                echo "<br><br><b>".'$_SESSION["liczba_ocen"] - liczba_ocen --> '."</b><br><br>";
+                                print_r($_SESSION["liczba_ocen"] ); echo "<br><br>";
+                                var_dump($_SESSION["liczba_ocen"] );
+                            echo "<hr><br><br>";
                             /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                             echo "GET ->"; print_r($_GET); echo "<hr><br>";
                             echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
@@ -142,29 +153,27 @@
 
                     <?php
 
+                    // -------------------------------------------------------------------------------------------------
                     // Problemy implementacyjne ->
 
-                    // 1. Po kliknięciu gwiazdki przy dodawaniu opinii, zostały one resetowane po najechaniu na inną gwiazdkę.    - Od teraz, po kiknięciu, gwiazdki zostają zapisane. (najechanie na inną gwiazdkę nie zmienia ich stanu - jedynie dopiero kliknięcie)
+                    // 1. Po kliknięciu gwiazdki przy dodawaniu opinii, -- zostały one resetowane po najechaniu na inną gwiazdkę.
+                    //    - Od teraz, po kiknięciu, gwiazdki zostają zapisane. (najechanie na inną gwiazdkę nie zmienia ich stanu - jedynie dopiero kliknięcie)
 
-                    // 2. Podczas dodawania opinii, przy kliknięciu dwóch gwiazdek w następującej po sobie kolejności, wystąpił błąd polegający na dodaniu niewłaściwej oceny w skali 5/5 (Np. jeśli użytkownik kliknął "3", a potem "2" - ocena została zapisana jako "3") - rozwiązaniem było dodanie funkcji usuwającej atrybuty "name" ze wszystkich gwiazdek - po kliknięciu na dowolną gwiazdkę;
+                    // 2. Podczas dodawania opinii, przy kliknięciu dwóch gwiazdek w następującej po sobie kolejności, wystąpił błąd polegający na dodaniu niewłaściwej oceny w skali 5/5 (Np. jeśli użytkownik kliknął "3", a potem "2" - ocena została zapisana jako "3")
+                    // - rozwiązaniem było dodanie funkcji usuwającej atrybuty "name" ze wszystkich gwiazdek - po kliknięciu na dowolną gwiazdkę;
                     // (atrybut "name" posiada tylko ten input, dla którego gwiazdka została kliknięta)
 
-                    // 3. Podczas odświeżania strony z książką poprzeż użycie klawiszy Ctrl + F5 - pojawiał się błąd polegający na nieodopowiednim umiejscowieniu szarych gwiazdek proporcjonalnie względem żółtych gwizdek. Rozwiązaniem było dodanie linii window.onload - "która czeka" na wczytanie wszystkich zasobów strony (w tym stylów CSS) - tak aby ostatecznie zachować poprawne umiejscowienie żółtych i szarych gwizdek względem siebie ;
-                    // rozwiązaniem było zastosowanie wartości procentowych (relatywnych) zamiast wartości wyrażonych w px - do ustalenia stylów tych elementów !
+                    // 3. Podczas odświeżania strony z książką poprzeż użycie klawiszy Ctrl + F5 - pojawiał się błąd polegający na nieodopowiednim umiejscowieniu szarych gwiazdek proporcjonalnie względem żółtych gwizdek (w sekcji #book-page-details - przy zdjęciu książki).
+
+                    // ✖ rozwiązaniem było dodanie linii window.onload - "która czeka" na wczytanie wszystkich zasobów strony (w tym stylów CSS) - tak aby ostatecznie zachować poprawne umiejscowienie żółtych i szarych gwizdek względem siebie ;
+
+                    // ✓ rozwiązaniem było zastosowanie wartości procentowych (relatywnych) zamiast wartości wyrażonych w px - do ustalenia stylów tych elementów !
 
                     // 4. Animacja wypełniania okręgu na żółto (proporcjonalnie do średniej oceny) - OPISAĆ - jak zostało zrobione to, że wypełnienie zaczyna się od początku okręgu;
 
-                    // -------------------------------------------------------------------------
+                    // -------------------------------------------------------------------------------------------------
 
-                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
-                    //echo '<a href="index.php?kategoria=' . $_SESSION['kategoria'] . '">&larr; Wróć </a>'; // tymczasowe (!) ;
-
-                    /*echo 'Informatyka \ '*/
-
-                    // PD -> zakomentowane - problemy implementacyjne
 
                     //query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.image_url, ks.rating,
                     //km.id_klienta, km.tresc,
@@ -176,7 +185,7 @@
                     //WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = km.id_ksiazki AND ks.id_ksiazki = rt.id_ksiazki AND ks.id_wydawcy wd.id_wydawcy AND ks.id_ksiazki = mg.id_ksiazki AND ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);
 
                     //$book = filter_var(filter_input(INPUT_GET, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
-                        //$book = filter_var(filter_input(INPUT_POST, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
+                    //$book = filter_var(filter_input(INPUT_POST, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
 
                     // validate book's id ;
 
@@ -193,19 +202,10 @@
                                      LEFT JOIN magazyn_ksiazki AS mg ON ks.id_ksiazki = mg.id_ksiazki
                                      LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
                                  WHERE ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);*/  // ERROR - nie zwraca poprawnej ilości ocen i komentarzy !
-
                     // The issue with your query is that you are using LEFT JOIN to join the ksiazki table with the komentarze and ratings tables. This means that for each row in the ksiazki table, all matching rows in the komentarze and ratings tables are returned. If there are multiple comments or ratings for a single book, each row for that book in the ksiazki table will be duplicated for each comment or rating. To fix this, you can use subqueries to count the number of comments and ratings for each book instead of joining the tables. Here's an example query that should give you the correct results
 
                     /* Solution below - This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.
                     This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.*/
-
-                    /*if (isset($_SESSION["rate-error"])) {
-                        $book[] = $_SESSION["rate-error"];
-                        unset($_SESSION["rate-error"]);
-                    } else if (isset($_SESSION["rate-success"])) {
-                        $book[] = $_SESSION["rate-success"];
-                        unset($_SESSION["rate-success"]);
-                    }*/
 
                     /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
                                 (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
@@ -219,6 +219,7 @@
                                     LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
                                 WHERE ks.id_ksiazki = '%s';
                                 ", "get_book", $book);*/ // foregins key => id_autora, id_ksiazki, id_wydawcy
+
                     // wynik zapytania -->
                     // 35	Java - Techniki zaawansowane Wydanie V	44.5	2018	2 (id_subkategori)	twarda	325	Java_techniki_zaawansowane.png	4.5	370 x 337 x 76	nowa	2 (liczba_kom) 	2   (liczba_ocen)	Cezary	Sokołowski	1	Helion	126 (ilosc dost. egzemplarzy)
 
@@ -242,21 +243,19 @@
 
                     // ✓ zmiana kwerendy po dodaniu subkategorii ->
 
-
-
-    /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
-                    kt.nazwa, sb.id_kategorii,
-                        (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
-                        (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
-                        (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
-                        au.imie, au.nazwisko, au.id_autora,
-                        ks.id_wydawcy, wd.nazwa_wydawcy
-                    FROM ksiazki AS ks
-                    JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
-                    JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
-                    LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
-                    LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                    WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]); */ // It is used to retrieve detailed information about a specific book (based on $_GET["book-id"])
+                    /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
+                                    kt.nazwa, sb.id_kategorii,
+                                        (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
+                                        (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
+                                        (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
+                                        au.imie, au.nazwisko, au.id_autora,
+                                        ks.id_wydawcy, wd.nazwa_wydawcy
+                                    FROM ksiazki AS ks
+                                    JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                                    JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                                    LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
+                                    LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                                    WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]); */ // It is used to retrieve detailed information about a specific book (based on $_GET["book-id"])
 
                     // $_SESSION["book-id"]
                     // $book
@@ -310,24 +309,23 @@
                     // pobranie ilości każdej oceny (5 - ilość 3, 4 - ilość 2, itd .... ->
                     // SD -> problem implementacyjny ;
 
-    // Oceny + Ich ilości dla tej książki ;
-    /*query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings
-                        WHERE id_ksiazki = '%s'
-                        GROUP BY ocena
-                        ORDER BY ocena DESC
-                        ", "get_ratings", $book); */// ✓ potrzebne w widoku w sekcji "Recenzje" ; poziome paski z ocenami (żółte/szare) ;
+                    // Oceny + Ich ilości dla tej książki ;
+                    /*query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings
+                                        WHERE id_ksiazki = '%s'
+                                        GROUP BY ocena
+                                        ORDER BY ocena DESC
+                                        ", "get_ratings", $book); */// ✓ potrzebne w widoku w sekcji "Recenzje" ; poziome paski z ocenami (żółte/szare) ;
 
-                    // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen;
-                    // $_SESSION["ratings"] -> [5] => 2 [4] => 1 ;
+                                    // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen;
+                                    // $_SESSION["ratings"] -> [5] => 2 [4] => 1 ;
 
-    //$_SESSION["raings_array"] = json_encode($_SESSION["ratings"]);
+                    //$_SESSION["raings_array"] = json_encode($_SESSION["ratings"]);
                         // funstions -> get_ratings() -> to pass that array (PHP) to JS
 
                         //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
                         // The json_encode() function is used to encode a PHP value into a JSON string;
 
                                                         //unset($_SESSION["book-id"]);
-
                     ?>
 
                 </div> <!-- #content -->
@@ -336,8 +334,9 @@
 
             <script>
 
-                const rating = document.getElementById("book-rate").textContent; // <span id="book-rate" style="display: none;">%s</span>
-                // "4.5" - type "string";    type "hidden" - "4.5",  lub   null ;
+                const rating = document.getElementById("book-rate").textContent;
+                    // <span id="book-rate" style="display: none;"> %s </span> <!-- $row["rating"] - "4" -->
+                    // "4.5" - type "string";    type "hidden" - "4.5",   ̶l̶u̶b̶ ̶ ̶n̶u̶l̶l̶ ̶ lub "0" ;
 
                     console.log("\n\n 471 rating -->", rating);
                     console.log("\n\n typeof rating -->", typeof rating);
@@ -354,299 +353,214 @@
                 circleTest.style.strokeDashoffset  = circumferenceTest;*/
 
 
-                // (!) właściwość  stroke-dashoffset - definiuje długość złotej linii, oraz odstępy pomiędzy przerwami, a więc aby początkowo ukryć złoty okrąg, należy ustawić  stroke-dashoffset=" " wartość na równą OBWODOWI KOŁA - dzięki czemu przerwa pomiędyz wzorem wyniesie dokładnie tyle co obwód koła, czyli złoty okrąg będzie niewidoczny
-                // " it creates a dash pattern with a dash length equal to the circumference ";
+                // (!) właściwość stroke-dasharray - definiuje długość złotej linii (ob - obwodu koła), oraz długości odstępów (przerw),  ̶,̶ ̶a̶ ̶w̶i̶ę̶c̶ ̶a̶b̶y̶ ̶p̶o̶c̶z̶ą̶t̶k̶o̶w̶o̶ ̶u̶k̶r̶y̶ć̶ ̶z̶ł̶o̶t̶y̶ ̶o̶k̶r̶ą̶g̶,̶ ̶n̶a̶l̶e̶ż̶y̶ ̶u̶s̶t̶a̶w̶i̶ć̶ ̶ ̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶=̶"̶ ̶"̶ ̶n̶a̶ ̶w̶a̶r̶t̶o̶ś̶ć̶ ̶r̶ó̶w̶n̶ą̶ ̶O̶B̶W̶O̶D̶O̶W̶I̶ ̶K̶O̶Ł̶A̶ ̶-̶ ̶d̶z̶i̶ę̶k̶i̶ ̶c̶z̶e̶m̶u̶ ̶p̶r̶z̶e̶r̶w̶a̶ ̶p̶o̶m̶i̶ę̶d̶z̶y̶ ̶w̶z̶o̶r̶e̶m̶ ̶w̶y̶n̶i̶e̶s̶i̶e̶ ̶d̶o̶k̶ł̶a̶d̶n̶i̶e̶ ̶t̶y̶l̶e̶ ̶c̶o̶ ̶o̶b̶w̶ó̶d̶ ̶k̶o̶ł̶a̶,̶ ̶c̶z̶y̶l̶i̶ ̶z̶ł̶o̶t̶y̶ ̶o̶k̶r̶ą̶g̶ ̶b̶ę̶d̶z̶i̶e̶ ̶n̶i̶e̶w̶i̶d̶o̶c̶z̶n̶y̶ ̶;̶
 
-                // poniżej troche o właściwościach stronke-dasharray i stroke-dashoffest, oraz dlaczego ustawienie obu tych wartości na wartość równą obwodowi koła - ukrywa początkowo złoty okrąg ;
+                //  ̶"̶ ̶i̶t̶ ̶c̶r̶e̶a̶t̶e̶s̶ ̶a̶ ̶d̶a̶s̶h̶ ̶p̶a̶t̶t̶e̶r̶n̶ ̶w̶i̶t̶h̶ ̶a̶ ̶d̶a̶s̶h̶ ̶l̶e̶n̶g̶t̶h̶ ̶e̶q̶u̶a̶l̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶"̶;̶
 
-                // "Setting the `stroke-dasharray` value to the circumference of the circle effectively hides the yellow circle (makes it invisible) because it creates a dash pattern with a dash length equal to the circumference, and no gaps in between.
-                //
-                //Here's why this works:
-                //
-                //1. When `stroke-dasharray` is set to the circumference, each dash in the dash pattern has the same length as the circumference of the circle. Since the circumference is the total length of the circle's perimeter, setting the dash length to this value means that each dash will cover the entire circumference of the circle.
-                //
-                //2. By not specifying any gaps between the dashes (i.e., not providing a second value in the `stroke-dasharray` property), the dashes will be placed end-to-end without any gaps. This effectively fills the entire circumference of the circle with dashes.
-                //
-                //3. Since the `stroke-dashoffset` is initially set to the same value as the `stroke-dasharray` (in this case, the circumference), the entire yellow circle is initially hidden by the dash pattern. The dashes cover the entire perimeter of the circle, making it appear as if it's not filled.
-                //
-                //To make the yellow circle visible and show the filling effect, you update the `stroke-dashoffset` value to a smaller value based on the desired fill amount. As the `stroke-dashoffset` decreases, the dash pattern shifts along the path, revealing the yellow portion of the circle. By adjusting the `stroke-dashoffset` from the initial circumference to a smaller value, you control the extent of the fill and animate the filling effect.
-                //
-                //In summary, setting `stroke-dasharray` to the circumference and initially setting `stroke-dashoffset` to the same value effectively hides the yellow circle by covering it with dashes. Adjusting the `stroke-dashoffset` value subsequently reveals the yellow portion and creates the filling effect.
-                //
-                //I hope this clarifies why setting `stroke-dasharray` to the circumference hides the yellow circle. Let me know if you have any further questions!
+                //  ̶p̶o̶n̶i̶ż̶e̶j̶ ̶t̶r̶o̶c̶h̶e̶ ̶o̶ ̶w̶ł̶a̶ś̶c̶i̶w̶o̶ś̶c̶i̶a̶c̶h̶ ̶s̶t̶r̶o̶n̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶ ̶i̶ ̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶e̶s̶t̶,̶ ̶o̶r̶a̶z̶ ̶d̶l̶a̶c̶z̶e̶g̶o̶ ̶u̶s̶t̶a̶w̶i̶e̶n̶i̶e̶ ̶o̶b̶u̶ ̶t̶y̶c̶h̶ ̶w̶a̶r̶t̶o̶ś̶c̶i̶ ̶n̶a̶ ̶w̶a̶r̶t̶o̶ś̶ć̶ ̶r̶ó̶w̶n̶ą̶ ̶o̶b̶w̶o̶d̶o̶w̶i̶ ̶k̶o̶ł̶a̶ ̶-̶ ̶u̶k̶r̶y̶w̶a̶ ̶p̶o̶c̶z̶ą̶t̶k̶o̶w̶o̶ ̶z̶ł̶o̶t̶y̶ ̶o̶k̶r̶ą̶g̶ ̶;̶
 
-                window.onload = function() {   // SD - (!) problem implementacyjny - ustawienie pozycji diva z szarymi gwiazdkami - rozwiązanie - poczekanie aż wszystkie zasoby strony (w tym CSS) się załadują) - Patrz chat gpt !
+                //  ̶"̶S̶e̶t̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶v̶a̶l̶u̶e̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶e̶f̶f̶e̶c̶t̶i̶v̶e̶l̶y̶ ̶h̶i̶d̶e̶s̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶c̶i̶r̶c̶l̶e̶ ̶(̶m̶a̶k̶e̶s̶ ̶i̶t̶ ̶i̶n̶v̶i̶s̶i̶b̶l̶e̶)̶ ̶b̶e̶c̶a̶u̶s̶e̶ ̶i̶t̶ ̶c̶r̶e̶a̶t̶e̶s̶ ̶a̶ ̶d̶a̶s̶h̶ ̶p̶a̶t̶t̶e̶r̶n̶ ̶w̶i̶t̶h̶ ̶a̶ ̶d̶a̶s̶h̶ ̶l̶e̶n̶g̶t̶h̶ ̶e̶q̶u̶a̶l̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶,̶ ̶a̶n̶d̶ ̶n̶o̶ ̶g̶a̶p̶s̶ ̶i̶n̶ ̶b̶e̶t̶w̶e̶e̶n̶.̶
+                //
+                // Here's why this works:
+                //
+                //  ̶1̶.̶ ̶W̶h̶e̶n̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶i̶s̶ ̶s̶e̶t̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶,̶ ̶e̶a̶c̶h̶ ̶d̶a̶s̶h̶ ̶i̶n̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶ ̶p̶a̶t̶t̶e̶r̶n̶ ̶h̶a̶s̶ ̶t̶h̶e̶ ̶s̶a̶m̶e̶ ̶l̶e̶n̶g̶t̶h̶ ̶a̶s̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶.̶ ̶S̶i̶n̶c̶e̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶i̶s̶ ̶t̶h̶e̶ ̶t̶o̶t̶a̶l̶ ̶l̶e̶n̶g̶t̶h̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶'̶s̶ ̶p̶e̶r̶i̶m̶e̶t̶e̶r̶,̶ ̶s̶e̶t̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶ ̶l̶e̶n̶g̶t̶h̶ ̶t̶o̶ ̶t̶h̶i̶s̶ ̶v̶a̶l̶u̶e̶ ̶m̶e̶a̶n̶s̶ ̶t̶h̶a̶t̶ ̶e̶a̶c̶h̶ ̶d̶a̶s̶h̶ ̶w̶i̶l̶l̶ ̶c̶o̶v̶e̶r̶ ̶t̶h̶e̶ ̶e̶n̶t̶i̶r̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶.̶
+                //
+                //  ̶2̶.̶ ̶B̶y̶ ̶n̶o̶t̶ ̶s̶p̶e̶c̶i̶f̶y̶i̶n̶g̶ ̶a̶n̶y̶ ̶g̶a̶p̶s̶ ̶b̶e̶t̶w̶e̶e̶n̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶e̶s̶ ̶(̶i̶.̶e̶.̶,̶ ̶n̶o̶t̶ ̶p̶r̶o̶v̶i̶d̶i̶n̶g̶ ̶a̶ ̶s̶e̶c̶o̶n̶d̶ ̶v̶a̶l̶u̶e̶ ̶i̶n̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶p̶r̶o̶p̶e̶r̶t̶y̶)̶,̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶e̶s̶ ̶w̶i̶l̶l̶ ̶b̶e̶ ̶p̶l̶a̶c̶e̶d̶ ̶e̶n̶d̶-̶t̶o̶-̶e̶n̶d̶ ̶w̶i̶t̶h̶o̶u̶t̶ ̶a̶n̶y̶ ̶g̶a̶p̶s̶.̶ ̶T̶h̶i̶s̶ ̶e̶f̶f̶e̶c̶t̶i̶v̶e̶l̶y̶ ̶f̶i̶l̶l̶s̶ ̶t̶h̶e̶ ̶e̶n̶t̶i̶r̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶w̶i̶t̶h̶ ̶d̶a̶s̶h̶e̶s̶.̶
+                //
+                //  ̶3̶.̶ ̶S̶i̶n̶c̶e̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶i̶s̶ ̶i̶n̶i̶t̶i̶a̶l̶l̶y̶ ̶s̶e̶t̶ ̶t̶o̶ ̶t̶h̶e̶ ̶s̶a̶m̶e̶ ̶v̶a̶l̶u̶e̶ ̶a̶s̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶(̶i̶n̶ ̶t̶h̶i̶s̶ ̶c̶a̶s̶e̶,̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶)̶,̶ ̶t̶h̶e̶ ̶e̶n̶t̶i̶r̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶c̶i̶r̶c̶l̶e̶ ̶i̶s̶ ̶i̶n̶i̶t̶i̶a̶l̶l̶y̶ ̶h̶i̶d̶d̶e̶n̶ ̶b̶y̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶ ̶p̶a̶t̶t̶e̶r̶n̶.̶ ̶T̶h̶e̶ ̶d̶a̶s̶h̶e̶s̶ ̶c̶o̶v̶e̶r̶ ̶t̶h̶e̶ ̶e̶n̶t̶i̶r̶e̶ ̶p̶e̶r̶i̶m̶e̶t̶e̶r̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶,̶ ̶m̶a̶k̶i̶n̶g̶ ̶i̶t̶ ̶a̶p̶p̶e̶a̶r̶ ̶a̶s̶ ̶i̶f̶ ̶i̶t̶'̶s̶ ̶n̶o̶t̶ ̶f̶i̶l̶l̶e̶d̶.̶
+                //
+                //  ̶T̶o̶ ̶m̶a̶k̶e̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶c̶i̶r̶c̶l̶e̶ ̶v̶i̶s̶i̶b̶l̶e̶ ̶a̶n̶d̶ ̶s̶h̶o̶w̶ ̶t̶h̶e̶ ̶f̶i̶l̶l̶i̶n̶g̶ ̶e̶f̶f̶e̶c̶t̶,̶ ̶y̶o̶u̶ ̶u̶p̶d̶a̶t̶e̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶v̶a̶l̶u̶e̶ ̶t̶o̶ ̶a̶ ̶s̶m̶a̶l̶l̶e̶r̶ ̶v̶a̶l̶u̶e̶ ̶b̶a̶s̶e̶d̶ ̶o̶n̶ ̶t̶h̶e̶ ̶d̶e̶s̶i̶r̶e̶d̶ ̶f̶i̶l̶l̶ ̶a̶m̶o̶u̶n̶t̶.̶ ̶A̶s̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶d̶e̶c̶r̶e̶a̶s̶e̶s̶,̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶ ̶p̶a̶t̶t̶e̶r̶n̶ ̶s̶h̶i̶f̶t̶s̶ ̶a̶l̶o̶n̶g̶ ̶t̶h̶e̶ ̶p̶a̶t̶h̶,̶ ̶r̶e̶v̶e̶a̶l̶i̶n̶g̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶p̶o̶r̶t̶i̶o̶n̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶.̶ ̶B̶y̶ ̶a̶d̶j̶u̶s̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶f̶r̶o̶m̶ ̶t̶h̶e̶ ̶i̶n̶i̶t̶i̶a̶l̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶t̶o̶ ̶a̶ ̶s̶m̶a̶l̶l̶e̶r̶ ̶v̶a̶l̶u̶e̶,̶ ̶y̶o̶u̶ ̶c̶o̶n̶t̶r̶o̶l̶ ̶t̶h̶e̶ ̶e̶x̶t̶e̶n̶t̶ ̶o̶f̶ ̶t̶h̶e̶ ̶f̶i̶l̶l̶ ̶a̶n̶d̶ ̶a̶n̶i̶m̶a̶t̶e̶ ̶t̶h̶e̶ ̶f̶i̶l̶l̶i̶n̶g̶ ̶e̶f̶f̶e̶c̶t̶.̶
+                //
+                //  ̶I̶n̶ ̶s̶u̶m̶m̶a̶r̶y̶,̶ ̶s̶e̶t̶t̶i̶n̶g̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶a̶n̶d̶ ̶i̶n̶i̶t̶i̶a̶l̶l̶y̶ ̶s̶e̶t̶t̶i̶n̶g̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶t̶o̶ ̶t̶h̶e̶ ̶s̶a̶m̶e̶ ̶v̶a̶l̶u̶e̶ ̶e̶f̶f̶e̶c̶t̶i̶v̶e̶l̶y̶ ̶h̶i̶d̶e̶s̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶c̶i̶r̶c̶l̶e̶ ̶b̶y̶ ̶c̶o̶v̶e̶r̶i̶n̶g̶ ̶i̶t̶ ̶w̶i̶t̶h̶ ̶d̶a̶s̶h̶e̶s̶.̶ ̶A̶d̶j̶u̶s̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶v̶a̶l̶u̶e̶ ̶s̶u̶b̶s̶e̶q̶u̶e̶n̶t̶l̶y̶ ̶r̶e̶v̶e̶a̶l̶s̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶p̶o̶r̶t̶i̶o̶n̶ ̶a̶n̶d̶ ̶c̶r̶e̶a̶t̶e̶s̶ ̶t̶h̶e̶ ̶f̶i̶l̶l̶i̶n̶g̶ ̶e̶f̶f̶e̶c̶t̶.̶
 
-                    // dobra chuja nie ma tego w chat gpt - weź przedstaw mu ten problem jeszcze raz tak jakby nie był rozwiązany - i opisz w PD (problemy implementacyjne) ;
+                window.addEventListener('load', function() {
 
-                    //const rating = 4.25;
+                    // Strona została w pełni załadowana; // Kod do wykonania po pełnym załadowaniu strony;
 
-                    /*if(rating != "") {
+                    // SD - problem implementacyjny - ustawienie pozycji diva z szarymi gwiazdkami (w sekcji #book-page-details - przy zdjęciu książki) - rozwiązanie - poczekanie aż wszystkie zasoby strony (w tym CSS) się załadują
 
-                    }*/
+                    // przedstaw ten problem jeszcze raz tak jakby nie był rozwiązany - i opisz w PD (problemy implementacyjne) ;
 
                     const totalRate = 5;
-                    // 4.5 / 5 * 100 => "90" - (!) Ocena wyrażona w procentach ;
-                    const percentageRate = (rating / totalRate) * 100; // "number" -> "93.3339" ;
+
+                    const percentageRate = (rating / totalRate) * 100; // (4.5 / 5) * 100 => "90"
+                    // "90" <- "number" // Ocena wyrażona w procentach;
 
                     const percentageRateRounded = `${Math.round(percentageRate / 10) * 10}%`;
-                    // "String" -> "90%"    // Zaokrąglona wartość oceny książki
+                    // "90%"  <- "string"
+                        // Zaokrąglona wartość średniej oceny (do najbliższej dziesiątki);
+
                     const percentageRateBase = `${100 - Math.round(percentageRate / 10) * 10}%`;
-                    // "String" -> "10%" // to będzie szerokość diva z Szarymi gwiazdkami ;
+                    // "10%" <- "String"
+                        // to będzie szerokość diva z Szarymi gwiazdkami;
 
-                    console.log("\n525 percentageRate -> ", percentageRate);
-                    console.log("\npercentageRateRounded -> ", percentageRateRounded);
-                    console.log("\npercentageRateBase -> ", percentageRateBase);
+                        /*console.log("\n525 percentageRate -> ", percentageRate);
+                        console.log("\npercentageRateRounded -> ", percentageRateRounded);
+                        console.log("\npercentageRateBase -> ", percentageRateBase);*/
 
-                    // const percentageRateRounded = `${(percentageRate / 10) * 10}%`;
-                    document.querySelector('.rate-inner').style.width = percentageRateRounded;
+                    document.querySelector('.rate-inner').style.width = percentageRateRounded; // width: 70%;
                     // ✓ szerokość diva z Żółtymi gwiazdkami ;
-                    document.querySelector('.rate-inner-base').style.width = percentageRateBase;
+                    document.querySelector('.rate-inner-base').style.width = percentageRateBase; // width: 30%;
                     // ✓ szerokość diva z Szarymi gwiazdkami ;
 
-                    const rateOuter = document.querySelector('.rate-outer');
-                    // ✓ pojemnik na divy z żółtymi i Szarymi gwiazdkami ;
-                    const rateOuterWidth = rateOuter.offsetWidth;
-                    // ✓ szerokość tego pojemnika (CSS -> "width");
-                    // "105" - type "number" - szerokosć (px) diva na Żółte i Szare gwiazdki ;
-                    console.log("\n 193 rateOuterWidth ->", rateOuterWidth);
-                    console.log("\n 193 rateOuterWidth ->", typeof rateOuterWidth);
+                    const rateOuter = document.querySelector('.rate-outer'); // ✓ pojemnik na divy z żółtymi i Szarymi gwiazdkami ;
+                    const rateOuterWidth = rateOuter.offsetWidth; // ✓ szerokość tego pojemnika (CSS -> "width");
+                    // "105" <- "number"                            <- szerokosć (px) diva na Żółte i Szare gwiazdki ;
+
+                        /*console.log("\n 193 rateOuterWidth ->", rateOuterWidth);
+                        console.log("\n 193 rateOuterWidth ->", typeof rateOuterWidth);*/
 
                     document.querySelector('.rate-inner-base').style.position = "relative";
                     //document.querySelector('.rate-inner-base').style.left = `${rateOuterWidth *  (Math.round(percentageRate / 10) * 10) / 100}px`; // -> 100 * (0,7) --> 70 (px) ;
+                    document.querySelector('.rate-inner-base').style.left = percentageRateRounded;
+                    // -> 100 * (0,7) --> 70 (px) ;
 
-                    document.querySelector('.rate-inner-base').style.left = percentageRateRounded; // -> 100 * (0,7) --> 70 (px) ;
-                    // ROZWIĄZANIE PROBLEMU IMPLEMENTACYJNEGO - zamiana position left z px na wartość % (!) - podczas resizowania nastąpiło błędne kalkulowanie tej pozycji, od teraz przy zmianie rozmiaru pozycja szarych gwiazdek względem złotych jest OK (!)
+                    // ✓✓✓ ROZWIĄZANIE PROBLEMU IMPLEMENTACYJNEGO - zamiana position left z px na wartość % (!) - podczas resizowania nastąpiło błędne kalkulowanie tej pozycji, od teraz przy ZMIANIE ROZMIARU pozycja szarych gwiazdek względem złotych jest OK (!)
 
                     // tutał był problem (ponieważ po Ctrl+F5 - szerokość rateOuterWidth była źle kalkulowana" - problemy implementacyjne - SD " ;
 
 
                     if(rating !== "") {
-                        document.querySelector('.rating-num').innerHTML = rating ; // zaokrąglenie --> pomnożyć przez 10, zaokrąglić, podzielić przez 10 ;
+                        document.querySelector('.rating-num').innerHTML = Math.round(rating*100)/100 ;
+                        // zaokrąglenie --> pomnożyć przez 10, zaokrąglić, podzielić przez 10 ;
                     } else {
-                        document.querySelector('.rating-num').innerHTML = "0" ; // zaokrąglenie --> pomnożyć przez 10, zaokrąglić, podzielić przez 10 ;
+                        document.querySelector('.rating-num').innerHTML = "0" ;
                     }
 
-
-
-
-
-
-
-
-
-                    //////////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     // Proporcjonalne wypełnienie okręgu ;
 
+                        //  ̶T̶o̶ ̶f̶i̶l̶l̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶p̶r̶o̶p̶o̶r̶t̶i̶o̶n̶a̶l̶l̶y̶ ̶b̶a̶s̶e̶d̶ ̶o̶n̶ ̶t̶h̶e̶ ̶a̶v̶e̶r̶a̶g̶e̶ ̶r̶a̶t̶i̶n̶g̶ ̶u̶s̶i̶n̶g̶ ̶J̶a̶v̶a̶S̶c̶r̶i̶p̶t̶,̶ ̶y̶o̶u̶ ̶c̶a̶n̶ ̶d̶y̶n̶a̶m̶i̶c̶a̶l̶l̶y̶ ̶c̶a̶l̶c̶u̶l̶a̶t̶e̶ ̶t̶h̶e̶ ̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶ ̶v̶a̶l̶u̶e̶ ̶b̶a̶s̶e̶d̶ ̶o̶n̶ ̶t̶h̶e̶ ̶r̶a̶t̶i̶n̶g̶.̶ ̶H̶e̶r̶e̶'̶s̶ ̶a̶n̶ ̶e̶x̶a̶m̶p̶l̶e̶ ̶o̶f̶ ̶h̶o̶w̶ ̶y̶o̶u̶ ̶c̶a̶n̶ ̶a̶c̶h̶i̶e̶v̶e̶ ̶t̶h̶i̶s̶:̶
+                        //  ̶A̶s̶s̶u̶m̶i̶n̶g̶ ̶y̶o̶u̶ ̶h̶a̶v̶e̶ ̶a̶ ̶v̶a̶r̶i̶a̶b̶l̶e̶ ̶n̶a̶m̶e̶d̶ ̶'̶r̶a̶t̶i̶n̶g̶'̶ ̶t̶h̶a̶t̶ ̶h̶o̶l̶d̶s̶ ̶t̶h̶e̶ ̶a̶v̶e̶r̶a̶g̶e̶ ̶r̶a̶t̶i̶n̶g̶ ̶v̶a̶l̶u̶e̶̶;̶
+                        //  ̶I̶n̶ ̶t̶h̶i̶s̶ ̶c̶o̶d̶e̶,̶ ̶w̶e̶ ̶c̶a̶l̶c̶u̶l̶a̶t̶e̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶u̶s̶i̶n̶g̶ ̶t̶h̶e̶ ̶f̶o̶r̶m̶u̶l̶a̶ ̶2̶ ̶*̶ ̶π̶ ̶*̶ ̶r̶,̶ ̶w̶h̶e̶r̶e̶ ̶r̶ ̶i̶s̶ ̶t̶h̶e̶ ̶r̶a̶d̶i̶u̶s̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶(̶i̶n̶ ̶y̶o̶u̶r̶ ̶c̶a̶s̶e̶,̶ ̶i̶t̶'̶s̶ ̶1̶0̶)̶.̶ ̶T̶h̶e̶n̶ ̶w̶e̶ ̶c̶a̶l̶c̶u̶l̶a̶t̶e̶ ̶t̶h̶e̶ ̶d̶e̶s̶i̶r̶e̶d̶ ̶o̶f̶f̶s̶e̶t̶ ̶b̶y̶ ̶s̶u̶b̶t̶r̶a̶c̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶p̶r̶o̶p̶o̶r̶t̶i̶o̶n̶a̶l̶ ̶v̶a̶l̶u̶e̶ ̶f̶r̶o̶m̶ ̶t̶h̶e̶ ̶t̶o̶t̶a̶l̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶.̶ ̶T̶h̶e̶ ̶p̶r̶o̶p̶o̶r̶t̶i̶o̶n̶a̶l̶ ̶v̶a̶l̶u̶e̶ ̶i̶s̶ ̶o̶b̶t̶a̶i̶n̶e̶d̶ ̶b̶y̶ ̶d̶i̶v̶i̶d̶i̶n̶g̶ ̶t̶h̶e̶ ̶r̶a̶t̶i̶n̶g̶ ̶b̶y̶ ̶t̶h̶e̶ ̶m̶a̶x̶i̶m̶u̶m̶ ̶r̶a̶t̶i̶n̶g̶ ̶(̶i̶n̶ ̶t̶h̶i̶s̶ ̶e̶x̶a̶m̶p̶l̶e̶,̶ ̶w̶e̶ ̶a̶s̶s̶u̶m̶e̶ ̶i̶t̶'̶s̶ ̶5̶)̶.̶ ̶F̶i̶n̶a̶l̶l̶y̶,̶ ̶w̶e̶ ̶u̶p̶d̶a̶t̶e̶ ̶t̶h̶e̶ ̶s̶t̶r̶o̶k̶e̶D̶a̶s̶h̶a̶r̶r̶a̶y̶ ̶a̶n̶d̶ ̶s̶t̶r̶o̶k̶e̶D̶a̶s̶h̶o̶f̶f̶s̶e̶t̶ ̶s̶t̶y̶l̶e̶s̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶e̶l̶e̶m̶e̶n̶t̶ ̶t̶o̶ ̶a̶c̶h̶i̶e̶v̶e̶ ̶t̶h̶e̶ ̶d̶e̶s̶i̶r̶e̶d̶ ̶f̶i̶l̶l̶i̶n̶g̶ ̶e̶f̶f̶e̶c̶t̶ ̶;̶
+                        //  ̶M̶a̶k̶e̶ ̶s̶u̶r̶e̶ ̶t̶o̶ ̶e̶x̶e̶c̶u̶t̶e̶ ̶t̶h̶i̶s̶ ̶c̶o̶d̶e̶ ̶a̶f̶t̶e̶r̶ ̶t̶h̶e̶ ̶p̶a̶g̶e̶ ̶h̶a̶s̶ ̶l̶o̶a̶d̶e̶d̶,̶ ̶e̶i̶t̶h̶e̶r̶ ̶b̶y̶ ̶p̶l̶a̶c̶i̶n̶g̶ ̶i̶t̶ ̶w̶i̶t̶h̶i̶n̶ ̶a̶ ̶D̶O̶M̶C̶o̶n̶t̶e̶n̶t̶L̶o̶a̶d̶e̶d̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶o̶r̶ ̶a̶t̶ ̶t̶h̶e̶ ̶e̶n̶d̶ ̶o̶f̶ ̶t̶h̶e̶ ̶b̶o̶d̶y̶ ̶t̶a̶g̶.̶
 
-                        // To fill the circle proportionally based on the average rating using JavaScript, you can dynamically calculate the stroke-dashoffset value based on the rating. Here's an example of how you can achieve this:
+                    const circle = document.getElementById('rating-circle'); // żółte kółko ;
+                        //console.log("\ncircle --> ", circle);
 
-                        // Assuming you have a variable named 'rating' that holds the average rating value
+                    const circumference = parseFloat(circle.getAttribute('r')) * 2 * Math.PI; // obwód koła; // circumference of the circle
+                    // "62.83185307179586" <- number;
 
-                        // In this code, we calculate the circumference of the circle using the formula 2 * π * r, where r is the radius of the circle (in your case, it's 10). Then we calculate the desired offset by subtracting the proportional value from the total circumference. The proportional value is obtained by dividing the rating by the maximum rating (in this example, we assume it's 5). Finally, we update the strokeDasharray and strokeDashoffset styles of the circle element to achieve the desired filling effect.
+                        //console.log("\n\n 584 circumference (obwód) koła)->", circumference, "\n\n\n");
 
-                        // Make sure to execute this code after the page has loaded, either by placing it within a DOMContentLoaded event listener or at the end of the body tag.
-
-
-                     const circle = document.getElementById('rating-circle');
-                    //const circumference = 2 * Math.PI * circle.getAttribute('r'); // obwód koła
-                    const circumference = parseFloat(circle.getAttribute('r')) * 2 * Math.PI; // obwód ; calculate the circumference
-                        console.log("\n\n\n\n 584 circumference (obwód) koła)->", circumference); // "62,8318"
-                                //const offset = circumference * (1 - (rating / 5));
+                                // const offset = circumference * (1 - (rating / 5));
                                 // zmienna określająca stopień wypełnienia koła ;
-                                // "31,4159" (dla średniej_oceny 2.5)
-                    const offset = circumference * (1 - (rating / 5)); // Calculate the stroke dash offset ; "Przesunięcie kreski obrysu " ;
-                    console.log("\n circumference -> ", circumference);
-                    console.log("\n offset -> ", offset);
+                                // "31,4159" (dla średniej_oceny 2.5) ;
 
+                        /*const offset = circumference * (1 - (rating / 5)); // Calculate the stroke dash offset ; "Przesunięcie kreski obrysu " ;
+                        console.log("\n circumference -> ", circumference);
+                        console.log("\n offset -> ", offset);
+                        circle.style.strokeDashoffset = `${offset}`;*/
 
-                    circle.style.strokeDashoffset = `${offset}`;
-                            //circle.style.strokeDasharray = `${circumference}`;
+                    circle.style.strokeDasharray = `${rating*(circumference/5)}, ${circumference}`;
 
+                });
 
+                // -----------------------------------------------------------------------------------------------------
 
+                const bookRatingDetails = document.querySelectorAll(".book-rating-details"); // Kolekcja NodeList divów z żółtymi paskami ;
 
-                    //////////////////////////////////////////////////////////////////////////////////////
+                $ratings = <?= $_SESSION["raings_array"] ?>; // JSON -> obiekt JS -> (tablica z ocenami, key - ocena, value - ilosc ocen);
 
+                // {                                         // { "5" : "2", "4" : "1" }
+                //    "5": "1",
+                //    "4": "1"
+                //    ...  ...
+                // }
 
-                }
+                $no_ratings =  <?= json_encode($_SESSION["liczba_ocen"]) ?>;      // "4" <- "String" - LICZBA wszystkich OCEN;
 
-                //////////////////////////////////////////////////////////////////////////////////////
+                    /*console.log("\n 298 $ratings -> ", $ratings);                     // [5] => 2 [4] => 1 ; --> { "5" : "2", "4" : "1" }
+                    console.log("\n 298 $ratings[0] -> ", $ratings[5]);                     // [5] => 2 [4] => 1 ; --> { "5" : "2", "4" : "1" }
+                    console.log("\n 298 typeof $ratings -> ", typeof $ratings);       // "Object"
 
-                /*let circleTest = document.getElementById("rating-circle");
-                let circumferenceTest = parseFloat(circleTest.getAttribute('r')) * 2 * Math.PI;
-                console.log("\n250 circumferenceTest -> ", circumferenceTest); // "62.83185307179586" - type = "number";
-                console.log("\n250 typeof circumferenceTest -> ", typeof circumferenceTest);
-                    //console.log("\n250 circumferenceTest -> ", circumferenceTest);
-                //circleTest.style.strokeDasharray = `circumferenceTest`;
-                //circleTest.style.strokeDashoffset = `circumferenceTest`;
+                    console.log("\n 298 $no_ratings -> ", $no_ratings);               // "12" lub np "0" ;    // liczba_ocen
+                    console.log("\n 298 typeof $no_ratings -> ", typeof $no_ratings); // String ;
 
-                //circleTest.style.strokeDasharray = circleTest.style.strokeDashoffset = circumferenceTest;
-                circleTest.style.strokeDasharray  = circumferenceTest;
-
-                circleTest.style.strokeDashoffset = "50";
-
-                const rating = document.getElementById("book-rate").textContent;
-                const offset = circumferenceTest * (1 - (rating / 5)); // Calculate the stroke dash offset ; "Przesunięcie kreski obrysu " ;
-                console.log("\n circumference -> ", circumferenceTest);
-                console.log("\n offset -> ", offset);
-                circleTest.style.strokeDashoffset = `${offset}`;*/
-
-
-                /*circle.style.strokeDashoffset = `${offset}`;
-                circle.style.strokeDasharray = `${circumference}`;
-
-            //////////////////////////////////////////////////////////////////////////////////////
-
-
-
-            // ---------------------------------------------------------------------------------------------------------
-            // circle average rating -->
-
-            // rating ;
-
-             /*const ratingCircle = document.getElementById("book-rate").textContent; // "4.5" - type "string";
-             const totalRateCircle = 5; // total rating possible
-             const percentageRateCircle = (ratingCircle / totalRateCircle) * 100; // "80"
-             // calculate percentage of rating --> "70" ;
-             const percentageRateRoundedCircle = `${Math.round(percentageRateCircle)}%`; // "80%"
-             // round the percentage rating --> "70%" ;
-             const percentageRateBaseCircle = `${100 - Math.round(percentageRateCircle)}%`; // "20%";
-             // --> "30%";
-             document.querySelector('.rating-circle').style.background = `conic-gradient(gold ${percentageRateRoundedCircle}, gray ${percentageRateBaseCircle})`;*/
-
-                //document.querySelector('.rating-num-circle').innerHTML = ratingCircle.toFixed(2); // display the rating with 2 decimal places
-
-                // ---------------------------------------------------------------------------------------------------------
-                // circle average rating ;
-
-                //const ratingCircle = document.getElementById("rating-circle");
-                // type = "Object"
-                // - <circle id="rating-circle" ... >
-                // - circle SVG element to Draw Circle ;
-
-                //console.log("\n 260 ratingCircle -> ", ratingCircle);
-                //console.log("\n 260 typeof ratingCircle -> ", typeof ratingCircle); // Object
-
-                //ratingCircle.classList.add("filled");
-
-                // Assuming you have a variable named 'rating' that holds the average rating value
-
-                //const rating = document.getElementById("book-rate").textContent; // "4.5" - type "string";
-
-                /*const rating = parseInt("4.5"); // "4.5" - type "string";
-                const circle = document.getElementById('rating-circle');
-                circle.style.strokeDashoffset = `${100 - rating}%`;
-                circle.classList.add('filled');*/
-
-                for(let i = 5, j = 0; i > 0; i--, j++) {
-                    console.log("\n i = ", i, "; j = ", j , "\n");
-                }
-
-                /*for(let j = 0; j < 5; j++) {
-                    console.log("\n j = ", j, "\n");
-                }*/
-
-                // ---------------------------------------------------------------------------------------------------------
-                // ---------------------------------------------------------------------------------------------------------
-
-                const bookRatingDetails = document.querySelectorAll(".book-rating-details");
-                    // Kolekcja divów z żółtymi paskami ;
-
-                // ratings from DB - JS -->
-                // kolekcja divów -> <div class="book-rating-details" ...>
-                // "Object" - 5  4  3  2  1
-
-                console.log("\n 288 bookRatingDetails -> ", bookRatingDetails); // Kolekcja typu NodeList - "live" ;
-                console.log("\n 288 bookRatingDetails.length -> ", bookRatingDetails.length); // 5 elementów (tyle ile jest pasków z ocenami) ;
-                console.log("\n 288 typeof bookRatingDetails -> ", typeof bookRatingDetails); // object;
-
-                $ratings = <?= $_SESSION["raings_array"] ?>;                 // tablica z ocenami (key - ocena,     value - ilosc ocen);
-
-                // [5] => 2 [4] => 1 ;     "Object" (!!!)  ;
-
-                $no_ratings =  <?= json_encode($_SESSION["liczba_ocen"]) ?>; // liczba wszystkich ocen --> "4" - "String" ;
-
-                console.log("\n 298 $ratings -> ", $ratings);               // [5] => 2 [4] => 1 ;
-                console.log("\n 298 typeof $ratings -> ", typeof $ratings); // "Object"
-
-                console.log("\n 298 $no_ratings -> ", $no_ratings);     // "12" lub np "0" ;    // liczba_ocen
-                console.log("\n 298 btypeof $no_ratings -> ", typeof $no_ratings); // String ;
-
-                //$ratings = array_reverse($ratings, true);
+                console.log("\n\n przed pętlą --> \n\n");
+                console.log("----------------------------------------------------------------------------------------");*/
 
                 //      bookRatingDetails.length == 5           (tyle ile jest divów - pasków poziomych z ocenami) ;
-                for (let i = bookRatingDetails.length, j = 0; i > 0 ; i--, j++) {  // ✓ Pętla po Kolekcji NodeList - dla każdego pojemnika na paski - class="book-rating-details" ;
-
-                    //   i   j  |
-                    //  ---------
-                    //   5   0  |
-                    //   4   1  |
-                    //   3   2  |
-                    //   2   3  |
-                    //   1   4  |
 
 
-                    let line = bookRatingDetails[j].querySelector(".line");
-                    // i-ty element kolekcji -> div o klasie "line"
-                        // ✓ POJEMNIK NA ŻÓŁTY I SZARY PASEK ;
-                        // ✓ <div class="book-rating-details"> --> (wewnątrz każdego diva jest) --> .line -->
-                            // .rated   - żółty pasek ;
-                            // .unrated - cały pasek ;
+                window.onload = function() {
 
-                    // console.log("i -> ", i);
-                    // console.log("line -> ", line);
+                    for (let i = bookRatingDetails.length, j = 0; i > 0 ; i--, j++) {
 
-                    // Do something with each element ;
+                        // ✓ Pętla po Kolekcji NodeList - dla każdego pojemnika na paski - class="book-rating-details" ;
 
-                    let rated = line.querySelector(".rated");                      // ✓ żółty pasek ;
-                    let norates = bookRatingDetails[j].querySelector(".no-rates"); // ✓ pojemnik na ilość_ocen ;
+                        //   i  |  j  |
+                        //  -----------
+                        //   5  |  0  |
+                        //   4  |  1  |
+                        //   3  |  2  |
+                        //   2  |  3  |
+                        //   1  |  4  |
 
-                    console.log("\n321 norates -> ", norates); // <div class="no-rates">
+                        let line = bookRatingDetails[j].querySelector(".line"); // i-ty element kolekcji -> div o klasie "line" ;
+                                                                                // ✓ POJEMNIK NA ŻÓŁTY I SZARY PASEK ;
+                        // ✓ <div class="book-rating-details"> --> (wewnątrz każdego diva jest) --> <
+                        //      div .line> -->
+                        //          .rated   - żółty pasek (div) ;
+                        //          .unrated - cały pasek (div) ;
 
-                    //console.log("rated -> ", rated);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
-                    //console.log("norates -> ", norates);
-                    //console.log("no_ratings -> ", $no_ratings);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
-                    //console.log("rated -> ",  );   // złoty pasek wypełnienia - długość zgodna z ilością ocen
+                        /*console.log("\n\n line -> ", line, "\n");*/
 
-                    let style = getComputedStyle(rated); // (read only) pobierz szerokość (właściwość CSS) żółteo paska ✓ ;
-                    // POBIERZ szerokość żółtego paska (read-only) ;
+                        // Do something with each element ;
 
-                    console.log("\n\n 342 style -> ", style.width); // 125 px;
+                        let rated = line.querySelector(".rated");                      // ✓ żółty pasek ;
+                        let norates = bookRatingDetails[j].querySelector(".no-rates"); // ✓ pojemnik na ilość_ocen ;
 
-                    let width = parseInt(style.width), newWidth, numer_of_rates;
-                    // "125" - (px) - "number" ;
+                        /*console.log("\n\n321 norates -> ", norates); // <div class="no-rates">*/
 
-                    // width - szerokość żółtego paska (125px);
+                        //console.log("rated -> ", rated);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
+                        //console.log("norates -> ", norates);
+                        //console.log("no_ratings -> ", $no_ratings);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
+                        //console.log("rated -> ",  );   // złoty pasek wypełnienia - długość zgodna z ilością ocen
 
-                    console.log("\n351 -- width --> ", width); // 125 - type "number ";      - szerokość żółteo paska ✓
-                    console.log("\n351 width --> ", typeof width);
-                    console.log("\n $ratings --> ", $ratings); // "object" - tablica z ocenami i ilością tych ocen dla danej książki;
+                        //let style = getComputedStyle(rated); // "125px" <- (read only) - szerokość (właściwość CSS) żółteo paska ✓ ;
+                        let style = getComputedStyle(line); // "125px" <- (read only) - szerokość (właściwość CSS) żółteo paska ✓ ;
+                            /*console.log("\n\n 342 .rated - style.width -> ", style.width);*/ // 125 px;
 
-                    //          5
-                    if($ratings[i] === undefined) { // ✓ jeśli dana ocena nie wystąpiła ani razu ;
-                        newWidth = 100;     // szerokość paska ;
-                        numer_of_rates = 0; // ilość_ocen ;
-                        rated.style.visibility = "hidden"; // ukrycie (i-tego) żółtego paska ;
-                    } else {
-                        // ✓ ustaw odpowiednią (proporcjonalną !) szerokość żółtego paska, zależnie od ilości ocen (!) ;
+                        let width = parseInt(style.width)-10, newWidth, numberOfRates; // width - szerokość żółtego paska (125px);
+                        // "125" - (px) <- "number" ;
 
-                        // newWidth    - ✓ szerokość żółtego paska ;
-                        // $no_ratings - ✓ liczba wszystkich ocen książki ;
-                        // $ratings[i] - ✓ ilość wysąpień konkretnej oceny (np "5" - wysąpiło 2 razy)
-                        newWidth = ( width / $no_ratings ) * $ratings[i]; // ✓
-                        numer_of_rates = $ratings[i];
+                            /*console.log("\n351 -- width --> ", width); // 125 - type "number "; - szerokość żółteo paska ✓
+                            console.log("\n351 width --> ", typeof width);
+                            console.log("\n $ratings --> ", $ratings); // "object" - tablica z ocenami i ilością tych ocen dla danej książki;*/
+
+                        //          5
+                        if($ratings[i] === undefined) { // ✓ jeśli dana ocena nie wystąpiła ani razu ;
+                            //newWidth = 100;     // szerokość paska ;
+                            numberOfRates = 0;    // ilość_ocen ;
+
+                            //rated.style.visibility = "hidden"; // ukrycie (i-tego) żółtego paska ;
+                            rated.classList.add("hidden-rate");  // visibility: hidden;
+                        } else {
+                            // ✓ ustaw odpowiednią (proporcjonalną !) szerokość żółtego paska, zależnie od ilości ocen (!) ;
+
+                            // newWidth    - ✓ szerokość żółtego paska ;
+                            // $no_ratings - ✓ liczba wszystkich ocen książki ;
+                            // $ratings[i] - ✓ ilość wysąpień konkretnej oceny (np "5" - wysąpiło 2 razy)
+                            newWidth = ( width / $no_ratings ) * $ratings[i]; // ✓
+                            numberOfRates = $ratings[i];
+
+                            rated.style.width = newWidth + "px"; // ustaw szerokość żółtego paska (jeśli nie było ocen - będzie on niewidoczny ) ;
+                        }
+
+                        //console.log("newWidth --> ", newWidth);
+
+                        norates.innerHTML = "("+numberOfRates+")"; // ilość ocen (np 2 razy wystąpiła ocena "5");
                     }
 
-                    //console.log("newWidth --> ", newWidth);
-
-                    rated.style.width = newWidth + "px"; // ustaw szerokość żółtego paska (jeśli nie było ocen - będzie on niewidoczny ) ;
-                    norates.innerHTML = "("+numer_of_rates+")"; // ilość ocen (np 2 razy wystąpiła ocena "5");
                 }
 
+                // -----------------------------------------------------------------------------------------------------
 
-                // ---------------------------------------------------------------------------------------------------------
+                /*console.log("----------------------------------------------------------------------------------------");*/
+
+                // -----------------------------------------------------------------------------------------------------
                 //  ̶a̶d̶d̶ ̶n̶e̶w̶ ̶r̶a̶t̶i̶n̶g̶ ̶(̶5̶ ̶s̶t̶a̶r̶s̶,̶ ̶h̶o̶v̶e̶r̶ ̶e̶f̶f̶e̶c̶t̶)̶ ̶-̶ ̶J̶S̶ ̶;̶
 
                 // Gwiazdki - przy dodawaniu nowej opinii - Interakcje przy najechaniu kursorem ;
@@ -654,92 +568,99 @@
                 const stars = document.querySelectorAll('.star'); // # add-rate -> # add-rate-outer -> .star ;
                 // Kolekcja typu NodeList ; // ✓ Kolekcja spanów z gwiazdkami ;
 
-                console.log("\n stars -> ", stars); // Kolekcja NodeList // ✓ Kolekcja spanów z gwiazdkami ;
-                console.log("\n typeof stars -> ", typeof stars); // "object"
+                    /*console.log("\n stars -> ", stars); // Kolekcja NodeList // ✓ Kolekcja spanów z gwiazdkami ;
+                    console.log("\n typeof stars -> ", typeof stars); // "object"*/
 
-                //let goldStars = 0;
+                // let goldStars = 0;
 
-                let keepStars = false; // ?
+                let keepStars = false; // == true po kliknięciu ("click") na gwiazdkę
 
-                function updateStars(event, clear, keep) { // usunąć argumenty clear ;
+                function updateStars(event) {
 
-                    console.log("\n 392 - keepStars -> ", keepStars) ;
+                        /*console.log("\n 392 - keepStars -> ", keepStars) ;*/
 
-                    const currentStar = event.currentTarget; // <span> z gwiazdką; // ten, który zostal kliknięty (!);
-                    // e.target - element, który wywołał zdarzenie (element docelowy dla zdarzenia);
-                    const currentStarId = currentStar.id; // "star-1", "star-4", ... // #star-1, ... #star-5
-                    const starNumber = Number(currentStarId.split('-')[1]); // "1", ... "5" ;
+                    const currentStar = event.currentTarget; // <span> z gwiazdką; // który zostal kliknięty;
+                        // <span class="star" id="star-1">
+                        //      1 <input type="hidden" value="1">
+                        // </span>
+                            const currentStarId = currentStar.id; // id klikniętej gwiazdki; // "star-1", "star-4", ... // #star-1, ... #star-5;
+                    const starNumber = Number(currentStarId.split('-')[1]); // "1", ... "5" ; <- "number"
                     // id klikniętej gwiazdki ;
 
-                    console.log("currentStar --> ", currentStar); // <span> z giwazdką ;
-                    console.log("currentStarId --> ", currentStarId);
-                    console.log("starNumber --> ", starNumber); // id klikniętej gwiazdki ;
+                        /*console.log("\n\n 593 currentStar --> ", currentStar);     // przykładowo --> <span class="star" id="star-1">
+                        console.log("\n\n 593 currentStarId --> ", currentStarId);
+                        console.log("\n\n 593 starNumber --> ", starNumber);       // id klikniętej gwiazdki ;*/
 
-                    let eventType = event.type; // typ wywołanego zdarzenia ; - "click", "mouseenter", ...
+                    let eventType = event.type; // typ wywołanego zdarzenia ; - "click", "mouseenter", "mouseout" ...
 
-                    if(eventType === "mouseenter"
-                        && keepStars === false
-                    ) {
+                    if (eventType === "mouseenter" && keepStars === false) {
 
-                        for (let i = 0; i < stars.length; i++) { // przejście przez kolekcje spanów z gwiazdkami ;
+                        // dodanie klasy "gold" do elementu <span> po najechaniu na niego myszą ;
 
-                            const star = stars[i]; // <span>
-                            const starId = star.id; // // "star-1", "star-4", ... // #star-1, ... #star-5
-                            const number = Number(starId.split('-')[1]); // "1", "2", ..
+                        for (let i = 0; i < stars.length; i++) {
 
-                            //console.log("number --> ", number);
+                            // przejście przez kolekcje spanów z gwiazdkami ;
 
-                            // ✓ jeśli i-ty element (span z gw.) jest mniejszy niz ten klikniety (event) ;
-                            if (number <= starNumber) {
+                            const star = stars[i];
+                                //      <span class="star" id="star-1">
+                                //           1 <input type="hidden" value="1">
+                                //      </span>
+                                const starId = star.id; // // "star-1", "star-4", ... // #star-1, ... #star-5
+                            const number = Number(starId.split('-')[1]); // "1", "2", ..., "5"
+                            // id-tej gwiazdki --> "1" / "2" / ... / "5"
+
+                            /*console.log("number --> ", number);*/
+
+                            if (number <= starNumber) { // ✓ jeśli i-ty element (<span> z gw.) jest mniejszy niz ten klikniety (event) ;
                                 // number - id i-tej gwiazki,
                                 // starNumber - id kliknietej gwiazdki ;
                                 star.classList.add('gold');
-                                //goldStars++;
-                            } else {
+                            } /*else {
                                 star.classList.remove('gold');
                                 //goldStars--;
-                            }
+                            }*/
                         }
                         // keepStars = false; // ?
                     }
 
-                    // to poniżej - zmienić lub usunac --->
-                    else if (eventType === "mouseout") { // (!)
-                        if(! keepStars) {
-                            for (let i = 0; i < stars.length; i++) {
-                                const star = stars[i];
+                    else if (eventType === "mouseout" && keepStars === false) {
+
+                        for (let i = 0; i < stars.length; i++) {
+
+                            const star = stars[i];
+                                //      <span class="star" id="star-1">
+                                //           1 <input type="hidden" value="1">
+                                //      </span>
+
+                            if(star.classList.contains("gold")) { // i-ty element (<span> z gw.);
                                 star.classList.remove('gold');
+                            }
 
-                                let input = star.querySelector('input[type="hidden"]');
+                            let input = star.querySelector('input[type="hidden"]');
 
-                                if (input.hasAttribute('name')) { // gdzie ten atrybut jest ustawiany ??
-                                    input.removeAttribute('name');
-                                }
+                            //console.log("\n\n 644 input --> \n\n", input);
+
+                            if (input.hasAttribute('name')) {
+                                //alert();
+                                input.removeAttribute('name');
                             }
                         }
                     }
                     // <--- ;
 
-                    else if (eventType === "click"
+                    else if (eventType === "click") {
 
-                    ) {
+                        // usuń atrybut "name" z pozostałych inputów - (input type="hidden"), jeśli on się tam znajdował ;
+                        removeNameAttribute(stars); // remove name attribute for every input[type="hidden"] element
 
-                        // usuń atrybut "name" z pozostałych gwiazdek (input), jeśli on się tam znajdował ;
-
-                        removeNameAttribute(stars);
-
-                        // click
                         for (let i = 0; i < stars.length; i++) {
 
-                            const star = stars[i]; // <span class="star ... >
-                            const starId = star.id; // star-1, star-2 ... star-5
-                            const number = Number(starId.split('-')[1]); // 1, 2, ... 5
-
-                            //console.log("713 star --> ", star);
-                            //console.log("starId --> ", starId);
-                            //console.log("number --> ", number);
-                            //console.log("stars length; --> ", stars.length);
-                            //console.log("i --> ", i);
+                            const star = stars[i];
+                                //      <span class="star" id="star-1">
+                                //           1 <input type="hidden" value="1">
+                                //      </span>
+                                const starId = star.id; // star-1, star-2 ... star-5
+                            const number = Number(starId.split('-')[1]); // 1, 2, ... 5 <--  // id-tej gwiazdki - "1" / "2" / ... / "5"
 
                             if (number <= starNumber) {
 
@@ -770,7 +691,7 @@
                         keepStars = true; // SD - rozwiązanie problemu implementacyjnego ;
                     }
 
-                    console.log("\n 486 keepStars -> ", keepStars);
+                    //console.log("\n 486 keepStars -> ", keepStars);
                 }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*function hasGoldStars(stars) {  // stars - NodeList collection (spany z gwiazdkami)
@@ -786,98 +707,82 @@
             }
         }
         return false;
-    }*/
+    } */
 
                 function removeNameAttribute(stars) {
-
-                    // remove "name" attribute In every <input typ hidden> in star <span> collection
-
-                    // ✓ SD - problem implementayjny - rozwiązanie ;
-
+                        // remove "name" attribute In every <input typ hidden> in star <span> collection
+                        // ✓ SD - problem implementayjny - rozwiązanie ;
                     for (let i = 0; i < stars.length; i++) { // NodeList Collection ;
 
-                        let input = stars[i].querySelector('input[type="hidden"]');
-                        // i-ty (!) input wewnątrz spana z gwiazdką ;
+                        let input = stars[i].querySelector('input[type="hidden"]'); // i-ty (!) input wewnątrz spana z gwiazdką ;
 
                         if(input.hasAttribute("name")) {
                             input.removeAttribute("name");
                         }
                     }
-                    return false;
-
                 }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                for (let i = 0; i < stars.length; i++) {
+                for (let i = 0; i < stars.length; i++) { // dla każdego elementu <span> z gwiazdką ;
 
                     const star = stars[i]; // <span ... class="star">
-                    // current star element (span);
+                    // current star element (<span>);
+
+                    //console.log("\n\n\n 733 stars[i] = \n\n\n", stars[i]);
 
                     // Add event listener for each "star" element ;
-                    star.addEventListener('mouseenter', function (event) {
+                    star.addEventListener('mouseenter', function(event) {
                         // event - element, który wywołał zdarzenie (<span> z gwiazdką)
-                        updateStars(event, true, true);
+                        // event --> zdarzenie + element;
+                        updateStars(event);
                     });
-                    star.addEventListener('mouseout', function (event) {
-                        updateStars(event, false, false);
+
+                    star.addEventListener('mouseout', function(event) {
+                        updateStars(event);
                     });
-                    star.addEventListener('click', function (event) {
-                        updateStars(event, true, true);
+
+                    star.addEventListener('click', function(event) {
+                        updateStars(event);
                     });
                 }
 
                 // ---------------------------------------------------------------------------------------------------------
 
-                // Komentarze poniżej ;
-                // ustawianie szerokości gwiazdek przy każdym komentarzu ;
+                // Komentarze - Sekcja komentarzy - poniżej ;
+                    // ustawianie szerokości gwiazdek przy każdym komentarzu ;
 
-                // error - pojawia się jeśli nie ma żadnych komentarzy ! - "commentRate" - nie istnieje !
+                // (naprawiony) error - pojawia się jeśli nie ma żadnych komentarzy ! - "commentRate" - nie istnieje !
 
-                // set the "name" attribute for input type hidden, that was selected
+                let commentRates = document.querySelectorAll(".comment-rate"); // \template\book-comment.php;
 
-                let commentRate = document.querySelector(".comment-rate"); // \template\book-comment.php;
+                commentRates.forEach(function(commentsRate) {
+                    let rating = commentsRate.textContent.trim(); // "4"
+                    commentsRate.querySelector(".comment-rate-inner").style.width = ((rating / 5) * 100) + "%";
+                    commentsRate.querySelector(".comment-rate-inner-base").style.width = (100-((rating / 5) * 100)) + "%";
+                    commentsRate.querySelector(".comment-rate-inner-base").style.position = "relative";
+                    commentsRate.querySelector(".comment-rate-inner-base").style.left = ((rating / 5) * 100) + "%";
+                });
 
-                if(commentRate) {
-
-                    console.log("\n\n 1002 commentRate -> ", commentRate);
-
-                    commentRate = commentRate.textContent.trim(); // 1, 2, ..., 5
-
-                    console.log("\n\n 986 commentRate -> ", commentRate);
-
-                    //let commentRate = document.querySelector(".comment-rate").textContent.trim(); // 1, 2, ..., 5
-
-                    console.log("\n\n 986 commentRate -> ", commentRate);
-
-                    let commentRateInner = document.querySelector(".comment-rate-inner");
-                    // <div class="comment-rate-inner">
+                /*if(commentRate) {
+                        console.log("\n\n 1002 commentRate -> ", commentRate);
+                    commentRate = commentRate.textContent.trim(); //$row["ocena"] - "1", "2", ..., "4", "5"
+                        console.log("\n\n 986 commentRate -> ", commentRate);
+                    let commentRateInner = document.querySelector(".comment-rate-inner"); // <div class="comment-rate-inner">
                     commentRateInner.style.width = (commentRate / 5) * 100 + "%"; // ustawienie szerokości pojemnika na gwiazdki - zależnie od ilości gwiazdek ;
-
                     let commentRates = document.querySelectorAll(".comment-rate") // kolekcja NodeList - pojemników (całych !) na wszystkie gwiazdki *przy komentarzach) ;
                     // console.log("commentRate -> ", commentRates);
-
                     for (let i = 0; i < commentRates.length; i++) { // dla każdego pojemnika na gwiazdki (przy komentarzach) ;
                         let rate = commentRates[i].textContent.trim(); // "4"
                         commentRates[i].querySelector(".comment-rate-inner").style.width = ((rate / 5) * 100) + "%";
                     }
-
                     //let commentRateInner = document.querySelector(".comment-rate-inner"); // <div class="comment-rate-inner">
                     //commentRateInner.style.width = (commentRate / 5) * 100 + "%";
-
                     // book-page-tabs -->
-
-                    /* el = document.getElementById("tab-2");
-
-                    el.addEventListener("click", setSpanWidthv2);*/
-
+                    /!* el = document.getElementById("tab-2");
+                    el.addEventListener("click", setSpanWidthv2);*!/
                 } else {
+                }*/
 
-                }
-
-
-
-
-
-                ////////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 // Karty - zapis ostatnio wybranej w localStorage ;
 
@@ -886,9 +791,9 @@
 
                 let divs = document.querySelectorAll('div.tab-panel');
                     console.log("\ndivs -> ", divs);
-                // <div clsas="tab-panel"> - ✓ pojemniki na karty
-                // Kolekcja NodeList - elementów (kart) które można przełączać
-                //console.log("divs -->", divs) ;
+                        // <div clsas="tab-panel"> - ✓ pojemniki na karty
+                        // Kolekcja NodeList - elementów (kart) które można przełączać
+                        //console.log("divs -->", divs) ;
 
                 let liEls = ul.querySelectorAll('li');
                     console.log("\nliEls -> ", liEls);
@@ -904,14 +809,12 @@
 
                 // (po kliknięciu) - ZAPISZ INDEKS AKTYWNEJ KARTY (OSTATNIO KLIKNIĘTEJ) W LS -
                 liEls.forEach( (liEl, index) => {
-                    liEl.addEventListener('click', function(event) {
-                        // dla każdego elementu listy - <li> ; - PO KLIKNIĘCIU ;
+
+                    liEl.addEventListener('click', function(event) { // dla każdego elementu listy - <li> ; - PO KLIKNIĘCIU ;
 
                                 // Check if the class attribute has changed
 
                                 // jeśli kliknięty <li> element nie ma klasy "active", trzeba mu ją nadać (bo został kliknięty, i powinien ją mieć) - ale tutaj - ZAPISUJE TYLKO indeks TEJ KARTY w Local Storage ! ;
-
-
 
                         if ( ! this.classList.contains('active') ) { // <li>
                             //console.log('Class attribute has changed');
@@ -924,7 +827,6 @@
                                 localStorage.setItem("liIndex", liIndex); // ✓ zapisz indeks klikniętej karty w LS
                             }
                         }
-                        // getCurrentIndex(); // pobierz indeks aktualnie aktywnej karty
                     });
                 });
 
@@ -968,18 +870,10 @@
                         liEls[liIndex].classList.add('active'); // dodanie klasy "active" do elementu listy zgodnie z tym jaki był zapisany w LS (ostatnio kliknięty)
                         divs[liIndex].classList.add('active'); // to samo dla karty z zawartością - <div class="tab-panel" ... > ;
 
-
-
-
-
-
                     } else {
                         // Value does not exist
                         console.log("Value does not exist for key 'liIndex'");
                     }
-
-
-
                 }
 
                 // ---------------------------------------------------------------------------------------------------------
@@ -987,9 +881,6 @@
                 content = document.getElementById("content"); // ustawienie wid div#content na 100%
                 //console.log("content -> ", content);
                 content.style.width = "100%";
-
-
-
 
             </script>
 

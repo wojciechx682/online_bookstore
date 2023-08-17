@@ -227,8 +227,8 @@
                     $_SESSION["avg_rating"] = $row["rating"];   // average book rating - "4.25" ;
                 $_SESSION["rating"] = $row["rating"];           // average book rating - "4.25" ;
 
-                $_SESSION["liczba_ocen"] = $row["liczba_ocen"]; // number of reviews - "2";
-                $_SESSION["id_ksiazki"] = $row["id_ksiazki"];
+                $_SESSION["liczba_ocen"] = $row["liczba_ocen"]; // number of reviews - "2" ;
+                $_SESSION["id_ksiazki"] = $row["id_ksiazki"];   // book-id - "1" ;
 
         if ( isset($_SESSION["rate-error"]) ) { // komunikat - błąd przy dodawaniu oceny przez klienta ;
 
@@ -263,9 +263,9 @@
         echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["cena"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $status, $submit);
         // ../template/book-page.php ;
 
-            // pobranie komentarzy (id_klienta, treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
-            query("SELECT km.id_klienta, km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]);
-            // (!) $_SESSION["comments"]; - ta zmienna zawiera wykorzystany szablon HTML (przechowuje wszystkie komentarze danej książki !);
+        // pobranie komentarzy (id_klienta, treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
+        query("SELECT km.id_klienta, km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]);
+        // (!) $_SESSION["comments"]; - ta zmienna zawiera wykorzystany szablon HTML (przechowuje wszystkie komentarze danej książki !);
 
 /*        $_SESSION["comments"] => Array
           (
@@ -298,7 +298,7 @@
 
         $book_page_tabs = file_get_contents("../template/book-page-tabs.php"); // wczytanie szablonu na sekcje (karty) z dodatkowymi informacjami o książce ;
 
-        echo sprintf($book_page_tabs, $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], ucfirst($row["oprawa"]), ucfirst($row["stan"]), $row["id_ksiazki"], $row["rating"], $message, implode($_SESSION["comments"]));
+        echo sprintf($book_page_tabs, $row["opis"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], ucfirst($row["oprawa"]), ucfirst($row["stan"]), $row["id_ksiazki"], $row["rating"], $message, implode($_SESSION["comments"]));
 
         // file_put_contents("../template/book-page-tabs-modified.php", $modified);
     }
@@ -1099,8 +1099,8 @@ EOT;
             // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
 
             $_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
-            /*echo "<br>448<br>";*/
-            //echo $_SESSION['book_exists']; exit();
+                /*echo "<br>448<br>";*/
+                //echo $_SESSION['book_exists']; exit();
             $result->free_result();
 
         } else {
@@ -1918,7 +1918,7 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
                             }
                             else { // brak zwróconych rekordów
 
-                                echo "<br>1747<br>"; // exit();
+                                //echo "<br>1747<br>"; // exit();
 
                                 //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
 
@@ -1938,13 +1938,11 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
 
                                     // orderDetailsVerifyOrderExists - admin/order-details.php - PRG
 
-                                    echo "<br>1767<br>";
-                                    echo "<br>result --> <br>";
-
-
-                                    echo "<br><hr><br>";
-                                    print_r($result); echo "<br><hr><br>";
-                                    var_dump($result);
+                    //echo "<br>1767<br>";
+                    //echo "<br>result --> <br>";
+                    //echo "<br><hr><br>";
+                    //print_r($result); echo "<br><hr><br>";
+                    //var_dump($result);
 
                                     //exit();
 

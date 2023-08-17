@@ -55,11 +55,13 @@
 
     <form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form%s"> <!-- AJAX -->
 
-        <input type="hidden" name="id_ksiazki" value="%s"> <!-- id_ksiazki -->
+        <input type="hidden" name="book-id" value="%s"> <!-- id_ksiazki -->
+
         <b>Ilość</b>
-        <input type="text" id="koszyk_ilosc%s" class="koszyk_ilosc" name="koszyk_ilosc" value="%s">
-        <button type="button" onclick="increase(this, %s)">+</button>
-        <button type="button" onclick="decrease(this, %s)"><span>-</span></button>
+        <input type="text" id="book-amount%s" class="book-amount" name="book-amount" value="%s">
+
+        <button type="button" value="%s" class="increase-btn">+</button> <!-- onclick="increase(this, s)" -->
+        <button type="button" value="%s" class="decrease-btn"><span>-</span></button> <!-- onclick="decrease(this, s)" -->
     </form>
 
     <form action="remove_book.php" method="post"

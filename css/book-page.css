@@ -67,7 +67,7 @@
 #book-page-publ,
 #book-page-nopg {
     /*border: 1px dashed black;*/
-    margin-bottom: 5px;
+    margin-bottom: 9px;
 }
 
 #book-page-title {
@@ -83,13 +83,20 @@
 
 /* ------------------------------------------------------------------------------------------------------------------ */
 
-.rate-inner {
+.rate-inner,
+.comment-rate-inner {
     overflow: hidden;
     width: 0;
 
     position: absolute;
     top: 0;
     left: 0;
+
+    /*transition: width 0.2s ease-in-out;*/
+}
+
+span#book-price {
+    margin-right: 3px;
 }
 
 /*..rate-inner::before {
@@ -110,13 +117,29 @@
     opacity: .3;
         /*transform: rotate(180deg);*/
     transform: scaleX(-1);
+
+    /*left: 0;
+    transition: left 0.2s ease-in-out;*/
+}
+
+.comment-rate-inner-base {
+    position: relative;
+    left: 0;
+
+    overflow: hidden;
+    transform: scaleX(-1);
 }
 
 .rate-inner-base::before {
+    font-size: 120%;
+}
+
+.rate-inner-base::before,
+.comment-rate-inner-base::before {
 
     content: "\f005 \f005 \f005 \f005 \f005";
     font-family: FontAwesome;
-    font-size: 120%;
+
     color: silver; /* set the color of the stars to silver/gray */
     -webkit-background-clip: text;
     /*background-size: 500% 100%;*/
@@ -181,11 +204,12 @@
 
 /* circle rates --> ------------------------------------------------------------------------------------------------- */
 #rating-circle {
-stroke-dasharray: 62;  /* Set the stroke-dasharray to the circumference of the circle */
+stroke-dasharray: 0, 62.83185307179586;  /* Set the stroke-dasharray to the circumference of the circle */
                                /* Ta właściwość definiuje wzór kresek i przerw używanych do tworzenia linii przerywanej lub kropkowanej  - "5,2"*/
-stroke-dashoffset: 62;  /* Initially hide the filled (yelow) portion */
+/*stroke-dashoffset: 62.83185307179586;*/  /* Initially hide the filled (yelow) portion */
                        /*  Ta właściwość określa pozycję początkową wzoru kreski - "Przesunięcie", zmieniając ją, zmieniamy początkową pozycję wzoru kreski; */
-    transition: stroke-dashoffset 0.4s ease;
+
+    transition: stroke-dasharray 0.4s ease;
 
     /*transform: rotate(90deg);*/ /* Rotate the circle by -90 degrees to start the fill from the top */
 
@@ -264,20 +288,23 @@ stroke-dashoffset: 62;  /* Initially hide the filled (yelow) portion */
     /*border: 1px solid red;*/
 
     border-radius: 10px;
-    width: 125px;
+
     position: relative;
     top: 16px;
     /*height: 5px;*/
     height: 10px;
     background-color: #FFD700FF;
+
+    transition: width 0.4s ease-in-out;
 }
 
 .rated {
     z-index: 10;
+    width: 0;
 }
 
 .unrated {
-    /*height: 10px;*/
+    width: 125px;
     background-color: #bebebe;
     position: relative;
     top: 6px;
@@ -489,6 +516,8 @@ span.star.gold::before {
 
 .comment-rate-inner {
     float: left;
+
+    z-index: 10;
 }
 
 .comment-rate-inner::before {
@@ -544,7 +573,7 @@ section.comment {
     cursor:pointer;
 }
 
-input[id^="koszyk_ilosc"] { /* ta zasada jest już w main.css */
+input[id^="book-amount"] { /* ta zasada jest już w main.css */
     width: 45px;
     text-align: center;
     margin-right: 10px;
@@ -557,7 +586,7 @@ input[id^="koszyk_ilosc"] { /* ta zasada jest już w main.css */
 
 /* --------------------------------------------------------------------------- */
 
-div#add-to-cart form input[name="koszyk_ilosc"] {
+div#add-to-cart form input[name="book-amount"] {
     min-width: 55px;
     /*width: calc(100% * 0.75);*/
     /*background-color: rgb(255, 255, 255);*/
@@ -579,8 +608,8 @@ div#add-to-cart form input[name="koszyk_ilosc"] {
 
 
 
-div#add-to-cart form input[name="koszyk_ilosc"]:focus,
-div#add-to-cart form input[name="koszyk_ilosc"]:hover {
+div#add-to-cart form input[name="book-amount"]:focus,
+div#add-to-cart form input[name="book-amount"]:hover {
     /*    -webkit-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
         -moz-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
         box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);*/

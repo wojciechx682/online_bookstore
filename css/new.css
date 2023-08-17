@@ -1593,6 +1593,10 @@ header {
     display: none !important;
 }
 
+.hidden-rate {
+    visibility: hidden;
+}
+
 .hidden-author {
     display: none !important;
 }
@@ -3377,7 +3381,10 @@ div.cart-book > span.book-details div.book-description div.author {
 
 }
 
-.koszyk_ilosc {
+/*.koszyk_ilosc {*/
+
+.book-amount
+{
     min-width: 55px;
     /*width: calc(100% * 0.75);*/
     /*background-color: rgb(255, 255, 255);*/

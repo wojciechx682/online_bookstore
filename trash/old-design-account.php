@@ -1,12 +1,10 @@
 <?php
-	/*session_start();
+	session_start();
 	include_once "../functions.php";
 	if(!(isset($_SESSION['zalogowany']))) {
         header("Location: index.php?login-error");
 		exit();
-	}*/
-
-
+	}
 ?>
 
 <!DOCTYPE HTML>
@@ -24,10 +22,10 @@
 
             <aside class="account-data">
                 <div id="nav">
-                    <a href="my_orders.php">[ Zamówienia ]</a><br><br>
-                    <a href="edit_data.php">[ Edytuj dane użytkownika ]</a><br><br>
-                    <a href="remove_account.php">[ Usuń konto ]</a><br><br>
-                    <a href="logout.php"> [ Wyloguj ]</a>
+                    <a href="../user/my_orders.php">[ Zamówienia ]</a><br><br>
+                    <a href="../user/edit_data.php">[ Edytuj dane użytkownika ]</a><br><br>
+                    <a href="../user/remove_account.php">[ Usuń konto ]</a><br><br>
+                    <a href="../user/logout.php"> [ Wyloguj ]</a>
                 </div>
             </aside>
 
@@ -43,7 +41,7 @@
                             <div class="edit_data_left">Telefon</div>
                         </div>
                         <div class="edit_data_right-container">
-                            <form id="edit_data_form" action="validate_user_data.php" method="post">
+                            <form id="edit_data_form" action="../user/validate_user_data.php" method="post">
                                 <div class="edit_data_right"><input type="text" id="imie_edit" name="imie_edit" value="<?=$_SESSION['imie']?>"></div>
                                 <div class="edit_data_right"><input type="text" id="nazwisko_edit" name="nazwisko_edit" value="<?=$_SESSION['nazwisko']?>"></div>
                                 <div class="edit_data_right"><input type="text" id="email_edit" name="email_edit" value="<?=$_SESSION['email']?>"></div>
@@ -83,7 +81,7 @@
                             <div class="edit_data_left">Miasto</div>
                         </div>
                         <div class="edit_data_right-container">
-                            <form id="edit_address_form" action="validate_address_data.php" method="post">
+                            <form id="edit_address_form" action="../user/validate_address_data.php" method="post">
                                 <div class="edit_data_right"><input type="text" id="miejscowosc_edit" name="miejscowosc_edit" value="<?=$_SESSION['miejscowosc']?>"></div>
                                 <div class="edit_data_right"><input type="text" id="ulica_edit" name="ulica_edit" value="<?=$_SESSION['ulica']?>"></div>
                                 <div class="edit_data_right"><input type="text" id="numer_domu_edit" name="numer_domu_edit" value="<?=$_SESSION['numer_domu']?>"></div><hr>
@@ -119,7 +117,7 @@
                                 <div class="edit_data_left"> Powtorz hasło </div>
                         </div>
                         <div class="edit_data_right-container">
-                                <form id="edit_password_form" action="validate_password.php" method="post">
+                                <form id="edit_password_form" action="../user/validate_password.php" method="post">
                                     <div class="edit_data_right"><input type="password" id="stare_haslo_edit" name="stare_haslo_edit"></div>
                                     <div class="edit_data_right"><input type="password" id="nowe_haslo_edit" name="nowe_haslo_edit"></div>
                                     <div class="edit_data_right"><input type="password" id="powtorz_haslo_edit" name="powtorz_haslo_edit"></div>

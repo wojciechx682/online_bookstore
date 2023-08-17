@@ -1,45 +1,43 @@
 
-function changeQuantity(button, id_ksiazki, amount) {
+// koszyk.php, book.php;
 
-	//const el = document.querySelector(`#koszyk_ilosc${id_ksiazki}`);
+let increaseBtns = document.querySelectorAll(".increase-btn");
+let decreaseBtns = document.querySelectorAll(".decrease-btn");
+
+increaseBtns.forEach(function(button) {
+	button.addEventListener("click", function(event) {
+		increase(event);
+	});
+});
+
+decreaseBtns.forEach(function(button) {
+	button.addEventListener("click", function(event) {
+		decrease(event);
+	});
+});
+
+function changeQuantity(button, bookId, amount) {
 
 	let form = button.parentNode;
-
-	console.log("\n form -> ", form);
-
-	let el = form.querySelector('input[type="text"]')
-
-	//const el = button.previousElementSibling; // <input type text> - przechowuje ilość książek
-	console.log("\n el (input type text) -> ", el);
-
-	const newQuantity = parseInt(el.value) + amount;
-	console.log("\n newQuantity -> ", newQuantity);
-	//let form = ??? ;
-
+	let input = form.querySelector('input[type="text"]');
+	const newQuantity = parseInt(input.value) + amount;
 
 	if (newQuantity >= 1) {
-		el.value = newQuantity;													 // koszyk.php,	book.php
-		//let form = document.querySelector(`#change_quantity_form${id_ksiazki}`); // (tylko dla) koszyk.php
-
-
-		//console.log("\n form -> ", form);
-		//console.log("\n typeof form -> ", typeof form);
-
-		//form.submit();
-
-		// Trigger the change event
-		$(el).trigger("change");
-
-														 // -----||---- koszyk.php
+		input.value = newQuantity;
+		$(input).trigger("change"); // trigger the change event --> AJAX - change_cart_quantity.js
 	}
 }
 
-function increase(button, id_ksiazki) {
-	changeQuantity(button, id_ksiazki, 1);
+function increase(event) {
+		let button = event.currentTarget;
+		let bookId = button.value;
+	changeQuantity(button, bookId, 1);
 }
 
-function decrease(button, id_ksiazki) {
-	changeQuantity(button, id_ksiazki, -1);
+function decrease(event) {
+		let button = event.currentTarget;
+		let bookId = button.value;
+	changeQuantity(button, bookId, -1);
 }
 
 /*function increase(id_ksiazki) {

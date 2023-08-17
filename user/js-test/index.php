@@ -1,18 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -53,6 +39,7 @@
         table {
             border-collapse: collapse;
             border-spacing: 0;
+            color: #006cd5;
         }
 
         tr, td {
@@ -60,10 +47,16 @@
             margin: 0;
         }
 
-        circle {
+        circle#gray-circle,
+        circle#gold-circle {
             stroke-dasharray: 0;
             stroke-dashoffset: 0;
         }
+
+        /*circle#blue-circle {
+            !*transition: stroke-dashoffset 0.4s ease;*!
+            transition: stroke-dasharray 1s ease;
+        }*/
 
     </style>
 
@@ -233,13 +226,37 @@
 
     <svg height="210" width="210">
 
-
         <circle id="gray-circle" cx="105" cy="105" r="100" stroke="#c0c0c0" stroke-width="3" fill="none" />
 
         <circle id="gold-circle" cx="105" cy="105" r="100" stroke="#ffc400" stroke-width="3" fill="none" />
+
     </svg>
 
     <br><hr><br>
+
+    <div>
+        <svg width="210" height="210">
+
+            <circle id="blue-circle" cx="105" cy="105" r="100" stroke="#006cd5" stroke-width="2" fill="none"
+
+            >
+
+                <!--stroke-dasharray="100"
+                    stroke-dashoffset="528"-->
+
+
+            </circle>
+
+        </svg>
+    </div>
+
+
+
+    <br><hr><br>
+
+
+
+
     <div id="result">
 
     </div>
@@ -247,33 +264,51 @@
     <script>
 
         let goldCircle = document.getElementById("gold-circle");
-            console.log("\n gold-circle -> ", goldCircle);
-
+            //console.log("\n gold-circle -> ", goldCircle);
         let grayCircle = document.getElementById("gray-circle");
-            console.log("\n gray-circle -> ", grayCircle);
+            //console.log("\n gray-circle -> ", grayCircle);
 
-
-        let yellowCircumference = parseFloat(goldCircle.getAttribute('r')) * 2 * Math.PI; // obód żółtego koła;
-        console.log("\n yellow Circumference -> ", yellowCircumference);
-        console.log("\n yellow Circumference -> ", typeof yellowCircumference);
+        let yellowCircumference = parseFloat(goldCircle.getAttribute('r')) * 2 * Math.PI; // obwód żółtego koła;
+        //console.log("\n yellow Circumference -> ", yellowCircumference);
+        //console.log("\n yellow Circumference -> ", typeof yellowCircumference);
 
         //goldCircle.style.strokeDasharray = "200";
 
-        // Ustaw koło jako całkowicie wypełnione
+        // ukryj złoty okrąg
         goldCircle.style.strokeDasharray = `${yellowCircumference}, ${yellowCircumference}`;
         goldCircle.style.strokeDashoffset = `${yellowCircumference}`;
 
         // Teraz, dla zmniejszenia wypełnienia o 100
-
-        let value = 400;
+        let value = 500;
         let newStrokeDashoffset = yellowCircumference - (yellowCircumference-value);
         goldCircle.style.strokeDashoffset = `${newStrokeDashoffset}`;
 
+    </script>
+
+    <script>
+
+        window.onload = function() {
+            let blueCircle = document.getElementById("blue-circle");
+
+            let circumference = parseFloat(blueCircle.getAttribute('r')) * 2 * Math.PI; // obód koła;
+            console.log("\nobwód koła -->", circumference, "-", typeof circumference);
+
+            /*blueCircle.style.strokeDasharray = `${circumference}`;
+            blueCircle.style.strokeDashoffset = `${circumference}`;*/
+
+            // Ustaw koło jako całkowicie wypełnione
+
+            let rating = 3.75;
+            //blueCircle.style.strokeDasharray = `${circumference}, ${0}`;
+            blueCircle.style.strokeDasharray = `${rating*(circumference/5)}, ${circumference}`;
+
+
+            //blueCircle.style.strokeDasharray = `${circumference}, ${circumference}`;
+            //blueCircle.style.strokeDashoffset = `${circumference}`;
+        }
 
 
     </script>
-
-
 
 
 

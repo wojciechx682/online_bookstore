@@ -6,47 +6,33 @@
     // $("form#change-magazine-form").submit(); // submit the <form>;
 });*/
 
-$("input.koszyk_ilosc").on("change", function(e) {
+$("input.book-amount").on("change", function(e) {
     let form = $(this).closest("form");
-    // Perform actions with the form element
+        // perform actions with the form element
     form.submit();
 });
-
-
 
 $("form.change_quantity_form").on("submit", function(e) { // po wysłaniu formularza;
 
     // "plik wie, który formularz został wysłany - jest to tylko jeden - odpowiedni - a nie wszystie formularze - tj. te które istnieją w kodzie i jest ich tyle ile jest zamówień";
     // plik JS wysyłający formularz z wykorzystaniem AJAX;
-    // plik "remove-order.php" obsługuje żądanie, odbiera dane i wykonuje zapytanie do BD.
+    // plik "change_cart_quantity.php" - obsługuje żądanie, odbiera dane i wykonuje zapytanie do BD.
 
     e.preventDefault();
 
-    // form data --> "id_ksiazki"   - "2"
-    //               "koszyk_ilosc" - "6"
+    // form data --> "book-id"   - "2"
+    //               "book-amount" - "6"
 
-    let data = $(this); // obiekt zawierający dane formularza;
+    let data = $(this);                         // obiekt jQzawierający dane formularza;
     let postData = $(this).serialize();
 
     let bookId = data[0][0].value;              // book-id (string);
-    console.log("\nid_ksiazki => ", bookId);
+        console.log("\nid_ksiazki => ", bookId);
 
     let bookQuantity = data[0][1].value;        // koszyk_ilosc;
-    console.log("\nkoszyk_ilosc => ", bookQuantity);
+        console.log("\nkoszyk_ilosc => ", bookQuantity);
 
-
-
-        // let textarea = data.find('textarea[name="comment"]'); // <textarea>;
-    // let confirmButton = data.find('button[type="submit"]'); // <button type="submit">;
-    // let deliveryDateDiv = data.closest(".delivery-date"); // przodek formularza, <div class="delivery-date">;
-    // let cancelButton = deliveryDateDiv.find(".cancel-order");
-
-    // Sanityzacja danych wejściowych - Wyczyszczenie niebezpiecznych zapisów - Komentarz;
-    // const sanitizedComment = DOMPurify.sanitize(comment, { USE_PROFILES: { html: true } });
-
-// const sanitizedComment = DOMPurify.sanitize(comment); // it works, but How ?
-
-
+    // const sanitizedComment = DOMPurify.sanitize(comment);
     // Walidacja wprowadzonych danych (niebezpieczne znaki, długość);
 
     /*if((comment !== sanitizedComment) || (sanitizedComment.length < 10) || (sanitizedComment.length > 255) ) { // niebezpieczne znaki - lub - niepoprawna długość;
@@ -66,7 +52,6 @@ $("form.change_quantity_form").on("submit", function(e) { // po wysłaniu formul
         data: postData,                  // serialized <form> data;
         timeout: 2000,                   // Waiting time;
         beforeSend: function() {         // Before Ajax - function called before sending the request;
-            // (?)
         },
         complete: function() {           // Once finished - function called always after sending request;
 
@@ -88,7 +73,7 @@ $("form.change_quantity_form").on("submit", function(e) { // po wysłaniu formul
 
                 let book = books[i];
                 let price = parseFloat(book.querySelector('.price').textContent);
-                let bookQuantity = parseInt(book.querySelector('.koszyk_ilosc').value);
+                let bookQuantity = parseInt(book.querySelector('.book-amount').value);
                 sumaZamowienia += (price * bookQuantity);
                     console.log("\nbook -> ", book);
                     console.log("\nprice -> ", price);
@@ -114,11 +99,8 @@ $("form.change_quantity_form").on("submit", function(e) { // po wysłaniu formul
                 $('#btn-parent a:nth-child(3) .btn.from-center, .btn-cart-main').html("Koszyk ("+koszykIloscKsiazek+")");
             }
         },
-        error: function(formData) {                                     // Show error msg
-                //$content.html('<div id="container">Please try again soon.</div>');
-            /*confirmButton.hide(); // "Potwierdź";
-            cancelButton.hide();  // "Anuluj";
-            $("div.delivery-date").append(data).fadeIn(1000); // data - dane zwrócone z serwera;*/
+        error: function(formData) {  // Show error msg;
+
         }
     });
 })

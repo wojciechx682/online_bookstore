@@ -15,7 +15,12 @@ if ($request_method === 'POST') {
     $amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     $inputs['amount'] = $amount;
     if ($amount !== false && $amount !== null) {
-        $amount = filter_var($amount, FILTER_VALIDATE_FLOAT, ['options' => ['min_range' => MIN_DONATION]]);
+        $amount = filter_var($amount, FILTER_VALIDATE_FLOAT, [
+                'options' => [
+                        'min_range' => MIN_DONATION
+                ]
+            ]
+        );
         if ($amount === false) {
             $errors['amount'] = 'The minimum donation is $1';
         } else {
