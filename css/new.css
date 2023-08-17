@@ -3209,6 +3209,8 @@ h3#cart-header {
     padding-bottom: 16px;
 
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
+
+    font-size: 120%;
 }
 
 form.remove_book_form input[type="submit"] {
@@ -4234,6 +4236,11 @@ div#advanced-search {
     text-align: initial;
 
     z-index: 2000;
+
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
 }
 
 .advanced-search-invisible {

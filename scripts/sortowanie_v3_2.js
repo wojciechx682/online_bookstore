@@ -1,24 +1,11 @@
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
-/*$('#sortuj_wg').on('change', function() {
-	sortBooks();
-});*/
+let selectList = document.getElementById("sortBy");
 
-// wywołaj funkcję po zmianie elementu listy (<select>);
-$('#sortuj_wg').on('change', () => { 	// arrow function ;
-	sortBooks();
+selectList.addEventListener("change", (event) => {
+	sortBooks(event);
 });
-
-/*function sortByTitleAscending(a, b) { // a, b -> .outer-book ;
-	return a.querySelector(".book-title").textContent.localeCompare(b.querySelector(".book-title").textContent);
-	// -1, 0, 1;
-}
-
-function sortByTitleDescending(a, b) { // a, b -> .outer-book ;
-	return b.querySelector(".book-title").textContent.localeCompare(a.querySelector(".book-title").textContent);
-	// -1, 0, 1;
-}*/
 
 // define sorting functions			   // a, b - elementy tablicy (array elements) - ✓ divy z książkami ;
 // funkcje porównujące ;               // return -1, 0 lub 1 ;
@@ -35,27 +22,32 @@ const sortByYearDescending = (a, b) => Number(b.querySelector(".book-year").text
 	// funkcja wyrażenia - jeden ze sposobów definiowania funkcji;
 	// dzięki zdefiniowaniu funkcji w ten sposób, możemy przekazać ją do innej funkcji podając jej nazwę jako argument
 
-function sortBooks() { // define a function to sort books ;
+const sortBooks = (event) => {
 
 		// get the <select> element,
 		// get selected option value
 		// get book content element ;
-	const selectElement = document.getElementById("sortuj_wg"); // <select> list; // object;
-	const selectedValue = DOMPurify.sanitize(selectElement.options[selectElement.selectedIndex].text); // "Nazwy A-Z"; // string;
-	const contentBooks = document.getElementById("content-books"); // <div id="content-books"> // object;
 
-		console.log("\n selectElement (select) -> ", selectElement);
-		console.log("\n typeof selectElement (select) -> ", typeof selectElement);
+	const selectList = event.currentTarget;
+	const selectedValue = DOMPurify.sanitize(selectList.options[selectList.selectedIndex].textContent);
+	const booksContainer = document.getElementById("content-books");
+
+		console.log("\n selectElement (select) -> ", selectList);
+		console.log("\n typeof selectElement (select) -> ", typeof selectList);
 		console.log("\n selectedValue (text)-> ", selectedValue); // DOMPurify (!)
 		console.log("\n typeof selectedValue (text)-> ", typeof selectedValue);
-		console.log("\n contentBooks (div) -> ", contentBooks);
-		console.log("\n typeof contentBooks (div) -> ", typeof contentBooks);
+		console.log("\n contentBooks (div) -> ", booksContainer);
+		console.log("\n typeof contentBooks (div) -> ", typeof booksContainer);
+
+	//return;
 
 	// let books = Array.from(document.querySelectorAll("#content-books > .outer-book"));
-	let books = Array.from(document.querySelectorAll("#content-books > .outer-book:not(.hidden):not(.hidden-author)")); // problem implementacyjny - sortowanie tylko tych książek, które nie mają klasy "hidden"
+
+	let books = Array.from(booksContainer.querySelectorAll(".outer-book:not(.hidden):not(.hidden-author)"));
+		// problem implementacyjny - sortowanie tylko tych książek, które nie mają klasy "hidden" oraz "hidden-author"
 
 		console.log("\n\nbooks ->", books);
-		console.log("typeof books ->", typeof books); // object;
+		console.log("typeof books ->", typeof books);  // object;
 		console.log("books.length -> ", books.length); // liczba książek w #content-books;
 
 	if(books.length < 2) { // If there is only one book, don't sort and return
@@ -92,8 +84,10 @@ function sortBooks() { // define a function to sort books ;
 	// Append the sorted book elements to the book content element
 	//books.forEach((book) => contentBooks.appendChild(book));
 
-	books.forEach(function(book) {
-		contentBooks.appendChild(book);
+	console.log("\n\nbooks ->", books);
+
+	books.forEach((book) => {
+		booksContainer.appendChild(book);
 	});
 
 }
@@ -203,7 +197,7 @@ function sortBooks() { // define a function to sort books ;
 	books.forEach((book) => contentBooks.appendChild(book));
 };*/
 
-document.getElementById("sortuj_wg").addEventListener("load", sortBooks);
+//document.getElementById("sortuj_wg").addEventListener("load", sortBooks);
 
 /*
 The refactored version of your code:

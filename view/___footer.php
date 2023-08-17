@@ -26,6 +26,7 @@
     <script src="../scripts/advanced-search.js"></script> <!-- advanced search div - toggle visibility -->
 
     <script src="../scripts/filter-authors.js"></script> <!-- // filtering - <ul> author's list ; -->
+
     <script src="../scripts/filtrowanie.js"></script> <!-- // filtering - CENA - price range ; -->
 
     <script src="../scripts/book-page-tabs.js"></script>

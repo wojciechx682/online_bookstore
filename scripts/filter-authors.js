@@ -1,33 +1,26 @@
 
 // filtering - <ul> author's list ;
 
-(function() {
+/*(function() {*/
 
     let updateBtn = document.getElementById("filter-authors"); // <button id="filter-authors"> Zastosuj </button>
-updateBtn.addEventListener("click", filterAuthors);
-
-    console.log("\nfilter-authors.js - updateBtn -> ", updateBtn);
-
-    //let all = document.querySelector('#ul-authors > li input[type="checkbox"][id="all-authors"]');
-    // <input type="checkbox" id="all-authors" name="author-checkbox" class="..."> "Wszyscy"
+        updateBtn.addEventListener("click", filterAuthors);
 
     let all = document.getElementById('all-authors'); // input type="checkbox" - "Wszyscy";
-all.addEventListener("change", updateAll);
+        all.addEventListener("change", updateAll);
 
-    /*console.log('\n all - input "Wszyscy" --> ', all);  // <input type="checkbox" id="all-authors" ... > "Wszyscy"
-    console.log('\n typeof all - input "Wszyscy" --> ', typeof all); // object*/
-    // let li = document.querySelectorAll('#ul-authors > li input[type="checkbox"]:not(#all-authors)');
-// NodeList of    ALL    <input checkbox> (authors);    // wszystkie checkboxy;
-let li = document.querySelectorAll('#ul-authors input[type="checkbox"]:not(#all-authors)'); // input type="checkbox"
+    // NodeList of    ALL    <input checkbox> (authors);    // wszystkie checkboxy;
+    let li = document.querySelectorAll('#ul-authors input[type="checkbox"]:not(#all-authors)'); // input type="checkbox"
 
-console.log("\nli (all-inputs) => ", li); // NodeList; input.author-checkbox;
+    //console.log("\nli (all-inputs) => ", li); // NodeList; input.author-checkbox;
 
-function updateAll() { // wywołanie po kliknięciu inputa "Wszyscy"
-    //console.log("\nupdateAll function executed ");
-    for(let i=0; i < li.length; i++) { // tyle razy ile jest checkboxów z autorami (poza inputem "Wszyscy")
-        li[i].checked = all.checked;   // uaktualnienie właściwości checked zgodnie z tym jaką ma input "Wszyscy"
+    function updateAll() { // wywołanie po kliknięciu inputa "Wszyscy"
+        //console.log("\nupdateAll function executed ");
+        for(let i=0; i < li.length; i++) { // tyle razy ile jest checkboxów z autorami (poza inputem "Wszyscy")
+            li[i].checked = all.checked;   // uaktualnienie właściwości checked zgodnie z tym jaką ma input "Wszyscy"
+        }
     }
-}
+
 window.addEventListener("load", function() {
     if(window.localStorage) {
         let authors = JSON.parse(localStorage.getItem("authors"));
@@ -50,41 +43,39 @@ window.addEventListener("load", function() {
 });
 
 function filterAuthors()  {
-    //console.log("\n\n34 - filterAuthors() function executed - \n\n");
+
+    console.log("\n\n34 - filterAuthors() function executed - \n\n");
         //const liChecked = document.querySelectorAll('#ul-authors > li input[type="checkbox"]:checked:not(#all-authors)');
     const liChecked = document.querySelectorAll('#ul-authors input[type="checkbox"]:checked:not(#all-authors)');
     // NodeList of <input checkbox CHECKED ! >
 
-    console.log("\n38 liChecked (all-inputs) => ", liChecked); // zaznaczone Checkboxy (!)
-    //console.log("\n38 typeof liChecked (all-inputs) => ", typeof liChecked);
-    // create array for authors (name + surname) ->
+    //console.log("\n38 liChecked (all-inputs) => ", liChecked); // zaznaczone Checkboxy (!)
+                //console.log("\n38 typeof liChecked (all-inputs) => ", typeof liChecked);
+                // create array for authors (name + surname) ->
     let items = Array.from(liChecked); // input type="checkbox" checked (!);
-    console.log("\n43 items (all-inputs checked) => ", items);
+    /*console.log("\n43 items (all-inputs checked) => ", items);
     console.log("\n43 items[0] (all-inputs checked) => ", items[0]);
-    console.log("\n43 typeof items[0] (all-inputs checked) => ", typeof items[0]);
-    //console.log("\n43 typeof items (all-inputs checked) => ", typeof items);
+    console.log("\n43 typeof items[0] (all-inputs checked) => ", typeof items[0]);*/
+                //console.log("\n43 typeof items (all-inputs checked) => ", typeof items);
     const authors = items.map(items => items.value.trim());
     console.log("\n 48 authors ->", authors);   // tablica (stringów) z listą autorów (imie, nazwisko); - (ZAZNACZONE CHECKBOXY !)
-
     console.log("\n 48 authors[0] ->", authors[0]);
     console.log("\n 48 typeof authors[0] ->", typeof authors[0]);
                                                 // authors -> ['Jerzy Grębosz', 'Adam Nowak'];
-    //console.log("\n 48 typeof authors ->", typeof authors);
+            //console.log("\n 48 typeof authors ->", typeof authors);
 
-    /*for (let i = 0; i < authors.length; i++) {
-        console.log("author ->", authors[i]);
-    }
-    */
+            /*for (let i = 0; i < authors.length; i++) {
+                console.log("author ->", authors[i]);
+            }
+            */
 
     // pokazanie tylko książek z dopasowanymi autorami ->
     //let books = document.querySelectorAll("#content-books .book");  // NodeList - kolekcja - divy z książkami ;
     let books = document.querySelectorAll("#content-books > .outer-book:not(.hidden)");  // NodeList - kolekcja - divy z książkami ;
-        console.log("\n58 books => ", books);
+    //console.log("\n58 books => ", books);
         //console.log("\n58 typeof books => ", typeof books); // object;
 
     //document.querySelectorAll("#content-books > .outer-book:not(.hidden)")
-
-
 
 // (!) Ukrycie WSZYSTKICH książek -> dodanie klasy "hidden"
 for(let i = 0; i< books.length; i++) {
@@ -106,8 +97,6 @@ for(let i = 0; i< books.length; i++) {
             }
         }
     }
-
-
 
             // Konwersja NodeList na tablicę -->
             /*let items = Array.from(li);
@@ -163,6 +152,14 @@ for(let i = 0; i< books.length; i++) {
 if(window.localStorage) {
     localStorage.setItem("authors", JSON.stringify(authors));
 }
+
+    /*$min = $('#value-min');
+    $max = $('#value-max');
+
+    console.log("\n min --> ", $min.val());
+    console.log("\n max --> ", $max.val());*/
+
+    //update($min, $max, true);
 }
 
 
@@ -244,4 +241,5 @@ all.addEventListener("change", filterAuthors);*/ // odkomentuj jeśli chcesz fil
 }*/
 
 
-}());
+/*
+}());*/

@@ -24,8 +24,8 @@
         //     }
         // }
 
-        console.log("min year -> ", min);
-        console.log("max year -> ", max);
+    /*console.log("min year -> ", min);
+    console.log("max year -> ", max);*/
     }
 
     function initFun() {                             // Tasks when script first runs

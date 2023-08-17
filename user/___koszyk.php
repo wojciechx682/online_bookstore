@@ -1,17 +1,6 @@
 <?php
-    /*session_start();
-        include_once "../functions.php";*/
-
-	/*if( ! isset($_SESSION['zalogowany']) ) {
-        $_SESSION["login-error"] = true;
-            header("Location: ___zaloguj.php");
-		        exit();
-	}*/
-
-
     // check if user is logged-in, and user-type is "client" - if not, redirect to login page ;
     require_once "../authenticate-user.php";
-
 ?>
 
 <!DOCTYPE HTML>
@@ -42,15 +31,13 @@
 
         <main>
 
-            <!-- <aside> <div id="nav"></div> </aside> -->
-
             <div id="content">
 
                 <?php   /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
                 echo "SESSION ->"; print_r($_SESSION); echo "<hr>"*/ ?>
 
-                <h3 id="cart-header">Koszyk</h3>
+                <h3 id="cart-header">Koszyk</h3 >
 
                 <?php
 

@@ -1,34 +1,29 @@
 
 // price range - noUISlider (jQ) ;  // książka jQuery - strona 544 - 549;
 
-(function() {
+//(function() {
 
     $min = $('#value-min'); // input type number - input#value-min - minimum price value input;
     $max = $('#value-max'); // input type number - input#value-max - maximum price value input;
 
-        console.log("\n#value-min --> ", $min);
-        console.log("\n#value-max --> ", $max);
+        /*console.log("\n#value-min --> ", $min);
+        console.log("\n#value-max --> ", $max);*/
+
     //let books = document.querySelectorAll("#content-books .book:not(.hidden)");
 
     //let books = document.querySelectorAll("#content-books .outer-book"); // kolekcja elementów DOM (NodeList) - divy z książkami;
 
-    let books = document.querySelectorAll("#content-books .outer-book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
-
-    //let books = document.querySelectorAll("#content-books .book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
 
 
-        console.log("\n 17 books -> ", books);
-        console.log("\n 17 books -> ", books);
-        console.log("\n 17 books -> ", books);
-        console.log("\n 17 books -> ", books);
-        console.log("\n 17 books -> ", books);
-        console.log("\n 17 books -> ", books);
-        console.log("\n 17 books -> ", books);
+    function update(min, max) { // update content-books
+
+        let books = document.querySelectorAll("#content-books .outer-book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
+
+        //let books = document.querySelectorAll("#content-books .book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
+
         console.log("\n 17 books -> ", books);
         console.log("\n 17 typeof books -> ", typeof books);
         console.log("\n 17 books instanceof NodeList -> ", books instanceof NodeList); // true
-
-    function update(min, max) { // update content-books
 
         for(let i=0; i < books.length; i++) { // for every book <div>;
 
@@ -38,9 +33,8 @@
             max = parseInt(max); // max input-value from slider (number)
             //price = parseInt(price);
 
-            console.log("\n price -> ", price);
-            console.log("\n typeof price -> ", typeof price);
-
+            /*console.log("\n price -> ", price);
+            console.log("\n typeof price -> ", typeof price);*/
 
             if((price >= min) && (price <= max)) {   // add or remove "hidden" clsas;
                 books[i].classList.remove('hidden');
@@ -48,6 +42,8 @@
                 books[i].classList.add('hidden');
             }
         }
+
+        filterAuthors(); // wzajemna integracja filtrów - rozwiązanie;
     }
 
     function initFun() {                            // Tasks when script first runs
@@ -68,7 +64,7 @@
         update($min.val(), $max.val());
     });
 
-}());
+//}());
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -2,7 +2,6 @@
 // filtering - <ul> - books status list ;
 
 let updateStatusBtn = document.getElementById("filter-book-status"); // <button id="filter-authors"> Zastosuj </button>
-
 updateStatusBtn.addEventListener("click", filterBookStatus);
 
     //let all = document.querySelector('#ul-authors > li input[type="checkbox"][id="all-authors"]');
@@ -17,8 +16,7 @@ all.addEventListener("change", updateAll);
 // NodeList of    ALL    <input checkbox> (authors);    // wszystkie checkboxy;
 
 let liStatus = document.querySelectorAll('#ul-book-status-list input[type="checkbox"]');
-
-console.log("\nliStatus (all-inputs) checked => ", liStatus); // NodeList;
+//console.log("\nliStatus (all-inputs) checked => ", liStatus); // NodeList;
 
         /*function updateAll() { // wywołanie po kliknięciu inputa "Wszyscy"
             console.log("\nupdateAll function executed ");
@@ -64,38 +62,38 @@ window.addEventListener("load", function() {
 */
 
 function filterBookStatus()  {
-        console.log("\n\n34 - filterBookStatus() function executed - \n\n");
-        //const liChecked = document.querySelectorAll('#ul-bookStatus > li input[type="checkbox"]:checked:not(#all-bookStatus)');
+        //console.log("\n\n34 - filterBookStatus() function executed - \n\n");
+            //const liChecked = document.querySelectorAll('#ul-bookStatus > li input[type="checkbox"]:checked:not(#all-bookStatus)');
     const liChecked = document.querySelectorAll('#ul-book-status-list input[type="checkbox"]:checked');
-    // NodeList of <input checkbox CHECKED>
-        console.log("\n38 liChecked (all-inputs) => ", liChecked); // zaznaczone Checkboxy (!)
-        console.log("\n38 typeof liChecked (all-inputs) => ", typeof liChecked);
-    // create array for bookStatus (name + surname) ->
+            // NodeList of <input checkbox CHECKED>
+        /*console.log("\n38 liChecked (all-inputs) => ", liChecked); // zaznaczone Checkboxy (!)
+        console.log("\n38 typeof liChecked (all-inputs) => ", typeof liChecked);*/
+            // create array for bookStatus (name + surname) ->
     let items = Array.from(liChecked); // input type="checkbox" checked (!);
-        console.log("\n43 items (all-inputs checked) => ", items);
-        console.log("\n43 typeof items (all-inputs checked) => ", typeof items);
+        /*console.log("\n43 items (all-inputs checked) => ", items);
+        console.log("\n43 typeof items (all-inputs checked) => ", typeof items);*/
     const bookStatus = items.map(items => items.value.trim());
-        console.log("\n 48 bookStatus ->", bookStatus);   // tablica z listą autorów (imie, nazwisko); - (ZAZNACZONE CHECKBOXY !)
+        /*console.log("\n 48 bookStatus ->", bookStatus);   // tablica z listą autorów (imie, nazwisko); - (ZAZNACZONE CHECKBOXY !)
                                                     // bookStatus -> ['Jerzy Grębosz', 'Adam Nowak'];
-        console.log("\n 48 typeof bookStatus ->", typeof bookStatus);
-    /*for (let i = 0; i < bookStatus.length; i++) {
-        console.log("author ->", bookStatus[i]);
-    }
-    */
+        console.log("\n 48 typeof bookStatus ->", typeof bookStatus);*/
+                                /*for (let i = 0; i < bookStatus.length; i++) {
+                                    console.log("author ->", bookStatus[i]);
+                                }
+                                */
     // pokazanie tylko książek z dopasowanymi autorami ->
                                                           // :not(.hidden)
     let books = document.querySelectorAll("#content-books .book");  // NodeList - kolekcja - divy z książkami (które są widoczne!);
-        console.log("\n58 books => ", books);
+        /*console.log("\n58 books => ", books);
         console.log("\n58 typeof books => ", typeof books); // object;
-
+*/
     // (!) Ukrycie WSZYSTKICH książek -> dodanie klasy "hidden"
     for(let i = 0; i < books.length; i++) {
         //let bookAuthor = books[i].querySelector(".book-author").innerHTML;
         books[i].classList.add('hidden');
     }
 
-    console.log("\n 68 bookStatus ->", bookStatus);   // tablica z listą autorów (imie, nazwisko); - (ZAZNACZONE CHECKBOXY !)
-    console.log("\n 68 typeof bookStatus ->", typeof bookStatus);
+    /*console.log("\n 68 bookStatus ->", bookStatus);   // tablica z listą autorów (imie, nazwisko); - (ZAZNACZONE CHECKBOXY !)
+    console.log("\n 68 typeof bookStatus ->", typeof bookStatus);*/
 
     // pokaż tylko książki z tymi autorami, których wybrano w filtrach -->
     for(let i = 0; i < bookStatus.length; i++) {  // tylko zaznaczeni autorzy (!) --> ['Jerzy Grębosz', 'Adam Nowak'];

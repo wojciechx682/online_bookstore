@@ -447,11 +447,10 @@
 
     }         // if ( $_SERVER['REQUEST_METHOD'] === "POST" ) ...
 
-    if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) )
-    {
+    if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) ) {
+
         $_SESSION["kategoria"] = "Wszystkie"; // "normal" entry from main-page (index.php) ;
     }
-
 ?>
 
 <!DOCTYPE HTML>
@@ -477,12 +476,11 @@
 
                         <?= isset($_SESSION["subcategory"]) ? " \ " . $_SESSION["subcategory"] . "</h3>" : ""; ?>
 
-
                         <h3>
-                            <label for="sortuj_wg">Sortowanie</label>
+                            <label for="sortBy">Sortowanie</label>
                         </h3>
 
-                        <select id="sortuj_wg">
+                        <select id="sortBy">
                             <option value="1">ceny rosnąco</option>
                             <option value="2">ceny malejąco</option>
                             <option value="3">nazwy A-Z</option>
@@ -902,7 +900,7 @@
 
     // save selected sorting option IN LOCAL STORAGE - after page reload ;
 
-    var selectElement = document.getElementById("sortuj_wg");
+   /* var selectElement = document.getElementById("sortBy");
 
     selectElement.addEventListener("change", function() {
         var selectedValue = selectElement.value;
@@ -921,7 +919,7 @@
             //filterAuthors();
         }
     });
-
+*/
 </script>
 
     <script src="../scripts/filter-book-status.js"></script>  <!-- filtrowanie - status -> "dostępna" / "niedostępna" -->
@@ -935,7 +933,7 @@
         // pokazanie / ukrycie list kategorii, pod-kateorii;
 
         let list = document.getElementById("categories-list"); // lista <ul> - Kategorie;
-            console.log("\nlist -> ", list);
+        //console.log("\nlist -> ", list);
         let sublist = document.getElementById("second-list");  // lista <ul> - pod-kategorie;
 
        if(list.style.display === "block") {
@@ -958,14 +956,14 @@
     // kliknięcie na "Kategorie" wyświetla listę kategorii - click on "Kategorie" in top nav -> hiding/displaying <ul> list;
 
     let categoryButton = document.getElementById("a-categories-top-nav");
-        console.log("\ncategoryButton -> ", categoryButton); // "Kategorie";
+    //console.log("\ncategoryButton -> ", categoryButton); // "Kategorie";
 
     function isMobileDevice() {
         return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
     if (isMobileDevice()) {
-            console.log("This website is being accessed from a mobile device.");
+        //console.log("This website is being accessed from a mobile device.");
         categoryButton.addEventListener("click", showCategories);
     }
 
@@ -990,11 +988,11 @@
     console.log("\n\n height --> ", height)*/
 
     let liItems = document.querySelectorAll('#categories-list li');
-        console.log("\n\n Number of list items: ", liItems.length); // "9" - kategorii;
+    //console.log("\n\n Number of list items: ", liItems.length); // "9" - kategorii;
 
     let firstListItem = liItems[0];
     let height = firstListItem.offsetHeight; // 36
-        console.log("\n\n Height of the first list item: ", height, "px"); // "36 px";
+    //console.log("\n\n Height of the first list item: ", height, "px"); // "36 px";
 
     let ulListHeight = height * liItems.length; // 36 * 9 =  324    // "324"
 
@@ -1037,7 +1035,7 @@
 
     if(isMobileDevice()) {
         let styleSheet = document.styleSheets[0];
-        console.log("\n\n styleSheet --> ", styleSheet);
+    //console.log("\n\n styleSheet --> ", styleSheet);
         // Pobierz regułę CSS z arkusza stylów
         //var cssRule = null;
         for (let i = 0; i < styleSheet.cssRules.length; i++) {

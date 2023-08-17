@@ -22,7 +22,7 @@ let subcategories;
             booksHeader.style.display = "block";
         }
         $("#books-content").html(data); // show content (data returned from server) - books;*/
-        console.log("\n\n 52 - data (sub-categories) -> \n", data);
+    //console.log("\n\n 52 - data (sub-categories) -> \n", data);
         subcategories = data;
         //console.log("\n\n 52 - subcategories  --> \n\n", subcategories);
     }).fail(function(data) { // (xhr, status, error)
@@ -33,21 +33,21 @@ let subcategories;
             //$("img#loading-icon").toggleClass("not-visible");
     });
 
-    console.log("\n subcategories ->  \n", subcategories);
+    //console.log("\n subcategories ->  \n", subcategories);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // get all list elements (list items);
 
 let listItems = document.querySelectorAll("#n-top-nav-content ol li ul#categories-list li"); // <li> items
-console.log("\nlistItems -> ", listItems);
+//console.log("\nlistItems -> ", listItems);
 
-//document.querySelectorAll('form#update-order-date').addEventListener("submit", function(e) {
-/*document.querySelectorAll('#n-top-nav-content ol li ul#categories-list li').addEventListener("mouseover", function(e) {
-});*/
+    //document.querySelectorAll('form#update-order-date').addEventListener("submit", function(e) {
+    /*document.querySelectorAll('#n-top-nav-content ol li ul#categories-list li').addEventListener("mouseover", function(e) {
+    });*/
 
 let secondUl = document.querySelector('ul#second-list');
-console.log("\nsecondUl -> ", secondUl);
+//console.log("\nsecondUl -> ", secondUl);
 
 //let secondUlfirstItem = secondUl.querySelector("li:first-child");
 //console.log("\nsecondUlfirstItem -> ", secondUlfirstItem);
@@ -117,7 +117,7 @@ listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "
                 </form>
             </li>*/
 
-            console.log("\n new secondULLi --> \n\n", secondULLi);
+        //console.log("\n new secondULLi --> \n\n", secondULLi);
 
             secondUl.appendChild(secondULLi);
 
@@ -126,12 +126,12 @@ listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "
         }
 
         let data = DOMPurify.sanitize(item.querySelector('form > input[type="hidden"]').value); // get name of the category (string) rom listItem;
-            console.log("\n data --> ", data, "\n"); // nazwa kategorii (string);
+        //console.log("\n data --> ", data, "\n"); // nazwa kategorii (string);
 
         let result = []; // docelowe podkategorie należące do kategorii po najechaniu myszą;
 
         subcategories.forEach((subcategory) => { // for every subcategory (object)
-            console.log("\n subcategory -> ", subcategory[1]);
+        //console.log("\n subcategory -> ", subcategory[1]);
 
             if(subcategory[2] === data) {  // if subcategory-name belongs to that category (data)
 
@@ -184,7 +184,7 @@ listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "
             }
         })
 
-        console.log("\n result -> ", result);
+    //console.log("\n result -> ", result);
         //console.log("\n result -> ", result);
 
         //////////////////////////////////////////////////////////////////////////////////
@@ -219,18 +219,18 @@ listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "
             //$("img#loading-icon").toggleClass("not-visible");
         });*/
 
-        for(let i = 0; i < result.length; i++) {
-            console.log("\n result[", i, "] = ", result[i]);
-        }
+    /*for(let i = 0; i < result.length; i++) {
+        console.log("\n result[", i, "] = ", result[i]);
+    }*/
 
     })
 
 });
 
 
-for(let i = 0; i < result.length; i++) {
+/*for(let i = 0; i < result.length; i++) {
     console.log("\n result[", i, "] = ", result[i]);
-}
+}*/
 
 /*
     <ul id="second-list">

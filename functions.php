@@ -85,24 +85,22 @@
 
 	function get_categories($result) // \user\index.php - top-nav - ol;
 	{
-        // header -> n-top-nav-content - wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
+        // wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
 
 		    $category_name = "Wszystkie";
-		/*echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
 
-		echo "\n".'<li>                
-                 <form method="post" action="index.php">
-                                <input type="hidden" name="kategoria" value="'.$category_name.'">
-                                <button class="submit-book-form" type="submit">'.$category_name.'</button>
-                           </form>                          
-                </li>';
+            /*echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
 
-        /*echo '<span style="float: left;">abc</span>';*/
-        /*echo '<div style="clear: both;"></div>';*/
+        echo "\n".'<li>                
+            <form method="post" action="index.php">
+                <input type="hidden" name="kategoria" value="'.$category_name.'">
+                <button class="submit-book-form" type="submit">'.$category_name.'</button>
+            </form>                          
+        </li>';
 
-		while ($row = $result->fetch_assoc()) // tyle ile jest kategorii;
+		while ($row = $result->fetch_assoc()) // tyle ile jest kategorii (name);
 		{
-		  	                    // echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
+            // echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
             // echo "\n".'<li><a href="index.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
             echo "\n".'<li>
                            <form method="post" action="index.php">
@@ -112,10 +110,8 @@
                        </li>';
             // <a href="index.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a>
             /*<!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->*/
-
-            //echo '<span style="float: left;">abc</span>';
-            /*echo '<div style="clear: both;"></div>';*/
 		}
+
         $result->free_result();
 	}
 

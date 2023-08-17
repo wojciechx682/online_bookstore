@@ -1,6 +1,4 @@
 
-    <!-- ___header-container.php -->
-
     <header>
 
         <div id="n-header">
@@ -10,8 +8,8 @@
                 <div id="header-title"> Księgarnia internetowa </div> <!-- top-header -->
 
                 <div id="btn-parent">
-                    <!-- <div class="btn from-center">Zaloguj</div> -->
-                    <?php if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) { echo '
+
+                    <?php if ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) { echo '
                         <a href="___account.php">
                             <div class="btn from-center">Moje konto</div>
                         </a>';}
@@ -23,56 +21,42 @@
                         <div class="btn from-center">Zarejestruj</div>
                     </a>
 
-                    <!--<div id="div-cart-header">-->
-                        <!-- <a class="top-nav-right" href="___koszyk.php" >Koszyk</a> -->
                     <a class="top-nav-right" href="___koszyk.php">
                         <div class="btn from-center">
                             Koszyk
                                 <?php
-                                    if( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
+                                    if ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
                                         query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
                                         echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "(3)"
                                     }
                                 ?>
                         </div>
                     </a>
-                    <!--</div>-->
 
-                </div> <!-- #btn-parent -->
+                </div>
 
-            </div> <!-- #n-top-header -->
-
-            <div id="div-search">
-                    <!--<form id="search-form" action="index.php" method="get" >-->
-                <form id="search-form" method="post" action="index.php">       <!-- -> POST -->
-                    <input type="search" name="input-search" id="input-search" placeholder="Tytuł książki">
-                        <!-- placeholder="tytuł książki" -->
-                    <input type="submit" value=" ">
-                        <!--<img id="search-arrow" src="../assets/arrow.png" alt="advanced filtering">--> <!-- advanced search -->
-                </form>
             </div>
 
-            <!--<div id="div-logo">
-                <img id="main-logo" src="../assets/logo4.png" alt="logo">
-            </div>-->
-
-                <!--<div id="div-cart">-->
-            <!--<div class="div-cart">-->
+            <div id="div-search">
+                <form id="search-form" method="post" action="index.php"> <!-- -> POST -->
+                    <input type="search" name="input-search" id="input-search" placeholder="Tytuł książki">
+                    <input type="submit" value=" ">
+                </form>
+            </div>
 
             <a class="top-nav-right" href="___koszyk.php">
                 <div class="btn from-center btn-cart-main">
                     Koszyk
                         <?php
-                            if(isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true") {
+                            if ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
                                 query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
                                 echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "(3)"
                             }
                         ?>
                 </div>
             </a>
-                <!--</div>-->
 
-        </div> <!-- #n-header -->
+        </div>
 
         <nav id="main-nav">
 
@@ -99,12 +83,7 @@
                                                 <button class="submit-book-form" type="submit">Wszystkie</button>
                                             </form>
                                         </li>
-                                        <li>
-                                            <form method="post" action="index.php">
-                                                <input type="hidden" name="kategoria" value="Dla dzieci">
-                                                <button class="submit-book-form" type="submit">Dla dzieci</button>
-                                            </form>
-                                        </li>
+                                        // ...
                                         <li>
                                             <form method="post" action="index.php">
                                                 <input type="hidden" name="kategoria" value="Fantastyka">
@@ -113,7 +92,7 @@
                                         </li>
                                         // ...
                                         // ...
-                                    </ul>*/
+                                    </ul> */
                                 ?>
                             </ul>
 
@@ -138,18 +117,12 @@
 
                         <li class="btn from-center">
                             <span id="search-arrow">Wyszukiwanie zaawansowane</span>
-                            <!--<ul>
-                                <li><a href="#">...</a></li>
-                                <li><a href="#">...</a></li>
-                                <li><a href="#">...</a></li>
-                                <li><a href="#">...</a></li>
-                            </ul>-->
                         </li>
 
                     </ol>
 
-                </div> <!-- #n-top-nav-content -->
-            </div> <!-- #n-top-nav -->
+                </div>
+            </div>
 
             <div id="advanced-search" class="advanced-search-invisible">
 
