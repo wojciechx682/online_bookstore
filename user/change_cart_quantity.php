@@ -1,5 +1,5 @@
 
-<!-- koszyk - AJAX - zmiana liczby egzemplarzy -->
+<!-- koszyk.php - AJAX - zmiana liczby egzemplarzy -->
 
 <?php
     // check if user is logged-in, and user-type is "client" - if not, redirect to login page ;

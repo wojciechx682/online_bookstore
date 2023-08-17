@@ -119,11 +119,7 @@
 				query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia WHERE id_klienta = '%s'", "get_orders", $_SESSION['id']);
 			?>
 
-			<br><br><a href="logout.php">[ Wyloguj ]</a>
-
-
-
-
+			<br><br><a href="../user/logout.php">[ Wyloguj ]</a>
 
 
 		</div>

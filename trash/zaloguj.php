@@ -78,7 +78,7 @@
 
                 Księgarnia online<br><br>
 
-                <form action="logowanie.php" method="post">
+                <form action="../user/logowanie.php" method="post">
 
                     <!-- Login: <br> <input type="text" name="login"> <br> -->
                     E-mail: <br> <input type="email" name="email" required value="jakub.wojciechowski.682@gmail.com"> <br>

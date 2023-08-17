@@ -33,7 +33,7 @@
                     <a href="my_orders.php">[ Zamówienia ]</a><br><br>
                     <a href="edit_data.php">[ Edytuj dane użytkownika ]</a><br><br>
                     <a href="remove_account.php">[ Usuń konto ]</a><br><br>
-                    <a href="logout.php"> [ Wyloguj ]</a>
+                    <a href="../user/logout.php"> [ Wyloguj ]</a>
                 </div>
             </aside>
             <div id="content">
@@ -85,7 +85,7 @@
                             <div class="edit_data_left"> Powtorz hasło </div>
                         </div>
                         <div class="edit_data_right-container">
-                            <form id="confirm_password_form" action="confirm_password.php" method="post">
+                            <form id="confirm_password_form" action="../user/confirm_password.php" method="post">
                                 <div class="edit_data_right"><input type="password" id="haslo_confirm" name="haslo_confirm"></div>
                                 <div class="edit_data_right"><input type="password" id="powtorz_haslo_confirm" name="powtorz_haslo_confirm"></div>
                             </form>

@@ -188,7 +188,7 @@ require "../view/header-container.php"; ?>
                     <h3>Tytyuł</h3><hr>
                     <pre>(szukaj tytułu w tej kategorii)</pre>
                     <!-- <div id="div-search">-->
-                    <form action="index.php" method="get">
+                    <form action="../user/index.php" method="get">
                         <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki"><br>
                         <input type="submit" value="Szukaj">
                     </form>

@@ -25,7 +25,7 @@
                 <!-- Formularz rejestracji -->
 
                 <form method="post"
-                      action="rejestracja.php">
+                      action="../user/rejestracja.php">
 
                     Stwórz nowe konto klienta<br><hr>
 

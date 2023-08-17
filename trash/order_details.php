@@ -64,7 +64,7 @@
                     }
                 ?>
 
-                <br><br><a href="logout.php">[ Wyloguj ]</a>
+                <br><br><a href="../user/logout.php">[ Wyloguj ]</a>
 
             </div>
 
