@@ -10,12 +10,16 @@
 
 	    //unset($_COOKIE['PHPSESSID']);
 	    //setcookie('key', '', time() - 3600, '/'); // empty value and old timestamp
+
+		setcookie("PHPSESSID", "", time() - 3600, "/");
 	}
 	//echo $_COOKIE['PHPSESSID'];
 	//exit();	  
 	// 86400 = 1 day
 	// Wylogowanie użytkownika, niszczenie sesji :
-		
+
+
+	// Warunki i przekierowania: Warunki, które sprawdzają różne scenariusze wylogowania (na podstawie zmiennych sesyjnych),
 
 	if( isset($_SESSION['zalogowany']) && isset($_SESSION['udanarejestracja']) ) // jeśli stworzyliśmy konto, będąc zalogowanym na inne;
 	{
