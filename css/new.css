@@ -2500,7 +2500,7 @@ div#content-books {
 }
 
 button#confirm-message {
-    margin-top: 33px;
+    margin-top: 31px;
 }
 
 /* Ensure the background stays behind other content */
@@ -2563,9 +2563,9 @@ margin-top: 25px;*/
     padding-bottom: 10px;
 }
 
-#login-error-message > h2:hover {
+/*#login-error-message > h2:hover {
     cursor: pointer;
-}
+}*/
 
 #login-error-message hr {
     background-color: rgba(166, 166, 166, 0.7);
@@ -3015,6 +3015,15 @@ hr.register-form-hr-line {
     /*max-width: 255px;*/
 }
 
+hr.login-form-hr-line {
+    margin-top: 20px;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
 div.g-recaptcha {
     margin-top: 18px;
 }
@@ -3127,7 +3136,7 @@ span.login-row {
 
     overflow: hidden;
 
-    margin: 10px 0 15px 0;
+    margin: 18px 0 15px 0;
 
     line-height: 215%;
 
@@ -3141,6 +3150,14 @@ div#content form#login-form div.login-form-section label:hover
     cursor: pointer;
 }
 
+form#login-form {
+    margin-bottom: 24px;
+    padding-top: 5px;
+}
+
+form#login-form div:nth-of-type(1) {
+    margin-top: 27px;
+}
 
 .login-form-section {
     /*background-color: #cbcbcb;*/
@@ -3184,7 +3201,7 @@ form#login-form input:focus
 form#login-form input[type="submit"] {
     width: 15%;
     margin-left: 0;
-    margin-top: 5px;
+    margin-top: 7px;
 }
 
 .login-form-section input:not([type="submit"]) {
@@ -4421,4 +4438,9 @@ div#add-to-cart, div#add-to-cart * {
     width: 270px;*/
     margin: 0;
     padding: 0;
+}
+
+form[action="logowanie.php"] h3 {
+    margin-top: 5px;
+    font-size: .9em;
 }

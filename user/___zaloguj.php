@@ -1,28 +1,31 @@
 <?php
 
-	/*session_start();*/
-
     require_once "../start-session.php";
 
-	if ( isset($_SESSION['zalogowany']) &&
-               $_SESSION['zalogowany'] == "true" &&
-        ! isset($_SESSION['udanarejestracja']) &&
+	if ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" &&
 
+        ! isset($_SESSION['udanarejestracja']) &&
         ! isset($_SESSION["login-error"]) ) // authenticate-user.php
 	{
         // ✓ "jeśli weszliśmy na zaloguj.php będąc wcześniej zalogowanym" ;
+
         // - (i nie było to przekierowanie po zakończeniu pomyślnej rejestracji /będąc zalogowanym na inne konto);
             // zmienna $_SESSION['zaloogwany'] jest ustawiana na wartość "true" wewnątrz funkcji log_in() - tylko wtedy, jeśli podano poprawne dane logowania;
-		header("Location: index.php"); // przekierowanie na strone główną;
+
+		header("Location: ___account.php"); // przekierowanie na strone profilu użytkownika;
 		exit();
 	}
-	elseif ( isset($_SESSION['zalogowany']) &&
-                   $_SESSION['zalogowany'] == "true" &&
-             isset($_SESSION['udanarejestracja']) &&
-                   $_SESSION['udanarejestracja'] == "true" &&
+	elseif ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" &&
+             isset($_SESSION['udanarejestracja']) && $_SESSION['udanarejestracja'] == "true" &&
 
              ! isset($_SESSION["login-error"]) ) // authenticate-user.php
-	{   // ✓ jeśli (pomyślnie) stworzyliśmy konto, będąc zalogowanym na inne ;
+	{
+        // ✓ jeśli (pomyślnie) stworzyliśmy konto, będąc zalogowanym na inne ;
+
+        /*echo "<br>25<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();*/
+
 		header("Location: logout.php"); // ustawi zmienną $_SESSION['udanarejestracja'] = true, przekieruje z powrotem do zaloguj.php (spełni się 3-ci warunek w zaloguj.php);
 		exit();
 	}
@@ -33,10 +36,6 @@
     ) // ✓ jeśli stworzyliśmy konto (normalnie - nie będąc zalogowanym w tym czasie na inne);
 	{
 		// unset($_SESSION['udanarejestracja']);
-
-        /*echo "<br> 23 <br> get -> " . print_r($_GET) . "<br>";
-        echo "<br> post -> " . print_r($_POST) . "<br>";
-        echo "<br> session -> " . print_r($_SESSION) . "<br>"; exit();*/
 
 		// ✓ Usuwanie zmiennych pamiętających wartości wpisane do formularza - ponieważ ISTNIEJĄ one po pomyślnym stowrzeniu nowego konta !
 		if (isset($_SESSION['register_imie'])) unset($_SESSION['register_imie']);
@@ -110,26 +109,26 @@
                             method="post"
                             id="login-form">
 
-                        Zaloguj się na swoje konto <hr class="register-form-hr-line">
+                        Zaloguj się na swoje konto <hr class="register-form-hr-line login-form-hr-line">
 
                         <div class="login-form-section">
 
                             <span class="login-row">
                                     <label>
-                                        E-mail <input type="email" name="email" required value="adam.nowak1@wp.pl"> <!-- jakub.wojciechowski.682@gmail.com -->
+                                        E-mail <input type="email" name="email" required value="adam.nowak1@wp.pl">
                                     </label>
                             </span>
 
                             <span class="login-row">
                                     <label>
-                                        Hasło <input type="password" name="haslo" required value="PassJacob33#"
-                                                           autocomplete="off"> <!-- jan -> jan1 -->     <!-- PassJacob33# -->
-                                    </label> <!-- name inputa zamienić na --> "password" -->
+                                        Hasło <input type="password" name="password" required value="PassJacob33#"
+                                                           autocomplete="off">
+                                    </label>
                             </span>
 
                             <input type="submit" value="Zaloguj się">
 
-                        </div> <!-- .login-form-section -->
+                        </div>
 
                     </form>
 
@@ -141,8 +140,8 @@
 
 
                     <?php
-                        if( isset($_SESSION["password-changed"]) && $_SESSION["password-changed"] )
-                        {       // if variable EXISTS and has value egual to "TRUE";
+                        if ( isset($_SESSION["password-changed"]) && $_SESSION["password-changed"] ) {
+                            // if variable EXISTS and has value egual to "TRUE";
                             echo "<h3>Udało się zmienić hasło</h3>";
                             session_unset();
                             session_destroy();
@@ -150,23 +149,22 @@
                     ?>
 
                     <?php
-                        // pokazujemy zawartość tej zmiennej tylko jeśli podano nieprawidłowy login lub hasło;
+                        // pokazujemy zawartość tej zmiennej tylko jeśli podano NIEPRAWIDŁOWY login lub hasło;
                             // czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI;
                         // normalne logowanie, podany zły login/hasło;
-                        if(isset($_SESSION['blad']))
-                        {
-                            echo ''.$_SESSION['blad']; // wyświetlenie komunikatu "nieprawidłowy login lub hasło";
+                        if(isset($_SESSION['blad'])) {
+                            echo ''.$_SESSION['blad']; // wyświetlenie komunikatu "Nieprawidłowy e-mail lub hasło";
                             unset($_SESSION["blad"]);
                         }
                     ?>
 
                     <?php
 
-                        if(isset($_SESSION['udanarejestracja']))
+                        if(isset($_SESSION['udanarejestracja']) && $_SESSION['udanarejestracja'])
                         {
                             unset($_SESSION['udanarejestracja']);
 
-                            echo '<span style="font-weight: bold;">Rejestracja przebiegła pomyślnie - od teraz możesz zalogować się na swoje konto</span><br>';
+                            echo '<span style="font-weight: bold;">Rejestracja przebiegła pomyślnie, od teraz możesz zalogować się na swoje konto</span><br>';
                         }
 
                         if(isset($_SESSION['deleted-successfully']) && $_SESSION['deleted-successfully'])
@@ -177,56 +175,30 @@
                         }
                     ?>
 
-                </div> <!-- #content -->
+                </div>
             </main>
-        </div> <!-- #container -->
+        </div>
 
         <script>
-            // ustawienie wid div#content na 100%;
+            // ustawienie width div#content na 100%;
             content = document.getElementById("content");
             content.style.width = "100%";
-
         </script>
 
         <?php require "../view/___footer.php" ?>
 
-    </div> <!-- #main-container -->
-
-    <!-- <div class="update-status hidden">
-
-        <h2>Archiwizuj zamówienie</h2>
-
-        <i class="icon-cancel icon-cancel%s"></i><hr>
-
-        <div class="delivery-date delivery-date%s">
-            <form class="remove-order" action="remove-order.php" method="post">
-
-                <input type="hidden" name="order-id" value="%s">
-
-                <span class="info">Dodaj komentarz wyjaściajacy powód zarchiwizowania zamówienia</span>
-
-                <textarea name="comment" id="comment" class="comment" onfocus="resetError(this)"></textarea>
-
-                <span class="remove-order-error">Opinia powinna zawierać od 10 do 255 znaków, oraz nie zawierać znaków specjalnych</span><div style="clear: both;"></div>
-
-                <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
-            </form>
-            <button class="cancel-order cancel-order%s update-order-status btn-link btn-link-static">Anuluj</button>
-
-        </div>
-
-    </div> -->
-
-    <!-- class="hidden" -->
+    </div>
 
     <div id="login-error-message" class="hidden">
         <h2>Musisz być zalogowany !</h2>
-        <hr>
-        <button id="confirm-message" class="btn-link btn-link-static">Potwierdź</button>
+            <hr>
+        <button id="confirm-message" class="btn-link btn-link-static">
+            Potwierdź
+        </button>
     </div>
 
     <div class="background">
-        <!-- Content goes here -->
+
     </div>
 
     <?php if ( isset($_SESSION["login-error"]) && $_SESSION["login-error"] ) : ?>

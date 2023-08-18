@@ -1,18 +1,7 @@
 <?php
 	session_start();
 		
-	if (isset($_COOKIE['PHPSESSID'])) 
-	{
-//		$cookie_name = "PHPSESSID";
-//		$cookie_value = $_COOKIE['PHPSESSID'];
-//
-//		setcookie($cookie_name, $cookie_value, time() - 3600, "/");
 
-	    //unset($_COOKIE['PHPSESSID']);
-	    //setcookie('key', '', time() - 3600, '/'); // empty value and old timestamp
-
-		setcookie("PHPSESSID", "", time() - 3600, "/");
-	}
 	//echo $_COOKIE['PHPSESSID'];
 	//exit();	  
 	// 86400 = 1 day
@@ -31,8 +20,8 @@
 		exit();
 	}
 	elseif( isset($_SESSION["password_confirmed"]) ) { // redirect from remove_password.php
-		session_unset();
-		session_destroy();
+			session_unset();
+			session_destroy();
 		session_start();
 		$_SESSION["deleted-successfully"] = true;
 		header('Location: ___zaloguj.php');
@@ -40,6 +29,19 @@
 	}
 	else // wylogowanie z konta poprzez naciśnięcie "wyloguj" przez użytkowika
 	{
+		if (isset($_COOKIE['PHPSESSID']))
+		{
+//		$cookie_name = "PHPSESSID";
+//		$cookie_value = $_COOKIE['PHPSESSID'];
+//
+//		setcookie($cookie_name, $cookie_value, time() - 3600, "/");
+
+			//unset($_COOKIE['PHPSESSID']);
+			//setcookie('key', '', time() - 3600, '/'); // empty value and old timestamp
+
+			setcookie("PHPSESSID", "", time() - 3600, "/");
+		}
+
 		session_unset();
 		session_destroy();
 		header('Location: ___zaloguj.php');

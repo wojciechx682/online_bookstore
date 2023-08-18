@@ -18,14 +18,14 @@
             <!-- kliknięcie na obrazek przechodzi na stronę "book.php" -> (z książką której dane zawarte są w tym formularzu)-->
         <!--<form method="post" action="../user/___book.php">-->
         <form method="post" action="../user/___book.php">
-            <input type="hidden" name="%s"> <!-- id_ksiazki -->
+            <input type="hidden" name="book-id" value="%s"> <!-- $row["id_ksiazki"] -->
             <button type="submit" class="book-img-button">
                 <img src="../assets/books/%s" alt="%s" title="%s">
             </button>
         </form>
 
-            <!-- dane o książce -> "tytuł", "cena", "rok_wydania, autor (imie, nazwisko) -->
-        <div class="book-description"  >
+        <!-- dane o książce -> "tytuł", "cena", "rok_wydania, autor (imie, nazwisko) -->
+        <div class="book-description">
 
             <!-- ✓ ZAMIENIĆ NA FORMULARZ -->
             <!-- <div class="title">
@@ -37,14 +37,14 @@
             <div class="title">
                  <!-- kliknięcie na TYTUŁ książki przechodzi na stronę "book.php" -> (z książką której dane zawarte są w tym formularzu)-->
                 <form method="post" action="../user/___book.php">
-                    <input type="hidden" name="%s"> <!-- id_ksiazki -->
+                    <input type="hidden" name="book-id" value="%s"> <!-- $row["id_ksiazki"] -->
                     <button class="submit-book-form" type="submit">
                         <h3 class="book-title">%s</h3>
                     </button>
                 </form>
             </div>
 
-            <div class="price">%s  PLN</div>
+            <div class="price"><span id="book-price">%s</span>PLN</div>
             <div class="year">%s</div>
             <div class="author">%s %s</div>
         </div> <!-- .book-description -->
@@ -55,7 +55,7 @@
 
     <form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form%s"> <!-- AJAX -->
 
-        <input type="hidden" name="book-id" value="%s"> <!-- id_ksiazki -->
+        <input type="hidden" name="book-id" value="%s"> <!-- $row["id_ksiazki"] -->
 
         <b>Ilość</b>
         <input type="text" id="book-amount%s" class="book-amount" name="book-amount" value="%s">

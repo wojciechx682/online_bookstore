@@ -943,14 +943,22 @@ EOT;
 
 	function log_in($result)
 	{
-        // logowanie.php - skrypt logowania -> weryfikacja hasła;
+        // logowanie.php - skrypt logowania -> weryfikacja adresu e-mail, hasła;
 
-        // sprawdza, czy istnieje taki email,   jeśli nie - przekierowuje do pliku zaloguj.php + wyświetla komunikat "Niepoprawny e-mail lub hasło";
+        // 1. sprawdza, czy istnieje taki email,    jeśli nie - przekierowuje do pliku zaloguj.php + wyświetla komunikat "Niepoprawny e-mail lub hasło";
 
-        // jeśli email istnieje (tzn jest taki klient/pracownik) - następuje weryfikacja hasła - czy podano poprawne hasło ? - za pomocą funkcji porównującej hash hasła zapisany w bazie danych z zahashowanym hasłem otrzymanym w tablicy POST;
+        // 1.1 jeśli email istnieje (tzn jest taki klient/pracownik) -->
 
-        // jeśli hasło było poprawne, i był to KLIENT - następuje pobranie liczby książek znajdujących się w koszyku, zapisanie danych klienta w zmiennych sesyjnych oraz przekierowanie na stronę główną,
-        // jeśli hasło było poprawne, i był to PRACOWNIK - następuje zapisanie danych pracownika w zmiennych sesyjnych oraz przekierowanie na stronę główną panelu administratora;
+        // 2. następuje weryfikacja hasła - czy podano poprawne hasło ? - za pomocą funkcji porównującej hash hasła zapisany w bazie danych z zahashowanym hasłem otrzymanym w tablicy POST;
+
+        // 3. jeśli hasło było poprawne, i był to KLIENT -
+            // 3.1 - następuje POBRANIE LICZBY KSIĄŻEK klienta, znajdujących się W KOSZYKU,
+            // - ZAPISANIE DANYCH KLIENTA w ZMIENNYCH SESYJNYCH oraz
+            // - PRZEKIEROWANIE NA STRONĘ GŁÓWNĄ,
+
+        // 4 jeśli hasło było poprawne, i był to PRACOWNIK
+            // - następuje zapisanie danych pracownika w zmiennych sesyjnych oraz
+            // - przekierowanie na stronę główną panelu administratora;
 
         // w przeciwnym przypadku (jeśli podano błędne dane logowania) - następuje przekierowania na stronę logowania + wyświetlenie komunikatu o błędzie;
 
@@ -958,29 +966,26 @@ EOT;
 
         if(empty($row)) { // (testowałem) --> to się wykona, ✓✓✓ JEŚLI PODANO ZŁY E-MAIL (nieistniejący) (ponieważ wynika to z kwerendy, WHERE email = '%s' -> 0 zwróconych wierszy) !
 
-            $_SESSION["blad"] = '<span style="color: red; font-weight: bold;">875 Nieprawidłowy e-mail lub hasło</span>';
+            $_SESSION["blad"] = '<span class="error">Nieprawidłowy e-mail lub hasło</span>';
             // błędne dane logowania (NIEISTNIEJĄCY EMAIL) -> przekierowanie do zaloguj.php + komunikat;
             return;
         }
 
-                                           //echo '\n\n668 $_POST[login] = ' . $_POST['email'] . "<br>";
-                                           //echo '$_POST[haslo] = ' . $_POST['haslo'] . "<br>"; exit();
-
 		// WERYFIKACJA HASZA : (czy hasze hasła sa identyczne ?)
 		    // porównanie hasha (hasła) podanego przy logowaniu, z hashem zapisanym w bazie danych;
 
-		$haslo = $_POST['haslo']; // "zmienne tworzone poza funkcjami są globalne (więcej o funkcjach w manualu), a zmienne tworzone w funkcjach mają zasięg lokalny" - http://www.php.pl/Wortal/Artykuly/PHP/Podstawy/Zmienne-i-stale/Zasieg-zmiennych
+		$password = $_POST['password']; // "zmienne tworzone poza funkcjami są globalne (więcej o funkcjach w manualu), a zmienne tworzone w funkcjach mają zasięg lokalny" - http://www.php.pl/Wortal/Artykuly/PHP/Podstawy/Zmienne-i-stale/Zasieg-zmiennych
 
         //echo "<br> haslo = $haslo <br>"; // exit();
         //echo "<br> row  = " . var_dump($row) . " <br>";  exit();
 
-		if(password_verify($haslo, $row['haslo']))
-		{
+		if (password_verify($password, $row['haslo'])) {
+
             // true -> hasze sa takie same (podano POPRAWNE HASŁO do konta - email także był poprawny);
 
 			$_SESSION['zalogowany'] = true;
 
-            $id = array_keys($row)[0]; // przyjmie wartość typu String (TEKSTOWĄ) taką jak -> "id_klienta"; "id_pracownika"; (użyto takiego zapisu ponieważ ID w tabeli klienci ma inną NAZWĘ niż w tabeli pracownicy.
+            $id = array_keys($row)[0]; // przyjmie wartość typu String (TEKSTOWĄ) taką jak -> "id_klienta"; "id_pracownika"; (użyto takiego zapisu ponieważ ID w tabeli "klienci" ma inną NAZWĘ niż w tabeli "pracownicy". - a klient i pracownik używa tego samego formularza logowania;
 
 			$_SESSION['id'] = $row[$id]; // wartość zmiennej => "id_klienta" lub "id_pracownika"; (tzn np 220, 221, ...);
 			$_SESSION['imie'] = $row['imie'];
@@ -998,7 +1003,6 @@ EOT;
 			                        $_SESSION['PESEL'] = $row['PESEL'];
 			                        $_SESSION['data_urodzenia'] = $row['data_urodzenia']; */
 
-
 			                        //$_SESSION['login'] = $row['login'];
 
             if($id === "id_klienta") {
@@ -1007,7 +1011,7 @@ EOT;
 
                 query("SELECT SUM(ilosc) AS suma 
                              FROM koszyk 
-                             WHERE id_klienta='%s'", "count_cart_quantity", $row['id_klienta']);
+                             WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
                 // pobranie liczby książek znajdujących się w kosztku; count_cart_quantity() -> $_SESSION['koszyk_ilosc_ksiazek'] -> zapis do zmiennej;
             }
 
@@ -1016,19 +1020,17 @@ EOT;
 			$result->free_result();   // pozbywamy się z pamięci rezultatu zapytania; free(); close();
 
             if($id === "id_klienta") {
-                header('Location: index.php');      // przekierowanie do strony index.php
+                header('Location: index.php'); exit();     // przekierowanie do strony index.php
             } else {
                 $_SESSION["stanowisko"] = $row["stanowisko"];
                     $_SESSION['user-type'] = "admin";
-                header('Location: ../admin/admin.php'); // pracownik - przekierowanie do strony admin.php
+                header('Location: ../admin/admin.php');  exit(); // pracownik - przekierowanie do strony admin.php
             }
-			exit(); // we should use exit() after header_location instruction;
 		}
 		else  // istniejący e-mail, złe (niepoprawne) hasło;
 		{
-			$_SESSION['blad'] = '<span style="color: red; font-weight: bold;">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowania (niepoprawne HASŁO) -> przekierowanie do zaloguj.php + komunikat;
-			header('Location: ___zaloguj.php');
-			exit();
+			$_SESSION['blad'] = '<span class="error">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowania (niepoprawne HASŁO) -> przekierowanie do zaloguj.php + komunikat;
+			header('Location: ___zaloguj.php');	exit();
 		}
 	}
 
