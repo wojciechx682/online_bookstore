@@ -4255,7 +4255,8 @@ form#password-reset-input input[type="submit"]
 }
 
 form#send-token input[type="submit"] {
-    margin-top: 17px !important;
+
+    margin-top: 23px !important;
     margin-bottom: 21px;
 }
 
@@ -4496,7 +4497,7 @@ p#insert-token {
 }
 
 input#token {
-    width: 350px !important;
+    /*width: 350px !important;*/
 }
 
 form#password-reset-input label:hover {
