@@ -44,8 +44,14 @@
 
 		session_unset();
 		session_destroy();
-		header('Location: ___zaloguj.php');
-		exit();
+
+		if(isset($_POST["reset-password-form"])) {
+			header('Location: ___reset_password.php');
+		} else {
+			header('Location: ___zaloguj.php'); exit();
+		}
+
+
 	}
 
 	//session_unset(); // niszczy sesje, oraz wszystkie zmienne sesyjne

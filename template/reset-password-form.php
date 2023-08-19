@@ -1,6 +1,9 @@
 
 <div>
-    <p>Wprowadź nowe hasło dla konta <strong>%s</strong> </p>
+    <p id="insert-token">
+        Wprowadź nowe hasło dla konta <strong>%s</strong>
+    </p>
+
     <form method="post" id="password-reset-input">
 
 <!--        <span>-->
@@ -20,13 +23,13 @@
 
             <span class="login-row">
                     <label>
-                        Nowe hasło <input type="password" name="new-password" id="new-password" reqiured>
+                        Nowe hasło <input type="password" name="new-password" id="new-password" required>
                     </label>
             </span>
 
             <span class="login-row">
                     <label>
-                        Powtórz hasło <input type="password" name="confirm-password" id="confirm-password" reqiured>
+                        Powtórz hasło <input type="password" name="confirm-password" id="confirm-password" required>
                     </label>
             </span>
 

@@ -2714,7 +2714,8 @@ div.book-url > form button.book-img-button, /* \user\orders.php */
 .cart-book > span.book-details form button.submit-book-form, /* koszyk.php - tytuł książki (!) */
 div#n-top-nav-content ol li ul li form button.submit-book-form, /* index - lista <ul> z kategoriami - button */
 div.order div.order-action div.order-options-container > div.order-action-options form button.submit-order-form,  /* \admin\orders.php - przycisk "Przeglądaj" -> order-id - PRG */
-div.admin-books div.book-action div.book-options-container > div.book-action-options form button.submit-book-form  /* \admin\books.php - przycisk "Przeglądaj" -> book-id - PRG */
+div.admin-books div.book-action div.book-options-container > div.book-action-options form button.submit-book-form,  /* \admin\books.php - przycisk "Przeglądaj" -> book-id - PRG */
+button.reset-password-button /* "Spróbuj jeszcze raz" -- reset_password.php */
 {
     /*margin: 0;
     padding: 0;
@@ -2739,11 +2740,18 @@ div.admin-books div.book-action div.book-options-container > div.book-action-opt
 }
 .book-info > form button.submit-book-form h3.book-title:hover,
 
-.cart-book form button.submit-book-form h3.book-title:hover
+.cart-book form button.submit-book-form h3.book-title:hover,
+button.reset-password-button:hover
 {
     cursor: pointer;
     text-decoration: underline;
+}
 
+button.reset-password-button {
+    color: #551a8b;
+    text-decoration: underline;
+    margin-bottom: 4px;
+    /*font-weight: 600;*/
 }
 
 .book-title {
@@ -2938,6 +2946,10 @@ button.btn-link[disabled=disabled], button.btn-link:disabled { /* form acion "do
 
 /* formularz rejestracji --> -------------------------------------------------------------------------- */
 
+form#register-form {
+    padding-top: 5px;
+}
+
 form#register-form input:not([type="checkbox"])
 {
     margin-left: 5px;
@@ -3006,6 +3018,10 @@ form#register-form input[type="checkbox"] {
     margin-right: 15px;
 }
 
+form#register-form hr.register-form-hr-line:nth-of-type(1) {
+    margin-top: 20px;
+}
+
 hr.register-form-hr-line {
 
     background-color: rgba(166, 166, 166, 0.7);
@@ -3019,9 +3035,16 @@ hr.login-form-hr-line {
     margin-top: 20px;
 }
 
+
+
 .error {
     color: red;
     font-weight: bold;
+}
+
+.error-password {
+    display: block;
+    margin-bottom: 10px;
 }
 
 div.g-recaptcha {
@@ -3732,7 +3755,7 @@ h3#order-summary-header + p {
 
 }
 
-#content > .account-header:nth-child(1) {
+#content > .account-header:nth-child(1):not(.reset-password-header) {
     font-size: 120%;
 
     margin-top: 5px;
@@ -4144,10 +4167,26 @@ div#content div.order div.book-url > form button.book-img-button > img:hover
 
 /* ___reset_password.php -->    --------------------------------------------------------------- */
 
+form#reset-form {
+    /*padding-top: 5px;*/
+    margin-bottom: 24px;
+}
+
+hr.reset-form-hr-line {
+    margin-bottom: 20px;
+}
+
+
 form#reset-form > h3.account-header {
-    width: 343px;
+    /*width: 343px;*/
+}
 
+h3.reset-password-header {
+    margin-top: 0;
+    padding-top: 5px;
+    padding-bottom: 20px;
 
+    /*font-size: 0.8em;*/
 }
 
 form#reset-form div#get-email label:hover {
@@ -4176,7 +4215,8 @@ form#password-reset-input input
     outline: none;
     /*margin-top: 10px;*/
 
-    margin-left: 15px;
+    margin-left: 17px;
+    margin-top: .5px;
 
 }
 
@@ -4214,9 +4254,14 @@ form#password-reset-input input[type="submit"]
     margin-top: 5px;
 }
 
+form#send-token input[type="submit"] {
+    margin-top: 17px !important;
+    margin-bottom: 21px;
+}
+
 div#get-email {
-    margin-top: 25px;
-    margin-bottom: 20px;
+    margin-top: 27px;
+    margin-bottom: 22px;
 }
 
 form#password-reset-input span.login-row {
@@ -4443,4 +4488,17 @@ div#add-to-cart, div#add-to-cart * {
 form[action="logowanie.php"] h3 {
     margin-top: 5px;
     font-size: .9em;
+}
+
+p#insert-token {
+    margin-bottom: 27px;
+    margin-top: 21px;
+}
+
+input#token {
+    width: 350px !important;
+}
+
+form#password-reset-input label:hover {
+    cursor: pointer;
 }

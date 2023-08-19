@@ -51,7 +51,7 @@
 		$email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
             // email - po procesie sanityzacji, // FILTER_SANITIZE_EMAIL - filtr do adresów mailowych (used to sanitize and validate email addresses);
 
-		if ( (filter_var($email, FILTER_VALIDATE_EMAIL) == false) || $email == null || ($email != $_POST["email"]) ) {
+		if ( !filter_var($email, FILTER_VALIDATE_EMAIL) || $email == null || ($email != $_POST["email"]) ) {
             // email nie przeszedł walidacji;
 			$_SESSION['blad'] = '<span class="error">Podaj poprawny adres e-mail</span>';
 			    header('Location: ___zaloguj.php');

@@ -33,7 +33,7 @@
                 // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0 -> przestawi
             // $_SESSION['book_exists'] -> na true ;
 
-            if($book === false || $_SESSION["book-id"] === false || $_SESSION['book_exists'] === false || empty($_SESSION["max-book-id"])
+            if ( $book === false || $_SESSION["book-id"] === false || $_SESSION['book_exists'] === false || empty   ($_SESSION["max-book-id"])
                                || ($_SESSION["book-id"] != $_POST["book-id"]))
             {
                 // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;

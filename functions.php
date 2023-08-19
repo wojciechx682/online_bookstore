@@ -335,10 +335,8 @@
     }
 
     function verify_rate_exists($result) {
-
         // function for cheking if comment / or rate already exists (for that book) made by that clinet
             //$row = $result->fetch_assoc();
-
         $_SESSION["rate_exists"] = true;
     }
 
@@ -401,41 +399,51 @@
         $_SESSION["max-magazine-id"] = $row["id_magazynu"]; // "2"
     }
 
-	function check_email($result)
-	{
-        // validate_user_data.php - (zmiana danych usera), sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną; (zmiana danych konta);
-        // remove_account.php     - sprawdza, -----------||--------------  ---------||-----------;  (resetowanie hasła);
-		$_SESSION['email_exists'] = true;
+	function check_email($result) {
 
-            $row = $result->fetch_assoc();    // reset_password.php - resetowanie hasła
+        // validate_user_data.php - (zmiana danych usera), sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną; (zmiana danych konta);
+
+        // remove_account.php     - sprawdza, -----------||--------------  ---------||-----------;  (resetowanie hasła);
+
+        if ($result->num_rows) { // jeśli zwrócono conajmniej jeden rekord (wiersz) - istnieje taki user (email)
+
+            $row = $result->fetch_assoc();
+
+            $_SESSION["email-exists"] = true;
             $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
+            $_SESSION["given-email"] = $row["email"]; // reset_password.php - resetowanie hasła
+        }
+
 	}
 
-    function generate_token() {     // remove_account.php; - return      $token_hashed    OR     null;
+    function generate_token() {     // reset_password.php; - return $token_hashed | OR | false;
+
+        //return false;
 
         try {
-            $token = bin2hex(random_bytes(32));    // generate random token;
-            $token_hashed = hash("sha256", $token); // hash user token using sha256 algorithm;
 
-            return $token_hashed; // Return the generated token;
+            $token = bin2hex(random_bytes(32)); // generate random token;
+            return hash("sha256", $token); // hash user token using sha256 algorithm; return the generated token;
 
         } catch (Exception $e) {
-                // Exception handling code
-                // You can handle the exception here, log it, display an error message, etc.
-                // For example:
-                    //echo "Wystąpił błąd podczas generowania tokenu. Spróbuj jeszcze raz";
-                // You can also log the error using error_log() or any other logging mechanism.
 
-            return null; // Return null or a default value to indicate failure
+            return false;
         }
     }
 
     function verify_token($result) // reset-password-form.php ;
     {
+        // check, if there is any token assigned to that e-mail
+
+        if ($result->num_rows) { // == 1 <-- jeśli zwrócono conajmniej jeden rekord (wiersz)
+
                 $row = $result->fetch_assoc();
-            $_SESSION["token_verified"] = true;
-        $_SESSION["email"] = $row["email"];
-        $_SESSION["exp_time"] = $row["exp_time"];
+            $_SESSION["token-exists"] = true;
+            $_SESSION["email"] = $row["email"];
+            $_SESSION["exp-time"] = $row["exp_time"];
+            $_SESSION["token"] = $row["token"];
+        }
+
     }
 
 //	function get_books_by_id($result) // koszyk_dodaj.php - nieużywane - do wyrzuczenia
