@@ -67,6 +67,7 @@
 
                         echo "<h3 class='data-changed'>" . $_SESSION['error_form'] . "</h3>"; // validate_user_data.php -> "Podaj poprawne dane", "...", - komunikat z błędem;
                         unset($_SESSION['error_form']); // usunięcie komunikatu z błędem (aby nie wyświetlał się ponownie po odświeżeniu strony);
+
                     } else { // dane przeszły walidację;
 
                         if( isset($_SESSION['validation_passed']) && $_SESSION['validation_passed']) {
@@ -120,6 +121,7 @@
                             // echo $_SESSION['a_error'];
                         echo "<h3 class='data-changed'>" . $_SESSION['a_error'] . "</h3>";
                             unset($_SESSION['a_error']);
+
                     } else {
 
                         if( isset($_SESSION['validation_passed_a']) && $_SESSION['validation_passed_a'] ) {
@@ -195,6 +197,7 @@
 		    </div> <!-- #content -->
 
         </main>
+
 	</div> <!-- #container -->
 
     <?php require "../view/footer.php"; ?>
