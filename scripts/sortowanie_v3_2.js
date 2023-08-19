@@ -12,8 +12,8 @@ selectList.addEventListener("change", (event) => {
 const sortByTitleAscending = (a, b) => a.querySelector(".book-title").textContent.localeCompare(b.querySelector(".book-title").textContent);
 const sortByTitleDescending = (a, b) =>	b.querySelector(".book-title").textContent.localeCompare(a.querySelector(".book-title").textContent);
 
-const sortByPriceAscending = (a, b) => Number(a.querySelector(".book-price").textContent) - Number(b.querySelector(".book-price").textContent);
-const sortByPriceDescending = (a, b) => Number(b.querySelector(".book-price").textContent) - Number(a.querySelector(".book-price").textContent);
+const sortByPriceAscending = (a, b) => Number(a.querySelector(".book-price span").textContent) - Number(b.querySelector(".book-price span").textContent);
+const sortByPriceDescending = (a, b) => Number(b.querySelector(".book-price span").textContent) - Number(a.querySelector(".book-price span").textContent);
 
 const sortByYearAscending = (a, b) => Number(a.querySelector(".book-year").textContent) - Number(b.querySelector(".book-year").textContent);
 const sortByYearDescending = (a, b) => Number(b.querySelector(".book-year").textContent) - Number(a.querySelector(".book-year").textContent);

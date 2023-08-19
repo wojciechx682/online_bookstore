@@ -177,7 +177,7 @@
                     $button = ($row["ilosc_egzemplarzy"] === 'dostępna') ? '' : 'disabled'; // "Dodaj do koszyka" - <button> ;
 
                     // replace fields in $book string to book data from $result, display result content as HTML
-                    echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"], $button);
+                    echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"], $button);
 
                     $i++;
                 }

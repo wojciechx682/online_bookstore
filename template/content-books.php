@@ -22,11 +22,11 @@
             <form method="post" action="../user/___book.php">
                 <input type="hidden" name="book-id" value="%s"> <!-- id_ksiazki -->
                 <button class="submit-book-form" type="submit">
-                    <h3 class="book-title">%s</h3> <!-- tytuł -->
+                    <h3 class="book-title" title="%s">%s</h3> <!-- tytuł -->
                 </button>
             </form>
 
-            <div class="book-price">%s</div>
+            <div class="book-price"><span>%s</span> PLN</div>
             <div class="book-year">%s</div>
 
             <div class="book-author">%s %s</div>

@@ -17,8 +17,10 @@
 
         for(let i=0; i < books.length; i++) { // for every book <div>;
 
-            let price = parseFloat(DOMPurify.sanitize(books[i].querySelector(".book .book-price").innerHTML));
+            let price = parseFloat(DOMPurify.sanitize(books[i].querySelector(".book .book-price span").innerHTML));
             // get the price of that book;
+
+            console.log("\n price --> ", price);
 
             min = parseInt(min); // min input-value from slider (number)
             max = parseInt(max); // max input-value from slider (number)
