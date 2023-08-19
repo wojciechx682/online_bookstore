@@ -3,32 +3,28 @@
 
 /*(function() {*/
 
-    let updateBtn = document.getElementById("filter-authors"); // <button id="filter-authors"> Zastosuj </button>
-        updateBtn.addEventListener("click", filterAuthors);
-
-    let all = document.getElementById('all-authors'); // input type="checkbox" - "Wszyscy";
-        all.addEventListener("change", updateAll);
-
+    let button = document.getElementById("filter-authors"); // <button id="filter-authors"> Zastosuj </button>
+    let firstCheckbox = document.getElementById('all-authors'); // input type="checkbox" - "Wszyscy";
     // NodeList of    ALL    <input checkbox> (authors);    // wszystkie checkboxy;
-    let li = document.querySelectorAll('#ul-authors input[type="checkbox"]:not(#all-authors)'); // input type="checkbox"
+    let items = document.querySelectorAll('#ul-authors input[type="checkbox"]:not(#all-authors)'); // input type="checkbox"
 
-    //console.log("\nli (all-inputs) => ", li); // NodeList; input.author-checkbox;
+    button.addEventListener("click", filterAuthors);
+    firstCheckbox.addEventListener("change", updateAll);
 
     function updateAll() { // wywołanie po kliknięciu inputa "Wszyscy"
-        //console.log("\nupdateAll function executed ");
-        for(let i=0; i < li.length; i++) { // tyle razy ile jest checkboxów z autorami (poza inputem "Wszyscy")
-            li[i].checked = all.checked;   // uaktualnienie właściwości checked zgodnie z tym jaką ma input "Wszyscy"
+        for(let i=0; i < items.length; i++) { // tyle razy ile jest checkboxów z autorami (poza inputem "Wszyscy")
+            items[i].checked = firstCheckbox.checked;   // uaktualnienie właściwości checked zgodnie z tym jaką ma input "Wszyscy"
         }
     }
 
-window.addEventListener("load", function() {
+/*window.addEventListener("load", function() {
     if(window.localStorage) {
         let authors = JSON.parse(localStorage.getItem("authors"));
         if (authors) {
-            /*console.log("149 ls authors -> ", authors);
+            /!*console.log("149 ls authors -> ", authors);
             console.log("150 ls authors.length -> ", authors.length);
             console.log("151 ls typeof(authors) -> ", typeof(authors));
-            console.log("149 li -> ", li);*/
+            console.log("149 li -> ", li);*!/
             //filterAuthors();
             for(let i = 0; i < authors.length; i++) {
                 for(let j = 0; j < li.length; j++) {
@@ -40,19 +36,14 @@ window.addEventListener("load", function() {
             filterAuthors();
         }
     }
-});
+});*/
 
 function filterAuthors()  {
 
-    console.log("\n\n34 - filterAuthors() function executed - \n\n");
-        //const liChecked = document.querySelectorAll('#ul-authors > li input[type="checkbox"]:checked:not(#all-authors)');
-    const liChecked = document.querySelectorAll('#ul-authors input[type="checkbox"]:checked:not(#all-authors)');
+    const itemsChecked = document.querySelectorAll('#ul-authors input[type="checkbox"]:checked:not(#all-authors)');
     // NodeList of <input checkbox CHECKED ! >
 
-    //console.log("\n38 liChecked (all-inputs) => ", liChecked); // zaznaczone Checkboxy (!)
-                //console.log("\n38 typeof liChecked (all-inputs) => ", typeof liChecked);
-                // create array for authors (name + surname) ->
-    let items = Array.from(liChecked); // input type="checkbox" checked (!);
+    let items = Array.from(itemsChecked); // input type="checkbox" checked (!);
     /*console.log("\n43 items (all-inputs checked) => ", items);
     console.log("\n43 items[0] (all-inputs checked) => ", items[0]);
     console.log("\n43 typeof items[0] (all-inputs checked) => ", typeof items[0]);*/
@@ -72,8 +63,8 @@ function filterAuthors()  {
     // pokazanie tylko książek z dopasowanymi autorami ->
     //let books = document.querySelectorAll("#content-books .book");  // NodeList - kolekcja - divy z książkami ;
     let books = document.querySelectorAll("#content-books > .outer-book:not(.hidden)");  // NodeList - kolekcja - divy z książkami ;
-    //console.log("\n58 books => ", books);
-        //console.log("\n58 typeof books => ", typeof books); // object;
+    console.log("\n58 books => ", books);
+    console.log("\n58 typeof books => ", typeof books); // object;
 
     //document.querySelectorAll("#content-books > .outer-book:not(.hidden)")
 

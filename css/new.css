@@ -4377,8 +4377,11 @@ input#year-min {
 }
 
 #slider { /* year-min, year-max */
-    margin-top: 40px;
+    margin-top: 50px;
     margin-bottom: 15px;
+
+
+    padding: 0 16px 0 10.3px;
 }
 
 div#advanced-search form#advanced-search-form input[type="text"],

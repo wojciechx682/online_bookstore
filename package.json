@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/wojciechx682/online_bookstore#readme",
   "dependencies": {
-    "dompurify": "^3.0.5"
+    "dompurify": "^3.0.5",
+    "nouislider": "^15.7.1"
   }
 }

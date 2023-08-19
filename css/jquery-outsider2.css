@@ -1,0 +1,72 @@
+
+/*.noUi-horizontal {
+    height: 12px;
+}
+
+.noUi-connect {
+    background: rgba(33, 146, 197, 0.56);
+}
+
+.noUi-horizontal .noUi-handle {
+    width: 22px;
+    height: 20px;
+    left: -1px;
+    top: -5px;
+}
+
+.noUi-handle:before, .noUi-handle:after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 14px;
+    width: 1px;
+    background: #E8E7E6;
+    left: 6px;
+    top: 2px;
+}
+
+.noUi-handle:after {
+    left: 13px;
+}*/
+
+/* --------------------------------------------------------------------------------------------------- */
+
+/*
+    .noUi-target	This class is added to the element noUiSlider.create() is called on. Has border, background and other styling properties to establish the slider design and background.
+    .noUi-base	The slider bar. Serves as the calculating point for the slider handles, and has no visible styling.
+    .noUi-origin	The elements connected to the base, defining the handle locations.
+    .noUi-handle	The actual, visible handles.
+    .noUi-touch-area	An empty div within .noUi-handle. Can be styled larger if desired.
+    .noUi-connect	Styling class for setting properties related to the slider connect segment.
+    .noUi-state-tap	This class is added when the slider bar is tapped or clicked. A slider with this call will reject any user input. noUiSlider will remove this class after 300ms, leaving that timespan to perform visual animations.
+    [disabled]	Apply this to your slider to disable it, and make sure the slider visuals reflect the disabled state.
+ */
+
+.noUi-connect {
+    background: rgba(33, 146, 197, 0.56);
+}
+
+.noUi-horizontal {
+    height: 13px;
+}
+
+.noUi-horizontal .noUi-handle {
+    width: 28px;
+    height: 23px;
+    right: -17px;
+    top: -6px;
+}
+
+.noUi-handle:before {
+    left: 8px;
+    top: 4px;
+}
+
+.noUi-handle:after {
+    top: 4px;
+}
+
+.noUi-state-blocked.noUi-connect,
+.noUi-state-blocked .noUi-connect {
+    background: #57d2ec;
+}

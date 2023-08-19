@@ -1,25 +1,15 @@
 
-// price range - noUISlider (jQ) ;  // książka jQuery - strona 544 - 549;
+// price-range - noUISlider (jQ) ;  // książka jQuery - strona 544 - 549;
 
 //(function() {
 
-    $min = $('#value-min'); // input type number - input#value-min - minimum price value input;
-    $max = $('#value-max'); // input type number - input#value-max - maximum price value input;
-
-        /*console.log("\n#value-min --> ", $min);
-        console.log("\n#value-max --> ", $max);*/
-
-    //let books = document.querySelectorAll("#content-books .book:not(.hidden)");
-
-    //let books = document.querySelectorAll("#content-books .outer-book"); // kolekcja elementów DOM (NodeList) - divy z książkami;
-
-
+    let inputMin = document.getElementById('value-min'); // input type number - input#value-min - minimum price value input;
+    let inputMax = document.getElementById('value-max'); // input type number - input#value-max - maximum price value input;
 
     function update(min, max) { // update content-books
 
-        let books = document.querySelectorAll("#content-books .outer-book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
-
-        //let books = document.querySelectorAll("#content-books .book:not(.hidden-author)"); // kolekcja elementów DOM (NodeList) - divy z książkami;
+        let books = document.querySelectorAll("#content-books .outer-book:not(.hidden-author)");
+        // kolekcja elementów DOM (NodeList) - divy z książkami;
 
         console.log("\n 17 books -> ", books);
         console.log("\n 17 typeof books -> ", typeof books);
@@ -27,18 +17,17 @@
 
         for(let i=0; i < books.length; i++) { // for every book <div>;
 
-            let price = parseFloat(DOMPurify.sanitize(books[i].querySelector(".book .book-price").innerHTML)); // get the price of that book;
+            let price = parseFloat(DOMPurify.sanitize(books[i].querySelector(".book .book-price").innerHTML));
+            // get the price of that book;
 
             min = parseInt(min); // min input-value from slider (number)
             max = parseInt(max); // max input-value from slider (number)
-            //price = parseInt(price);
-
-            /*console.log("\n price -> ", price);
-            console.log("\n typeof price -> ", typeof price);*/
 
             if((price >= min) && (price <= max)) {   // add or remove "hidden" clsas;
+
                 books[i].classList.remove('hidden');
             } else {
+
                 books[i].classList.add('hidden');
             }
         }
@@ -46,23 +35,62 @@
         filterAuthors(); // wzajemna integracja filtrów - rozwiązanie;
     }
 
-    function initFun() {                            // Tasks when script first runs
-        $('#slider').noUiSlider({                   // Set up the slide control
-            range: [5, 150], start: [10, 135], handles: 2, margin: 1, connect: true,
-            serialization: { to: [$min, $max], resolution: 1 }
-        }).change(function() {
-            update($min.val(), $max.val());         // Update content-books every time after slider values change
-        });
-        //makeRows();                               // Create table rows and rows array
-        //appendRows();                             // Add the rows to the table
-        update($min.val(), $max.val());             // Update content-books at first load
-    }
+    let slider = document.getElementById('slider');
 
-    $(initFun);                                     // Call init() when DOM is ready
-
-    $("#value-min, #value-max").change(function() { // update content-book after input value will change
-        update($min.val(), $max.val());
+    noUiSlider.create(slider, {
+        start: [17, 136],
+        connect: true,
+        margin: 15,
+        padding: 0,
+        step: 1,
+        range: {
+            'min': 5,
+            'max': 150
+        }
     });
+
+    slider.noUiSlider.on('change', function (values, handle) {
+
+        // values: Current slider values (array);
+        // handle: Handle that caused the event (number);
+        // unencoded: Slider values without formatting (array);
+        // tap: Event was caused by the user tapping the slider (boolean);
+        // positions: Left offset of the handles (array);
+        // noUiSlider: slider public Api (noUiSlider);
+
+        let value = values[handle];
+
+        if (handle === 0) { // Pierwszy uchwyt odpowiada za wartość minimalną
+
+            inputMin.value = Math.round(value);
+
+        } else if (handle === 1) {  // Drugi uchwyt odpowiada za wartość maksymalną
+
+            inputMax.value = Math.round(value);
+        }
+
+        update(values[0], values[1]);
+
+    });
+
+    inputMin.addEventListener('change', function () {
+        slider.noUiSlider.set([this.value, null]);
+    });
+
+    inputMax.addEventListener('change', function () {
+        slider.noUiSlider.set([null, this.value]);
+    });
+
+    let initialValues = slider.noUiSlider.get();  // set init values for inputs
+    inputMin.value = Math.round(initialValues[0]);
+    inputMax.value = Math.round(initialValues[1]);
+
+
+
+
+
+
+
 
 //}());
 
@@ -151,3 +179,33 @@
         updateResults();
     });
 })();*/
+
+// ------------------------------------------------------------------------------------
+// events -->
+
+// 'update',
+// 'change',
+// 'set',
+// 'slide',
+// 'drag'
+
+// values - slider values
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

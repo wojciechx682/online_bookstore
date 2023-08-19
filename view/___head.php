@@ -12,7 +12,12 @@
             <link rel="stylesheet" href="../css/book-page-tabs.css">  <!-- \user\book.php -->
             <link rel="stylesheet" href="../css/book-page.css">       <!-- \user\book.php -->
 
-            <link rel="stylesheet" href="../css/jquery-outsider.css"> <!-- (CSS) ! - wtyczka\biblioteka jQuery - NoUISlider ZAMIENIĆ NA ORYGINALNY STYL -->
+            <!--<link rel="stylesheet" href="../css/jquery-outsider.css">--> <!-- (CSS) ! - wtyczka\biblioteka jQuery - NoUISlider ZAMIENIĆ NA ORYGINALNY STYL -->
+
+            <link rel="stylesheet" href="../node_modules/nouislider/dist/nouislider.css">
+            <link rel="stylesheet" href="../css/jquery-outsider2.css">
+
+
 
         <link rel="preconnect" href="https://fonts.googleapis.com">      <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

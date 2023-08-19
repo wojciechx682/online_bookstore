@@ -28,7 +28,7 @@
     console.log("max year -> ", max);*/
     }
 
-    function initFun() {                             // Tasks when script first runs
+    /*function initFun() {                             // Tasks when script first runs
         $('#adv-search-year-slider').noUiSlider({    // Set up the slide control
             range: [1990, 2023], start: [1992, 2018], handles: 2, margin: 1, connect: true,
             serialization: { to: [$year_min, $year_max], resolution: 1 }
@@ -45,6 +45,6 @@
 
     $("#year-min, #year-max").change(function () {  // update slider values after changing input type number values;
         updateYear($year_min.val(), $year_max.val());
-    });
+    });*/
 
 }());
