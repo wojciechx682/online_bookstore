@@ -14,7 +14,7 @@
 
 <style>
     div.error {
-        color: red !important;
+        color: #d41515;
         /*margin-top: 10px;*/
         /*font-weight: bold;*/
     }
@@ -38,7 +38,7 @@
                       action="rejestracja.php"
                             id="register-form">
 
-                    Stwórz nowe konto klienta <hr class="register-form-hr-line">
+                    <b>Stwórz nowe konto klienta</b><hr class="register-form-hr-line">
 
                     <div class="form-section">
 

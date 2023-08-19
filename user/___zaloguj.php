@@ -109,7 +109,7 @@
                             method="post"
                             id="login-form">
 
-                        Zaloguj się na swoje konto <hr class="register-form-hr-line login-form-hr-line">
+                        <b>Zaloguj się na swoje konto</b><hr class="register-form-hr-line login-form-hr-line">
 
                         <div class="login-form-section">
 
@@ -125,6 +125,9 @@
                                                            autocomplete="off">
                                     </label>
                             </span>
+
+
+                            <div class="g-recaptcha g-recaptcha-login" data-sitekey="6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1"></div>
 
                             <input type="submit" value="Zaloguj się">
 
@@ -142,7 +145,7 @@
                     <?php
                         if ( isset($_SESSION["password-changed"]) && $_SESSION["password-changed"] ) {
                             // if variable EXISTS and has value egual to "TRUE";
-                            echo "<h3>Udało się zmienić hasło</h3>";
+                            echo "<h3>Hasło zostało zmienione</h3>";
                             session_unset();
                             session_destroy();
                         }
@@ -157,6 +160,16 @@
                             unset($_SESSION["blad"]);
                         }
                     ?>
+
+                    <?php
+                        if(isset($_SESSION['e_recaptcha'])) // błąd z reCaptcha;
+                        {
+                            echo $_SESSION['e_recaptcha'];
+                            unset($_SESSION['e_recaptcha']);
+                        }
+                    ?>
+
+
 
                     <?php
 
@@ -260,6 +273,8 @@
         });
 
     </script> -->
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 
 </body>
 </html>

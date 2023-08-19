@@ -413,7 +413,6 @@
             $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
             $_SESSION["given-email"] = $row["email"]; // reset_password.php - resetowanie hasła
         }
-
 	}
 
     function generate_token() {     // reset_password.php; - return $token_hashed | OR | false;

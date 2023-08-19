@@ -3038,8 +3038,10 @@ hr.login-form-hr-line {
 
 
 .error {
-    color: red;
+    color: #d41515;
     font-weight: bold;
+    display: block;
+    margin-top: 15px;
 }
 
 .error-password {
@@ -3182,6 +3184,11 @@ form#login-form div:nth-of-type(1) {
     margin-top: 27px;
 }
 
+form#login-form div.login-form-section {
+    width: 303px;
+}
+
+
 .login-form-section {
     /*background-color: #cbcbcb;*/
 
@@ -3209,7 +3216,7 @@ form#login-form input
     outline: none;
     /*margin-top: 10px;*/
 
-    margin-left: 15px;
+    margin-left: 24px;
 }
 
 form#login-form input:hover,
@@ -3227,7 +3234,7 @@ form#login-form input[type="submit"] {
     margin-top: 7px;
 }
 
-.login-form-section input:not([type="submit"]) {
+form#password-reset-input .login-form-section input:not([type="submit"]) {
     float: right;
 }
 
@@ -3237,6 +3244,15 @@ a.a-login-page-link {
     display: block;
     margin: 18px 0 18px 0;
     width: 280px;
+}
+
+div.g-recaptcha-login {
+    margin-bottom: 20px;
+
+    /*transform: scale(1.14);
+    -webkit-transform: scale(1.14);
+    transform-origin:0 0;
+    -webkit-transform-origin:0 0;*/
 }
 
 
@@ -4257,7 +4273,7 @@ form#password-reset-input input[type="submit"]
 form#send-token input[type="submit"] {
 
     margin-top: 23px !important;
-    margin-bottom: 21px;
+    margin-bottom: 24px;
 }
 
 div#get-email {
@@ -4267,6 +4283,19 @@ div#get-email {
 
 form#password-reset-input span.login-row {
     width: 365px;
+}
+
+form#password-reset-input {
+    margin-bottom: 24px;
+}
+
+form#password-reset-input input[type="submit"] {
+    margin-top: 9px;
+}
+
+form[action="logowanie.php"] input:not([type="submit"]) {
+    float: right;
+    margin-left: 0 !important;
 }
 
 /* advanced-search --> --------------------------------------------------------- */

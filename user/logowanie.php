@@ -61,6 +61,20 @@
 
 			    // query("SELECT * FROM klienci WHERE email='%s'", "log_in", $email_sanitized);
 
+            require('C:\xampp\apache\conf\config.php');
+            $secret = RECAPTCHA_SECRET_KEY; // re-captcha secret-key
+
+            // make HTTP request to Google reCAPTCHA API to verify the user's response; returns encoded JSON string, that needs to be decoded;
+            // pobierz zawartość pliku z odpowiedzią Google;
+            $response = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response'])); // $response - decoded PHP object;
+
+            // $response => stdClass Object ( [success] => 1 [challenge_ts] => 2023-08-15T15:41:42Z [hostname] => localhost )
+
+            if( $response->success === false) { //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
+                $_SESSION['e_recaptcha'] = '<span class="error">Weryfikacja reCaptcha nie przebiegła pomyślnie</span>';
+                header('Location: ___zaloguj.php');  exit();
+            }
+
 			query("SELECT kl.id_klienta, kl.haslo, kl.imie, kl.nazwisko, kl.telefon, kl.email, kl.adres_id,
                                 ad.miejscowosc, ad.ulica, ad.numer_domu, ad.kod_pocztowy, ad.kod_miejscowosc
                          FROM klienci AS kl, adres AS ad 
