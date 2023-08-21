@@ -14,9 +14,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
+require 'PHPMaileraaaa/src/Exception.php';
+require 'PHPMaileraaaa/src/PHPMailer.php';
+require 'PHPMaileraaaa/src/SMTP.php';
 
 
 // Klasa PHPMailer - wysyłanie wiadomości w formacie HTML;

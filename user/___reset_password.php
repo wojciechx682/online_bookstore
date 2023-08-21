@@ -9,15 +9,18 @@
 // Import PHPMailer classes into the global namespace
 // These must be at the top of your script, not inside a function
 
+require_once '../vendor/autoload.php';
+
 use PHPMailer\PHPMailer\PHPMailer; // In PHP, the "use" statement - is used to import external classes or namespaces into the current PHP file;
 use PHPMailer\PHPMailer\Exception; // This line imports the "Exception" class from the PHPMailer\PHPMailer namespace;
 use PHPMailer\PHPMailer\SMTP;      // The SMTP class is used for providing an alternative method of sending emails using the Simple Mail Transfer Protocol (SMTP);
 
 // by including these use statements, you can refer to these classes directly by their names (PHPMailer, Exception, and SMTP)
 
-require 'PHPMailer/src/Exception.php';
+/*require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
+require 'PHPMailer/src/SMTP.php';*/ // <!-- bez użycia Composera !
+
 
 if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirect - Get
 
