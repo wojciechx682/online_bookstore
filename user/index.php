@@ -75,13 +75,19 @@
             // post-redirect-get - input-search-nav ;   // input-search-nav <-- zmienna istnieje (może być pusta --> "");
             // wprowadzono tytuł z input-search-nav (wyszukiwanie książek w tej kategorii);
 
-            $title = filter_input(INPUT_POST, "input-search-nav", FILTER_SANITIZE_STRING); // SANITYZACJA - input-search-nav; // Strip tags and HTML-encode double and single quotes, optionally strip or encode special characters.
-            $_SESSION["input-search-nav"] = $title;
+            $title = filter_input(INPUT_POST, "input-search-nav", FILTER_SANITIZE_STRING); // SANITYZACJA - input-search-nav; --> $title | FALSE
 
-            if( $title === false || // dane nie przeszły walidacji przez filtr,
-                $title === null ||  // zmienna nie istnieje ( == null, jeśli zmienna $_POST nie istnieje),
-                ($_SESSION["input-search-nav"] !== $_POST["input-search-nav"]) ) {
-                    // validation failed - redirect to main-page (index.php);
+             //  Strip tags and HTML-encode double and single quotes, optionally strip or encode special characters.
+
+            $_SESSION["input-search-nav"] = $title; // --> $title | FALSE
+
+            if ( empty($title) || // dane nie przeszły walidacji przez filtr, lub - wprowadzono pustą wartość --> ""
+                 ($_SESSION["input-search-nav"] !== $_POST["input-search-nav"]) ) { // wartość po sanityzacji jest rózna od wartości podanej przez użytkownika
+
+                // validation failed - redirect to main-page (index.php);
+
+                    $_SESSION["no-results"] = "Brak wyników";
+
                     unset($_POST, $title, $_SESSION["input-search-nav"]);
                         header('Location: index.php', true,303);
                             exit();
@@ -92,66 +98,90 @@
                     // $_SESSION["input-search-nav"]; <--
                         exit();
             }
-
-        } /*else {
-            // pusty (nie istnieje) input-search nav;
-            // --> do nothing !
-        }*/
+        }
         elseif ( isset($_POST["kategoria"]) )   // && ! empty($_POST['kategoria'])
         {
             // post-redirect-get - top-nav -> kategoria; // przypadek wejśia w dowolną kategorię z górnego panelu;
                 // $_SESSION["kategoria"] = htmlentities($_POST['kategoria'], ENT_QUOTES, "UTF-8"); // "Wszystkie", "Informatyka", "Horror"
                 // $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
-            $category = filter_input(INPUT_POST, "kategoria", FILTER_SANITIZE_STRING); // SANITYZACJA - kategoria;
-            $_SESSION["kategoria"] = $category;
 
-            $_SESSION["category-exists"] = false; // check if THAT category exists in db (!) ;
-            query("SELECT nazwa FROM kategorie WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["kategoria"]); // ✓ przestawi $_SESSION["category-exists"] --> na true, jeśli taka kategoria (nazwa) istnieje;
+            if ( $_POST["kategoria"] != "Wszystkie" ) {
 
-            if( $category === false || $category === null || ($_SESSION["kategoria"] !== $_POST["kategoria"]) || $_SESSION["category-exists"] === false ) {
-                // validation failed - redirect to main-page (index.php);
-                                 // $_SESSION["kategoria"] = "Wszystkie";
-                //unset($_POST, $category, $_SESSION["kategoria"]);
-                unset($_POST, $category, $_SESSION["kategoria"], $_SESSION["category-exists"], $_SESSION["subcategory"]);
+                $category = filter_input(INPUT_POST, "kategoria", FILTER_SANITIZE_STRING); // SANITYZACJA - kategoria; --> $category | FALSE
+                $_SESSION["kategoria"] = $category; // --> $category | FALSE
+
+                // check if THAT category exists in db (!) ;
+                query("SELECT nazwa FROM kategorie WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["kategoria"]);
+                // $_SESSION["category-exists"] --> true, jeśli taka kategoria (nazwa) istnieje;
+                // -------------||------------- --> FALSE, jeśli taka kategoria (nazwa) NIE istnieje;
+
+                if ( empty($category) // pusta wartość "" (empty) - lub nie przeszła walidacji (false)
+                    || ($_SESSION["kategoria"] !== $_POST["kategoria"]) // nazwa kategorii po walidacji inna, niż podana w żądaniu POST
+                    || $_SESSION["category-exists"] === false ) { // kategoria nie istnieje
+
+                    $_SESSION["no-results"] = "Brak wyników";
+
+                    // validation failed - redirect to main-page (index.php);
+
+                    unset($_POST, $category, $_SESSION["kategoria"], $_SESSION["category-exists"], $_SESSION["subcategory"], $_SESSION["subcategory-exists"]);
                     header('Location: index.php', true,303);
-                        exit();
-            } else {
-                // validation passed (category) - kategoria - nie pusty, posiada wartość, która przeszła walidację;
+                    exit();
 
-                if ( isset($_POST["subcategory"]) ) { // && ! empty($_POST['subcategory'])
-
-                    $subcategory = filter_input(INPUT_POST, "subcategory", FILTER_SANITIZE_STRING); // SANITYZACJA - podkategoria;
-                    $_SESSION["subcategory"] = $subcategory;
-
-                    $_SESSION["subcategory-exists"] = false; // check if THAT sub-category exists in db (!) ;
-                    query("SELECT nazwa FROM subkategorie WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // ✓ przestawi $_SESSION["subcategory-exists"] --> na true, jeśli taka pod-kategoria (nazwa) istnieje;
-
-                    if( $subcategory === false || $subcategory === null || ($_SESSION["subcategory"] !== $_POST["subcategory"]) || $_SESSION["subcategory-exists"] === false ) {
-                        // validation failed - redirect to main page (index.php);
-                        unset($_POST, $category, $subcategory, $_SESSION["kategoria"], $_SESSION["subcategory"], $_SESSION["category-exists"], $_SESSION["subcategory-exists"]);
-                            header('Location: index.php', true, 303);
-                                exit();
-                    }
                 } else {
-                    unset($_SESSION["subcategory"]); // ✓ remove subcategory variable, if it not exists in $_POST[] (!)
-                }
-                // kategoria + subkategoria (jeśli była ustawiona w POST) - przeszły walidację - ✓ przekierowanie (redirect) - 303;
+                    // validation passed (category) - kategoria - nie pusty, posiada wartość, która przeszła walidację;
+                    //                                          - istnieje kategoria o takiej nazwie
+
+                    if ( isset($_POST["subcategory"]) ) { // && ! empty($_POST['subcategory'])
+
+                        $subcategory = filter_input(INPUT_POST, "subcategory", FILTER_SANITIZE_STRING); // SANITYZACJA - podkategoria; --> $subcategory | FALSE
+                        $_SESSION["subcategory"] = $subcategory;
+
+                        // check if THAT sub-category exists in db (!) ;
+                        query("SELECT nazwa FROM subkategorie WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // ✓ przestawi $_SESSION["subcategory-exists"] --> na true, jeśli taka pod-kategoria (nazwa) istnieje; // w przeciwnym wypadku --> $_SESSION["subcategory-exists"] == false;
+
+                        if( empty($subcategory)  // pusta wartość podkategorii --> "", lub nie przeszła walidacji (false)
+                            || ($_SESSION["subcategory"] !== $_POST["subcategory"]) // nazwa podkategorii inna po walidacji niż ta podana w POST
+                            || $_SESSION["subcategory-exists"] === false ) { // podkategoria nie istnieje
+
+                            $_SESSION["no-results"] = "Brak wyników";
+
+                            // validation failed - redirect to main page (index.php);
+                            unset($_POST, $category, $subcategory, $_SESSION["kategoria"], $_SESSION["subcategory"], $_SESSION["category-exists"], $_SESSION["subcategory-exists"]);
+                            header('Location: index.php', true, 303);
+                            exit();
+                        }
+
+                    } else {
+                        unset($_SESSION["subcategory"]); // ✓ remove subcategory variable (SESSION), if it not exists in $_POST[] (!)
+                    }
+                    // kategoria + subkategoria (jeśli była ustawiona w POST) - przeszły walidację - ✓ przekierowanie (redirect) - 303;
                     header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
-                        exit();
+                    exit();
+                }
+
+            } else {
+                $_SESSION["kategoria"] = "Wszystkie";
+                unset($_SESSION["subcategory"], $_SESSION["category-exists"], $_SESSION["subcategory-exists"]);
+                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
+                exit();
             }
         }
 
         elseif ( isset($_POST["input-search"]) ) { // Post - Redirect - Get - input-search (top-nav);
 
-            $search_value = filter_input(INPUT_POST, 'input-search', FILTER_SANITIZE_STRING); // SANITYZACJA - input-search;
+            $search_value = filter_input(INPUT_POST, 'input-search', FILTER_SANITIZE_STRING); // SANITYZACJA - input-search; --> $search_value | FALSE;
             $_SESSION["input-search"] = $search_value;
 
             $_SESSION["kategoria"] = "Wszystkie"; // ✓ - ponieważ szukamy książek w każdej kategorii ! ;
 
-            if( $search_value === false || $search_value === null || ($_SESSION["input-search"] !== $_POST["input-search"]) ) {
+            if( empty($search_value) // pusta wartość --> "" - lub nie przeszła walidacji (false)
+                || ($_SESSION["input-search"] !== $_POST["input-search"]) ) { // inna wartość po walidacji
                 // validation failed - redirect to main-page (index.php);
                         // unset($_POST, $category, $_SESSION["kategoria"]);
-                    unset($_POST, $search_value, $_SESSION["input-search"], $_SESSION["kategoria"], $_SESSION["subcategory"]);
+
+                    $_SESSION["no-results"] = "Brak wyników";
+
+                    unset($_POST, $search_value, $_SESSION["input-search"], $_SESSION["kategoria"], $_SESSION["subcategory"], $_SESSION["category-exists"], $_SESSION["subcategory-exists"]);
                         header('Location: index.php', true, 303);
                             exit();
             } else {
@@ -181,23 +211,23 @@
 
             $valid = true; // flaga walidacyjna - "true" - zakładamy że wszystkie dane są OK (wstępnie);
 
-            $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING); // SANITYZACJA - adv-search-category;
+            $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING); // SANITYZACJA - adv-search-category; --> $category | FALSE;
             // FILTER_SANITIZE_STRING - strip tags and HTML-encode double and single quotes, optionally strip or encode special characters;
             $_SESSION["adv-search-category"] = $category;
             $_SESSION["kategoria"] = $category; // (chcemy zostawić kategorię po odświeżeniu strony, nawet jeśli dane nie przejdą walidacji);
 
             unset($_SESSION["subcategory"]);
 
-            if( $category === false || $category === null || ( $_SESSION["adv-search-category"] !== $_POST["adv-search-category"] ) ) {
+            if( empty($category) // pusta wartość --> "" (empty), lub nie przeszła walidacji (false)
+                || ( $_SESSION["adv-search-category"] !== $_POST["adv-search-category"] ) ) {
                 // category empty ("") or failed validation ;
                     $valid = false;
             } else { // adv-search-category - passed validation;
 
                 if($_SESSION["adv-search-category"] != "Wszystkie") { // "Informatyka",  "Dla dzieci",  "Fantastyka", ...
 
-                    $_SESSION["category-exists"] = false;
                     query("SELECT nazwa FROM kategorie WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
-                    // $_SESSION["category-exists"] ==> true;
+                    // $_SESSION["category-exists"] ==> true/false; (zależnie od tego czy istnieje taka kategoria);
 
                     if($_SESSION["category-exists"] === false) {
                         unset($_SESSION["category-exists"]);
@@ -279,7 +309,9 @@
                 $title = filter_input(INPUT_POST, "adv-search-title", FILTER_SANITIZE_STRING);
                 $_SESSION["adv-search-title"] = $title;
 
-                if ( $title === false || ($_SESSION["adv-search-title"] !== $_POST["adv-search-title"]) || strlen($title)>255 ) {
+                if ( empty($title) // (false) - nie przeszedł walidacji,
+                    || ($_SESSION["adv-search-title"] !== $_POST["adv-search-title"])
+                    || strlen($title)>255 ) {
                     $valid = false;
                 }
             }
@@ -291,11 +323,11 @@
             if ( ! empty($_POST["adv-search-author"]) ) { // sanitize adv-search-author;
 
                 // get highest author-id from database ;
-                query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "get_author_id", "");
-                // $_SESSION["max-author-id"] => id_autora - "36";
+                query("SELECT MAX(id_autora) FROM autor", "get_author_id", "");
+                // $_SESSION["max-author-id"] => id_autora --> "36";
 
                 $author = filter_input(INPUT_POST, "adv-search-author", FILTER_SANITIZE_NUMBER_INT);
-                // Remove all characters except digits, plus and minus sign
+                // Remove all characters except digits, plus and minus sign; --> $author | FALSE
 
                 // validate author-id - ✓ valid integer in specific range ;
                 $_SESSION["adv-search-author"] = filter_var($author, FILTER_VALIDATE_INT, [
@@ -307,11 +339,11 @@
                 ); // ✓ It ensures that the value is an integer within the specified range;
 
                 // check if that author (id) exists in db ... ;
-                $_SESSION["author-exists"] = false;
                 query("SELECT id_autora FROM autor WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]);
-                // ✓ przestawi $_SESSION["author-exists"] na true, jeśli taki autor (id) istnieje
+                // ✓ $_SESSION["author-exists"] --> true/false, (zależnie od tego, czy istnieje taki autor o takim id)
 
-                if( $author === false || $_SESSION["adv-search-author"] === false || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || $_SESSION["author-exists"] === false ) {
+                if( empty($author) // (false) - id nie przeszło walidacji
+                    || $_SESSION["adv-search-author"] === false || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || $_SESSION["author-exists"] === false ) {
                     // author (id) didn't pass validation
                     $valid = false;
                 }
@@ -349,6 +381,10 @@
                 if( $year_max === false || $_SESSION["year-max"] === false ) {
                     $valid = false;
                 }
+
+                if ($_SESSION["year-min"] > $_SESSION["year-max"]) {
+                    $valid = false;
+                }
             }
 
             // $_SESSION["adv-search-category"]
@@ -361,13 +397,12 @@
             if ( $valid === false ) {
                 // validation failed - data didn't pass validation -  redirect to main-page (index.php);
 
-                // ✖ $_SESSION["kategoria"] = "Wszystkie"; // ? - testowałem i - i tak jest ustawiana ;
-
                 unset($_POST, $category, $_SESSION["adv-search-category"], $_SESSION["kategoria"], $_SESSION["category-exists"], $title, $_SESSION["adv-search-title"], $author, $_SESSION["adv-search-author"], $_SESSION["max-author-id"], $_SESSION["author-exists"], $_SESSION["adv-search-query"], $year_min, $year_max, $_SESSION["year-min"], $_SESSION["year-max"]);
                     header('Location: index.php', true, 303);
                         exit();
 
             } else { // $valid === true;
+
                 // validation passed - all POST values are valid (correct) ;
                 // echo "<br> all POST values are valid (correct) <br>"; exit();
                     // ✓ zmienne sesyjne ($_SESSION) z formularza ustawione
@@ -447,10 +482,11 @@
 
     }         // if ( $_SERVER['REQUEST_METHOD'] === "POST" ) ...
 
-    if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) ) {
+   if ( ! isset($_SESSION["kategoria"]) || empty($_SESSION["kategoria"]) ) {
 
         $_SESSION["kategoria"] = "Wszystkie"; // "normal" entry from main-page (index.php) ;
     }
+
 ?>
 
 <!DOCTYPE HTML>
@@ -467,6 +503,10 @@
         <div id="container">
 
             <main>
+
+                <?php echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; ?>
 
                 <aside id="book-filters">
 
@@ -861,11 +901,36 @@
                         /*echo '<div id="content">';
                             echo '<div id="content-books">';*/
 
-                            if(isset($_SESSION["subcategory"])) {
-                                displayBooksWithSubcategory($_SESSION['kategoria'], $_SESSION["subcategory"]);
+
+
+                            if(isset($_SESSION["no-results"]) && !empty($_SESSION["no-results"])) {
+
+                                echo '<div id="content">';
+                                    echo '<div id="content-books">';
+
+                                        echo '<span class="main-page-search-result-error">' . $_SESSION["no-results"] . '</span>';
+                                        unset($_SESSION["no-results"]);
+
+                                    echo '</div>'; // #content-books;
+                                echo '</div>'; // #content;
+
                             } else {
-                                displayBooks($_SESSION['kategoria']);
+                                if(isset($_SESSION["subcategory"])) {
+                                    displayBooksWithSubcategory($_SESSION['kategoria'], $_SESSION["subcategory"]);
+                                } else {
+                                    displayBooks($_SESSION['kategoria']);
+                                }
                             }
+
+                        /*if(isset($_SESSION["subcategory"])) {
+                            displayBooksWithSubcategory($_SESSION['kategoria'], $_SESSION["subcategory"]);
+                        } else {
+                            displayBooks($_SESSION['kategoria']);
+                        }*/
+
+
+
+
 
                             //displayBooks($_SESSION['kategoria']);
                             //                            if($_SESSION['kategoria'] == "Wszystkie")

@@ -54,12 +54,10 @@
         $result->free_result();
     }
 
-    function get_authors_adv_search($result)
-    {
-        // \user\index.php - header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
+    function get_authors_adv_search($result) { // \user\index.php - header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
 
-            /*echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';*/
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) { // tyle ile jest autorów (imie, nazwisko, id_autora)
+
             //echo "\n".'<option value="'.$row['id_autora'].'">'.$row['imie']." ".$row['nazwisko'].'</option>';
 
             // load the content from the external template file into string
@@ -85,43 +83,33 @@
 
 	function get_categories($result) // \user\index.php - top-nav - ol;
 	{
-        // wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
+        // wyświetla listę kategorii;   wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
 
-		    $category_name = "Wszystkie";
+        /*echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
 
-            /*echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
+        $categoryName = "Wszystkie";
 
-        echo "\n".'<li>                
-            <form method="post" action="index.php">
-                <input type="hidden" name="kategoria" value="'.$category_name.'">
-                <button class="submit-book-form" type="submit">'.$category_name.'</button>
-            </form>                          
-        </li>';
+        // load the content from the external template file into string
+        $listItem = file_get_contents("../template/top-nav-categories.php"); // <--- szablon elementu listy;
+
+        // replace fields in $listItem string to  category data from $result, display result content as HTML
+        echo sprintf($listItem, $categoryName, $categoryName);
 
 		while ($row = $result->fetch_assoc()) // tyle ile jest kategorii (name);
 		{
-            // echo '<li><a href="index.php?kategoria='.$row['kategoria'].' ">'.$row['kategoria'].'</a></li>';
-            // echo "\n".'<li><a href="index.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a></li>';
-            echo "\n".'<li>
-                           <form method="post" action="index.php">
-                                <input type="hidden" name="kategoria" value="'.$row["nazwa"].'">
-                                <button class="submit-book-form" type="submit">'.$row["nazwa"].'</button>
-                           </form>
-                       </li>';
-            // <a href="index.php?kategoria='.$row['nazwa'].'">'.$row['nazwa'].'</a>
-            /*<!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->*/
+            echo sprintf($listItem, $row["nazwa"], $row["nazwa"]);
+
 		}
 
         $result->free_result();
 	}
 
-    function get_categories_adv_search($result) // \user\index.php
+    function get_categories_adv_search($result) // \user\index.php // advanced_search --> <select> - lista kategorii;
     {
-            // header -> advanced_search -> <select> - lista kategorii;
-        $category_name = "Wszystkie";
-            echo "\n".'<option value="'.$category_name.'">'.$category_name.'</option>';
-        while ($row = $result->fetch_assoc()) {
-            echo "\n".'<option value="'.$row['nazwa'].'">'.$row['nazwa'].'</option>';
+        while ($row = $result->fetch_assoc()) { // tyle ile jest kategorii
+
+            echo '<option value="'.$row['nazwa'].'">'.$row['nazwa'].'</option>';
+
         }
         $result->free_result();
     }
@@ -135,35 +123,41 @@
 
                 $i = 0;
 
-                while ($row = $result->fetch_assoc())
-                {
+                //print_r($result); exit();
 
-                //		  	echo '<div id="book'.$i.'" class="book">';
-                //			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
-                //			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
-                //			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';
-                //			  	echo '<form action="add_to_cart.php" method="post">';
-                //			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
-                //			  		echo '<input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">';
-                //			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
-                //			  	echo '</form>';
-                //		  	echo '</div>';
+                if($result->num_rows) { // 1, 2, 3, ...
 
-                //            $book = '
-                //                <div id="book%s" class="book">
-                //                    <div class="title">%s</div><br>
-                //                    <div class="price">%s</div><br>
-                //                    <div class="year">%s</div><br>
-                //                    <form action="add_to_cart.php" method="post">
-                //                        <input type="hidden" name="id_ksiazki" value="%s">
-                //                        <input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">
-                //                        <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>
-                //                    </form>
-                //                </div>
-                //            ';
+                    //echo "<br> 140 <br>"; exit();
 
-                    // load the content from the external template file into string
-                    $book = file_get_contents("../template/content-books.php");
+                    while ($row = $result->fetch_assoc())
+                    {
+
+                        //		  	echo '<div id="book'.$i.'" class="book">';
+                        //			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
+                        //			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
+                        //			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';
+                        //			  	echo '<form action="add_to_cart.php" method="post">';
+                        //			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
+                        //			  		echo '<input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">';
+                        //			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
+                        //			  	echo '</form>';
+                        //		  	echo '</div>';
+
+                        //            $book = '
+                        //                <div id="book%s" class="book">
+                        //                    <div class="title">%s</div><br>
+                        //                    <div class="price">%s</div><br>
+                        //                    <div class="year">%s</div><br>
+                        //                    <form action="add_to_cart.php" method="post">
+                        //                        <input type="hidden" name="id_ksiazki" value="%s">
+                        //                        <input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">
+                        //                        <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>
+                        //                    </form>
+                        //                </div>
+                        //            ';
+
+                        // load the content from the external template file into string
+                        $book = file_get_contents("../template/content-books.php");
 
                         /*if($row["ilosc_egzemplarzy"] == null) {
                             $row["ilosc_egzemplarzy"] = 'niedostępna';
@@ -172,14 +166,18 @@
                                 $row["ilosc_egzemplarzy"] = 'dostępna';
                             }
                         }*/
-                    $row["ilosc_egzemplarzy"] = ($row["ilosc_egzemplarzy"] === null) ? 'niedostępna' : ($row["ilosc_egzemplarzy"] > 0 ? 'dostępna' : 'niedostępna');
+                        $row["ilosc_egzemplarzy"] = ($row["ilosc_egzemplarzy"] === null) ? 'niedostępna' : ($row["ilosc_egzemplarzy"] > 0 ? 'dostępna' : 'niedostępna');
 
-                    $button = ($row["ilosc_egzemplarzy"] === 'dostępna') ? '' : 'disabled'; // "Dodaj do koszyka" - <button> ;
+                        $button = ($row["ilosc_egzemplarzy"] === 'dostępna') ? '' : 'disabled'; // "Dodaj do koszyka" - <button> ;
 
-                    // replace fields in $book string to book data from $result, display result content as HTML
-                    echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"], $button);
+                        // replace fields in $book string to book data from $result, display result content as HTML
+                        echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"], $button);
 
-                    $i++;
+                        $i++;
+                    }
+                } else {
+                    echo '<span class="main-page-search-result-error">Brak wyników</span>';
+
                 }
 
             echo '</div>'; // #content-books;
@@ -457,8 +455,8 @@
 //		$result->free_result();
 //	}
 
-	function count_cart_quantity($result) // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku; \user\index.php - pobiera ilość książek klienta w koszyku;
-	{
+	function count_cart_quantity($result) { // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku;
+                                            // \user\index.php - pobiera ilość książek klienta w koszyku;
 		$row = $result->fetch_assoc();
 
 //		if($row['suma'] == NULL) {
@@ -471,6 +469,9 @@
         $_SESSION['koszyk_ilosc_ksiazek'] = ($row['suma'] == NULL) ? 0 : $row['suma']; // SUM(ilosc) AS suma -> $row["suma"];
 
 		$result->free_result();
+
+        // !!! $result -> num_rows
+        // w przypadku gdy podano id nieistniejącego klienta, zwróci 1 WIERSZ, z wartością NULL (suma == NULL)
 	}
 
 	function get_product_from_cart($result)	// koszyk.php, order.php
@@ -1123,14 +1124,17 @@ EOT;
 
     function verifyAuthorExists($result) { // \admin\edit-book-data,    \user\index.php - advanced-search (prg)
 
-        if($result->num_rows) {
+        if($result->num_rows) { // 1, 2, 3
             // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
-                $_SESSION['author-exists'] = true;
+            $_SESSION["author-exists"] = true;
+
             $result->free_result();
 
         } else { // można nawet to zakomentować;
             //echo "<br>no<br>";
             // do nothing !
+
+            $_SESSION["author-exists"] = false;
         }
     }
 
@@ -1149,14 +1153,17 @@ EOT;
 
     function verifyCategoryExists($result) { // \admin\edit-book-data,
                                              // \user\index.php - PRG - spr, czy istnieje kategoria o takiej nazwie;
-        if($result->num_rows) {
+        if($result->num_rows) { // 1, 2, 3, ...
             // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
-                $_SESSION['category-exists'] = true;
+            $_SESSION["category-exists"] = true;
+
             $result->free_result();
 
         } else { // można nawet to zakomentować;
-            //echo "<br>no<br>"; // \user\index.php - można usunąć warunek else, ponieważ $_SESSION['category-exists'] == false;
+            //echo "<br>no<br>"; // \user\index.php - można usunąć warunek else, ponieważ $_SESSION['category-exists"] == false;
             // do nothing !
+
+            $_SESSION["category-exists"] = false;
         }
     }
 
@@ -1165,11 +1172,11 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
     if($result->num_rows) {
 
         $_SESSION['subcategory-exists'] = true;
+
         $result->free_result();
 
-    } else { // można nawet to zakomentować;
-        //echo "<br>no<br>"; // \user\index.php - można usunąć warunek else, ponieważ $_SESSION['subcategory-exists'] == false;
-        // do nothing !
+    } else {
+        $_SESSION['subcategory-exists'] = false;
     }
 }
 

@@ -71,6 +71,7 @@
                         <li class="btn from-center">
                                 <!--<a href="___kategorie.php">Kategorie</a>-->
                             <a href="#" id="a-categories-top-nav">Kategorie</a>
+
                             <ul id="categories-list">
                                 <?php
                                     query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories", "");
@@ -150,6 +151,7 @@
                             </label>
                         </span>
                             <select id="adv-search-category" name="adv-search-category">
+                                <option value="Wszystkie">Wszystkie</option>
                                 <?php
                                     query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories_adv_search", "");
                                     // <option value=" nazwa_kategorii "> nazwa_kategorii </option>-->

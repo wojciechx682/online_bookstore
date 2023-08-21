@@ -4574,3 +4574,12 @@ input#token {
 form#password-reset-input label:hover {
     cursor: pointer;
 }
+
+/* --------------------------------------------------------------------------------------------------------- */
+
+span.main-page-search-result-error {
+    display: block;
+    font-weight: bold;
+
+    margin: 15px 0 0 7px;
+}
