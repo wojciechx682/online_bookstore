@@ -1,10 +1,6 @@
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
-
-
-
-
 window.addEventListener('load', () => { // po wczytaniu wszystkich zasobów strony (elementów, stylów, skryptów ...)
 
 	let books = document.querySelectorAll(".outer-book:not(.hidden):not(.hidden-author)");

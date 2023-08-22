@@ -494,8 +494,6 @@
 
 <?php require "../view/___head.php"; ?>
 
-
-
 <body>
 
     <div id="main-container">

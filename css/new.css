@@ -241,15 +241,12 @@ body {
 
 
 
-@media only screen and (max-width: 1023px) {
+@media only screen and (max-width: 1030px) {
 
     /* nav-bar cena */
     div#price-range > label span {
-
         font-size: 90% !important;
-
-        margin-top: 1.6px !important;
-
+        margin-top: 0.6px !important;
     }
     div#price-range > label input[type="number"] {
         /*max-width: 60px;
@@ -271,7 +268,7 @@ body {
         padding-right: 0 !important;
         max-width: 45px !important;
 
-        margin-right: 0px !important;
+        /*margin-right: 0px !important;*/
 
         position: relative !important;
         top: 1px !important;
@@ -638,7 +635,7 @@ body {
 
 }
 
-@media only screen and (max-width: 685px) {
+@media only screen and (max-width: 910px) {
 
     div#nav > select {
         /*margin-top: 15px;
@@ -2012,7 +2009,7 @@ div#nav > select {
     border-radius: 5px;
     /* font-size: 20px; */
     /*font-weight: bold;*/
-    padding: 3px 5px 3px 5px;
+    padding: 3px 8px 5px 6px;
     box-sizing: border-box;
     /*outline: none;*/
     /*margin-top: 10px;*/
@@ -2186,7 +2183,7 @@ div#input-search-nav-div form > input[type="search"] {
     width: 50%;
     position: relative;
     top: .42px;
-    height: 24px !important;
+    height: 28px !important;
 }
 
 
@@ -2200,13 +2197,13 @@ div#input-search-nav-div form > input[type="submit"] {
     color: #424242;
     background-image: url('../assets/search-icon.png');
     background-repeat: no-repeat;
-    background-position: right 11px top 3px;
+    background-position: right 11px top 6px;
     background-size: 16px;
     overflow: auto;
     min-width: 38px;
     position: relative;
     /* top: 7.499999799px; */
-    top: 7px;
+    top: 10px;
     /*padding: 4px 0 4px 8px;*/
 
     padding: 0 !important;
@@ -2217,7 +2214,7 @@ div#input-search-nav-div form > input[type="submit"] {
 
     box-sizing: content-box;
 
-    height: 22px !important;
+    height: 28px !important;
 }
 
 /*#div-search > form#search-form > input[type="submit"] {
@@ -2376,7 +2373,7 @@ ul#second-list::-webkit-scrollbar-thumb
 ul#ul-book-status-list::-webkit-scrollbar-thumb*/
 {
     background: #727272;     /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
+    border-radius: 12px;       /* roundness of the scroll thumb */
     /*border: 3px solid orange;*/  /* creates padding around scroll thumb */
 }
 
