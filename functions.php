@@ -56,16 +56,19 @@
 
     function get_authors_adv_search($result) { // \user\index.php - header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
 
+        // load the content from the external template file into string
+        $author = file_get_contents("../template/adv-search-authors.php");
+
+        echo sprintf($author, "", "", "");
+
         while ($row = $result->fetch_assoc()) { // tyle ile jest autorów (imie, nazwisko, id_autora)
 
             //echo "\n".'<option value="'.$row['id_autora'].'">'.$row['imie']." ".$row['nazwisko'].'</option>';
 
-            // load the content from the external template file into string
-            $author = file_get_contents("../template/adv-search-authors.php");
-
             // replace fields in $author string to author data from $result, display result content as HTML
             echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
         }
+
         $result->free_result();
 
 //        while ($row = $result->fetch_assoc())
@@ -85,20 +88,19 @@
 	{
         // wyświetla listę kategorii;   wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
 
-        /*echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
+            /*echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
 
         $categoryName = "Wszystkie";
 
         // load the content from the external template file into string
-        $listItem = file_get_contents("../template/top-nav-categories.php"); // <--- szablon elementu listy;
+        $listItem = file_get_contents("../template/top-nav-categories.php"); // <--- szablon dla elementu listy;
 
-        // replace fields in $listItem string to  category data from $result, display result content as HTML
+        // replace fields in $listItem string to category data from $result, display result content as HTML
         echo sprintf($listItem, $categoryName, $categoryName);
 
 		while ($row = $result->fetch_assoc()) // tyle ile jest kategorii (name);
 		{
             echo sprintf($listItem, $row["nazwa"], $row["nazwa"]);
-
 		}
 
         $result->free_result();
@@ -106,11 +108,19 @@
 
     function get_categories_adv_search($result) // \user\index.php // advanced_search --> <select> - lista kategorii;
     {
+        $categoryName = "Wszystkie";
+
+        // load the content from the external template file into string
+        $category = file_get_contents("../template/adv-search-categories.php");
+
+        echo sprintf($category, $categoryName, $categoryName);
+
         while ($row = $result->fetch_assoc()) { // tyle ile jest kategorii
 
-            echo '<option value="'.$row['nazwa'].'">'.$row['nazwa'].'</option>';
-
+            // replace fields in $author string to author data from $result, display result content as HTML
+            echo sprintf($category, $row['nazwa'], $row["nazwa"]);
         }
+
         $result->free_result();
     }
 

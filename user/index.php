@@ -323,7 +323,7 @@
             if ( ! empty($_POST["adv-search-author"]) ) { // sanitize adv-search-author;
 
                 // get highest author-id from database ;
-                query("SELECT MAX(id_autora) FROM autor", "get_author_id", "");
+                query("SELECT MAX(id_autora) AS id_autora FROM autor", "get_author_id", "");
                 // $_SESSION["max-author-id"] => id_autora --> "36";
 
                 $author = filter_input(INPUT_POST, "adv-search-author", FILTER_SANITIZE_NUMBER_INT);
@@ -494,6 +494,8 @@
 
 <?php require "../view/___head.php"; ?>
 
+
+
 <body>
 
     <div id="main-container">
@@ -504,9 +506,9 @@
 
             <main>
 
-                <?php echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                <?php /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; ?>
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/ ?>
 
                 <aside id="book-filters">
 
@@ -514,19 +516,19 @@
 
                         <?= "<h3>".$_SESSION["kategoria"]; ?>
 
-                        <?= isset($_SESSION["subcategory"]) ? " \ " . $_SESSION["subcategory"] . "</h3>" : ""; ?>
+                        <?= isset($_SESSION["subcategory"]) ? " / " . $_SESSION["subcategory"] . "</h3>" : ""; ?>
 
                         <h3>
                             <label for="sortBy">Sortowanie</label>
                         </h3>
 
                         <select id="sortBy">
-                            <option value="1">ceny rosnąco</option>
-                            <option value="2">ceny malejąco</option>
-                            <option value="3">nazwy A-Z</option>
-                            <option value="4">nazwy Z-A</option>
-                            <option value="5">Najnowszych</option>
-                            <option value="6">Najstarszych</option>
+                            <option data-sort="price" data-order="asc" value="1">ceny rosnąco</option>
+                            <option data-sort="price" data-order="desc" value="2">ceny malejąco</option>
+                            <option data-sort="title" data-order="asc" value="3">nazwy A-Z</option>
+                            <option data-sort="title" data-order="desc" value="4">nazwy Z-A</option>
+                            <option data-sort="year" data-order="asc" value="5">Najstarszych</option>
+                            <option data-sort="year" data-order="desc" value="6">Najnowszych</option>
                         </select>
 
                         <!-- <button id="sort_button" onclick="sortBooks()">Sortuj</button> -->
@@ -537,20 +539,20 @@
 
                         <div id="price-range">
 
-                            <label>
-                                <span>
-                                    Min
-                                </span>
-                                    <input type="number" id="value-min" step="1" min="5">
-                            </label>
+                                <label>
+                                    <span>
+                                        Min
+                                    </span>
+                                        <input type="number" id="min-price" step="1" min="5">
+                                </label>
                             <label>
                                 <span>
                                     Max
                                 </span>
-                                    <input type="number" id="value-max" step="1" max="150">
+                                    <input type="number" id="max-price" step="1" max="150">
                             </label>
 
-                            <div id="slider"></div> <!-- jQuery NoUISlider --> <!-- noUiSlider -->
+                            <div id="price-slider"></div> <!-- jQuery NoUISlider --> <!-- noUiSlider -->
 
                         </div>
 

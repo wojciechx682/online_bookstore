@@ -1,33 +1,33 @@
 
-// price-range - noUISlider (jQ) ;  // książka jQuery - strona 544 - 549;
+    let inputMin = document.getElementById('min-price');
+    let inputMax = document.getElementById('max-price');
+    let slider = document.getElementById('price-slider');
 
-//(function() {
+    const filterBooks = (min, max, flag) => { // funkcja filtrująca książki na podstawie przedziału cenowego.
+                                        // Arrow Function Expression
 
-    let inputMin = document.getElementById('value-min'); // input type number - input#value-min - minimum price value input;
-    let inputMax = document.getElementById('value-max'); // input type number - input#value-max - maximum price value input;
+        let books = document.querySelectorAll("#content-books .outer-book:not(.hidden-author)"); // NodeList;
 
-    function update(min, max) { // update content-books
+            console.log("\n books -> ", books);
+            console.log("\n typeof books -> ", typeof books);
+            console.log("\n books instanceof NodeList -> ", books instanceof NodeList);
 
-        let books = document.querySelectorAll("#content-books .outer-book:not(.hidden-author)");
-        // kolekcja elementów DOM (NodeList) - divy z książkami;
+        min = parseInt(min); // convert values to Int;
+        max = parseInt(max);
 
-        console.log("\n 17 books -> ", books);
-        console.log("\n 17 typeof books -> ", typeof books);
-        console.log("\n 17 books instanceof NodeList -> ", books instanceof NodeList); // true
+            console.log("\n min -> ", min);
+            console.log("\n max -> ", max);
 
-        for(let i=0; i < books.length; i++) { // for every book <div>;
+        for (let i = 0; i < books.length; i++) {
 
             let price = parseFloat(DOMPurify.sanitize(books[i].querySelector(".book .book-price span").innerHTML));
-            // get the price of that book;
+            // sanitize values,
+            // convert values to Float;
 
-            console.log("\n price --> ", price);
-
-            min = parseInt(min); // min input-value from slider (number)
-            max = parseInt(max); // max input-value from slider (number)
-
-            if((price >= min) && (price <= max)) {   // add or remove "hidden" clsas;
+            if(price >= min && price <= max) {
 
                 books[i].classList.remove('hidden');
+
             } else {
 
                 books[i].classList.add('hidden');
@@ -37,21 +37,21 @@
         filterAuthors(); // wzajemna integracja filtrów - rozwiązanie;
     }
 
-    let slider = document.getElementById('slider');
-
-    noUiSlider.create(slider, {
+    noUiSlider.create(slider, { // create new slider using NoUISlider library
         start: [17, 136],
         connect: true,
         margin: 15,
-        padding: 0,
+        padding: [0, 3],
         step: 1,
         range: {
             'min': 5,
-            'max': 150
+            'max': 148
         }
     });
 
     slider.noUiSlider.on('change', function (values, handle) {
+
+        // execute function after changing price range on slider
 
         // values: Current slider values (array);
         // handle: Handle that caused the event (number);
@@ -60,39 +60,37 @@
         // positions: Left offset of the handles (array);
         // noUiSlider: slider public Api (noUiSlider);
 
-        let value = values[handle];
+        if (handle) {
 
-        if (handle === 0) { // Pierwszy uchwyt odpowiada za wartość minimalną
+            inputMax.value = Math.round(values[handle]);
 
-            inputMin.value = Math.round(value);
+        } else {
 
-        } else if (handle === 1) {  // Drugi uchwyt odpowiada za wartość maksymalną
-
-            inputMax.value = Math.round(value);
+            inputMin.value = Math.round(values[handle]);
         }
 
-        update(values[0], values[1]);
+        filterBooks(values[0], values[1]);
 
     });
 
+
+
     inputMin.addEventListener('change', function () {
         slider.noUiSlider.set([this.value, null]);
+            let currentValues = slider.noUiSlider.get();
+            filterBooks(currentValues[0], currentValues[1]);
     });
 
     inputMax.addEventListener('change', function () {
         slider.noUiSlider.set([null, this.value]);
+            let currentValues = slider.noUiSlider.get();
+            filterBooks(currentValues[0], currentValues[1]);
+
     });
 
     let initialValues = slider.noUiSlider.get();  // set init values for inputs
     inputMin.value = Math.round(initialValues[0]);
     inputMax.value = Math.round(initialValues[1]);
-
-
-
-
-
-
-
 
 //}());
 

@@ -17,7 +17,7 @@
 
     <script src="../node_modules/nouislider/dist/nouislider.js"></script>
 
-<script src="../scripts/sortowanie_v3_2.js"></script> <!-- books - sortowanie -->
+
     <!--<script src="../scripts/display-slider.js"></script>-->
 
 

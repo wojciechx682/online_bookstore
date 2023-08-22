@@ -1,93 +1,116 @@
 
 // filtering - <ul> author's list ;
 
+// Kod JavaScript umożliwia użytkownikowi filtrowanie książek na podstawie autorów za pomocą checkboxów. Jeśli użytkownik zaznaczy niektóre checkboxy i kliknie "Zastosuj", tylko książki tych autorów będą widoczne. Checkbox "Wszyscy" pozwala na zaznaczenie lub odznaczenie wszystkich checkboxów.
+
 /*(function() {*/
 
-    let button = document.getElementById("filter-authors"); // <button id="filter-authors"> Zastosuj </button>
-    let firstCheckbox = document.getElementById('all-authors'); // input type="checkbox" - "Wszyscy";
-    // NodeList of    ALL    <input checkbox> (authors);    // wszystkie checkboxy;
-    let items = document.querySelectorAll('#ul-authors input[type="checkbox"]:not(#all-authors)'); // input type="checkbox"
+    let button = document.getElementById("filter-authors");         // <button> - Zastosuj
+    let firstCheckbox = document.getElementById("all-authors");     // <input>  - "Wszyscy"
 
-    button.addEventListener("click", filterAuthors);
-    firstCheckbox.addEventListener("change", updateAll);
+    let items = document.querySelectorAll('#ul-authors input[type="checkbox"]:not(#all-authors)'); // NodeList -> <input>
 
-    function updateAll() { // wywołanie po kliknięciu inputa "Wszyscy"
-        for(let i=0; i < items.length; i++) { // tyle razy ile jest checkboxów z autorami (poza inputem "Wszyscy")
+    const updateAll = () => {                           // wywołanie po kliknięciu inputa "Wszyscy"
+        /*for (let i = 0; i < items.length; i++) {        // tyle razy ile jest checkboxów z autorami (poza inputem "Wszyscy")
             items[i].checked = firstCheckbox.checked;   // uaktualnienie właściwości checked zgodnie z tym jaką ma input "Wszyscy"
-        }
+        }*/
+
+        items.forEach(item => {
+            item.checked = firstCheckbox.checked;
+        });
     }
 
-/*window.addEventListener("load", function() {
+window.addEventListener("load", function() {
     if(window.localStorage) {
         let authors = JSON.parse(localStorage.getItem("authors"));
         if (authors) {
-            /!*console.log("149 ls authors -> ", authors);
+            /*console.log("149 ls authors -> ", authors);
             console.log("150 ls authors.length -> ", authors.length);
             console.log("151 ls typeof(authors) -> ", typeof(authors));
-            console.log("149 li -> ", li);*!/
+            console.log("149 li -> ", li);*/
             //filterAuthors();
             for(let i = 0; i < authors.length; i++) {
-                for(let j = 0; j < li.length; j++) {
-                    if(li[j].value === authors[i]) {
-                        li[j].checked = true;
+                for(let j = 0; j < items.length; j++) {
+                    if(items[j].value === authors[i]) {
+                        items[j].checked = true;
                     }
                 }
             }
             filterAuthors();
         }
     }
-});*/
+});
 
-function filterAuthors()  {
+const filterAuthors = () => {
 
-    const itemsChecked = document.querySelectorAll('#ul-authors input[type="checkbox"]:checked:not(#all-authors)');
-    // NodeList of <input checkbox CHECKED ! >
+    /*const checked = document.querySelectorAll('#ul-authors input[type="checkbox"]:checked:not(#all-authors)'); // NodeList - of <input> checkbox - CHECKED
+    const items = Array.from(checked); // Array - <input> type="checkbox" - checked
+    const authors = items.map(items => items.value.trim());*/
 
-    let items = Array.from(itemsChecked); // input type="checkbox" checked (!);
-    /*console.log("\n43 items (all-inputs checked) => ", items);
-    console.log("\n43 items[0] (all-inputs checked) => ", items[0]);
-    console.log("\n43 typeof items[0] (all-inputs checked) => ", typeof items[0]);*/
-                //console.log("\n43 typeof items (all-inputs checked) => ", typeof items);
-    const authors = items.map(items => items.value.trim());
-    console.log("\n 48 authors ->", authors);   // tablica (stringów) z listą autorów (imie, nazwisko); - (ZAZNACZONE CHECKBOXY !)
-    console.log("\n 48 authors[0] ->", authors[0]);
-    console.log("\n 48 typeof authors[0] ->", typeof authors[0]);
-                                                // authors -> ['Jerzy Grębosz', 'Adam Nowak'];
-            //console.log("\n 48 typeof authors ->", typeof authors);
+    //console.log("\n authors ->", authors);   // tablica (stringów) z listą autorów (imie, nazwisko); - (ZAZNACZONE CHECKBOXY !)
+    //console.log("\n typeof authors ->", typeof authors);   // tablica (stringów) z listą autorów (imie, nazwisko); - (ZAZNACZONE CHECKBOXY !)
+                                                           // authors -> ['Jerzy Grębosz', 'Adam Nowak'];
 
-            /*for (let i = 0; i < authors.length; i++) {
-                console.log("author ->", authors[i]);
-            }
-            */
+    /*$min = $('#value-min');
+    $max = $('#value-max');
 
-    // pokazanie tylko książek z dopasowanymi autorami ->
-    //let books = document.querySelectorAll("#content-books .book");  // NodeList - kolekcja - divy z książkami ;
+    console.log("\n min --> ", $min.val());
+    console.log("\n max --> ", $max.val());
+
+    filterBooks($min, $max, false);*/
+
+
+    const checkedAuthors = Array.from(
+        document.querySelectorAll('#ul-authors input[type="checkbox"]:checked:not(#all-authors)')
+    ).map(item => item.value.trim());
+
+    console.log("\n authors ->", checkedAuthors);
+
+        // pokazanie tylko książek z dopasowanymi autorami ->
+        //let books = document.querySelectorAll("#content-books .book");  // NodeList - kolekcja - divy z książkami ;
     let books = document.querySelectorAll("#content-books > .outer-book:not(.hidden)");  // NodeList - kolekcja - divy z książkami ;
-    console.log("\n58 books => ", books);
-    console.log("\n58 typeof books => ", typeof books); // object;
 
-    //document.querySelectorAll("#content-books > .outer-book:not(.hidden)")
+    console.log("\nbooks => ", books);
+    console.log("\ntypeof books => ", typeof books); // object;
 
-// (!) Ukrycie WSZYSTKICH książek -> dodanie klasy "hidden"
-for(let i = 0; i< books.length; i++) {
-    //let bookAuthor = books[i].querySelector(".book-author").innerHTML;
-    books[i].classList.add('hidden-author');
-}
-    //console.log("\n 68 authors ->", authors);   // tablica z listą autorów (imie, nazwisko); - (ZAZNACZONE CHECKBOXY !)
-    //console.log("\n 68 typeof authors ->", typeof authors);
+/*  for (let i = 0; i < books.length; i++) {
+        //let bookAuthor = books[i].querySelector(".book-author").innerHTML;
+        books[i].classList.add('hidden-author');
+    }
 
-    // pokaż tylko książki z tymi autorami, których wybrano w filtrach -->
-
-    for(let i = 0; i < authors.length; i++) {  // tylko zaznaczeni autorzy (!) --> ['Jerzy Grębosz', 'Adam Nowak'];
+    for(let i = 0; i < checkedAuthors.length; i++) {  // tylko zaznaczeni autorzy (!) --> ['Jerzy Grębosz', 'Adam Nowak'];
 
         for(let j = 0 ; j < books.length; j++) {
             //console.log("\n\n 111 \n\n", books[j]);
 
-            if(books[j].querySelector(".book-author").innerHTML === authors[i]) {
+            if(books[j].querySelector(".book-author").innerHTML === checkedAuthors[i]) {
                 books[j].classList.remove('hidden-author');
             }
         }
-    }
+    } */
+
+    let minValue = parseInt(document.getElementById("min-price").value);
+    let maxValue = parseInt(document.getElementById("max-price").value);
+
+    books.forEach(book => {
+
+        const bookAuthor = book.querySelector(".book-author").innerHTML;
+        const bookPrice = parseFloat(DOMPurify.sanitize(book.querySelector(".book .book-price span").innerHTML));
+
+        if ( checkedAuthors.includes(bookAuthor) &&
+             (bookPrice >= minValue) && (bookPrice <= maxValue) ) {
+
+            book.classList.remove('hidden-author');
+            
+            /*console.log("\n\n\n bookPrice --> ", bookPrice);
+            console.log("\n\n min-value --> ", minValue);
+            console.log("\n\n max-value --> ", maxValue);*/
+
+        } else {
+
+            book.classList.add('hidden-author');
+        }
+    });
 
             // Konwersja NodeList na tablicę -->
             /*let items = Array.from(li);
@@ -141,20 +164,14 @@ for(let i = 0; i< books.length; i++) {
             saveChx();*/
 
 if(window.localStorage) {
-    localStorage.setItem("authors", JSON.stringify(authors));
-}
-
-    /*$min = $('#value-min');
-    $max = $('#value-max');
-
-    console.log("\n min --> ", $min.val());
-    console.log("\n max --> ", $max.val());*/
-
-    //update($min, $max, true);
+    localStorage.setItem("authors", JSON.stringify(checkedAuthors));
 }
 
 
+}
 
+button.addEventListener("click", filterAuthors);
+firstCheckbox.addEventListener("change", updateAll);
 
 /*let all = document.querySelector('#ul-authors > li input[type="checkbox"][id="all-authors"]'); // <input type="checkbox" ... id="all-authors">
 all.addEventListener("change", filterAuthors);*/ // odkomentuj jeśli chcesz filtrować zaraz po klikięciu checkboxa

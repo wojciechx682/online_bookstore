@@ -151,7 +151,6 @@
                             </label>
                         </span>
                             <select id="adv-search-category" name="adv-search-category">
-                                <option value="Wszystkie">Wszystkie</option>
                                 <?php
                                     query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories_adv_search", "");
                                     // <option value=" nazwa_kategorii "> nazwa_kategorii </option>-->
@@ -168,7 +167,6 @@
                                 </label>
                             </span>
                                 <select id="adv-search-author" name="adv-search-author">
-                                    <option value=""></option>
                                         <?php
                                             query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie ASC", "get_authors_adv_search", "");
                                             // <option value=" id_autora "> imie nazwisko </option>-->
@@ -178,25 +176,25 @@
                     </div>
 
                     <div>
-                        <!--<p>-->
-                            <div id="year-range">
 
-                                <span class="adv-search">
-                                    <label for="year-min">
-                                        Rok wydania
-                                    </label>
-                                </span>
+                        <div id="year-range">
+
+                            <span class="adv-search">
+                                <label for="year-min">
+                                    Rok wydania
+                                </label>
+                            </span>
                                 <label>
                                     od <input type="number" id="year-min" name="year-min">
                                 </label>
-                                <label>
-                                    do <input type="number" id="year-max" name="year-max">
-                                </label>
+                            <label>
+                                do <input type="number" id="year-max" name="year-max">
+                            </label>
 
-                                <div id="adv-search-year-slider"></div> <!-- !!! jQuery NoUISlider -->
+                            <div id="adv-search-year-slider"></div> <!-- jQuery NoUISlider -->
 
-                            </div>
-                        <!--</p>-->
+                        </div>
+
                     </div>
 
                     <input type="submit" value="Szukaj">

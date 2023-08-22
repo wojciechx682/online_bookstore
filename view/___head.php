@@ -17,8 +17,6 @@
             <link rel="stylesheet" href="../node_modules/nouislider/dist/nouislider.css">
             <link rel="stylesheet" href="../css/jquery-outsider2.css">
 
-
-
         <link rel="preconnect" href="https://fonts.googleapis.com">      <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
@@ -38,5 +36,7 @@
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js" integrity="sha512-KqUc2WMPF/gxte9xVjVE4TIt1LMUTidO3BrcItFg0Ro24I7pGNzgcXdnWdezNY+8T0/JEmdC79MuwYn+8UdOqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --> <!-- dom purify -->
 
     <script src="../node_modules/dompurify/dist/purify.min.js"></script> <!-- dom purify --> <!-- zainstalowany za pomocą npm -> npm install dompurify -->
+
+    <script src="../scripts/sortowanie_v3_2.js"></script> <!-- books - sortowanie -->
 
 </head>

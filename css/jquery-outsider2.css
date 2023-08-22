@@ -44,26 +44,28 @@
 
 .noUi-connect {
     background: rgba(33, 146, 197, 0.56);
+    box-shadow: inset 0 0 3px rgba(51,51,51,0.25);
 }
 
 .noUi-horizontal {
-    height: 13px;
+    height: 12px;
 }
 
 .noUi-horizontal .noUi-handle {
-    width: 28px;
-    height: 23px;
+    width: 22px;
+    height: 20px;
     right: -17px;
-    top: -6px;
+    top: -5px;
 }
 
 .noUi-handle:before {
-    left: 8px;
-    top: 4px;
+    left: 6px;
+    top: 2px;
 }
 
 .noUi-handle:after {
-    top: 4px;
+    top: 2px;
+    left: 13px;
 }
 
 .noUi-state-blocked.noUi-connect,

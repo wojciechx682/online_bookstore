@@ -2004,7 +2004,7 @@ div#nav > select:focus {
 
 div#nav > select {
     margin-top: 15px;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
     outline: none;
     /* background-color: rgb(255, 255, 255); */
     color: #707070;
@@ -2048,7 +2048,7 @@ button#sort_button:hover {
 
 div#price-range {
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
-    padding-bottom: 7px;
+    padding-bottom: 10px;
 
     overflow: hidden;
 }
@@ -4415,7 +4415,7 @@ input#year-min {
     width: 250px;
 }
 
-#slider { /* year-min, year-max */
+#price-slider { /* year-min, year-max */
     margin-top: 50px;
     margin-bottom: 15px;
 
@@ -4550,11 +4550,18 @@ div#add-to-cart, div#add-to-cart * {
 /* --------------------------------------------------------------------------------------------------------- */
 
 .outer-book {
-    display: inline-block;
+    /*display: inline-block;*/
+
+    display: none;
+
     /*overflow: auto;
     width: 270px;*/
     margin: 0;
     padding: 0;
+}
+
+.outer-book-visible {
+    display: inline-block;
 }
 
 form[action="logowanie.php"] h3 {
