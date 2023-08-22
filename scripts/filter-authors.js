@@ -1,37 +1,34 @@
 
-// filtering - <ul> author's list ;
+// Kod JavaScript umożliwia użytkownikowi filtrowanie książek na podstawie autorów za pomocą checkboxów.
+// Jeśli użytkownik zaznaczy niektóre checkboxy i kliknie "Zastosuj", tylko książki tych autorów będą widoczne.
+// Checkbox "Wszyscy" pozwala na zaznaczenie lub odznaczenie wszystkich checkboxów.
 
-// Kod JavaScript umożliwia użytkownikowi filtrowanie książek na podstawie autorów za pomocą checkboxów. Jeśli użytkownik zaznaczy niektóre checkboxy i kliknie "Zastosuj", tylko książki tych autorów będą widoczne. Checkbox "Wszyscy" pozwala na zaznaczenie lub odznaczenie wszystkich checkboxów.
+let button = document.getElementById("filter-authors");
+let firstCheckbox = document.getElementById("all-authors");
+let items = document.querySelectorAll('#ul-authors input[type="checkbox"]:not(#all-authors)');
 
-/*(function() {*/
-
-    let button = document.getElementById("filter-authors");         // <button> - Zastosuj
-    let firstCheckbox = document.getElementById("all-authors");     // <input>  - "Wszyscy"
-
-    let items = document.querySelectorAll('#ul-authors input[type="checkbox"]:not(#all-authors)'); // NodeList -> <input>
-
-    const updateAll = () => {                           // wywołanie po kliknięciu inputa "Wszyscy"
-        /*for (let i = 0; i < items.length; i++) {        // tyle razy ile jest checkboxów z autorami (poza inputem "Wszyscy")
-            items[i].checked = firstCheckbox.checked;   // uaktualnienie właściwości checked zgodnie z tym jaką ma input "Wszyscy"
-        }*/
-
-        items.forEach(item => {
-            item.checked = firstCheckbox.checked;
-        });
-    }
+const updateAll = () => {
+    /*for (let i = 0; i < items.length; i++) {
+        items[i].checked = firstCheckbox.checked;
+    }*/
+    items.forEach(item => {
+        item.checked = firstCheckbox.checked;
+    });
+}
 
 window.addEventListener("load", function() {
     if(window.localStorage) {
         let authors = JSON.parse(localStorage.getItem("authors"));
         if (authors) {
-            /*console.log("149 ls authors -> ", authors);
-            console.log("150 ls authors.length -> ", authors.length);
-            console.log("151 ls typeof(authors) -> ", typeof(authors));
-            console.log("149 li -> ", li);*/
-            //filterAuthors();
-            for(let i = 0; i < authors.length; i++) {
-                for(let j = 0; j < items.length; j++) {
-                    if(items[j].value === authors[i]) {
+                /*console.log("149 ls authors -> ", authors);
+                console.log("150 ls authors.length -> ", authors.length);
+                console.log("151 ls typeof(authors) -> ", typeof(authors));
+                console.log("149 li -> ", li);*/
+                //filterAuthors();
+
+            for (let i = 0; i < authors.length; i++) {
+                for (let j = 0; j < items.length; j++) {
+                    if (items[j].value === authors[i]) {
                         items[j].checked = true;
                     }
                 }
@@ -101,7 +98,7 @@ const filterAuthors = () => {
              (bookPrice >= minValue) && (bookPrice <= maxValue) ) {
 
             book.classList.remove('hidden-author');
-            
+
             /*console.log("\n\n\n bookPrice --> ", bookPrice);
             console.log("\n\n min-value --> ", minValue);
             console.log("\n\n max-value --> ", maxValue);*/
@@ -171,6 +168,7 @@ if(window.localStorage) {
 }
 
 button.addEventListener("click", filterAuthors);
+
 firstCheckbox.addEventListener("change", updateAll);
 
 /*let all = document.querySelector('#ul-authors > li input[type="checkbox"][id="all-authors"]'); // <input type="checkbox" ... id="all-authors">
