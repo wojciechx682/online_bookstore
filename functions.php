@@ -482,7 +482,7 @@
         // w przypadku gdy podano id nieistniejącego klienta, zwróci 1 WIERSZ, z wartością NULL (suma == NULL)
 	}
 
-	function get_product_from_cart($result)	// koszyk.php, order.php
+	function get_product_from_cart($result)	// koszyk.php,  order.php
 	{
 		// $row[] -> kl.id_klienta, 		klient
 		//		     ko.id_ksiazki,        	 	     koszyk
@@ -490,6 +490,9 @@
 		//		     ks.tytul, 			    ksiazki
 		//		     ks.cena,               ksiazki
 		//		     ks.rok_wydania         ksiazki
+        //           ks.image_url           ksiazki
+        //           au.imie                         autor
+        //           au.nazwisko                     autor
 
 		$_SESSION['suma_zamowienia'] = 0;
 

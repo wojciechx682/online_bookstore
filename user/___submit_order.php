@@ -43,18 +43,17 @@
 
                 <?php
                     query("SELECT kl.id_klienta, 
-                                        ko.id_ksiazki, ko.ilosc, 
-                                        ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, 
-                                        au.imie, au.nazwisko 
-                                 FROM klienci AS kl, 
-                                      koszyk AS ko, 
-                                      ksiazki AS ks, 
-                                      autor AS au 
-                                 WHERE kl.id_klienta = ko.id_klienta AND 
-                                       ko.id_ksiazki = ks.id_ksiazki AND 
-                                       ks.id_autora = au.id_autora AND 
-                                       kl.id_klienta='%s'", "get_product_from_cart", $_SESSION["id"]);
-                    // książki które zamówił klient o danym ID; (które posiada aktualnie w koszyku) ;
+                                  ko.id_ksiazki, ko.ilosc, 
+                                  ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, 
+                                  au.imie, au.nazwisko 
+                           FROM klienci AS kl, 
+                                koszyk AS ko, 
+                                ksiazki AS ks, 
+                                autor AS au 
+                           WHERE kl.id_klienta = ko.id_klienta AND 
+                                 ko.id_ksiazki = ks.id_ksiazki AND 
+                                 ks.id_autora = au.id_autora AND 
+                                 kl.id_klienta='%s'", "get_product_from_cart", $_SESSION["id"]); // książki które zamówił klient o danym ID; (które posiada aktualnie w koszyku);
                 ?>
 
                 <form action="___order.php" method="post" id="submit-order">
@@ -68,8 +67,7 @@
                     <div>
                         <label>
                             <p class="option">
-                                <input type="radio" name="delivery-type" id="dostawa_kurier_dpd"
-                                                    value="Kurier DPD">
+                                <input type="radio" name="delivery-type" value="Kurier DPD">
                                 <span>
                                     <img src="../assets/dpd.png" title="Kurier DPD">
                                         Kurier DPD
@@ -81,8 +79,7 @@
                     <div>
                         <label>
                             <p class="option">
-                                <input type="radio" name="delivery-type" id="dostawa_kurier_inpost"
-                                                    value="Kurier Inpost">
+                                <input type="radio" name="delivery-type" value="Kurier Inpost">
                                 <span>
                                     <img src="../assets/inpost.png" title="Kurier Inpost">
                                         Kurier Inpost
@@ -94,8 +91,7 @@
                     <div>
                         <label>
                             <p class="option">
-                                <input type="radio" name="delivery-type" id="odbior_paczkomaty_inpost"
-                                                    value="Paczkomaty 24/7 (Inpost)">
+                                <input type="radio" name="delivery-type" value="Paczkomaty 24/7 (Inpost)">
                                 <span>
                                     <img src="../assets/paczkomaty24_7.png" title="Paczkomaty 24/7 (Inpost)">
                                         Paczkomaty 24/7 (Inpost)
@@ -107,8 +103,7 @@
                     <div>
                         <label>
                             <p class="option">
-                                <input type="radio" name="delivery-type" id="odbior_poczta_polska"
-                                                    value="Odbiór w punkcie (Poczta polska)">
+                                <input type="radio" name="delivery-type" value="Odbiór w punkcie (Poczta polska)">
                                 <span>
                                     <img src="../assets/odbior_poczta_polska.png" title="Odbiór w punkcie (Poczta polska)">
                                         Odbiór w punkcie (Poczta polska)
@@ -120,8 +115,7 @@
                     <div>
                         <label>
                             <p class="option">
-                                <input type="radio" name="delivery-type" id="odbior_w_ksiegarni"
-                                                    value="Odbiór w sklepie (Księgarnia)">
+                                <input type="radio" name="delivery-type" value="Odbiór w sklepie (Księgarnia)">
                                 <span>
                                     <img src="../assets/odbior_osobisty.png" title="Odbiór w sklepie (Księgarnia)">
                                         Odbiór w sklepie (Księgarnia)
@@ -141,8 +135,7 @@
                     <div>
                         <label>
                             <p class="option">
-                                <input type="radio" name="payment-method" id="platnosc-blik"
-                                                    value="Blik">
+                                <input type="radio" name="payment-method" value="Blik">
                                 <span>
                                      <img src="../assets/blik.png" title="Blik">
                                         Blik
@@ -154,8 +147,7 @@
                     <div>
                         <label>
                             <p class="option">
-                                <input type="radio" name="payment-method" id="platnosc-pobranie"
-                                                    value="Pobranie">
+                                <input type="radio" name="payment-method" value="Pobranie">
                                 <span>
                                     <img src="../assets/pobranie.png" title="Pobranie">
                                         Pobranie
@@ -167,8 +159,7 @@
                     <div>
                         <label>
                             <p class="option">
-                                <input type="radio" name="payment-method" id="platnosc-katra-online"
-                                                    value="Karta płatnicza (online)">
+                                <input type="radio" name="payment-method" value="Karta płatnicza (online)">
                                 <span>
                                     <img src="../assets/karta.png" title="Karta płatnicza (online)">
                                         Karta płatnicza (online)

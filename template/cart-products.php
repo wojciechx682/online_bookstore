@@ -53,7 +53,7 @@
 
     <!--<form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form s">-->
 
-    <form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form%s"> <!-- AJAX -->
+    <form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form%s"> <!-- $row["id_ksiazki"] --> <!-- AJAX -->
 
         <input type="hidden" name="book-id" value="%s"> <!-- $row["id_ksiazki"] -->
 
@@ -69,7 +69,7 @@
                    <!-- <input type="hidden" name="id_klienta" value="s">
                     <input type="hidden" name="ilosc" value="s">-->
 
-        <input type="hidden" name="id_ksiazki" value="%s">
+        <input type="hidden" name="id_ksiazki" value="%s"> <!-- $row["id_ksiazki"] -->
         <input type="submit" value="Usuń">
     </form>
 

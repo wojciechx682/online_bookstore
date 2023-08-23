@@ -35,6 +35,11 @@
 
                     // query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, au.imie, au.nazwisko FROM klienci AS kl, koszyk AS ko, ksiazki AS ks, autor AS au WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND kl.id_klienta='%s'", "get_product_from_cart", $_SESSION['id']); // Książki które zamówił klient o danym ID;
 
+                echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();
+
+
                 if ( isset($_POST['delivery-type']) && ! empty($_POST['delivery-type']) &&
                     isset($_POST['payment-method']) && ! empty($_POST['payment-method']) ) { // "value" attribute from input radio
 
