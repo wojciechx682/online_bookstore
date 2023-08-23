@@ -31,25 +31,23 @@
 		get_books($result);
 	}*/
 
-    function get_authors($result)
+    function get_authors($result) // \user\index.php - left <nav>
     {
         // tworzy elementy listy <li> - w których kazdy wyświetli imie i nazwisko autora ;
 
-            echo '<li>
-                      <label>
-                         <input type="checkbox" name="author-checkbox" class="author-checkbox" id="all-authors">Wszyscy
-                      </label>
-                  </li>';
+        echo '<li>
+                  <label>
+                      <input type="checkbox" name="author-checkbox" class="author-checkbox" id="all-authors">Wszyscy
+                  </label>
+              </li>';
 
-            /*echo "<br>40<br>";*/
-            while ($row = $result->fetch_assoc())
-            {
-                // load the content from the external template file into string
-                $author = file_get_contents("../template/content-authors.php");
+        // load the content from the external template file into string
+        $author = file_get_contents("../template/content-authors.php");
 
-                // replace fields in $author string to author data from $result, display result content as HTML
-                echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"]);
-            }
+        while ($row = $result->fetch_assoc())
+        {   // replace fields in $author string to author data from $result, display result content as HTML
+            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"]);
+        }
 
         $result->free_result();
     }
@@ -267,7 +265,7 @@
         echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["cena"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $status, $submit);
         // ../template/book-page.php ;
 
-        // pobranie komentarzy (id_klienta, treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
+        // pobranie komentarzy do książki - (id_klienta, treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
         query("SELECT km.id_klienta, km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]);
         // (!) $_SESSION["comments"]; - ta zmienna zawiera wykorzystany szablon HTML (przechowuje wszystkie komentarze danej książki !);
 
@@ -276,33 +274,33 @@
                 [0] =>
 
                   <section class="comment">
-                      <div class="comment-author">Adam</div>  <!-- $row["imie"] - autor komentarza (imie) -->
-                      <div class="comment-date">2023-08-15 16:20:16</div>    <!-- $row["data"] - 2021-01-01 15:22:34 -->
+                      <div class="comment-author">Adam</div>                                                       <!-- $row["imie"] - autor komentarza (imie) -->
+                      <div class="comment-date">2023-08-15 16:20:16</div>                                          <!-- $row["data"] - 2021-01-01 15:22:34 -->
                       <div class="comment-rate">
-                          <span>4</span>                   <!-- $row["ocena"] - "4" -->
-                          <div class="comment-rate-inner"></div> <!-- (!!!) - JS - width -> 80 procent -->
+                          <span>4</span>                                                                           <!-- $row["ocena"] - "4" -->
+                          <div class="comment-rate-inner"></div> <!-- JS - width -> 80 procent -->
                       </div>
                       <div style="clear: both;"></div>
-                      <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit 1</div> <!--  $row["tresc"] - "abc..." -->
+                      <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit 1</div> <!-- $row["tresc"] - "abc..." -->
                   </section>
 
                   [1] =>
 
                   <section class="comment">
-                      <div class="comment-author">Adam</div>  <!-- $row["imie"] - autor komentarza (imie) -->
-                      <div class="comment-date">2023-08-15 16:20:29</div>    <!-- $row["data"] - 2021-01-01 15:22:34 -->
+                      <div class="comment-author">Adam</div>                                                       <!-- $row["imie"] - autor komentarza (imie) -->
+                      <div class="comment-date">2023-08-15 16:20:29</div>                                          <!-- $row["data"] - 2021-01-01 15:22:34 -->
                       <div class="comment-rate">
-                          <span>5</span>                   <!-- $row["ocena"] - "4" -->
+                          <span>5</span>                                                                           <!-- $row["ocena"] - "4" -->
                           <div class="comment-rate-inner"></div> <!-- (!!!) - JS - width -> 80 procent -->
                       </div>
                       <div style="clear: both;"></div>
-                      <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit 2</div> <!--  $row["tresc"] - "abc..." -->
+                      <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit 2</div> <!-- $row["tresc"] - "abc..." -->
                   </section>
         )*/
 
         $book_page_tabs = file_get_contents("../template/book-page-tabs.php"); // wczytanie szablonu na sekcje (karty) z dodatkowymi informacjami o książce ;
 
-        echo sprintf($book_page_tabs, $row["opis"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], ucfirst($row["oprawa"]), ucfirst($row["stan"]), $row["id_ksiazki"], $row["rating"], $message, implode($_SESSION["comments"]));
+        echo sprintf($book_page_tabs, $row["opis"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], ucfirst($row["oprawa"]), ucfirst($row["stan"]), $row["kategoria"], $row["podkategoria"], round($row["rating"],2), $message, implode($_SESSION["comments"]));
 
         // file_put_contents("../template/book-page-tabs-modified.php", $modified);
     }
@@ -377,7 +375,7 @@
 
     // ..\user\book.php - POST ;
     function get_book_id($result) {
-        // get highest book-id from db to apply max-range filter in ..\book.php (POST);
+        // get highest book-id from db to apply max-range filter in \user\book.php (POST);
             $row = $result->fetch_assoc();
         $_SESSION["max-book-id"] = $row["id_ksiazki"]; // "35"
     }
@@ -1102,7 +1100,7 @@ EOT;
         echo "<br> 993 <br>";
     }
 
-	function cart_verify_book($result)
+	function cart_verify_book($result) // zmienić nazwę na "verifyBookExists" (?)
 	{
         /*echo "<br>1038 -> cart_verify_book <br><hr> -->";
         print_r($result); //exit();*/
@@ -1114,14 +1112,12 @@ EOT;
 
             // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
 
-            $_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
-                /*echo "<br>448<br>";*/
-                //echo $_SESSION['book_exists']; exit();
+            $_SESSION["book_exists"] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
+
             $result->free_result();
 
         } else {
-                //echo "<br>no<br>";
-            // do nothing !
+            $_SESSION["book_exists"] = false;
         }
 
         /*// \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;

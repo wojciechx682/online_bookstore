@@ -728,6 +728,13 @@ body {
 
 }
 
+@media only screen and (max-width: 890px) {
+    #book-page-details {
+        margin-bottom: 0 !important;
+
+    }
+}
+
 @media only screen and (max-width: 710px) {
 
     /* ___my-orders.php */
@@ -756,7 +763,7 @@ body {
 
 }
 
-@media only screen and (max-width: 625px) {
+@media only screen and (max-width: 665px) {
 
     /* ___bok-page.php */
 
@@ -766,7 +773,11 @@ body {
         padding-left: 1% !important;
         padding-right: 1% !important;
 
-        min-width: 175px !important;
+        /*min-width: 175px !important;*/
+    }
+
+    div#book-page div#book-page-image img {
+        width: 167px !important;
     }
 
     div#book-page-rate span.rating-num {
@@ -799,6 +810,10 @@ body {
         position: relative !important;
         left: 73.4px !important;
     }*/
+
+    span#rating-num {
+        margin-left: 30px !important;
+    }
 }
 
 @media only screen and (max-width: 600px) {
@@ -1583,6 +1598,10 @@ header {
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
+#n-top-nav-content ul#categories-list li {
+    width: 150px;
+}
+
 #n-top-nav-content ol > li:nth-child(3),
 #n-top-nav-content ol > li:nth-child(3) a {
 
@@ -1726,7 +1745,7 @@ ul#second-list {
     float: left !important;
     position: relative;
     /*top: -288px;*/ /* js set that property dynamically based on number of categories */
-    left: 125px;
+    left: 150px;
 
     /*width: 295px;*/
     width: 340px;
@@ -2143,9 +2162,13 @@ div#input-search-nav-div > label {
 div#input-search-nav-div h3 { /* "Tytuł" */
     margin-top: 0;
     margin-bottom: 0;
-    padding-bottom: 8px;
+    padding-bottom: 15px;
     padding-top: 15px;
     /*border-top: 1px ridge rgba(166, 166, 166, 0.38);*/
+}
+
+div#input-search-nav-div form {
+    /*float: left;*/
 }
 
 /* div#input-search-nav form > input[type="search"] { */
@@ -2184,8 +2207,13 @@ div#input-search-nav-div form > input[type="search"] {
     position: relative;
     top: .42px;
     height: 28px !important;
+
+    float: left;
 }
 
+div#input-search-nav-div {
+    overflow-y: hidden;
+}
 
 
 /*div#input-search-nav form > input[type="submit"] {*/
@@ -2201,9 +2229,9 @@ div#input-search-nav-div form > input[type="submit"] {
     background-size: 16px;
     overflow: auto;
     min-width: 38px;
-    position: relative;
-    /* top: 7.499999799px; */
-    top: 10px;
+    /*position: relative;
+    top: 10px;*/
+
     /*padding: 4px 0 4px 8px;*/
 
     padding: 0 !important;
@@ -2316,7 +2344,7 @@ div#nav > h3:nth-of-type(4) label:hover {
 
 div#nav > h3:nth-of-type(5) { /* "Status" (dostępna/niedostępna) */
     padding-top: 18px;
-    padding-bottom: 11px;
+    padding-bottom: 16px;
     margin-top: 18px;
     border-top: 1px ridge rgba(166, 166, 166, 0.38);
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
@@ -2332,7 +2360,8 @@ ul#ul-book-status-list /* "Stasus" - dostępna/niedostępna */ {
     padding-left: 0;
     height: 125px;
     overflow-y: scroll;
-    /*border-top: 1px ridge rgba(166, 166, 166, 0.38);*/
+    border-top: 1px ridge rgba(166, 166, 166, 0.18);
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.18);
     background-color: rgba(199, 199, 199, 0.1);
     border-radius: 4px;
     overflow-x: hidden !important;
@@ -2411,7 +2440,7 @@ button#filter-book-status
     padding: 4px;
     box-sizing: border-box;
     outline: none;
-    /* margin-top: 10px; */
+     margin-top: 4px;
     /*margin-left: 15px;*/
 }
 
@@ -4518,7 +4547,7 @@ div#advanced-search input[type="submit"] {
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
     /* font-size: 20px; */
-    /*font-weight: bold;*/
+    font-weight: bold;
     padding: 4px;
     box-sizing: border-box;
     outline: none;

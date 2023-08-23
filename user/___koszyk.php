@@ -89,6 +89,7 @@
     <script>
         content = document.getElementById("content");
         content.style.width = "100%";
+        content.style.paddingLeft = "25px";
     </script>
 
     <?php require "../view/___footer.php"; ?>

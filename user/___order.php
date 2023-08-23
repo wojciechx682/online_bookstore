@@ -1,15 +1,8 @@
 <?php
 
-    // (!) dodać zabezpieczenie przed ponownym przesłaniem formularza (patrz /learn_php );
+    // (!) dodać zabezpieczenie przed ponownym przesłaniem formularza (PRG !);
 
-                /*session_start();
-                include_once "../functions.php";
-                if( ! isset($_SESSION['zalogowany']) ) {
 
-                    $_SESSION["login-error"] = true;
-                        header("Location: ___zaloguj.php");
-                            exit();
-                }*/
 
     // check if user is logged-in, and user-type is "client" - if not, redirect to login page ;
     require_once "../authenticate-user.php";
@@ -40,27 +33,21 @@
 
                 <?php
 
-                $id_klienta = $_SESSION["id"];
-
                     // query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, au.imie, au.nazwisko FROM klienci AS kl, koszyk AS ko, ksiazki AS ks, autor AS au WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND kl.id_klienta='%s'", "get_product_from_cart", $_SESSION['id']); // Książki które zamówił klient o danym ID;
 
-                if( isset($_POST['zamowienie-typ-dostawy']) &&    // "value" attribute from input radio
-                    isset($_POST['zamowienie-typ-platnosci']) &&
+                if ( isset($_POST['delivery-type']) && ! empty($_POST['delivery-type']) &&
+                    isset($_POST['payment-method']) && ! empty($_POST['payment-method']) ) { // "value" attribute from input radio
 
-                    ! empty($_POST['zamowienie-typ-dostawy']) &&
-                    ! empty($_POST['zamowienie-typ-platnosci'])
-                )
-                {
 
-                            // POST -->
-                            // Array ( [zamowienie-typ-dostawy] => Kurier DPD
-                            //         [zamowienie-typ-platnosci] => Blik )
+                        // POST -->
+                        // Array ( [zamowienie-typ-dostawy] => Kurier DPD
+                        //         [zamowienie-typ-platnosci] => Blik )
 
-                           /* echo "<br> POST --> </br>";
-                            print_r($_POST);
-                            exit();*/
+                        /* echo "<br> POST --> </br>";
+                        print_r($_POST);
+                        exit();*/
 
-                    // Walidacja typu dostawy i płatności, czy wartość równa się istniejącej, ustalonej przez nas ?
+                    // Walidacja typu dostawy i płatności, czy wartość równa się istniejącej, ustalonej przez nas.
 
                     if($_POST['zamowienie-typ-dostawy'] == "Kurier DPD") // value of input type radio ;
                     {
@@ -273,7 +260,7 @@
 
                     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                    $order = [$id_klienta, $data_zlozenia_zamowienia, $termin_dostawy, $data_wyslania_zamowienia, $data_dostarczenia_zamowienia, $forma_dostawy, $status, $id_pracownika]; // an array that stores order data informations;
+                    $order = [$_SESSION["id"], $data_zlozenia_zamowienia, $termin_dostawy, $data_wyslania_zamowienia, $data_dostarczenia_zamowienia, $forma_dostawy, $status, $id_pracownika]; // an array that stores order data informations;
 
                     query("INSERT INTO zamowienia (id_zamowienia, id_klienta, data_zlozenia_zamowienia, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia, status, id_pracownika) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "get_last_order_id", $order);
                     // adds a new order - inserts data into the "orders" table,

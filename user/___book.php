@@ -2,6 +2,8 @@
 
     require_once "../start-session.php";
 
+    // Implementacja wzorca PRG (Post-Redirect-Get);
+
     if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶
 
         if ( isset($_POST["book-id"]) && ! empty($_POST["book-id"]) ) { // "35" ; // check if POST value (id_ksiazki) exists and is not empty;
@@ -9,7 +11,7 @@
             // Process the form data and perform necessary validations ;
 
             // get highest book-id from database ;
-            query("SELECT id_ksiazki FROM ksiazki ORDER BY id_ksiazki DESC LIMIT 1", "get_book_id", "");
+            query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM ksiazki", "get_book_id", "");
                 // $_SESSION["max-book-id"] = "35"
                 // - set variable to be applied in book-id filter below;
                 // (if book-id is higher than maximum id number in db - manage the error - redirect to index.php);
@@ -30,15 +32,12 @@
             $_SESSION['book_exists'] = false;
 
             query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
-                // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0 -> przestawi
-            // $_SESSION['book_exists'] -> na true ;
+                // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0;
+            // $_SESSION['book_exists'] --> true/false - zależnie od tego czy książka o takim ID istnieje ;
 
-            if ( $book === false || $_SESSION["book-id"] === false || $_SESSION['book_exists'] === false || empty   ($_SESSION["max-book-id"])
-                               || ($_SESSION["book-id"] != $_POST["book-id"]))
+            if ( $book === false || $_SESSION["book-id"] === false || $_SESSION['book_exists'] === false || empty   ($_SESSION["max-book-id"]) || ($_SESSION["book-id"] != $_POST["book-id"]))
             {
                 // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
-
-                // $_SESSION["error"] = true ;
 
                 unset($_POST, $book, $_SESSION["book-id"], $_SESSION["max-book-id"], $_SESSION["book_exists"]);
 
@@ -90,13 +89,17 @@
 
                         <?php
 
+                        echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
+
                             echo '<a href="index.php">&larr; Wróć </a>'; // tymczasowe (!) ;
 
                             if(isset($_SESSION["avg_rating"])) {
                                 unset($_SESSION["avg_rating"]); // $row["rating"];
                             }
 
-                            query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, ks.opis, kt.nazwa, sb.id_kategorii,
+                            query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, ks.opis, kt.nazwa AS kategoria, sb.id_kategorii, sb.nazwa AS podkategoria,
        
                                              (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki) AS liczba_komentarzy, 
                                              (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki) AS liczba_ocen, 
@@ -126,6 +129,7 @@
 
                                                              // $_SESSION["ratings"] -> [5] => 2
                                                              //                         [4] => 1 ;
+
                             $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]); // JSON string;
 
                                 // funstions -> get_ratings() -> to pass that array (PHP) to JS
@@ -375,7 +379,7 @@
 
                 window.addEventListener('load', function() {
 
-                    // Strona została w pełni załadowana; // Kod do wykonania po pełnym załadowaniu strony;
+                    // Strona została w pełni załadowana; // Kod do wykonania po pełnym załadowaniu strony (i wszystkich zasobów) ;
 
                     // SD - problem implementacyjny - ustawienie pozycji diva z szarymi gwiazdkami (w sekcji #book-page-details - przy zdjęciu książki) - rozwiązanie - poczekanie aż wszystkie zasoby strony (w tym CSS) się załadują
 
@@ -403,8 +407,8 @@
                     document.querySelector('.rate-inner-base').style.width = percentageRateBase; // width: 30%;
                     // ✓ szerokość diva z Szarymi gwiazdkami ;
 
-                    const rateOuter = document.querySelector('.rate-outer'); // ✓ pojemnik na divy z żółtymi i Szarymi gwiazdkami ;
-                    const rateOuterWidth = rateOuter.offsetWidth; // ✓ szerokość tego pojemnika (CSS -> "width");
+                    /*const rateOuter = document.querySelector('.rate-outer'); // ✓ pojemnik na divy z żółtymi i Szarymi gwiazdkami ;
+                    const rateOuterWidth = rateOuter.offsetWidth;*/ // ✓ szerokość tego pojemnika (CSS -> "width");
                     // "105" <- "number"                            <- szerokosć (px) diva na Żółte i Szare gwiazdki ;
 
                         /*console.log("\n 193 rateOuterWidth ->", rateOuterWidth);
@@ -424,7 +428,7 @@
                         document.querySelector('.rating-num').innerHTML = Math.round(rating*100)/100 ;
                         // zaokrąglenie --> pomnożyć przez 10, zaokrąglić, podzielić przez 10 ;
                     } else {
-                        document.querySelector('.rating-num').innerHTML = "0" ;
+                        document.querySelector('.rating-num').innerHTML = "" ;
                     }
 
                     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -810,7 +814,7 @@
                 // (po kliknięciu) - ZAPISZ INDEKS AKTYWNEJ KARTY (OSTATNIO KLIKNIĘTEJ) W LS -
                 liEls.forEach( (liEl, index) => {
 
-                    liEl.addEventListener('click', function(event) { // dla każdego elementu listy - <li> ; - PO KLIKNIĘCIU ;
+                    liEl.addEventListener('click', function() { // dla każdego elementu listy - <li> ; - PO KLIKNIĘCIU ;
 
                                 // Check if the class attribute has changed
 
@@ -865,7 +869,6 @@
 
                         // pobierz indeks aktywnej karty (tej która jako ostatnia została kliknięta);
                         liIndex = localStorage.getItem("liIndex"); // "0", "1", "2"
-
 
                         liEls[liIndex].classList.add('active'); // dodanie klasy "active" do elementu listy zgodnie z tym jaki był zapisany w LS (ostatnio kliknięty)
                         divs[liIndex].classList.add('active'); // to samo dla karty z zawartością - <div class="tab-panel" ... > ;

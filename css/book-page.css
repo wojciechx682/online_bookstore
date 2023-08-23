@@ -351,10 +351,14 @@ div#tab-3 div#add-review hr {
     resize: none;
     margin: 10px 0 10px 0;
 
-    border: 1px solid #4d4d4d;
+    border: 1px solid #4d4d4d70;
     outline: none ;
 
     padding: 5px 5px;
+
+    background-color: #fafafa;
+
+    border-radius: 5px;
 }
 
 #textarea-label {

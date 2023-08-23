@@ -22,6 +22,7 @@
                     <h3>Recenzje</h3>
                 </a>
             </li>
+
         </ul> <!-- ul.tab-list -->
 
         <div class="tab-panel" id="tab-1"> <!-- tab-panel -->
@@ -38,10 +39,12 @@
             <p><span class="book-details-tab">Wydawnictwo</span><strong>%s</strong></p> <!-- $row["nazwa_wydawcy"] -->
             <p><span class="book-details-tab">Ilość stron</span><strong>%s</strong></p> <!-- $row["ilosc_stron"] -->
             <p><span class="book-details-tab">Rok wydania</span><strong>%s</strong></p> <!-- $row["rok_wydania"] -->
-            <p><span class="book-details-tab">Wymiary</span><strong>%s</strong></p> <!-- $row["wymiary"] -->
+            <p><span class="book-details-tab">Wymiary (mm)</span><strong>%s</strong></p> <!-- $row["wymiary"] -->
             <p><span class="book-details-tab">Oprawa</span><strong>%s</strong></p> <!-- $row["oprawa"] -->
             <p><span class="book-details-tab">Stan</span><strong>%s</strong></p> <!-- $row["stan"] -->
-            <p><span class="book-details-tab">Numer (id) książki</span><strong>%s</strong></p> <!-- $row["id_ksiazki"] -->
+            <!--<p><span class="book-details-tab">Numer (id) książki</span><strong>s</strong></p>--> <!-- $row["id_ksiazki"] -->
+            <p><span class="book-details-tab">Kategoria</span><strong>%s</strong></p> <!-- $row["id_ksiazki"] -->
+            <p><span class="book-details-tab">Podkategoria</span><strong>%s</strong></p> <!-- $row["id_ksiazki"] -->
         </div>
 
         <div class="tab-panel active" id="tab-3">
