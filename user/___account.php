@@ -21,16 +21,51 @@
 
                 <div id="nav">
 
-                    <a href="___my_orders.php"><h3>Zamówienia</h3><hr></a>
-                    <a href="___account.php"><h3>Edytuj dane użytkownika</h3><hr></a>
+                    <!--<a href="___my_orders.php">
+                        <h3>Zamówienia</h3><hr>
+                    </a>-->
+
+                    <a href="___my_orders.php">
+                        <div class="btn from-center account-btn">
+                            <h3>Zamówienia</h3>
+                        </div>
+                    </a>
+                        <hr>
+
+                    <a href="___account.php">
+                        <div class="btn from-center account-btn">
+                            <h3>Edytuj dane użytkownika</h3>
+                        </div>
+                    </a>
+                        <hr>
+
+                    <a href="___remove_account.php">
+                        <div class="btn from-center account-btn">
+                            <h3>Usuń konto</h3>
+                        </div>
+                    </a>
+                        <hr>
+
+                    <a href="logout.php">
+                        <div class="btn from-center account-btn">
+                            <h3>Wyloguj</h3>
+                        </div>
+                    </a>
+                        <hr>
+
+
+
+                    <!--<a href="___account.php"><h3>Edytuj dane użytkownika</h3><hr></a>
                     <a href="___remove_account.php"><h3>Usuń konto</h3><hr></a>
-                    <a href="logout.php"><h3>Wyloguj</h3><hr></a>
+                    <a href="logout.php"><h3>Wyloguj</h3><hr></a>-->
 
                 </div>
 
             </aside>
 
-            <div id="content">
+            <div id="content" style="background-color: #4d4d4d">
+
+
 
                 <h3 class="account-header">Moje konto</h3>
 
