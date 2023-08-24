@@ -43,15 +43,26 @@
     <style>
         .sticky {
             position: fixed;
-            top: 0px;
+            top: 0;
+            left: 0;
             z-index: 3000;
-            width: inherit;
+            width: 100% !important;
         }
 
         .stickyContainer {
             position: relative;
             top: 37px;
         }
+
+        div.sticky-adv-search {
+            position: initial !important;
+            /*top: 0;
+            left: 0;
+            z-index: 3000;
+            width: 100% !important;*/
+            margin: 0 auto;
+        }
+
     </style>
 
     <script>
@@ -62,14 +73,17 @@
             let stickyNav = function() {
                 let ScrollY = $(window).scrollTop();
 
-                if(ScrollY > NavY) {
+                if(ScrollY+1 > NavY) {
                     $('#main-nav').addClass('sticky');
+                    $('#advanced-search').addClass('sticky-adv-search');
 
                     let container = document.getElementById("container");
                     container.classList.add("stickyContainer");
 
                 } else {
                     $('#main-nav').removeClass('sticky');
+                    $('#advanced-search').removeClass('sticky-adv-search');
+
 
                     let container = document.getElementById("container");
                     container.classList.remove("stickyContainer");
