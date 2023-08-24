@@ -1041,13 +1041,13 @@ body {
         display: none;
     }
 
-
     #div-search > form#search-form > input#input-search {
-
         /*min-width: 165px;*/
         width: calc(100% * 0.87) !important;
-
     }
+
+
+
 
     /*div#div-search > form#search-form > input[type="submit"] {
         display: none;
@@ -1386,18 +1386,51 @@ body {
     min-width: 250px;
 }
 
-#div-search > form#search-form > input[type="submit"]
+/*#div-search > form#search-form > input[type="submit"]
 {
     padding: 8px 32px 8px 2px;
     margin-left: 8px;
     border: 1px solid #a9a9a9;
     border-radius: 2px;
-    /* Add search icon as background image */
+    !* Add search icon as background image *!
     background-image: url('../assets/search-icon.png');
     background-repeat: no-repeat;
     background-position: right 10px top 8px;
     background-size: 16px;
+    !* padding-right: 32px;*!
+}*/
+
+#div-search > form#search-form > button[type="submit"]
+{
+    padding: 8px 7px 8px 7px;
+    margin-left: 8px;
+    border: 1px solid #a9a9a9;
+    border-radius: 2px;
+
+    width: 40px;
+
+    /* Add search icon as background image */
+    /*background-image: url('../assets/search-icon.png');
+    background-repeat: no-repeat;
+    background-position: right 10px top 8px;
+    background-size: 16px;*/
     /* padding-right: 32px;*/
+}
+
+#div-search > form#search-form > button[type="submit"]:hover {
+
+    border-color: #818181;
+    background-color: #f3f3f3;
+    cursor: pointer;
+    /* Add search icon as background image */
+    /* background-image: url('../assets/search-icon.png');*/
+    /*    background-repeat: no-repeat;
+        background-position: right 8px center;
+        background-size: 16px;*/
+    /*padding-right: 32px;*/
+    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
 }
 
 /*#main-container > #container > main div#content > div#admin-books-header-container div#div-search-admin > form#search-form > input[type="submit"] !* admin/books.php *!
@@ -1414,21 +1447,21 @@ body {
     !* padding-right: 32px;*!
 }*/
 
-#div-search > form#search-form > input[type="submit"]:hover {
+/*#div-search > form#search-form > input[type="submit"]:hover {
 
     border-color: #818181;
     background-color: #f3f3f3;
     cursor: pointer;
-    /* Add search icon as background image */
-    /* background-image: url('../assets/search-icon.png');*/
-    /*    background-repeat: no-repeat;
+    !* Add search icon as background image *!
+    !* background-image: url('../assets/search-icon.png');*!
+    !*    background-repeat: no-repeat;
         background-position: right 8px center;
-        background-size: 16px;*/
-    /*padding-right: 32px;*/
+        background-size: 16px;*!
+    !*padding-right: 32px;*!
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
-}
+}*/
 
 #div-search > form#search-form > input#input-search {
     min-width: 165px;

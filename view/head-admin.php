@@ -10,7 +10,7 @@
             <link rel="stylesheet" href="../css/new.css">
             <link rel="stylesheet" href="../css/admin.css">
 
-            <link href="../assets/fontello/css/fontello.css" rel="stylesheet" type="text/css"> <!-- <- font-awesome -->
+            <link href="../assets/fontello/css/fontello.css" rel="stylesheet" type="text/css"> <!-- <-- fontello -->
 
         <link rel="stylesheet" href="../css/jquery-outsider.css"> <!-- <- (CSS) wtyczka\biblioteka jQuery - NoUISlider -->
 

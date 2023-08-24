@@ -39,8 +39,15 @@
 
             <div id="div-search">
                 <form id="search-form" method="post" action="index.php"> <!-- -> POST -->
+
+
+
                     <input type="search" name="input-search" id="input-search" placeholder="Tytuł książki">
-                    <input type="submit" value=" ">
+
+                    <button type="submit">
+                        <i class="icon-search"></i>
+                    </button>
+
                 </form>
             </div>
 
