@@ -40,4 +40,49 @@
 
     <script src="../scripts/sortowanie_v3_2.js"></script> <!-- books - sortowanie -->
 
+    <style>
+        .sticky {
+            position: fixed;
+            top: 0px;
+            z-index: 3000;
+            width: inherit;
+        }
+
+        .stickyContainer {
+            position: relative;
+            top: 37px;
+        }
+    </style>
+
+    <script>
+
+        $(document).ready(function() {
+            let NavY = $('#main-nav').offset().top;
+
+            let stickyNav = function() {
+                let ScrollY = $(window).scrollTop();
+
+                if(ScrollY > NavY) {
+                    $('#main-nav').addClass('sticky');
+
+                    let container = document.getElementById("container");
+                    container.classList.add("stickyContainer");
+
+                } else {
+                    $('#main-nav').removeClass('sticky');
+
+                    let container = document.getElementById("container");
+                    container.classList.remove("stickyContainer");
+                }
+            };
+
+            stickyNav();
+
+            $(window).scroll(function() {
+                stickyNav();
+            });
+        });
+
+    </script>
+
 </head>
