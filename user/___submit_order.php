@@ -1,26 +1,15 @@
 <?php
-
-    /*session_start();
-    include_once "../functions.php";
-    if( ! isset($_SESSION['zalogowany']) ) {
-
-        $_SESSION["login-error"] = true;
-            header("Location: ___zaloguj.php");
-                exit();
-    }*/
-
     // check if user is logged-in, and user-type is "client" - if not, redirect to login page ;
     require_once "../authenticate-user.php";
 
-    if ( !isset($_SESSION["koszyk_ilosc_ksiazek"]) || $_SESSION['koszyk_ilosc_ksiazek'] == 0) {
+    if ( !isset($_SESSION["koszyk_ilosc_ksiazek"]) || $_SESSION['koszyk_ilosc_ksiazek'] === 0) {
 
-        $_SESSION["quantity-error"] = true;
-        header('Location: ___koszyk.php', true, 303);
-        exit();
+        $_SESSION["order-error"] = "Aby złożyć zamówienie, dodaj książki do koszyka";
+        header('Location: ___koszyk.php', true, 303); exit();
     }
 
+    unset($_SESSION["delivery-price"], $_SESSION["payment-price"]);
 ?>
-
 
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -29,188 +18,202 @@
 
 <body>
 
-<div id="main-container">
+    <div id="main-container">
 
-    <?php require "../view/___header-container.php"; ?>
+        <?php require "../view/___header-container.php"; ?>
 
-	<div id="container">
+        <div id="container">
 
-        <main>
+            <main>
 
-            <div id="content">
+                <div id="content" class="shopping-cart">
 
-                <h3 id="cart-header">Koszyk</h3>
+                    <h3 id="cart-header">Koszyk</h3>
 
-                <?php
-                    query("SELECT kl.id_klienta, 
-                                  ko.id_ksiazki, ko.ilosc, 
-                                  ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, 
-                                  au.imie, au.nazwisko 
-                           FROM klienci AS kl, 
-                                koszyk AS ko, 
-                                ksiazki AS ks, 
-                                autor AS au 
-                           WHERE kl.id_klienta = ko.id_klienta AND 
-                                 ko.id_ksiazki = ks.id_ksiazki AND 
-                                 ks.id_autora = au.id_autora AND 
-                                 kl.id_klienta='%s'", "get_product_from_cart", $_SESSION["id"]); // książki które zamówił klient o danym ID; (które posiada aktualnie w koszyku);
-                ?>
+                    <?php
 
-                <form action="___order.php" method="post" id="submit-order">
+                        query("SELECT kl.id_klienta, 
+                                      ko.id_ksiazki, ko.ilosc, 
+                                      ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, 
+                                      au.imie, au.nazwisko 
+                               FROM klienci AS kl, 
+                                    koszyk AS ko, 
+                                    ksiazki AS ks, 
+                                    autor AS au 
+                               WHERE kl.id_klienta = ko.id_klienta AND 
+                                     ko.id_ksiazki = ks.id_ksiazki AND 
+                                     ks.id_autora = au.id_autora AND 
+                                     kl.id_klienta='%s'", "get_product_from_cart", $_SESSION["id"]);
+
+                        query("SELECT fd.id_formy_dostawy AS id, fd.nazwa, fd.cena FROM formy_dostawy AS fd", "getDeliveryTypes", "");
+
+                        query("SELECT mp.id_metody_platnosci AS id, mp.nazwa, mp.oplata FROM metody_platnosci AS mp", "getPaymentMethods", "");
+
+                    ?>
+
+                    <form action="___order.php" method="post" id="submit-order">
+
+                        <p>
+                            <strong>
+                                Wybierz formę dostawy
+                            </strong>
+                        </p>
+
+                        <div id="delivery-type">
+
+                            <?php
+                                foreach ($_SESSION["delivery-types"] as $name => $values) {
+
+                                    $deliveryOption = file_get_contents("../template/delivery-option.php");
+
+                                    echo sprintf($deliveryOption, $name, strtolower(str_replace([" ", "/"], ["_", ""], $name)), $name, $name, $name, $values["cena"]);
+                                }
+                            ?>
+
+                        </div>
+
+                        <p>
+                            <strong>
+                                Wybierz metodę płatności
+                            </strong>
+                        </p>
+
+                        <div id="payment-method">
+
+                        <?php
+
+                            foreach ($_SESSION["payment-methods"] as $name => $values) {
+
+                                $paymentMethod = file_get_contents("../template/payment-method.php");
+
+                                echo sprintf($paymentMethod, $name, strtolower(str_replace([" ", "/"], ["_", ""], $name)), $name, $name, $name, $values["oplata"]);
+                            }
+                        ?>
+
+                        </div>
+
+                        <h3 id="order-sum">
+                            <span class="order-sum order-sum-cart">suma</span><?= $_SESSION["suma_zamowienia"]; ?> PLN
+                        </h3>
+
+                        <button type="submit" class="btn-link btn-link-static">
+                            Zamawiam
+                        </button>
+
+                    </form>
 
                     <p>
-                        <strong>
-                            Wybierz formę dostawy
+                        <strong id="order-error">
+                            <?php
+                                if (isset($_SESSION["order-error"])) {
+                                    echo $_SESSION["order-error"];
+                                    unset($_SESSION["order-error"]);
+                                }
+                            ?>
                         </strong>
                     </p>
 
-                    <div>
-                        <label>
-                            <p class="option">
-                                <input type="radio" name="delivery-type" value="Kurier DPD">
-                                <span>
-                                    <img src="../assets/dpd.png" title="Kurier DPD">
-                                        Kurier DPD
-                                </span>
-                            </p>
-                        </label>
-                    </div>
+                </div>
 
-                    <div>
-                        <label>
-                            <p class="option">
-                                <input type="radio" name="delivery-type" value="Kurier Inpost">
-                                <span>
-                                    <img src="../assets/inpost.png" title="Kurier Inpost">
-                                        Kurier Inpost
-                                </span>
-                            </p>
-                        </label>
-                    </div>
+            </main>
 
-                    <div>
-                        <label>
-                            <p class="option">
-                                <input type="radio" name="delivery-type" value="Paczkomaty 24/7 (Inpost)">
-                                <span>
-                                    <img src="../assets/paczkomaty24_7.png" title="Paczkomaty 24/7 (Inpost)">
-                                        Paczkomaty 24/7 (Inpost)
-                                </span>
-                            </p>
-                        </label>
-                    </div>
+        </div>
 
-                    <div>
-                        <label>
-                            <p class="option">
-                                <input type="radio" name="delivery-type" value="Odbiór w punkcie (Poczta polska)">
-                                <span>
-                                    <img src="../assets/odbior_poczta_polska.png" title="Odbiór w punkcie (Poczta polska)">
-                                        Odbiór w punkcie (Poczta polska)
-                                </span>
-                            </p>
-                        </label>
-                    </div>
+        <?php require "../view/___footer.php"; ?>
 
-                    <div>
-                        <label>
-                            <p class="option">
-                                <input type="radio" name="delivery-type" value="Odbiór w sklepie (Księgarnia)">
-                                <span>
-                                    <img src="../assets/odbior_osobisty.png" title="Odbiór w sklepie (Księgarnia)">
-                                        Odbiór w sklepie (Księgarnia)
-                                </span>
-                            </p>
-                        </label>
-                    </div>
+        <script>
 
-                    <div style="clear: both;"></div>
+            let form = document.getElementById("submit-order");
 
-                    <p>
-                        <strong>
-                            Wybierz metodę płatności
-                        </strong>
-                    </p>
+            form.addEventListener("submit", (event) => {
 
-                    <div>
-                        <label>
-                            <p class="option">
-                                <input type="radio" name="payment-method" value="Blik">
-                                <span>
-                                     <img src="../assets/blik.png" title="Blik">
-                                        Blik
-                                </span>
-                            </p>
-                        </label>
-                    </div>
+                let deliveryType = Array.from(form.querySelectorAll('input[name="delivery-type"]'));
+                let paymentMethod = Array.from(form.querySelectorAll('input[name="payment-method"]'));
 
-                    <div>
-                        <label>
-                            <p class="option">
-                                <input type="radio" name="payment-method" value="Pobranie">
-                                <span>
-                                    <img src="../assets/pobranie.png" title="Pobranie">
-                                        Pobranie
-                                </span>
-                            </p>
-                        </label>
-                    </div>
+                let deliveryTypeChecked = deliveryType.filter(input => input.checked);
+                let paymentMethodChecked = paymentMethod.filter(input => input.checked);
 
-                    <div>
-                        <label>
-                            <p class="option">
-                                <input type="radio" name="payment-method" value="Karta płatnicza (online)">
-                                <span>
-                                    <img src="../assets/karta.png" title="Karta płatnicza (online)">
-                                        Karta płatnicza (online)
-                                </span>
-                            </p>
-                        </label>
-                    </div>
+                let errorMessage = document.getElementById("order-error");
 
-                    <div style="clear: both;"></div>
+                if(deliveryTypeChecked.length <= 0) {
 
-                    <button type="submit" class="btn-link btn-link-static">
-                        Zamawiam
-                    </button>
+                    errorMessage.innerHTML = "Aby złożyć zamówienie, wybierz formę dostawy";
 
-                </form> <!-- POST -> order.php -->
+                } else if (paymentMethodChecked.length <= 0) {
 
-                <?php
-                    /*if( isset($_SESSION["order-error"]) ) {
-                            unset($_SESSION["order-error"]);
-                        echo "<p><strong>Aby złożyć zamówienie, dodaj książki do koszyka</strong></p>";
-                    }*/
-                    if ( isset($_SESSION["delivery-error"]) ) { // order_php -> "true";
-                            unset($_SESSION["delivery-error"]);
-                        echo "<p><strong>Podaj poprawną formę dostawy</strong></p>";
-                    }
-                    elseif ( isset($_SESSION["payment-error"]) ) { // order_php -> "true";
-                            unset($_SESSION["payment-error"]);
-                        echo "<p><strong>Podaj poprawną formę płatności</strong></p>";
+                    errorMessage.innerHTML = "Aby złożyć zamówienie, wybierz metodę płatności";
 
-                    } elseif ( isset($_SESSION["order-error"]) ) { // empty POST values ;
-                            unset($_SESSION["order-error"]);
-                        echo "<p><strong>Aby złożyć zamówienie, wybierz formę dostawy i metodę płatności</strong></p>";
-                    }
-                ?>
+                } else {
+                    form.submit();
+                }
 
-            </div>
+                event.preventDefault();
 
-            <!--<script src="../scripts/set-span-width.js"> </script>-->
+            });
 
-        </main>
+            document.addEventListener('DOMContentLoaded', function() {
 
-	</div> <!-- #container -->
+                let deliveryTypes = document.querySelectorAll("input[type='radio'][name='delivery-type']");
+                let paymentmethods = document.querySelectorAll("input[type='radio'][name='payment-method']");
 
-    <script>
-        content = document.getElementById("content");
-        content.style.width = "100%";
-    </script>
+                deliveryTypes.forEach(function(deliveryType) {
 
-    <?php require "../view/footer.php"; ?>
+                    deliveryType.addEventListener('change', function() {
 
-</div> <!-- #main-container -->
+                        let price = parseFloat(this.closest('.option').querySelector('.delivery-price').textContent);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "update-order-sum.php",
+                            data: {
+                                "delivery-price": price
+                            },
+                            timeout: 2000,
+                            success: function(data) {
+
+                                let orderSum = data.suma_zamowienia.toFixed(2);
+
+                                let header = document.getElementById("order-sum");
+                                header.lastChild.textContent = orderSum + " PLN";
+
+                            }
+                        });
+                    });
+                });
+
+                paymentmethods.forEach(function(paymentMethod) {
+
+                    paymentMethod.addEventListener('change', function() {
+
+                        let selectedPaymentMethod = this.value;
+
+                        let price = parseFloat(this.closest('.option').querySelector('.payment-price').textContent);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "update-order-sum.php",
+                            data: {
+                                "payment-price": price
+                            },
+                            timeout: 2000,
+                            success: function(data) {
+
+                                let orderSum = Number(data.suma_zamowienia).toFixed(2);
+
+                                let header = document.getElementById("order-sum");
+                                header.lastChild.textContent = orderSum + " PLN";
+                            }
+                        });
+                    });
+                });
+
+            });
+
+        </script>
+
+    </div> <!-- #main-container -->
+
+    <script src="../scripts/change_cart_quantity.js"></script> <!-- Ajax - zmiany ilości książek w koszyku -->
 
 </body>
 </html>

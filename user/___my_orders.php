@@ -48,7 +48,7 @@
                 <?php
                     echo '<script> displayNav(); </script>';
 
-                    query("SELECT id_zamowienia, data_zlozenia_zamowienia, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia, komentarz FROM zamowienia WHERE id_klienta = '%s'", "get_orders", $_SESSION['id']); // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
+                    query("SELECT id_zamowienia, data_zlozenia_zamowienia, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, fd.nazwa, komentarz FROM zamowienia, formy_dostawy AS fd WHERE zamowienia.id_formy_dostawy = fd.id_formy_dostawy AND id_klienta = '%s'", "get_orders", $_SESSION['id']); // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
                 ?>
 
                 <!--<br><br><a href="logout.php">[ Wyloguj ]</a>-->

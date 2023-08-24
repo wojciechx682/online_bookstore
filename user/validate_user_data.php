@@ -5,19 +5,18 @@
 
     require_once "../start-session.php";
 
-    if(
-        ( isset($_POST['imie_edit']) && isset($_POST['nazwisko_edit']) && isset($_POST['email_edit']) && isset($_POST['telefon_edit'] ) )
-        && (
-            ($_POST['imie_edit'] != $_SESSION['imie']) || ($_POST['nazwisko_edit'] != $_SESSION['nazwisko']) || ($_POST['email_edit'] != $_SESSION['email']) || ($_POST['telefon_edit'] != $_SESSION['telefon']) // przynajmniej jedno pole jest inne - od już istniejących wartości
-        )
-    )
-    {   // Edycja danych użytkownika -> Imię, Nazwisko, E-mail, Telefon;
+    if ( ( isset($_POST['imie_edit']) && isset($_POST['nazwisko_edit']) && isset($_POST['email_edit']) && isset($_POST['telefon_edit'] ) ) &&
+         ( ($_POST['imie_edit'] != $_SESSION['imie']) || ($_POST['nazwisko_edit'] != $_SESSION['nazwisko']) || ($_POST['email_edit'] != $_SESSION['email']) || ($_POST['telefon_edit'] != $_SESSION['telefon']) ) ) {
+
+        // przynajmniej jedno pole jest inne - od już istniejących wartości;
+
+        // Edycja danych użytkownika -> Imię, Nazwisko, E-mail, Telefon;
 
         // jeśli podano dane (POST), i są one różne od tych które były aktualnie ustawione (w Sesji); (✓✓✓ a mówiąc super-dokładnie - to przynajmniej JEDEN input ma inną wartość niż ta co była w sesji - tzn. wprowadzono conajmniej jedną inną wartość - a więc chcemy edytować tą zmienną)
 
         $imie = filter_input(INPUT_POST, "imie_edit", FILTER_SANITIZE_STRING);
         $nazwisko = filter_input(INPUT_POST, "nazwisko_edit", FILTER_SANITIZE_STRING);
-		$email = $_POST['email_edit']; // filter_var SANITIZE_EMAIL + validate email
+		$email = $_POST["email_edit"]; // filter_var SANITIZE_EMAIL + validate email
         $telefon = filter_input(INPUT_POST, "telefon_edit", FILTER_SANITIZE_STRING);
 
         //$imie = htmlentities($imie, ENT_QUOTES, "UTF-8");
@@ -47,24 +46,24 @@
         if( ! (preg_match($name_regex, $imie)) )
         {
             $validation = false;
-            $_SESSION['error_form'] = "Podaj poprawne imię";
+            $_SESSION["error_form"] = "Podaj poprawne imię";
         }
         if( ! (preg_match($name_regex, $nazwisko)) )
         {
             $validation = false;
-            $_SESSION['error_form'] = "Podaj poprawne nazwisko";
+            $_SESSION["error_form"] = "Podaj poprawne nazwisko";
         }
 
 		if( (is_numeric($imie)) || (is_numeric($nazwisko)) )
 		{
 			$validation = false;
-			$_SESSION['error_form'] = "Podaj poprawne dane";		
+            $_SESSION["error_form"] = "Podaj poprawne dane";
 		}					
 
 		if( (preg_match('/[0-9]/', $imie)) || (preg_match('/[0-9]/', $nazwisko)) )
 		{
 			$validation = false;
-			$_SESSION['error_form'] = "Podaj poprawne dane";		
+            $_SESSION["error_form"] = "Podaj poprawne dane";
 		}
 
 		$email_sanitized = filter_var($email, FILTER_SANITIZE_EMAIL); // sanityzacja email => <script>alert();</script>
@@ -72,20 +71,20 @@
 		if( ! filter_var($email_sanitized, FILTER_VALIDATE_EMAIL) || ($email_sanitized != $email)) // email nie przeszedł walidacji;
 		{						
 			$validation = false;
-			$_SESSION['error_form'] = "Podaj poprawny adres e-mail";
+            $_SESSION["error_form"] = "Podaj poprawny adres e-mail";
 		}
 		else // email przeszedł walidację,  musimy sprawdzić, czy taki email nie jest już zajęty;
 		{
 			if($email_sanitized != $_SESSION['email']) // czy jest różny od tego co było w polu formularza;
 			{
-				$_SESSION['email_exists'] = false;
+				$_SESSION["email_exists"] = false;
 
-				query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_sanitized); // to przełączy zmienną $_SESSION['email_exists'] na true, jeśli taki email będzie istnieć (jeśli $result zwróci rekordy);
+				query("SELECT * FROM klienci WHERE email='%s'", "check_email", $email_sanitized); // to przełączy zmienną $_SESSION["email_exists"] na true, jeśli taki email będzie istnieć (jeśli $result zwróci rekordy);
 
-				if( isset($_SESSION['email_exists']) && $_SESSION["email_exists"]) // <-- działa, testowałem :)
+				if( isset($_SESSION["email_exists"]) && $_SESSION["email_exists"]) // <-- działa, testowałem :)
 				{
 					$validation = false;
-					$_SESSION['error_form'] = "E-mail zajęty";
+                    $_SESSION["error_form"] = "E-mail zajęty";
 				}
 			}
 		}			

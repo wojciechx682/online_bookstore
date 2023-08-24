@@ -39,7 +39,7 @@
                 <form method="post" action="../user/___book.php">
                     <input type="hidden" name="book-id" value="%s"> <!-- $row["id_ksiazki"] -->
                     <button class="submit-book-form" type="submit">
-                        <h3 class="book-title">%s</h3>
+                        <h3 class="book-title" title="%s">%s</h3>
                     </button>
                 </form>
             </div>
@@ -49,29 +49,31 @@
             <div class="author">%s %s</div>
         </div> <!-- .book-description -->
 
-    <div id="form-cart-container" style="min-width: 260px;  float: left; ">
+        <div id="form-cart-container" style="min-width: 260px;  float: left; ">
 
-    <!--<form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form s">-->
+            <!--<form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form s">-->
 
-    <form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form%s"> <!-- $row["id_ksiazki"] --> <!-- AJAX -->
+            <form action="change_cart_quantity.php" method="post" class="change_quantity_form" id="change_quantity_form%s"> <!-- $row["id_ksiazki"] --> <!-- AJAX -->
 
-        <input type="hidden" name="book-id" value="%s"> <!-- $row["id_ksiazki"] -->
+                <input type="hidden" name="book-id" data-book-id="%s"> <!-- $row["id_ksiazki"] -->
 
-        <b>Ilość</b>
-        <input type="text" id="book-amount%s" class="book-amount" name="book-amount" value="%s">
+                <label>
+                    <b>Ilość</b>
+                    <input type="text" id="book-amount%s" class="book-amount" name="book-amount" value="%s">
+                </label>
 
-        <button type="button" value="%s" class="increase-btn">+</button> <!-- onclick="increase(this, s)" -->
-        <button type="button" value="%s" class="decrease-btn"><span>-</span></button> <!-- onclick="decrease(this, s)" -->
-    </form>
+                <button type="button" data-book-id="%s" class="increase-btn">+</button> <!-- onclick="increase(this, s)" -->
+                <button type="button" data-book-id="%s" class="decrease-btn"><span>-</span></button> <!-- onclick="decrease(this, s)" -->
 
-    <form action="remove_book.php" method="post"
-                                   class="remove_book_form">
-                   <!-- <input type="hidden" name="id_klienta" value="s">
-                    <input type="hidden" name="ilosc" value="s">-->
+            </form>
 
-        <input type="hidden" name="id_ksiazki" value="%s"> <!-- $row["id_ksiazki"] -->
-        <input type="submit" value="Usuń">
-    </form>
+            <form action="remove_book.php" method="post" class="remove_book_form">
+                           <!-- <input type="hidden" name="id_klienta" value="s">
+                            <input type="hidden" name="ilosc" value="s">-->
+
+                <input type="hidden" name="id_ksiazki" value="%s"> <!-- data-book-id --> <!-- $row["id_ksiazki"] -->
+                <input type="submit" value="Usuń">
+            </form>
 
         </div>
 

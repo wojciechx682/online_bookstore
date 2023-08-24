@@ -474,13 +474,27 @@
 //			$_SESSION['koszyk_ilosc_ksiazek'] = $row['suma'];
 //		}
 
-        $_SESSION['koszyk_ilosc_ksiazek'] = ($row['suma'] == NULL) ? 0 : $row['suma']; // SUM(ilosc) AS suma -> $row["suma"];
+        $_SESSION["koszyk_ilosc_ksiazek"] = ($row["suma"] == NULL) ? 0 : $row["suma"]; // SUM(ilosc) AS suma -> $row["suma"];
 
 		$result->free_result();
 
         // !!! $result -> num_rows
         // w przypadku gdy podano id nieistniejącego klienta, zwróci 1 WIERSZ, z wartością NULL (suma == NULL)
 	}
+
+    function count_cart_sum($result) {
+
+        // \user\change_cart_quantiyt.php - oblicza sumę (cenę) książek w koszyku klienta;
+
+        $row = $result->fetch_assoc();
+
+        if ($result->num_rows) {
+            $_SESSION["suma_zamowienia"] = $row["suma"];
+        } else {
+            $_SESSION["suma_zamowienia"] = 0;
+        }
+
+    }
 
 	function get_product_from_cart($result)	// koszyk.php,  order.php
 	{
@@ -494,11 +508,18 @@
         //           au.imie                         autor
         //           au.nazwisko                     autor
 
-		$_SESSION['suma_zamowienia'] = 0;
+		//$_SESSION["suma_zamowienia"] = 0;
 
 		$i = 0;
 
-		while ($row = $result->fetch_assoc())
+        // zapisz do ZS łączną sumę dla wszystkich książek w koszyku klienta -->
+
+        query("SELECT ROUND(SUM(ko.ilosc * ks.cena),2) AS suma
+                     FROM klienci AS kl, koszyk AS ko, ksiazki AS ks
+                     WHERE kl.id_klienta = '%s' AND kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki
+                     GROUP BY kl.id_klienta", "count_cart_sum", $_SESSION["id"]); // <-- $_SESSION["suma_zamowienia"]
+
+		while ($row = $result->fetch_assoc()) // tyle, ile jest książek w koszyku tego klienta
 		{
 //		  	echo '<div id="book'.$i.'"> <span class="book-details">';
 //                echo '<div class="title">'.$row['tytul'].'</div>';
@@ -549,11 +570,11 @@
             $book = file_get_contents("../template/cart-products.php");
 
             // replace fields in $book string to book data from $result
-            echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["id_ksiazki"], $row["id_ksiazki"], $row['id_ksiazki'], $row['ilosc'], $row['id_ksiazki'], $row['id_ksiazki'], $row['id_ksiazki']);
+            echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["ilosc"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"]);
 
             $i++;
 
-		  	$_SESSION['suma_zamowienia'] += $row['ilosc'] * $row['cena'];
+		  	//$_SESSION["suma_zamowienia"] += $row["ilosc"] * $row["cena"];
 		}
 
         /*echo '<span style="color: #c7c7c7;">';
@@ -625,11 +646,35 @@
 //		}
 //	}
 
+    function getDeliveryTypes($result) { // \user\submit_order.php - pobierz możliwe formy dostawy z bazy danych;
+
+        $_SESSION["delivery-types"] = [];
+
+        while($row = $result->fetch_assoc()) {
+
+            $_SESSION["delivery-types"][$row["nazwa"]] = ["id" => $row["id"], "cena" => $row["cena"]];
+        }
+
+        $result->free_result();
+    }
+
+    function getPaymentMethods($result) { // \user\submit_order.php - pobierz możliwe metody płatności z bazy danych;
+
+        $_SESSION["payment-methods"] = [];
+
+        while($row = $result->fetch_assoc()) {
+
+            $_SESSION["payment-methods"][$row["nazwa"]] = ["id" => $row["id"], "oplata" => $row["oplata"]];
+        }
+
+        $result->free_result();
+    }
+
 	function insert_order_details($result)
 	{
         // order.php -> insert do tabeli szczegoly_zamowienia - na podstawie tabeli koszyk
 
-		$id_zamowienia = $_SESSION['last_order_id']; // id_zamowienia -> get_last_order_id()
+		$id_zamowienia = $_SESSION["last_order_id"]; // id_zamowienia -> get_last_order_id()
 
 		while ($row = $result->fetch_assoc())        // wiersze z tabeli koszyk
 		{
@@ -645,7 +690,7 @@
 
             $cart = [$id_zamowienia, $id_ksiazki, $ilosc];
 
-		  	query("INSERT INTO szczegoly_zamowienia (id_zamowienia, id_ksiazki, ilosc) VALUES ('%s', '%s', '%s')", "", $cart);
+		  	query("INSERT INTO szczegoly_zamowienia VALUES ('%s', '%s', '%s')", "", $cart);
 
 		  	// echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
 		}
@@ -1233,12 +1278,12 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
 
     function get_last_order_id($result, $polaczenie)
     {
-                // order.php - dodawanie zamówień (tabela zamówienia)
-                // - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
-                // query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
+        // order.php - dodawanie zamówień (tabela zamówienia)
+            // - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
+            // query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
 
         // - pobranie id nowo wstawionego wiersza (nowo wstawianego zamówienia);
-        $_SESSION['last_order_id'] = $polaczenie->insert_id;
+        $_SESSION["last_order_id"] = $polaczenie->insert_id;
     }
 
     function get_last_book_id($result, $polaczenie) { // admin\add-book-data.php;
@@ -1364,9 +1409,10 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
 
         $row = $result->fetch_assoc();
 
-        if($row == NULL) { // brak zwroconych. rekordow; (żaden pracownik nie był przypisany do zamówienia);
-             query("SELECT id_pracownika FROM pracownicy ORDER BY RAND() LIMIT 1", "get_employee", ""); // wybieramy losowego pracownika; $_SESSION["employee_id"];
-        } else {
+        if($row === null) { // brak zwroconych. rekordow; (żaden pracownik nie był przypisany do żadnego zamówienia);
+            // wybieramy losowego pracownika; $_SESSION["employee_id"];
+            query("SELECT id_pracownika FROM pracownicy ORDER BY RAND() LIMIT 1", "get_employee", "");
+        } else { // istnieje pracownik z najmniejszą liczbą przypisanych zamówień;
             $_SESSION["employee_id"] = $row["id_pracownika"];
             $result->free_result();
         }
@@ -1831,6 +1877,9 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
 
     function query($query, $fun, $value)
     {
+        // obsługa błędów,
+        // bezpieczeństwo - SQL injection
+
         require "connect.php";
         mysqli_report(MYSQLI_REPORT_STRICT);
 

@@ -1,44 +1,47 @@
 
-// koszyk.php, book.php;
+// user\koszyk.php, user\book.php;
 
-let increaseBtns = document.querySelectorAll(".increase-btn");
-let decreaseBtns = document.querySelectorAll(".decrease-btn");
+let buttons = document.querySelectorAll(".increase-btn, .decrease-btn");
 
-increaseBtns.forEach(function(button) {
-	button.addEventListener("click", function(event) {
-		increase(event);
+console.log("\n\n buttons --> \n\n", buttons);
+
+buttons.forEach(button => {
+	button.addEventListener("click", () => {
+		let amount = button.classList.contains("increase-btn") ? 1 : -1;
+		changeQuantity(button, amount);
 	});
 });
 
-decreaseBtns.forEach(function(button) {
-	button.addEventListener("click", function(event) {
-		decrease(event);
-	});
-});
-
-function changeQuantity(button, bookId, amount) {
+function changeQuantity(button, amount) {
 
 	let form = button.parentNode;
 	let input = form.querySelector('input[type="text"]');
 	const newQuantity = parseInt(input.value) + amount;
 
 	if (newQuantity >= 1) {
+
+		console.log("\n >= 1 \n");
+
 		input.value = newQuantity;
 		$(input).trigger("change"); // trigger the change event --> AJAX - change_cart_quantity.js
 	}
 }
 
+/*
 function increase(event) {
-		let button = event.currentTarget;
-		let bookId = button.value;
-	changeQuantity(button, bookId, 1);
+	console.log("\n increase function <--  \n");
+		let button = event.currentTarget; // <button>
+		let bookId = button.dataset.bookId; 		  // book-id - "value" attribute of <button> element
+	changeQuantity(event, bookId, 1);
 }
 
 function decrease(event) {
+	console.log("\n decrease function <--  \n");
 		let button = event.currentTarget;
-		let bookId = button.value;
-	changeQuantity(button, bookId, -1);
+		let bookId = button.dataset.bookId;
+	changeQuantity(event, bookId, -1);
 }
+*/
 
 /*function increase(id_ksiazki) {
 	// increase input form value by 1, and then send <form> --> change_cart_quantity.php
