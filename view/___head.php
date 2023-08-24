@@ -14,13 +14,14 @@
 
             <!--<link rel="stylesheet" href="../css/jquery-outsider.css">--> <!-- (CSS) ! - wtyczka\biblioteka jQuery - NoUISlider ZAMIENIĆ NA ORYGINALNY STYL -->
 
-            <link rel="stylesheet" href="../node_modules/nouislider/dist/nouislider.css">
+            <link rel="stylesheet" href="../node_modules/nouislider/dist/nouislider.css"> <!-- jQuery - NoUISlider -->
             <link rel="stylesheet" href="../css/jquery-outsider2.css">
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">      <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">  <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
                                                             <!-- font-awesome -->
