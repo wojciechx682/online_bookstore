@@ -44,7 +44,7 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
 
             // check if there is any user (client) with that email;
 
-            query("SELECT id_klienta, imie, email FROM klienci WHERE email='%s'", "check_email", $email);
+            query("SELECT id_klienta, imie, email FROM klienci WHERE email='%s'", "reset_password_check_email", $email);
             // ustawi zmienną       $_SESSION["email-exists"] --> na "true", jeśli JEST taki user (email) - (jeśli zwrócono rekordy z BD -> $result);
             //                      $_SESSION["imie"];
             //                      $_SESSION["given-email"]; <-- adres wprowadzony w POST["email"]

@@ -416,10 +416,28 @@
             $row = $result->fetch_assoc();
 
             $_SESSION["email-exists"] = true;
-            $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
-            $_SESSION["given-email"] = $row["email"]; // reset_password.php - resetowanie hasła
+
+        } else {
+            $_SESSION["email-exists"] = false;
         }
 	}
+
+    function reset_password_check_email($result) {
+
+        if ($result->num_rows) {
+
+            $row = $result->fetch_assoc();
+
+            $_SESSION["email-exists"] = true;
+            $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
+            $_SESSION["given-email"] = $row["email"]; // reset_password.php - resetowanie hasła
+
+        } else {
+            $_SESSION["email-exists"] = false;
+        }
+	}
+
+
 
     function generate_token() {     // reset_password.php; - return $token_hashed | OR | false;
 
@@ -1000,9 +1018,9 @@ EOT;
 		}
 		$result->free_result();*/
 
-        $row = $result->fetch_assoc();
-            $_SESSION['stare_haslo'] = $row['haslo']; // hasło klienta w postaci zahashowanej;
-        $result->free_result();
+            $row = $result->fetch_assoc();
+        $_SESSION["password_hashed"] = $row["haslo"]; // hasło klienta w postaci zahashowanej;
+            $result->free_result();
 	}
 
 	function log_in($result)

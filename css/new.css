@@ -3822,6 +3822,10 @@ h3#order-summary-header + p {
     padding-top: 5px;
 }
 
+div.edit_data_left-container > label {
+    cursor: pointer;
+}
+
 .edit_data_button {
     text-align: right;
 
@@ -3858,8 +3862,11 @@ h3#order-summary-header + p {
 
 .data-changed {
     margin-left: 6px;
-
     margin-bottom: 5px;
+}
+
+.data-changed-password {
+    width: 399px !important;
 }
 
 
@@ -3911,7 +3918,7 @@ h3#order-summary-header + p {
 #content > .account-header:nth-child(1):not(.reset-password-header) {
     font-size: 120%;
 
-    margin-top: 5px;
+    margin-top: 2px;
     margin-bottom: 10px;
 }
 
@@ -3968,7 +3975,7 @@ div#container > main > aside.account-data > div#nav a h3 {
 
 div#container > main > aside.account-data > div#nav hr {
     /*background-color: rgba(166, 166, 166, 0.7);*/
-    background-color: rgba(166, 166, 166, 0.53);
+    background-color: rgba(166, 166, 166, 0.45);
     border: none;
     height: 1px;
     margin: 5px 0 0 1px;
