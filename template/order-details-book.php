@@ -12,14 +12,23 @@
         <!-- ✓✓✓ GET -> na POST <form> - użycie techniki PRG <-------------------- -->
 
         <form method="post" action="../user/___book.php">
-            <input type="hidden" name="%s">
+            <input type="hidden" name="book-id" value="%s">
             <button type="submit" class="book-img-button">
                 <img src="../assets/books/%s" alt="book">
             </button>
         </form>
     </div>
     <div class="book-desc">
-        <span class="order-book-desc-row">%s</span>
+        <!--<span class="order-book-desc-row"><strong>%s</strong></span>-->
+
+        <form method="post" action="___book.php">
+            <input type="hidden" name="book-id" value="%s"> <!-- id_ksiazki -->
+            <button class="submit-book-form" type="submit">
+                <h3 title="%s">%s</h3> <!-- tytuł -->
+            </button>
+        </form>
+
+
         <span class="order-book-desc-row">Autor - %s %s</span>
         <span class="order-book-desc-row">Rok wydania - %s</span>
     </div>

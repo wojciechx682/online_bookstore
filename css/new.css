@@ -2828,7 +2828,8 @@ div.book-url > form button.book-img-button, /* \user\orders.php */
 div#n-top-nav-content ol li ul li form button.submit-book-form, /* index - lista <ul> z kategoriami - button */
 div.order div.order-action div.order-options-container > div.order-action-options form button.submit-order-form,  /* \admin\orders.php - przycisk "Przeglądaj" -> order-id - PRG */
 div.admin-books div.book-action div.book-options-container > div.book-action-options form button.submit-book-form,  /* \admin\books.php - przycisk "Przeglądaj" -> book-id - PRG */
-button.reset-password-button /* "Spróbuj jeszcze raz" -- reset_password.php */
+button.reset-password-button, /* "Spróbuj jeszcze raz" -- reset_password.php */
+div.book-desc form button.submit-book-form /* my-orders.php */
 {
     /*margin: 0;
     padding: 0;
@@ -2842,6 +2843,15 @@ button.reset-password-button /* "Spróbuj jeszcze raz" -- reset_password.php */
     cursor: pointer;
     color: inherit;
     text-align: left;
+}
+
+div.book-desc form button.submit-book-form h3 {
+    margin: 0;
+    padding-bottom: 4px;
+}
+
+div.book-desc form button.submit-book-form h3:hover {
+    text-decoration: underline;
 }
 
 .book-cover > form button.book-img-button {
@@ -4185,8 +4195,14 @@ div.book-desc span.order-book-desc-row {
     display: block;
     padding-top: 2px;
     padding-bottom: 2px;
-
 }
+
+div.book-desc span.order-book-desc-row strong {
+    text-decoration: underline;
+    cursor:pointer
+}
+
+
 
 .book-quan {
     /*border: 1px dashed black;*/

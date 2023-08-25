@@ -6,66 +6,82 @@
 
     if ($_SERVER['REQUEST_METHOD'] === "POST") { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶
 
-        if (isset($_POST["book-id"]) && ! empty($_POST["book-id"])) { // "35" ; // check if POST value (id_ksiazki) exists and is not empty;
+        if (isset($_POST["book-id"]) && !empty($_POST["book-id"])) { // "35" ; // check if POST value (id_ksiazki) exists and is not empty;
 
             // Process the form data and perform necessary validations ;
 
-            query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM ksiazki", "getBookId", ""); // get highest book-id from database ;
-            // $_SESSION["max-book-id"] = "35"
-                // - set variable to be applied in book-id filter below;
-                // (if book-id is higher than maximum id number in db - manage the error - redirect to index.php);
+            $bookId = validateBookId($_POST["book-id"]); // "35" or FALSE; <-- validate book-id - is it valid ID (integer) and is there a book with that ID ?
 
-            // sanitize input - book-id ;
-            $book = filter_var($_POST["book-id"], FILTER_SANITIZE_NUMBER_INT); // "35" or FALSE;
+            if (empty($bookId)) { // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
 
-            // validate book-id - ✓ valid integer in specific range ;
-            $_SESSION["book-id"] = filter_var($book, FILTER_VALIDATE_INT, [
-                    'options' => [
-                        'min_range' => 1,                       // Minimum allowed book-id value
-                        'max_range' => $_SESSION["max-book-id"] // Maximum allowed book-id value (highest book-id in database) ; functions() -> "getBookId()"
-                    ]
-                ]
-            ); // ✓ It ensures that the value is an integer within the specified range;
-
-            // check if there is really a book with that id ;
-
-            unset($_SESSION["book_exists"]);
-
-            query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExists", $_SESSION["book-id"]);
-                // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0;
-            // $_SESSION["book_exists"] --> true - zależnie od tego czy książka o takim ID istnieje ; NULL otherwise (!)
-
-            if ( $book === false || $_SESSION["book-id"] === false || empty($_SESSION["book_exists"]) || empty($_SESSION["max-book-id"]) || ($_SESSION["book-id"] != $_POST["book-id"])) {
-
-                // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
-
-                unset($_POST, $book, $_SESSION["book-id"], $_SESSION["max-book-id"], $_SESSION["book_exists"]);
-
-                header('Location: index.php', true, 303); exit();
+                unset($_POST, $bookId, $_SESSION["max-book-id"], $_SESSION["book_exists"]);
+                    header('Location: index.php', true, 303); exit();
 
             } else { // input OK - book-id passed validation,    there is a book with that ID;
                      //               Valid book-id           and           book-exists
-                // Execute code (such as database updates) here;
-                // Perform any required actions with the form data (e.g., database update);
 
-                    unset($_POST, $_SESSION["max-book-id"], $book, $_SESSION["book_exists"]); // keep $_SESSION["book-id"];
+                //echo "<br> 25 <br>"; exit();
 
+                $_SESSION["book-id"] = $bookId;
 
-
+                unset($_POST, $_SESSION["max-book-id"], $bookId, $_SESSION["book_exists"]); // keep $_SESSION["book-id"];
                 // Redirect to prevent form resubmission // to prevent resubmitting the form
                 header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
+
             }
+
+
+/*// sanitize input - book-id ;
+$book = filter_var($_POST["book-id"], FILTER_SANITIZE_NUMBER_INT); // "35" or FALSE;
+unset($_SESSION["max-book-id"]);
+query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM ksiazki", "getBookId", ""); // get highest book-id from database ;
+// $_SESSION["max-book-id"] = "35"
+// - set variable to be applied in book-id filter below;
+// (if book-id is higher than maximum id number in db - manage the error - redirect to index.php);
+// validate book-id - ✓ valid integer in specific range ;
+$_SESSION["book-id"] = filter_var($book, FILTER_VALIDATE_INT, [
+        'options' => [
+            'min_range' => 1,                       // Minimum allowed book-id value
+            'max_range' => $_SESSION["max-book-id"] // Maximum allowed book-id value (highest book-id in database) ; functions() -> "getBookId()"
+        ]
+    ]
+); // It ensures that the value is an integer within the specified range;
+// check if there is really a book with that id ;
+unset($_SESSION["book_exists"]);
+query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExists", $_SESSION["book-id"]);
+    // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0;
+// $_SESSION["book_exists"] --> true - zależnie od tego czy książka o takim ID istnieje ; NULL otherwise (!)*/
+
+        /*if ( $book === false || $_SESSION["book-id"] === false || empty($_SESSION["book_exists"]) || empty($_SESSION["max-book-id"]) || ($_SESSION["book-id"] != $_POST["book-id"])) {
+
+            // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
+
+            unset($_POST, $book, $_SESSION["book-id"], $_SESSION["max-book-id"], $_SESSION["book_exists"]);
+
+            header('Location: index.php', true, 303); exit();
+
+        } else { // input OK - book-id passed validation,    there is a book with that ID;
+                 //               Valid book-id           and           book-exists
+            // Execute code (such as database updates) here;
+            // Perform any required actions with the form data (e.g., database update);
+
+                unset($_POST, $_SESSION["max-book-id"], $book, $_SESSION["book_exists"]); // keep $_SESSION["book-id"];
+
+            // Redirect to prevent form resubmission // to prevent resubmitting the form
+            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
+        }*/
 
         } else { // zmienna POST nie istnieje,   nastąpiło wejście pod /user/___book.php bez podania wartości w POST[] ;
             //echo "<br> POST value (book-id) doesnt exist <br>" ;
             header('Location: index.php', true, 303); exit();
         }
 
-    } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (empty($_SESSION["book-id"]))) {
+    } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (empty($_SESSION["book-id"])) ) {
 
         header('Location: index.php', true, 303); exit();
 
     } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (!empty($_SESSION["book-id"])) && (!empty($_SESSION["rating"])) )  {
+
         // pobierz liczbę ocen książki, jeśli wynosi zero, zapisz ten stan do zmiennej -->
         query("SELECT ks.id_ksiazki, ks.tytul, ks.rating, (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki) AS liczba_ocen
                            FROM ksiazki AS ks
@@ -125,17 +141,13 @@
                                              JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy 
                                          WHERE ks.id_ksiazki = '%s'", "getBook", $_SESSION["book-id"]); // \template\book-page.php ;
 
-                        /*if( isset($_SESSION["liczba_ocen"]) && $_SESSION["liczba_ocen"] == "0" ) {
-                            query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $_SESSION["book-id"]); // afected rows !!!
-                        }*/
-
                             $_SESSION["ratings"] = [];
 
                             query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "getRatings", $_SESSION["book-id"]);
 
-                            if(empty($_SESSION["ratings"])) {
+                            /*if(empty($_SESSION["ratings"])) {
                                 $_SESSION["ratings"] = [];
-                            }
+                            }*/
 
                                 // ✓ potrzebne w widoku w sekcji "Recenzje" ; poziome paski z ocenami (żółte/szare) ;
 

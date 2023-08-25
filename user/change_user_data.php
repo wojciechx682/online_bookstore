@@ -35,18 +35,21 @@
         $name_regex = '/^[A-ZŁŚŻ]{1}[a-ząęółśżźćń]+$/u';
 
         if (!preg_match($name_regex, $name) || is_numeric($name) || preg_match('/[0-9]/', $name) || strlen($name)>$max_name_length) {
+
             $valid = false;
             $_SESSION["user_data_error_message"] = "Podaj poprawne imię";
         }
 
         if (!preg_match($name_regex, $surname) || is_numeric($surname) || preg_match('/[0-9]/', $surname) || strlen($surname)>$max_name_length) {
+
             $valid = false;
             $_SESSION["user_data_error_message"] = "Podaj poprawne nazwisko";
         }
 
 		$email_s = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-		if (!filter_var($email_s, FILTER_VALIDATE_EMAIL) || ($email_s != $_POST["email_edit"])) {
+		if (!filter_var($email_s, FILTER_VALIDATE_EMAIL) || ($email_s != $email)) {
+
             $valid = false;
             $_SESSION["user_data_error_message"] = "Podaj poprawny adres e-mail";
 		}
@@ -61,10 +64,10 @@
                 if (isset($_SESSION["email-exists"]) && $_SESSION["email-exists"]) {
                     $valid = false;
                     $_SESSION["user_data_error_message"] = "Istnieje już konto przypisane do tego adresu e-mail";
-                }
-                unset($_SESSION["email-exists"], $_SESSION["given-email"]);
-            }
 
+                    unset($_SESSION["email-exists"], $_SESSION["given-email"]);
+                }
+            }
 		}			
 
 		if (!is_numeric($phone) || strlen($phone)>$max_phone_length) {
@@ -92,12 +95,11 @@
                 header('Location: ___account.php'); exit();
 
             } else {
+
                 $_SESSION["user_data_error_message"] = "Wystąpił błąd. Spróbuj jeszcze raz";
 
                 header('Location: ___account.php'); exit();
             }
-
-
 		}
 		else {
 

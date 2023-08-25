@@ -84,7 +84,7 @@
             if ( empty($title) || // dane nie przeszły walidacji przez filtr, lub - wprowadzono pustą wartość --> ""
                  ($_SESSION["input-search-nav"] !== $_POST["input-search-nav"]) ) { // wartość po sanityzacji jest rózna od wartości podanej przez użytkownika
 
-                // validation failed - redirect to main-page (index.php);
+                    // validation failed - redirect to main-page (index.php);
 
                     $_SESSION["no-results"] = "Brak wyników";
 
@@ -92,6 +92,7 @@
                         header('Location: index.php', true,303);
                             exit();
             } else {
+
                 // validation passed ; - input-search-nav - nie pusty, posiada wartość, która przeszła walidację ;
 
                 /*unset($_SESSION["book_exists"]);
@@ -153,9 +154,9 @@
                     // $_SESSION["input-search-nav"]; <--
                         exit();
             }
-        }
-        elseif ( isset($_POST["kategoria"]) )   // && ! empty($_POST['kategoria'])
-        {
+
+        } elseif ( isset($_POST["kategoria"]) ) { // && ! empty($_POST['kategoria'])
+
             // post-redirect-get - top-nav -> kategoria; // przypadek wejśia w dowolną kategorię z górnego panelu;
                 // $_SESSION["kategoria"] = htmlentities($_POST['kategoria'], ENT_QUOTES, "UTF-8"); // "Wszystkie", "Informatyka", "Horror"
                 // $_SESSION["kategoria"] = strip_tags($_SESSION["kategoria"]);
@@ -184,6 +185,7 @@
                     exit();
 
                 } else {
+
                     // validation passed (category) - kategoria - nie pusty, posiada wartość, która przeszła walidację;
                     //                                          - istnieje kategoria o takiej nazwie
 
@@ -243,8 +245,6 @@
                             exit();
             } else {
                 // validation passed - input-search ;
-
-
 
                 unset($_SESSION["subcategory"]); // ✓ - ponieważ szukamy książek w każdej kategorii;
                     header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form

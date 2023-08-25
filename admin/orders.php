@@ -1,5 +1,5 @@
 <?php
-        // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
+
     require_once "../authenticate-admin.php";
 ?>
 
@@ -35,13 +35,12 @@
 
                     <?php
                         query("SELECT zm.id_zamowienia,
-                                            zm.data_zlozenia_zamowienia, 
-                                            zm.status,
-                                        kl.imie, kl.nazwisko,
-                                        pl.kwota, pl.sposob_platnosci                                        
-                                    FROM zamowienia AS zm, klienci AS kl, platnosci AS pl 
-                                    WHERE zm.id_zamowienia = pl.id_zamowienia AND
-                                    zm.id_klienta = kl.id_klienta AND zm.id_pracownika = '%s'", "get_all_orders", $_SESSION["id"]);
+                                       zm.data_zlozenia_zamowienia,
+                                       zm.status,
+                                       kl.imie, kl.nazwisko,
+                                       pl.kwota, mp.nazwa AS metoda_platnosci
+                                FROM zamowienia AS zm, klienci AS kl, platnosci AS pl, metody_platnosci AS mp
+                                WHERE zm.id_zamowienia = pl.id_zamowienia AND pl.id_metody_platnosci = mp.id_metody_platnosci AND zm.id_klienta = kl.id_klienta AND zm.id_pracownika = '%s'", "getAllOrders", $_SESSION["id"]);
                         // content of the table;
                         // wszystkie zamówienia złożone przez klientów - (przypisane do zalogowanego pracownika) ;
 

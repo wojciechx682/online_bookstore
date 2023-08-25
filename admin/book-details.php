@@ -24,8 +24,9 @@
             // check if there is really a book with that id ;
             $_SESSION['book_exists'] = false;
 
+            unset($_SESSION["book_exists"]);
             // check if there is really an order with that id (post - order-id);
-            query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
+            query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExists", $_SESSION["book-id"]);
             // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0    -> przestawi
             // $_SESSION['book_exists'] -> na true ;
 

@@ -37,7 +37,7 @@
                          WHERE zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
             // przestawi zmienną - $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie (o takim id), jeśli num_rows > 0 ;
 
-            if($orderId === false || $_SESSION["order-id"] === false || $_SESSION['order-exists'] === false || ($_SESSION["order-id"] !== array_keys($_POST)[0]) ) {
+            if ($orderId === false || $_SESSION["order-id"] === false || $_SESSION["order-exists"] === false || ($_SESSION["order-id"] !== array_keys($_POST)[0]) ) {
                     // tutaj trzeba odpowiednio obsłużyć błąd ;
                 // ✓ id-zamówienia (order-id) nie przeszło walidacji, LUB ✓ nie istnieje zamówienie o takim id;
                     // musi być komunikat o błędzie (np okienko) + exit() ! ;
@@ -128,7 +128,7 @@
                                      FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm,
                                           autor AS au
                                      WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND zm.id_zamowienia = '%s'",
-                                    "get_order_details_admin", $_SESSION["order-id"]);
+                                    "getOrderDetailsAdmin", $_SESSION["order-id"]);
                         // content of table;  $_SESSION['order_details_books_id'];
                         // szczegóły danego zamówienia;
                                            // (content) id_zamowienia,  tytul,   cena, ilosc, kwota;
@@ -137,17 +137,20 @@
                         query("SELECT pl.kwota 
                                      FROM platnosci AS pl, zamowienia AS zm 
                                      WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
-                                    "get_order_sum_admin", $_SESSION["order-id"]);
+                                    "getOrderSumAdmin", $_SESSION["order-id"]);
                         // footer of table;
                             // kwota (suma) zamówienia; // "SUMA 279.3 PLN";
 
                         echo '<div id="order-det-container">';
 
-                        query("SELECT pl.sposob_platnosci, pl.data_platnosci, 
-                                            zm.forma_dostarczenia, zm.status 
-                                     FROM zamowienia AS zm, platnosci AS pl 
-                                     WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
-                                    "get_order_summary", $_SESSION["order-id"]);
+                        query("SELECT pl.id_metody_platnosci, pl.data_platnosci, 
+                                      zm.id_formy_dostawy, zm.status, fd.nazwa AS forma_dostarczenia, mp.nazwa AS metoda_platnosci
+                               FROM zamowienia AS zm, platnosci AS pl, formy_dostawy AS fd, metody_platnosci AS mp
+                               WHERE zm.id_zamowienia = pl.id_zamowienia AND 
+                                     zm.id_formy_dostawy = fd.id_formy_dostawy AND
+                                     pl.id_metody_platnosci = mp.id_metody_platnosci AND
+                                     zm.id_zamowienia='%s'",
+                               "getOrderSummary", $_SESSION["order-id"]);
 
                         // sposób_płatności, data_platnosci, forma_dostarczenia, status;
                     ?>

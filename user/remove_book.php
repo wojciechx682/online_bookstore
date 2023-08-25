@@ -37,6 +37,7 @@
 					 // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po usunięciu książki);
 
 		$_SESSION["suma_zamowienia"] = 0;
+
 		query("SELECT ROUND(SUM(ko.ilosc * ks.cena),2) AS suma
                      FROM klienci AS kl, koszyk AS ko, ksiazki AS ks
                      WHERE kl.id_klienta = '%s' AND kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki

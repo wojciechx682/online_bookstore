@@ -1,5 +1,23 @@
 <?php
     require_once "../authenticate-user.php";
+
+    // $_SESSION["imie"]
+    // $_SESSION["nazwisko"]
+    // $_SESSION["email"]
+    // $_SESSION["telefon"]
+        // $_SESSION["user_data_error_message"]
+        // $_SESSION["is_user_data_changed"]
+
+    // $_SESSION["miejscowosc"]
+    // $_SESSION["ulica"]
+    // $_SESSION["numer_domu"]
+    // $_SESSION["kod_pocztowy"]
+    // $_SESSION["kod_miejscowosc"]
+        // $_SESSION["address-data-error"]
+        // $_SESSION["is_address_data_changed"]
+
+    // $_SESSION["error_password_message"]
+    // $_SESSION["is_password_changed"]
 ?>
 
 <!DOCTYPE HTML>
@@ -24,9 +42,9 @@
                 <h3 class="account-header">Moje konto</h3>
 
                 <?php
-                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
                 ?>
 
                 <div class="dane_konta">

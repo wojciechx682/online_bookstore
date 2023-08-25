@@ -75,6 +75,8 @@
                 header('Location: ___zaloguj.php');  exit();
             }
 
+            $_SESSION["blad"] = '<span class="error">Nieprawidłowy e-mail lub hasło</span>';
+
 			query("SELECT kl.id_klienta, kl.haslo, kl.imie, kl.nazwisko, kl.telefon, kl.email, kl.adres_id,
                                 ad.miejscowosc, ad.ulica, ad.numer_domu, ad.kod_pocztowy, ad.kod_miejscowosc
                          FROM klienci AS kl, adres AS ad 

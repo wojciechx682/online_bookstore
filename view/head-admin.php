@@ -26,7 +26,7 @@
         <!-- <script src="../scripts/jquery-3.6.3.js"></script> -->
 
     <script src="../scripts/display-nav.js"></script>
-    <script src="../scripts/change-quantity.js"></script>
+    <!--<script src="../scripts/change-quantity.js"></script>-->
     <!--<script src="../scripts/load-theme.js"></script>-->
     <script src="../scripts/show-order-options.js"></script> <!-- admin/orders.php -->
     <script src="../scripts/show-books-options.js"></script> <!-- admin/books.php -->

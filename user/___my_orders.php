@@ -24,7 +24,6 @@
                 <h3 class="account-header">Historia zamówień</h3> <!-- <h3>Zamówienia</h3><hr> -->
 
                 <?php
-                    echo '<script> displayNav(); </script>';
 
                     query("SELECT id_zamowienia, data_zlozenia_zamowienia, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, fd.nazwa, komentarz FROM zamowienia, formy_dostawy AS fd WHERE zamowienia.id_formy_dostawy = fd.id_formy_dostawy AND id_klienta = '%s'", "getOrders", $_SESSION['id']); // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
                 ?>
@@ -36,11 +35,14 @@
 
     </div> <!-- #container -->
 
+    <script>displayNav();</script>
+
     <?php require "../view/footer.php"; ?>
 
 </div>
 
 <script>
+
     content = document.getElementById("content");
         content.style.overflow = "auto";
 
@@ -57,8 +59,6 @@
             orderStatus[i].style.fontWeight = "bold";
         }
     }
-
-
 
 </script>
 

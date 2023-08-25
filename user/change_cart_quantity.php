@@ -20,13 +20,13 @@
 
         query("SELECT SUM(ilosc) AS suma 
                              FROM koszyk 
-                             WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION["id"]);
+                             WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
         //  $_SESSION["koszyk_ilosc_ksiazek"] <-- aktualna ilość książek klienta w koszykuksiazki
 
         query("SELECT ROUND(SUM(ko.ilosc * ks.cena),2) AS suma
                FROM klienci AS kl, koszyk AS ko, ksiazki AS ks
                WHERE kl.id_klienta = '%s' AND kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki
-               GROUP BY kl.id_klienta", "count_cart_sum", $_SESSION["id"]); // <-- $_SESSION["suma_zamowienia"]
+               GROUP BY kl.id_klienta", "countCartSum", $_SESSION["id"]); // <-- $_SESSION["suma_zamowienia"]
 
         // ------------------------------------------------------------------------------
         $cartData = [

@@ -118,15 +118,14 @@
 
                 unset($_POST);
 
-                header('Location: ___account.php');
-                exit();
+                header('Location: ___account.php'); exit();
 
             } else {
+
                 $_SESSION["user_data_error_message"] = "Wystąpił błąd. Spróbuj jeszcze raz";
 
                 header('Location: ___account.php'); exit();
             }
-
         }
         else // dane nie przeszły walidacji;
         {
