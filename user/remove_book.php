@@ -1,22 +1,12 @@
 <?php
-		// koszyk.php - usunięcie książki ;
-	session_start();
-	include_once "../functions.php";
+	// koszyk.php - usunięcie książki ;
 
-if( ! isset($_SESSION['zalogowany']) ) {
+	require_once "../authenticate-user.php";
 
-	$_SESSION["login-error"] = true;
-	header("Location: ___zaloguj.php");
-	exit();
-}
-
-	if(
-		isset($_POST['id_ksiazki']) /*&&
-		isset($_POST['id_klienta']) &&
+	if ( isset($_POST['id_ksiazki']) /*&&
+		 isset($_POST['id_klienta']) &&
 		isset($_POST['ilosc'])*/ &&
-		! empty($_POST["id_ksiazki"])
-
-	)
+		! empty($_POST["id_ksiazki"]))
 	{
 		$id_klienta = $_SESSION['id'];
 
@@ -43,8 +33,14 @@ if( ! isset($_SESSION['zalogowany']) ) {
 
 		query("SELECT SUM(ilosc) AS suma 
 					 FROM koszyk
-					 WHERE id_klienta='%s'", "count_cart_quantity", $id_klienta);
+					 WHERE id_klienta='%s'", "countCartQuantity", $id_klienta);
 					 // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po usunięciu książki);
+
+		$_SESSION["suma_zamowienia"] = 0;
+		query("SELECT ROUND(SUM(ko.ilosc * ks.cena),2) AS suma
+                     FROM klienci AS kl, koszyk AS ko, ksiazki AS ks
+                     WHERE kl.id_klienta = '%s' AND kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki
+                     GROUP BY kl.id_klienta", "countCartSum", $_SESSION["id"]); // <-- $_SESSION["suma_zamowienia"]
 
 	}
 

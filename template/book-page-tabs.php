@@ -158,7 +158,7 @@
                         <div>
                             <label for="textarea-comment" id="textarea-label">Twoja opinia</label>
                         </div>
-                        <textarea id="textarea-comment" name="comment" required rows="4" cols="80" maxlength="255" minlength="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit</textarea>
+                        <textarea id="textarea-comment" name="comment" required rows="4" cols="80" maxlength="255" minlength="5" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non facilisis risus, a condimentum ipsum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In hac habitasse platea dictumst."></textarea>
                     </div>
 
                     <!--<hr>-->

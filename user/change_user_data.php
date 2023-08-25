@@ -1,6 +1,6 @@
 <?php
 
-    require_once "../start-session.php";
+    require_once "../authenticate-user.php";
 
     if ( (isset($_POST["imie_edit"]) &&
           isset($_POST["nazwisko_edit"]) &&
@@ -24,6 +24,9 @@
         //$name = ucfirst($name);
         //$surname = ucfirst($surname);
 
+        $max_name_length = 255;
+        $max_phone_length = 15;
+
         $name = mb_convert_case($name, MB_CASE_TITLE, "UTF-8");
         $surname = mb_convert_case($surname, MB_CASE_TITLE, "UTF-8");
 
@@ -31,28 +34,29 @@
 
         $name_regex = '/^[A-ZŁŚŻ]{1}[a-ząęółśżźćń]+$/u';
 
-        if (!preg_match($name_regex, $name) || is_numeric($name) || preg_match('/[0-9]/', $name)) {
+        if (!preg_match($name_regex, $name) || is_numeric($name) || preg_match('/[0-9]/', $name) || strlen($name)>$max_name_length) {
             $valid = false;
             $_SESSION["user_data_error_message"] = "Podaj poprawne imię";
         }
 
-        if (!preg_match($name_regex, $surname) || is_numeric($surname) || preg_match('/[0-9]/', $surname)) {
+        if (!preg_match($name_regex, $surname) || is_numeric($surname) || preg_match('/[0-9]/', $surname) || strlen($surname)>$max_name_length) {
             $valid = false;
             $_SESSION["user_data_error_message"] = "Podaj poprawne nazwisko";
         }
 
-		$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+		$email_s = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL) || ($email != $_POST["email_edit"])) {
+		if (!filter_var($email_s, FILTER_VALIDATE_EMAIL) || ($email_s != $_POST["email_edit"])) {
             $valid = false;
             $_SESSION["user_data_error_message"] = "Podaj poprawny adres e-mail";
 		}
-		else
-		{
+		else {
+
             if ($email != $_SESSION["email"]) {
 
-                query("SELECT email FROM klienci WHERE email='%s'", "check_email", $email); // $_SESSION["email_exists"] --> true/false
-                query("SELECT email FROM pracownicy WHERE email='%s'", "check_email", $email);
+                unset($_SESSION["email-exists"]);
+                query("SELECT email FROM klienci WHERE BINARY email='%s'", "checkEmail", $email); // $_SESSION["email_exists"] --> true / NULL
+                query("SELECT email FROM pracownicy WHERE BINARY email='%s'", "checkEmail", $email);
 
                 if (isset($_SESSION["email-exists"]) && $_SESSION["email-exists"]) {
                     $valid = false;
@@ -63,38 +67,47 @@
 
 		}			
 
-		if (!is_numeric($phone) || strlen($phone)>15) {
+		if (!is_numeric($phone) || strlen($phone)>$max_phone_length) {
 			$valid = false;
 			$_SESSION["user_data_error_message"] = "Podaj poprawny numer telefonu";
 		}
 		
-		if ( $valid ) {
+		if ($valid) {
 
             $user_data = [$name, $surname, $email, $phone, $_SESSION["id"]];
 
-			query("UPDATE klienci SET imie='%s', nazwisko='%s', email='%s', telefon='%s' WHERE id_klienta='%s'", "", $user_data);
+			$updateSuccessful = query("UPDATE klienci SET imie='%s', nazwisko='%s', email='%s', telefon='%s' WHERE id_klienta='%s'", "", $user_data);
 
-            $_SESSION["is_user_data_changed"] = true;
+            if ($updateSuccessful) {
 
-			$_SESSION["imie"] = $name;
-			$_SESSION["nazwisko"] = $surname;
-			$_SESSION["email"] = $email;
-			$_SESSION["telefon"] = $phone;
+                $_SESSION["is_user_data_changed"] = true;
 
-			unset($_POST, $_SESSION["user_data_error_message"]);
+                $_SESSION["imie"] = $name;
+                $_SESSION["nazwisko"] = $surname;
+                $_SESSION["email"] = $email;
+                $_SESSION["telefon"] = $phone;
 
-			header('Location: ___account.php');
-                exit();
+                unset($_POST, $_SESSION["user_data_error_message"]);
+
+                header('Location: ___account.php'); exit();
+
+            } else {
+                $_SESSION["user_data_error_message"] = "Wystąpił błąd. Spróbuj jeszcze raz";
+
+                header('Location: ___account.php'); exit();
+            }
+
+
 		}
-		else
-		{
+		else {
+
 			header('Location: ___account.php');
                 exit();
 		}
 	}
 	else // nie było danych w żądaniu POST lub były one te same co już istniejące w Sesji;
 	{
-		    // echo '<script> alert("Uzupełnij wszystkie pola") </script>';
+        // echo '<script> alert("Uzupełnij wszystkie pola") </script>';
 
         $_SESSION["user_data_error_message"] = "Podaj dane które różnią się od istniejących";
 		    header('Location: ___account.php');

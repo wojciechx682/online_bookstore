@@ -11,22 +11,17 @@
 		$comment = filter_input(INPUT_POST, "comment", FILTER_SANITIZE_STRING); // tresc_komentarza;
 		$rate = filter_var(filter_input(INPUT_POST, 'star', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT); // ocena;
 
-
-
 		$comment_data = [$_SESSION["id"], $_SESSION["id_ksiazki"]];
 
 		// sprawdzenie czy klient dodał już komentarz do tej książki -->
 
 		unset($_SESSION["rate_exists"]);
-		query("SELECT id_komentarza, id_ksiazki, id_klienta, tresc FROM komentarze WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "verifyRateExists", $comment_data);
-		// $_SESSION["rate_exists"] => true / false
 
-		unset($_SESSION["comment_exists"]);
+		query("SELECT id_komentarza, id_ksiazki, id_klienta, tresc FROM komentarze WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "verifyRateExists", $comment_data); // $_SESSION["rate_exists"] => true / NULL;
 		// sprawdzenie czy istnieje już dodana ocena w tabela rating dla tej książki - wstawiona przez tego klienta -->
-		query("SELECT id_oceny, id_ksiazki, ocena, id_klienta FROM ratings WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "verifyCommentExists", $comment_data);
-		// $_SESSION["rate_exists"] => true / false;
+		query("SELECT id_oceny, id_ksiazki, ocena, id_klienta FROM ratings WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "verifyRateExists", $comment_data); // $_SESSION["rate_exists"] => true / NULL;
 
-		if (!empty($_SESSION["rate_exists"]) || !empty($_SESSION["comment_exists"])) {
+		if (!empty($_SESSION["rate_exists"])) {
 
 			$_SESSION["rate-error"] = "<h3 class='data-changed'>Dodałeś już opinię dla tej książki</h3>";
 			header('Location: ___book.php?book='.$_SESSION["id_ksiazki"]);

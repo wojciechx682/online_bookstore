@@ -49,19 +49,19 @@
                             <form id="edit_data_form" action="change_user_data.php" method="post">
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="imie_edit" name="imie_edit" value="<?=$_SESSION["imie"]?>">
+                                    <input type="text" id="imie_edit" name="imie_edit" value="<?=$_SESSION["imie"]?>" maxlength="255" required>
                                 </div>
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="nazwisko_edit" name="nazwisko_edit" value="<?=$_SESSION["nazwisko"]?>">
+                                    <input type="text" id="nazwisko_edit" name="nazwisko_edit" value="<?=$_SESSION["nazwisko"]?>" maxlength="255" required>
                                 </div>
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="email_edit" name="email_edit" value="<?=$_SESSION["email"]?>">
+                                    <input type="text" id="email_edit" name="email_edit" value="<?=$_SESSION["email"]?>" maxlength="255" required>
                                 </div>
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="telefon_edit" name="telefon_edit" value="<?=$_SESSION["telefon"]?>">
+                                    <input type="text" id="telefon_edit" name="telefon_edit" value="<?=$_SESSION["telefon"]?>" maxlength="15" required>
                                 </div>
 
                                 <div class="edit_data_right">
@@ -115,18 +115,19 @@
                             <form id="edit_address_form" action="change_user_address.php" method="post">
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="miejscowosc_edit" name="miejscowosc_edit" value="<?=$_SESSION["miejscowosc"]?>">
+                                    <input type="text" id="miejscowosc_edit" name="miejscowosc_edit" value="<?=$_SESSION["miejscowosc"]?>" maxlength="255" required>
                                 </div>
                                 <div class="edit_data_right">
-                                    <input type="text" id="ulica_edit" name="ulica_edit" value="<?=$_SESSION["ulica"]?>"></div>
+                                    <input type="text" id="ulica_edit" name="ulica_edit" value="<?=$_SESSION["ulica"]?>" maxlength="255">
+                                </div>
                                 <div class="edit_data_right">
-                                    <input type="text" id="numer_domu_edit" name="numer_domu_edit" value="<?=$_SESSION["numer_domu"]?>">
+                                    <input type="text" id="numer_domu_edit" name="numer_domu_edit" value="<?=$_SESSION["numer_domu"]?>" maxlength="25" required>
                                 </div><hr>
                                 <div class="edit_data_right">
-                                    <input type="text" id="kod_poczt_edit" name="kod_poczt_edit" value="<?=$_SESSION["kod_pocztowy"]?>">
+                                    <input type="text" id="kod_poczt_edit" name="kod_poczt_edit" value="<?=$_SESSION["kod_pocztowy"]?>" maxlength="25" required>
                                 </div>
                                 <div class="edit_data_right">
-                                    <input type="text" id="miasto_edit" name="miasto_edit" value="<?=$_SESSION["kod_miejscowosc"]?>">
+                                    <input type="text" id="miasto_edit" name="miasto_edit" value="<?=$_SESSION["kod_miejscowosc"]?>" maxlength="255" required>
                                 </div>
 
                                 <div class="edit_data_right">

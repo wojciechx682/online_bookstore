@@ -4,9 +4,9 @@
 
     // Implementacja wzorca PRG (Post-Redirect-Get);
 
-    if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶
+    if ($_SERVER['REQUEST_METHOD'] === "POST") { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶
 
-        if ( isset($_POST["book-id"]) && ! empty($_POST["book-id"]) ) { // "35" ; // check if POST value (id_ksiazki) exists and is not empty;
+        if (isset($_POST["book-id"]) && ! empty($_POST["book-id"])) { // "35" ; // check if POST value (id_ksiazki) exists and is not empty;
 
             // Process the form data and perform necessary validations ;
 
@@ -22,16 +22,18 @@
             $_SESSION["book-id"] = filter_var($book, FILTER_VALIDATE_INT, [
                     'options' => [
                         'min_range' => 1,                       // Minimum allowed book-id value
-                        'max_range' => $_SESSION["max-book-id"] // Maximum allowed book-id value (highest book-id in database) ; functions() -> "get_book_id()"
+                        'max_range' => $_SESSION["max-book-id"] // Maximum allowed book-id value (highest book-id in database) ; functions() -> "getBookId()"
                     ]
                 ]
             ); // ✓ It ensures that the value is an integer within the specified range;
 
             // check if there is really a book with that id ;
+
             unset($_SESSION["book_exists"]);
+
             query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExists", $_SESSION["book-id"]);
                 // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0;
-            // $_SESSION["book_exists"] --> true - zależnie od tego czy książka o takim ID istnieje ;
+            // $_SESSION["book_exists"] --> true - zależnie od tego czy książka o takim ID istnieje ; NULL otherwise (!)
 
             if ( $book === false || $_SESSION["book-id"] === false || empty($_SESSION["book_exists"]) || empty($_SESSION["max-book-id"]) || ($_SESSION["book-id"] != $_POST["book-id"])) {
 
@@ -48,6 +50,8 @@
 
                     unset($_POST, $_SESSION["max-book-id"], $book, $_SESSION["book_exists"]); // keep $_SESSION["book-id"];
 
+
+
                 // Redirect to prevent form resubmission // to prevent resubmitting the form
                 header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
             }
@@ -57,9 +61,19 @@
             header('Location: index.php', true, 303); exit();
         }
 
-    } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (!isset($_SESSION["book-id"]) || empty($_SESSION["book-id"]))) {
+    } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (empty($_SESSION["book-id"]))) {
 
         header('Location: index.php', true, 303); exit();
+
+    } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (!empty($_SESSION["book-id"])) && (!empty($_SESSION["rating"])) )  {
+        // pobierz liczbę ocen książki, jeśli wynosi zero, zapisz ten stan do zmiennej -->
+        query("SELECT ks.id_ksiazki, ks.tytul, ks.rating, (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki) AS liczba_ocen
+                           FROM ksiazki AS ks
+                           WHERE ks.id_ksiazki = '%s'", "updateBookRates", $_SESSION["book-id"]); // <-- UPDATE
+
+        unset($_SESSION["rating"]);
+        // Redirect to prevent form resubmission // to prevent resubmitting the form
+        header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
     }
 
 ?>
@@ -87,9 +101,9 @@
 
                         <?php
 
-                        echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
+                            echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                            echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                            echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
 
                             echo '<a href="index.php">&larr; Wróć </a>'; // tymczasowe (!) ;
 
@@ -115,6 +129,8 @@
                             query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $_SESSION["book-id"]); // afected rows !!!
                         }*/
 
+                            $_SESSION["ratings"] = [];
+
                             query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "getRatings", $_SESSION["book-id"]);
 
                             if(empty($_SESSION["ratings"])) {
@@ -139,6 +155,9 @@
                                 // The json_encode() function is used to encode a PHP value into a JSON string;
 
                             echo "<hr><br>";
+                        echo "<b>".'$_SESSION["comments"] - comments  (PHP) -->'."</b><br><br>";
+                        print_r($_SESSION["comments"]); echo "<br><br>";
+                        var_dump($_SESSION["comments"]);
                                 echo "<b>".'$_SESSION["ratings"] - ratings array (PHP) -->'."</b><br><br>";
                                 print_r($_SESSION["ratings"]); echo "<br><br>";
                                 var_dump($_SESSION["ratings"]);

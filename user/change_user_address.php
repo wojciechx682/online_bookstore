@@ -1,6 +1,6 @@
 <?php
 
-    require_once "../start-session.php";
+    require_once "../authenticate-user.php";
 
     if ( (isset($_POST["miejscowosc_edit"]) &&
           isset($_POST["ulica_edit"]) &&
@@ -15,11 +15,7 @@
 
         // jeśli podano dane (POST), i są one różne od tych które były aktualnie ustawione (w Sesji);
 
-        // Edycja danych adresowych -> Miejscowość,
-                                    // Ulica,
-                                    // Numer_domu,
-                                    // Kod_pocztowy,
-                                    // Miasto;
+        // Edycja danych adresowych -> Miejscowość, // Ulica, // Numer_domu, // Kod_pocztowy, // Miasto;
 
         // sanitize address input;
         $miejscowosc = filter_input(INPUT_POST, "miejscowosc_edit", FILTER_SANITIZE_STRING);
@@ -27,6 +23,9 @@
         $numer_domu = filter_input(INPUT_POST, "numer_domu_edit", FILTER_SANITIZE_STRING);
         $kod_pocztowy = filter_input(INPUT_POST, "kod_poczt_edit", FILTER_SANITIZE_STRING);
         $miasto = filter_input(INPUT_POST, "miasto_edit", FILTER_SANITIZE_STRING);
+
+        $max_city_length = 255;
+        $max_house_no_len = 25;
 
         $valid = true;
 
@@ -43,7 +42,7 @@
         //           #4A-23A
         //           $@!#$@#$
 
-        if(!preg_match($address_regex, $miejscowosc)) {
+        if(!preg_match($address_regex, $miejscowosc) || strlen($miejscowosc)>$max_city_length) {
             $valid = false;
             $_SESSION["address-data-error"] = "Podaj poprawną nazwę miejscowości";
         }
@@ -54,7 +53,7 @@
                 //    Passing:
                 //          "ul. Warszawska"  "al. Jana Pawła II"  "Plac Grunwaldzki"
 
-                if ( !preg_match($street_regex, $ulica)) {
+                if (!preg_match($street_regex, $ulica) || strlen($ulica)>$max_city_length) {
                     $valid = false;
                     $_SESSION["address-data-error"] = "Podaj poprawną nazwę ulicy";
                 }
@@ -73,7 +72,7 @@
         //           AAA-123
         //           AAA-AAA
 
-        if( !preg_match($house_number_regex, $numer_domu)) {
+        if( !preg_match($house_number_regex, $numer_domu) || strlen($numer_domu)>$max_house_no_len) {
             $valid = false;
             $_SESSION["address-data-error"] = "Podaj poprawny numer domu";
         }
@@ -85,44 +84,53 @@
 
         $zip_regex = "/^[0-9]{2}[\-]{1}[0-9]{3}$/";
 
-        if( !preg_match($zip_regex, $kod_pocztowy)) {
+        if( !preg_match($zip_regex, $kod_pocztowy) || strlen($kod_pocztowy)>$max_house_no_len) {
             $valid = false;
             $_SESSION["address-data-error"] = "Podaj poprawny kod pocztowy";
         }
 
         $miasto = ucfirst(trim($miasto, " "));
 
-        if( !preg_match($address_regex, $miasto)) {
+        if( !preg_match($address_regex, $miasto) || strlen($miasto)>$max_city_length) {
             $valid = false;
             $_SESSION["address-data-error"] = "Podaj poprawną miejscowość";
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        if( $valid )
-        {
+        if ($valid) {
+
             $user_data = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $miasto, $_SESSION["adres_id"]]; // $id - id_adresu;
 
             // query("UPDATE klienci SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE id_klienta='%s'", "", $user_data);
 
-            query("UPDATE adres SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE adres_id='%s'", "", $user_data);
+            $updateSuccessful = query("UPDATE adres SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE adres_id='%s'", "", $user_data);
 
-            $_SESSION["is_address_data_changed"] = true;
+            if ($updateSuccessful) {
 
-            $_SESSION["miejscowosc"] = $miejscowosc;
-            $_SESSION["ulica"] = $ulica;
-            $_SESSION["numer_domu"] = $numer_domu;
-            $_SESSION["kod_pocztowy"] = $kod_pocztowy;
-            $_SESSION["kod_miejscowosc"] = $miasto;
+                $_SESSION["is_address_data_changed"] = true;
 
-            unset($_POST);
+                $_SESSION["miejscowosc"] = $miejscowosc;
+                $_SESSION["ulica"] = $ulica;
+                $_SESSION["numer_domu"] = $numer_domu;
+                $_SESSION["kod_pocztowy"] = $kod_pocztowy;
+                $_SESSION["kod_miejscowosc"] = $miasto;
 
-            header('Location: ___account.php');
+                unset($_POST);
+
+                header('Location: ___account.php');
                 exit();
+
+            } else {
+                $_SESSION["user_data_error_message"] = "Wystąpił błąd. Spróbuj jeszcze raz";
+
+                header('Location: ___account.php'); exit();
+            }
+
         }
         else // dane nie przeszły walidacji;
         {
-                //echo '<script> alert("Niepoprawne dane") </script>';
+            //echo '<script> alert("Niepoprawne dane") </script>';
             header('Location: ___account.php');
                 exit();
         }

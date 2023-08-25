@@ -197,6 +197,20 @@
 		//$result->free_result();
 	}
 
+    function updateBookRates($result) { // \book.php
+
+        $row = $result->fetch_assoc();
+
+        $_SESSION["liczba_ocen"] = $row["liczba_ocen"];
+        $_SESSION["avg_rating"] = $row["rating"];
+        $_SESSION["rating"] = $row["rating"];
+
+        if ($row["liczba_ocen"] == 0) {
+            query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $row["id_ksiazki"]);
+        }
+
+    }
+
     function getBook($result) { // get_book
 
         // get book-details on book.php - page ;
@@ -235,6 +249,11 @@
                 $_SESSION["liczba_ocen"] = $row["liczba_ocen"]; // number of reviews - "2" ;
                 $_SESSION["id_ksiazki"] = $row["id_ksiazki"];   // book-id - "1" ;
 
+        /*if ($_SESSION["liczba_ocen"] == 0) {
+            query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $_SESSION["book-id"]); // afected rows !!!
+        }*/
+
+
         if ( isset($_SESSION["rate-error"]) ) { // komunikat - błąd przy dodawaniu oceny przez klienta ;
 
             $message = $_SESSION["rate-error"];
@@ -269,6 +288,9 @@
         // ../template/book-page.php ;
 
         // pobranie komentarzy do książki - (id_klienta, treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
+
+        $_SESSION["comments"] = [];
+
         query("SELECT km.id_klienta, km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "getComments", $_SESSION["id_ksiazki"]);
         // (!) $_SESSION["comments"]; - ta zmienna zawiera wykorzystany szablon HTML (przechowuje wszystkie komentarze danej książki !);
 
@@ -356,12 +378,6 @@
         $_SESSION["rate_exists"] = true;
     }
 
-    function verifyCommentExists($result) {
-
-        // function for cheking if comment / or rate already exists (for that book) made by that clinet
-        $_SESSION["comment_exists"] = true;
-    }
-
     function getComments($result) { // get_comments // "km.id_klienta", "km.treść", "km.data", "kl.imie", "rt.ocena" ;
 
         // ̶$̶i̶ ̶=̶ ̶0̶;̶
@@ -424,21 +440,13 @@
         $_SESSION["max-magazine-id"] = $row["id_magazynu"]; // "2"
     }
 
-	function check_email($result) {
+	function checkEmail($result) { // check_email
 
         // validate_user_data.php - (zmiana danych usera), sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną; (zmiana danych konta);
 
         // remove_account.php     - sprawdza, -----------||--------------  ---------||-----------;  (resetowanie hasła);
 
-        if ($result->num_rows) { // jeśli zwrócono conajmniej jeden rekord (wiersz) - istnieje taki user (email)
-
-            $row = $result->fetch_assoc();
-
-            $_SESSION["email-exists"] = true;
-
-        } else {
-            $_SESSION["email-exists"] = false;
-        }
+        $_SESSION["email-exists"] = true;
 	}
 
     function resetPasswordCheckEmail($result) { // reset_password_check_email
@@ -450,8 +458,6 @@
         $_SESSION["given-email"] = $row["email"]; // reset_password.php - resetowanie hasła
 
     }
-
-
 
     function generate_token() {     // reset_password.php; - return $token_hashed | OR | false;
 
@@ -1018,7 +1024,7 @@ EOT;
         }
     }
 
-	function verify_password($result) // validate_password.php (zmiana hasła); // confirm_password.php (usuwanie konta);
+	function verifyPassword($result) // verify_password // validate_password.php (zmiana hasła); // confirm_password.php (usuwanie konta);
 	{
 		/*while ($row = $result->fetch_assoc())
 		{
@@ -1937,9 +1943,9 @@ function query($query, $fun, $values) {
 
                 } elseif ($result === true) { // (bool - true) - dla zapytań INSERT, UPDATE, DELETE ...
 
-                    if ($connection->affected_rows && $fun) { // && $fun
+                    if ($connection->affected_rows) { // && $fun
 
-                        // affected_rows - liczba zmodyfikowanych wierszy przez zapytanie (INSERT, UPDATE, DELETE) --> 0, 1, 2, 3, 4, ...
+                        // affected_rows - liczba zmodyfikowanych wierszy przez zapytanie (INSERT, UPDATE, DELETE) --> 1, 2, 3, 4, ...
 
                         // Tutaj obsłuż przypadki, gdy zapytanie wpłynęło na co najmniej jeden wiersz
 
@@ -1947,7 +1953,16 @@ function query($query, $fun, $values) {
 
                         //$fun($result);
 
-                            $fun($connection);
+                        if ($fun) {
+
+                            $fun($connection); // order.php;
+
+                        } else {
+
+                            return true; // UPDATE, --> $updateSuccessful, if($updateSuccessful) { ... }
+                        }
+
+
 
                     } else {
                         // Obsłuż przypadki, gdy zapytanie nie wpłynęło na żaden wiersz, ale nie wystąpiły błędy
