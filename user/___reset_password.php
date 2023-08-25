@@ -44,7 +44,8 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
 
             // check if there is any user (client) with that email;
 
-            query("SELECT id_klienta, imie, email FROM klienci WHERE email='%s'", "reset_password_check_email", $email);
+            unset($_SESSION["email-exists"]);
+            query("SELECT id_klienta, imie, email FROM klienci WHERE email='%s'", "resetPasswordCheckEmail", $email);
             // ustawi zmienną       $_SESSION["email-exists"] --> na "true", jeśli JEST taki user (email) - (jeśli zwrócono rekordy z BD -> $result);
             //                      $_SESSION["imie"];
             //                      $_SESSION["given-email"]; <-- adres wprowadzony w POST["email"]
@@ -53,7 +54,8 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
 
                 // istnieje taki user (email), można zresetować mu hasło;
 
-                query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE email='%s'", "verify_token", $email);
+                unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
+                query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE email='%s'", "verifyToken", $email);
                 // sprawdź, czy istnieje{ą) już tokeny w tabeli "password_reset_tokens" dla tego adresu e-email !;
                 if ( isset($_SESSION["token-exists"]) && $_SESSION["token-exists"] ) {
                     // usuń wszystkie tokeny (jeśli istniały) z tej tabeli, dla tego klienta;
@@ -175,7 +177,8 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
 
             // ✓ musimy sprawdzić, czy istnieje wpis (rekord) w tabeli "password_reset_tokens" dla podanego tokenu ($_POST["token"]) oraz maila ($_SESSION["given-email"]) - jeśli jest taki rekord, oznacza to że user podał poprawny token ($_POST["token"]), jeśli nie zwróci rekordów, tzn że podano zły token
 
-            query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE token='%s' AND email='%s'", "verify_token", [$token, $_SESSION["given-email"]]);
+            unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
+            query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE token='%s' AND email='%s'", "verifyToken", [$token, $_SESSION["given-email"]]);
 
             // ✓ $_SESSION["token-exists"] = true; (jeśli znaleziono taki token w BD - czyli user podał poprawny token !);
             // ✓ $_SESSION["email"] = $row["email"];

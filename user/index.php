@@ -93,7 +93,62 @@
                             exit();
             } else {
                 // validation passed ; - input-search-nav - nie pusty, posiada wartość, która przeszła walidację ;
-                    // przekierowanie ! (może być na dowolny adres, niekoniecznie ten sam);
+
+                /*unset($_SESSION["book_exists"]);
+
+                $values = [$_SESSION["input-search-nav"]];
+
+                $query = "SELECT
+                                ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
+                                kt.nazwa, sb.id_kategorii, sb.nazwa,
+                                au.imie, au.nazwisko,
+                                SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                            FROM 
+                                ksiazki AS ks
+                            JOIN 
+                                autor AS au ON ks.id_autora = au.id_autora
+                            JOIN 
+                                subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                            JOIN 
+                                kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                            LEFT JOIN 
+                                magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                            WHERE ks.tytul LIKE '%%%s%%'";
+
+                if($_SESSION["kategoria"] != "Wszystkie") { // kategoria zawsze jest ustawiona wsześniej, przyjmuje wartość "Wszystkie" lub dowolną inną z istniejących;
+
+                    // jeśli kategoria to np. "Informatyka", "Horror", "Fantastyka";
+
+                    $where = []; // WHERE CONDITION
+                    // $where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
+                    $where[] = " AND kt.nazwa LIKE '%%%s%%'"; //%%%s%% // "Informatyka", "Horror", "Fantastyka";
+                    $values[] = $_SESSION['kategoria']; // dodanie do tablicy argumentów zmiennej kategoria - do użycia w funkcji query(); // od teraz values = ["input-search-nav" (tytul), "kategoria"];
+
+                    if(isset($_SESSION["subcategory"])) { // jeśli jest ustawiona pod-kateoria;
+                        $where[] = " AND sb.nazwa LIKE '%%%s%%'"; // szukaj w także w tej podkategorii;
+                        $values[] = $_SESSION['subcategory'];
+                    }
+                }
+
+                if (!empty($where)) { // dodanie do zapytania warunku  w którym kategoria to ->  "Informatyka", "Horror", "Fantastyka";
+
+                    // combine the conditions into a single WHERE clause
+                    $query .= implode("", $where);
+
+
+                }
+
+                $query .= " GROUP BY ks.id_ksiazki";
+
+                query($query, "verifyBookExists", $values);
+
+
+                if(empty($_SESSION["book_exists"])) {
+                    $_SESSION["no-results"] = "Brak wyników";
+                    unset($_POST, $title, $_SESSION["input-search-nav"]);
+                }*/
+
+                // przekierowanie ! (może być na dowolny adres, niekoniecznie ten sam);
                 header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // prg - to prevent resubmitting the form
                     // $_SESSION["input-search-nav"]; <--
                         exit();
@@ -111,13 +166,14 @@
                 $_SESSION["kategoria"] = $category; // --> $category | FALSE
 
                 // check if THAT category exists in db (!) ;
+                unset($_SESSION["category-exists"]);
                 query("SELECT nazwa FROM kategorie WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["kategoria"]);
-                // $_SESSION["category-exists"] --> true, jeśli taka kategoria (nazwa) istnieje;
-                // -------------||------------- --> FALSE, jeśli taka kategoria (nazwa) NIE istnieje;
+                // $_SESSION["category-exists"] --> true,                   jeśli taka kategoria (nazwa) istnieje;
+                // -------------||------------- --> zmienna NIE ISTNIEJE !, jeśli taka kategoria (nazwa) NIE istnieje;
 
                 if ( empty($category) // pusta wartość "" (empty) - lub nie przeszła walidacji (false)
                     || ($_SESSION["kategoria"] !== $_POST["kategoria"]) // nazwa kategorii po walidacji inna, niż podana w żądaniu POST
-                    || $_SESSION["category-exists"] === false ) { // kategoria nie istnieje
+                    || empty($_SESSION["category-exists"])) { // kategoria nie istnieje
 
                     $_SESSION["no-results"] = "Brak wyników";
 
@@ -137,11 +193,12 @@
                         $_SESSION["subcategory"] = $subcategory;
 
                         // check if THAT sub-category exists in db (!) ;
-                        query("SELECT nazwa FROM subkategorie WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // ✓ przestawi $_SESSION["subcategory-exists"] --> na true, jeśli taka pod-kategoria (nazwa) istnieje; // w przeciwnym wypadku --> $_SESSION["subcategory-exists"] == false;
+                        unset($_SESSION["subcategory-exists"]);
+                        query("SELECT nazwa FROM subkategorie WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // ✓ przestawi $_SESSION["subcategory-exists"] --> na true, jeśli taka pod-kategoria (nazwa) istnieje; // w przeciwnym wypadku --> $_SESSION["subcategory-exists"] --> zmienna NIE ISTNIEJE; - jeśli taka pod-kategoria (nazwa) nie istnieje !
 
                         if( empty($subcategory)  // pusta wartość podkategorii --> "", lub nie przeszła walidacji (false)
                             || ($_SESSION["subcategory"] !== $_POST["subcategory"]) // nazwa podkategorii inna po walidacji niż ta podana w POST
-                            || $_SESSION["subcategory-exists"] === false ) { // podkategoria nie istnieje
+                            || empty($_SESSION["subcategory-exists"]) ) { // podkategoria nie istnieje
 
                             $_SESSION["no-results"] = "Brak wyników";
 
@@ -186,6 +243,9 @@
                             exit();
             } else {
                 // validation passed - input-search ;
+
+
+
                 unset($_SESSION["subcategory"]); // ✓ - ponieważ szukamy książek w każdej kategorii;
                     header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
                         exit();
@@ -218,18 +278,19 @@
 
             unset($_SESSION["subcategory"]);
 
-            if( empty($category) // pusta wartość --> "" (empty), lub nie przeszła walidacji (false)
+            if (empty($category) // pusta wartość --> "" (empty), lub nie przeszła walidacji (false)
                 || ( $_SESSION["adv-search-category"] !== $_POST["adv-search-category"] ) ) {
                 // category empty ("") or failed validation ;
                     $valid = false;
             } else { // adv-search-category - passed validation;
 
-                if($_SESSION["adv-search-category"] != "Wszystkie") { // "Informatyka",  "Dla dzieci",  "Fantastyka", ...
+                if ($_SESSION["adv-search-category"] != "Wszystkie") { // "Informatyka",  "Dla dzieci",  "Fantastyka", ...
 
+                    unset($_SESSION["category-exists"]);
                     query("SELECT nazwa FROM kategorie WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
                     // $_SESSION["category-exists"] ==> true/false; (zależnie od tego czy istnieje taka kategoria);
 
-                    if($_SESSION["category-exists"] === false) {
+                    if (empty($_SESSION["category-exists"])) {
                         unset($_SESSION["category-exists"]);
                         $valid = false;
                     }
@@ -323,7 +384,8 @@
             if ( ! empty($_POST["adv-search-author"]) ) { // sanitize adv-search-author;
 
                 // get highest author-id from database ;
-                query("SELECT MAX(id_autora) AS id_autora FROM autor", "get_author_id", "");
+                unset($_SESSION["max-author-id"]);
+                query("SELECT MAX(id_autora) AS id_autora FROM autor", "getAuthorId", "");
                 // $_SESSION["max-author-id"] => id_autora --> "36";
 
                 $author = filter_input(INPUT_POST, "adv-search-author", FILTER_SANITIZE_NUMBER_INT);
@@ -339,11 +401,12 @@
                 ); // ✓ It ensures that the value is an integer within the specified range;
 
                 // check if that author (id) exists in db ... ;
+                unset($_SESSION["author-exists"]);
                 query("SELECT id_autora FROM autor WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]);
                 // ✓ $_SESSION["author-exists"] --> true/false, (zależnie od tego, czy istnieje taki autor o takim id)
 
                 if( empty($author) // (false) - id nie przeszło walidacji
-                    || $_SESSION["adv-search-author"] === false || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || $_SESSION["author-exists"] === false ) {
+                    || $_SESSION["adv-search-author"] === false || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || empty($_SESSION["author-exists"]) ) {
                     // author (id) didn't pass validation
                     $valid = false;
                 }
@@ -504,9 +567,9 @@
 
             <main>
 
-                <?php /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                <?php echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/ ?>
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; ?>
 
                 <aside id="book-filters">
 
@@ -574,7 +637,7 @@
 
                         <ul id="ul-authors">
                             <?php
-                                query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie ASC", "get_authors", "");
+                                query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie", "getAuthors", "");
                                 // filtrowanie autorów - <ul> authors list;
                             ?>
                         </ul>
@@ -664,7 +727,7 @@
                                 LEFT JOIN 
                                       magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
                                 WHERE ks.tytul LIKE '%%%s%%' 
-                                GROUP BY ks.id_ksiazki", "get_books", $search_value); // input-search => tytuł książki;
+                                GROUP BY ks.id_ksiazki", "getBooks", $search_value); // input-search => tytuł książki;
 
                     }
 
@@ -706,6 +769,8 @@
                         /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                         echo "GET ->"; print_r($_GET); echo "<hr><br>";
                         echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+
+
 
                         // dodanie statusu - "dostępna / niedostępna" -->
 
@@ -754,7 +819,7 @@
                         echo "<br><hr><br> query --> <br><br>";
                         echo $query . "<br><br><hr><br>";
 
-                        query($query, "get_books", $values);
+                        query($query, "getBooks", $values);
 
                     }
 
@@ -862,7 +927,7 @@
                         echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
                         // execute the query - advanced-search;
-                        query($_SESSION["adv-search-query"], "get_books", $_SESSION["adv-search-values"]);
+                        query($_SESSION["adv-search-query"], "getBooks", $_SESSION["adv-search-values"]);
 
                         unset($_SESSION["adv-search-query"], $_SESSION["adv-search-values"]);
 
@@ -894,6 +959,8 @@
 
 
                             if(isset($_SESSION["no-results"]) && !empty($_SESSION["no-results"])) {
+
+                                //echo "<br>903<br>"; exit();
 
                                 echo '<div id="content">';
                                     echo '<div id="content-books">';

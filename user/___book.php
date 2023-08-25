@@ -10,9 +10,8 @@
 
             // Process the form data and perform necessary validations ;
 
-            // get highest book-id from database ;
-            query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM ksiazki", "get_book_id", "");
-                // $_SESSION["max-book-id"] = "35"
+            query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM ksiazki", "getBookId", ""); // get highest book-id from database ;
+            // $_SESSION["max-book-id"] = "35"
                 // - set variable to be applied in book-id filter below;
                 // (if book-id is higher than maximum id number in db - manage the error - redirect to index.php);
 
@@ -29,14 +28,13 @@
             ); // ✓ It ensures that the value is an integer within the specified range;
 
             // check if there is really a book with that id ;
-            $_SESSION['book_exists'] = false;
-
-            query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $_SESSION["book-id"]);
+            unset($_SESSION["book_exists"]);
+            query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExists", $_SESSION["book-id"]);
                 // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0;
-            // $_SESSION['book_exists'] --> true/false - zależnie od tego czy książka o takim ID istnieje ;
+            // $_SESSION["book_exists"] --> true - zależnie od tego czy książka o takim ID istnieje ;
 
-            if ( $book === false || $_SESSION["book-id"] === false || $_SESSION['book_exists'] === false || empty   ($_SESSION["max-book-id"]) || ($_SESSION["book-id"] != $_POST["book-id"]))
-            {
+            if ( $book === false || $_SESSION["book-id"] === false || empty($_SESSION["book_exists"]) || empty($_SESSION["max-book-id"]) || ($_SESSION["book-id"] != $_POST["book-id"])) {
+
                 // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
 
                 unset($_POST, $book, $_SESSION["book-id"], $_SESSION["max-book-id"], $_SESSION["book_exists"]);
@@ -111,13 +109,17 @@
                                              JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii 
                                              JOIN autor AS au ON ks.id_autora = au.id_autora 
                                              JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy 
-                                         WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]); // \template\book-page.php ;
+                                         WHERE ks.id_ksiazki = '%s'", "getBook", $_SESSION["book-id"]); // \template\book-page.php ;
 
-                                if( isset($_SESSION["liczba_ocen"]) && $_SESSION["liczba_ocen"] == "0" ) {
-                                    query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $_SESSION["book-id"]);
-                                }
+                        /*if( isset($_SESSION["liczba_ocen"]) && $_SESSION["liczba_ocen"] == "0" ) {
+                            query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $_SESSION["book-id"]); // afected rows !!!
+                        }*/
 
-                            query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "get_ratings", $_SESSION["book-id"]);
+                            query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "getRatings", $_SESSION["book-id"]);
+
+                            if(empty($_SESSION["ratings"])) {
+                                $_SESSION["ratings"] = [];
+                            }
 
                                 // ✓ potrzebne w widoku w sekcji "Recenzje" ; poziome paski z ocenami (żółte/szare) ;
 

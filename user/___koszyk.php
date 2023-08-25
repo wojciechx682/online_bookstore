@@ -40,7 +40,7 @@
                                WHERE kl.id_klienta = ko.id_klienta AND 
                                      ko.id_ksiazki = ks.id_ksiazki AND 
                                      ks.id_autora = au.id_autora AND 
-                                     kl.id_klienta='%s'", "get_product_from_cart", $_SESSION["id"]);
+                                     kl.id_klienta='%s'", "getProductsFromCart", $_SESSION["id"]);
 
                         // książki które zamówił klient o danym ID; (które posiada aktualnie w koszyku);
 

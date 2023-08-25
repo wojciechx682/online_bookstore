@@ -31,9 +31,11 @@
 		get_books($result);
 	}*/
 
-    function get_authors($result) // \user\index.php - left <nav>
+    function getAuthors($result) // get_authors // \user\index.php - left <nav>
     {
         // tworzy elementy listy <li> - w których kazdy wyświetli imie i nazwisko autora ;
+
+        // funkcja "get_authors" wykona się tylko, jeśli $result zawiera rekordy - czyli jeśli istnieje conajmniej jeden autor !
 
         echo '<li>
                   <label>
@@ -49,10 +51,10 @@
             echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"]);
         }
 
-        $result->free_result();
+
     }
 
-    function get_authors_adv_search($result) { // \user\index.php - header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
+    function getAuthorsAdvSearch($result) { // get_authors_adv_search // \user\index.php - header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
 
         // load the content from the external template file into string
         $author = file_get_contents("../template/adv-search-authors.php");
@@ -67,7 +69,7 @@
             echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
         }
 
-        $result->free_result();
+        //$result->free_result();
 
 //        while ($row = $result->fetch_assoc())
 //        {
@@ -82,7 +84,7 @@
 //        $result->free_result();
     }
 
-	function get_categories($result) // \user\index.php - top-nav - ol;
+	function getCategories($result) // get_categories // \user\index.php - top-nav - ol;
 	{
         // wyświetla listę kategorii;   wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
 
@@ -101,10 +103,10 @@
             echo sprintf($listItem, $row["nazwa"], $row["nazwa"]);
 		}
 
-        $result->free_result();
+        //$result->free_result();
 	}
 
-    function get_categories_adv_search($result) // \user\index.php // advanced_search --> <select> - lista kategorii;
+    function getCategoriesAdvSearch($result) // get_categories_adv_search // \user\index.php // advanced_search --> <select> - lista kategorii;
     {
         $categoryName = "Wszystkie";
 
@@ -119,21 +121,21 @@
             echo sprintf($category, $row['nazwa'], $row["nazwa"]);
         }
 
-        $result->free_result();
+        //$result->free_result();
     }
 
-	function get_books($result)
+	function getBooks($result) // get_books
 	{
         // content -> wyświetla wszystkie książki
+
+        // funkcja wykona się, tylko jeśli $result zawiera conajmniej jeden rekord !
 
         echo '<div id="content">';
             echo '<div id="content-books">';
 
                 $i = 0;
 
-                //print_r($result); exit();
-
-                if($result->num_rows) { // 1, 2, 3, ...
+                //if($result->num_rows) { // 1, 2, 3, ...
 
                     //echo "<br> 140 <br>"; exit();
 
@@ -183,18 +185,19 @@
 
                         $i++;
                     }
-                } else {
+
+                /*} else {
                     echo '<span class="main-page-search-result-error">Brak wyników</span>';
 
-                }
+                }*/
 
             echo '</div>'; // #content-books;
         echo '</div>'; // #content;
 
-		$result->free_result();
+		//$result->free_result();
 	}
 
-    function get_book($result) {
+    function getBook($result) { // get_book
 
         // get book-details on book.php - page ;
 
@@ -266,7 +269,7 @@
         // ../template/book-page.php ;
 
         // pobranie komentarzy do książki - (id_klienta, treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
-        query("SELECT km.id_klienta, km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "get_comments", $_SESSION["id_ksiazki"]);
+        query("SELECT km.id_klienta, km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "getComments", $_SESSION["id_ksiazki"]);
         // (!) $_SESSION["comments"]; - ta zmienna zawiera wykorzystany szablon HTML (przechowuje wszystkie komentarze danej książki !);
 
 /*        $_SESSION["comments"] => Array
@@ -298,6 +301,11 @@
                   </section>
         )*/
 
+        if(empty($_SESSION["comments"])) {
+            $_SESSION["comments"] = [];
+        }
+
+
         $book_page_tabs = file_get_contents("../template/book-page-tabs.php"); // wczytanie szablonu na sekcje (karty) z dodatkowymi informacjami o książce ;
 
         echo sprintf($book_page_tabs, $row["opis"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], ucfirst($row["oprawa"]), ucfirst($row["stan"]), $row["kategoria"], $row["podkategoria"], round($row["rating"],2), $message, implode($_SESSION["comments"]));
@@ -305,7 +313,7 @@
         // file_put_contents("../template/book-page-tabs-modified.php", $modified);
     }
 
-    function get_ratings($result) { // user\book.php   // "ocena", "liczba_ocen" ;
+    function getRatings($result) { // get_ratings // user\book.php   // "ocena", "liczba_ocen" ;
 
         // wstawia do tablicy sesyjnej - ilości poszczególnych ocen dla książki ->   5 -> 4,  4 -> 26,  3 -> 15, ....
 
@@ -326,7 +334,8 @@
 
             $_SESSION['ratings'][$book_rating] = $num_of_ratings;
 
-        }  //  ̶$̶_̶S̶E̶S̶S̶I̶O̶N̶[̶"̶r̶a̶t̶i̶n̶g̶s̶"̶]̶ ̶-̶>̶ ̶[̶5̶]̶ ̶=̶>̶ ̶2̶ ̶[̶4̶]̶ ̶=̶>̶ ̶1̶,̶ ̶.̶.̶.̶ ̶;̶
+        }
+           //  ̶$̶_̶S̶E̶S̶S̶I̶O̶N̶[̶"̶r̶a̶t̶i̶n̶g̶s̶"̶]̶ ̶-̶>̶ ̶[̶5̶]̶ ̶=̶>̶ ̶2̶ ̶[̶4̶]̶ ̶=̶>̶ ̶1̶,̶ ̶.̶.̶.̶ ̶;̶
            // $_SESSION["ratings"] -> Array ( [5] => 2
            //                                 [4] => 1
            //                                 [3] => 3
@@ -337,16 +346,23 @@
             echo "<br><br>";
         exit();*/
 
-        $result->free_result();
+        //$result->free_result();
     }
 
-    function verify_rate_exists($result) {
+    function verifyRateExists($result) { // verify_rate_exists
+
         // function for cheking if comment / or rate already exists (for that book) made by that clinet
             //$row = $result->fetch_assoc();
         $_SESSION["rate_exists"] = true;
     }
 
-    function get_comments($result) { // "km.id_klienta", "km.treść", "km.data", "kl.imie", "rt.ocena" ;
+    function verifyCommentExists($result) {
+
+        // function for cheking if comment / or rate already exists (for that book) made by that clinet
+        $_SESSION["comment_exists"] = true;
+    }
+
+    function getComments($result) { // get_comments // "km.id_klienta", "km.treść", "km.data", "kl.imie", "rt.ocena" ;
 
         // ̶$̶i̶ ̶=̶ ̶0̶;̶
 
@@ -370,20 +386,23 @@
             //$̶i̶+̶+̶;̶
         }
 
-        $result->free_result();
+        //$result->free_result();
     }
 
     // ..\user\book.php - POST ;
-    function get_book_id($result) {
+    function getBookId($result) { //get_book_id
         // get highest book-id from db to apply max-range filter in \user\book.php (POST);
             $row = $result->fetch_assoc();
         $_SESSION["max-book-id"] = $row["id_ksiazki"]; // "35"
     }
 
     // ..\admin\add-book-data, \edit-book-data - POST ;     \user\index.php - advanced-search - prg;
-    function get_author_id($result) {
+    function getAuthorId($result) { // get_author_id
+
+        // wykona się tylko, jeśli zwrócono conajmniej 1 wiersz ! (num_rows)
+
         // get highest author-id from db to apply max-range filter in ..\admin\add-book-data, \edit-book-data (POST), \user\index.php - adv-search - prg;
-            $row = $result->fetch_assoc();
+        $row = $result->fetch_assoc();
         $_SESSION["max-author-id"] = $row["id_autora"]; // "25"
     }
 
@@ -422,20 +441,15 @@
         }
 	}
 
-    function reset_password_check_email($result) {
+    function resetPasswordCheckEmail($result) { // reset_password_check_email
 
-        if ($result->num_rows) {
+        $row = $result->fetch_assoc();
 
-            $row = $result->fetch_assoc();
+        $_SESSION["email-exists"] = true;
+        $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
+        $_SESSION["given-email"] = $row["email"]; // reset_password.php - resetowanie hasła
 
-            $_SESSION["email-exists"] = true;
-            $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
-            $_SESSION["given-email"] = $row["email"]; // reset_password.php - resetowanie hasła
-
-        } else {
-            $_SESSION["email-exists"] = false;
-        }
-	}
+    }
 
 
 
@@ -454,19 +468,15 @@
         }
     }
 
-    function verify_token($result) // reset-password-form.php ;
+    function verifyToken($result) // verify_token // reset-password-form.php ;
     {
         // check, if there is any token assigned to that e-mail
 
-        if ($result->num_rows) { // == 1 <-- jeśli zwrócono conajmniej jeden rekord (wiersz)
-
-                $row = $result->fetch_assoc();
-            $_SESSION["token-exists"] = true;
-            $_SESSION["email"] = $row["email"];
-            $_SESSION["exp-time"] = $row["exp_time"];
-            $_SESSION["token"] = $row["token"];
-        }
-
+        $row = $result->fetch_assoc();
+        $_SESSION["token-exists"] = true;
+        $_SESSION["email"] = $row["email"];
+        $_SESSION["exp-time"] = $row["exp_time"];
+        $_SESSION["token"] = $row["token"];
     }
 
 //	function get_books_by_id($result) // koszyk_dodaj.php - nieużywane - do wyrzuczenia
@@ -481,7 +491,7 @@
 //		$result->free_result();
 //	}
 
-	function count_cart_quantity($result) { // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku;
+	function countCartQuantity($result) { // count_cart_quantity // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku;
                                             // \user\index.php - pobiera ilość książek klienta w koszyku;
 		$row = $result->fetch_assoc();
 
@@ -494,28 +504,24 @@
 
         $_SESSION["koszyk_ilosc_ksiazek"] = ($row["suma"] == NULL) ? 0 : $row["suma"]; // SUM(ilosc) AS suma -> $row["suma"];
 
-		$result->free_result();
+		//$result->free_result();
 
         // !!! $result -> num_rows
         // w przypadku gdy podano id nieistniejącego klienta, zwróci 1 WIERSZ, z wartością NULL (suma == NULL)
 	}
 
-    function count_cart_sum($result) {
+    function countCartSum($result) { // count_cart_sum
 
         // \user\change_cart_quantiyt.php - oblicza sumę (cenę) książek w koszyku klienta;
 
         $row = $result->fetch_assoc();
 
-        if ($result->num_rows) {
-            $_SESSION["suma_zamowienia"] = $row["suma"];
-        } else {
-            $_SESSION["suma_zamowienia"] = 0;
-        }
+        $_SESSION["suma_zamowienia"] = $row["suma"];
 
     }
 
-	function get_product_from_cart($result)	// koszyk.php,  order.php
-	{
+	function getProductsFromCart($result) { // get_product_from_cart // koszyk.php,  order.php
+
 		// $row[] -> kl.id_klienta, 		klient
 		//		     ko.id_ksiazki,        	 	     koszyk
 		//		     ko.ilosc, 						 koszyk
@@ -532,10 +538,12 @@
 
         // zapisz do ZS łączną sumę dla wszystkich książek w koszyku klienta -->
 
+        $_SESSION["suma_zamowienia"] = 0;
+
         query("SELECT ROUND(SUM(ko.ilosc * ks.cena),2) AS suma
                      FROM klienci AS kl, koszyk AS ko, ksiazki AS ks
                      WHERE kl.id_klienta = '%s' AND kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki
-                     GROUP BY kl.id_klienta", "count_cart_sum", $_SESSION["id"]); // <-- $_SESSION["suma_zamowienia"]
+                     GROUP BY kl.id_klienta", "countCartSum", $_SESSION["id"]); // <-- $_SESSION["suma_zamowienia"]
 
 		while ($row = $result->fetch_assoc()) // tyle, ile jest książek w koszyku tego klienta
 		{
@@ -688,7 +696,7 @@
         $result->free_result();
     }
 
-	function insert_order_details($result)
+	function insertOrderDetails($result) // insert_order_details
 	{
         // order.php -> insert do tabeli szczegoly_zamowienia - na podstawie tabeli koszyk
 
@@ -716,7 +724,7 @@
 		$result->free_result();
 	}
 
-	function get_orders($result) // wywołanie w my_orders.php
+	function getOrders($result) // get_orders // wywołanie w my_orders.php
 	{
         // // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status;
 
@@ -771,7 +779,7 @@ EOT;
 
             echo "<br><hr>";*/
 
-            get_order_sum("", $row["id_zamowienia"]); // suma zam; --> $_SESSION["order_sum"];
+            getOrderSum("", $row["id_zamowienia"]); // suma zam; --> $_SESSION["order_sum"];
             // ✓ zapisze sumę zamówienia w zmiennej sesyjnej; $_SESSION["order_sum"];
 
             // load the content from the external template file into string
@@ -783,7 +791,7 @@ EOT;
             // replace fields in $order string to author data from $result, display result content as HTML;
             echo sprintf($order, $row['data_zlozenia_zamowienia'], $row["status"], $row["id_zamowienia"]); // To jest tylko NAGŁÓWEK pojedynczego zamówienia;
 
-            query("SELECT id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "get_order_details", $row['id_zamowienia']); // --> $_SESSION['order_details_books_id'];
+            query("SELECT id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "getOrderDetails", $row['id_zamowienia']); // --> $_SESSION['order_details_books_id'];
             // ✓ pojedyncze wiersze z danymi o książce w tym zamówieniu;
             // wiele wierszy -> "id_ksiazki", "ilosc";
 
@@ -854,7 +862,7 @@ EOT;
             echo "</div>";
 		}
 
-		$result->free_result();
+		//$result->free_result();
 	}
 
 //	function validate_form()
@@ -862,8 +870,8 @@ EOT;
 //		// echo '<script> alert("test123"); </script>';
 //	}
 
-    function get_order_details($result) //  ̶o̶r̶d̶e̶r̶_̶d̶e̶t̶a̶i̶l̶s̶.̶p̶h̶p̶   ___my_orders.php
-    {
+    function getOrderDetails($result) { // get_order_details //  ___my_orders.php
+
 //        $_SESSION['order_details_books_id'] = array();
 //        $_SESSION['order_details_books_quantity'] = array();
 
@@ -891,7 +899,7 @@ EOT;
             // replace fields in $order string to author data from $result, display result content as HTML
             echo sprintf($order, $row['ilosc']);*/
 
-            query("SELECT tytul, cena, au.imie, au.nazwisko, rok_wydania, image_url FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = '%s'", "order_details_get_book", $_SESSION['order_details_books_id'][$i]); // To jest pojedynczy "Wiersz" - w widoku w tabeli - który wyświetla Pojedynczą książkę w Tym zamówieniu
+            query("SELECT tytul, cena, au.imie, au.nazwisko, rok_wydania, image_url FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = '%s'", "orderDetailsGetBook", $_SESSION['order_details_books_id'][$i]); // To jest pojedynczy "Wiersz" - w widoku w tabeli - który wyświetla Pojedynczą książkę w Tym zamówieniu
 
             $i++;
         }
@@ -938,10 +946,10 @@ EOT;
         }*/
 
 
-        $result->free_result();
+        //$result->free_result();
     }
 
-	function order_details_get_book($result)
+	function orderDetailsGetBook($result) // order_details_get_book
 	{
         // Wyświetla wiersze z książkami w tabeli z danym zamówieniem;
 
@@ -984,7 +992,7 @@ EOT;
                 count($_SESSION['order_details_books_quantity']),
                 $row["cena"]);
 		}
-		$result->free_result();
+		//$result->free_result();
 	}
 
     /*function get_order_sum($result = NULL, $order_id) {
@@ -998,12 +1006,12 @@ EOT;
         }
     }*/
 
-    function get_order_sum($result = null, $order_id = null) {
+    function getOrderSum($result = null, $order_id = null) { // get_order_sum
 
-        if ( ! ($result instanceof mysqli_result) ) { // dla funkcji get_orders() ;
-            // $result was not passed, do something else;
+        if (!($result instanceof mysqli_result)) { // dla funkcji get_orders();
             query("SELECT kwota FROM platnosci WHERE id_zamowienia='%s'", "get_order_sum", $order_id);
-        } else  { // to się wywoła rekurencyjnie z warunku wyżej - zapisze sumę zamówienia do zmiennej sesyjnej;
+        } else  {
+            // to się wywoła rekurencyjnie z warunku wyżej - zapisze sumę zamówienia do zmiennej sesyjnej;
             // $result was passed, do something with it;
                 $row = $result->fetch_assoc();
             $_SESSION["order_sum"] = $row["kwota"];
@@ -1093,8 +1101,8 @@ EOT;
 
                 query("SELECT SUM(ilosc) AS suma 
                              FROM koszyk 
-                             WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION['id']);
-                // pobranie liczby książek znajdujących się w kosztku; count_cart_quantity() -> $_SESSION['koszyk_ilosc_ksiazek'] -> zapis do zmiennej;
+                             WHERE id_klienta='%s'", "countCartQuantity", $_SESSION['id']);
+                // pobranie liczby książek znajdujących się w kosztku; countCartQuantity() -> $_SESSION['koszyk_ilosc_ksiazek'] -> zapis do zmiennej;
             }
 
 			unset($_SESSION['blad']); // usuwa komunikat o błędzie logowania; // jest potrzebne, ponieważ mogła nastąpić sytuacja, w której klient podał złe dane (nastąpiło ustawienie zmiennej $_SESSION["blad"]), po czym nastąpiło logowanie pracownika (wszystkie dane były poprawne) - wtedy zmienna $_SESSION["blad"] istnieje, i należy ją usunąć;
@@ -1166,48 +1174,32 @@ EOT;
         echo "<br> 993 <br>";
     }
 
-	function cart_verify_book($result) // zmienić nazwę na "verifyBookExists" (?)
+	function verifyBookExists($result) // cart_verify_book // zmienić nazwę na "verifyBookExists" (?)
 	{
-        /*echo "<br>1038 -> cart_verify_book <br><hr> -->";
-        print_r($result); //exit();*/
+                /*echo "<br>1038 -> cart_verify_book <br><hr> -->";
+                print_r($result); //exit();*/
 
-        if($result->num_rows) {
-                //echo "<br>yes<br>";
+        // \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
 
-            // \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
-
-            // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
-
-            $_SESSION["book_exists"] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
-
-            $result->free_result();
-
-        } else {
-            $_SESSION["book_exists"] = false;
-        }
-
-        /*// \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
         // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
-		$_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
-        //echo "<br>448<br>";
-        //echo $_SESSION['book_exists']; exit();
-		$result->free_result();*/
+
+        $_SESSION["book_exists"] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
+
+                /*// \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
+                // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
+                $_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
+                //echo "<br>448<br>";
+                //echo $_SESSION['book_exists']; exit();
+                $result->free_result();*/
 	}
 
-    function verifyAuthorExists($result) { // \admin\edit-book-data,    \user\index.php - advanced-search (prg)
+    function verifyAuthorExists($result) {
 
-        if($result->num_rows) { // 1, 2, 3
-            // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
-            $_SESSION["author-exists"] = true;
+        // \admin\edit-book-data,    \user\index.php - advanced-search (prg)
 
-            $result->free_result();
+        // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
 
-        } else { // można nawet to zakomentować;
-            //echo "<br>no<br>";
-            // do nothing !
-
-            $_SESSION["author-exists"] = false;
-        }
+        $_SESSION["author-exists"] = true;
     }
 
     function verifyPublisherExists($result) { // \admin\edit-book-data
@@ -1223,33 +1215,20 @@ EOT;
         }
     }
 
-    function verifyCategoryExists($result) { // \admin\edit-book-data,
-                                             // \user\index.php - PRG - spr, czy istnieje kategoria o takiej nazwie;
-        if($result->num_rows) { // 1, 2, 3, ...
-            // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
-            $_SESSION["category-exists"] = true;
+    function verifyCategoryExists($result) {
+        // funkcja wywołuje się tylko wtedy, gdy $result zwrócił rekordy! ($num_rows > 0);
 
-            $result->free_result();
+        // \admin\edit-book-data, - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
+        // \user\index.php - PRG - spr, czy istnieje kategoria o takiej nazwie;
 
-        } else { // można nawet to zakomentować;
-            //echo "<br>no<br>"; // \user\index.php - można usunąć warunek else, ponieważ $_SESSION['category-exists"] == false;
-            // do nothing !
-
-            $_SESSION["category-exists"] = false;
-        }
+        $_SESSION["category-exists"] = true;
     }
 
-function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy istnieje pod-kategoria o takiej nazwie;
+function verifySubcategoryExists($result) {
 
-    if($result->num_rows) {
+    // \user\index.php - prg - spr, czy istnieje pod-kategoria o takiej nazwie;
 
-        $_SESSION['subcategory-exists'] = true;
-
-        $result->free_result();
-
-    } else {
-        $_SESSION['subcategory-exists'] = false;
-    }
+    $_SESSION["subcategory-exists"] = true;
 }
 
     function verifyWarehouseExists($result) {
@@ -1294,14 +1273,14 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
             $result->free_result();
     }*/
 
-    function get_last_order_id($result, $polaczenie)
+    function getLastOrderId($connection) // get_last_order_id
     {
         // order.php - dodawanie zamówień (tabela zamówienia)
             // - pobranie id nowo wstawionego wiersza, korzysta z dodatkowej funkcji w celu zdobycia id nowo wstawianego zamówienia
             // query("SELECT id_zamowienia FROM zamowienia ORDER BY id_zamowienia DESC LIMIT 1", "get_id", "");
 
         // - pobranie id nowo wstawionego wiersza (nowo wstawianego zamówienia);
-        $_SESSION["last_order_id"] = $polaczenie->insert_id;
+        $_SESSION["last_order_id"] = $connection->insert_id;
     }
 
     function get_last_book_id($result, $polaczenie) { // admin\add-book-data.php;
@@ -1423,17 +1402,19 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
             $result->free_result();
     }
 
-    function get_employee_id($result) { // ___order.php - pobranie id pracownika z najmniejszą liczbą zamówień;
+    function getEmployeeId($result) { // get_employee_id // ___order.php - pobranie id pracownika z najmniejszą liczbą zamówień;
 
         $row = $result->fetch_assoc();
 
-        if($row === null) { // brak zwroconych. rekordow; (żaden pracownik nie był przypisany do żadnego zamówienia);
+        /*if($row === null) { // brak zwroconych. rekordow; (żaden pracownik nie był przypisany do żadnego zamówienia);
             // wybieramy losowego pracownika; $_SESSION["employee_id"];
             query("SELECT id_pracownika FROM pracownicy ORDER BY RAND() LIMIT 1", "get_employee", "");
         } else { // istnieje pracownik z najmniejszą liczbą przypisanych zamówień;
-            $_SESSION["employee_id"] = $row["id_pracownika"];
+
             $result->free_result();
-        }
+        }*/
+
+        $_SESSION["employee_id"] = $row["id_pracownika"];
     }
 
     function updateOrder($result) { // \admin\order-details.php
@@ -1493,7 +1474,7 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
 
         // pole "ile_razy_sprzedana" - określa liczbę zamówień, w których znalazła się ta książka. (nie jest to liczba sprzedanych sztuk!)
 
-        $result->free_result();
+        //$result->free_result();
     }
 
     function createMagazineSelectList($result) { // \admin\add-book.php
@@ -1815,7 +1796,7 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
                             kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
                         LEFT JOIN 
                             magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
-                        GROUP BY ks.id_ksiazki", "get_books", ""); // dane o ksiażce + ilość egzemplarzy na stanie
+                        GROUP BY ks.id_ksiazki", "getBooks", ""); // dane o ksiażce + ilość egzemplarzy na stanie
         }
         else
         {
@@ -1843,7 +1824,7 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
                         LEFT JOIN 
                             magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
                         WHERE kt.nazwa LIKE '%s'                                   
-                        GROUP BY ks.id_ksiazki", "get_books", $_SESSION['kategoria']); // dane o ksiażce + ilość egzemplarzy na stanie
+                        GROUP BY ks.id_ksiazki", "getBooks", $_SESSION['kategoria']); // dane o ksiażce + ilość egzemplarzy na stanie
 
         // WHERE kt.nazwa LIKE '%s'
 
@@ -1870,7 +1851,7 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
                     LEFT JOIN 
                         magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
                     WHERE kt.nazwa LIKE '%s' AND sb.nazwa LIKE '%s'                                  
-                    GROUP BY ks.id_ksiazki", "get_books", [$_SESSION['kategoria'], $_SESSION["subcategory"]]); // dane o ksiażce + ilość egzemplarzy na stanie
+                    GROUP BY ks.id_ksiazki", "getBooks", [$_SESSION['kategoria'], $_SESSION["subcategory"]]); // dane o ksiażce + ilość egzemplarzy na stanie
     }
 
 
@@ -1893,191 +1874,303 @@ function verifySubcategoryExists($result) { // \user\index.php - prg - spr, czy 
 
     }
 
-    function query($query, $fun, $value)
-    {
-        // obsługa błędów,
-        // bezpieczeństwo - SQL injection
+function query($query, $fun, $values) {
 
-        require "connect.php";
-        mysqli_report(MYSQLI_REPORT_STRICT);
+// $query - SQL - "SELECT imie, nazwisko FROM klienci";
 
-        try
-            {
-                $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+// $fun   - callback function
+// - wywołaj funkcję tylko wtedy, jeśli $result --> - jest obiektem, który posiada conajmniej jeden wiersz (num_rows) <-- zapytania typu SELECT
+//                                                  - posiada wartość == "true" (bool) <-- dla zapytań INSERT, UPDATE, DELETE
+//                                                    ORAZ stan BD został zmieniony (zaktualizowany, wstawiony, usunięty wiersz)
 
-                if($polaczenie->connect_errno) {
+// jeśli nie udało się wykonać zapytania, $result zwróci false;
+// ---------------------------------------------------------------------------------------------------------------------
 
-                    throw new Exception(mysqli_connect_errno());
-                }
-                else {
+    require "connect.php";
 
-                    if(gettype($value) !== "array") { // jeśli to nie jest tablica
+    mysqli_report(MYSQLI_REPORT_STRICT);
 
-                        $value = [$value];            // zrób z niej tablicę
-                    }
-                    //if (!is_array($value)) {
-                    //	$values = [$values];
-                    //}
-                    for($i = 0; $i < count($value); $i++) { // sanitization;
+    try {
 
-                        $value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
-                    }
+        $connection = new mysqli($host, $db_user, $db_password, $db_name);
 
-                    if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie,
-                    {                                                          // $value - tablica parametrów do vsprintf
+        if ($connection->connect_errno) {
+            throw new Exception(mysqli_connect_errno()); // failed to connect to DB;
+        } else {
 
-                        // zamiana na switch ?
+            // connection successful
 
-                        //echo "<br><br> query() --> " . $query . "<br><br>";
+            if (!is_array($values)) {
 
-
-
-                        // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
-                        if(gettype($result) != "object") { // ̶b̶r̶a̶k̶ ̶z̶w̶r̶ó̶c̶o̶n̶y̶c̶h̶ ̶w̶y̶n̶i̶k̶ó̶w̶
-
-                            // $result nie jest obiektem, jest to wartość logiczna "1" ;
-                                        // result print_r -->
-                                            //    1
-                                        // result var_dump-->
-                                            //    bool(true)
-                                        //gettype(result) -->
-                                            //    boolean
-                            // ✓✓✓ INSERT, UPDATE ... (bez dodatkowej funkcji) ;
-
-                           //echo "<br>1390 - result NIE jest obiektem ! (jest true/false) - boolean <br>";
-
-                            //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n'.$query.'\n\n")</script>';
-                            //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n")</script>';
-                           // echo '<script>console.log("'.$query.'\n\n")</script>';
-
-                            if($fun != "") {
-
-                                // pytanie -> czy każda funkcja typu INSERT/UPDATE (korzystająca z + dod.funkcji) wymaga $polaczenie w jakimś celu ?
-
-                                // ✓✓✓ INSERT, UPDATE  + dodatkowa_funkcja;
-
-                                //echo '<script>console.log("INSERT, UPDATE + dodatkowa_funkcja - 1385 - result NIE jest obiektem - \n\n")</script>';
-                                //echo '<script>console.log("'.$query.'\n\n")</script>';
-
-                                //echo "<br>1394<br>";;
-
-                                //echo "<br> 1388 <br>"; exit();
-
-                                $fun($result, $polaczenie);
-                            }
-
-                        } else {  // $result jest obiektem
-
-                                //echo "<br>1403 - result jest obiektem<br>";
-
-                            //echo '<script>console.log("SELECT - 1397 - result jest obiektem - \n\n")</script>';
-                            //echo '<script>console.log("'.$query.'\n\n")</script>';
-
-                            //echo "<br>623<br>"; //exit();
-                            // SELECT
-                            $num_of_rows = $result->num_rows; // ilość zwróconych wierszy
-
-                            //echo "<br>num_of_rows --> " . $num_of_rows . "<br>";
-
-                            if($num_of_rows > 0) // znaleziono rekordy
-                            {
-
-                                //echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 - \n\n")</script>';
-                                //echo '<script>console.log("'.$query.'\n\n")</script>';
-                                //echo "<br>1416 - znaleziono rekordy - num_rows >  0 <br>"; exit();
-
-                                //echo "<br>625<br>"; //exit();
-
-    //                            if ( isset($_POST["year-min"]) && !empty($_POST["year-min"]) && isset($_POST["year-max"]) && !empty($_POST["year-max"])
-    //                            ) {
-    //                                echo "<br><hr><br> query ( ) -> " . $query . "<br><hr>"; // testowanie wyszukiwania zaawansowanego
-    //                                //exit();
-    //                            }
-    //
-    //                            echo "<br><hr><br> num_of_rows -> " . $num_of_rows . "<br><hr>";
-
-                                if($fun != "") {
-
-                                   // echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 + dodatkowa funkcja - \n\n")</script>';
-
-                                    $fun($result); // register_verify_email (rejestracja - sprawdzenie czy email jest zajęty ?),
-                                }
-
-                            }
-                            else { // brak zwróconych rekordów
-
-                                //echo "<br>1747<br>"; // exit();
-
-                                //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
-
-                                //echo "<br>1435 - brak zwróconych rekordów - num_rows == 0 <br>"; exit();
-
-                                //echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0 - \n\n")</script>';
-                                //echo '<script>console.log("'.$query.'\n\n")</script>';
-
-
-                                if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "aaa" && $fun != "verify_rate_exists"
-                                && $fun != "orderDetailsVerifyOrderExists"
-
-                                ) {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
-
-                                   // echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0\n\n wywołanie dodatkowej funkcji - \n\n")</script>';
-                                    //echo '<script>console.log("'.$query.'\n\n")</script>';
-
-                                    // orderDetailsVerifyOrderExists - admin/order-details.php - PRG
-
-                    //echo "<br>1767<br>";
-                    //echo "<br>result --> <br>";
-                    //echo "<br><hr><br>";
-                    //print_r($result); echo "<br><hr><br>";
-                    //var_dump($result);
-
-                                    //exit();
-
-                                    $fun($result);
-                                }
-
-                                // check_email - (zmiana danych użytkownika) - validate_user_data.php - SPRAWDZA, CZY ISTNIEJE TAKI EMAIL
-                                    // - jeśli istnieje ($result zwrócił rekordy) - ✓ przestawia zmienną $_SESSION['email_exists'] na "true"
-                                    // - jeśli NIE istnieje ($result NIE zwrócił rekordów) - NIE POWINNA WYWOŁAĆ SIĘ TA FUNKCJA ($fun - check_email);
-
-
-                                /*if($fun == "log_in" || $fun == "get_product_from_cart") {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
-
-                                    $fun($result);
-                                }*/
-
-                                // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
-
-                                 // dla register_verify_email (rejestracja) nie powinna wykonać się funkcja $fun !
-
-                                // Kiedy jest potrzeba aby wywołać funkcję $fun gdy nie zwrócono żadnych rekordw ?
-                                // -> dla logowanie.php (patrz wyżej)
-
-                                // (!) dla dodawania książek NIE DZIAŁA !
-                            }
-                        }
-                    }
-                    else // nie udało się zrealizować zapytania
-                    {
-                        throw new Exception($polaczenie->error);
-                    }
-
-                    $polaczenie->close();
-                }
+                $values = [$values];
             }
-        catch(Exception $e) // exception - wyjątek; przechwycenie i obsługa wyjątku;
-        {
-            echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności ] </div>'; // użycie "return" zamisat echo
-            echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - dla deweloperów
-            exit(); // (?)
+
+            // zamiast tego --> mysqli --> prepared statements;
+
+            for($i = 0; $i < count($values); $i++) {
+                $values[$i] = mysqli_real_escape_string($connection, $values[$i]);
+            }
+            /*foreach ($values as &$value) {
+                $value = mysqli_real_escape_string($connection, $value);
+            }
+            unset($value); // Zalecane, aby uniknąć przypadkowych problemów z dalszym użyciem zmiennej $value.*/
+
+        //$connection->begin_transaction();
+
+            if ($result = $connection->query(vsprintf($query, $values))) {
+
+                // $result --> obiekt || true
+
+                if ($result instanceof mysqli_result) { // zapytanie typu SELECT <-- obiekt
+
+                    // SELECT --> $result -> wyniki zapytania
+
+                    if ($result->num_rows) { // 1, 2, 3, ...
+
+                        $fun($result);
+
+                        //$result->free_result();
+                    } /*else {
+
+                        // nie zrwócono żadnych wierszy ! (SELECT)
+                    }*/
+
+                } elseif ($result === true) { // (bool - true) - dla zapytań INSERT, UPDATE, DELETE ...
+
+                    if ($connection->affected_rows && $fun) { // && $fun
+
+                        // affected_rows - liczba zmodyfikowanych wierszy przez zapytanie (INSERT, UPDATE, DELETE) --> 0, 1, 2, 3, 4, ...
+
+                        // Tutaj obsłuż przypadki, gdy zapytanie wpłynęło na co najmniej jeden wiersz
+
+                        // zaktualizowany / wstawiony / usunięty
+
+                        //$fun($result);
+
+                            $fun($connection);
+
+                    } else {
+                        // Obsłuż przypadki, gdy zapytanie nie wpłynęło na żaden wiersz, ale nie wystąpiły błędy
+
+                    }
+                }
+
+            } else {
+
+                // nie udało się wykonać zapytania; <-- $result == false
+
+                throw new Exception($connection->error);
+
+            }
+
+            $connection->close();
+
+
         }
 
-        //exit();
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //return "<br> query = ".$query.", type = ".$type."<br>";
+    } catch(Exception $e) {
+        echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności ] </div>';
+        // użycie "return" zamisat echo ?
+        echo '<br><span style="color:red">Informacja developerska: </span>'.$e;
+        // wyświetlenie komunikatu błędu - dla deweloperów
+        //exit(); // (?)
     }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// backup
+
+/*function query($query, $fun, $value)
+{
+    // obsługa błędów,
+    // bezpieczeństwo - SQL injection
+
+    require "connect.php";
+    mysqli_report(MYSQLI_REPORT_STRICT);
+
+    try
+    {
+        $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+
+        if($polaczenie->connect_errno) {
+
+            throw new Exception(mysqli_connect_errno());
+        }
+        else { // udane połączenie
+
+
+
+
+
+            if(gettype($value) !== "array") { // jeśli to nie jest tablica
+
+                $value = [$value];            // zrób z niej tablicę
+            }
+            //if (!is_array($value)) {
+            //	$values = [$values];
+            //}
+            for($i = 0; $i < count($value); $i++) { // sanitization;
+
+                $value[$i] = mysqli_real_escape_string($polaczenie, $value[$i]);
+            }
+
+            if($result = $polaczenie->query(vsprintf($query, $value))) // $query - zapytanie,
+            {                                                          // $value - tablica parametrów do vsprintf
+
+                // zamiana na switch ?
+
+                //echo "<br><br> query() --> " . $query . "<br><br>";
+
+
+
+                // można zoptymalizować poniższy kod, bo użycie funkcji jest powtórzone ->
+                if(gettype($result) != "object") { // ̶b̶r̶a̶k̶ ̶z̶w̶r̶ó̶c̶o̶n̶y̶c̶h̶ ̶w̶y̶n̶i̶k̶ó̶w̶
+
+                    // $result nie jest obiektem, jest to wartość logiczna "1" ;
+                    // result print_r -->
+                    //    1
+                    // result var_dump-->
+                    //    bool(true)
+                    //gettype(result) -->
+                    //    boolean
+                    // ✓✓✓ INSERT, UPDATE ... (bez dodatkowej funkcji) ;
+
+                    //echo "<br>1390 - result NIE jest obiektem ! (jest true/false) - boolean <br>";
+
+                    //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n'.$query.'\n\n")</script>';
+                    //echo '<script>console.log("INSERT, UPDATE - 1379 - result NIE jest obiektem - \n\n")</script>';
+                    // echo '<script>console.log("'.$query.'\n\n")</script>';
+
+                    if($fun != "") {
+
+                        // pytanie -> czy każda funkcja typu INSERT/UPDATE (korzystająca z + dod.funkcji) wymaga $polaczenie w jakimś celu ?
+
+                        // ✓✓✓ INSERT, UPDATE  + dodatkowa_funkcja;
+
+                        //echo '<script>console.log("INSERT, UPDATE + dodatkowa_funkcja - 1385 - result NIE jest obiektem - \n\n")</script>';
+                        //echo '<script>console.log("'.$query.'\n\n")</script>';
+
+                        //echo "<br>1394<br>";;
+
+                        //echo "<br> 1388 <br>"; exit();
+
+                        $fun($result, $polaczenie);
+                    }
+
+                } else {  // $result jest obiektem
+
+                    //echo "<br>1403 - result jest obiektem<br>";
+
+                    //echo '<script>console.log("SELECT - 1397 - result jest obiektem - \n\n")</script>';
+                    //echo '<script>console.log("'.$query.'\n\n")</script>';
+
+                    //echo "<br>623<br>"; //exit();
+                    // SELECT
+                    $num_of_rows = $result->num_rows; // ilość zwróconych wierszy
+
+                    //echo "<br>num_of_rows --> " . $num_of_rows . "<br>";
+
+                    if($num_of_rows > 0) // znaleziono rekordy
+                    {
+
+                        //echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 - \n\n")</script>';
+                        //echo '<script>console.log("'.$query.'\n\n")</script>';
+                        //echo "<br>1416 - znaleziono rekordy - num_rows >  0 <br>"; exit();
+
+                        //echo "<br>625<br>"; //exit();
+
+                        //                            if ( isset($_POST["year-min"]) && !empty($_POST["year-min"]) && isset($_POST["year-max"]) && !empty($_POST["year-max"])
+                        //                            ) {
+                        //                                echo "<br><hr><br> query ( ) -> " . $query . "<br><hr>"; // testowanie wyszukiwania zaawansowanego
+                        //                                //exit();
+                        //                            }
+                        //
+                        //                            echo "<br><hr><br> num_of_rows -> " . $num_of_rows . "<br><hr>";
+
+                        if($fun != "") {
+
+                            // echo '<script>console.log("SELECT - 1409 - result jest obiektem, num_of_rows > 0 + dodatkowa funkcja - \n\n")</script>';
+
+                            $fun($result); // register_verify_email (rejestracja - sprawdzenie czy email jest zajęty ?),
+                        }
+
+                    }
+                    else { // brak zwróconych rekordów
+
+                        //echo "<br>1747<br>"; // exit();
+
+                        //echo '<h3>Brak wyników</h3>'; // brak zwróconych rekordów (np 0 zwróconych wierszy); // zamiast "echo" można użyć "return"
+
+                        //echo "<br>1435 - brak zwróconych rekordów - num_rows == 0 <br>"; exit();
+
+                        //echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0 - \n\n")</script>';
+                        //echo '<script>console.log("'.$query.'\n\n")</script>';
+
+
+                        if($fun != "" && $fun != "register_verify_email" && $fun != "check_email" && $fun != "verify_token" && $fun != "aaa" && $fun != "verify_rate_exists"
+                            && $fun != "orderDetailsVerifyOrderExists"
+
+                        ) {   // logowanie.php ✓ -> podany zły email (num_rows ---> 0 (brak) zwr. rekordów;
+
+                            // echo '<script>console.log("SELECT - 1432 - result jest obiektem, \n brak zwróconych rekordów - num_rows == 0\n\n wywołanie dodatkowej funkcji - \n\n")</script>';
+                            //echo '<script>console.log("'.$query.'\n\n")</script>';
+
+                            // orderDetailsVerifyOrderExists - admin/order-details.php - PRG
+
+                            //echo "<br>1767<br>";
+                            //echo "<br>result --> <br>";
+                            //echo "<br><hr><br>";
+                            //print_r($result); echo "<br><hr><br>";
+                            //var_dump($result);
+
+                            //exit();
+
+                            $fun($result);
+                        }
+
+                        // check_email - (zmiana danych użytkownika) - validate_user_data.php - SPRAWDZA, CZY ISTNIEJE TAKI EMAIL
+                        // - jeśli istnieje ($result zwrócił rekordy) - ✓ przestawia zmienną $_SESSION['email_exists'] na "true"
+                        // - jeśli NIE istnieje ($result NIE zwrócił rekordów) - NIE POWINNA WYWOŁAĆ SIĘ TA FUNKCJA ($fun - check_email);
+
+
+
+
+                        // z drugiej strony nie chce, aby wywołało funkcję "register_verify_email jesli nie znaleziono takich istniejących maili w BD (przy rejestracji ...) a zatem tutaj funkcja "register_ver_email" nie powinna zostać wykonana !
+
+                        // dla register_verify_email (rejestracja) nie powinna wykonać się funkcja $fun !
+
+                        // Kiedy jest potrzeba aby wywołać funkcję $fun gdy nie zwrócono żadnych rekordw ?
+                        // -> dla logowanie.php (patrz wyżej)
+
+                        // (!) dla dodawania książek NIE DZIAŁA !
+                    }
+                }
+            }
+            else // nie udało się zrealizować zapytania
+            {
+                throw new Exception($polaczenie->error);
+            }
+
+            $polaczenie->close();
+        }
+    }
+    catch(Exception $e) // exception - wyjątek; przechwycenie i obsługa wyjątku;
+    {
+        echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności ] </div>'; // użycie "return" zamisat echo
+        echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - dla deweloperów
+        exit(); // (?)
+    }
+
+    //exit();
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //return "<br> query = ".$query.", type = ".$type."<br>";
+}*/
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*function query($query, $fun, $value)
 {

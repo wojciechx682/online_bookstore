@@ -10,8 +10,8 @@
 	// "23" - id książki ;
 	//  "1" - ilość egzemplarzy, która ma zostać dodana do koszyka ;
 
-	if ( isset($_POST['book-id']) && !empty($_POST['book-id']) &&
-		 isset($_POST['book-amount']) && !empty($_POST['book-amount']) ) {
+	if ( isset($_POST["book-id"]) && !empty($_POST["book-id"]) &&
+		 isset($_POST["book-amount"]) && !empty($_POST["book-amount"]) ) {
 
 		/*echo "<br> post book-id --> <br>" . $_POST["book-id"] . "<br>";
 		echo "<br> post book-id --> <br>" . $_POST['book-amount'] . "<br>"; exit();*/
@@ -22,7 +22,8 @@
 			// remove any non-numeric characters. This filter will leave only the numeric characters.
 
 		// get highest book-id from database ;
-		query("SELECT id_ksiazki FROM ksiazki ORDER BY id_ksiazki DESC LIMIT 1", "get_book_id", "");
+		unset($_SESSION["max-book-id"]);
+		query("SELECT id_ksiazki FROM ksiazki ORDER BY id_ksiazki DESC LIMIT 1", "getBookId", "");
 			// $_SESSION["max-book-id"] => "35"
 
 		$bookId = filter_var($bookId, FILTER_VALIDATE_INT, [
@@ -33,13 +34,12 @@
 			]
 		);
 
-		$_SESSION['book_exists'] = false;
+		unset($_SESSION["book_exists"]);
+		query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExists", $bookId);
 
-		query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", $bookId);
+		if ($bookId === false || empty($_SESSION["book_exists"]) || ($bookId != $_POST["book-id"])) {
 
-		if ($bookId === false || $_SESSION['book_exists'] === false || ($bookId != $_POST['book-id'])) {
-
-			unset($_SESSION["max-book-id"], $_SESSION['book_exists']);
+			unset($_SESSION["max-book-id"], $_SESSION["book_exists"]);
 				header('Location: ___koszyk.php', true, 303);
 					exit();
 		}
@@ -58,15 +58,14 @@
 					exit();
 		}
 
-		$_SESSION['book_exists'] = false; // book already in shopping cart ? let's assume that it isn't ...
 
-		query("SELECT * FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "cart_verify_book", [$_SESSION["id"], $bookId]);
-
-        // sprawdzenie, czy ta książka jest już w koszyku tego klienta; jeśli num_rows > 0 -> przestawi $_SESSION['book_exists'] -> na true ;       ;
+		unset($_SESSION["book_exists"]);
+		query("SELECT * FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "verifyBookExists", [$_SESSION["id"], $bookId]);
+        // sprawdzenie, czy ta książka jest już w koszyku tego klienta; jeśli num_rows > 0 -> przestawi $_SESSION['book_exists'] -> na true ;
 
 		$book = [$bookAmount, $_SESSION["id"], $bookId];
 
-		if($_SESSION['book_exists']) { // boox exists, update book quantity in shopping_cart ;
+		if($_SESSION["book_exists"]) { // boox exists, update book quantity in shopping_cart ;
 
 			query("UPDATE koszyk SET ilosc=ilosc+'%s' WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $book);
 
@@ -74,11 +73,11 @@
 			query("INSERT INTO koszyk (ilosc, id_klienta, id_ksiazki) VALUES ('%s', '%s', '%s')", "", $book);
 		}
 
-		query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $_SESSION["id"]);
+		query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
 
         // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczbie książek)
 
-        unset($_POST, $book, $_SESSION['book_exists']);
+        unset($_POST, $book, $_SESSION["book_exists"]);
 	}
 
 	header('Location: ___koszyk.php'); // redirect to "cart" when POST variables were not set;

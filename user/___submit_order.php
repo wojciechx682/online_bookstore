@@ -43,7 +43,7 @@
                                WHERE kl.id_klienta = ko.id_klienta AND 
                                      ko.id_ksiazki = ks.id_ksiazki AND 
                                      ks.id_autora = au.id_autora AND 
-                                     kl.id_klienta='%s'", "get_product_from_cart", $_SESSION["id"]);
+                                     kl.id_klienta='%s'", "getProductsFromCart", $_SESSION["id"]);
 
                         query("SELECT fd.id_formy_dostawy AS id, fd.nazwa, fd.cena FROM formy_dostawy AS fd", "getDeliveryTypes", "");
 
