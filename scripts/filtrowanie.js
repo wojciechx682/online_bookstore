@@ -3,7 +3,7 @@ let inputMin = document.getElementById('min-price');
 let inputMax = document.getElementById('max-price');
 let slider = document.getElementById('price-slider');
 
-const filterBooks = (min, max, flag) => { // funkcja filtrująca książki na podstawie przedziału cenowego.
+const filterBooks = (min, max) => { // funkcja filtrująca książki na podstawie przedziału cenowego.
                                     // Arrow Function Expression
 
     let books = document.querySelectorAll("#content-books .outer-book:not(.hidden-author)"); // NodeList;
@@ -20,7 +20,7 @@ const filterBooks = (min, max, flag) => { // funkcja filtrująca książki na po
 
     for (let i = 0; i < books.length; i++) {
 
-        let price = parseFloat(DOMPurify.sanitize(books[i].querySelector(".book .book-price span").innerHTML));
+        let price = parseFloat(DOMPurify.sanitize(books[i].querySelector(".book .book-price").innerHTML));
         // sanitize values,
         // convert values to Float;
 
@@ -34,11 +34,17 @@ const filterBooks = (min, max, flag) => { // funkcja filtrująca książki na po
         }
     }
 
+    // zapisz wartości przedziału cenowego do sessionStorage -->
+    if(window.sessionStorage) {
+        sessionStorage.setItem("sliderMinValue", min);
+        sessionStorage.setItem("sliderMaxValue", max);
+    }
+
     filterAuthors(); // wzajemna integracja filtrów - rozwiązanie;
 }
 
 noUiSlider.create(slider, { // create new slider using NoUISlider library
-    start: [17, 136],
+    start: [5, 145],
     connect: true,
     margin: 15,
     padding: [0, 3],
@@ -49,7 +55,7 @@ noUiSlider.create(slider, { // create new slider using NoUISlider library
     }
 });
 
-slider.noUiSlider.on('change', function (values, handle) {
+slider.noUiSlider.on("change", function (values, handle) {
 
     // execute function after changing price range on slider
 
@@ -87,6 +93,17 @@ inputMax.addEventListener('change', function () {
         filterBooks(currentValues[0], currentValues[1]);
 
 });
+
+
+if(window.sessionStorage) {
+    // pobranie danych z sessionStorage
+    let sliderMinValue = sessionStorage.getItem("sliderMinValue");
+    let sliderMaxValue = sessionStorage.getItem("sliderMaxValue");
+
+    if (sliderMinValue !== null && sliderMaxValue !== null) {
+        slider.noUiSlider.set([sliderMinValue, sliderMaxValue]);
+    }
+}
 
 let initialValues = slider.noUiSlider.get();  // set init values for inputs
 inputMin.value = Math.round(initialValues[0]);

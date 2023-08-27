@@ -2,9 +2,9 @@
 
     require_once "../start-session.php";
 
-	if ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" &&
+	if ( isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true &&
 
-        ! isset($_SESSION['udanarejestracja']) &&
+        ! isset($_SESSION["udanarejestracja"]) &&
         ! isset($_SESSION["login-error"]) ) // authenticate-user.php
 	{
         // ✓ "jeśli weszliśmy na zaloguj.php będąc wcześniej zalogowanym" ;
@@ -15,8 +15,8 @@
 		header("Location: ___account.php"); // przekierowanie na strone profilu użytkownika;
 		exit();
 	}
-	elseif ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" &&
-             isset($_SESSION['udanarejestracja']) && $_SESSION['udanarejestracja'] == "true" &&
+	elseif ( isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true &&
+             isset($_SESSION["udanarejestracja"]) && $_SESSION["udanarejestracja"] === true &&
 
              ! isset($_SESSION["login-error"]) ) // authenticate-user.php
 	{
@@ -29,8 +29,8 @@
 		header("Location: logout.php"); // ustawi zmienną $_SESSION['udanarejestracja'] = true, przekieruje z powrotem do zaloguj.php (spełni się 3-ci warunek w zaloguj.php);
 		exit();
 	}
-	elseif ( ! isset($_SESSION['zalogowany']) &&
-               isset($_SESSION['udanarejestracja']) &&
+	elseif ( ! isset($_SESSION["zalogowany"]) &&
+               isset($_SESSION["udanarejestracja"]) &&
 
              ! isset($_SESSION["login-error"]) // authenticate-user.php
     ) // ✓ jeśli stworzyliśmy konto (normalnie - nie będąc zalogowanym w tym czasie na inne);
@@ -105,9 +105,7 @@
 
                     <!-- Księgarnia online<br><br> -->
 
-                    <form action="logowanie.php"
-                            method="post"
-                            id="login-form">
+                    <form action="logowanie.php"method="post" id="login-form">
 
                         <b>Zaloguj się na swoje konto</b><hr class="register-form-hr-line login-form-hr-line">
 
@@ -121,8 +119,7 @@
 
                             <span class="login-row">
                                     <label>
-                                        Hasło <input type="password" name="password" required value="PassJacob33#"
-                                                           autocomplete="off">
+                                        Hasło <input type="password" name="password" required value="PassJacob33#" autocomplete="off">
                                     </label>
                             </span>
 
@@ -143,7 +140,7 @@
 
 
                     <?php
-                        if ( isset($_SESSION["password-changed"]) && $_SESSION["password-changed"] ) {
+                        if (isset($_SESSION["password-changed"]) && $_SESSION["password-changed"]) {
                             // if variable EXISTS and has value egual to "TRUE";
                             echo "<h3>Hasło zostało zmienione</h3>";
                             session_unset();
@@ -155,17 +152,17 @@
                         // pokazujemy zawartość tej zmiennej tylko jeśli podano NIEPRAWIDŁOWY login lub hasło;
                             // czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI;
                         // normalne logowanie, podany zły login/hasło;
-                        if(isset($_SESSION['blad'])) {
-                            echo ''.$_SESSION['blad']; // wyświetlenie komunikatu "Nieprawidłowy e-mail lub hasło";
+                        if (isset($_SESSION["blad"])) {
+                            echo ''.$_SESSION["blad"]; // wyświetlenie komunikatu "Nieprawidłowy e-mail lub hasło";
                             unset($_SESSION["blad"]);
                         }
                     ?>
 
                     <?php
-                        if(isset($_SESSION['e_recaptcha'])) // błąd z reCaptcha;
+                        if(isset($_SESSION["e_recaptcha"])) // błąd z reCaptcha;
                         {
-                            echo $_SESSION['e_recaptcha'];
-                            unset($_SESSION['e_recaptcha']);
+                            echo $_SESSION["e_recaptcha"];
+                            unset($_SESSION["e_recaptcha"]);
                         }
                     ?>
 
@@ -173,23 +170,25 @@
 
                     <?php
 
-                        if(isset($_SESSION['udanarejestracja']) && $_SESSION['udanarejestracja'])
-                        {
-                            unset($_SESSION['udanarejestracja']);
+                        if(isset($_SESSION["udanarejestracja"]) && $_SESSION["udanarejestracja"]) {
+
+                            unset($_SESSION["udanarejestracja"]);
 
                             echo '<span style="font-weight: bold;">Rejestracja przebiegła pomyślnie, od teraz możesz zalogować się na swoje konto</span><br>';
                         }
 
-                        if(isset($_SESSION['deleted-successfully']) && $_SESSION['deleted-successfully'])
+                        if(isset($_SESSION["deleted-successfully"]) && $_SESSION["deleted-successfully"])
                         {
-                            unset($_SESSION['deleted-successfully']);
+                            unset($_SESSION["deleted-successfully"]);
 
                             echo '<span style="font-weight: bold;">Twoje konto zostało usunięte</span><br>';
                         }
                     ?>
 
                 </div>
+
             </main>
+
         </div>
 
         <script>

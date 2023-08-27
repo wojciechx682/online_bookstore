@@ -9,13 +9,18 @@
 
                 <div id="btn-parent">
 
-                    <?php if ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) { echo '
-                        <a href="___account.php">
-                            <div class="btn from-center">Moje konto</div>
-                        </a>';}
-                          else { echo '<a href="___zaloguj.php">
-                                           <div class="btn from-center">Zaloguj</div>
-                                       </a>';} ?>
+                    <?php if (isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true) {
+
+                              echo '<a href="___account.php">
+                                  <div class="btn from-center">Moje konto</div>
+                              </a>';
+                          }
+                          else {
+                              echo '<a href="___zaloguj.php">
+                                   <div class="btn from-center">Zaloguj</div>
+                              </a>';
+                          }
+                    ?>
 
                     <a href="___zarejestruj.php">
                         <div class="btn from-center">Zarejestruj</div>
@@ -25,9 +30,9 @@
                         <div class="btn from-center">
                             Koszyk
                                 <?php
-                                    if ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
-                                        query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "countCartQuantity", $_SESSION['id']);
-                                        echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "(3)"
+                                    if (isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true) {
+                                        query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
+                                        echo "(".$_SESSION["koszyk_ilosc_ksiazek"].")"; // "(3)"
                                     }
                                 ?>
                         </div>
@@ -38,9 +43,7 @@
             </div>
 
             <div id="div-search">
-                <form id="search-form" method="post" action="index.php"> <!-- -> POST -->
-
-
+                <form id="search-form" method="post" action="index.php">
 
                     <input type="search" name="input-search" id="input-search" placeholder="Tytuł książki">
 
@@ -55,7 +58,7 @@
                 <div class="btn from-center btn-cart-main">
                     Koszyk
                         <?php
-                            if ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true" ) {
+                            if (isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] === true) {
                                 query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "countCartQuantity", $_SESSION['id']);
                                 echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "(3)"
                             }
@@ -81,20 +84,20 @@
 
                             <ul id="categories-list">
                                 <?php
-                                    query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "getCategories", "");
+                                    query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa", "getCategories", "");
                                     // wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz <ul>
 
                                     /*<ul>
                                         <li>
                                             <form method="post" action="index.php">
-                                                <input type="hidden" name="kategoria" value="Wszystkie">
+                                                <input type="hidden" name="category" value="Wszystkie">
                                                 <button class="submit-book-form" type="submit">Wszystkie</button>
                                             </form>
                                         </li>
-                                        // ...
+                                            // ...
                                         <li>
                                             <form method="post" action="index.php">
-                                                <input type="hidden" name="kategoria" value="Fantastyka">
+                                                <input type="hidden" name="category" value="Fantastyka">
                                                 <button class="submit-book-form" type="submit">Fantastyka</button>
                                             </form>
                                         </li>
@@ -104,7 +107,7 @@
                                 ?>
                             </ul>
 
-                            <ul id="second-list"> <!-- pod-kategorie -->
+                            <ul id="subcategories-list"> <!-- pod-kategorie -->
                                 <!--
                                 // ...
                                 // ...
@@ -146,7 +149,7 @@
                                     Tytuł
                                 </label>
                             </span>
-                                <input type="text" name="adv-search-title" id="adv-search-title">
+                                <input type="text" name="adv-search-title" id="adv-search-title" maxlength="255">
                         </p>
                     </div>
 
@@ -160,7 +163,7 @@
                             <select id="adv-search-category" name="adv-search-category">
                                 <?php
                                     query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa", "getCategoriesAdvSearch", "");
-                                    // <option value=" nazwa_kategorii "> nazwa_kategorii </option>-->
+                                    // <option value="{nazwa_kategorii}">{nazwa_kategorii}</option>
                                 ?>
                             </select>
                         </p>
@@ -174,10 +177,10 @@
                                 </label>
                             </span>
                                 <select id="adv-search-author" name="adv-search-author">
-                                        <?php
-                                            query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie ASC", "getAuthorsAdvSearch", "");
-                                            // <option value=" id_autora "> imie nazwisko </option>-->
-                                        ?>
+                                    <?php
+                                        query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie", "getAuthorsAdvSearch", "");
+                                        // <option value="{id_autora}">{imie nazwisko}</option>
+                                    ?>
                                 </select>
                         </p>
                     </div>
@@ -187,9 +190,7 @@
                         <div id="year-range">
 
                             <span class="adv-search">
-                                <label for="year-min">
-                                    Rok wydania
-                                </label>
+                                <label for="year-min">Rok wydania</label>
                             </span>
                                 <label>
                                     od <input type="number" id="year-min" name="year-min">

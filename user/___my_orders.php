@@ -25,7 +25,13 @@
 
                 <?php
 
-                    query("SELECT id_zamowienia, data_zlozenia_zamowienia, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, fd.nazwa, komentarz FROM zamowienia, formy_dostawy AS fd WHERE zamowienia.id_formy_dostawy = fd.id_formy_dostawy AND id_klienta = '%s'", "getOrders", $_SESSION['id']); // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
+                echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
+
+                    query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, zm.status, zm.termin_dostawy, zm.data_wysłania_zamowienia, zm.data_dostarczenia, fd.nazwa AS forma_dostawy, zm.komentarz, pl.kwota AS suma, mp.nazwa AS sposob_platnosci FROM zamowienia AS zm, formy_dostawy AS fd, platnosci AS pl, metody_platnosci AS mp WHERE zm.id_formy_dostawy = fd.id_formy_dostawy AND zm.id_zamowienia = pl.id_zamowienia AND pl.id_metody_platnosci = mp.id_metody_platnosci AND id_klienta = '%s'", "getOrders", $_SESSION['id']);
+
+                    // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
                 ?>
 
                 <!--<br><br><a href="logout.php">[ Wyloguj ]</a>-->
@@ -37,7 +43,7 @@
 
     <script>displayNav();</script>
 
-    <?php require "../view/footer.php"; ?>
+    <?php require "../view/___footer.php"; ?>
 
 </div>
 
@@ -55,7 +61,7 @@
 
     for(let i=0; i<orderStatus.length; i++) {
         if(orderStatus[i].innerHTML == "Zarchiwizowane") {
-            orderStatus[i].style.color = "#30af30";
+            orderStatus[i].style.color = "#cb2f2f";
             orderStatus[i].style.fontWeight = "bold";
         }
     }

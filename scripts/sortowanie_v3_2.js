@@ -1,175 +1,184 @@
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 
-window.addEventListener('load', () => { // po wczytaniu wszystkich zasobów strony (elementów, stylów, skryptów ...)
-
-	let books = document.querySelectorAll(".outer-book:not(.hidden):not(.hidden-author)");
+window.addEventListener("load", () => {
+	//let books = document.querySelectorAll(".outer-book:not(.hidden):not(.hidden-author)");
+	let books = document.querySelectorAll(".outer-book");
+	// ".outer-book" --> ".outer-book.outer-book-visible"
 	for (let i = 0; i < books.length; i++) {
-		books[i].classList.add("outer-book-visible");
+		books[i].classList.add("outer-book-visible"); // dla każdej widocznej książki, dodaj klasę "outer-book-visible"
 	}
 
 	let selectList = document.getElementById("sortBy"); // <select>
-
 	selectList.addEventListener("change", (event) => {
 		sortBooks();
 	});
 
-	// define sorting functions			   // a, b - elementy tablicy (array elements) - ✓ divy z książkami ;
-	// funkcje porównujące ;               // return -1, 0 lub 1 ;
-	const sortByTitleAscending = (a, b) => a.querySelector(".book-title").textContent.localeCompare(b.querySelector(".book-title").textContent);
-	const sortByTitleDescending = (a, b) =>	b.querySelector(".book-title").textContent.localeCompare(a.querySelector(".book-title").textContent);
-
-	const sortByPriceAscending = (a, b) => Number(a.querySelector(".book-price span").textContent) - Number(b.querySelector(".book-price span").textContent);
-	const sortByPriceDescending = (a, b) => Number(b.querySelector(".book-price span").textContent) - Number(a.querySelector(".book-price span").textContent);
-
-	const sortByYearAscending = (a, b) => Number(a.querySelector(".book-year").textContent) - Number(b.querySelector(".book-year").textContent);
-	const sortByYearDescending = (a, b) => Number(b.querySelector(".book-year").textContent) - Number(a.querySelector(".book-year").textContent);
-
-	// są to funkcje wyrażenia (function expression) - funkcja jest przypisywana do zmiennej (o określonej przez nas nazwie);
-		// funkcja wyrażenia - jeden ze sposobów definiowania funkcji;
-		// dzięki zdefiniowaniu funkcji w ten sposób, możemy przekazać ją do innej funkcji podając jej nazwę jako argument
-
-	const sortBooks = () => {
-
-			// get the <select> element,
-			// get selected option value
-			// get book content element ;
-
-		const selectList = document.getElementById("sortBy"); // <select> element;
-
-			//const selectedValue = DOMPurify.sanitize(selectList.options[selectList.selectedIndex].textContent); // "nazwy A-Z"
-		const selectedOption = selectList.options[selectList.selectedIndex]; // <option> element
-		const sortType = selectedOption.getAttribute('data-sort');
-		const sortOrder = selectedOption.getAttribute('data-order');
-
-		const booksContainer = document.getElementById("content-books");
-
-			console.log("\n selectElement (select) -> ", selectList);
-			console.log("\n typeof selectElement (select) -> ", typeof selectList);
-
-			console.log("\n\n\n selectedOption (text)-> ", selectedOption); // DOMPurify (!)
-			console.log("\n typeof selectedOption (text)-> ", typeof selectedOption);
-
-			console.log("\n\n\n sortType (string) -> ", sortType);
-			console.log("\n\n\n typeof sortType -> ", typeof sortType);
-
-			console.log("\n\n\n sortOrder (string) -> ", sortOrder);
-			console.log("\n\n\n typeof sortOrder -> ", typeof sortOrder);
-
-			console.log("\n\n\n contentBooks (div) -> ", booksContainer);
-			console.log("\n typeof contentBooks (div) -> ", typeof booksContainer);
-
-		// return;
-
-		// let books = Array.from(document.querySelectorAll("#content-books > .outer-book"));
-
-		let books = Array.from(booksContainer.querySelectorAll(".outer-book:not(.hidden):not(.hidden-author)"));
-			// problem implementacyjny - sortowanie tylko tych książek, które nie mają klasy "hidden" oraz "hidden-author"
-
-			console.log("\n\nbooks ->", books);
-			console.log("typeof books ->", typeof books);  // object;
-			console.log("books.length -> ", books.length); // liczba książek w #content-books;
-
-		if(books.length < 2) { // If there is only one book, don't sort and return
-			return;
+	if(window.sessionStorage) {
+		let selectedIndex = sessionStorage.getItem("selectedIndex");
+		if(selectedIndex) {
+			selectList.selectedIndex = selectedIndex;
+			sortBooks();
 		}
-
-		const sortFunctions = {
-			title: {
-				asc: sortByTitleAscending, // <-- to jest referencja do funkcji - porównującej dwa elementy tablicy - (a,b)
-				desc: sortByTitleDescending
-			},
-			price: {
-				asc: sortByPriceAscending,
-				desc: sortByPriceDescending
-			},
-			year: {
-				asc: sortByYearAscending,
-				desc: sortByYearDescending
-			}
-		};
-
-		console.log("\n\nsortFunctions ->", sortFunctions);
-		console.log("\n\ntypeof sortFunctions ->", typeof sortFunctions);
-
-		// Sort the books array based on the selected option
-		/*switch (selectedValue) {
-			case "nazwy A-Z":
-				books.sort(sortByTitleAscending);
-				// sortByTitleAscending - ✓ funkcja definiująca porządek sortowania (porównująca) - zwraca wartość będącą liczbą (-1, 0, 1)
-				break;
-			case "nazwy Z-A":
-				books.sort(sortByTitleDescending);
-				break;
-			case "ceny rosnąco":
-				books.sort(sortByPriceAscending);
-				break;
-			case "ceny malejąco":
-				books.sort(sortByPriceDescending);
-				break;
-			case "Najstarszych":
-				books.sort(sortByYearAscending);
-				break;
-			case "Najnowszych":
-				books.sort(sortByYearDescending);
-				break;
-			default:
-				return;
-		}*/
-
-		// dzięli użyciu obiektu przechowującego referencje do funkcji, uzyskanie odpowiedniej funkcji sortującej jest bardziej elastyczne -->
-		if (sortFunctions[sortType] && sortFunctions[sortType][sortOrder]) {
-			books.sort(sortFunctions[sortType][sortOrder]);
-		}
-		// Jest to bardzo elastyczne podejście, które pozwala na łatwe rozbudowywanie i modyfikowanie funkcji sortujących w przyszłości, bez konieczności wprowadzania dużych zmian w kodzie.
-
-		// Append the sorted book elements to the book content element
-		//books.forEach((book) => contentBooks.appendChild(book));
-		console.log("\n\nbooks ->", books);
-		books.forEach((book) => {
-			booksContainer.appendChild(book);
-		});
-
-
-		// save selected sorting option IN LOCAL STORAGE - after page reload, sort books ;
-
-		let selectedIndex = selectList.selectedIndex; // indeks elementu listy, który został ostatnio wybrany (change);
-		localStorage.setItem("selectedIndex", selectedIndex); // zapis indeksu do local storage;
-
-		/*//let selectElement = document.getElementById("sortBy"); // selectList <--
-
-		selectList.addEventListener("change", function() {
-			var selectedValue = selectList.value;
-			localStorage.setItem("selectedValue", selectedValue); // "1" / "2" / "3" / ... / "6";
-		});
-
-		window.addEventListener("load", function() {
-
-			var selectedValue = localStorage.getItem("selectedValue");
-
-			if (selectedValue && selectList) {
-
-				selectList.value = selectedValue;
-
-				sortBooks(); // execute sorting function;
-				//filterAuthors();
-			}
-		});
-
-
-		localStorage.setItem("selectedValue", selectedValue);*/
-
 	}
-
-	let selectedIndex = localStorage.getItem("selectedIndex");
-
-	if(selectedIndex) {
-		selectList.selectedIndex = selectedIndex;
-		sortBooks();
-
-	}
-
 });
+
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// define sorting functions			   // a, b - elementy tablicy (array elements) - ✓ divy z książkami ;
+// funkcje porównujące ;               // return -1, 0 lub 1 ;
+const sortByTitleAscending = (a, b) => a.querySelector(".book-title").textContent.localeCompare(b.querySelector(".book-title").textContent);
+const sortByTitleDescending = (a, b) =>	b.querySelector(".book-title").textContent.localeCompare(a.querySelector(".book-title").textContent);
+
+const sortByPriceAscending = (a, b) => Number(a.querySelector(".book-price").textContent) - Number(b.querySelector(".book-price").textContent);
+const sortByPriceDescending = (a, b) => Number(b.querySelector(".book-price").textContent) - Number(a.querySelector(".book-price").textContent);
+
+const sortByYearAscending = (a, b) => Number(a.querySelector(".book-year").textContent) - Number(b.querySelector(".book-year").textContent);
+const sortByYearDescending = (a, b) => Number(b.querySelector(".book-year").textContent) - Number(a.querySelector(".book-year").textContent);
+
+// są to funkcje wyrażenia (function expression) - funkcja jest przypisywana do zmiennej (o określonej przez nas nazwie);
+	// funkcja wyrażenia - jeden ze sposobów definiowania funkcji;
+	// dzięki zdefiniowaniu funkcji w ten sposób, możemy przekazać ją do innej funkcji podając jej nazwę jako argument
+
+// Funkcja sortująca -->
+
+const sortBooks = () => {
+
+		// get the <select> element,
+		// get selected option value
+		// get book content element ;
+
+	const selectList = document.getElementById("sortBy"); // <select> element - "Sortuj według";
+
+		//const selectedValue = DOMPurify.sanitize(selectList.options[selectList.selectedIndex].textContent); // "nazwy A-Z"
+	const selectedOption = selectList.options[selectList.selectedIndex]; // SELECTED <option> element
+	const sortType = selectedOption.getAttribute('data-sort'); // data-sort="price"
+	const sortOrder = selectedOption.getAttribute('data-order'); // data-order="asc"
+
+	const booksContainer = document.getElementById("content-books");
+
+		console.log("\n (sortBooks) - selectElement (select) -> ", selectList);
+		console.log("\n (sortBooks) - typeof selectElement (select) -> ", typeof selectList);
+
+		console.log("\n (sortBooks) - selectedOption (text)-> ", selectedOption); // DOMPurify (!)
+		console.log("\n (sortBooks) - typeof selectedOption (text)-> ", typeof selectedOption);
+
+		console.log("\n (sortBooks) - sortType (string) -> ", sortType);
+		console.log("\n (sortBooks) - typeof sortType -> ", typeof sortType);
+
+		console.log("\n (sortBooks) - sortOrder (string) -> ", sortOrder);
+		console.log("\n (sortBooks) - typeof sortOrder -> ", typeof sortOrder);
+
+		console.log("\n (sortBooks) - contentBooks (div) -> ", booksContainer);
+		console.log("\n (sortBooks) - typeof contentBooks (div) -> ", typeof booksContainer);
+
+	// return;
+
+	// let books = Array.from(document.querySelectorAll("#content-books > .outer-book"));
+
+	let books = Array.from(booksContainer.querySelectorAll(".outer-book:not(.hidden):not(.hidden-author)"));
+	// problem implementacyjny - sortowanie tylko tych książek, które nie mają klasy "hidden" oraz "hidden-author" - sortuje tylko widoczne książki !
+
+		console.log("\n\nbooks ->", books);
+		console.log("typeof books ->", typeof books);  // object;
+		console.log("books.length -> ", books.length); // liczba książek w #content-books;
+
+	if(books.length < 2) { // If there is only one book, don't sort and return
+		return;
+	}
+
+	const sortFunctions = {
+		title: {
+			asc: sortByTitleAscending, // <-- to jest referencja do funkcji - porównującej dwa elementy tablicy - (a,b)
+			desc: sortByTitleDescending
+		},
+		price: {
+			asc: sortByPriceAscending,
+			desc: sortByPriceDescending
+		},
+		year: {
+			asc: sortByYearAscending,
+			desc: sortByYearDescending
+		}
+	};
+
+	console.log("\n\nsortFunctions ->", sortFunctions);
+	console.log("\n\ntypeof sortFunctions ->", typeof sortFunctions);
+
+	// Sort the books array based on the selected option
+	/*switch (selectedValue) {
+		case "nazwy A-Z":
+			books.sort(sortByTitleAscending);
+			// sortByTitleAscending - ✓ funkcja definiująca porządek sortowania (porównująca) - zwraca wartość będącą liczbą (-1, 0, 1)
+			break;
+		case "nazwy Z-A":
+			books.sort(sortByTitleDescending);
+			break;
+		case "ceny rosnąco":
+			books.sort(sortByPriceAscending);
+			break;
+		case "ceny malejąco":
+			books.sort(sortByPriceDescending);
+			break;
+		case "Najstarszych":
+			books.sort(sortByYearAscending);
+			break;
+		case "Najnowszych":
+			books.sort(sortByYearDescending);
+			break;
+		default:
+			return;
+	}*/
+
+	// dzięki użyciu obiektu przechowującego referencje do funkcji, uzyskanie odpowiedniej funkcji sortującej jest bardziej elastyczne -->
+	if (sortFunctions[sortType] && sortFunctions[sortType][sortOrder]) {
+		books.sort(sortFunctions[sortType][sortOrder]);
+	}
+	// Jest to bardzo elastyczne podejście, które pozwala na łatwe rozbudowywanie i modyfikowanie funkcji sortujących w przyszłości, bez konieczności wprowadzania dużych zmian w kodzie.
+
+	// Append the sorted book elements to the book content element
+	//books.forEach((book) => contentBooks.appendChild(book));
+	console.log("\n\nbooks ->", books);
+	books.forEach((book) => {
+		booksContainer.appendChild(book);
+	});
+
+
+// save selected sorting option IN SESSION STORAGE - after page reload, sort books ;
+if(window.sessionStorage) {
+	let selectedIndex = selectList.selectedIndex; // indeks elementu listy, który został ostatnio wybrany (change);
+	sessionStorage.setItem("selectedIndex", selectedIndex); // zapis indeksu do session storage;
+}
+
+
+	/*//let selectElement = document.getElementById("sortBy"); // selectList <--
+
+	selectList.addEventListener("change", function() {
+		var selectedValue = selectList.value;
+		localStorage.setItem("selectedValue", selectedValue); // "1" / "2" / "3" / ... / "6";
+	});
+
+	window.addEventListener("load", function() {
+
+		var selectedValue = localStorage.getItem("selectedValue");
+
+		if (selectedValue && selectList) {
+
+			selectList.value = selectedValue;
+
+			sortBooks(); // execute sorting function;
+			//filterAuthors();
+		}
+	});
+
+
+	localStorage.setItem("selectedValue", selectedValue);*/
+
+}
+
+
+
+//});
 
 // define sorting functions			   // a, b - elementy tablicy (array elements) - ✓ divy z książkami ;
 // funkcje porównujące ;              // return -1, 0 lub 1 ;

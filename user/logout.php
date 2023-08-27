@@ -19,7 +19,7 @@
 		header('Location: ___zaloguj.php');
 		exit();
 	}
-	elseif( isset($_SESSION["password_confirmed"]) ) { // redirect from remove_password.php
+	elseif( isset($_SESSION["password_confirmed"]) ) { // redirect from remove_password.php (usunięcie konta klienta)
 			session_unset();
 			session_destroy();
 		session_start();

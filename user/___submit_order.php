@@ -92,9 +92,32 @@
 
                         </div>
 
+                        <h3 id="cart-header" class="address-data">Dane adresowe</h3>
+
+                            <div class="order-address-data">
+                                <?= $_SESSION["imie"] . " " . $_SESSION["nazwisko"]; ?>
+                            </div>
+                            <div class="order-address-data">
+                                <?= $_SESSION["miejscowosc"] . ", "; ?>
+                                <?= !empty($_SESSION["ulica"]) ? (" ul. " . $_SESSION["ulica"] . " ") : " "; ?>
+                                <?= $_SESSION["numer_domu"] . " "; ?>
+
+
+
+                            </div>
+                            <div class="order-address-data">
+                                <?= $_SESSION["kod_pocztowy"] . " " . $_SESSION["kod_miejscowosc"]; ?>
+                            </div>
+
+                        <!--<button id="edit-user-data">Edytuj</button>-->
+
+                        <hr id="submit-order">
+
                         <h3 id="order-sum">
                             <span class="order-sum order-sum-cart">suma</span><?= $_SESSION["suma_zamowienia"]; ?> PLN
                         </h3>
+
+
 
                         <button type="submit" class="btn-link btn-link-static">
                             Zamawiam

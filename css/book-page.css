@@ -432,7 +432,7 @@ span.star.gold::before {
 
 #add-rate-button {
     position: relative;
-    top: -4px;
+    top: -5px;
 
     /* margin-left: 5px; */
     /* width: 200px; */
@@ -445,7 +445,7 @@ span.star.gold::before {
     border-radius: 5px;
     /* font-size: 20px; */
     font-weight: bold;
-    padding: 4px;
+    padding: 4px 4px 5px 4px;
     box-sizing: border-box;
     outline: none;
     /* margin-top: 10px; */

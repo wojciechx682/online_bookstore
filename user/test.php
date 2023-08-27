@@ -6,6 +6,8 @@
         //$data = date("2023-07-30");
 
 
+echo password_hash("PassJacob33#", PASSWORD_DEFAULT); exit();
+
 echo "<br><hr><br>";
 
 $_POST["dispatch-date"] = "2021-01-01";

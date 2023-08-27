@@ -361,7 +361,20 @@ body {
     .book-info {
         min-width: 165px !important;
         padding-left: 8px !important;
+        float: left;
     }
+
+    /*.book-info {
+        !* padding: 1rem; *!
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+
+        !*position: relative;
+        top: -40px;*!
+    }*/
 
     #content-books .book-title {
         margin: 8px 0 0 0 !important;
@@ -1421,7 +1434,7 @@ body {
     padding: 8px 7px 8px 7px;
     margin-left: 8px;
     border: 1px solid #a9a9a9;
-    border-radius: 2px;
+    border-radius: 5px;
 
     width: 40px;
 
@@ -1547,6 +1560,15 @@ body {
     line-height: 29px;
 
     padding-right: 30px;
+}
+
+h3.address-data {
+    margin-bottom: 8px !important;
+}
+
+div.order-address-data {
+    margin-bottom: 5px;
+    font-size: 1.04rem;
 }
 
 .btn-cart-main {
@@ -1790,7 +1812,7 @@ div.break-row {
     clear: both;
 }
 
-ul#second-list {
+ul#subcategories-list {
     float: left !important;
     position: relative;
     /*top: -288px;*/ /* js set that property dynamically based on number of categories */
@@ -1819,7 +1841,7 @@ ul#second-list {
     border-top: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
-ul#second-list li {
+ul#subcategories-list li {
     /*width: 250px;*/
     width: 340px;
     text-align: left;
@@ -2430,14 +2452,14 @@ ul#ul-book-status-list li {
 }
 
 ul#ul-authors::-webkit-scrollbar,
-ul#second-list::-webkit-scrollbar
+ul#subcategories-list::-webkit-scrollbar
     /*,
 ul#ul-book-status-list::-webkit-scrollbar*/ {
     width: 12px;               /* width of the entire scrollbar */
 }
 
 ul#ul-authors::-webkit-scrollbar-track,
-ul#second-list::-webkit-scrollbar-track
+ul#subcategories-list::-webkit-scrollbar-track
     /*,
     ul#ul-book-status-list::-webkit-scrollbar-track*/
 {
@@ -2446,7 +2468,7 @@ ul#second-list::-webkit-scrollbar-track
 }
 
 ul#ul-authors::-webkit-scrollbar-thumb,
-ul#second-list::-webkit-scrollbar-thumb
+ul#subcategories-list::-webkit-scrollbar-thumb
     /*,
 ul#ul-book-status-list::-webkit-scrollbar-thumb*/
 {
@@ -2473,7 +2495,8 @@ ul#ul-book-status-list  > li > label  {
 /* ul - przycisk zastosuj */
 
 button#filter-authors,
-button#filter-book-status
+button#filter-book-status,
+button#edit-user-data
 {
     /* margin-left: 5px; */
     /* width: 200px; */
@@ -2493,9 +2516,22 @@ button#filter-book-status
     /*margin-left: 15px;*/
 }
 
+button#edit-user-data {
+    /*float: right;*/
+    /*margin-left: 15px;*/
+
+    /*position: relative;
+    top: -5px;*/
+
+    padding: 5px 65px;
+}
+
+
+
 
 button#filter-authors:hover,
-button#filter-book-status:hover
+button#filter-book-status:hover,
+button#edit-user-data:hover
 {
     cursor: pointer;
     -webkit-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
@@ -2630,7 +2666,8 @@ button#confirm-message {
     /*pointer-events: none;*/ /* background zasłania nam całą stronę, więc user nie może kliknąć nic innego niż "Potwierdź" w oknie dialogowym */
 }
 
-#login-error-message {
+#login-error-message,
+#application-error-message {
     /*height: 310px;*/
     height: 200px;
     width: 660px;
@@ -2660,6 +2697,15 @@ button#confirm-message {
     -moz-box-shadow: 0px 0px 10px -2px rgba(66, 68, 90, 1);
     box-shadow: 0px 0px 10px -2px rgba(66, 68, 90, 1);
 
+}
+
+#application-error-message {
+    width: 715px;
+    height: 285px;
+}
+
+#application-error-message button#confirm-message {
+    margin-top: 25px;
 }
 
 #login-error-message > h2 {
@@ -2780,9 +2826,9 @@ margin-top: 25px;*/
 .book-info {
     /* padding: 1rem; */
     padding: 0;
-    display: flex;
+/*    display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between;*/
     height: 100%;
 
     /*position: relative;
@@ -2935,6 +2981,8 @@ button.reset-password-button {
     /*margin-top: 25px;*/
 
     /*z-index: 1 !important;*/
+
+    display: unset;
 }
 
 /*.book:hover .book-price,
@@ -3095,6 +3143,10 @@ form#register-form input:not([type="checkbox"])
 
 }
 
+form#register-form input {
+    margin: 10px 0 10px 0;
+}
+
 
 
 form#register-form input:not([type="checkbox"]):hover {
@@ -3145,13 +3197,18 @@ form#register-form hr.register-form-hr-line:nth-of-type(1) {
     margin-top: 20px;
 }
 
-hr.register-form-hr-line {
+hr.register-form-hr-line,
+hr#submit-order {
 
     background-color: rgba(166, 166, 166, 0.7);
     border: none;
     height: 1px;
     margin: 15px 0px 15px 0px;
     /*max-width: 255px;*/
+}
+
+hr#submit-order {
+    background-color: rgba(166, 166, 166, 0.38);;
 }
 
 hr.login-form-hr-line {
@@ -3183,13 +3240,18 @@ form#register-form input[type="submit"] {
 .form-section { /* alredy exists in main.css */
     /*width: 300px;*/
 
-    width: calc(100% / 3.3);
-    float: left;
+    /*width: calc(100% / 3.3);
+    float: left;*/
     margin: 4px 50px 4px 4px;
 
-    /*display: inline-block;*/
+        /*display: inline-block;*/
 
-    min-width: 275px;
+    /*min-width: 275px;*/
+
+    /*width: 100%;*/
+
+    width: 470px;
+
 }
 
 .form-section input {
@@ -3213,6 +3275,14 @@ span.row {
     line-height: 215%;
 
     /*min-width: 275px;*/
+
+}
+
+form#register-form div.register-label {
+    border: 1px solid blue;
+
+    width: 250px;
+    float: left;
 
 }
 
@@ -3629,6 +3699,7 @@ div.cart-book > span.book-details div.book-description div.author {
 
 h3#order-sum {
     font-size: 1.2em;
+    margin-top: 15px;
 }
 
 span.order-sum {
@@ -3741,11 +3812,15 @@ h3#order-summary-header + p {
     /*overflow-y: clip;*/
 
     margin-bottom: 15px;
+
+
 }
 
 /*.dane_konta:first-of-type,*/
 .dane-konta-form {
-    min-height: 280px;
+    /*min-height: 280px;*/
+
+    height: 475px;
 }
 
 #content .dane_konta:nth-of-type(3) {
@@ -3784,6 +3859,12 @@ h3#order-summary-header + p {
 
     float: left;
 }
+
+div.remove_account div.edit_data_left {
+    padding-top: 0;
+}
+
+
 
 .edit_data_left-container hr,
 .edit_data_right-container hr
@@ -3947,8 +4028,12 @@ div.edit_data_left-container > label {
     padding: 6.5px;
     box-sizing: border-box;
     outline: none;
-    margin-top: 3px;
+    margin-top: 6px;
     margin-left: 15px;
+}
+
+form#confirm_password_form button[type="submit"] {
+    margin-top: 6px;
 }
 
 .dane_konta button[type="submit"]:hover {
@@ -4015,6 +4100,9 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
     margin-right: 18px;
     cursor: pointer;
 
+    position: relative;
+    top: 2px;
+
 }
 
 .confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
@@ -4047,6 +4135,12 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
     padding-bottom: 45px;
 }
 
+.insert-password div.edit_data_left,
+.insert-password div.edit_data_right
+{
+    margin-bottom: 20px;
+}
+
 /* komunikat "Złe hasło" - po podaniu złego hasła przy próbie usunięcia konta,
    oraz "Zaznacz checkbox" */
 
@@ -4055,11 +4149,15 @@ div.remove_account span.remove-account-confirm-error {
 
     display: block;
 
-    margin-top: 20px;
+    margin-top: 42px;
     margin-left: 2px;
 
-    color: red;
+    color: #cb2f2f;
     font-weight: bold;
+}
+
+div.remove_account button[type="submit"] {
+    margin-top: 27px;
 }
 
 /* my_orders.php -->    --------------------------------------------------------------- */
@@ -4080,13 +4178,16 @@ div.remove_account span.remove-account-confirm-error {
     text-align: left !important;
 }
 .order-date-title, .order-status-title, .order-id-title,
-.order-date, .order-status, .order-id, .a-book-id, .a-book-title, .a-book-category, .a-book-price, .a-book-author, .a-book-magazine, .a-book-quantity  {
+.order-date, .order-status, .order-id, .a-book-id, .a-book-title, .a-book-category, .a-book-price, .a-book-author, .a-book-magazine, .a-book-quantity,
+.order-payment-method-title, .order-payment-method,
+.order-delivery-method-title, .order-delivery-method
+{
     /*border: 1px dashed black;*/
 
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
 
     float: left;
-    width: 33.33%;
+    width: 25%;
     text-align: center;
 
 
@@ -4094,14 +4195,33 @@ div.remove_account span.remove-account-confirm-error {
     padding-top: 10px;
 }
 
-.order-date-title, .order-status-title, .order-id-title {
+/*.order-payment-method-title,
+.order-delivery-method-title {
+    width: 50%;
+
+    text-align: left;
+
+}*/
+
+.order-payment-method {
+    border-left: 1px ridge rgba(166, 166, 166, 0.38);
+}
+
+
+/*.order-payment-method,
+.order-delivery-method {
+    width: 50%;
+    text-align: left;
+    padding-left: 15px;
+}*/
+
+
+
+.order-date-title, .order-status-title, .order-id-title,
+.order-payment-method-title {
     color: #3b3b3b;
     font-weight: bold;
-
     padding: 8px 0 8px 0;
-
-
-
 }
 
 .order-date-title {
@@ -4111,6 +4231,17 @@ div.remove_account span.remove-account-confirm-error {
 
     background-color: #f3f3f3;
 }
+
+.order-payment-method-title,
+.order-delivery-method-title {
+    border-left: 1px ridge rgba(166, 166, 166, 0.38);
+    background-color: #f3f3f3;
+}
+
+.order-delivery-method-title {
+    border-right: none;
+}
+
 
 .order-status-title {
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
@@ -4146,7 +4277,7 @@ div.remove_account span.remove-account-confirm-error {
 
     /*width: 35px;*/
     min-width: 35px;
-    width: 4%;
+    width: 5%;
 
 }
 .book-url {
@@ -4158,7 +4289,7 @@ div.remove_account span.remove-account-confirm-error {
 
     float: left;
     text-align: center;
-    height: 150px;
+    height: 155px;
 
     min-width: 150px;
     width: 20%;
@@ -4181,12 +4312,13 @@ div.remove_account span.remove-account-confirm-error {
 
     text-align: left;
 
-    height: 150px;
+    height: 155px;
 
     min-width: 200px;
     width: 55%;
 
     padding: 12px 12px 12px 15px;
+
 
 
 }
@@ -4215,7 +4347,7 @@ div.book-desc span.order-book-desc-row strong {
     float: left;
 
     text-align: left;
-    height: 150px;
+    height: 155px;
 
     min-width: 50px;
     width: 10%;
@@ -4270,7 +4402,7 @@ div[class*="order-book-price"]:not([class$="1"])
 
     text-align: left;
 
-    height: 150px;
+    height: 155px;
 
     min-width: 50px;
     width: 10%;
@@ -4467,7 +4599,7 @@ form[action="logowanie.php"] input:not([type="submit"]) {
 
 div#advanced-search {
 
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(252, 252, 252);
 
     position: absolute;
     /*top: 35px;*/
@@ -4498,6 +4630,12 @@ div#advanced-search {
     border-bottom-right-radius: 16px;
 
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+}
+
+div#advanced-search input[type="text"],
+div#advanced-search input[type="number"]
+{
+    background-color: white !important;
 }
 
 .advanced-search-invisible {
@@ -4538,7 +4676,7 @@ input#year-min {
 #adv-search-year-slider {
     margin-top: 24px;
     margin-bottom: 18px;
-    width: 250px;
+    width: 296px;
 }
 
 #price-slider { /* year-min, year-max */
@@ -4548,6 +4686,11 @@ input#year-min {
 
     padding: 0 16px 0 10.3px;
 }
+
+div#adv-search-year-slider {
+    padding: 0 16px 0 4px;
+}
+
 
 div#advanced-search form#advanced-search-form input[type="text"],
 div#advanced-search form#advanced-search-form input[type="number"] {
@@ -4648,7 +4791,7 @@ div#advanced-search input[type="submit"] {
     border-radius: 5px;
     /* font-size: 20px; */
     font-weight: bold;
-    padding: 4px;
+    padding: 5px 22px 6px 22px;
     box-sizing: border-box;
     outline: none;
     margin-top: 10px;

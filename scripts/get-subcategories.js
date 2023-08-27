@@ -46,7 +46,7 @@ let listItems = document.querySelectorAll("#n-top-nav-content ol li ul#categorie
     /*document.querySelectorAll('#n-top-nav-content ol li ul#categories-list li').addEventListener("mouseover", function(e) {
     });*/
 
-let secondUl = document.querySelector('ul#second-list');
+let secondUl = document.querySelector('ul#subcategories-list');
 //console.log("\nsecondUl -> ", secondUl);
 
 //let secondUlfirstItem = secondUl.querySelector("li:first-child");
@@ -97,7 +97,7 @@ listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "
 
             let secondUlInput = document.createElement('input');
                 secondUlInput.setAttribute("type", "hidden");
-                secondUlInput.setAttribute("name", "kategoria");
+                secondUlInput.setAttribute("name", "category");
                 secondUlInput.setAttribute("value", item.querySelector("input").value);
 
             let secondUlButton = document.createElement('button');
@@ -154,7 +154,7 @@ listItems.forEach((item) => { // for every listItem;    // usunąć kategorię "
 
                 let category = document.createElement('input');
                     category.type = "hidden";
-                    category.name = "kategoria";
+                    category.name = "category";
                     category.value = subcategory[2];
 
                 let subcategoryInput = document.createElement('input');

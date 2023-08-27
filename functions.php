@@ -66,7 +66,7 @@
             //echo "\n".'<option value="'.$row['id_autora'].'">'.$row['imie']." ".$row['nazwisko'].'</option>';
 
             // replace fields in $author string to author data from $result, display result content as HTML
-            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
+            echo sprintf($author, $row["id_autora"], $row["imie"], $row["nazwisko"]);
         }
 
         //$result->free_result();
@@ -118,7 +118,7 @@
         while ($row = $result->fetch_assoc()) { // tyle ile jest kategorii
 
             // replace fields in $author string to author data from $result, display result content as HTML
-            echo sprintf($category, $row['nazwa'], $row["nazwa"]);
+            echo sprintf($category, $row["nazwa"], $row["nazwa"]);
         }
 
         //$result->free_result();
@@ -130,8 +130,8 @@
 
         // funkcja wykona się, tylko jeśli $result zawiera conajmniej jeden rekord !
 
-        echo '<div id="content">';
-            echo '<div id="content-books">';
+        /*echo '<div id="content">';
+            echo '<div id="content-books">';*/
 
                 $i = 0;
 
@@ -191,19 +191,22 @@
 
                 }*/
 
-            echo '</div>'; // #content-books;
-        echo '</div>'; // #content;
+            /*echo '</div>'; // #content-books;
+        echo '</div>'; // #content;*/
 
 		//$result->free_result();
 	}
 
-    function updateBookRates($result) { // \book.php - jeśli usunięto komentarze do książki - aktualizacja po wejściu na \user\book.php
+    function updateBookRates($result) {
+
+        // \book.php - jeśli usunięto komentarze do książki - aktualizacja po wejściu na \user\book.php
 
         $row = $result->fetch_assoc();
 
+        $_SESSION["rating"] = $row["rating"];
         $_SESSION["liczba_ocen"] = $row["liczba_ocen"];
         $_SESSION["avg_rating"] = $row["rating"];
-        $_SESSION["rating"] = $row["rating"];
+
 
         if ($row["liczba_ocen"] == 0) {
             query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $row["id_ksiazki"]);
@@ -243,7 +246,7 @@
         $book = file_get_contents("../template/book-page.php");
 
                 // wstaw do Z.S wartości zwrócone z Bazy (!);
-                    $_SESSION["avg_rating"] = $row["rating"];   // average book rating - "4.25" ;
+                $_SESSION["avg_rating"] = $row["rating"];   // average book rating - "4.25" ;
                 $_SESSION["rating"] = $row["rating"];           // average book rating - "4.25" ;
 
                 $_SESSION["liczba_ocen"] = $row["liczba_ocen"]; // number of reviews - "2" ;
@@ -349,7 +352,7 @@
             $book_rating = $row['ocena'];
             $num_of_ratings = $row['liczba_ocen'];
 
-            $_SESSION['ratings'][$book_rating] = $num_of_ratings;
+            $_SESSION["ratings"][$book_rating] = $num_of_ratings;
 
         }
            //  ̶$̶_̶S̶E̶S̶S̶I̶O̶N̶[̶"̶r̶a̶t̶i̶n̶g̶s̶"̶]̶ ̶-̶>̶ ̶[̶5̶]̶ ̶=̶>̶ ̶2̶ ̶[̶4̶]̶ ̶=̶>̶ ̶1̶,̶ ̶.̶.̶.̶ ̶;̶
@@ -412,15 +415,15 @@
         // \user\book.php
         // \user\add_to_cart.php
 
-        // book (ID) exist and has valid ID ?
+        // --> book (ID) exist in database (book exists) ?
+        // --> has valid ID (that passing validation) ?
 
         // sanitize book-id;
         $bookIdSanitized = filter_var($bookId, FILTER_SANITIZE_NUMBER_INT); // "35" or FALSE;
         // remove any non-numeric characters. This filter will leave only the numeric characters.
 
         // get highest book-id from database ;
-            unset($_SESSION["max-book-id"]);
-
+        unset($_SESSION["max-book-id"]);
         query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM ksiazki", "getBookId", "");
         // $_SESSION["max-book-id"] => "35" or NULL;
         // - set variable to be applied in book-id filter below;
@@ -436,18 +439,17 @@
 
 
         // check if there is really a book with that id ;
-            unset($_SESSION["book_exists"]);
-
+        unset($_SESSION["book_exists"]);
         query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExists", $bookIdValidated);
         // $_SESSION["book_exists"] --> true or NULL - zależnie od tego czy książka o takim ID istnieje;
 
         if (empty($bookIdSanitized) || empty($bookIdValidated) || empty($_SESSION["book_exists"]) || empty($_SESSION["max-book-id"]) || ($bookIdValidated != $bookId)) {
 
+                unset($_SESSION["max-book-id"], $_SESSION["book_exists"]);
             return false;
-
+            // error - there is no book with that ID - or - bookID didn't pass validation;
         } else {
-
-            return $bookIdValidated;
+            return $bookIdValidated; // book-id - valid and exists (!) - return that ID
         }
 
     }
@@ -841,8 +843,8 @@ EOT;
 
             echo "<br><hr>";*/
 
-            getOrderSum("", $row["id_zamowienia"]); // suma zam; --> $_SESSION["order_sum"];
-            // ✓ zapisze sumę zamówienia w zmiennej sesyjnej; $_SESSION["order_sum"];
+        //getOrderSum("", $row["id_zamowienia"]); // suma zam; --> $_SESSION["order_sum"];
+        // ✓ zapisze sumę zamówienia w zmiennej sesyjnej; $_SESSION["order_sum"];
 
             // load the content from the external template file into string
             $order = file_get_contents("../template/order-details.php"); // widok -> data, status, numer_zamowienia;
@@ -851,9 +853,10 @@ EOT;
                 //echo sprintf($order, $row['data_zlozenia_zamowienia'], $row["status"], $row["id_zamowienia"], $_SESSION["order_sum"]); // To jest tylko NAGŁÓWEK pojedynczego zamówienia;
 
             // replace fields in $order string to author data from $result, display result content as HTML;
-            echo sprintf($order, $row['data_zlozenia_zamowienia'], $row["status"], $row["id_zamowienia"]); // To jest tylko NAGŁÓWEK pojedynczego zamówienia;
+            echo sprintf($order, $row["data_zlozenia_zamowienia"], $row["status"], $row["id_zamowienia"], $row["sposob_platnosci"]); // To jest tylko NAGŁÓWEK pojedynczego zamówienia;
 
-            query("SELECT id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "getOrderDetails", $row['id_zamowienia']); // --> $_SESSION['order_details_books_id'];
+            query("SELECT id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "getOrderDetails", $row["id_zamowienia"]);
+            // --> $_SESSION['order_details_books_id'];
             // ✓ pojedyncze wiersze z danymi o książce w tym zamówieniu;
             // wiele wierszy -> "id_ksiazki", "ilosc";
 
@@ -880,6 +883,10 @@ EOT;
             //echo sprintf($order, $_SESSION["order_sum"]);
                 // Stopka w tabeli tego zamówienia - wyświetla tylko SUMĘ zamówienia;
 
+        /*$payment = file_get_contents("../template/order-details-payment-method.php");
+        echo sprintf($payment, $row["sposob_platnosci"], $row["forma_dostawy"]);*/
+
+
             if (
                 isset($_SESSION["termin_dostawy"]) && !empty($_SESSION["termin_dostawy"])
                 && $_SESSION["termin_dostawy"] !== "0000-00-00"
@@ -889,7 +896,7 @@ EOT;
             ) {
                 // status zamówienia to "W trakcie realizacji" --> termin_dostawy;
                 $order = file_get_contents("../template/order-sum-order-in-progress.php");
-                echo sprintf($order, $_SESSION["termin_dostawy"], $_SESSION["order_sum"]);
+                echo sprintf($order, $_SESSION["termin_dostawy"], $row["suma"]);
             }
             elseif (
                 isset($_SESSION["data_wysłania_zamowienia"]) && !empty($_SESSION["data_wysłania_zamowienia"])
@@ -900,7 +907,7 @@ EOT;
             ) {
                 // status zamówienia to "Wysłano" --> termin_dostawy, data_wyslania_zamowienia;
                 $order = file_get_contents("../template/order-sum-order-sent.php");
-                echo sprintf($order, $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"],  $_SESSION["order_sum"]);
+                echo sprintf($order, $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"],  $row["suma"]);
             } elseif (
                 isset($_SESSION["data_dostarczenia"]) && !empty($_SESSION["data_dostarczenia"])
                 && $_SESSION["data_dostarczenia"] !== "0000-00-00"
@@ -908,21 +915,25 @@ EOT;
             ) {
                 // status zamówienia to "Dostarczono" (zakończono) --> termin_dostawy?, data_wyslania_zamowienia?, data_dostarczenia;
                 $order = file_get_contents("../template/order-sum-order-delivered.php");
-                echo sprintf($order, $_SESSION["data_dostarczenia"], $_SESSION["order_sum"]);
+                echo sprintf($order, $_SESSION["data_dostarczenia"], $row["suma"]);
 
             } elseif (
                 $row["status"] === "Zarchiwizowane"
             ) {
                 $order = file_get_contents("../template/order-sum-order-archived.php");
-                echo sprintf($order, $row["komentarz"], $_SESSION["order_sum"]);
+                echo sprintf($order, $row["komentarz"], $row["suma"]);
             }
             else { // status -> "Oczekujące na potwierdzenie";
                 $order = file_get_contents("../template/order-sum.php");
-                echo sprintf($order, $_SESSION["order_sum"]);
+                //echo sprintf($order, $_SESSION["order_sum"]);
+                echo sprintf($order, $row["suma"]);
             }
 
             echo "</div>";
+
 		}
+
+        unset($_SESSION["order_details_books_id"], $_SESSION["order_details_books_quantity"], $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"], $_SESSION["data_dostarczenia"], $_SESSION["book-id"], $_SESSION["avg_rating"], $_SESSION["rating"], $_SESSION["id_ksiazki"], $_SESSION["comments"]);
 
 		//$result->free_result();
 	}
@@ -937,8 +948,8 @@ EOT;
 //        $_SESSION['order_details_books_id'] = array();
 //        $_SESSION['order_details_books_quantity'] = array();
 
-        $_SESSION['order_details_books_id'] = []; //
-        $_SESSION['order_details_books_quantity'] = []; //
+        $_SESSION["order_details_books_id"] = []; //
+        $_SESSION["order_details_books_quantity"] = []; //
 
         $i = 0;
 
@@ -949,10 +960,10 @@ EOT;
             /*echo "<br><strong>order_id  &rarr;</strong> " .$row['id_zamowienia'].", <strong>book_id  &rarr;</strong> ".$row['id_ksiazki'].", <strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";*/
             //echo "<strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";
 
-            $_SESSION['order_details_books_id'][$i] =  $row['id_ksiazki']; // przechowuje id książek (tablica)
+            $_SESSION["order_details_books_id"][$i] =  $row["id_ksiazki"]; // przechowuje id książek (tablica)
             //array_push($_SESSION['order_details_books_id'], $row['id_ksiazki']);
 
-            $_SESSION['order_details_books_quantity'][$i] =  $row['ilosc']; // przechowuje ilosc (tablica) ! DO ZROBIENIA W PRZYSZŁOŚCI TAK JAK FUNKCJA order_details_get_book
+            $_SESSION["order_details_books_quantity"][$i] =  $row["ilosc"]; // przechowuje ilosc (tablica) ! DO ZROBIENIA W PRZYSZŁOŚCI TAK JAK FUNKCJA order_details_get_book
             //array_push($_SESSION['order_details_books_quantity'], $row['ilosc']);
 
             // load the content from the external template file into string
@@ -961,7 +972,7 @@ EOT;
             // replace fields in $order string to author data from $result, display result content as HTML
             echo sprintf($order, $row['ilosc']);*/
 
-            query("SELECT tytul, cena, au.imie, au.nazwisko, rok_wydania, image_url FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = '%s'", "orderDetailsGetBook", $_SESSION['order_details_books_id'][$i]); // To jest pojedynczy "Wiersz" - w widoku w tabeli - który wyświetla Pojedynczą książkę w Tym zamówieniu
+            query("SELECT tytul, cena, au.imie, au.nazwisko, rok_wydania, image_url FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = '%s'", "orderDetailsGetBook", $_SESSION["order_details_books_id"][$i]); // To jest pojedynczy "Wiersz" - w widoku w tabeli - który wyświetla Pojedynczą książkę w Tym zamówieniu
 
             $i++;
         }
@@ -1048,7 +1059,7 @@ EOT;
             // replace fields in $order string to author data from $result, display result content as HTML
             echo sprintf($order, count($_SESSION['order_details_books_quantity']),
                 $_SESSION["order_details_books_id"][count($_SESSION['order_details_books_id'])-1],
-                $row["image_url"], $row['tytul'], $_SESSION["order_details_books_id"][count($_SESSION['order_details_books_id'])-1], $row['tytul'], $row['tytul'], $row['imie'], $row['nazwisko'], $row['rok_wydania'],
+                $row["image_url"], $row['tytul'], $row['tytul'], $row['tytul'], $_SESSION["order_details_books_id"][count($_SESSION['order_details_books_id'])-1], $row['tytul'], $row['tytul'], $row['imie'], $row['nazwisko'], $row['rok_wydania'],
                 count($_SESSION['order_details_books_quantity']),
                 $_SESSION["order_details_books_quantity"][count($_SESSION['order_details_books_quantity'])-1],
                 count($_SESSION['order_details_books_quantity']),
@@ -1093,8 +1104,8 @@ EOT;
             $result->free_result();
 	}
 
-	function log_in($result)
-	{
+	function log_in($result) {
+
         // logowanie.php - skrypt logowania -> weryfikacja adresu e-mail, hasła;
 
         // 1. sprawdza, czy istnieje taki email,    jeśli nie - przekierowuje do pliku zaloguj.php + wyświetla komunikat "Niepoprawny e-mail lub hasło";
@@ -1133,25 +1144,25 @@ EOT;
         //echo "<br> haslo = $haslo <br>"; // exit();
         //echo "<br> row  = " . var_dump($row) . " <br>";  exit();
 
-		if (password_verify($password, $row['haslo'])) {
+		if (password_verify($password, $row["haslo"])) {
 
             // true -> hasze sa takie same (podano POPRAWNE HASŁO do konta - email także był poprawny);
 
-			$_SESSION['zalogowany'] = true;
+			$_SESSION["zalogowany"] = true;
 
             $id = array_keys($row)[0]; // przyjmie wartość typu String (TEKSTOWĄ) taką jak -> "id_klienta"; "id_pracownika"; (użyto takiego zapisu ponieważ ID w tabeli "klienci" ma inną NAZWĘ niż w tabeli "pracownicy". - a klient i pracownik używa tego samego formularza logowania;
 
-			$_SESSION['id'] = $row[$id]; // wartość zmiennej => "id_klienta" lub "id_pracownika"; (tzn np 220, 221, ...);
-			$_SESSION['imie'] = $row['imie'];
-			$_SESSION['nazwisko'] = $row['nazwisko'];
-            $_SESSION['telefon'] = $row['telefon'];
-            $_SESSION['email'] = $row['email'];
-                $_SESSION['adres_id'] = $row['adres_id'];
-                $_SESSION['miejscowosc'] = $row['miejscowosc'];
-                $_SESSION['ulica'] = $row['ulica'];
-                $_SESSION['numer_domu'] = $row['numer_domu'];
-                $_SESSION['kod_pocztowy'] = $row['kod_pocztowy'];
-                $_SESSION['kod_miejscowosc'] = $row['kod_miejscowosc'];
+			$_SESSION["id"] = $row[$id]; // wartość zmiennej => "id_klienta" lub "id_pracownika"; (tzn np 220, 221, ...);
+			$_SESSION["imie"] = $row['imie'];
+			$_SESSION["nazwisko"] = $row['nazwisko'];
+            $_SESSION["telefon"] = $row['telefon'];
+            $_SESSION["email"] = $row['email'];
+                $_SESSION["adres_id"] = $row['adres_id'];
+                $_SESSION["miejscowosc"] = $row['miejscowosc'];
+                $_SESSION["ulica"] = $row['ulica'];
+                $_SESSION["numer_domu"] = $row['numer_domu'];
+                $_SESSION["kod_pocztowy"] = $row['kod_pocztowy'];
+                $_SESSION["kod_miejscowosc"] = $row['kod_miejscowosc'];
                                     /* $_SESSION['wojewodztwo'] = $row['wojewodztwo'];
                                     $_SESSION['kraj'] = $row['kraj'];
 			                        $_SESSION['PESEL'] = $row['PESEL'];
@@ -1159,21 +1170,19 @@ EOT;
 
 			                        //$_SESSION['login'] = $row['login'];
 
-            if($id === "id_klienta") {
-
-                $_SESSION['user-type'] = "klient";
-
-                query("SELECT SUM(ilosc) AS suma 
-                             FROM koszyk 
-                             WHERE id_klienta='%s'", "countCartQuantity", $_SESSION['id']);
-                // pobranie liczby książek znajdujących się w kosztku; countCartQuantity() -> $_SESSION['koszyk_ilosc_ksiazek'] -> zapis do zmiennej;
-            }
-
-			unset($_SESSION['blad']); // usuwa komunikat o błędzie logowania; // jest potrzebne, ponieważ mogła nastąpić sytuacja, w której klient podał złe dane (nastąpiło ustawienie zmiennej $_SESSION["blad"]), po czym nastąpiło logowanie pracownika (wszystkie dane były poprawne) - wtedy zmienna $_SESSION["blad"] istnieje, i należy ją usunąć;
+			//unset($_SESSION["blad"]); // usuwa komunikat o błędzie logowania; // jest potrzebne, ponieważ mogła nastąpić sytuacja, w której klient podał złe dane (nastąpiło ustawienie zmiennej $_SESSION["blad"]), po czym nastąpiło logowanie pracownika (wszystkie dane były poprawne) - wtedy zmienna $_SESSION["blad"] istnieje, i należy ją usunąć;
 
 			//$result->free_result();   // pozbywamy się z pamięci rezultatu zapytania; free(); close();
 
             if ($id === "id_klienta") {
+
+                $_SESSION["user-type"] = "klient";
+
+                query("SELECT SUM(ilosc) AS suma 
+                             FROM koszyk 
+                             WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
+                // pobranie liczby książek znajdujących się w kosztku; countCartQuantity() -> $_SESSION['koszyk_ilosc_ksiazek'] -> zapis do zmiennej;
+
                 header('Location: index.php'); exit();     // przekierowanie do strony index.php
             } else {
                 $_SESSION["stanowisko"] = $row["stanowisko"];
@@ -1183,7 +1192,7 @@ EOT;
 		}
 		else  // istniejący e-mail, złe (niepoprawne) hasło;
 		{
-			$_SESSION['blad'] = '<span class="error">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowania (niepoprawne HASŁO) -> przekierowanie do zaloguj.php + komunikat;
+			$_SESSION["blad"] = '<span class="error">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowania (niepoprawne HASŁO) -> przekierowanie do zaloguj.php + komunikat;
 			header('Location: ___zaloguj.php');	exit();
 		}
 	}
@@ -1290,12 +1299,12 @@ EOT;
         $_SESSION["category-exists"] = true;
     }
 
-function verifySubcategoryExists($result) {
+    function verifySubcategoryExists($result) {
 
-    // \user\index.php - prg - spr, czy istnieje pod-kategoria o takiej nazwie;
+        // \user\index.php - prg - spr, czy istnieje pod-kategoria o takiej nazwie;
 
-    $_SESSION["subcategory-exists"] = true;
-}
+        $_SESSION["subcategory-exists"] = true;
+    }
 
     function verifyWarehouseExists($result) {
         // \admin\add-book-data.php
@@ -1829,10 +1838,10 @@ function verifySubcategoryExists($result) {
     //        nazwa funkcji, która zostanie wywołana, gdy zapytanie zostanie wykonane pomyślnie.
     // $value - wartość będąca parametrem funkcji sprintf / vsprintf (pojedyncza zmienna lub TABLICA)
 
-    function displayBooks($kategoria) // $_SESSION["kategoria"] - nazwa kategorii (string)
+    function displayBooks($category) // $_SESSION["kategoria"] - nazwa kategorii (string)
     {
         // alias dla funkcji query() -> index.php
-        if($kategoria == "Wszystkie")
+        if($category == "Wszystkie")
         {
                                     //query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki", "get_books", "");
                                     /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
@@ -1892,14 +1901,14 @@ function verifySubcategoryExists($result) {
                         LEFT JOIN 
                             magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
                         WHERE kt.nazwa LIKE '%s'                                   
-                        GROUP BY ks.id_ksiazki", "getBooks", $_SESSION['kategoria']); // dane o ksiażce + ilość egzemplarzy na stanie
+                        GROUP BY ks.id_ksiazki", "getBooks", $_SESSION["category"]); // dane o ksiażce + ilość egzemplarzy na stanie
 
         // WHERE kt.nazwa LIKE '%s'
 
         }
     }
 
-    function displayBooksWithSubcategory($kategoria, $subcategory) // nazwa kategorii (string), nazwa podkategorii (string)
+    function displayBooksWithSubcategory($category, $subcategory) // nazwa kategorii (string), nazwa podkategorii (string)
     {
         // dodanie statusu - "dostępna / niedostępna" -->
 
@@ -1919,7 +1928,7 @@ function verifySubcategoryExists($result) {
                     LEFT JOIN 
                         magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
                     WHERE kt.nazwa LIKE '%s' AND sb.nazwa LIKE '%s'                                  
-                    GROUP BY ks.id_ksiazki", "getBooks", [$_SESSION['kategoria'], $_SESSION["subcategory"]]); // dane o ksiażce + ilość egzemplarzy na stanie
+                    GROUP BY ks.id_ksiazki", "getBooks", [$_SESSION["category"], $_SESSION["subcategory"]]); // dane o ksiażce + ilość egzemplarzy na stanie
     }
 
 

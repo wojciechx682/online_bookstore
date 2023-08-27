@@ -3,7 +3,7 @@
 
 let buttons = document.querySelectorAll(".increase-btn, .decrease-btn");
 
-console.log("\n\n buttons --> \n\n", buttons);
+//console.log("\n\n buttons --> \n\n", buttons);
 
 buttons.forEach(button => {
 	button.addEventListener("click", () => {
@@ -20,7 +20,7 @@ function changeQuantity(button, amount) {
 
 	if (newQuantity >= 1) {
 
-		console.log("\n >= 1 \n");
+		//console.log("\n >= 1 \n");
 
 		input.value = newQuantity;
 		$(input).trigger("change"); // trigger the change event --> AJAX - change_cart_quantity.js

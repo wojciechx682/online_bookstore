@@ -6,7 +6,16 @@
 		 isset($_POST["star"]) && !empty($_POST["star"]) ) {
 
 		$comment = filter_input(INPUT_POST, "comment", FILTER_SANITIZE_STRING); // tresc_komentarza;
-		$rate = filter_var(filter_input(INPUT_POST, 'star', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT); // ocena;
+		$rate = filter_var(filter_input(INPUT_POST, "star", FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT); // ocena;
+
+		if (empty($comment) || ($comment != $_POST["comment"]) || empty($rate) || ($rate != $_POST["star"])) {
+
+			// dane nie przeszły walidacji, obsługa błędu;
+
+			$_SESSION["rate-error"] = "<h3 class='data-changed'>Wystąpił błąd. Spróbuj jeszcze raz</h3>";
+
+			header('Location: ___book.php'); exit();
+		}
 
 		$comment_data = [$_SESSION["id"], $_SESSION["id_ksiazki"]];
 
@@ -22,7 +31,7 @@
 		if (!empty($_SESSION["rate_exists"])) {
 
 			$_SESSION["rate-error"] = "<h3 class='data-changed'>Dodałeś już opinię dla tej książki</h3>";
-			header('Location: ___book.php?book='.$_SESSION["id_ksiazki"]); exit();
+			header('Location: ___book.php'); exit();
 
 		} else {
 
@@ -42,7 +51,7 @@
 				  SET rating = x.avg_score 
 				  WHERE ksiazki.id_ksiazki = '%s'", "", $comment_data[1]);
 
-			if ( $commentInserted && $rateInserted && $ratingUpdated) {
+			if ( $commentInserted && $rateInserted && $ratingUpdated ) {
 
 				$_SESSION["rate-success"] = "<h3 class='data-changed'>Twoja opinia została dodana</h3>"; // afected rows !!!!
 
@@ -51,13 +60,12 @@
 				$_SESSION["rate-error"] = "<h3 class='data-changed'>Wystąpił błąd. Spróbuj jeszcze raz</h3>";
 			}
 
-			header('Location: ___book.php?book='.$_SESSION["id_ksiazki"]); // GET ??? ZAMIENIĆ NA POST !
-			exit();
+			header('Location: ___book.php');	exit();
 		}
 	}
 	else {
 		$_SESSION["rate-error"] = "<h3 class='data-changed'>Uzupełnij wszystkie pola</h3>";
-		header('Location: ___book.php?book='.$_SESSION["id_ksiazki"]);
+		header('Location: ___book.php');
 		exit();
 	}
 ?>

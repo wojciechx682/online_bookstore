@@ -8,8 +8,8 @@
     //$year_min = $('#year-min'); // input type number - input#year-min - minimum year value input;
     //$year_max = $('#year-max'); // input type number - input#year-max - maximum year value input;
 
-    let yearMin = document.getElementById('year-min');
-    let yearMax = document.getElementById('year-max');
+    let yearMin = document.getElementById("year-min");
+    let yearMax = document.getElementById("year-max");
 
     function updateYear(min, max) {
         // for(let i=0; i<books.length; i++) {
@@ -53,20 +53,20 @@
 let yearSlider = document.getElementById('adv-search-year-slider');
 
 noUiSlider.create(yearSlider, {
-    start: [1994, 2018],
+    start: [1995, 2018],
     connect: true,
-    /*margin: 15,
-    padding: 0,
-    step: 1,*/
+    margin: 5,
     padding: 1,
+    /*step: 1,*/
+
     step: 1,
     range: {
-        'min': 1990,
-        'max': 2023
+        'min': 1989,
+        'max': 2024
     }
 });
 
-yearSlider.noUiSlider.on('update', function (values, handle) {
+yearSlider.noUiSlider.on("update", function (values, handle) {
 
     // values: Current slider values (array);
     // handle: Handle that caused the event (number);
@@ -95,11 +95,11 @@ yearSlider.noUiSlider.on('update', function (values, handle) {
 
 
 
-yearMin.addEventListener('change', function () {
+yearMin.addEventListener("change", function () {
     yearSlider.noUiSlider.set([this.value, null]);
 });
 
-yearMax.addEventListener('change', function () {
+yearMax.addEventListener("change", function () {
     yearSlider.noUiSlider.set([null, this.value]);
 });
 

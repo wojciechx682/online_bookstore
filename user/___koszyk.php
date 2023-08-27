@@ -49,7 +49,7 @@
                     ?>
 
                     <h3 id='order-sum'>
-                        <span class='order-sum order-sum-cart'>suma</span><?= $_SESSION["suma_zamowienia"]; ?> PLN
+                        <span class='order-sum order-sum-cart'>suma</span><?= isset($_SESSION["suma_zamowienia"]) ? $_SESSION["suma_zamowienia"] : "0"; ?> PLN
                     </h3>
 
                     <button class="btn-link btn-link-static">
@@ -74,6 +74,8 @@
     </div> <!-- #main-container -->
 
     <script src="../scripts/change_cart_quantity.js"></script> <!-- Ajax - zmiany ilości książek w koszyku -->
+
+    <?php require "../view/app-error-window.php"; ?>
 
 </body>
 </html>

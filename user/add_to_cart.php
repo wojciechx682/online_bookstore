@@ -31,11 +31,11 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
 		if (empty($bookId)) {
 
-			unset($_SESSION["max-book-id"], $_SESSION["book_exists"]);
-				header('Location: ___koszyk.php', true, 303);
+			$_SESSION["application-error"] = true; // book-id - nie istnieje taka książka, lub podano niepoprawne dane (book-id);
+				header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
 					exit();
 
-		} else {
+		} else { // book-id --> valid, there is book with that ID;
 
 			$bookAmount = filter_var(
 				filter_input(INPUT_POST, "book-amount", FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT, [
@@ -45,47 +45,65 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 				]
 			);
 
-			if (empty($bookAmount) || $bookAmount < 0 || !is_numeric($bookAmount)) {
+			if (empty($bookAmount) || $bookAmount <= 0 || !is_numeric($bookAmount)) {
 
-				unset($bookAmount, $_SESSION["max-book-id"], $_SESSION['book_exists']);
-					header('Location: ___koszyk.php', true, 303);
+				$_SESSION["application-error"] = true; // "ilość" - dane nie przeszły wlaidacji
+
+				unset($bookAmount, $_SESSION["max-book-id"], $_SESSION["book_exists"]);
+					header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
 						exit();
-			}
+			} else {
+
+				// "ilość" - poprawna wartość (int)
 
 				unset($_SESSION["book-available"]);
 
-			query("SELECT ks.id_ksiazki, mgk.ilosc_dostepnych_egzemplarzy FROM ksiazki AS ks, magazyn_ksiazki AS mgk WHERE ks.id_ksiazki = mgk.id_ksiazki AND ks.id_ksiazki = '%s'", "checkBookAvailability", $bookId);
+				query("SELECT ks.id_ksiazki, mgk.ilosc_dostepnych_egzemplarzy FROM ksiazki AS ks, magazyn_ksiazki AS mgk WHERE ks.id_ksiazki = mgk.id_ksiazki AND ks.id_ksiazki = '%s'", "checkBookAvailability", $bookId);
 
-			if(!empty($_SESSION["book-available"])) { // jeśli książka jest dostępna na magazynie
+				if (empty($_SESSION["book-available"])) {
 
-				unset($_SESSION["book_exists"]);
+					// książka nie dostępna w magazynie
+					$_SESSION["application-error"] = true;
+						header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+							exit();
 
-				query("SELECT * FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "verifyBookExists", [$_SESSION["id"], $bookId]);
-				// sprawdzenie, czy ta książka jest już w koszyku tego klienta; jeśli num_rows > 0 -> przestawi $_SESSION['book_exists'] -> na true ;
+				} else {
 
-				$book = [$bookAmount, $_SESSION["id"], $bookId];
+					// jeśli książka jest dostępna na magazynie
 
-				if($_SESSION["book_exists"]) { // boox exists, update book quantity in shopping_cart ;
+					unset($_SESSION["book_exists"]);
 
-					query("UPDATE koszyk SET ilosc=ilosc+'%s' WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $book);
+					query("SELECT id_ksiazki FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "verifyBookExists", [$_SESSION["id"], $bookId]);
+					// sprawdzenie, czy ta książka jest już w koszyku tego klienta; jeśli num_rows > 0 -> przestawi $_SESSION['book_exists'] -> na true ;
 
-				} else {  // insert book to shopping cart
+					$book = [$bookAmount, $_SESSION["id"], $bookId];
 
-					query("INSERT INTO koszyk (ilosc, id_klienta, id_ksiazki) VALUES ('%s', '%s', '%s')", "", $book);
+					if($_SESSION["book_exists"]) { // boox exists, update book quantity in shopping_cart ;
+
+						$updatedSuccessful = query("UPDATE koszyk SET ilosc=ilosc+'%s' WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $book);
+
+						if (empty($updatedSuccessful)) {
+							$_SESSION["application-error"] = true;
+							unset($bookAmount, $_SESSION["max-book-id"], $_SESSION["book_exists"], $_SESSION["book-available"]);
+						}
+
+					} else {  // insert book to shopping cart
+
+						$insertSuccessful = query("INSERT INTO koszyk (ilosc, id_klienta, id_ksiazki) VALUES ('%s', '%s', '%s')", "", $book);
+
+						if (empty($insertSuccessful)) {
+							$_SESSION["application-error"] = true;
+							unset($bookAmount, $_SESSION["max-book-id"], $_SESSION["book_exists"], $_SESSION["book-available"]);
+						}
+					}
+
+					query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
+
+					// funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczbie książek)
+
+					unset($_POST, $book, $_SESSION["max-book-id"], $_SESSION["book_exists"], $_SESSION["book-available"]);
 				}
-
-				query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
-
-				// funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczbie książek)
-
-				unset($_POST, $book, $_SESSION["book_exists"]);
-
 			}
-
-
-
-
-
 		}
 
 	}

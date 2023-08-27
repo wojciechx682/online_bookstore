@@ -26,7 +26,11 @@
                 </button>
             </form>
 
-            <div class="book-price"><span>%s</span> PLN</div>
+            <div class="book-price">%s</div>
+            <div class="book-price">PLN</div>
+
+            <div style="clear: both;"></div>
+
             <div class="book-year">%s</div>
 
             <div class="book-author">%s %s</div>

@@ -11,12 +11,8 @@
 
 	// jesli wszystkie pola sa ustawione i nie sa puste
 
-	if(
-        isset($_POST['haslo_confirm']) &&
-        isset($_POST['powtorz_haslo_confirm']) &&
-        ! empty($_POST['haslo_confirm']) &&
-        ! empty($_POST['powtorz_haslo_confirm'])
-    ) {
+	if ( isset($_POST["password"]) && !empty($_POST["password"]) &&
+         !empty($_POST["confirm_password"]) && !empty($_POST["confirm_password"])) {
 
         // $haslo = $_POST['haslo_confirm']; //  ̶P̶o̶w̶i̶n̶i̶e̶n̶e̶m̶ ̶t̶o̶ ̶j̶a̶k̶o̶ś̶ ̶z̶a̶k̶o̶d̶o̶w̶a̶ć̶ ̶?̶ ̶Z̶a̶s̶z̶y̶f̶r̶o̶w̶a̶ć̶ ̶?̶ ̶T̶a̶k̶ ̶a̶b̶y̶ ̶n̶i̶e̶ ̶b̶y̶ł̶o̶ ̶d̶o̶s̶t̶ę̶p̶n̶e̶,̶ ̶b̶o̶ ̶t̶a̶ ̶z̶m̶i̶e̶n̶n̶a̶ ̶t̶r̶z̶y̶m̶a̶ ̶j̶a̶w̶n̶i̶e̶ ̶h̶a̶s̶ł̶o̶
         // $powtorz_haslo = $_POST['powtorz_haslo_confirm'];
@@ -26,28 +22,29 @@
             // $nowe_haslo = strip_tags($haslo);
             // $powtorz_haslo = strip_tags($powtorz_haslo);
 
-        $haslo = filter_input(INPUT_POST, "haslo_confirm", FILTER_SANITIZE_STRING);
-        $powtorz_haslo = filter_input(INPUT_POST, "powtorz_haslo_confirm", FILTER_SANITIZE_STRING);
+        $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
+        $confirm_password = filter_input(INPUT_POST, "confirm_password", FILTER_SANITIZE_STRING);
 
-        $_SESSION['password_confirmed'] = true; // flaga walidująca
+        $_SESSION["password_confirmed"] = true; // flaga walidująca
 
-        $id = filter_var($_SESSION['id'], FILTER_SANITIZE_NUMBER_INT); // id_klienta;
+        if ( ($password !== $confirm_password) || ($password !== $_POST["password"]) || ($confirm_password !== $_POST["confirm_password"])) {
 
-        if ( ($haslo !== $powtorz_haslo) || ($haslo !== $_POST['haslo_confirm']) || ($powtorz_haslo !== $_POST['powtorz_haslo_confirm'])) {
-            $_SESSION['password_confirmed'] = false;
+            $_SESSION["password_confirmed"] = false;
+
         } else {
-            query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verify_password", $id);
+
+            query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verifyPassword", $_SESSION["id"]);
                 // ta funkcja ustawia zmienna sesyjna $_SESSION['stare_haslo'] ktora przechowuje haslo (hash hasła) z BD;
-            // $_SESSION['stare_haslo'] --> przechowuje aktualne (zahashowane) hasło z BD;
+            // $_SESSION["password_hashed"] --> przechowuje aktualne (zahashowane) hasło z BD;
         }
 
-        if ( ! password_verify($haslo, $_SESSION['stare_haslo'])) // true? -> hasze sa takie same (podano poprawne hasło do konta)
-        {
-            $_SESSION['password_confirmed'] = false; // podane złe hasło;
+        if ( ! password_verify($password, $_SESSION["password_hashed"])) {
+            // true? -> hasze sa takie same (podano poprawne hasło do konta)
+            $_SESSION["password_confirmed"] = false; // podane złe hasło;
         }
 
     } else {
-        $_SESSION['password_confirmed'] = false;
+        $_SESSION["password_confirmed"] = false;
     }
 
     unset($_SESSION["stare_haslo"]);

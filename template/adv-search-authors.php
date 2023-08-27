@@ -1,6 +1,4 @@
+
 <!-- template used on main page (index.php) to display authors <select> list -->
 
-<option value="%s"> <!-- id autora -->
-    %s %s
-</option>
-
+<option value="%s">%s %s</option>

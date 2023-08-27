@@ -14,20 +14,22 @@
 
             if (empty($bookId)) { // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
 
-                unset($_POST, $bookId, $_SESSION["max-book-id"], $_SESSION["book_exists"]);
-                    header('Location: index.php', true, 303); exit();
+                $_SESSION["application-error"] = true; // \view\app-error-window.php <-- "Wystąpił błąd";
+
+                unset($_POST, $bookId);
+                    header('Location: index.php', true, 303);
+                        exit();
 
             } else { // input OK - book-id passed validation,    there is a book with that ID;
                      //               Valid book-id           and           book-exists
 
-                //echo "<br> 25 <br>"; exit();
+                $_SESSION["book-id"] = $bookId; // wartość po walidacji;
 
-                $_SESSION["book-id"] = $bookId;
-
-                unset($_POST, $_SESSION["max-book-id"], $bookId, $_SESSION["book_exists"]); // keep $_SESSION["book-id"];
+                // --> keep $_SESSION["book-id"];
                 // Redirect to prevent form resubmission // to prevent resubmitting the form
-                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
-
+                unset($_POST, $bookId, $_SESSION["max-book-id"], $_SESSION["book_exists"]);
+                    header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+                        exit();
             }
 
 
@@ -71,21 +73,24 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
             header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
         }*/
 
-        } else { // zmienna POST nie istnieje,   nastąpiło wejście pod /user/___book.php bez podania wartości w POST[] ;
+        } else {
+            // zmienna POST nie istnieje,   nastąpiło wejście pod /user/___book.php bez podania wartości w POST[] ;
             //echo "<br> POST value (book-id) doesnt exist <br>" ;
+            $_SESSION["application-error"] = true;
             header('Location: index.php', true, 303); exit();
         }
 
     } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (empty($_SESSION["book-id"])) ) {
-
+        // wejście pod adres \user\book.php - (GET) - poprzez URL - zmienna $_SESSION["book-id"] nie istnieje;
+        $_SESSION["application-error"] = true;
         header('Location: index.php', true, 303); exit();
 
     } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (!empty($_SESSION["book-id"])) && (!empty($_SESSION["rating"])) )  {
 
         // pobierz liczbę ocen książki, jeśli wynosi zero, zapisz ten stan do zmiennej -->
         query("SELECT ks.id_ksiazki, ks.tytul, ks.rating, (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki) AS liczba_ocen
-                           FROM ksiazki AS ks
-                           WHERE ks.id_ksiazki = '%s'", "updateBookRates", $_SESSION["book-id"]); // <-- UPDATE
+               FROM ksiazki AS ks
+               WHERE ks.id_ksiazki = '%s'", "updateBookRates", $_SESSION["book-id"]); // <-- UPDATE
 
         unset($_SESSION["rating"]);
         // Redirect to prevent form resubmission // to prevent resubmitting the form
@@ -141,9 +146,13 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                                              JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy 
                                          WHERE ks.id_ksiazki = '%s'", "getBook", $_SESSION["book-id"]); // \template\book-page.php ;
 
+                       /* echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
+
                             $_SESSION["ratings"] = [];
 
-                            query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "getRatings", $_SESSION["book-id"]);
+                            query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "getRatings", $_SESSION["book-id"]); // $_SESSION["ratings"] <--
 
                             /*if(empty($_SESSION["ratings"])) {
                                 $_SESSION["ratings"] = [];
@@ -156,7 +165,6 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                                 // ocena  liczba_ocen
                                 //   5	      1
                                 //   4	      1
-
                                                              // $_SESSION["ratings"] -> [5] => 2
                                                              //                         [4] => 1 ;
 
@@ -410,7 +418,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                 //
                 //  ̶I̶n̶ ̶s̶u̶m̶m̶a̶r̶y̶,̶ ̶s̶e̶t̶t̶i̶n̶g̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶a̶n̶d̶ ̶i̶n̶i̶t̶i̶a̶l̶l̶y̶ ̶s̶e̶t̶t̶i̶n̶g̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶t̶o̶ ̶t̶h̶e̶ ̶s̶a̶m̶e̶ ̶v̶a̶l̶u̶e̶ ̶e̶f̶f̶e̶c̶t̶i̶v̶e̶l̶y̶ ̶h̶i̶d̶e̶s̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶c̶i̶r̶c̶l̶e̶ ̶b̶y̶ ̶c̶o̶v̶e̶r̶i̶n̶g̶ ̶i̶t̶ ̶w̶i̶t̶h̶ ̶d̶a̶s̶h̶e̶s̶.̶ ̶A̶d̶j̶u̶s̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶v̶a̶l̶u̶e̶ ̶s̶u̶b̶s̶e̶q̶u̶e̶n̶t̶l̶y̶ ̶r̶e̶v̶e̶a̶l̶s̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶p̶o̶r̶t̶i̶o̶n̶ ̶a̶n̶d̶ ̶c̶r̶e̶a̶t̶e̶s̶ ̶t̶h̶e̶ ̶f̶i̶l̶l̶i̶n̶g̶ ̶e̶f̶f̶e̶c̶t̶.̶
 
-                window.addEventListener('load', function() {
+                window.addEventListener("load", function() {
 
                     // Strona została w pełni załadowana; // Kod do wykonania po pełnym załadowaniu strony (i wszystkich zasobów) ;
 
@@ -473,7 +481,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                         //  ̶I̶n̶ ̶t̶h̶i̶s̶ ̶c̶o̶d̶e̶,̶ ̶w̶e̶ ̶c̶a̶l̶c̶u̶l̶a̶t̶e̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶u̶s̶i̶n̶g̶ ̶t̶h̶e̶ ̶f̶o̶r̶m̶u̶l̶a̶ ̶2̶ ̶*̶ ̶π̶ ̶*̶ ̶r̶,̶ ̶w̶h̶e̶r̶e̶ ̶r̶ ̶i̶s̶ ̶t̶h̶e̶ ̶r̶a̶d̶i̶u̶s̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶(̶i̶n̶ ̶y̶o̶u̶r̶ ̶c̶a̶s̶e̶,̶ ̶i̶t̶'̶s̶ ̶1̶0̶)̶.̶ ̶T̶h̶e̶n̶ ̶w̶e̶ ̶c̶a̶l̶c̶u̶l̶a̶t̶e̶ ̶t̶h̶e̶ ̶d̶e̶s̶i̶r̶e̶d̶ ̶o̶f̶f̶s̶e̶t̶ ̶b̶y̶ ̶s̶u̶b̶t̶r̶a̶c̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶p̶r̶o̶p̶o̶r̶t̶i̶o̶n̶a̶l̶ ̶v̶a̶l̶u̶e̶ ̶f̶r̶o̶m̶ ̶t̶h̶e̶ ̶t̶o̶t̶a̶l̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶.̶ ̶T̶h̶e̶ ̶p̶r̶o̶p̶o̶r̶t̶i̶o̶n̶a̶l̶ ̶v̶a̶l̶u̶e̶ ̶i̶s̶ ̶o̶b̶t̶a̶i̶n̶e̶d̶ ̶b̶y̶ ̶d̶i̶v̶i̶d̶i̶n̶g̶ ̶t̶h̶e̶ ̶r̶a̶t̶i̶n̶g̶ ̶b̶y̶ ̶t̶h̶e̶ ̶m̶a̶x̶i̶m̶u̶m̶ ̶r̶a̶t̶i̶n̶g̶ ̶(̶i̶n̶ ̶t̶h̶i̶s̶ ̶e̶x̶a̶m̶p̶l̶e̶,̶ ̶w̶e̶ ̶a̶s̶s̶u̶m̶e̶ ̶i̶t̶'̶s̶ ̶5̶)̶.̶ ̶F̶i̶n̶a̶l̶l̶y̶,̶ ̶w̶e̶ ̶u̶p̶d̶a̶t̶e̶ ̶t̶h̶e̶ ̶s̶t̶r̶o̶k̶e̶D̶a̶s̶h̶a̶r̶r̶a̶y̶ ̶a̶n̶d̶ ̶s̶t̶r̶o̶k̶e̶D̶a̶s̶h̶o̶f̶f̶s̶e̶t̶ ̶s̶t̶y̶l̶e̶s̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶e̶l̶e̶m̶e̶n̶t̶ ̶t̶o̶ ̶a̶c̶h̶i̶e̶v̶e̶ ̶t̶h̶e̶ ̶d̶e̶s̶i̶r̶e̶d̶ ̶f̶i̶l̶l̶i̶n̶g̶ ̶e̶f̶f̶e̶c̶t̶ ̶;̶
                         //  ̶M̶a̶k̶e̶ ̶s̶u̶r̶e̶ ̶t̶o̶ ̶e̶x̶e̶c̶u̶t̶e̶ ̶t̶h̶i̶s̶ ̶c̶o̶d̶e̶ ̶a̶f̶t̶e̶r̶ ̶t̶h̶e̶ ̶p̶a̶g̶e̶ ̶h̶a̶s̶ ̶l̶o̶a̶d̶e̶d̶,̶ ̶e̶i̶t̶h̶e̶r̶ ̶b̶y̶ ̶p̶l̶a̶c̶i̶n̶g̶ ̶i̶t̶ ̶w̶i̶t̶h̶i̶n̶ ̶a̶ ̶D̶O̶M̶C̶o̶n̶t̶e̶n̶t̶L̶o̶a̶d̶e̶d̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶o̶r̶ ̶a̶t̶ ̶t̶h̶e̶ ̶e̶n̶d̶ ̶o̶f̶ ̶t̶h̶e̶ ̶b̶o̶d̶y̶ ̶t̶a̶g̶.̶
 
-                    const circle = document.getElementById('rating-circle'); // żółte kółko ;
+                    const circle = document.getElementById("rating-circle"); // żółte kółko ;
                         //console.log("\ncircle --> ", circle);
 
                     const circumference = parseFloat(circle.getAttribute('r')) * 2 * Math.PI; // obwód koła; // circumference of the circle
@@ -521,7 +529,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                 //      bookRatingDetails.length == 5           (tyle ile jest divów - pasków poziomych z ocenami) ;
 
 
-                window.onload = function() {
+                window.onload = function() { // <!-- zamienić na event listener !!!!!!
 
                     for (let i = bookRatingDetails.length, j = 0; i > 0 ; i--, j++) {
 
@@ -860,8 +868,8 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
                             //console.log('Current li index:', liIndex);
 
-                            if(window.localStorage) {
-                                localStorage.setItem("liIndex", liIndex); // ✓ zapisz indeks klikniętej karty w LS
+                            if(window.sessionStorage) {
+                                sessionStorage.setItem("liIndex", liIndex); // ✓ zapisz indeks klikniętej karty w LS
                             }
                         }
                     });
@@ -880,10 +888,10 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                     //return 0;
                 }
 
-                if(window.localStorage) {
+                if(window.sessionStorage) {
 
                     // Check if the value for key "liIndex" exists in local storage
-                    if (localStorage.getItem("liIndex") !== null) {
+                    if (sessionStorage.getItem("liIndex") !== null) {
                         // Value exists
                         console.log("Value exists for key 'liIndex'");
 
@@ -901,7 +909,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                         }
 
                         // pobierz indeks aktywnej karty (tej która jako ostatnia została kliknięta);
-                        liIndex = localStorage.getItem("liIndex"); // "0", "1", "2"
+                        liIndex = sessionStorage.getItem("liIndex"); // "0", "1", "2"
 
                         liEls[liIndex].classList.add('active'); // dodanie klasy "active" do elementu listy zgodnie z tym jaki był zapisany w LS (ostatnio kliknięty)
                         divs[liIndex].classList.add('active'); // to samo dla karty z zawartością - <div class="tab-panel" ... > ;
@@ -1014,6 +1022,8 @@ window.addEventListener('load', function() {
 </script>
 
 <!--<script src="../scripts/...js"></script>-->
+
+    <?php require "../view/app-error-window.php"; ?>
 
 </body>
 </html>

@@ -58,6 +58,15 @@
     top: -5px;
 }
 
+.noUi-horizontal .noUi-handle:hover {
+   cursor: pointer;
+}
+
+div#price-slider:hover,
+div#adv-search-year-slider:hover {
+    cursor: pointer;
+}
+
 .noUi-handle:before {
     left: 6px;
     top: 2px;

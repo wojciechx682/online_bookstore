@@ -41,7 +41,7 @@
 
     <script src="../node_modules/dompurify/dist/purify.min.js"></script> <!-- dom purify --> <!-- zainstalowany za pomocą npm -> npm install dompurify -->
 
-    <script src="../scripts/sortowanie_v3_2.js"></script> <!-- books - sortowanie -->
+    <!--<script src="../scripts/sortowanie_v3_2.js"></script>--> <!-- books - sortowanie -->
 
     <style>
         .sticky {

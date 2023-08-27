@@ -7,6 +7,10 @@ let button = document.getElementById("filter-authors");
 let firstCheckbox = document.getElementById("all-authors");
 let items = document.querySelectorAll('#ul-authors input[type="checkbox"]:not(#all-authors)');
 
+/*console.log("\n\n(filter-authors.js) - button --> ", button);
+console.log("\n\n(filter-authors.js) - firstCheckbox --> ", firstCheckbox);
+console.log("\n\n(filter-authors.js) - items --> \n", items);*/
+
 const updateAll = () => {
     /*for (let i = 0; i < items.length; i++) {
         items[i].checked = firstCheckbox.checked;
@@ -17,8 +21,11 @@ const updateAll = () => {
 }
 
 window.addEventListener("load", function() {
-    if(window.localStorage) {
-        let authors = JSON.parse(localStorage.getItem("authors"));
+
+    if(window.sessionStorage) {
+
+        let authors = JSON.parse(sessionStorage.getItem("authors")); // pobierz listę autorów z sessionStorage;
+
         if (authors) {
                 /*console.log("149 ls authors -> ", authors);
                 console.log("150 ls authors.length -> ", authors.length);
@@ -61,14 +68,14 @@ const filterAuthors = () => {
         document.querySelectorAll('#ul-authors input[type="checkbox"]:checked:not(#all-authors)')
     ).map(item => item.value.trim());
 
-    console.log("\n authors ->", checkedAuthors);
+    //console.log("\n authors ->", checkedAuthors);
 
         // pokazanie tylko książek z dopasowanymi autorami ->
         //let books = document.querySelectorAll("#content-books .book");  // NodeList - kolekcja - divy z książkami ;
     let books = document.querySelectorAll("#content-books > .outer-book:not(.hidden)");  // NodeList - kolekcja - divy z książkami ;
 
-    console.log("\nbooks => ", books);
-    console.log("\ntypeof books => ", typeof books); // object;
+/*console.log("\n\n (filter-authors.js) - books -> \n", books);
+console.log("\n(filter-authors.js) - typeof books => ", typeof books); // object;*/
 
 /*  for (let i = 0; i < books.length; i++) {
         //let bookAuthor = books[i].querySelector(".book-author").innerHTML;
@@ -92,12 +99,12 @@ const filterAuthors = () => {
     books.forEach(book => {
 
         const bookAuthor = book.querySelector(".book-author").innerHTML;
-        const bookPrice = parseFloat(DOMPurify.sanitize(book.querySelector(".book .book-price span").innerHTML));
+        const bookPrice = parseFloat(DOMPurify.sanitize(book.querySelector(".book .book-price").innerHTML));
 
         if ( checkedAuthors.includes(bookAuthor) &&
              (bookPrice >= minValue) && (bookPrice <= maxValue) ) {
 
-            book.classList.remove('hidden-author');
+            book.classList.remove("hidden-author");
 
             /*console.log("\n\n\n bookPrice --> ", bookPrice);
             console.log("\n\n min-value --> ", minValue);
@@ -105,9 +112,11 @@ const filterAuthors = () => {
 
         } else {
 
-            book.classList.add('hidden-author');
+            book.classList.add("hidden-author");
         }
     });
+
+    console.log("\n\n(filter-authors.js) - books -> \n", books);
 
             // Konwersja NodeList na tablicę -->
             /*let items = Array.from(li);
@@ -160,10 +169,10 @@ const filterAuthors = () => {
             }
             saveChx();*/
 
-if(window.localStorage) {
-    localStorage.setItem("authors", JSON.stringify(checkedAuthors));
-}
-
+    // zapisz listę autorów do sessionStorage;
+    if(window.sessionStorage) {
+        sessionStorage.setItem("authors", JSON.stringify(checkedAuthors));
+    }
 
 }
 

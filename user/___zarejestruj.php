@@ -42,168 +42,219 @@
 
                     <div class="form-section">
 
+                        <div class="register-label">
+
+                            <span class="row">
+
+                                <label for="register-name">
+
+                                    Imię:
+
+                                </label>
+
+                            </span>
+
+                        </div>
+
+                    <input type="text" name="imie" required value="<?php
+                        if(isset($_SESSION['register_imie'])) {
+                            echo $_SESSION['register_imie'];
+                            unset($_SESSION['register_imie']);
+                        }
+                        else {
+                            echo "Adam";
+                        } ?>" id="register-name">
+
+                    <?php
+                        if(isset($_SESSION['e_imie'])) {
+                            echo '<div class="error">'.$_SESSION['e_imie'].'</div>';
+                            unset($_SESSION['e_imie']);
+                        }
+                    ?>
+
+
+                    <div class="register-label">
+
                         <span class="row">
-                            <label>
-                                Imię: <input type="text" name="imie" required value="<?php
-                                    if(isset($_SESSION['register_imie']))
-                                    {
-                                        echo $_SESSION['register_imie'];
-                                        unset($_SESSION['register_imie']);
-                                    }
+                            <label for="register-surname">
+                                Nazwisko:
+                            </label>
+                        </span>
+
+                    </div>
+
+                    <input type="text" name="nazwisko" required value="<?php
+                        if(isset($_SESSION['register_nazwisko']))
+                        {
+                            echo $_SESSION['register_nazwisko'];
+                            unset($_SESSION['register_nazwisko']);
+                        }
+                        else {
+                            echo "Nowak";
+                        } ?>" id="register-surname">
+
+                        <?php
+                        if(isset($_SESSION['e_nazwisko'])) // błąd z nazwiskiem użytkownika;
+                        {
+                            echo '<div class="error">'.$_SESSION['e_nazwisko'].'</div>';
+                            unset($_SESSION['e_nazwisko']);
+                        }
+                    ?>
+
+
+                    <div class="register-label">
+                       <span class="row">
+                            <label for="register-email">
+                                E-mail:
+                            </label>
+                       </span>
+                    </div>
+
+
+                    <input type="email" name="email" required value="<?php
+                        if(isset($_SESSION['register_email']))
+                        {
+                            echo $_SESSION['register_email'];
+                                unset($_SESSION['register_email']);
+                        }
+                    else {
+                        echo "adam.nowak@wp.pl";
+                    } ?>" id="register-email">
+
+                    <?php
+                        if(isset($_SESSION['e_email']))
+                        {
+                            echo '<div class="error">'.$_SESSION['e_email'].'</div>';
+                                unset($_SESSION['e_email']);
+                        }
+                    ?>
+
+                    <div class="register-label">
+                        <span class="row">
+                            <label for="haslo1">
+                                Hasło:
+                            </label>
+                        </span>
+                    </div>
+
+                        <input type="password" name="haslo1" maxlength="30" id="haslo1"
+                                               required value="PassJacob33#" >
+
+                            <div id="feedback" style="color:red;"></div>
+
+                            <?php
+                                if(isset($_SESSION['e_haslo']))
+                                {
+                                    echo '<div class="error">'.$_SESSION['e_haslo'].'</div>';
+                                        unset($_SESSION['e_haslo']);
+                                }
+                            ?>
+
+
+                    <div class="register-label">
+                        <span class="row">
+                            <label for="haslo2">
+                                Powtórz hasło:
+                            </label>
+                        </span>
+                    </div>
+
+
+                    <input type="password" name="haslo2" id="haslo2" maxlength="30"
+                               required value="PassJacob33#">
+
+                    <!-- .form-section -->
+
+                    <!-- Dane adresowe -->
+
+                    <div class="form-section">
+
+                        <div class="register-label">
+                            <span class="row">
+                                <label for="miejscowosc">
+                                    Miejscowość:
+                                </label>
+                            </span>
+                        </div>
+
+
+                        <input type="text" name="miejscowosc" id="miejscowosc" required value="<?php
+                                if(isset($_SESSION['register_miejscowosc']))
+                                {
+                                    echo $_SESSION['register_miejscowosc'];
+                                        unset($_SESSION['register_miejscowosc']);
+                                }
                                 else {
-                                    echo "Adam";
-                                } ?>">
+                                    echo "Dolna odra";
+                                }
+                            ?>">
 
-                                <?php
-                                    if(isset($_SESSION['e_imie'])) {
-                                        echo '<div class="error">'.$_SESSION['e_imie'].'</div>';
-                                            unset($_SESSION['e_imie']);
-                                    }
-                                ?>
-                            </label>
-                        </span>
+                        <?php
+                            if(isset($_SESSION['e_miejscowosc']))
+                            {
+                                echo '<div class="error">'.$_SESSION['e_miejscowosc'].'</div>';
+                                    unset($_SESSION['e_miejscowosc']);
+                            }
+                        ?>
 
-                        <span class="row">
-                            <label>
-                                Nazwisko: <input type="text" name="nazwisko" required value="<?php
-                                    if(isset($_SESSION['register_nazwisko']))
-                                    {
-                                        echo $_SESSION['register_nazwisko'];
-                                            unset($_SESSION['register_nazwisko']);
-                                    }
-                                else {
-                                    echo "Nowak";
-                                } ?>">
+                        <div class="register-label">
+                            <span class="row">
+                                <label for="ulica">
+                                    Ulica:
+                                </label>
+                            </span>
+                        </div>
 
-                                <?php
-                                    if(isset($_SESSION['e_nazwisko'])) // błąd z nazwiskiem użytkownika;
-                                    {
-                                        echo '<div class="error">'.$_SESSION['e_nazwisko'].'</div>';
-                                            unset($_SESSION['e_nazwisko']);
-                                    }
-                                ?>
-                            </label>
-                        </span>
 
-                        <span class="row">
-                            <label>
-                                E-mail: <input type="email" name="email" required value="<?php
-                                    if(isset($_SESSION['register_email']))
-                                    {
-                                        echo $_SESSION['register_email'];
-                                            unset($_SESSION['register_email']);
-                                    }
-                                else {
-                                    echo "adam.nowak@wp.pl";
-                                } ?>">
 
-                                <?php
-                                    if(isset($_SESSION['e_email']))
-                                    {
-                                        echo '<div class="error">'.$_SESSION['e_email'].'</div>';
-                                            unset($_SESSION['e_email']);
-                                    }
-                                ?>
-                            </label>
-                        </span>
+                        <input type="text" name="ulica" id="ulica" value="<?php
+                            if(isset($_SESSION['register_ulica']))
+                            {
+                                echo $_SESSION['register_ulica'];
+                                    unset($_SESSION['register_ulica']);
+                            }
+                            else {
+                                echo "Słoneczna";
+                            }
+                        ?>">
 
-                        <span class="row">
-                            <label>
-                                Hasło: <input type="password" name="haslo1" maxlength="30" id="haslo1"
-                                                   required value="PassJacob33#" >
+                        <?php
+                            if(isset($_SESSION['e_ulica']))
+                            {
+                                echo '<div class="error">'.$_SESSION['e_ulica'].'</div>';
+                                    unset($_SESSION['e_ulica']);
+                            }
+                        ?>
 
-                                <div id="feedback" style="color:red;"></div>
+                        <div class="register-label">
+                            <span class="row">
+                                <label for="numer_domu">
+                                    Numer domu:
+                                </label>
+                            </span>
+                        </div>
 
-                                <?php
-                                    if(isset($_SESSION['e_haslo']))
-                                    {
-                                        echo '<div class="error">'.$_SESSION['e_haslo'].'</div>';
-                                            unset($_SESSION['e_haslo']);
-                                    }
-                                ?>
-                            </label>
-                        </span>
 
-                        <span class="row">
-                            <label>
-                                Powtórz hasło: <input type="password" name="haslo2" maxlength="30"
-                                                           required value="PassJacob33#">
-                            </label>
-                        </span>
 
-                    </div> <!-- .form-section -->
+                        <input type="text" name="numer_domu" id="numer_domu" value="<?php
+                            if(isset($_SESSION['register_numer_domu']))
+                            {
+                                echo $_SESSION['register_numer_domu'];
+                                unset($_SESSION['register_numer_domu']);
+                            }
+                            else {
+                                echo "61";
+                            }
+                        ?>">
 
-                    <div class="form-section"> <!-- Dane adresowe -->
+                        <?php
+                            if(isset($_SESSION['e_numer_domu']))
+                            {
+                                echo '<div class="error">'.$_SESSION['e_numer_domu'].'</div>';
+                                unset($_SESSION['e_numer_domu']);
+                            }
+                        ?>
 
-                        <span class="row">
-                            <label>
-                                Miejscowość: <input type="text" name="miejscowosc" required value="<?php
-                                    if(isset($_SESSION['register_miejscowosc']))
-                                    {
-                                        echo $_SESSION['register_miejscowosc'];
-                                            unset($_SESSION['register_miejscowosc']);
-                                    }
-                                    else {
-                                        echo "Dolna odra";
-                                    }
-                                ?>">
-
-                                <?php
-                                    if(isset($_SESSION['e_miejscowosc']))
-                                    {
-                                        echo '<div class="error">'.$_SESSION['e_miejscowosc'].'</div>';
-                                            unset($_SESSION['e_miejscowosc']);
-                                    }
-                                ?>
-                            </label>
-                        </span>
-
-                        <span class="row">
-                            <label>
-                                Ulica: <input type="text" name="ulica" value="<?php
-                                    if(isset($_SESSION['register_ulica']))
-                                    {
-                                        echo $_SESSION['register_ulica'];
-                                            unset($_SESSION['register_ulica']);
-                                    }
-                                    else {
-                                        echo "Słoneczna";
-                                    }
-                                ?>">
-
-                                <?php
-                                    if(isset($_SESSION['e_ulica']))
-                                    {
-                                        echo '<div class="error">'.$_SESSION['e_ulica'].'</div>';
-                                            unset($_SESSION['e_ulica']);
-                                    }
-                                ?>
-                            </label>
-                        </span>
-
-                        <span class="row">
-                            <label>
-                                Numer domu: <input type="text" name="numer_domu" value="<?php
-                                    if(isset($_SESSION['register_numer_domu']))
-                                    {
-                                        echo $_SESSION['register_numer_domu'];
-                                            unset($_SESSION['register_numer_domu']);
-                                    }
-                                    else
-                                    {
-                                        echo "61";
-                                    }
-                                ?>">
-
-                                <?php
-                                    if(isset($_SESSION['e_numer_domu']))
-                                    {
-                                        echo '<div class="error">'.$_SESSION['e_numer_domu'].'</div>';
-                                            unset($_SESSION['e_numer_domu']);
-                                    }
-                                ?>
-                            </label>
-                        </span>
 
                     </div>
 
@@ -483,7 +534,7 @@
 
 	</div> <!-- #container -->
 
-    <?php require "../view/footer.php"; ?>
+    <?php require "../view/___footer.php"; ?>
 
 </div> <!-- #main-container -->
 

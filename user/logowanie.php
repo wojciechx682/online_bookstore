@@ -23,8 +23,8 @@
 
     require_once "../start-session.php";
 
-	if ( ( !isset($_POST['email']) || !isset($_POST['password']) ) ||               // jeśli nie ustawiono loginu/hasła;
-         ( isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] == "true") ) { // lub jesteśmy zalogowani (byliśmy zalogowani wcześniej);
+	if ( (!isset($_POST["email"]) || !isset($_POST["password"])) ||              // jeśli nie ustawiono loginu/hasła;
+         (isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true)) { // lub jesteśmy zalogowani (byliśmy zalogowani wcześniej);
 
         // spełni się, jeśli (sprawdzone 100% - testowałem) -->
             // nie podaliśmy loginu i hasła, oraz nie byliśmy zalogowani;
@@ -38,12 +38,10 @@
             // nie podaliśmy loginu i hasła,
             // lub jeśli byliśmy już zalogowani
 
-		header('Location: ___zaloguj.php');
-		    exit();
-	}
-	else {
-        // zmienne $_POST['email'], $_POST['password'] - istnieją (mogą być puste), ORAZ (AND) NIE jesteśmy zalogowani ;
-            // ✓ spełni się, jeśli -> podaliśmy login i hasło, oraz nie byliśmy zalogowani; ("normale logowanie");
+		header('Location: ___zaloguj.php'); exit();
+
+	} else { // zmienne $_POST["email"], $_POST["password"] - istnieją (mogą być puste), ORAZ (AND) NIE jesteśmy zalogowani ;
+             // ✓ spełni się, jeśli -> podaliśmy login i hasło, oraz nie byliśmy zalogowani; ("normale logowanie");
 
         // $email = $_POST['email']; // "jason1@wp.pl";
 		// $email = htmlentities($email, ENT_QUOTES, "UTF-8"); // zamiana na encje - zamiana znaków kodów źródłowych na encje; &lt&gt;
@@ -51,13 +49,12 @@
 		$email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
             // email - po procesie sanityzacji, // FILTER_SANITIZE_EMAIL - filtr do adresów mailowych (used to sanitize and validate email addresses);
 
-		if ( !filter_var($email, FILTER_VALIDATE_EMAIL) || $email == null || ($email != $_POST["email"]) ) {
+		if ( !filter_var($email, FILTER_VALIDATE_EMAIL) || empty($email) || ($email !== $_POST["email"]) ) {
             // email nie przeszedł walidacji;
-			$_SESSION['blad'] = '<span class="error">Podaj poprawny adres e-mail</span>';
-			    header('Location: ___zaloguj.php');
-			        exit();
-		} else {
-            // email is correct; (email is valid);
+			$_SESSION["blad"] = '<span class="error">Podaj poprawny adres e-mail</span>';
+			    header('Location: ___zaloguj.php'); exit();
+
+        } else { // email is correct; (email is valid);
 
 			    // query("SELECT * FROM klienci WHERE email='%s'", "log_in", $email_sanitized);
 
@@ -70,8 +67,8 @@
 
             // $response => stdClass Object ( [success] => 1 [challenge_ts] => 2023-08-15T15:41:42Z [hostname] => localhost )
 
-            if( $response->success === false) { //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
-                $_SESSION['e_recaptcha'] = '<span class="error">Weryfikacja reCaptcha nie przebiegła pomyślnie</span>';
+            if( !$response->success ) { //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
+                $_SESSION["e_recaptcha"] = '<span class="error">Weryfikacja reCaptcha nie przebiegła pomyślnie</span>';
                 header('Location: ___zaloguj.php');  exit();
             }
 
@@ -87,7 +84,7 @@
             // funkcja log_in - ustawia $_SESSION["blad"] == "nieprawidłowy login lub hasło" - jeśli podano złe dane logowania;
                 // jeśli podano poprawne dane logowania, wewnątrz funkcji następuje przekierowanie do odpowiednich plików;
 
-            if (isset($_SESSION['blad'])) { // ✓ niepoprawne dane logowania - nie znaleziono takiego KLIENTA (email) !, próba znalezienia takiego pracownika;
+            if (isset($_SESSION["blad"])) { // ✓ niepoprawne dane logowania - nie znaleziono takiego KLIENTA (email) !, próba znalezienia takiego pracownika;
 
                 // ✓ błąd powstały w wyniku złych danych logowania KLIENTA (nieistniejący email) - jeśli podano istniejący e-mail, to to się ✓ nie wykona, tylko nastąpi przekierowanie do zaloguj.php z komunikatem błędu - (warunek else password_verify() w log_in)
 

@@ -130,7 +130,7 @@
 
                         <div class="edit_data_right-container">
 
-                            <form id="edit_address_form" action="change_user_address.php" method="post">
+                            <form id="edit_address_form" action="change_address_data.php" method="post">
 
                                 <div class="edit_data_right">
                                     <input type="text" id="miejscowosc_edit" name="miejscowosc_edit" value="<?=$_SESSION["miejscowosc"]?>" maxlength="255" required>
@@ -236,7 +236,7 @@
 
 	</div>
 
-    <?php require "../view/footer.php"; ?>
+    <?php require "../view/___footer.php"; ?>
 
 </div>
 
