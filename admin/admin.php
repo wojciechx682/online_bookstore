@@ -134,7 +134,7 @@
                                 <i class="icon-basket"></i>
                             </div>
                             <div class="section-info">Całkowity przychód</div>
-                            <div class="section-info"><span class="section-info-details"><?= $_SESSION["totalSale"]; ?> PLN</span></div>
+                            <div class="section-info"><span class="section-info-details"><?= empty($_SESSION["totalSale"]) ? "0" : $_SESSION["totalSale"] ?> PLN</span></div>
                         </section>
 
                     </article>

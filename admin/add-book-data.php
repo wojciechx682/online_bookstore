@@ -41,16 +41,16 @@ require_once "../authenticate-admin.php";
 
         // back-end validation;
 
-        query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "get_author_id", ""); // get highest author-id from db;
+        query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "getAuthorId", ""); // get highest author-id from db;
             // $_SESSION["max-author-id"] => "35";
 
-        query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "get_publisher_id", ""); // get highest publisher-id from db;
+        query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "getPublisherId", ""); // get highest publisher-id from db;
             // $_SESSION["max-publisher-id"] => "5";
 
-        query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "get_category_id", ""); // get highest category-id from db;
+        query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "getCategoryId", ""); // get highest category-id from db;
             // $_SESSION["max-category-id"] => "7";
 
-        query("SELECT id_magazynu FROM magazyn ORDER BY id_magazynu DESC LIMIT 1", "get_magazine_id", ""); // get highest magazine-id from db;
+        query("SELECT id_magazynu FROM magazyn ORDER BY id_magazynu DESC LIMIT 1", "getMagazineId", ""); // get highest magazine-id from db;
             // $_SESSION["max-magazine-id"] => "2";
 
             $title = filter_var($_POST['add-book-title'], FILTER_SANITIZE_STRING);

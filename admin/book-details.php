@@ -53,7 +53,7 @@
                     // ✓✓✓ valid book-id, book exist in db;
                     //echo "\n 49 SESSION order-id -> " . $_SESSION["book-id"];
                     //echo "<br> 51 Valid order-id and order exist ! <br><hr>"; exit();
-                unset($_POST, $bookId, $warehouseId, $_SESSION["book-exists"]);
+                unset($_POST, $bookId, $warehouseId, $_SESSION["book-exists"], $_SESSION["warehouse-id"]);
                 // redirect to the page itself
                 //header('Location: ___book.php', true, 303);
 
@@ -64,7 +64,7 @@
                 // to prevent resubmitting the form
             }
 
-        } elseif (isset($_POST["book-id"]) && ! empty($_POST["book-id"])) {
+        } elseif (isset($_POST["book-id"]) && !empty($_POST["book-id"]) && empty($_SESSION["warehouse-id"])) {
 
             // \order-details.php --> \book-details.php
 
@@ -73,23 +73,20 @@
             header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
 
         }
-        else {
+        /*else {
             // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/admin/book-details.php bez podania wartości w POST[] ;
                 //echo "<br> POST value (book-id) doesnt exist ! <br>" ;
 
             header('Location: books.php'); exit();
                 // $_SESSION["error"] = true ;
-                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
-                //exit();
-        }
 
-    } elseif (
-        $_SERVER['REQUEST_METHOD'] === "GET" && ( ! isset($_SESSION["book-id"]) || empty($_SESSION["book-id"]) || ! isset($_SESSION["warehouse-id"]) || empty($_SESSION["warehouse-id"]))
+        }*/
+
+    } /*elseif (
+        $_SERVER['REQUEST_METHOD'] === "GET" && ( (!isset($_SESSION["book-id"]) || empty($_SESSION["book-id"])) && (! isset($_SESSION["warehouse-id"]) || empty($_SESSION["warehouse-id"])) )
     ) {
         header('Location: books.php'); exit();
-    }
+    }*/
 
 ?>
 

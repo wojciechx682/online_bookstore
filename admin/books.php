@@ -33,6 +33,12 @@
     </form>
 </div>-->
 
+                <?php
+                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";
+                ?>
+
 
                 <form id="change-magazine-form" action="change-magazine.php" method="post"> <!-- list <select> z wyborem magazynu -->
 
@@ -107,6 +113,12 @@
 </div>
 
 <img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
+
+<script>
+    // sortowanie tabeli -->
+
+
+</script>
 
 </body>
 </html>

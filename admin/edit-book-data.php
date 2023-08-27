@@ -56,7 +56,7 @@ require_once "../authenticate-admin.php";
         $category = filter_var($_POST['edit-book-category'], FILTER_VALIDATE_INT);
         $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);*/
 
-        query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "get_author_id", "");
+        query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "getAuthorId", "");
         // get highest author-id from db; // $_SESSION["max-author-id"] => "36";
         query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "get_publisher_id", "");
         // get highest publisher-id from db; // $_SESSION["max-publisher-id"] => "2";

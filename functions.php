@@ -504,19 +504,19 @@
         $_SESSION["max-author-id"] = $row["id_autora"]; // "25"
     }
 
-    function get_publisher_id($result) {
+    function getPublisherId($result) { // get_publisher_id
         // get highest publisher-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
             $row = $result->fetch_assoc();
         $_SESSION["max-publisher-id"] = $row["id_wydawcy"]; // "5"
     }
 
-    function get_category_id($result) {
+    function getCategoryId($result) { // get_category_id
         // get highest category-id from db to apply max-range filter in ..\admin\add-book-data.php (POST);
             $row = $result->fetch_assoc();
         $_SESSION["max-category-id"] = $row["id_kategorii"]; // "7"
     }
 
-    function get_magazine_id($result) {
+    function getMagazineId($result) { // get_magazine_id
         // get highest publisher-id from db to apply max-range filter in ..\admin\add-book-data.php, \edit-book-data.php (POST);
             $row = $result->fetch_assoc();
         $_SESSION["max-magazine-id"] = $row["id_magazynu"]; // "2"
@@ -1385,7 +1385,7 @@ EOT;
         $_SESSION["last_order_id"] = $connection->insert_id;
     }
 
-    function get_last_book_id($result, $polaczenie) { // admin\add-book-data.php;
+    function get_last_book_id($polaczenie) { // admin\add-book-data.php;
         $_SESSION["last-book-id"] = $polaczenie->insert_id;
     }
 
