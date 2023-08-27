@@ -133,7 +133,8 @@
 		{		
 			//$_SESSION['wszystko_OK'] = false;
 			$_SESSION['valid'] = false;
-			$_SESSION['e_imie'] = "Imię może składać się tylko z liter alfabetu, pierwsza litera powinna być wielka";
+			//$_SESSION['e_imie'] = "Imię może składać się tylko z liter alfabetu, pierwsza litera powinna być wielka";
+			$_SESSION['e_imie'] = "Imię może składać się tylko z liter alfabetu";
 		}
 
 		if ( strlen($imie)<3 || strlen($imie)>20 )
@@ -149,7 +150,8 @@
 		{		
 			//$_SESSION['wszystko_OK'] = false;
 			$_SESSION['valid'] = false;
-			$_SESSION['e_nazwisko'] = "Nazwisko może składać się tylko z liter alfabetu, pierwsza litera powinna być wielka";
+			//$_SESSION['e_nazwisko'] = "Nazwisko może składać się tylko z liter alfabetu, pierwsza litera powinna być wielka";
+			$_SESSION['e_nazwisko'] = "Nazwisko może składać się tylko z liter alfabetu";
 		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -465,13 +467,13 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 
         //$email_sanitized = "kamil.litwin@wp.pl";
 
-		// Sprawdzenie czy taki user (email i hasło) istnieje już w bazie;
-		query("SELECT id_klienta FROM klienci WHERE email='%s'", "register_verify_email", $email_sanitized);
+		// Sprawdzenie czy taki user (email) istnieje już w bazie;
+		query("SELECT id_klienta FROM klienci WHERE email='%s'", "registerVerifyEmail", $email_sanitized);
         // przestawi mi zmienną $_SESSION['valid'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest !;
 
         // jeśli pracownik posiada taki email ->
 
-        query("SELECT id_pracownika  FROM pracownicy WHERE email='%s'", "register_verify_email", $email_sanitized);
+        query("SELECT id_pracownika  FROM pracownicy WHERE email='%s'", "registerVerifyEmail", $email_sanitized);
         // przestawi mi zmienną $_SESSION['valid'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);
 
 
@@ -485,7 +487,7 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
             $address = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc];
             // należy pobrać id ostatnio wstawionego wiersza w tabeli klienci !
 
-            query("INSERT INTO adres (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address); // funkcja "register" - $_SESSION['udanarejestracja'] = true,  $_SESSION['last_adres_id'] - pobiera ID ostatnio wstawioneo adresu (wiersza) - z właściwości obiektu "$polaczenie";
+            query("INSERT INTO adres (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address); // funkcja "register" --> $_SESSION['udanarejestracja'] = true,  $_SESSION['last_adres_id'] - pobiera ID ostatnio wstawioneo adresu (wiersza) - z właściwości obiektu "$polaczenie";
 
             //exit();
 
@@ -493,22 +495,18 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
                       $_SESSION['udanarejestracja'] &&
                 isset($_SESSION['last_adres_id']) ) {
 
-                    //$user = [$imie, $nazwisko, $email, $telefon, " ", " ", " ", " ", " ", $haslo_hash];
-                $user = [$imie, $nazwisko, $email, $telefon, $haslo_hash];
-                    // print_r($user);
-                    // exit();
+                $user = [$imie, $nazwisko, $email, $telefon, $haslo_hash, $_SESSION["last_adres_id"]];
+
                     // query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database;
 
-                $address = $_SESSION["last_adres_id"];
-                    // register() --> $_SESSION['last_adres_id'] = $polaczenie->insert_id;
 
-                $user[] = $address;
+                    // register() --> $_SESSION['last_adres_id'] = $polaczenie->insert_id;
 
                 // print_r($user); exit();
 
-                echo "<br> 495 <br> ";
+                //echo "<br> 495 <br> ";
 
-                query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
+                $insertSuccessful = query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
                 //query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
                 // add new user to database, ̶$̶_̶S̶E̶S̶S̶I̶O̶N̶[̶'̶l̶a̶s̶t̶_̶c̶l̶i̶e̶n̶t̶_̶i̶d̶'̶] ̶-̶>̶ ̶i̶d̶ ̶n̶o̶w̶o̶ ̶w̶s̶t̶a̶w̶i̶o̶n̶e̶g̶o̶ ̶k̶l̶i̶e̶n̶t̶a̶;̶
                 //exit();
@@ -517,22 +515,42 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
                 /*echo "<br> SESSION -> <br>";
                 print_r($_SESSION); exit();*/
 
-                unset($_SESSION['valid'], $_SESSION["last_adres_id"]);
+                /*unset($_SESSION["valid"], $_SESSION["register_imie"], $_SESSION["register_nazwisko"], $_SESSION["register_email"], $_SESSION["register_miejscowosc"], $_SESSION["register_ulica"], $_SESSION["register_numer_domu"], $_SESSION["register_kod_pocztowy"], $_SESSION["register_kod_miejscowosc"], $_SESSION["register_telefon"], $_SESSION["register_regulamin"]);*/
 
-                header('Location: ___zaloguj.php'); // $_SESSION["udana-rejestracja"]
-                exit();
+                if($insertSuccessful) {
+
+                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();*/
+
+                    unset($_SESSION["last_adres_id"]);
+
+                    header('Location: ___zaloguj.php'); // $_SESSION["udana-rejestracja"]
+                    exit();
+
+                } else { // nie udało się dodać usera
+
+                    query("DELETE FROM adres WHERE adres_id = '%s'", "", $_SESSION["last_adres_id"]);
+
+                    unset($_SESSION["udanarejestracja"], $_SESSION["last_adres_id"]);
+
+                    $_SESSION["register-error"] = true;
+                    header('Location: ___zarejestruj.php'); // $_SESSION["udana-rejestracja"]
+                    exit();
+                }
 
             } else {
                 // nie udało się wstawić wierszy do tabeli "adres" ;
 
+                unset($_SESSION["udanarejestracja"]);
+
                 $_SESSION["register-error"] = true;
-                header('Location: ___zarejestruj.php'); // $_SESSION["udana-rejestracja"]
+                header('Location: ___zarejestruj.php');
                 exit();
             }
-
         }
-		else // nieudana walidacja;
-		{
+		else {
+            // nieudana walidacja;
 			header('Location: ___zarejestruj.php');
             exit();
         }

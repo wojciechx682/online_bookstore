@@ -1197,15 +1197,17 @@ EOT;
 		}
 	}
 
-	function register_verify_email($result)
+	function registerVerifyEmail($result) // register_verify_email
 	{
         // rejestracja (rejestracja.php) - weryfikacja, czy istnieje taki email (czy jest zajęty);
 		$_SESSION['valid'] = false;
-		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email!";
+		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email";
 	}
 
-    function register($result, $polaczenie) // $polaczenie object - to receive last insert id;
-    {
+    function register($polaczenie) {
+
+        // $polaczenie object - to receive last insert id;
+
                         /*// dodanie nowego użytkownika - rejestracja.php
                         $_SESSION['udanarejestracja'] = true;
                         // pobranie ID ostatnio wstawionego klienta ->
@@ -1244,7 +1246,7 @@ EOT;
                 //unset($_SESSION['wszystko_OK']); $_SESSION["valid"]
                 //header('Location: ___zaloguj.php');
 
-        echo "<br> 993 <br>";
+        //echo "<br> 993 <br>";
     }
 
 	function verifyBookExists($result) // cart_verify_book // zmienić nazwę na "verifyBookExists" (?)
@@ -1388,7 +1390,11 @@ EOT;
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// admin -->
 
-    function getAllOrders($result) { // get_all_orders // \admin\orders.php - wszystkie zamówienia złożone przez klientów, przypisane do zalogowanego pracownika;
+    function getAllOrders($result) {
+
+        // get_all_orders // \admin\orders.php - wszystkie zamówienia złożone przez klientów, przypisane do zalogowanego pracownika;
+
+        require "../view/admin/order-header.php"; // table header;
 
         while($row = $result->fetch_assoc()) {
                         // echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
@@ -1434,7 +1440,7 @@ EOT;
             $order = file_get_contents("../template/admin/order-details.php");
 
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, $i, $row["tytul"], $row["imie"],$row["nazwisko"],$row["rok_wydania"],$row["ilosc"], $row["cena"]);
+            echo sprintf($order, $i, $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"],$row["rok_wydania"],$row["ilosc"], $row["cena"]);
 
                         /* if($i === 0) {
                             $order_f = file_get_contents("../template/admin/order-details-footer.php");

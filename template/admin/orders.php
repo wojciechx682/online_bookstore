@@ -13,7 +13,7 @@
     <div class="order-id">%s</div>
     <div class="order-date">%s</div>
     <div class="order-client">%s %s</div>
-    <div class="order-total-sum">%s</div>
+    <div class="order-total-sum">%s PLN</div>
     <div class="order-payment">%s</div>
     <div class="order-status%s order-status">%s</div> <!-- order-id -->
 

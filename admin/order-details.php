@@ -113,6 +113,12 @@
                     <h3 class="section-header">Szczegóły zamówienia</h3>
                 </header>
 
+                <?php
+                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";
+                ?>
+
                 <?php require "../view/admin/order-details-header.php"; // first row, header of columns ?>
 
                 <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_SESSION["order-id"]) ) : ?>
@@ -122,7 +128,7 @@
                         query("SELECT zm.id_zamowienia, 
                                             ks.tytul, 
                                             au.imie, au.nazwisko,
-                                            sz.ilosc, 
+                                            sz.ilosc, sz.id_ksiazki,
                                             ks.cena, ks.rok_wydania,                                       
                                             pl.kwota 
                                      FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm,

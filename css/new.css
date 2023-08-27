@@ -2875,7 +2875,8 @@ div#n-top-nav-content ol li ul li form button.submit-book-form, /* index - lista
 div.order div.order-action div.order-options-container > div.order-action-options form button.submit-order-form,  /* \admin\orders.php - przycisk "Przeglądaj" -> order-id - PRG */
 div.admin-books div.book-action div.book-options-container > div.book-action-options form button.submit-book-form,  /* \admin\books.php - przycisk "Przeglądaj" -> book-id - PRG */
 button.reset-password-button, /* "Spróbuj jeszcze raz" -- reset_password.php */
-div.book-desc form button.submit-book-form /* my-orders.php */
+div.book-desc form button.submit-book-form, /* my-orders.php */
+div.order button.submit-book-form    /* admin -> order-details - kliknięcie na tytuł ksiązki --> przejście na stronę z książką */
 {
     /*margin: 0;
     padding: 0;
@@ -2891,12 +2892,14 @@ div.book-desc form button.submit-book-form /* my-orders.php */
     text-align: left;
 }
 
-div.book-desc form button.submit-book-form h3 {
+div.book-desc form button.submit-book-form h3,
+div.order button.submit-book-form h3 {
     margin: 0;
     padding-bottom: 4px;
 }
 
-div.book-desc form button.submit-book-form h3:hover {
+div.book-desc form button.submit-book-form h3:hover,
+div.order button.submit-book-form h3:hover {
     text-decoration: underline;
 }
 
@@ -3237,12 +3240,17 @@ form#register-form input[type="submit"] {
     /*width: 300px;*/
 
     width: calc(100% / 3.3);
-    float: left;
-    margin: 4px 50px 4px 4px;
+    /*float: left;*/
+    margin: 4px 50px 25px 4px;
 
     /*display: inline-block;*/
 
     min-width: 275px;
+
+    /*border: 1px solid blue;*/
+
+
+
 
 
 }

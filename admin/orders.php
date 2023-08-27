@@ -29,7 +29,12 @@
                     </header>
 
                     <?php
-                        require "../view/admin/order-header.php"; // table header;
+                        //require "../view/admin/order-header.php"; // table header;
+
+
+                        echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr>";
 
                     ?>
 
@@ -170,6 +175,18 @@
             let removeBox = removeBoxes[i]; // perform actions on each element;
         }*/
     });
+
+    window.addEventListener("load", () => {
+
+        let orders = document.querySelector(".order");
+
+        if (!orders) {
+            document.getElementById("content").append("Brak przypisanych zamówień");
+        }
+
+    });
+
+
 
 </script>
 

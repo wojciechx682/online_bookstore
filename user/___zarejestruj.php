@@ -483,7 +483,7 @@ require_once "../start-session.php";
 
     </div> <!-- #container -->
 
-    <?php require "../view/footer.php"; ?>
+    <?php require "../view/___footer.php" ?>
 
 </div> <!-- #main-container -->
 
