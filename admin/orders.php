@@ -194,6 +194,106 @@
 
 <script src="remove-order.js"></script> <!-- admin\remove-order.js -->
 
+<script>
+
+    /*window.addEventListener("load", () => {
+
+        /!*let compare = {
+            name: function(a, b) {
+                if(a < b) {
+                    return -1;
+                } else {
+                    return a > b ? 1 : 0;
+                }
+            }
+        };*!/
+
+        let isAscending = true;
+
+        let orderRows = Array.from(document.querySelectorAll(".order-content")); // zamówienie - wiersz w tabeli;
+        console.log("\n\n orderRows --> \n\n", orderRows);
+
+        let client = document.querySelector('.order-client');
+        console.log("\n\n client --> \n\n", client);
+
+        client.addEventListener("click", function() {
+
+            let sortOrder = this.dataset.sort; // Pobranie zawartości atrybutu data-sort
+
+            console.log("\n\n sortOrder --> \n\n", sortOrder);
+
+            orderRows.sort(function (a, b) {
+                let clientA = $(a).find('.order-client').text().trim().toLowerCase();
+                let clientB = $(b).find('.order-client').text().trim().toLowerCase();
+
+                if (isAscending) {
+                    return clientA.localeCompare(clientB);
+                } else {
+                    return clientB.localeCompare(clientA);
+                }
+            });
+
+            isAscending = !isAscending;
+
+            $('.order-content').remove();
+            $(orderRows).insertAfter($('.order').last());
+        });
+    });*/
+
+    // sortowanie zawartości (wierszy) - po kliknięciu nagłówka (pola)
+
+    window.addEventListener("load", () => {
+        let isAscending = true;
+
+        let orderRows = Array.from(document.querySelectorAll(".order-content")); // wiersze z zamówieniami (rows)
+
+        let headers = Array.from(document.querySelectorAll('[data-sort]'));
+
+        headers.forEach(header => {
+            header.addEventListener("click", function() {
+                let sortOrder = this.dataset.sort;
+
+                orderRows.sort((a, b) => {
+                    let valueA = $(a).find(`.${header.classList[0]}`).text().trim();
+                    let valueB = $(b).find(`.${header.classList[0]}`).text().trim();
+
+                    switch(sortOrder) {
+                        case "string":
+                            valueA = valueA.toLowerCase();
+                            valueB = valueB.toLowerCase();
+                            return isAscending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+                        case "number":
+                            return isAscending ? valueA - valueB : valueB - valueA;
+                        case "date":
+                            return isAscending ? new Date(valueA) - new Date(valueB) : new Date(valueB) - new Date(valueA);
+                        case "currency":
+                            valueA = parseFloat(valueA.replace(' PLN', ''));
+                            valueB = parseFloat(valueB.replace(' PLN', ''));
+                            return isAscending ? valueA - valueB : valueB - valueA;
+                        default:
+                            return 0;
+                    }
+                });
+
+                isAscending = !isAscending;
+
+                $('.order-content').remove();
+                $(orderRows).insertAfter($('.order').last());
+            });
+        });
+    });
+
+    // Ten kod:
+
+    // 1. Dodaje słuchacze zdarzeń do każdego nagłówka z atrybutem data-sort.
+    // 2. Wybiera odpowiedni algorytm sortowania w zależności od wartości data-sort.
+    // 3. Sortuje wiersze według wybranej kolumny i kierunku.
+    // Możesz dostosować lub rozszerzyć funkcje sortujące w przypadku, gdybyś potrzebował innych typów sortowania lub gdybyś chciał wprowadzić jakieś specjalne zachowania dla konkretnych kolumn.
+
+
+
+
+</script>
 
 </body>
 </html>

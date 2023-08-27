@@ -117,7 +117,47 @@
 <script>
     // sortowanie tabeli -->
 
+    /*window.addEventListener("load", () => {
 
+        let isAscending = true;
+
+        let orderRows = Array.from(document.querySelectorAll(".admin-books-content")); // wiersze z zamówieniami (rows)
+
+        let headers = Array.from(document.querySelectorAll('[data-sort]'));
+
+        headers.forEach(header => {
+            header.addEventListener("click", function() {
+                let sortOrder = this.dataset.sort;
+
+                orderRows.sort((a, b) => {
+                    let valueA = $(a).find(`.${header.classList[0]}`).text().trim();
+                    let valueB = $(b).find(`.${header.classList[0]}`).text().trim();
+
+                    switch(sortOrder) {
+                        case "string":
+                            valueA = valueA.toLowerCase();
+                            valueB = valueB.toLowerCase();
+                            return isAscending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+                        case "number":
+                            return isAscending ? valueA - valueB : valueB - valueA;
+                        case "date":
+                            return isAscending ? new Date(valueA) - new Date(valueB) : new Date(valueB) - new Date(valueA);
+                        case "currency":
+                            valueA = parseFloat(valueA.replace(' PLN', ''));
+                            valueB = parseFloat(valueB.replace(' PLN', ''));
+                            return isAscending ? valueA - valueB : valueB - valueA;
+                        default:
+                            return 0;
+                    }
+                });
+
+                isAscending = !isAscending;
+
+                $('.admin-books-content').remove();
+                $(orderRows).insertAfter($('.admin-books').last());
+            });
+        });
+    });*/
 </script>
 
 </body>
