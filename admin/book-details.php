@@ -64,7 +64,16 @@
                 // to prevent resubmitting the form
             }
 
-        } else {
+        } elseif (isset($_POST["book-id"]) && ! empty($_POST["book-id"])) {
+
+            // \order-details.php --> \book-details.php
+
+            $_SESSION["book-id"] = $_POST["book-id"];
+
+            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
+
+        }
+        else {
             // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/admin/book-details.php bez podania wartości w POST[] ;
                 //echo "<br> POST value (book-id) doesnt exist ! <br>" ;
 
@@ -157,6 +166,32 @@
                         // magazyn nr 1 |
                         // Polska | Zachodmiopomorskie | Szczecin | Fryderyka Chopina 3 | 800-21 Szczecin
                 ?>
+
+                <?php endif; ?>
+
+
+                <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_SESSION["book-id"]) && !isset($_SESSION["warehouse-id"]) ) : ?>
+
+                    <?php
+
+                        query("SELECT ks.tytul, ks.cena, ks.rok_wydania, au.imie, au.nazwisko, wd.nazwa_wydawcy, ks.opis, ks.wymiary, ks.ilosc_stron,
+                                       ks.oprawa, ks.stan, ks.rating AS srednia_ocen, ks.image_url,
+                                       (SELECT COUNT(*) FROM ratings WHERE ratings.id_ksiazki = ks.id_ksiazki) AS liczba_ocen,
+                                       (SELECT COUNT(*) FROM koszyk WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_klientow_posiadajacych_w_koszyku,
+                                       (SELECT SUM(ilosc) FROM szczegoly_zamowienia WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_sprzedanych_egzemplarzy,
+                                       (SELECT COUNT(*) FROM szczegoly_zamowienia, ksiazki WHERE szczegoly_zamowienia.id_ksiazki = ksiazki.id_ksiazki AND ksiazki.id_ksiazki='%s'
+                                        GROUP BY szczegoly_zamowienia.id_ksiazki) AS ilosc_zamowien_w_ktorych_wystapila,
+                                       kat.nazwa AS nazwa_kategorii, sub.nazwa AS nazwa_subkategorii, magks.ilosc_dostepnych_egzemplarzy, mag.nazwa AS nazwa_magazynu, mag.kraj, mag.wojewodztwo, mag.miejscowosc, mag.ulica, mag.numer_ulicy, mag.kod_pocztowy, mag.kod_miejscowosc
+                                FROM ksiazki AS ks
+                                         JOIN autor AS au ON ks.id_autora = au.id_autora
+                                         JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                                         JOIN subkategorie AS sub ON ks.id_subkategorii = sub.id_subkategorii
+                                         JOIN kategorie AS kat ON sub.id_kategorii = kat.id_kategorii
+                                         JOIN magazyn_ksiazki AS magks ON ks.id_ksiazki = magks.id_ksiazki
+                                         JOIN magazyn AS mag ON magks.id_magazynu = mag.id_magazynu
+                                WHERE ks.id_ksiazki = '%s' LIMIT 1", "get_book_details",  [$_SESSION["book-id"], $_SESSION["book-id"], $_SESSION["book-id"], $_SESSION["book-id"]]);
+
+                    ?>
 
                 <?php endif; ?>
 
