@@ -1536,3 +1536,19 @@ div#application-error-message {
     color: white;
 }
 
+span.header-option {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+div.admin-books:not(.admin-books-content) div:not(.a-book-magazine):not(.book-action),
+div.order:not(.order-content) div:not(.order-action)
+{
+    cursor: pointer;
+    /*display: initial !important;*/
+}
+
+div.admin-books div.a-book-quantity span {
+    /*display: unset;*/
+    all: unset;
+}

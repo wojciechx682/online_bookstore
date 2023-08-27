@@ -111,7 +111,27 @@ console.log("\ndata val => ", data[0][0].value); // jQ object;
                 let headers = Array.from(document.querySelectorAll('[data-sort]'));
 
                 headers.forEach(header => {
+
                     header.addEventListener("click", function() {
+
+                        console.log("\n header --> ", header);
+
+                        $(header).siblings().find("i").remove();
+
+                        let icon = header.querySelector("i");
+
+                        if (!icon) {
+                            icon = document.createElement("i");
+                            icon.classList.add("icon-up-open-1");
+                            header.appendChild(icon);
+                        } else if (icon.classList.contains("icon-down-open-1")) {
+                            icon.classList.replace("icon-down-open-1", "icon-up-open-1");
+                        } else {
+                            icon.classList.replace("icon-up-open-1", "icon-down-open-1");
+                        }
+
+
+
                         let sortOrder = this.dataset.sort;
 
                         orderRows.sort((a, b) => {

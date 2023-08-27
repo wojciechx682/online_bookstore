@@ -50,8 +50,6 @@
         {   // replace fields in $author string to author data from $result, display result content as HTML
             echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"]);
         }
-
-
     }
 
     function getAuthorsAdvSearch($result) { // get_authors_adv_search // \user\index.php - header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
@@ -2062,21 +2060,22 @@ function query($query, $fun, $values) {
         $connection = new mysqli($host, $db_user, $db_password, $db_name);
 
         if ($connection->connect_errno) {
+
             throw new Exception(mysqli_connect_errno()); // failed to connect to DB;
+
         } else {
 
             // connection successful
 
+            // zamiast tego --> mysqli --> prepared statements;
             if (!is_array($values)) {
-
                 $values = [$values];
             }
-
-            // zamiast tego --> mysqli --> prepared statements;
-
             for($i = 0; $i < count($values); $i++) {
                 $values[$i] = mysqli_real_escape_string($connection, $values[$i]);
             }
+            // zamiast tego --> mysqli --> prepared statements;
+
             /*foreach ($values as &$value) {
                 $value = mysqli_real_escape_string($connection, $value);
             }
@@ -2090,7 +2089,7 @@ function query($query, $fun, $values) {
 
                 if ($result instanceof mysqli_result) { // zapytanie typu SELECT <-- obiekt
 
-                    // SELECT --> $result -> wyniki zapytania
+                    // SELECT --> mysqli $result -> wyniki zapytania
 
                     if ($result->num_rows) { // 1, 2, 3, ...
 
@@ -2124,7 +2123,6 @@ function query($query, $fun, $values) {
                         }
 
 
-
                     } else {
                         // Obsłuż przypadki, gdy zapytanie nie wpłynęło na żaden wiersz, ale nie wystąpiły błędy
 
@@ -2145,7 +2143,6 @@ function query($query, $fun, $values) {
             }
 
             $connection->close();
-
 
         }
 
