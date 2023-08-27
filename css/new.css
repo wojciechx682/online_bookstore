@@ -3143,10 +3143,6 @@ form#register-form input:not([type="checkbox"])
 
 }
 
-form#register-form input {
-    margin: 10px 0 10px 0;
-}
-
 
 
 form#register-form input:not([type="checkbox"]):hover {
@@ -3240,17 +3236,14 @@ form#register-form input[type="submit"] {
 .form-section { /* alredy exists in main.css */
     /*width: 300px;*/
 
-    /*width: calc(100% / 3.3);
-    float: left;*/
+    width: calc(100% / 3.3);
+    float: left;
     margin: 4px 50px 4px 4px;
 
-        /*display: inline-block;*/
+    /*display: inline-block;*/
 
-    /*min-width: 275px;*/
+    min-width: 275px;
 
-    /*width: 100%;*/
-
-    width: 470px;
 
 }
 
@@ -3275,14 +3268,6 @@ span.row {
     line-height: 215%;
 
     /*min-width: 275px;*/
-
-}
-
-form#register-form div.register-label {
-    border: 1px solid blue;
-
-    width: 250px;
-    float: left;
 
 }
 
