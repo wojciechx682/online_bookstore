@@ -124,6 +124,30 @@
         //$result->free_result();
     }
 
+    function getCategoriesAdmin($result) {
+
+        require "../view/admin/categories-header.php"; // table header;
+
+        /*while($row = $result->fetch_assoc()) {
+
+            echo "<br> ".$row["id_kategorii"]." ".$row["nazwa"]." ";
+
+        }*/
+
+        $i = 0;
+
+        while($row = $result->fetch_assoc()) {
+            // echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
+            // load the content from the external template file into string
+            $category = file_get_contents("../template/admin/categories.php");
+            // replace fields in $order string to author data from $result, display result content as HTML
+            echo sprintf($category, $row['id_kategorii'], $row["nazwa"], $row["id_kategorii"], $row["id_kategorii"], $row["nazwa"], $row["id_kategorii"]);
+
+            $i++;
+        }
+
+    }
+
 	function getBooks($result) // get_books
 	{
         // content -> wyświetla wszystkie książki
@@ -1297,6 +1321,7 @@ EOT;
 
         // \admin\edit-book-data, - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
         // \user\index.php - PRG - spr, czy istnieje kategoria o takiej nazwie;
+        // \admin\edit-category-data.php - (zmiana nazwy kategorii) -  czy już istnieje kategoria o takiej nazwie;
 
         $_SESSION["category-exists"] = true;
     }
@@ -1601,6 +1626,36 @@ EOT;
 
     // powyższe kilka funkcji można zoptymalizować tak, aby była to jedna (np używając tablicy num. a nie assocjacyjnych);
 
+    function countBooksAvailable($result) { // zlicz sumę wszystkich książek w magazynie
+
+        // \admin\admin.php
+
+        $row = $result->fetch_assoc();
+
+        $_SESSION["booksAmount"] = $row["liczba_ksiazek"];
+
+    }
+
+    function countpendingOrders($result) { // \admin\admin.php
+
+        // liczba oczekujących zamówień (pending) --> status = "Oczekujące ..."
+
+        $row = $result->fetch_assoc();
+
+        $_SESSION["pendingOrders"] = $row["liczba_zamowien"];
+
+    }
+
+    function countTotalSales($result) { // zlicz sumę wszystkich książek w magazynie
+
+        // \admin\admin.php
+
+        $row = $result->fetch_assoc();
+
+        $_SESSION["totalSale"] = $row["totalSale"];
+
+    }
+
     function getSubcategories($result) { //  \admin\edit-book.php,  \user\index.php (!)
 
         // returns data in JSON format - instead text/html (as all other functions in this code);
@@ -1817,9 +1872,38 @@ EOT;
         echo json_encode($bookData);
     }
 
+    function getCategoryData($result) {  // \admin\edit-category.php
+
+        // returns data in JSON format - instead text/html (as all other functions in this code);
+        // return array as JSON-encoded response;
+
+        $categoryData = []; // array();
+
+        while($row = $result->fetch_assoc()) {
+            $data = [
+                'id_kategorii' => $row['id_kategorii'],
+                'nazwa' => $row['nazwa']
+            ];
+            $categoryData[] = $data; // what does that line do ? how does it do ?
+        }
+        //header('Content-Type: application/json');
+        echo json_encode($categoryData);
+    }
+
+    function verifyCategoryNameTaken($result) {
+
+        // \admin\edit-category-data.php
+
+        $_SESSION["categoryNameTaken"] = true;
+    }
+
     function updateBookData($result) {
         $_SESSION["update-book-successful"] = false;
     }
+
+    /*function updateCategoryName($result) {
+        $_SESSION["update-category-successful"] = true;
+    }*/
 
 
     /*function createEditForm($result) {

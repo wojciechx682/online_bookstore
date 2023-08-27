@@ -2876,7 +2876,9 @@ div.order div.order-action div.order-options-container > div.order-action-option
 div.admin-books div.book-action div.book-options-container > div.book-action-options form button.submit-book-form,  /* \admin\books.php - przycisk "Przeglądaj" -> book-id - PRG */
 button.reset-password-button, /* "Spróbuj jeszcze raz" -- reset_password.php */
 div.book-desc form button.submit-book-form, /* my-orders.php */
-div.order button.submit-book-form    /* admin -> order-details - kliknięcie na tytuł ksiązki --> przejście na stronę z książką */
+div.order button.submit-book-form,    /* admin -> order-details - kliknięcie na tytuł ksiązki --> przejście na stronę z książką */
+
+div.category div.category-action div.category-options-container > div.category-action-options form button.submit-order-form
 {
     /*margin: 0;
     padding: 0;
@@ -4155,7 +4157,8 @@ div.remove_account button[type="submit"] {
 
 /* my_orders.php -->    --------------------------------------------------------------- */
 
-.order, div.admin-books {
+.order, div.admin-books,
+.category {
     /*border: 1px dashed black;*/
     border: 1px ridge rgba(166, 166, 166, 0.38);
 

@@ -30,6 +30,7 @@
     <!--<script src="../scripts/load-theme.js"></script>-->
     <script src="../scripts/show-order-options.js"></script> <!-- admin/orders.php -->
     <script src="../scripts/show-books-options.js"></script> <!-- admin/books.php -->
+    <script src="../scripts/show-category-options.js"></script> <!-- admin/categories.php -->
     <script src="../scripts/remove-order.js"></script> <!-- admin/orders.php -->
     <!--<script src="../scripts/box-functions.js"></script>--> <!-- wspólne funkcjonalności dla okienek - kliknięcie "X" zamyka okno -->
 

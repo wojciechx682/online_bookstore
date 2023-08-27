@@ -339,7 +339,7 @@
                         <input type="hidden" value="" name="edit-book-id" id="edit-book-id"> <!-- id_ksiązki - int(11) -->
                         <input type="hidden" value="" name="edit-book-image_url" id="edit-book-image_url"> <!-- image_url -->
 
-                        <input type="submit" id="input-submit-edit-book-data">
+                        <input type="submit" id="input-submit-edit-book-data" value="Edytuj dane">
 
                     </form>
 
