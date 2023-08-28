@@ -522,7 +522,7 @@
 
 	function checkEmail($result) { // check_email
 
-        // validate_user_data.php - (zmiana danych usera), sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną; (zmiana danych konta);
+        // change_user_data.php - (zmiana danych usera), sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną; (zmiana danych konta);
 
         // remove_account.php     - sprawdza, -----------||--------------  ---------||-----------;  (resetowanie hasła);
 
@@ -539,20 +539,46 @@
 
     }
 
-    function generate_token() {     // reset_password.php; - return $token_hashed | OR | false;
+    function generate_token() { // reset_password.php; - return $token | OR | false;
 
         //return false;
-
         try {
+            $token = bin2hex(random_bytes(8)); // generate random token (16 letters);
 
-            $token = bin2hex(random_bytes(32)); // generate random token;
-            return hash("sha256", $token); // hash user token using sha256 algorithm; return the generated token;
+            // 16-znakowy, kryptograficznie bezpieczny losowy ciąg heksadecymalny.
+
+            // 8e2fa8c5e828598c
+            // 06ab7636f4b3a56d
+            // d496c2fdb32d08d8
+            // ...
+
+            return $token; // return generated token;
 
         } catch (Exception $e) {
 
             return false;
         }
     }
+
+    /*function generate_token($length = 12) {
+
+        try {
+            //$token = bin2hex(random_bytes(32)); // generate random token;
+            //return hash("sha256", $token); // hash user token using sha256 algorithm; return the generated token;
+
+            $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            $charactersLength = strlen($characters);
+            $token = "";
+            for ($i = 0; $i < $length; $i++) {
+                $token .= $characters[random_int(0, $charactersLength - 1)];
+            }
+            return $token; // return the generated token (plain, not hased);
+            return hash("sha256", $token); return the generated token (plain, not hased);
+
+        } catch (Exception $e) {
+            return false;
+        }
+    }*/
 
     function verifyToken($result) // verify_token // reset-password-form.php ;
     {
@@ -1113,17 +1139,19 @@ EOT;
         }
     }
 
-	function verifyPassword($result) // verify_password // validate_password.php (zmiana hasła); // confirm_password.php (usuwanie konta);
-	{
+	function verifyPassword($result) {   // check, if user provided correct password
+
+        // verify_password // change_password.php (zmiana hasła); // confirm_password.php (usuwanie konta);
+
 		/*while ($row = $result->fetch_assoc())
 		{
 		  	$_SESSION['stare_haslo'] = $row['haslo'];
 		}
 		$result->free_result();*/
 
-            $row = $result->fetch_assoc();
+        $row = $result->fetch_assoc();
         $_SESSION["password_hashed"] = $row["haslo"]; // hasło klienta w postaci zahashowanej;
-            $result->free_result();
+        // $result->free_result();
 	}
 
 	function log_in($result) {
@@ -2051,6 +2079,8 @@ function query($query, $fun, $values) {
 // jeśli nie udało się wykonać zapytania, $result zwróci false;
 // ---------------------------------------------------------------------------------------------------------------------
 
+
+
     require "connect.php";
 
     mysqli_report(MYSQLI_REPORT_STRICT);
@@ -2067,7 +2097,7 @@ function query($query, $fun, $values) {
 
             // connection successful
 
-            // zamiast tego --> mysqli --> prepared statements;
+            // zamiast tego --> mysqli --> prepared statements; - przygotowane zapytania mysqli
             if (!is_array($values)) {
                 $values = [$values];
             }
@@ -2103,6 +2133,10 @@ function query($query, $fun, $values) {
 
                 } elseif ($result === true) { // (bool - true) - dla zapytań INSERT, UPDATE, DELETE ...
 
+                    //echo "<br> query --> <br>" . vsprintf($query, $values) . "<br>"; exit();
+
+                    // jeśli wykonano zapytanie UPDATE z tymi samymi danymi które już istnieją w bazie, affected_rows - wynosi 0 (false)
+
                     if ($connection->affected_rows) { // && $fun
 
                         // affected_rows - liczba zmodyfikowanych wierszy przez zapytanie (INSERT, UPDATE, DELETE) --> 1, 2, 3, 4, ...
@@ -2117,9 +2151,13 @@ function query($query, $fun, $values) {
 
                             $fun($connection); // order.php;
 
+                            // jeśli wymagane jest pobranie id ostatnio wstawionego wiersza - wywołaj funkcję;
+
                         } else {
 
                             return true; // UPDATE, --> $updateSuccessful, if($updateSuccessful) { ... }
+
+                            // udało się wykonać zapytanie i zmieniono stan bazy (wiersze) - INSERT - UPDATE - DELETE
                         }
 
 

@@ -196,17 +196,16 @@
 		// hasło - musi zawierać: 
             // przynajmniej JEDNĄ DUŻĄ LITERĘ,    ✓     (?=.*[A-Z])
             // przynajmniej JEDNĄ MAŁĄ LITERĘ,    ✓     (?=.*[a-z])
-            // przynajmniej JEDEN ZNAK SPECJALNY  ✓     (?=.*[!@#$%^&*-\/\?])
+            // przynajmniej JEDEN ZNAK SPECJALNY  ✓     (?=.*[!@#$%^&_*+-\/\?])
             // conajmniej JEDNĄ CYFRĘ             ✓     (?=.*[0-9])
             // długość od 10 do 30 znaków          ✓     .{10,31}
 
 		$pass_regex = '/^((?=.*[!@#$%^&_*+-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
 
-		if( ! preg_match($pass_regex, $haslo1) )
-		{		
+		if (!preg_match($pass_regex, $haslo1)) {
 			//$_SESSION['wszystko_OK'] = false;
 			$_SESSION['valid'] = false;
-			$_SESSION['e_haslo'] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&*_-\/\?)";
+			$_SESSION['e_haslo'] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&_*+-\/\?)";
 		}	
 		
 		// Verifying that both passwords are the same;

@@ -3886,7 +3886,9 @@ div.remove_account div.edit_data_left {
 }
 
 .edit_data_right-container input[type="text"],
-.edit_data_right-container input[type="password"]
+.edit_data_right-container input[type="password"],
+.edit_data_right-container input[type="email"]
+
 {
 
     padding-top: 6.5px !important;
@@ -3961,10 +3963,12 @@ div.edit_data_left-container > label {
 
 .edit_data_right > input[type="text"]:hover,
 .edit_data_right > input[type="password"]:hover,
+.edit_data_right > input[type="email"]:hover,
+
 
 .edit_data_right > input[type="text"]:focus,
-.edit_data_right > input[type="password"]:focus
-
+.edit_data_right > input[type="password"]:focus,
+.edit_data_right > input[type="email"]:focus
 
 {
     cursor: pointer;
@@ -3974,7 +3978,8 @@ div.edit_data_left-container > label {
 }
 
 .edit_data_right > input[type="text"],
-.edit_data_right > input[type="password"]
+.edit_data_right > input[type="password"],
+.edit_data_right > input[type="email"]
 {
     /*min-width: 165px;*/
     /*width: calc(100% * 0.75);*/

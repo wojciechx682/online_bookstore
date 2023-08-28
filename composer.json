@@ -14,6 +14,7 @@
     "require": {
         "phpmailer/phpmailer": "^6.8",
       "ext-mbstring": "*",
-      "ext-mysqli": "*"
+      "ext-mysqli": "*",
+      "ext-ctype": "*"
     }
 }

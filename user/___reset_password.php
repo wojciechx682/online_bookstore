@@ -63,11 +63,13 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
                     unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
                 }
 
-                $token_hashed = generate_token(); // returns false | OR | string ($token);
+                $token = generate_token(); // returns false | OR | string ($token);
 
-                if ($token_hashed) {
+                if ($token) {
 
-                    // token generated successfully
+                    // token (plain) generated successfully, hash user token to store it in database -->
+
+                    $token_hashed = hash("sha256", $token); // hash user token using sha256 algorithm;
 
                     $datetime = new DateTimeImmutable();
                     $exp_time = $datetime->add(new DateInterval('PT15M'))->format('Y-m-d H:i:s'); // token expiration date;
@@ -109,8 +111,8 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
                             </head>
                             <body>
                                 <p>Witaj <b>'.$user.'</b>, </p>                            
-                                <p>Poprosiłeś o zresetowanie hasła do swojego konta w księgarni. Aby zresetować hasło, wprowadź poniższy token na <strong><i><u>stronie resetowania hasła</u></i></strong> w aplikacji</p>                               
-                                <h4>'.$token_hashed.'</h4>                             
+                                <p>Poprosiłeś o zresetowanie hasła do swojego konta w księgarni. Aby zresetować hasło, wprowadź poniższy kod na <strong><i><u>stronie resetowania hasła</u></i></strong> w aplikacji</p>                               
+                                <h4>'.$token.'</h4>                             
                                 <p>Jeśli nie prosiłeś o zresetowanie hasła, możesz zignorować tę wiadomość.</p>
                                 <p>Powyższy token będzie aktywny tylko przez 15 minut</p>
                                 <br>
@@ -143,7 +145,7 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
                 } else {
 
                     // token generation failed, handle the error accordingly
-                    $_SESSION["e-token"] = "<h3 style='margin-bottom: 0; padding-bottom: 0;'>Wystąpił błąd podczas generowania tokenu. Spróbuj jeszcze raz</h3>";
+                    $_SESSION["e-token"] = "<h3 style='margin-bottom: 0; padding-bottom: 0;'>Wystąpił błąd podczas generowania kodu. Spróbuj jeszcze raz</h3>";
 
                     unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"], $_SESSION["given-email"]);
                     header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
@@ -177,8 +179,10 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
 
             // ✓ musimy sprawdzić, czy istnieje wpis (rekord) w tabeli "password_reset_tokens" dla podanego tokenu ($_POST["token"]) oraz maila ($_SESSION["given-email"]) - jeśli jest taki rekord, oznacza to że user podał poprawny token ($_POST["token"]), jeśli nie zwróci rekordów, tzn że podano zły token
 
+            $token_hashed = hash("sha256", $token);
+
             unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
-            query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE token='%s' AND email='%s'", "verifyToken", [$token, $_SESSION["given-email"]]);
+            query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE token='%s' AND email='%s'", "verifyToken", [$token_hashed, $_SESSION["given-email"]]);
 
             // ✓ $_SESSION["token-exists"] = true; (jeśli znaleziono taki token w BD - czyli user podał poprawny token !);
             // ✓ $_SESSION["email"] = $row["email"];

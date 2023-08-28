@@ -99,7 +99,7 @@
                             </div>
                             <div class="order-address-data">
                                 <?= $_SESSION["miejscowosc"] . ", "; ?>
-                                <?= !empty($_SESSION["ulica"]) ? (" ul. " . $_SESSION["ulica"] . " ") : " "; ?>
+                                <?= !empty($_SESSION["ulica"]) ? (" " . $_SESSION["ulica"] . " ") : " "; ?>
                                 <?= $_SESSION["numer_domu"] . " "; ?>
 
 

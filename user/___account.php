@@ -18,6 +18,8 @@
 
     // $_SESSION["error_password_message"]
     // $_SESSION["is_password_changed"]
+
+    //unset($_SESSION["id"]);
 ?>
 
 <!DOCTYPE HTML>
@@ -67,19 +69,19 @@
                             <form id="edit_data_form" action="change_user_data.php" method="post">
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="imie_edit" name="imie_edit" value="<?=$_SESSION["imie"]?>" maxlength="255" required>
+                                    <input type="text" id="name" name="name" value="<?=$_SESSION["imie"]?>" maxlength="255" required>
                                 </div>
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="nazwisko_edit" name="nazwisko_edit" value="<?=$_SESSION["nazwisko"]?>" maxlength="255" required>
+                                    <input type="text" id="surname" name="surname" value="<?=$_SESSION["nazwisko"]?>" maxlength="255" required>
                                 </div>
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="email_edit" name="email_edit" value="<?=$_SESSION["email"]?>" maxlength="255" required>
+                                    <input type="email" id="email" name="email" value="<?=$_SESSION["email"]?>" maxlength="255" required>
                                 </div>
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="telefon_edit" name="telefon_edit" value="<?=$_SESSION["telefon"]?>" maxlength="15" required>
+                                    <input type="text" id="phone" name="phone" value="<?=$_SESSION["telefon"]?>" maxlength="15" required>
                                 </div>
 
                                 <div class="edit_data_right">
@@ -96,21 +98,25 @@
 
                 </div>
 
-                <?php
-                    if (isset($_SESSION["user_data_error_message"])) {
+                <h3 class="data-changed">
 
-                        echo "<h3 class='data-changed'>" . $_SESSION["user_data_error_message"] . "</h3>";
-                        unset($_SESSION["user_data_error_message"]);
+                    <?php
+                        if (isset($_SESSION["user_data_error_message"])) {
 
-                    } else {
+                            echo $_SESSION["user_data_error_message"];
+                            unset($_SESSION["user_data_error_message"]);
 
-                        if (isset($_SESSION["is_user_data_changed"]) && $_SESSION["is_user_data_changed"]) {
+                        } else {
 
-                            echo "<h3 class='data-changed'>Dane zostały zmienione</h3>";
-                            unset($_SESSION["is_user_data_changed"]);
+                            if (isset($_SESSION["is_user_data_changed"]) && $_SESSION["is_user_data_changed"]) {
+
+                                echo "Dane zostały zmienione";
+                                unset($_SESSION["is_user_data_changed"]);
+                            }
                         }
-                    }
-                ?>
+                    ?>
+
+                </h3>
 
                 <div class="dane_konta">
 
@@ -120,11 +126,11 @@
 
                         <div class="edit_data_left-container">
 
-                            <label for="miejscowosc_edit"><div class="edit_data_left">Miejscowość</div></label>
-                            <label for="ulica_edit"><div class="edit_data_left">Ulica</div></label>
-                            <label for="numer_domu_edit"><div class="edit_data_left">Numer domu</div><hr></label>
-                            <label for="kod_poczt_edit"> <div class="edit_data_left">Kod pocztowy</div></label>
-                            <label for="miasto_edit"><div class="edit_data_left">Miasto</div></label>
+                            <label for="city"><div class="edit_data_left">Miejscowość</div></label>
+                            <label for="street"><div class="edit_data_left">Ulica</div></label>
+                            <label for="houseNo"><div class="edit_data_left">Numer domu</div><hr></label>
+                            <label for="postCode"> <div class="edit_data_left">Kod pocztowy</div></label>
+                            <label for="cityCode"><div class="edit_data_left">Miasto</div></label>
 
                         </div>
 
@@ -133,19 +139,19 @@
                             <form id="edit_address_form" action="change_address_data.php" method="post">
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="miejscowosc_edit" name="miejscowosc_edit" value="<?=$_SESSION["miejscowosc"]?>" maxlength="255" required>
+                                    <input type="text" id="city" name="city" value="<?=$_SESSION["miejscowosc"]?>" maxlength="255" required>
                                 </div>
                                 <div class="edit_data_right">
-                                    <input type="text" id="ulica_edit" name="ulica_edit" value="<?=$_SESSION["ulica"]?>" maxlength="255">
+                                    <input type="text" id="street" name="street" value="<?=$_SESSION["ulica"]?>" maxlength="255">
                                 </div>
                                 <div class="edit_data_right">
-                                    <input type="text" id="numer_domu_edit" name="numer_domu_edit" value="<?=$_SESSION["numer_domu"]?>" maxlength="25" required>
+                                    <input type="text" id="houseNo" name="houseNo" value="<?=$_SESSION["numer_domu"]?>" maxlength="25" required>
                                 </div><hr>
                                 <div class="edit_data_right">
-                                    <input type="text" id="kod_poczt_edit" name="kod_poczt_edit" value="<?=$_SESSION["kod_pocztowy"]?>" maxlength="25" required>
+                                    <input type="text" id="postCode" name="postCode" value="<?=$_SESSION["kod_pocztowy"]?>" maxlength="25" required>
                                 </div>
                                 <div class="edit_data_right">
-                                    <input type="text" id="miasto_edit" name="miasto_edit" value="<?=$_SESSION["kod_miejscowosc"]?>" maxlength="255" required>
+                                    <input type="text" id="cityCode" name="cityCode" value="<?=$_SESSION["kod_miejscowosc"]?>" maxlength="255" required>
                                 </div>
 
                                 <div class="edit_data_right">
@@ -161,21 +167,25 @@
                     </div>
                 </div>
 
-                <?php
-                    if( isset($_SESSION["address-data-error"]) ) {
+                <h3 class="data-changed">
 
-                        echo "<h3 class='data-changed'>" . $_SESSION["address-data-error"] . "</h3>";
-                            unset($_SESSION["address-data-error"]);
+                    <?php
+                        if( isset($_SESSION["address_data_error_message"]) ) {
 
-                    } else {
+                            echo $_SESSION["address_data_error_message"];
+                                unset($_SESSION["address_data_error_message"]);
 
-                        if( isset($_SESSION["is_address_data_changed"]) && $_SESSION["is_address_data_changed"] ) {
+                        } else {
 
-                            echo "<h3 class='data-changed'>Dane zostały zmienione</h3>";
-                                unset($_SESSION["is_address_data_changed"]);
+                            if( isset($_SESSION["is_address_data_changed"]) && $_SESSION["is_address_data_changed"] ) {
+
+                                echo "Dane zostały zmienione";
+                                    unset($_SESSION["is_address_data_changed"]);
+                            }
                         }
-                    }
-                ?>
+                    ?>
+
+                </h3>
 
                 <div class="dane_konta">
 
@@ -184,18 +194,18 @@
                     <div class="edit_data_container">
 
                         <div class="edit_data_left-container">
-                                <label for="stare_haslo_edit"><div class="edit_data_left">Stare hasło</div></label>
-                                <label for="nowe_haslo_edit"><div class="edit_data_left">Nowe hasło</div></label>
-                                <label for="powtorz_haslo_edit"><div class="edit_data_left">Powtorz hasło</div></label>
+                                <label for="oldPassword"><div class="edit_data_left">Aktualne hasło</div></label>
+                                <label for="newPassword"><div class="edit_data_left">Nowe hasło</div></label>
+                                <label for="confirmPassword"><div class="edit_data_left">Powtorz hasło</div></label>
                         </div>
 
                         <div class="edit_data_right-container">
 
                             <form id="edit_password_form" action="change_password.php" method="post">
 
-                                <div class="edit_data_right"><input required type="password" id="stare_haslo_edit" name="stare_haslo_edit"></div>
-                                <div class="edit_data_right"><input required type="password" id="nowe_haslo_edit" name="nowe_haslo_edit"></div>
-                                <div class="edit_data_right"><input required type="password" id="powtorz_haslo_edit" name="powtorz_haslo_edit"></div>
+                                <div class="edit_data_right"><input required type="password" id="oldPassword" name="oldPassword" maxlength="255" autocomplete="off"></div>
+                                <div class="edit_data_right"><input required type="password" id="newPassword" name="newPassword" maxlength="255" autocomplete="off"></div>
+                                <div class="edit_data_right"><input required type="password" id="confirmPassword" name="confirmPassword" maxlength="255" autocomplete="off"></div>
 
                                 <div class="edit_data_right">
                                     <div class="edit_data_button">
@@ -211,21 +221,25 @@
 
                 </div>
 
-                    <?php
-                        if (isset($_SESSION["error_password_message"])) {
+                <h3 class="data-changed data-changed-password">
 
-                            echo "<h3 class='data-changed data-changed-password'>" . $_SESSION["error_password_message"] . "</h3>";
-                            unset($_SESSION["error_password_message"]);
+                    <?php
+                        if (isset($_SESSION["change_password_error_message"])) {
+
+                            echo $_SESSION["change_password_error_message"];
+                            unset($_SESSION["change_password_error_message"]);
 
                         } else {
 
                             if (isset($_SESSION["is_password_changed"]) && $_SESSION["is_password_changed"]) {
 
-                                echo "<h3 class='data-changed'>Hasło zostało zmienione</h3>";
+                                echo "Hasło zostało zmienione";
                                 unset($_SESSION["is_password_changed"]);
                             }
                         }
                     ?>
+
+                </h3>
 
                 <script> displayNav(); </script>
                 <!-- ustawia szerokość lewego nava na 25% oraz odpowiednią szerokość dla diva "content" -->
@@ -238,7 +252,62 @@
 
     <?php require "../view/___footer.php"; ?>
 
+    <!--<script>
+        document.getElementById("edit_data_form").addEventListener("submit", (event) => {
+
+            event.preventDefault();
+
+            let form = event.currentTarget;
+            let inputs = form.elements;
+            let result = document.querySelector(".data-changed");
+            let errorMsg;
+
+            let name = inputs.name.value;
+            let surname = inputs.surname.value;
+            let email = inputs.email.value;
+            let phone = inputs.phone.value;
+
+            let valid = true;
+
+            let nameRegex = /^[A-ZŁŚŻ][a-ząęółśżźćń]+$/;
+            let maxNameLength = 255;
+
+            if (!nameRegex.test(name) || !isNaN(name) || name.length > maxNameLength) {
+                valid = false;
+                errorMsg = "Podaj poprawne imię";
+            }
+
+            if (!nameRegex.test(surname) || !isNaN(surname) || surname.length > maxNameLength) {
+                valid = false;
+                errorMsg = "Podaj poprawne nazwisko";
+            }
+
+            let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            if (!emailRegex.test(email)) {
+                valid = false;
+                errorMsg = "Podaj poprawny adres e-mail";
+            }
+
+            let phoneRegex = /^\d+$/;
+            let maxPhoneLength = 15;
+
+            if (!phoneRegex.test(phone) || phone.length > maxPhoneLength) {
+                valid = false;
+                errorMsg = "Podaj poprawny numer telefonu";
+            }
+
+            if(valid) {
+                form.submit();
+            } else {
+                result.innerHTML = errorMsg;
+            }
+
+        });
+    </script>-->
+
 </div>
 
 </body>
 </html>
+
