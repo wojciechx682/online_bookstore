@@ -51,12 +51,28 @@
 	$newPassword = filter_input(INPUT_POST, "newPassword", FILTER_SANITIZE_STRING);
 	$confirmPassword = filter_input(INPUT_POST, "confirmPassword", FILTER_SANITIZE_STRING);
 
+		$pass_regex = '/^((?=.*[!@#$%^&_*+-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/ ;
+		// hasło - musi zawierać:
+		// przynajmniej JEDNĄ DUŻĄ LITERĘ,    ✓     (?=.*[A-Z])
+		// przynajmniej JEDNĄ MAŁĄ LITERĘ,    ✓     (?=.*[a-z])
+		// przynajmniej JEDEN ZNAK SPECJALNY  ✓     (?=.*[!@#$%^&_*+-\/\?])
+		// conajmniej JEDNĄ CYFRĘ             ✓     (?=.*[0-9])
+		// długość od 10 do 30 znaków          ✓     .{10,31}
+		if (!preg_match($pass_regex, $newPassword)) {
+			$valid = false;
+			$_SESSION["change_password_error_message"] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&_*+-\/\?)";
+		}
+		if ($newPassword !== $confirmPassword) {
+			$valid = false;
+			$_SESSION["change_password_error_message"] = "Podane hasła nie są identyczne";
+
+		}
 
 		if (isset($_POST["oldPassword"]) && !empty($_POST["oldPassword"])) {
 
 			$oldPassword = filter_input(INPUT_POST, "oldPassword", FILTER_SANITIZE_STRING);
 
-				unset($_SESSION["password_hashed"]); // remove variable, if was set before;
+			unset($_SESSION["password_hashed"]); // remove variable, if was set before;
 			query("SELECT haslo FROM %s WHERE %s='%s'", "verifyPassword", [$table, $column, $_SESSION["id"]]); // $_SESSION["password_hashed"] <-- hash - OR - null
 
 			if (isset($_SESSION["password_hashed"]) && !empty($_SESSION["password_hashed"])) {
@@ -88,25 +104,6 @@
 				$valid = false;
 				$_SESSION["change_password_error_message"] = "Wystąpił błąd. Spróbuj jeszcze raz";
 			}
-
-
-		}
-
-		$pass_regex = '/^((?=.*[!@#$%^&_*+-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/ ;
-		// hasło - musi zawierać:
-		// przynajmniej JEDNĄ DUŻĄ LITERĘ,    ✓     (?=.*[A-Z])
-		// przynajmniej JEDNĄ MAŁĄ LITERĘ,    ✓     (?=.*[a-z])
-		// przynajmniej JEDEN ZNAK SPECJALNY  ✓     (?=.*[!@#$%^&_*+-\/\?])
-		// conajmniej JEDNĄ CYFRĘ             ✓     (?=.*[0-9])
-		// długość od 10 do 30 znaków          ✓     .{10,31}
-		if (!preg_match($pass_regex, $newPassword)) {
-			$valid = false;
-			$_SESSION["change_password_error_message"] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&_*+-\/\?)";
-		}
-		if ($newPassword !== $confirmPassword) {
-			$valid = false;
-			$_SESSION["change_password_error_message"] = "Podane hasła nie są identyczne";
-
 		}
 
 		if ($valid) {
