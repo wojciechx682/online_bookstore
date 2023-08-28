@@ -2185,7 +2185,15 @@ function query($query, $fun, $values) {
 
         //$connection->begin_transaction();
 
+
+
             if ($result = $connection->query(vsprintf($query, $values))) {
+
+                //echo "<br> query --> <br><br>".$query; exit();
+
+
+
+                //$_SESSION["query"][] = $query;
 
                 // $result --> obiekt || true
 
@@ -2208,6 +2216,8 @@ function query($query, $fun, $values) {
                     //echo "<br> query --> <br>" . vsprintf($query, $values) . "<br>"; exit();
 
                     // jeśli wykonano zapytanie UPDATE z tymi samymi danymi które już istnieją w bazie, affected_rows - wynosi 0 (false)
+
+                    //echo "<br> query --> <br><br>".vsprintf($query, $values); exit();
 
                     if ($connection->affected_rows) { // && $fun
 

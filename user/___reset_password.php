@@ -76,7 +76,7 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
                     // token (plain) generated successfully, hash user token to store it in database -->
                     $token_hashed = hash("sha256", $token); // hash user token using sha256 algorithm;
                     $datetime = new DateTimeImmutable();
-                    $exp_time = $datetime->add(new DateInterval('PT15M'))->format('Y-m-d H:i:s'); // token expiration date;
+                    $exp_time = $datetime->add(new DateInterval('PT15S'))->format('Y-m-d H:i:s'); // token expiration date;
                     $data = [$token_hashed, $email, $exp_time];
 
                     $insertSuccessful = query("INSERT INTO password_reset_tokens (token_id, token, email, exp_time) VALUES (NULL, '%s', '%s', '%s')", "", $data);
@@ -240,15 +240,14 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
             // $token nie przeszedł walidacji / sanityzacji
 
             $_SESSION["bad-token"] = '<span class="error">Zły token</span>';
-            unset($_POST, $token);
-                //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                unset($token);
+                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
 
-        } else {
+        } else { // $token passed validation (filter_input);
 
             // $_POST["token"] --> $token,
-            // $_SESSION["given-email"]
 
-            // ✓ musimy sprawdzić, czy istnieje wpis (rekord) w tabeli "password_reset_tokens" dla podanego tokenu ($_POST["token"]) oraz maila ($_SESSION["given-email"]) - jeśli jest taki rekord, oznacza to że user podał poprawny token ($_POST["token"]), jeśli nie zwróci rekordów, tzn że podano zły token
+            // ✓ musimy sprawdzić, czy istnieje wpis (rekord) w tabeli "password_reset_tokens" dla podanego tokenu ($_POST["token"]) - jeśli jest taki rekord, oznacza to że user podał poprawny token ($_POST["token"]), jeśli nie zwróci rekordów, tzn że podano zły token;
 
             $token_hashed = hash("sha256", $token);
 
@@ -297,17 +296,16 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
 
                     $_SESSION["token-valid"] = true;
 
-                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
-                    echo "SESSION ->"; var_dump($_SESSION); echo "<hr><br>";
-                    echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
 
-                    unset($_POST, $_SESSION["email-sent"], $_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
-                    header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303
+                    //unset($_POST, $_SESSION["email-sent"], $_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
+
+                    unset($_SESSION["email-sent"]);
+
+                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303
 
                 } else { // expired token
 
+                    unset($_SESSION["email"]);
                     $_SESSION["bad-token"] = "<h3>Podany token nie jest juz aktualny, Spróbuj jeszcze raz</h3>";
                    /* echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
@@ -315,16 +313,19 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
                     echo "SESSION ->"; var_dump($_SESSION); echo "<hr><br>";
                     echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
 
-                    unset($_POST, $_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
-                    header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                    //unset($_POST, $_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
+                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
                 }
 
             } else {
                 $_SESSION["bad-token"] = '<span class="error">Zły token</span>';
-                unset($_POST);
-                header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                //unset($_POST);
+                //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
             }
         }
+
+        unset($_POST, $_SESSION["token-exists"], $_SESSION["exp-time"], $_SESSION["token"]);
+        header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit();
 
     } elseif ( isset($_POST["new-password"]) && ! empty($_POST["new-password"]) &&
                isset($_POST["confirm-password"]) && ! empty($_POST["confirm-password"]) )  { // user przesłał poprzez formularz nowe hasło --> name="new-password";
@@ -487,7 +488,7 @@ echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
                         echo '<script>hideTokenForm();</script>';
 
                         $reset_form = file_get_contents("../template/reset-password-form.php");
-                        echo sprintf($reset_form, $_SESSION["given-email"]);
+                        echo sprintf($reset_form, $_SESSION["email"]);
                     }
 
                     if(isset($_SESSION["e_haslo"])) { // hasło nie spełnia wymagań ;
