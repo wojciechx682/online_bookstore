@@ -4,16 +4,21 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*require_once "../vendor/autoload.php";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;*/
+
     require_once "../start-session.php";
 
 // Import PHPMailer classes into the global namespace
 // These must be at the top of your script, not inside a function
 
-require_once '../vendor/autoload.php';
+/*require_once '../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer; // In PHP, the "use" statement - is used to import external classes or namespaces into the current PHP file;
 use PHPMailer\PHPMailer\Exception; // This line imports the "Exception" class from the PHPMailer\PHPMailer namespace;
-use PHPMailer\PHPMailer\SMTP;      // The SMTP class is used for providing an alternative method of sending emails using the Simple Mail Transfer Protocol (SMTP);
+use PHPMailer\PHPMailer\SMTP; */     // The SMTP class is used for providing an alternative method of sending emails using the Simple Mail Transfer Protocol (SMTP);
 
 // by including these use statements, you can refer to these classes directly by their names (PHPMailer, Exception, and SMTP)
 
@@ -24,7 +29,7 @@ require 'PHPMailer/src/SMTP.php';*/ // <!-- bez użycia Composera !
 
 if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirect - Get
 
-    if ( isset($_POST["email"]) && ! empty($_POST["email"]) ) { // if email was in POST request;
+    if ( isset($_POST["email"]) ) { // if email was in POST request;
 
         $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL); // email - OR - FALSE
                                                                                                 // validate if provided email is correct;
@@ -37,8 +42,8 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
                 // to avoid any potential XSS attacks and other vulnerabilities;
             $_SESSION["email-not-valid"] = "<h3 class='error'>Podaj poprawny adres e-mail</h3>"; // display error message;
 
-            unset($_POST, $email);
-            header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+            //unset($_POST, $email);
+                //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
 
         } else {  // email passed the validation (filter_var);
 
@@ -56,6 +61,7 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
 
                 unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
                 query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE email='%s'", "verifyToken", $email);
+
                 // sprawdź, czy istnieje{ą) już tokeny w tabeli "password_reset_tokens" dla tego adresu e-email !;
                 if ( isset($_SESSION["token-exists"]) && $_SESSION["token-exists"] ) {
                     // usuń wszystkie tokeny (jeśli istniały) z tej tabeli, dla tego klienta;
@@ -68,99 +74,164 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
                 if ($token) {
 
                     // token (plain) generated successfully, hash user token to store it in database -->
-
                     $token_hashed = hash("sha256", $token); // hash user token using sha256 algorithm;
-
                     $datetime = new DateTimeImmutable();
                     $exp_time = $datetime->add(new DateInterval('PT15M'))->format('Y-m-d H:i:s'); // token expiration date;
                     $data = [$token_hashed, $email, $exp_time];
 
-                    query("INSERT INTO password_reset_tokens (token_id, token, email, exp_time) VALUES (NULL, '%s', '%s', '%s')", "", $data);
+                    $insertSuccessful = query("INSERT INTO password_reset_tokens (token_id, token, email, exp_time) VALUES (NULL, '%s', '%s', '%s')", "", $data);
                     // wstawienie wpisu do tabeli z tokenami (token + emaiL, exp_time);
 
-                    try { // wyślij do klienta email z tokenem
-
-                        $mail = new PHPMailer(true);   // create a new PHPMailer instance, passing `true` enables exceptions;
-
-
-                        $mail->isSMTP();                         // Server settings below, Send using SMTP
-                        //$mail->SMTPDebug = SMTP::DEBUG_SERVER; // aby widzieć komunikaty przebiegu wysyłania wiadomośći;
-
-                        $mail->Host = 'smtp.gmail.com';          // Set the SMTP server to send through
-                        $mail->Port = 465;                       // TCP port to connect to;  use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Enable implicit TLS encryption
-                        $mail->SMTPAuth = true;                  // Enable SMTP authentication
-
-                        $mail->Username = 'jakub.wojciechowski.683@gmail.com'; // adres nadawcy; podaj swój adres gmail // SMTP username
-                        $mail->Password = 'ubkdmiyqcquifysy';                  // podaj swoje HASŁO DO APLIKACJI (!) - gmail; // SMTP password
-
-                        $mail->CharSet = 'UTF-8';  // konfiguracja wiadomości
-                        $mail->setFrom('app.bookstore@gmail.com', 'Księgarnia internetowa - Przypomnij hasło'); // nazwa odbiorcy (name)
-                        $mail->addAddress($email); // email ODBIORCY ;
-                        //$mail->addReplyTo('biuro@domena.pl', 'Biuro');
-
-                        $mail->isHTML(true); // Set email format to HTML
-                        $mail->Subject = 'Księgarnia internetowa - Przypomnij hasło';
+                    if ($insertSuccessful) { // udało się wstawić wiersz z tokenem do BD
 
                         $user = $_SESSION["imie"];
 
-                        $mail->Body = '
-                        <html>
-                            <head>
-                                <title>Przypomnij hasło</title>
-                            </head>
-                            <body>
-                                <p>Witaj <b>'.$user.'</b>, </p>                            
-                                <p>Poprosiłeś o zresetowanie hasła do swojego konta w księgarni. Aby zresetować hasło, wprowadź poniższy kod na <strong><i><u>stronie resetowania hasła</u></i></strong> w aplikacji</p>                               
-                                <h4>'.$token.'</h4>                             
-                                <p>Jeśli nie prosiłeś o zresetowanie hasła, możesz zignorować tę wiadomość.</p>
-                                <p>Powyższy token będzie aktywny tylko przez 15 minut</p>
-                                <br>
-                                <p>© 2023 Online Bookstore. All rights reserved.</p>
-                            </body>                  
-                        </html>
-                    ';
+                        $message = '
+                            <html>
+                                <head>
+                                    <title>Przypomnij hasło</title>
+                                </head>
+                                <body>
+                                    <p>Witaj <b>'.$user.'</b>, </p>                            
+                                    <p>Poprosiłeś o zresetowanie hasła do swojego konta w księgarni. Aby zresetować hasło, wprowadź poniższy kod na <strong><i><u>stronie resetowania hasła</u></i></strong> w aplikacji</p>                               
+                                    <h4>'.$token.'</h4>                             
+                                    <p>Jeśli nie prosiłeś o zresetowanie hasła, możesz zignorować tę wiadomość.</p>
+                                    <p>Powyższy kod będzie aktywny tylko przez 15 minut</p>
+                                    <br>
+                                    <p>© 2023 Online Bookstore. All rights reserved.</p>
+                                </body>                  
+                            </html>
+                        ';
 
-                        //$mail->addAttachment('img/html-ebook.jpg'); // załącznik
-                        //
+                        $subject = 'Księgarnia internetowa - Przypomnij hasło';
 
-                        if($mail->send()) {
-                            $_SESSION["email-sent"] = true;  // email wysłany pomyślnie
+                        if (sendEmail($message, $email, $subject)) { // email wysłany pomyślnie
+                            $_SESSION["email-sent"] = true;
+                            //unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"]), $_SESSION["given-email"];
 
-                            unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"]);
-                            header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                            unset($_SESSION["sent-error"]);
 
-                        } else {
-                            $_SESSION["email-sent"] = false; // email niewysłany, wystąpił błąd
+                            //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+
+                        } else { // nie udało się wysłać wiadomości e-mail;
+
+                            //unset($_SESSION["email-exists"]);
+
+                            $_SESSION["email-sent"] = false; // email niewysłany, wystąpił błąd;
+
+                            /*echo "<br> email NOT sent --> "; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                            echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                            echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();*/
+
+                            //unset($_POST);
+                            //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
                         }
 
-                    } catch(Exception $e) {
+                        /*try {
 
-                        $_SESSION["sent-error"] = "<span class='error error-password'>{$mail->ErrorInfo}</span>";
+                            // wyślij do klienta email z tokenem
 
-                        unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"], $_SESSION["given-email"]);
-                        header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                            $mail = new PHPMailer(true);   // create a new PHPMailer instance, passing `true` enables exceptions;
+
+
+                            $mail->isSMTP();                         // Server settings below, Send using SMTP
+                            //$mail->SMTPDebug = SMTP::DEBUG_SERVER; // aby widzieć komunikaty przebiegu wysyłania wiadomośći;
+
+                            $mail->Host = 'smtp.gmail.com';          // Set the SMTP server to send through
+                            $mail->Port = 465;                       // TCP port to connect to;  use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Enable implicit TLS encryption
+                            $mail->SMTPAuth = true;                  // Enable SMTP authentication
+
+                            $mail->Username = 'jakub.wojciechowski.683@gmail.com'; // adres nadawcy; podaj swój adres gmail // SMTP username
+                            $mail->Password = 'ubkdmiyqcquifysy';                  // podaj swoje HASŁO DO APLIKACJI (!) - gmail; // SMTP password
+
+                            $mail->CharSet = 'UTF-8';  // konfiguracja wiadomości
+                            $mail->setFrom('app.bookstore@gmail.com', 'Księgarnia internetowa - Przypomnij hasło'); // nazwa odbiorcy (name)
+                            $mail->addAddress($email); // email ODBIORCY ;
+                            //$mail->addReplyTo('biuro@domena.pl', 'Biuro');
+
+                            $mail->isHTML(true); // Set email format to HTML
+                            $mail->Subject = 'Księgarnia internetowa - Przypomnij hasło';
+
+                            $user = $_SESSION["imie"];
+
+                            $mail->Body = '
+                            <html>
+                                <head>
+                                    <title>Przypomnij hasło</title>
+                                </head>
+                                <body>
+                                    <p>Witaj <b>'.$user.'</b>, </p>
+                                    <p>Poprosiłeś o zresetowanie hasła do swojego konta w księgarni. Aby zresetować hasło, wprowadź poniższy kod na <strong><i><u>stronie resetowania hasła</u></i></strong> w aplikacji</p>
+                                    <h4>'.$token.'</h4>
+                                    <p>Jeśli nie prosiłeś o zresetowanie hasła, możesz zignorować tę wiadomość.</p>
+                                    <p>Powyższy kod będzie aktywny tylko przez 15 minut</p>
+                                    <br>
+                                    <p>© 2023 Online Bookstore. All rights reserved.</p>
+                                </body>
+                            </html>
+                        ';
+
+                            //$mail->addAttachment('img/html-ebook.jpg'); // załącznik
+                            //
+
+                            if($mail->send()) {
+                                $_SESSION["email-sent"] = true;  // email wysłany pomyślnie
+
+                                unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"]);
+                                header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+
+                            } else {
+                                $_SESSION["email-sent"] = false; // email niewysłany, wystąpił błąd
+                            }
+
+                        } catch(Exception $e) {
+
+                            $_SESSION["sent-error"] = "<span class='error error-password'>{$mail->ErrorInfo}</span>";
+
+                            unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"], $_SESSION["given-email"]);
+                            header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                        }*/
+
+                    } else { // nie udało się wstawić wiersza z tokenem do BD;
+
+                        //unset($_SESSION["email-exists"]);
+
+                        $_SESSION["e-token"] = "<h3 style='margin-bottom: 0; padding-bottom: 0;'>1 Wystąpił błąd podczas generowania kodu weryfikacyjnego. Spróbuj jeszcze raz</h3>";
                     }
 
                 } else {
 
-                    // token generation failed, handle the error accordingly
-                    $_SESSION["e-token"] = "<h3 style='margin-bottom: 0; padding-bottom: 0;'>Wystąpił błąd podczas generowania kodu. Spróbuj jeszcze raz</h3>";
+                    //unset($_SESSION["email-exists"]);
 
-                    unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"], $_SESSION["given-email"]);
-                    header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                    // token generation failed, handle the error accordingly
+                    $_SESSION["e-token"] = "<h3 style='margin-bottom: 0; padding-bottom: 0;'> 2 Wystąpił błąd podczas generowania kodu weryfikacyjnego. Spróbuj jeszcze raz</h3>";
+
+                    //unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"], $_SESSION["given-email"]);
+                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+
                 }
+
+            //unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"], $_SESSION["given-email"]);
+                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+
+                unset($_SESSION["email-exists"]);
 
             } else {
                 $_SESSION["email-exists"] = false;
-
-                unset($_POST, $email);
-                header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                    //unset($_POST, $email);
+                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
             }
         }
+
+        unset($_POST, $email, $_SESSION["imie"], $_SESSION["given-email"]);
+
+        header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit();
+
+
     }
 
-    elseif (isset($_POST["token"]) && ! empty($_POST["token"]) ) {
+    elseif (isset($_POST["token"])) {
 
         $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING); // zahashowany token | lub | FALSE;
 
@@ -170,7 +241,7 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
 
             $_SESSION["bad-token"] = '<span class="error">Zły token</span>';
             unset($_POST, $token);
-            header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
 
         } else {
 
@@ -182,17 +253,19 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
             $token_hashed = hash("sha256", $token);
 
             unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
-            query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE token='%s' AND email='%s'", "verifyToken", [$token_hashed, $_SESSION["given-email"]]);
+            query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE token='%s'", "verifyToken", $token_hashed);
 
             // ✓ $_SESSION["token-exists"] = true; (jeśli znaleziono taki token w BD - czyli user podał poprawny token !);
             // ✓ $_SESSION["email"] = $row["email"];
             // ✓ $_SESSION["exp_time"] = $row["exp_time"];
             // ✓ $_SESSION["token"] = $row["token"];
 
-            if ( isset($_SESSION["token-exists"]) && $_SESSION["token-exists"] && // ✓ istnieje taki token w bd dla takiego maila,
+            if ( isset($_SESSION["token-exists"]) && $_SESSION["token-exists"] &&
                  isset($_SESSION["email"]) && ! empty($_SESSION["email"]) &&
                  isset($_SESSION["exp-time"]) && ! empty($_SESSION["exp-time"]) &&
                  isset($_SESSION["token"]) && ! empty($_SESSION["token"]) ) {
+
+                // ✓ istnieje taki token (hash) - nie musimy sprawdzać zgodności adresu e-mail, ponieważ algorytm hashujący sha-256 jest bezkolizyjny - ilość możliwych do wygenerowania hashy wynosi tyle --> 115,792,089,237,316,195,423,570,985,008,687,907,853,269,984,665,640,564,039,457,584,007,913,129,639,936
 
                 /*&& $_SESSION["email"] == $_SESSION["given-email"]
                 && ! isset($_POST["new-password"]) && ! isset($_POST["confirm-password"])*/
@@ -388,6 +461,10 @@ echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
 
             <div id="content">
 
+                <?php echo "<br> --> "; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; ?>
+
                 <h3 class="account-header reset-password-header">Przypomnij hasło</h3>
 
                 <form method="post" id="reset-form">
@@ -456,7 +533,8 @@ echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
 
                     if( isset($_SESSION["sent-error"]) || ( isset($_SESSION["email-sent"]) && ($_SESSION["email-sent"] === false) ) ) { // nie udało się wysłać maila ;
 
-                        echo "<h3>Wystąpił błąd. Nie udało się wysłać wiadomości na podany adres e-mail</h3>".$_SESSION["sent-error"];
+                        //echo "<h3>Wystąpił błąd. Nie udało się wysłać wiadomości na podany adres e-mail</h3>";
+                        echo "<span class='error error-password'>".$_SESSION["sent-error"]."</span>";
                         unset($_SESSION["sent-error"], $_SESSION["email-sent"], $_SESSION["given-email"]);
                     }
 

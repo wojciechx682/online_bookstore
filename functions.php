@@ -31,6 +31,11 @@
 		get_books($result);
 	}*/
 
+require_once "vendor/autoload.php";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
     function getAuthors($result) // get_authors // \user\index.php - left <nav>
     {
         // tworzy elementy listy <li> - w których kazdy wyświetli imie i nazwisko autora ;
@@ -588,8 +593,75 @@
         $_SESSION["token-exists"] = true;
         $_SESSION["email"] = $row["email"];
         $_SESSION["exp-time"] = $row["exp_time"];
-        $_SESSION["token"] = $row["token"];
+        $_SESSION["token"] = $row["token"]; // hashed token (sha256)
     }
+
+    // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // send email function;
+
+    function sendEmail($message, $sendTo, $subject) {
+
+        try {
+
+            /*require_once "vendor/autoload.php";
+            use PHPMailer\PHPMailer\PHPMailer;
+            use PHPMailer\PHPMailer\Exception;
+            use PHPMailer\PHPMailer\SMTP;*/
+
+            // wyślij do klienta email z tokenem
+
+            $mail = new PHPMailer(true);   // create a new PHPMailer instance, passing `true` enables exceptions;
+
+            $mail->isSMTP();                         // Server settings below, Send using SMTP
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER; // aby widzieć komunikaty przebiegu wysyłania wiadomośći;
+
+            $mail->Host = 'smtp.gmail.com';          // Set the SMTP server to send through
+            $mail->Port = 465;                       // TCP port to connect to;  use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Enable implicit TLS encryption
+            $mail->SMTPAuth = true;                  // Enable SMTP authentication
+
+            $mail->Username = 'jakub.wojciechowski.683@gmail.com'; // adres nadawcy; podaj swój adres gmail // SMTP username
+            $mail->Password = 'ubkdmiyqcquifysy';                  // podaj swoje HASŁO DO APLIKACJI (!) - gmail; // SMTP password
+
+            $mail->CharSet = 'UTF-8';  // konfiguracja wiadomości
+            $mail->setFrom('app.bookstore@gmail.com', 'Księgarnia internetowa'); // nazwa nadawcy (name)
+            $mail->addAddress($sendTo); // email ODBIORCY ;
+            //$mail->addReplyTo('biuro@domena.pl', 'Biuro');
+
+            $mail->isHTML(true); // Set email format to HTML
+            $mail->Subject = $subject;
+
+            //$user = $_SESSION["imie"];
+
+            $mail->Body = $message;
+
+            //$mail->addAttachment('img/html-ebook.jpg'); // załącznik
+            //
+
+            if ($mail->send()) {
+                    /*$_SESSION["email-sent"] = true;  // email wysłany pomyślnie
+                    unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"]);
+                    header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;*/
+                return true;
+
+            } else {
+                    //$_SESSION["email-sent"] = false; // email niewysłany, wystąpił błąd
+                //return false;
+                throw new Exception();
+            }
+
+        } catch(Exception $e) {
+
+            $_SESSION["sent-error"] = "Wystąpił błąd. Nie udało się wysłać wiadomości na podany adres e-mail. {$mail->ErrorInfo}"; // $e->getMessage();
+
+            //return false;
+
+        }
+
+    }
+
+
+    // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //	function get_books_by_id($result) // koszyk_dodaj.php - nieużywane - do wyrzuczenia
 //	{
@@ -2185,6 +2257,7 @@ function query($query, $fun, $values) {
         }
 
     } catch(Exception $e) {
+
         echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności ] </div>';
         // użycie "return" zamisat echo ?
         echo '<br><span style="color:red">Informacja developerska: </span>'.$e;
