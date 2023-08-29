@@ -9,7 +9,7 @@
         </span>
 
         <span class="order-in-progress">
-            <span class="order-info">Data dostarczenia</span> %s
+            <span class="order-info order-delivered">Data dostarczenia</span> %s
         </span>
 
     </div>

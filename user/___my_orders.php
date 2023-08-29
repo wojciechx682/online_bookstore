@@ -30,7 +30,7 @@
                 echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
 
                     query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, zm.status, zm.termin_dostawy, zm.data_wysłania_zamowienia, zm.data_dostarczenia, zm.komentarz, 
-                                  fd.nazwa AS forma_dostawy, 
+                                  fd.nazwa AS forma_dostawy, fd.cena AS koszt_dostawy, 
                                   pl.kwota AS suma, 
                                   mp.nazwa AS sposob_platnosci 
                            FROM zamowienia AS zm, 

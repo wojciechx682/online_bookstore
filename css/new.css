@@ -4467,6 +4467,13 @@ div[class*="order-book-price"]:not([class$="1"])
     max-width: 655px;
 }
 
+div.order-sum > div#delivery-info span.order-in-progress span.order-delivered {
+
+    /*min-width: 150px !important;*/
+
+
+}
+
 div.order-sum > div#delivery-info {
     /*border: 1px solid blue;*/
     width: 70%;
@@ -4476,7 +4483,13 @@ div.order-sum > div#delivery-info {
 
 div.order-sum > div#delivery-info span.order-in-progress {
     display: block;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
+}
+
+div.order-sum div#delivery-info span.order-in-progress:not(:nth-of-type(1)) {
+    color: red;
+    /*line-height: 15px;*/
+    margin-top: 8px;
 }
 
 div.order-sum > div#order-sum {

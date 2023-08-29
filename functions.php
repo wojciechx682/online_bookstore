@@ -927,6 +927,9 @@ use PHPMailer\PHPMailer\SMTP;
             // load the content from the external template file into string
             $order = file_get_contents("../template/order-details.php"); // <div class="order">
                 // pojemnik na zamówienie - div class="order" --> widok nagłówka tabeli z pojedynczym zamówieniem --> data, status, numer_zamówienia (ID), sposób_płatności
+
+            $orderDate = DateTime::createFromFormat('Y-m-d H:i:s', $row["data_zlozenia_zamowienia"])->format('d-m-Y H:i:s');
+
             // replace fields in $order string to order data from $result, display result content as HTML;
             echo sprintf($order, $row["data_zlozenia_zamowienia"], $row["status"], $row["id_zamowienia"], $row["sposob_platnosci"]); // pojemnik na tabelę z zamówieniem, nagłówek tabeli;
             query("SELECT id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "getOrderDetails", $row["id_zamowienia"]);
@@ -938,7 +941,8 @@ use PHPMailer\PHPMailer\SMTP;
                         $book_id = $_SESSION['order_details_books_id'][$i];
                         query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '%s'", "order_details_get_book", $book_id);
                     }*/
-            $_SESSION["termin_dostawy"] = $row["termin_dostawy"];
+
+            $_SESSION["termin_dostawy"] = DateTime::createFromFormat('Y-m-d', $row["termin_dostawy"])->format('d-m-Y');
             $_SESSION["data_wysłania_zamowienia"] = $row["data_wysłania_zamowienia"];
             $_SESSION["data_dostarczenia"] = $row["data_dostarczenia"];
                 /* echo "<br> 608 termin dostawy -> <br>" . $_SESSION["termin_dostawy"] . "<br>";
@@ -955,6 +959,8 @@ use PHPMailer\PHPMailer\SMTP;
 
         /*$payment = file_get_contents("../template/order-details-payment-method.php");
         echo sprintf($payment, $row["sposob_platnosci"], $row["forma_dostawy"]);*/
+
+
 
 
             if ( isset($_SESSION["termin_dostawy"]) && !empty($_SESSION["termin_dostawy"]) &&
