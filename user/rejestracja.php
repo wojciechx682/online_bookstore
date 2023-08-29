@@ -36,8 +36,7 @@
         // 3. Jeśli po wszystkich testach, flaga $valid ma wartość "true", to walidacja się udała.
 
 
-	if(
-        isset($_POST['email']) && !empty($_POST['email']) &&
+	if (isset($_POST['email']) && !empty($_POST['email']) &&
         isset($_POST['imie']) && !empty($_POST['imie']) &&
         isset($_POST['nazwisko']) && !empty($_POST['nazwisko']) &&
         isset($_POST['haslo1']) && !empty($_POST['haslo1']) &&
@@ -47,9 +46,8 @@
         isset($_POST['numer_domu']) && !empty($_POST['numer_domu']) &&
         isset($_POST['kod_pocztowy']) && !empty($_POST['kod_pocztowy']) &&
         isset($_POST['kod_miejscowosc']) && !empty($_POST['kod_miejscowosc']) &&
-        isset($_POST['telefon']) && !empty($_POST['telefon'])
-    )
-	{
+        isset($_POST['telefon']) && !empty($_POST['telefon'])) {
+
             // data processing, validation and sanitization;
             // if the data is correct, a new user account is created;
             // (inserting a new record into the customers table);
@@ -69,22 +67,22 @@
             // g-recaptcha-response:
 
 		//$_SESSION['wszystko_OK'] = true; // validation flag; // $valid
-		$_SESSION['valid'] = true; // validation flag; // $valid
+		$_SESSION["valid"] = true; // validation flag; // $valid
 
-		$imie = $_POST['imie'];
-		$nazwisko = $_POST['nazwisko'];
-		$email = $_POST['email'];
-        $haslo1 = $_POST['haslo1'];
-        $haslo2 = $_POST['haslo2'];
+		$imie = $_POST["imie"];
+		$nazwisko = $_POST["nazwisko"];
+		$email = $_POST["email"];
+        $haslo1 = $_POST["haslo1"];
+        $haslo2 = $_POST["haslo2"];
 
-		$miejscowosc = $_POST['miejscowosc']; 
+		$miejscowosc = $_POST["miejscowosc"];
 		//if( isset($_POST["ulica"]) && ! empty($_POST["ulica"]) ) { $ulica = $_POST['ulica']; }
         $ulica = isset($_POST["ulica"]) && ! empty($_POST["ulica"]) ? $_POST["ulica"] : ''; // set empty string if ulica is not set
-		$numer_domu = $_POST['numer_domu'];
+		$numer_domu = $_POST["numer_domu"];
 
-		$kod_pocztowy = $_POST['kod_pocztowy'];
-		$kod_miejscowosc = $_POST['kod_miejscowosc'];
-		$telefon = $_POST['telefon'];
+		$kod_pocztowy = $_POST["kod_pocztowy"];
+		$kod_miejscowosc = $_POST["kod_miejscowosc"];
+		$telefon = $_POST["telefon"];
 
 
         //if( isset($_POST["ulica"]) && ! empty($_POST["ulica"]) ) { $ulica = $_POST['ulica']; }

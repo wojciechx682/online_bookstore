@@ -23,13 +23,13 @@
 
             <span class="login-row">
                     <label>
-                        Nowe hasło <input type="password" name="newPassword" id="newPassword" required>
+                        Nowe hasło <input type="password" name="newPassword" id="newPassword" required maxlength="255">
                     </label>
             </span>
 
             <span class="login-row">
                     <label>
-                        Powtórz hasło <input type="password" name="confirmPassword" id="confirmPassword" required>
+                        Powtórz hasło <input type="password" name="confirmPassword" id="confirmPassword" required maxlength="255">
                     </label>
             </span>
 

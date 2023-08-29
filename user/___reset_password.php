@@ -27,46 +27,41 @@ require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';*/ // <!-- bez użycia Composera !
 
 
-if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirect - Get
+if ($_SERVER["REQUEST_METHOD"] === "POST") {                 // Post - Redirect - Get
 
-    if ( isset($_POST["email"]) ) { // if email was in POST request;
+    if (isset($_POST["email"])) { // if email was in POST request;
 
         $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL); // email - OR - FALSE
                                                                                                 // validate if provided email is correct;
                                                                                                 // return false if email failed validation;
-        if ( filter_var($email, FILTER_VALIDATE_EMAIL) === false ||
-             $email === false ||
-             $email !== $_POST["email"] ) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || empty($email) || $email !== $_POST["email"]) {
                 // email didn't pass validation;
                 // ensures that the email input is sanitized and valid;
                 // to avoid any potential XSS attacks and other vulnerabilities;
-            $_SESSION["email-not-valid"] = "<h3 class='error'>Podaj poprawny adres e-mail</h3>"; // display error message;
+            $_SESSION["email-not-valid"] = "Podaj poprawny adres e-mail";
 
-            //unset($_POST, $email);
-                //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+        } else { // email passed the validation (filter_var);
 
-        } else {  // email passed the validation (filter_var);
+                unset($_SESSION["email-exists"]);
+            query("SELECT id_klienta, imie, email FROM klienci WHERE email='%s'", "resetPasswordCheckEmail", $email);  // check if there is any user (client) with that email;
 
-            // check if there is any user (client) with that email;
+            // query("SELECT 'klient' AS user_type, imie, email FROM klienci WHERE BINARY email = '%s' UNION SELECT 'pracownik' AS user_type, imie, email FROM pracownicy WHERE BINARY email = '%s'", "resetPasswordCheckEmail", [$email, $email]);
 
-            unset($_SESSION["email-exists"]);
-            query("SELECT id_klienta, imie, email FROM klienci WHERE email='%s'", "resetPasswordCheckEmail", $email);
-            // ustawi zmienną       $_SESSION["email-exists"] --> na "true", jeśli JEST taki user (email) - (jeśli zwrócono rekordy z BD -> $result);
-            //                      $_SESSION["imie"];
-            //                      $_SESSION["given-email"]; <-- adres wprowadzony w POST["email"]
+                // ustawi zmienną       $_SESSION["email-exists"] --> na "true", jeśli JEST taki user (email) - (jeśli zwrócono rekordy z BD -> $result);
+                //                                                        w przeciwnym razie, zmienna nie istnieje (null)
+                //                      $_SESSION["imie"]; --> (imie klienta)
 
-            if ( isset($_SESSION["email-exists"]) && $_SESSION["email-exists"] ) { // jeśli user podał email, który rzeczywiście istnieje (i do kogoś należy);
+            if (isset($_SESSION["email-exists"]) && $_SESSION["email-exists"]) { // jeśli user podał email, który rzeczywiście istnieje (i do kogoś należy);
 
                 // istnieje taki user (email), można zresetować mu hasło;
 
-                unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
+                    unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
                 query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE email='%s'", "verifyToken", $email);
-
                 // sprawdź, czy istnieje{ą) już tokeny w tabeli "password_reset_tokens" dla tego adresu e-email !;
-                if ( isset($_SESSION["token-exists"]) && $_SESSION["token-exists"] ) {
+                if (isset($_SESSION["token-exists"]) && $_SESSION["token-exists"]) {
                     // usuń wszystkie tokeny (jeśli istniały) z tej tabeli, dla tego klienta;
                     query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $email); // delete all rows with that email
-                    unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
+                        unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
                 }
 
                 $token = generate_token(); // returns false | OR | string ($token);
@@ -76,7 +71,7 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
                     // token (plain) generated successfully, hash user token to store it in database -->
                     $token_hashed = hash("sha256", $token); // hash user token using sha256 algorithm;
                     $datetime = new DateTimeImmutable();
-                    $exp_time = $datetime->add(new DateInterval('PT15S'))->format('Y-m-d H:i:s'); // token expiration date;
+                    $exp_time = $datetime->add(new DateInterval('PT15M'))->format('Y-m-d H:i:s'); // token expiration date;
                     $data = [$token_hashed, $email, $exp_time];
 
                     $insertSuccessful = query("INSERT INTO password_reset_tokens (token_id, token, email, exp_time) VALUES (NULL, '%s', '%s', '%s')", "", $data);
@@ -103,28 +98,17 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
                             </html>
                         ';
 
-                        $subject = 'Księgarnia internetowa - Przypomnij hasło';
+                        $subject = "Księgarnia internetowa - Przypomnij hasło";
 
                         if (sendEmail($message, $email, $subject)) { // email wysłany pomyślnie
+
                             $_SESSION["email-sent"] = true;
-                            //unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"]), $_SESSION["given-email"];
 
                             unset($_SESSION["sent-error"]);
 
-                            //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
-
                         } else { // nie udało się wysłać wiadomości e-mail;
 
-                            //unset($_SESSION["email-exists"]);
-
                             $_SESSION["email-sent"] = false; // email niewysłany, wystąpił błąd;
-
-                            /*echo "<br> email NOT sent --> "; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                            echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                            echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();*/
-
-                            //unset($_POST);
-                            //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
                         }
 
                         /*try {
@@ -195,53 +179,33 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
 
                     } else { // nie udało się wstawić wiersza z tokenem do BD;
 
-                        //unset($_SESSION["email-exists"]);
-
-                        $_SESSION["e-token"] = "<h3 style='margin-bottom: 0; padding-bottom: 0;'>1 Wystąpił błąd podczas generowania kodu weryfikacyjnego. Spróbuj jeszcze raz</h3>";
+                        $_SESSION["e-token"] = "Wystąpił błąd podczas generowania kodu weryfikacyjnego. Spróbuj jeszcze raz";
                     }
 
-                } else {
+                } else { // token generation failed (generate_token());
 
-                    //unset($_SESSION["email-exists"]);
-
-                    // token generation failed, handle the error accordingly
-                    $_SESSION["e-token"] = "<h3 style='margin-bottom: 0; padding-bottom: 0;'> 2 Wystąpił błąd podczas generowania kodu weryfikacyjnego. Spróbuj jeszcze raz</h3>";
-
-                    //unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"], $_SESSION["given-email"]);
-                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                    $_SESSION["e-token"] = "Wystąpił błąd podczas generowania kodu weryfikacyjnego. Spróbuj jeszcze raz";
 
                 }
 
-            //unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"], $_SESSION["given-email"]);
-                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                unset($_SESSION["email-exists"], $_SESSION["imie"]);
 
-                unset($_SESSION["email-exists"]);
+            } else { // nie istnieje konto z takim adresem e-mail
 
-            } else {
                 $_SESSION["email-exists"] = false;
-                    //unset($_POST, $email);
-                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
             }
         }
 
-        unset($_POST, $email, $_SESSION["imie"], $_SESSION["given-email"]);
-
-        header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit();
-
-
+        unset($_POST); // keep $email (post)
     }
 
     elseif (isset($_POST["token"])) {
 
-        $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING); // zahashowany token | lub | FALSE;
+        $token = filter_input(INPUT_POST, "token", FILTER_SANITIZE_STRING); // zahashowany token | lub | FALSE;
 
-        if($token === false || $token !== $_POST["token"] ) {
+        if (empty($token) || ($token !== $_POST["token"])) { // $token nie przeszedł walidacji
 
-            // $token nie przeszedł walidacji / sanityzacji
-
-            $_SESSION["bad-token"] = '<span class="error">Zły token</span>';
-                unset($token);
-                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+            $_SESSION["bad-token"] = "Wprowadzony kod jest nieprawidłowy. Upewnij się, że używasz najnowszego kodu wysłanego na Twój adres e-mail";
 
         } else { // $token passed validation (filter_input);
 
@@ -251,118 +215,88 @@ if ( $_SERVER["REQUEST_METHOD"] === "POST" ) {                 // Post - Redirec
 
             $token_hashed = hash("sha256", $token);
 
-            unset($_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
             query("SELECT token_id, token, email, exp_time FROM password_reset_tokens WHERE token='%s'", "verifyToken", $token_hashed);
 
             // ✓ $_SESSION["token-exists"] = true; (jeśli znaleziono taki token w BD - czyli user podał poprawny token !);
-            // ✓ $_SESSION["email"] = $row["email"];
+            // ✓ $_SESSION["email"] = $row["email"];  <------
             // ✓ $_SESSION["exp_time"] = $row["exp_time"];
             // ✓ $_SESSION["token"] = $row["token"];
 
             if ( isset($_SESSION["token-exists"]) && $_SESSION["token-exists"] &&
                  isset($_SESSION["email"]) && ! empty($_SESSION["email"]) &&
                  isset($_SESSION["exp-time"]) && ! empty($_SESSION["exp-time"]) &&
-                 isset($_SESSION["token"]) && ! empty($_SESSION["token"]) ) {
+                 isset($_SESSION["token"]) && ! empty($_SESSION["token"]) ) { // istnieje taki token
 
                 // ✓ istnieje taki token (hash) - nie musimy sprawdzać zgodności adresu e-mail, ponieważ algorytm hashujący sha-256 jest bezkolizyjny - ilość możliwych do wygenerowania hashy wynosi tyle --> 115,792,089,237,316,195,423,570,985,008,687,907,853,269,984,665,640,564,039,457,584,007,913,129,639,936
 
-                /*&& $_SESSION["email"] == $_SESSION["given-email"]
-                && ! isset($_POST["new-password"]) && ! isset($_POST["confirm-password"])*/
-
                 unset($_SESSION["bad-token"]);
-
-                // wysłano formularz z tokenem
-
-                /*if($_SESSION["token"] != $token) {
-                    $_SESSION["bad-token"] = "<h3>354 Zły token</h3>";
-                } else {
-
-                }*/ // jeśli podano błędny token (nieistniejący, to ten kod który czytasz w tym miejscu się nie wykona !
 
                 $exp_time = $_SESSION["exp-time"];   // data wygaśnięcia tokenu;
                 $datetime = new DateTimeImmutable();
                 $cur_date = $datetime->format('Y-m-d H:i:s'); // aktualna data;
 
-                // czy token był nadal ważny ?
-
-                if ($cur_date < $exp_time) {
-
-                    // token był nadal aktualny ... ;
-
-                    /*echo '<script>hideResetForm();</script>';
-                    echo '<script>hideTokenForm();</script>';
-                    $reset_form = file_get_contents("../template/reset-password-form.php"); // template - szablon - "Wprowadź nowe hasło dla konta ..." ;
-                    echo sprintf($reset_form, $_SESSION["email"]);*/
-
+                if ($cur_date < $exp_time) {  // czy token był nadal ważny
+                    // token był nadal aktualny;
                     $_SESSION["token-valid"] = true;
-
-
-                    //unset($_POST, $_SESSION["email-sent"], $_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
-
                     unset($_SESSION["email-sent"]);
-
-                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303
 
                 } else { // expired token
 
                     unset($_SESSION["email"]);
-                    $_SESSION["bad-token"] = "<h3>Podany token nie jest juz aktualny, Spróbuj jeszcze raz</h3>";
-                   /* echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
-                    echo "SESSION ->"; var_dump($_SESSION); echo "<hr><br>";
-                    echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
-
-                    //unset($_POST, $_SESSION["token-exists"], $_SESSION["email"], $_SESSION["exp-time"], $_SESSION["token"]);
-                    //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                    $_SESSION["bad-token"] = "Podany kod nie jest juz aktualny. Spróbuj jeszcze raz";
                 }
 
             } else {
-                $_SESSION["bad-token"] = '<span class="error">Zły token</span>';
-                //unset($_POST);
-                //header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+
+                $_SESSION["bad-token"] = "Wprowadzony kod jest nieprawidłowy. Upewnij się, że używasz najnowszego kodu wysłanego na Twój adres e-mail";
             }
         }
 
         unset($_POST, $_SESSION["token-exists"], $_SESSION["exp-time"], $_SESSION["token"]);
-        header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit();
 
-    } elseif ( isset($_POST["new-password"]) && ! empty($_POST["new-password"]) &&
-               isset($_POST["confirm-password"]) && ! empty($_POST["confirm-password"]) )  { // user przesłał poprzez formularz nowe hasło --> name="new-password";
+    } elseif ( isset($_POST["newPassword"]) && ! empty($_POST["newPassword"]) &&
+               isset($_POST["confirmPassword"]) && ! empty($_POST["confirmPassword"]) )  { // user przesłał poprzez formularz nowe hasło --> name="new-password";
 
-        $new_password = $_POST["new-password"];
-        $confirm_password = $_POST["confirm-password"];
+        $newPassword = $_POST["newPassword"];
+        $confirmPassword = $_POST["confirmPassword"];
 
-        if($new_password === $confirm_password) {
+        if($newPassword === $confirmPassword) {
 
-            $pass_regex = '/^((?=.*[!@#$%^&*-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
+            $pass_regex = '/^((?=.*[!@#$%^&_*+-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
 
-            if ( ! preg_match($pass_regex, $new_password) ) {
+            if ( !preg_match($pass_regex, $newPassword) ) {
 
-                $_SESSION["e-haslo"] = '<span class="error">Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&*-\/\?)</span>';
-
-                header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+                $_SESSION["e-haslo"] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&_*+-\/\?)";
 
             } else {
 
-                $haslo = password_hash($new_password, PASSWORD_DEFAULT);
-                $data = [$haslo, $_SESSION["given-email"]];
+                $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                $data = [$newPassword, $_SESSION["email"]];
+                    //unset($_SESSION["e-haslo"]);
+                $updateSuccessful = query("UPDATE klienci SET haslo = '%s' WHERE email = '%s'", "", $data);
 
-                query("UPDATE klienci SET haslo = '%s' WHERE email = '%s'", "", $data);
+                if($updateSuccessful) {
 
-                $_SESSION["password-changed"] = true;
+                    $_SESSION["password-changed"] = true;
 
-                query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["given-email"]);
+                    query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["email"]);
 
-                header('Location: ___zaloguj.php', true, 303); exit(); // redirect with HTTP 303 response code;
+                    header('Location: ___zaloguj.php', true, 303); exit(); // redirect with HTTP 303 response code;
+
+                } else {
+
+                    $_SESSION["e-haslo"] = "Wystąpił błąd. Nie udało się zmienić hasła";
+                }
             }
 
         } else {
 
-            $_SESSION["e-haslo"] = "<h3>Podane hasła nie są identyczne</h3>";
-            header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+            $_SESSION["e-haslo"] = "Podane hasła nie są identyczne";
         }
     }
+
+    header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;
+
 }
 
 /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
@@ -468,21 +402,50 @@ echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
 
                 <h3 class="account-header reset-password-header">Przypomnij hasło</h3>
 
-                <form method="post" id="reset-form">
+                <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && empty($_SESSION["email-sent"]) && empty($_SESSION["token-valid"]) ) : ?>
 
-                    <div id="get-email">
-                        <label>
-                            Podaj e-mail: <input type="text" name="email" required>
-                        </label>
-                    </div>
+                    <form method="post" id="reset-form">
 
-                    <input type="submit" value="Przypomnij hasło">
+                        <div id="get-email">
+                            <label>
+                                Podaj e-mail: <input type="text" name="email" required>
+                            </label>
+                        </div>
 
-                </form>
+                        <input type="submit" value="Przypomnij hasło">
+
+                    </form>
+
+                <?php elseif ($_SERVER['REQUEST_METHOD'] === "GET" && !empty($_SESSION["email-sent"])) : ?>
+
+                    <!-- // udało się przesłać email klientowi; -->
+
+                    <?php
+                        $token_form = file_get_contents("../view/email-sent.php");
+                        echo $token_form;
+
+                    ?>
+
+                <?php elseif ($_SERVER['REQUEST_METHOD'] === "GET" && !empty($_SESSION["token-valid"])) : ?>
+
+                    <!-- // user provided valid (correct) token; -->
+
+                    <?php
+                        $reset_form = file_get_contents("../template/reset-password-form.php");
+                        echo sprintf($reset_form, $_SESSION["email"]);
+
+                        if(isset($_SESSION["e_haslo"])) { // hasło nie spełnia wymagań;
+
+                            echo '<span class="error">'.$_SESSION["e_haslo"].'</span>';
+                                unset($_SESSION["e_haslo"]);
+                        }
+                    ?>
+
+                <?php endif; ?>
 
                 <?php
 
-                    if ( isset($_SESSION["token-valid"]) && $_SESSION["token-valid"]) { // user provided valid (correct) token;
+                    /*if ( isset($_SESSION["token-valid"]) && $_SESSION["token-valid"]) { // user provided valid (correct) token;
 
                         echo '<script>hideResetForm();</script>';
                         echo '<script>hideTokenForm();</script>';
@@ -506,7 +469,7 @@ echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
 
                         echo '<script>hideResetForm();</script>'; // ukrycie pierwszego formularza "Podaj-email";
 
-                    }
+                    }*/
 
                 ?>
 
@@ -520,40 +483,39 @@ echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
                 </form>
 
                 <?php
-                    if( isset($_SESSION["email-exists"]) && $_SESSION["email-exists"] === false )
-                    {
+
+                    if (isset($_SESSION["email-exists"]) && $_SESSION["email-exists"] === false) {
                         // == "true" - jeśli nie istnieje takie konto z tym emailem - (nie istnieje taki email w bazie danych) ;
                         echo '<span class="error">Nie istnieje konto przypisane do tego adresu</span>';
-                        unset($_SESSION["email-exists"], $_SESSION["given-email"]);
+                            unset($_SESSION["email-exists"], $_SESSION["email"]);
 
-                    } elseif ( isset($_SESSION["e-token"]) && ! empty($_SESSION["e-token"]) ) {
+                    } elseif (isset($_SESSION["e-token"]) && ! empty($_SESSION["e-token"])) {
 
-                        echo $_SESSION["e-token"]; // "Wystąpił błąd podczas generowania tokenu ..."
-                        unset($_SESSION["e-token"]);
+                        echo '<span class="error">'.$_SESSION["e-token"].'</span>'; // "Wystąpił błąd podczas generowania kodu weryfikacyjnego. Spróbuj jeszcze raz"
+                            unset($_SESSION["e-token"]);
                     }
 
-                    if( isset($_SESSION["sent-error"]) || ( isset($_SESSION["email-sent"]) && ($_SESSION["email-sent"] === false) ) ) { // nie udało się wysłać maila ;
+                    if (isset($_SESSION["sent-error"]) || (isset($_SESSION["email-sent"]) && ($_SESSION["email-sent"] === false))) { // nie udało się wysłać maila ;
 
-                        //echo "<h3>Wystąpił błąd. Nie udało się wysłać wiadomości na podany adres e-mail</h3>";
-                        echo "<span class='error error-password'>".$_SESSION["sent-error"]."</span>";
+                        echo "<span class='error error-password'>".$_SESSION["sent-error"]."</span>"; // "Wystąpił błąd. Nie udało się wysłać wiadomości na podany adres e-mail ... ";
                         unset($_SESSION["sent-error"], $_SESSION["email-sent"], $_SESSION["given-email"]);
                     }
 
-                    if( isset($_SESSION["email-not-valid"]) ) { // niepoprany email - email nie przeszedł walidacji ;
+                    if (isset($_SESSION["email-not-valid"])) { // email nie przeszedł walidacji (filter_input);
 
-                        echo $_SESSION["email-not-valid"];
-                        unset($_SESSION["email-not-valid"], $_SESSION["given-email"]);
+                        echo '<span class="error">'.$_SESSION["email-not-valid"].'</span>';
+                        unset($_SESSION["email-not-valid"]);
                     }
 
-                    if( isset($_SESSION["bad-token"]) ) {
+                    if (isset($_SESSION["bad-token"])) {
 
-                        echo $_SESSION["bad-token"];
+                        echo '<span class="error">'.$_SESSION["bad-token"].'</span>'; // ""Wprowadzony kod jest nieprawidłowy. Upewnij się, że używasz najnowszego kodu wysłanego na Twój adres e-mail";
                         unset($_SESSION["bad-token"]);
                     }
 
-                    if( isset($_SESSION["e-haslo"]) ) {
+                    if (isset($_SESSION["e-haslo"])) { // hasło nie przeszło walidacji
 
-                        echo $_SESSION["e-haslo"];
+                        echo '<span class="error">'.$_SESSION["e-haslo"].'</span>';
                         unset($_SESSION["e-haslo"]);
                     }
 

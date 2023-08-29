@@ -531,6 +531,8 @@ use PHPMailer\PHPMailer\SMTP;
 
         // remove_account.php     - sprawdza, -----------||--------------  ---------||-----------;  (resetowanie hasła);
 
+
+
         $_SESSION["email-exists"] = true;
 	}
 
@@ -540,8 +542,6 @@ use PHPMailer\PHPMailer\SMTP;
 
         $_SESSION["email-exists"] = true;
         $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
-        $_SESSION["given-email"] = $row["email"]; // reset_password.php - resetowanie hasła
-
     }
 
     function generate_token() { // reset_password.php; - return $token | OR | false;
@@ -589,7 +589,7 @@ use PHPMailer\PHPMailer\SMTP;
     {
         // check, if there is any token assigned to that e-mail
 
-        $row = $result->fetch_assoc();
+            $row = $result->fetch_assoc();
         $_SESSION["token-exists"] = true;
         $_SESSION["email"] = $row["email"];
         $_SESSION["exp-time"] = $row["exp_time"];
@@ -1221,8 +1221,8 @@ EOT;
 		}
 		$result->free_result();*/
 
-        $row = $result->fetch_assoc();
-        $_SESSION["password_hashed"] = $row["haslo"]; // hasło klienta w postaci zahashowanej;
+            $row = $result->fetch_assoc();
+        $_SESSION["password_hashed"] = $row["haslo"]; // hasło klienta (lub pracownika) w postaci zahashowanej;
         // $result->free_result();
 	}
 

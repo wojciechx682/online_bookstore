@@ -14,7 +14,7 @@ require_once "../start-session.php";
 
 <style>
     div.error {
-        color: #d41515;
+        /*color: #d41515;*/
         /*margin-top: 10px;*/
         /*font-weight: bold;*/
     }
@@ -34,9 +34,7 @@ require_once "../start-session.php";
 
                 <!-- Formularz rejestracji -->
 
-                <form method="post"
-                      action="rejestracja.php"
-                      id="register-form">
+                <form method="post" action="rejestracja.php" id="register-form">
 
                     <b>Stwórz nowe konto klienta</b><hr class="register-form-hr-line">
 
@@ -44,65 +42,60 @@ require_once "../start-session.php";
 
                         <span class="row">
                             <label>
-                                Imię: <input type="text" name="imie" required value="<?php
-                                if(isset($_SESSION['register_imie']))
-                                {
-                                    echo $_SESSION['register_imie'];
-                                    unset($_SESSION['register_imie']);
-                                }
-                                else {
-                                    echo "Adam";
-                                } ?>">
+                                Imię: <input type="text" name="imie" required maxlength="255" value="<?php
+                                    if (isset($_SESSION["register_imie"])) {
+                                        echo $_SESSION["register_imie"];
+                                            unset($_SESSION["register_imie"]);
+                                    }
+                                    else {
+                                        echo "Adam";
+                                    } ?>">
 
                                 <?php
-                                if(isset($_SESSION['e_imie'])) {
-                                    echo '<div class="error">'.$_SESSION['e_imie'].'</div>';
-                                    unset($_SESSION['e_imie']);
-                                }
+                                    if (isset($_SESSION["e_imie"])) {
+                                        echo '<div class="error">'.$_SESSION["e_imie"].'</div>';
+                                            unset($_SESSION["e_imie"]);
+                                    }
                                 ?>
                             </label>
                         </span>
 
                         <span class="row">
                             <label>
-                                Nazwisko: <input type="text" name="nazwisko" required value="<?php
-                                if(isset($_SESSION['register_nazwisko']))
-                                {
-                                    echo $_SESSION['register_nazwisko'];
-                                    unset($_SESSION['register_nazwisko']);
-                                }
-                                else {
-                                    echo "Nowak";
-                                } ?>">
+                                Nazwisko: <input type="text" name="nazwisko" required maxlength="255" value="<?php
+                                    if (isset($_SESSION["register_nazwisko"])) {
+                                        echo $_SESSION["register_nazwisko"];
+                                            unset($_SESSION["register_nazwisko"]);
+                                    }
+                                    else {
+                                        echo "Nowak";
+                                    } ?>">
 
                                 <?php
-                                if(isset($_SESSION['e_nazwisko'])) // błąd z nazwiskiem użytkownika;
-                                {
-                                    echo '<div class="error">'.$_SESSION['e_nazwisko'].'</div>';
-                                    unset($_SESSION['e_nazwisko']);
-                                }
+                                    if (isset($_SESSION["e_nazwisko"])) {
+                                        echo '<div class="error">'.$_SESSION["e_nazwisko"].'</div>';
+                                            unset($_SESSION["e_nazwisko"]);
+                                    }
                                 ?>
                             </label>
                         </span>
 
                         <span class="row">
                             <label>
-                                E-mail: <input type="email" name="email" required value="<?php
-                                if(isset($_SESSION['register_email']))
-                                {
-                                    echo $_SESSION['register_email'];
-                                    unset($_SESSION['register_email']);
-                                }
-                                else {
-                                    echo "adam.nowak@wp.pl";
-                                } ?>">
+                                E-mail: <input type="email" name="email" required maxlength="255" value="<?php
+                                    if (isset($_SESSION["register_email"])) {
+                                        echo $_SESSION["register_email"];
+                                            unset($_SESSION["register_email"]);
+                                    }
+                                    else {
+                                        echo "adam.nowak@wp.pl";
+                                    } ?>">
 
                                 <?php
-                                if(isset($_SESSION['e_email']))
-                                {
-                                    echo '<div class="error">'.$_SESSION['e_email'].'</div>';
-                                    unset($_SESSION['e_email']);
-                                }
+                                    if (isset($_SESSION["e_email"])) {
+                                        echo '<div class="error">'.$_SESSION["e_email"].'</div>';
+                                            unset($_SESSION["e_email"]);
+                                    }
                                 ?>
                             </label>
                         </span>
@@ -110,16 +103,15 @@ require_once "../start-session.php";
                         <span class="row">
                             <label>
                                 Hasło: <input type="password" name="haslo1" maxlength="30" id="haslo1"
-                                              required value="PassJacob33#" >
+                                              required value="PassJacob33#">
 
                                 <div id="feedback" style="color:red;"></div>
 
                                 <?php
-                                if(isset($_SESSION['e_haslo']))
-                                {
-                                    echo '<div class="error">'.$_SESSION['e_haslo'].'</div>';
-                                    unset($_SESSION['e_haslo']);
-                                }
+                                    if (isset($_SESSION["e_haslo"])) {
+                                        echo '<div class="error">'.$_SESSION["e_haslo"].'</div>';
+                                            unset($_SESSION["e_haslo"]);
+                                    }
                                 ?>
                             </label>
                         </span>
@@ -138,22 +130,19 @@ require_once "../start-session.php";
                         <span class="row">
                             <label>
                                 Miejscowość: <input type="text" name="miejscowosc" required value="<?php
-                                if(isset($_SESSION['register_miejscowosc']))
-                                {
-                                    echo $_SESSION['register_miejscowosc'];
-                                    unset($_SESSION['register_miejscowosc']);
-                                }
-                                else {
-                                    echo "Dolna odra";
-                                }
-                                ?>">
+                                    if (isset($_SESSION["register_miejscowosc"])) {
+                                        echo $_SESSION["register_miejscowosc"];
+                                            unset($_SESSION["register_miejscowosc"]);
+                                    }
+                                    else {
+                                        echo "Dolna odra";
+                                    } ?>">
 
                                 <?php
-                                if(isset($_SESSION['e_miejscowosc']))
-                                {
-                                    echo '<div class="error">'.$_SESSION['e_miejscowosc'].'</div>';
-                                    unset($_SESSION['e_miejscowosc']);
-                                }
+                                    if (isset($_SESSION["e_miejscowosc"])) {
+                                        echo '<div class="error">'.$_SESSION["e_miejscowosc"].'</div>';
+                                            unset($_SESSION["e_miejscowosc"]);
+                                    }
                                 ?>
                             </label>
                         </span>
@@ -161,22 +150,19 @@ require_once "../start-session.php";
                         <span class="row">
                             <label>
                                 Ulica: <input type="text" name="ulica" value="<?php
-                                if(isset($_SESSION['register_ulica']))
-                                {
-                                    echo $_SESSION['register_ulica'];
-                                    unset($_SESSION['register_ulica']);
-                                }
-                                else {
-                                    echo "Słoneczna";
-                                }
-                                ?>">
+                                    if (isset($_SESSION["register_ulica"])) {
+                                        echo $_SESSION["register_ulica"];
+                                            unset($_SESSION["register_ulica"]);
+                                    }
+                                    else {
+                                        echo "Słoneczna";
+                                    } ?>">
 
                                 <?php
-                                if(isset($_SESSION['e_ulica']))
-                                {
-                                    echo '<div class="error">'.$_SESSION['e_ulica'].'</div>';
-                                    unset($_SESSION['e_ulica']);
-                                }
+                                    if (isset($_SESSION["e_ulica"])) {
+                                        echo '<div class="error">'.$_SESSION["e_ulica"].'</div>';
+                                            unset($_SESSION["e_ulica"]);
+                                    }
                                 ?>
                             </label>
                         </span>
@@ -184,23 +170,19 @@ require_once "../start-session.php";
                         <span class="row">
                             <label>
                                 Numer domu: <input type="text" name="numer_domu" value="<?php
-                                if(isset($_SESSION['register_numer_domu']))
-                                {
-                                    echo $_SESSION['register_numer_domu'];
-                                    unset($_SESSION['register_numer_domu']);
-                                }
-                                else
-                                {
-                                    echo "61";
-                                }
-                                ?>">
+                                    if (isset($_SESSION["register_numer_domu"])) {
+                                        echo $_SESSION["register_numer_domu"];
+                                            unset($_SESSION["register_numer_domu"]);
+                                    }
+                                    else {
+                                        echo "61";
+                                    } ?>">
 
                                 <?php
-                                if(isset($_SESSION['e_numer_domu']))
-                                {
-                                    echo '<div class="error">'.$_SESSION['e_numer_domu'].'</div>';
-                                    unset($_SESSION['e_numer_domu']);
-                                }
+                                    if (isset($_SESSION["e_numer_domu"])) {
+                                        echo '<div class="error">'.$_SESSION["e_numer_domu"].'</div>';
+                                            unset($_SESSION["e_numer_domu"]);
+                                    }
                                 ?>
                             </label>
                         </span>
@@ -212,22 +194,20 @@ require_once "../start-session.php";
                         <span class="row">
                             <label>
                                 Kod pocztowy: <input type="text" name="kod_pocztowy" value="<?php
-                                if(isset($_SESSION['register_kod_pocztowy']))
-                                {
-                                    echo $_SESSION['register_kod_pocztowy'];
-                                    unset($_SESSION['register_kod_pocztowy']);
-                                }
-                                else {
-                                    echo "64-600";
-                                }
-                                ?>"> <br>
+                                    if (isset($_SESSION["register_kod_pocztowy"])) {
+                                        echo $_SESSION["register_kod_pocztowy"];
+                                            unset($_SESSION["register_kod_pocztowy"]);
+                                    }
+                                    else {
+                                        echo "64-600";
+                                    }
+                                    ?>"> <br>
 
                                 <?php
-                                if(isset($_SESSION['e_kod_pocztowy']))
-                                {
-                                    echo '<div class="error">'.$_SESSION['e_kod_pocztowy'].'</div>';
-                                    unset($_SESSION['e_kod_pocztowy']);
-                                }
+                                    if (isset($_SESSION["e_kod_pocztowy"])) {
+                                        echo '<div class="error">'.$_SESSION["e_kod_pocztowy"].'</div>';
+                                            unset($_SESSION["e_kod_pocztowy"]);
+                                    }
                                 ?>
                             </label>
                         </span>
@@ -235,22 +215,19 @@ require_once "../start-session.php";
                         <span class="row">
                             <label>
                                 Miejscowość: <input type="text" name="kod_miejscowosc" value="<?php
-                                if(isset($_SESSION['register_kod_miejscowosc']))
-                                {
-                                    echo $_SESSION['register_kod_miejscowosc'];
-                                    unset($_SESSION['register_kod_miejscowosc']);
-                                }
-                                else {
-                                    echo "Dębno";
-                                }
-                                ?>">
+                                    if (isset($_SESSION["register_kod_miejscowosc"])) {
+                                        echo $_SESSION["register_kod_miejscowosc"];
+                                            unset($_SESSION["register_kod_miejscowosc"]);
+                                    }
+                                    else {
+                                        echo "Dębno";
+                                    } ?>">
 
                                 <?php
-                                if(isset($_SESSION['e_kod_miejscowosc']))
-                                {
-                                    echo '<div class="error">'.$_SESSION['e_kod_miejscowosc'].'</div>';
-                                    unset($_SESSION['e_kod_miejscowosc']);
-                                }
+                                    if (isset($_SESSION["e_kod_miejscowosc"])) {
+                                        echo '<div class="error">'.$_SESSION["e_kod_miejscowosc"].'</div>';
+                                            unset($_SESSION["e_kod_miejscowosc"]);
+                                    }
                                 ?>
                             </label>
                         </span>
@@ -322,23 +299,19 @@ require_once "../start-session.php";
                         <span class="row">
                             <label>
                                 Telefon (PL +48): <input type="tel" name="telefon" value="<?php
-                                if(isset($_SESSION['register_telefon']))
-                                {
-                                    echo $_SESSION['register_telefon'];
-                                    unset($_SESSION['register_telefon']);
-                                }
-                                else
-                                {
-                                    echo "505101303";
-                                }
-                                ?>">
+                                    if(isset($_SESSION["register_telefon"])) {
+                                        echo $_SESSION["register_telefon"];
+                                            unset($_SESSION["register_telefon"]);
+                                    }
+                                    else {
+                                        echo "505101303";
+                                    } ?>">
 
                                 <?php
-                                if(isset($_SESSION['e_telefon']))
-                                {
-                                    echo '<div class="error">'.$_SESSION['e_telefon'].'</div>';
-                                    unset($_SESSION['e_telefon']);
-                                }
+                                    if (isset($_SESSION["e_telefon"])) {
+                                        echo '<div class="error">'.$_SESSION["e_telefon"].'</div>';
+                                            unset($_SESSION["e_telefon"]);
+                                    }
                                 ?>
                             </label>
                         </span>
@@ -351,57 +324,47 @@ require_once "../start-session.php";
 
                     <label>
                         <input type="checkbox" name="regulamin" <?php
+                            if (isset($_SESSION["register_regulamin"])) {
+                                echo "checked";
+                                    unset($_SESSION["register_regulamin"]);
+                            } else {
+                                echo "checked";
+                            } ?>>
 
-                        if(isset($_SESSION['register_regulamin']))
-                        {
-                            echo "checked";
-                            unset($_SESSION['register_regulamin']);
-                        }
-                        else
-                        {
-                            echo "checked";
-                        }
-
-                        ?>> Akceptuję regulamin
+                        Akceptuję regulamin
                     </label>
 
                     <?php
-                    if(isset($_SESSION['e_regulamin']))
-                    {
-                        // błąd z akceptacją regulaminu (checkbox);
-                        echo '<div class="error" style="margin-top: 10px;">'.$_SESSION['e_regulamin'].'</div>';
-                        unset($_SESSION['e_regulamin']);
-                    }
+                        if (isset($_SESSION["e_regulamin"])) { // błąd z akceptacją regulaminu (checkbox);
+                            echo '<div class="error" style="margin-top: 10px;">'.$_SESSION["e_regulamin"].'</div>';
+                                unset($_SESSION["e_regulamin"]);
+                        }
                     ?>
-
 
                     <div class="g-recaptcha" data-sitekey="6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1"></div>
 
                     <?php
-                    if(isset($_SESSION['e_recaptcha'])) // błąd z reCaptcha;
-                    {
-                        echo '<div class="error">'.$_SESSION['e_recaptcha'].'</div>';
-                        unset($_SESSION['e_recaptcha']);
-                    }
+                        if (isset($_SESSION["e_recaptcha"])) { // błąd z reCaptcha;
+                            echo '<div class="error">'.$_SESSION["e_recaptcha"].'</div>';
+                                unset($_SESSION["e_recaptcha"]);
+                        }
                     ?>
 
 
                     <input type="submit" value="Zarejestruj się" id="register-button">
 
                     <?php
-                    if(isset($_SESSION['e_fields'])) // nie wypełniono wszystkich pol;
-                    {
-                        echo '<div class="error">'.$_SESSION['e_fields'].'</div>';
-                        unset($_SESSION['e_fields']);
-                    }
+                        if (isset($_SESSION["e_fields"])) { // nie wypełniono wszystkich pol;
+                            echo '<div class="error">'.$_SESSION["e_fields"].'</div>';
+                                unset($_SESSION["e_fields"]);
+                        }
                     ?>
 
                     <?php
-                    if(isset($_SESSION["register-error"]) && $_SESSION["register-error"]) // nie udało się wstawić wierszy do tabeli "adres";
-                    {
-                        echo '<div class="error">Wystąpił błąd. Spróbuj jeszcze raz</div>';
-                        unset($_SESSION["register-error"]);
-                    }
+                        if (isset($_SESSION["register-error"]) && $_SESSION["register-error"]) { // nie udało się wstawić wierszy do tabeli "adres";
+                            echo '<div class="error">Wystąpił błąd. Spróbuj jeszcze raz</div>';
+                                unset($_SESSION["register-error"]);
+                        }
                     ?>
 
 

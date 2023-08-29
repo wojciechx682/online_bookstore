@@ -3219,7 +3219,9 @@ hr.login-form-hr-line {
 
 
 .error {
-    color: #d41515;
+    /*color: #d41515;*/
+    color: #aa1c1c;;
+
     font-weight: bold;
     display: block;
     margin-top: 15px;
