@@ -780,7 +780,7 @@ use PHPMailer\PHPMailer\SMTP;
             $book = file_get_contents("../template/cart-products.php");
 
             // replace fields in $book string to book data from $result
-            echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["ilosc"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"]);
+            echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["kategoria"], $row["podkategoria"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["ilosc"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"]);
 
             $i++;
 
@@ -957,11 +957,15 @@ use PHPMailer\PHPMailer\SMTP;
             //echo sprintf($order, $_SESSION["order_sum"]);
                 // Stopka w tabeli tego zamówienia - wyświetla tylko SUMĘ zamówienia;
 
-        /*$payment = file_get_contents("../template/order-details-payment-method.php");
-        echo sprintf($payment, $row["sposob_platnosci"], $row["forma_dostawy"]);*/
+            /*$payment = file_get_contents("../template/order-details-payment-method.php");
+            echo sprintf($payment, $row["sposob_platnosci"], $row["forma_dostawy"]);*/
 
+            $kosztPlatnosci = ($row["koszt_platnosci"] !== "0.00") ? $row["koszt_platnosci"] : "";
 
-
+            if(!empty($kosztPlatnosci)) {
+                $kosztPlatnosci = sprintf('<div class="order-sum-info"><span>Pobranie</span> %s PLN</div>', $kosztPlatnosci);
+            }
+            //echo "<br> koszt platnosci --> <br>" . $kosztPlatnosci . "<br>";
 
             if ( isset($_SESSION["termin_dostawy"]) && !empty($_SESSION["termin_dostawy"]) &&
                 $_SESSION["termin_dostawy"] !== "0000-00-00" &&
@@ -971,9 +975,10 @@ use PHPMailer\PHPMailer\SMTP;
 
                     // status zamówienia to "W trakcie realizacji" --> termin_dostawy;
                     $order = file_get_contents("../template/order-sum-order-in-progress.php");
-                    echo sprintf($order, $row["forma_dostawy"], $_SESSION["termin_dostawy"], $row["suma"]);
+                    echo sprintf($order, $row["forma_dostawy"], $_SESSION["termin_dostawy"], $row["koszt_dostawy"],  $kosztPlatnosci, $row["suma"]);
 
-            } elseif ( isset($_SESSION["data_wysłania_zamowienia"]) && !empty($_SESSION["data_wysłania_zamowienia"]) &&
+            }
+            elseif ( isset($_SESSION["data_wysłania_zamowienia"]) && !empty($_SESSION["data_wysłania_zamowienia"]) &&
                       $_SESSION["termin_dostawy"] !== "0000-00-00" &&
                       $_SESSION["data_wysłania_zamowienia"] !== "0000-00-00 00:00:00"
                 /*&& $_SESSION["data_dostarczenia"] === "0000-00-00"*/
@@ -982,7 +987,8 @@ use PHPMailer\PHPMailer\SMTP;
                 // status zamówienia to "Wysłano" --> termin_dostawy, data_wyslania_zamowienia;
                 $order = file_get_contents("../template/order-sum-order-sent.php");
                 echo sprintf($order, $row["forma_dostawy"], $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"],  $row["suma"]);
-            } elseif (
+            }
+            elseif (
                 isset($_SESSION["data_dostarczenia"]) && !empty($_SESSION["data_dostarczenia"])
                 && $_SESSION["data_dostarczenia"] !== "0000-00-00"
                 && $row["status"] === "Dostarczono"
@@ -991,7 +997,8 @@ use PHPMailer\PHPMailer\SMTP;
                 $order = file_get_contents("../template/order-sum-order-delivered.php");
                 echo sprintf($order, $_SESSION["data_dostarczenia"], $row["suma"]);
 
-            } elseif (
+            }
+            elseif (
                 $row["status"] === "Zarchiwizowane"
             ) {
                 $order = file_get_contents("../template/order-sum-order-archived.php");
@@ -1000,7 +1007,7 @@ use PHPMailer\PHPMailer\SMTP;
             else { // status -> "Oczekujące na potwierdzenie";
                 $order = file_get_contents("../template/order-sum.php");
                 //echo sprintf($order, $_SESSION["order_sum"]);
-                echo sprintf($order, $row["suma"]);
+                echo sprintf($order, $row["forma_dostawy"], $row["koszt_dostawy"],  $kosztPlatnosci, $row["suma"]);
             }
 
             echo "</div>";
@@ -1466,7 +1473,7 @@ use PHPMailer\PHPMailer\SMTP;
 
         $row = $result->fetch_assoc();
 
-        $orderSum = file_get_contents("../template/order-sum.php");
+        $orderSum = file_get_contents("../template/admin/order-sum.php");
 
         // replace fields in $order string to author data from $result, display result content as HTML
         echo sprintf($orderSum, $row["kwota"]);

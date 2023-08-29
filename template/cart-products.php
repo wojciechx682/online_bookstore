@@ -47,6 +47,7 @@
             <div class="price"><span id="book-price">%s</span>PLN</div>
             <div class="year">%s</div>
             <div class="author">%s %s</div>
+            <div class="cart-category">%s, %s</div>
         </div> <!-- .book-description -->
 
         <div id="form-cart-container" style="min-width: 260px;  float: left; ">

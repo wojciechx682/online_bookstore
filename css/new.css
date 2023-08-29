@@ -592,14 +592,14 @@ body {
 @media only screen and (max-width: 750px) {
 
     div.order-sum > div#delivery-info {
-        width: 65% !important;
+        width: 55% !important;
         /*min-width: 335px;*/
     }
 
-    div.order-sum > div#order-sum {
+    /*div.order-sum > div.order-sum-info {
         width: 35% !important;
-        /*min-width: 335px;*/
-    }
+        !*min-width: 335px;*!
+    }*/
 }
 
 @media only screen and (max-width: 735px) {
@@ -3684,6 +3684,18 @@ div.cart-book > span.book-details div.book-description div.author {
     /*transition: all 0.125s ease-in-out;*/
 }
 
+.cart-book div.price,
+.cart-book div.year,
+.cart-book div.author {
+    margin-bottom: 3px;
+}
+
+.cart-book div.cart-category {
+    color: #919191;
+    margin-top: 5px;
+    font-style: italic;
+}
+
 .book .book-info form[action="add_to_cart.php"] button[type="submit"] {
     margin: 0 !important;
 }
@@ -4455,7 +4467,7 @@ div[class*="order-book-price"]:not([class$="1"])
     /*border: 1px ridge rgba(166, 166, 166, 0.38);*/
 
     padding: 20px 20px 20px 20px;
-    overflow-y: auto;
+    overflow: auto;
     /*text-align: right;*/
 }
 .order-sum > span {
@@ -4476,9 +4488,13 @@ div.order-sum > div#delivery-info span.order-in-progress span.order-delivered {
 
 div.order-sum > div#delivery-info {
     /*border: 1px solid blue;*/
-    width: 70%;
+    width: 60%;
     /*display: inline-block;*/
+
+    /*min-height: 75px;*/
+
     float: left;
+
 }
 
 div.order-sum > div#delivery-info span.order-in-progress {
@@ -4487,22 +4503,57 @@ div.order-sum > div#delivery-info span.order-in-progress {
 }
 
 div.order-sum div#delivery-info span.order-in-progress:not(:nth-of-type(1)) {
-    color: red;
+    /*color: red;*/
     /*line-height: 15px;*/
     margin-top: 8px;
 }
 
-div.order-sum > div#order-sum {
-    /*display: inline-block;*/
-    /*border: 1px solid red;*/
+div.order-sum div.order-sum-info span {
+    /*margin-right: 20px;*/
 
     float: left;
-    width: 30%;
-    text-align: right;
 
-    min-width: 135px;
+    /*min-width: 100px;*/
 
 }
+
+div.order-sum div.order-sum-info:not(:nth-of-type(1)) {
+    /*color: blue;*/
+
+    margin-top: 8px;
+}
+
+div.order-sum > div.order-sum-info {
+    /*display: inline-block;*/
+    border: 1px solid red;
+
+    /*float: right;*/
+    /*width: 20%;*/
+    text-align: right;
+
+    /*min-width: 135px;*/
+    width: 150px;
+
+    display: inline-block;
+
+}
+
+div#test123 {
+    /*border: 1px solid rebeccapurple;*/
+
+    /*display: inline-block;*/
+    float: right;
+
+    text-align: right;
+    width: 190px;
+}
+
+div#test123 div#total-sum {
+    font-weight: bold;
+    font-size: 105%;
+}
+
+
 
 
 .order hr {
@@ -4533,6 +4584,11 @@ div.order-sum div#delivery-info span.order-in-progress span.order-info {
 div.order-sum > span.order-sent {
     padding-top: 20px;
     /*padding-bottom: 20px;*/
+}
+
+div.order-sum > div.order-in-progress {
+    width: 30%;
+    float: right !important;
 }
 
 /* div#content div.order div.book-url a > img, */

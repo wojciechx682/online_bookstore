@@ -32,7 +32,7 @@
                     query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, zm.status, zm.termin_dostawy, zm.data_wysłania_zamowienia, zm.data_dostarczenia, zm.komentarz, 
                                   fd.nazwa AS forma_dostawy, fd.cena AS koszt_dostawy, 
                                   pl.kwota AS suma, 
-                                  mp.nazwa AS sposob_platnosci 
+                                  mp.nazwa AS sposob_platnosci, mp.oplata AS koszt_platnosci
                            FROM zamowienia AS zm, 
                                 formy_dostawy AS fd, 
                                 platnosci AS pl, 
@@ -41,16 +41,16 @@
 
                     // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
 
-                    // id_zamowienia            - 1263
-                    // data_zlozenia_zamowienia - 2023-08-29 14:32:31
-                    // status                   - Oczekujące na potwierdzenie
-                    // termin_dostawy           - 0000-00-00
-                    // data_wysłania_zamowienia - 0000-00-00 00:00:00
-                    // data_dostarczenia        - 0000-00-00
-                    // komentarz                - ""
-                    // forma_dostawy            - Kurier DPD
-                    // suma                     - 301.65
-                    // sposob_platnosci         - Blik
+                        // id_zamowienia            - 1263
+                        // data_zlozenia_zamowienia - 2023-08-29 14:32:31
+                        // status                   - Oczekujące na potwierdzenie
+                        // termin_dostawy           - 0000-00-00
+                        // data_wysłania_zamowienia - 0000-00-00 00:00:00
+                        // data_dostarczenia        - 0000-00-00
+                        // komentarz                - ""
+                        // forma_dostawy            - Kurier DPD
+                        // suma                     - 301.65
+                        // sposob_platnosci         - Blik
                 ?>
 
                 <!--<br><br><a href="logout.php">[ Wyloguj ]</a>-->

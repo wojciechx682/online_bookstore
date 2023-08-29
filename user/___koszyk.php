@@ -32,14 +32,19 @@
                         query("SELECT kl.id_klienta, 
                                       ko.id_ksiazki, ko.ilosc, 
                                       ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, 
-                                      au.imie, au.nazwisko 
+                                      au.imie, au.nazwisko,
+                                      sb.nazwa AS podkategoria, kt.nazwa AS kategoria
                                FROM klienci AS kl, 
                                     koszyk AS ko, 
                                     ksiazki AS ks, 
-                                    autor AS au 
+                                    autor AS au,
+                                    subkategorie AS sb,
+                                    kategorie AS kt                                                                                   
                                WHERE kl.id_klienta = ko.id_klienta AND 
                                      ko.id_ksiazki = ks.id_ksiazki AND 
-                                     ks.id_autora = au.id_autora AND 
+                                     ks.id_autora = au.id_autora AND    
+                                     sb.id_subkategorii = ks.id_subkategorii
+                                     AND sb.id_kategorii = kt.id_kategorii AND
                                      kl.id_klienta='%s'", "getProductsFromCart", $_SESSION["id"]);
 
                         // książki które zamówił klient o danym ID; (które posiada aktualnie w koszyku);
