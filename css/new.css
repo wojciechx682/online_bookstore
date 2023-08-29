@@ -3908,7 +3908,8 @@ div.remove_account div.edit_data_left {
 
 .edit_data_right-container input[type="text"],
 .edit_data_right-container input[type="password"],
-.edit_data_right-container input[type="email"]
+.edit_data_right-container input[type="email"],
+.edit_data_right-container input[type="tel"]
 
 {
 
@@ -3985,11 +3986,13 @@ div.edit_data_left-container > label {
 .edit_data_right > input[type="text"]:hover,
 .edit_data_right > input[type="password"]:hover,
 .edit_data_right > input[type="email"]:hover,
+.edit_data_right > input[type="tel"]:hover,
 
 
 .edit_data_right > input[type="text"]:focus,
 .edit_data_right > input[type="password"]:focus,
-.edit_data_right > input[type="email"]:focus
+.edit_data_right > input[type="email"]:focus,
+.edit_data_right > input[type="tel"]:focus
 
 {
     cursor: pointer;
@@ -4000,7 +4003,8 @@ div.edit_data_left-container > label {
 
 .edit_data_right > input[type="text"],
 .edit_data_right > input[type="password"],
-.edit_data_right > input[type="email"]
+.edit_data_right > input[type="email"],
+.edit_data_right > input[type="tel"]
 {
     /*min-width: 165px;*/
     /*width: calc(100% * 0.75);*/
@@ -4019,6 +4023,8 @@ div.edit_data_left-container > label {
     margin-left: 15px;
     /*transition: all 0.125s ease-in-out; */
 }
+
+
 
 .account-header {
 

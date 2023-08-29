@@ -11,7 +11,7 @@
 
 <div id="main-container">
 
-<?php require "../view/___header-container.php"; ?>
+    <?php require "../view/___header-container.php"; ?>
 
 	<div id="container">
 
@@ -29,7 +29,15 @@
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
                 echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
 
-                    query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, zm.status, zm.termin_dostawy, zm.data_wysłania_zamowienia, zm.data_dostarczenia, fd.nazwa AS forma_dostawy, zm.komentarz, pl.kwota AS suma, mp.nazwa AS sposob_platnosci FROM zamowienia AS zm, formy_dostawy AS fd, platnosci AS pl, metody_platnosci AS mp WHERE zm.id_formy_dostawy = fd.id_formy_dostawy AND zm.id_zamowienia = pl.id_zamowienia AND pl.id_metody_platnosci = mp.id_metody_platnosci AND id_klienta = '%s'", "getOrders", $_SESSION['id']);
+                    query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, zm.status, zm.termin_dostawy, zm.data_wysłania_zamowienia, zm.data_dostarczenia, zm.komentarz, 
+                                  fd.nazwa AS forma_dostawy, 
+                                  pl.kwota AS suma, 
+                                  mp.nazwa AS sposob_platnosci 
+                           FROM zamowienia AS zm, 
+                                formy_dostawy AS fd, 
+                                platnosci AS pl, 
+                                metody_platnosci AS mp 
+                           WHERE zm.id_formy_dostawy = fd.id_formy_dostawy AND zm.id_zamowienia = pl.id_zamowienia AND pl.id_metody_platnosci = mp.id_metody_platnosci AND id_klienta = '%s'", "getOrders", $_SESSION['id']);
 
                     // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
                 ?>

@@ -1226,7 +1226,7 @@ EOT;
         // $result->free_result();
 	}
 
-	function log_in($result) {
+	function log_in($result) { // funkcja wykona się tylko, jeśli zwrócono wiersze (czyli wtedy gdy istnieje taki klient/pracownik)
 
         // logowanie.php - skrypt logowania -> weryfikacja adresu e-mail, hasła;
 
@@ -1247,7 +1247,7 @@ EOT;
 
         // w przeciwnym przypadku (jeśli podano błędne dane logowania) - następuje przekierowania na stronę logowania + wyświetlenie komunikatu o błędzie;
 
-        unset($_SESSION["blad"]);
+        unset($_SESSION["invalid_credentials"]);
 
 		$row = $result->fetch_assoc(); // wiersz - pola tabeli = tablica asocjacyjna;
 
@@ -1289,7 +1289,6 @@ EOT;
                                     $_SESSION['kraj'] = $row['kraj'];
 			                        $_SESSION['PESEL'] = $row['PESEL'];
 			                        $_SESSION['data_urodzenia'] = $row['data_urodzenia']; */
-
 			                        //$_SESSION['login'] = $row['login'];
 
 			//unset($_SESSION["blad"]); // usuwa komunikat o błędzie logowania; // jest potrzebne, ponieważ mogła nastąpić sytuacja, w której klient podał złe dane (nastąpiło ustawienie zmiennej $_SESSION["blad"]), po czym nastąpiło logowanie pracownika (wszystkie dane były poprawne) - wtedy zmienna $_SESSION["blad"] istnieje, i należy ją usunąć;
@@ -1305,17 +1304,21 @@ EOT;
                              WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
                 // pobranie liczby książek znajdujących się w kosztku; countCartQuantity() -> $_SESSION['koszyk_ilosc_ksiazek'] -> zapis do zmiennej;
 
-                header('Location: index.php'); exit();     // przekierowanie do strony index.php
+                header('Location: index.php'); // przekierowanie do strony index.php
+                    exit();
+
             } else {
                 $_SESSION["stanowisko"] = $row["stanowisko"];
                     $_SESSION['user-type'] = "admin";
-                header('Location: ../admin/admin.php');  exit(); // pracownik - przekierowanie do strony admin.php
+                header('Location: ../admin/admin.php');  // pracownik - przekierowanie do strony admin.php
+                    exit();
             }
-		}
-		else  // istniejący e-mail, złe (niepoprawne) hasło;
-		{
-			$_SESSION["blad"] = '<span class="error">Nieprawidłowy e-mail lub hasło</span>'; // błędne dane logowania (niepoprawne HASŁO) -> przekierowanie do zaloguj.php + komunikat;
-			header('Location: ___zaloguj.php');	exit();
+
+		} else { // istniejący e-mail, złe (niepoprawne) hasło;
+			$_SESSION["invalid_credentials"] = '<span class="error">Nieprawidłowy e-mail lub hasło</span>';
+            // błędne dane logowania (niepoprawne HASŁO) -> przekierowanie do zaloguj.php + komunikat;
+			    header('Location: ___zaloguj.php');
+                    exit();
 		}
 	}
 

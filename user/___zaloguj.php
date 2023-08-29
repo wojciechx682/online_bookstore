@@ -107,7 +107,7 @@
 
                     <!-- Księgarnia online<br><br> -->
 
-                    <form action="logowanie.php"method="post" id="login-form">
+                    <form action="logowanie.php" method="post" id="login-form">
 
                         <b>Zaloguj się na swoje konto</b><hr class="register-form-hr-line login-form-hr-line">
 
@@ -155,8 +155,8 @@
                             // czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI;
                         // normalne logowanie, podany zły login/hasło;
                         if (isset($_SESSION["blad"])) {
-                            echo ''.$_SESSION["blad"]; // wyświetlenie komunikatu "Nieprawidłowy e-mail lub hasło";
-                            unset($_SESSION["blad"]);
+                            echo $_SESSION["blad"]; // wyświetlenie komunikatu "Nieprawidłowy e-mail lub hasło";
+                                unset($_SESSION["blad"]);
                         }
                     ?>
 
@@ -164,7 +164,7 @@
                         if(isset($_SESSION["e_recaptcha"])) // błąd z reCaptcha;
                         {
                             echo $_SESSION["e_recaptcha"];
-                            unset($_SESSION["e_recaptcha"]);
+                                unset($_SESSION["e_recaptcha"]);
                         }
                     ?>
 

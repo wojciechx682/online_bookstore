@@ -57,10 +57,10 @@
 
                         <div class="edit_data_left-container">
 
-                            <label for="imie_edit"><div class="edit_data_left">Imię</div></label>
-                            <label for="nazwisko_edit"><div class="edit_data_left">Nazwisko</div></label>
-                            <label for="email_edit"><div class="edit_data_left">E-mail</div></label>
-                            <label for="telefon_edit"><div class="edit_data_left">Telefon</div></label>
+                            <label for="name"><div class="edit_data_left">Imię</div></label>
+                            <label for="surname"><div class="edit_data_left">Nazwisko</div></label>
+                            <label for="email"><div class="edit_data_left">E-mail</div></label>
+                            <label for="phone"><div class="edit_data_left">Telefon</div></label>
 
                         </div>
 
@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="edit_data_right">
-                                    <input type="text" id="phone" name="phone" value="<?=$_SESSION["telefon"]?>" maxlength="15" required>
+                                    <input type="tel" id="phone" name="phone" value="<?=$_SESSION["telefon"]?>" maxlength="15" required>
                                 </div>
 
                                 <div class="edit_data_right">
@@ -104,14 +104,13 @@
                         if (isset($_SESSION["user_data_error_message"])) {
 
                             echo $_SESSION["user_data_error_message"];
-                            unset($_SESSION["user_data_error_message"]);
+                                unset($_SESSION["user_data_error_message"]);
 
                         } else {
-
                             if (isset($_SESSION["is_user_data_changed"]) && $_SESSION["is_user_data_changed"]) {
 
                                 echo "Dane zostały zmienione";
-                                unset($_SESSION["is_user_data_changed"]);
+                                    unset($_SESSION["is_user_data_changed"]);
                             }
                         }
                     ?>
@@ -227,14 +226,14 @@
                         if (isset($_SESSION["change_password_error_message"])) {
 
                             echo $_SESSION["change_password_error_message"];
-                            unset($_SESSION["change_password_error_message"]);
+                                unset($_SESSION["change_password_error_message"]);
 
                         } else {
 
                             if (isset($_SESSION["is_password_changed"]) && $_SESSION["is_password_changed"]) {
 
                                 echo "Hasło zostało zmienione";
-                                unset($_SESSION["is_password_changed"]);
+                                    unset($_SESSION["is_password_changed"]);
                             }
                         }
                     ?>
