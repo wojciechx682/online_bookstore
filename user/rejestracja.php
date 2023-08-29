@@ -36,17 +36,17 @@
         // 3. Jeśli po wszystkich testach, flaga $valid ma wartość "true", to walidacja się udała.
 
 
-	if (isset($_POST['email']) && !empty($_POST['email']) &&
-        isset($_POST['imie']) && !empty($_POST['imie']) &&
-        isset($_POST['nazwisko']) && !empty($_POST['nazwisko']) &&
-        isset($_POST['haslo1']) && !empty($_POST['haslo1']) &&
-        isset($_POST['haslo2']) && !empty($_POST['haslo2']) &&
-        isset($_POST['miejscowosc']) && !empty($_POST['miejscowosc']) &&
-        /*isset($_POST['ulica']) && !empty($_POST['ulica']) &&*/
-        isset($_POST['numer_domu']) && !empty($_POST['numer_domu']) &&
-        isset($_POST['kod_pocztowy']) && !empty($_POST['kod_pocztowy']) &&
-        isset($_POST['kod_miejscowosc']) && !empty($_POST['kod_miejscowosc']) &&
-        isset($_POST['telefon']) && !empty($_POST['telefon'])) {
+	if (isset($_POST["email"]) && !empty($_POST["email"]) &&
+        isset($_POST["imie"]) && !empty($_POST["imie"]) &&
+        isset($_POST["nazwisko"]) && !empty($_POST["nazwisko"]) &&
+        isset($_POST["haslo1"]) && !empty($_POST["haslo1"]) &&
+        isset($_POST["haslo2"]) && !empty($_POST["haslo2"]) &&
+        isset($_POST["miejscowosc"]) && !empty($_POST["miejscowosc"]) &&
+        /*isset($_POST["ulica"]) && !empty($_POST["ulica"]) &&*/
+        isset($_POST["numer_domu"]) && !empty($_POST["numer_domu"]) &&
+        isset($_POST["kod_pocztowy"]) && !empty($_POST["kod_pocztowy"]) &&
+        isset($_POST["kod_miejscowosc"]) && !empty($_POST["kod_miejscowosc"]) &&
+        isset($_POST["telefon"]) && !empty($_POST["telefon"])) {
 
             // data processing, validation and sanitization;
             // if the data is correct, a new user account is created;
@@ -77,15 +77,16 @@
 
 		$miejscowosc = $_POST["miejscowosc"];
 		//if( isset($_POST["ulica"]) && ! empty($_POST["ulica"]) ) { $ulica = $_POST['ulica']; }
-        $ulica = isset($_POST["ulica"]) && ! empty($_POST["ulica"]) ? $_POST["ulica"] : ''; // set empty string if ulica is not set
+        $ulica =  $_POST["ulica"] ?? ""; // set empty string if ulica is not set
 		$numer_domu = $_POST["numer_domu"];
 
 		$kod_pocztowy = $_POST["kod_pocztowy"];
 		$kod_miejscowosc = $_POST["kod_miejscowosc"];
 		$telefon = $_POST["telefon"];
 
-
         //if( isset($_POST["ulica"]) && ! empty($_POST["ulica"]) ) { $ulica = $_POST['ulica']; }
+
+        $maxStringLength = 255;
 
 
             //$wojewodztwo = $_POST['wojewodztwo'];
@@ -110,7 +111,7 @@
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		// $imie = str_replace(str_split(' '), '', $imie); // remove all white spaces
-		$imie = ucfirst(strtolower(trim($imie, " ")));	// trim() - remove space in the first and last position; // strtolower() - change all to lowercase, ucfirst() - keep first letter uppercase
+		$imie = ucfirst(strtolower(trim($imie, " "))); // trim() - remove space in the first and last position; // strtolower() - change all to lowercase, ucfirst() - keep first letter uppercase
 
         $name_regex = '/^[A-ZŁŚŻ]{1}[a-ząęółśżźćń]+$/u';
 
@@ -127,32 +128,27 @@
 
         // preg_match() - sprawdza dopasowanie wzorca do ciągu, TRUE/FALSE
 
-		if( ! preg_match($name_regex, $imie) )
-		{		
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['valid'] = false;
-			//$_SESSION['e_imie'] = "Imię może składać się tylko z liter alfabetu, pierwsza litera powinna być wielka";
-			$_SESSION['e_imie'] = "Imię może składać się tylko z liter alfabetu";
+		if (!preg_match($name_regex, $imie)) {
+			$_SESSION["valid"] = false;
+			$_SESSION["e_imie"] = "Imię może składać się tylko z liter alfabetu";
 		}
 
-		if ( strlen($imie)<3 || strlen($imie)>20 )
-        {
-            //$_SESSION['wszystko_OK'] = false;
-            $_SESSION['valid'] = false;
-            $_SESSION['e_imie'] = "Podaj poprawne imię";
+		if (strlen($imie)<3 || strlen($maxStringLength)>27) {
+            $_SESSION["valid"] = false;
+            $_SESSION["e_imie"] = "Podaj poprawne imię";
         }
 
 		$nazwisko = ucfirst(strtolower(trim($nazwisko, " "))); // => "Nowak";
 
-		if( ! preg_match($name_regex, $nazwisko) )
-		{		
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['valid'] = false;
-			//$_SESSION['e_nazwisko'] = "Nazwisko może składać się tylko z liter alfabetu, pierwsza litera powinna być wielka";
-			$_SESSION['e_nazwisko'] = "Nazwisko może składać się tylko z liter alfabetu";
+		if (!preg_match($name_regex, $nazwisko)) {
+            $_SESSION["valid"] = false;
+			$_SESSION["e_nazwisko"] = "Nazwisko może składać się tylko z liter alfabetu";
 		}
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (strlen($nazwisko)<3 || strlen($nazwisko)>$maxStringLength) {
+            $_SESSION["valid"] = false;
+            $_SESSION["e_nazwisko"] = "Podaj poprawne nazwisko";
+        }
 
 		// Sprawdzenie poprawności adresu email;
 	
@@ -161,33 +157,16 @@
             // - przefiltruj zmienną w sposób określony przez rodzaj filtru (drugi parametr funkcji);
             // sanityzacja kodu - wyczyszczenie źródła z potencjalnie groźnych zapisów;
 
-		$email = str_replace(str_split(' '), '', $email); // remove all white spaces;   ' ' => '';
-
-		    // $email = htmlentities($email, ENT_QUOTES, "UTF-8");
+		$email = str_replace(str_split(" "), "", $email); // remove all white spaces;   ' ' => '';
 
 		$email_sanitized = filter_var($email, FILTER_SANITIZE_EMAIL); // email - after the sanitization process. removes source code characters to avoid XSS attacks;
 
-		if( ! filter_var($email_sanitized, FILTER_VALIDATE_EMAIL) || ($email_sanitized != $email) )
-		{
+		if (!filter_var($email_sanitized, FILTER_VALIDATE_EMAIL) || ($email_sanitized !== $email)) {
                 // ensures that the email input is sanitized and valid;
                 // to avoid any potential XSS attacks and other vulnerabilities;
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['valid'] = false;
-			$_SESSION['e_email'] = "Podaj poprawny adres e-mail";
+			$_SESSION["valid"] = false;
+			$_SESSION["e_email"] = "Podaj poprawny adres e-mail";
 		}
-
-        // sprawdzenie, czy email nie jest zajęty -->
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                        // Sprawdzenie poprawności hasła :
-                                        // if((strlen($haslo1)<8) || (strlen($haslo1)>20)) // sprawdzenie długości hasła
-                                        // {
-                                        //     $wszystko_OK = false;
-                                        //     $valid = false;
-                                        //     $_SESSION['e_ haslo'] = "Hasło musi posiadać od 8 do 20 znaków!";
-                                        // }
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		// Sprawdzenie, czy hasło zawiera - jeden duży znak, jeden mały znak, jeden znak specjalny, jedna cyfra, oraz długość od 10 do 30 znaków
 
@@ -201,30 +180,22 @@
 		$pass_regex = '/^((?=.*[!@#$%^&_*+-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
 
 		if (!preg_match($pass_regex, $haslo1)) {
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['valid'] = false;
-			$_SESSION['e_haslo'] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&_*+-\/\?)";
+			$_SESSION["valid"] = false;
+			$_SESSION["e_haslo"] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&_*+-\/\?)";
 		}	
 		
 		// Verifying that both passwords are the same;
 
-            //echo "<br> haslo1 = " . $haslo1 . "<br>";
-            //echo "<br> haslo2 = " . $haslo2 . "<br>";
-
-		if($haslo1 !== $haslo2)
-		{
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['valid'] = false;
-			$_SESSION['e_haslo'] = "Podane hasła są różne";
+		if($haslo1 !== $haslo2) {
+			$_SESSION["valid"] = false;
+			$_SESSION["e_haslo"] = "Podane hasła są różne";
 		}
 
-// (!) Hashing the password, using the latest encryption method in "PASSWORD_DEFAULT"
+        // (!) Hashing the password, using the latest encryption method in "PASSWORD_DEFAULT"
 
-$haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
+        $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Miejscowosc;
-
 		// $address_regex = '/(*UTF8)^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]+([\s|\-]?[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+){4}$/';
 
         $miejscowosc = ucfirst(trim($miejscowosc, " "));
@@ -240,11 +211,9 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
         //           #4A-23A
         //           $@!#$@#$
 
-		if( ! (preg_match($address_regex, $miejscowosc)) )
-		{
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['valid'] = false;
-			$_SESSION['e_miejscowosc'] = "Podaj poprawną nazwę miejscowości";
+		if ( !preg_match($address_regex, $miejscowosc)) {
+			$_SESSION["valid"] = false;
+			$_SESSION["e_miejscowosc"] = "Podaj poprawną nazwę miejscowości";
 		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -255,26 +224,22 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 
         // $street_regex = '/^[A-ZĄĆĘŁŃÓŚŹŻ]{1}[a-ząćęłńóśźż]*(\s[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+){0,2}$/';
 
-        if( isset($ulica) ) {
-            if( ! empty($ulica) ) {
+        if (isset($ulica)) {
+            if( !empty($ulica)) {
 
                 $street_regex = '/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s.-]{3,35}$/';
                 //    Passing:
                 //          "ul. Warszawska"  "al. Jana Pawła II"  "Plac Grunwaldzki"
 
-                if( ! (preg_match($street_regex, $ulica)) )
-                {
-                    //$_SESSION['wszystko_OK'] = false;
-                    $_SESSION['valid'] = false;
-                    $_SESSION['e_ulica'] = "Podaj poprawną nazwę ulicy";
+                if ( !preg_match($street_regex, $ulica)) {
+                    $_SESSION["valid"] = false;
+                    $_SESSION["e_ulica"] = "Podaj poprawną nazwę ulicy";
                 }
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Numer domu;
-
-		    $numer_domu = str_replace(str_split(' '), '', $numer_domu); // remove all white spaces;   ' ' => '';
+        $numer_domu = str_replace(str_split(" "), "", $numer_domu); // remove all white spaces;   ' ' => '';
 
 		// $house_number_regex = '/^[0-9]{1,3}+\s?[\/-]?+\s?+[A-Za-z0-9]{0,3}$/';
 
@@ -288,44 +253,35 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
         //           AAA-123
         //           AAA-AAA
 
-		if( ! (preg_match($house_number_regex, $numer_domu)) )
-		{		
+		if (!preg_match($house_number_regex, $numer_domu)) {
 			//$_SESSION['wszystko_OK'] = false;
 			$_SESSION['valid'] = false;
 			$_SESSION['e_numer_domu'] = "Podaj poprawny numer domu";
 		}
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// kod pocztowy
 
-		$kod_pocztowy = str_replace(str_split(' '), '', $kod_pocztowy); // remove all white spaces;   ' ' => '';
+		$kod_pocztowy = str_replace(str_split(" "), "", $kod_pocztowy); // remove all white spaces;   ' ' => '';
 
 		$zip_regex = "/^[0-9]{2}[\-]{1}[0-9]{3}$/";
 
-		if( ! (preg_match($zip_regex, $kod_pocztowy)) )
-		{		
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['valid'] = false;
-			$_SESSION['e_kod_pocztowy'] = "Podaj poprawny kod pocztowy";
+		if (!preg_match($zip_regex, $kod_pocztowy)) {
+			$_SESSION["valid"] = false;
+			$_SESSION["e_kod_pocztowy"] = "Podaj poprawny kod pocztowy";
 		}
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// kod-miejscowosc 
 
         $kod_miejscowosc = ucfirst(trim($kod_miejscowosc, " "));
 
-		if( ! (preg_match($address_regex, $kod_miejscowosc)) )
-		{		
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['valid'] = false;
-			$_SESSION['e_kod_miejscowosc'] = "Podaj poprawną miejscowość";
+		if (!preg_match($address_regex, $kod_miejscowosc)) {
+			$_SESSION["valid"] = false;
+			$_SESSION["e_kod_miejscowosc"] = "Podaj poprawną miejscowość";
 		}
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// telefon		
+		// telefon
 
-		$telefon = str_replace(str_split('!"#$%&\'()*\'-./:;<>?@[\\]^_{}|~ '), '', $telefon);
-
+        $telefon = str_replace(str_split('!"#$%&\'()*\'-./:;<>?@[\\]^_{}|~ '), '', $telefon);
         //         +48 22 123 45 67    -->    +48221234567
 
 		$phone_regex = "/^([+]?[0-9]{2})?[0-9]{9}$/";
@@ -338,31 +294,27 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
         //           12345678 (less than 9 digits)
         //           0048123456789 (invalid format)
 
-		if( ! (preg_match($phone_regex, $telefon)) )
-		{		
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['valid'] = false;
-			$_SESSION['e_telefon'] = "Podaj poprawny numer telefonu";
+		if ( !preg_match($phone_regex, $telefon) || strlen($telefon)>15) {
+			$_SESSION["valid"] = false;
+			$_SESSION["e_telefon"] = "Podaj poprawny numer telefonu";
 		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Checkbox - Have the terms and conditions been accepted ?
 		// Checkbox - checked ? not checked ?
-        //echo "<br> regulamin -> " . $_POST['regulamin'] . "<br>"; exit();
+        // echo "<br> regulamin -> " . $_POST['regulamin'] . "<br>"; exit();
         // // on - zaznaczony;      niezaznaczony -> (zmienna nie istnieje);
 
-		if( ! isset($_POST['regulamin']) )
-		{
+		if ( !isset($_POST["regulamin"])) {
             // if checkbox was not checked, it will not exist in $_POST[] variable
-			//$_SESSION['wszystko_OK'] = false;
-			$_SESSION['valid'] = false;
-			$_SESSION['e_regulamin'] = "Potwierdź akceptację regulaminu";
+			$_SESSION["valid"] = false;
+			$_SESSION["e_regulamin"] = "Potwierdź akceptację regulaminu";
 		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                // Sprawdzenie zaznaczenie checkbox'a CAPTCHA
+        // Sprawdzenie zaznaczenie checkbox'a CAPTCHA
 
-                // $secret = "6LcW48gfAAAAALDhZZERPDMpGD5aYMcLJ3s_IszG"; // secret key for recaptcha API, used to authenticate and verify that the reCAPTCHA response sent from your website to Google's servers is valid and coming from your website
+        // $secret = "6LcW48gfAAAAALDhZZERPDMpGD5aYMcLJ3s_IszG"; // secret key for recaptcha API, used to authenticate and verify that the reCAPTCHA response sent from your website to Google's servers is valid and coming from your website
 
         require('C:\xampp\apache\conf\config.php');
         $secret = RECAPTCHA_SECRET_KEY; // secret-key / klucz tajny;
@@ -386,12 +338,10 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 
         // $response => stdClass Object ( [success] => 1 [challenge_ts] => 2023-08-15T15:41:42Z [hostname] => localhost )
 
-        if( ! $response->success )
-		{
-                    //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
-
-			$_SESSION['valid'] = false;
-			$_SESSION['e_recaptcha'] = "<h3 style='font-weight: unset; margin-bottom: 5px;'>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>";
+        if ( !$response->success) {
+            //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
+			$_SESSION["valid"] = false;
+			$_SESSION["e_recaptcha"] = "<h3 style='font-weight: unset; margin-bottom: 5px;'>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>";
 		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -399,33 +349,29 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 		// Zapamiętanie danych z formularza - Formularz pamiętający wprowadzone dane;
 		
             //$_SESSION['fr_nick'] = $nick; // fr - formularz rejestracji
-		$_SESSION['register_imie'] = $imie;
-		$_SESSION['register_nazwisko'] = $nazwisko;
-		$_SESSION['register_email'] = $email;
+		$_SESSION["register_imie"] = $imie;
+		$_SESSION["register_nazwisko"] = $nazwisko;
+		$_SESSION["register_email"] = $email;
             //$_SESSION['fr_haslo1'] = $haslo1;   // nie przechowujemy haseł w zmiennych sesyjnych !
             //$_SESSION['fr_haslo2'] = $haslo2;
-		$_SESSION['register_miejscowosc'] = $miejscowosc;
-		if(isset($ulica)) {
-            $_SESSION['register_ulica'] = $ulica;
+		$_SESSION["register_miejscowosc"] = $miejscowosc;
+		if (isset($ulica)) {
+            $_SESSION["register_ulica"] = $ulica;
         }
-		$_SESSION['register_numer_domu'] = $numer_domu;
-		$_SESSION['register_kod_pocztowy'] = $kod_pocztowy;
-		$_SESSION['register_kod_miejscowosc'] = $kod_miejscowosc;
+		$_SESSION["register_numer_domu"] = $numer_domu;
+		$_SESSION["register_kod_pocztowy"] = $kod_pocztowy;
+		$_SESSION["register_kod_miejscowosc"] = $kod_miejscowosc;
             //$_SESSION['fr_wojewodztwo'] = $wojewodztwo;
             //$_SESSION['fr_kraj'] = $kraj;
             //$_SESSION['fr_PESEL'] = $PESEL;
             //$_SESSION['fr_data_urodzenia'] = $data_urodzenia;
-		$_SESSION['register_telefon'] = $telefon;
+		$_SESSION["register_telefon"] = $telefon;
 
-		if(isset($_POST['regulamin'])) // remembering the checkbox selection
-		{
-			$_SESSION['register_regulamin'] = true;
+		if (isset($_POST["regulamin"])) {
+            // remembering the checkbox selection
+			$_SESSION["register_regulamin"] = true;
 		}
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-        echo "GET ->"; print_r($_GET); echo "<hr><br>";
-        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();*/
 
         /*
             POST -> Array
@@ -462,104 +408,60 @@ $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
             )
         */
 
-        //$email_sanitized = "kamil.litwin@wp.pl";
-
 		// Sprawdzenie czy taki user (email) istnieje już w bazie;
 		query("SELECT id_klienta FROM klienci WHERE email='%s'", "registerVerifyEmail", $email_sanitized);
-        // przestawi mi zmienną $_SESSION['valid'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest !;
-
+            // przestawi mi zmienną $_SESSION["valid"] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest;
         // jeśli pracownik posiada taki email ->
-
         query("SELECT id_pracownika  FROM pracownicy WHERE email='%s'", "registerVerifyEmail", $email_sanitized);
-        // przestawi mi zmienną $_SESSION['valid'] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);
+            // przestawi mi zmienną $_SESSION["valid"] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);
 
 
-        //exit();
-
-		if($_SESSION['valid'])      // udana walidacja;    // $_SESSION['valid']
-		{
-			////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			// Zrealizowanie zapytania INSERT :
+		if ($_SESSION["valid"]) {
 
             $address = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc];
             // należy pobrać id ostatnio wstawionego wiersza w tabeli klienci !
 
-            query("INSERT INTO adres (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address); // funkcja "register" --> $_SESSION['udanarejestracja'] = true,  $_SESSION['last_adres_id'] - pobiera ID ostatnio wstawioneo adresu (wiersza) - z właściwości obiektu "$polaczenie";
+            query("INSERT INTO adres (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address);
+            // funkcja "register" --> $_SESSION["udanarejestracja"] = true,
+            //                        $_SESSION["last_adres_id"] - pobiera ID ostatnio wstawioneo adresu (wiersza) - z właściwości obiektu "$polaczenie";
 
             //exit();
 
-            if( isset($_SESSION['udanarejestracja']) && // jeśli udało się wstawić wiersz do tabeli "adres";
-                      $_SESSION['udanarejestracja'] &&
-                isset($_SESSION['last_adres_id']) ) {
+            if( isset($_SESSION["udanarejestracja"]) && // jeśli udało się wstawić wiersz do tabeli "adres";
+                      $_SESSION["udanarejestracja"] &&
+                isset($_SESSION["last_adres_id"]) ) {
 
                 $user = [$imie, $nazwisko, $email, $telefon, $haslo_hash, $_SESSION["last_adres_id"]];
 
-                    // query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database;
-
-
-                    // register() --> $_SESSION['last_adres_id'] = $polaczenie->insert_id;
-
-                // print_r($user); exit();
-
-                //echo "<br> 495 <br> ";
+                // query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database;
 
                 $insertSuccessful = query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
-                //query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
-                // add new user to database, ̶$̶_̶S̶E̶S̶S̶I̶O̶N̶[̶'̶l̶a̶s̶t̶_̶c̶l̶i̶e̶n̶t̶_̶i̶d̶'̶] ̶-̶>̶ ̶i̶d̶ ̶n̶o̶w̶o̶ ̶w̶s̶t̶a̶w̶i̶o̶n̶e̶g̶o̶ ̶k̶l̶i̶e̶n̶t̶a̶;̶
-                //exit();
-                //unset($_SESSION['wszystko_OK']);
+                // add new user to database;
 
-                /*echo "<br> SESSION -> <br>";
-                print_r($_SESSION); exit();*/
-
-                /*unset($_SESSION["valid"], $_SESSION["register_imie"], $_SESSION["register_nazwisko"], $_SESSION["register_email"], $_SESSION["register_miejscowosc"], $_SESSION["register_ulica"], $_SESSION["register_numer_domu"], $_SESSION["register_kod_pocztowy"], $_SESSION["register_kod_miejscowosc"], $_SESSION["register_telefon"], $_SESSION["register_regulamin"]);*/
-
-                if($insertSuccessful) {
-
-                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();*/
+                if ($insertSuccessful) {
 
                     unset($_SESSION["last_adres_id"]);
-
-                    header('Location: ___zaloguj.php'); // $_SESSION["udana-rejestracja"]
-                    exit();
+                        header('Location: ___zaloguj.php'); // $_SESSION["udana-rejestracja"]
+                            exit();
 
                 } else { // nie udało się dodać usera
 
                     query("DELETE FROM adres WHERE adres_id = '%s'", "", $_SESSION["last_adres_id"]);
-
-                    unset($_SESSION["udanarejestracja"], $_SESSION["last_adres_id"]);
-
-                    $_SESSION["register-error"] = true;
-                    header('Location: ___zarejestruj.php'); // $_SESSION["udana-rejestracja"]
-                    exit();
+                        unset($_SESSION["udanarejestracja"], $_SESSION["last_adres_id"]);
+                            $_SESSION["register-error"] = true;
                 }
-
-            } else {
-                // nie udało się wstawić wierszy do tabeli "adres" ;
-
-                unset($_SESSION["udanarejestracja"]);
+            } else { // nie udało się wstawić wierszy do tabeli "adres" ;
 
                 $_SESSION["register-error"] = true;
-                header('Location: ___zarejestruj.php');
-                exit();
             }
         }
-		else {
-            // nieudana walidacja;
-			header('Location: ___zarejestruj.php');
-            exit();
-        }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    } else {
 
+        $_SESSION["e_fields"] = "<h3>Uzupełnij wszystkie pola</h3>";
     }
-    else {
 
-        $_SESSION['e_fields'] = "<h3>Uzupełnij wszystkie pola</h3>";
-        header('Location: ___zarejestruj.php');
+    header('Location: ___zarejestruj.php');
         exit();
-    }
 
 ?>

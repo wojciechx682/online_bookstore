@@ -1322,8 +1322,8 @@ EOT;
 	function registerVerifyEmail($result) // register_verify_email
 	{
         // rejestracja (rejestracja.php) - weryfikacja, czy istnieje taki email (czy jest zajęty);
-		$_SESSION['valid'] = false;
-		$_SESSION['e_email'] = "Istnieje już konto przypisane do tego adresu email";
+		$_SESSION["valid"] = false;
+		$_SESSION["e_email"] = "Istnieje już konto przypisane do tego adresu email";
 	}
 
     function register($polaczenie) {
@@ -1351,14 +1351,14 @@ EOT;
         echo "<br>". gettype($polaczenie->insert_id);*/
 
         // dodanie nowego użytkownika - rejestracja.php
-        $_SESSION['udanarejestracja'] = true;
+        $_SESSION["udanarejestracja"] = true;
 
             // pobranie ID ostatnio wstawionego adresu  ->
             //query("SELECT adres_id FROM adres ORDER BY adres_id DESC LIMIT 1", "get_address_id", "");
             // $_SESSION['last_adres_id'] -> id ostatnio dodanego adresu;
 
         // pobranie ID ostatnio wstawionego adresu  ->
-        $_SESSION['last_adres_id'] = $polaczenie->insert_id;
+        $_SESSION["last_adres_id"] = $polaczenie->insert_id;
 
         //echo "<br> $ SESSION['last_adres_id'] --> " . "<br>";         // 1
         //print_r($_SESSION['last_adres_id']); exit();
@@ -2231,7 +2231,7 @@ function query($query, $fun, $values) {
 
                         if ($fun) {
 
-                            $fun($connection); // order.php;
+                            $fun($connection); // order.php; // register.php - (adres + dane_usera <-- last_insert_id)
 
                             // jeśli wymagane jest pobranie id ostatnio wstawionego wiersza - wywołaj funkcję;
 

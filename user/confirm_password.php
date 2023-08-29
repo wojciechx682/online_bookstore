@@ -12,7 +12,9 @@
 	// jesli wszystkie pola sa ustawione i nie sa puste
 
 	if ( isset($_POST["password"]) && !empty($_POST["password"]) &&
-         !empty($_POST["confirm_password"]) && !empty($_POST["confirm_password"])) {
+         isset($_POST["confirmPassword"]) && !empty($_POST["confirmPassword"])) {
+
+
 
         // $haslo = $_POST['haslo_confirm']; //  ̶P̶o̶w̶i̶n̶i̶e̶n̶e̶m̶ ̶t̶o̶ ̶j̶a̶k̶o̶ś̶ ̶z̶a̶k̶o̶d̶o̶w̶a̶ć̶ ̶?̶ ̶Z̶a̶s̶z̶y̶f̶r̶o̶w̶a̶ć̶ ̶?̶ ̶T̶a̶k̶ ̶a̶b̶y̶ ̶n̶i̶e̶ ̶b̶y̶ł̶o̶ ̶d̶o̶s̶t̶ę̶p̶n̶e̶,̶ ̶b̶o̶ ̶t̶a̶ ̶z̶m̶i̶e̶n̶n̶a̶ ̶t̶r̶z̶y̶m̶a̶ ̶j̶a̶w̶n̶i̶e̶ ̶h̶a̶s̶ł̶o̶
         // $powtorz_haslo = $_POST['powtorz_haslo_confirm'];
@@ -23,22 +25,28 @@
             // $powtorz_haslo = strip_tags($powtorz_haslo);
 
         $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
-        $confirm_password = filter_input(INPUT_POST, "confirm_password", FILTER_SANITIZE_STRING);
+        $confirmPassword = filter_input(INPUT_POST, "confirmPassword", FILTER_SANITIZE_STRING);
 
         $_SESSION["password_confirmed"] = true; // flaga walidująca
 
-        if ( ($password !== $confirm_password) || ($password !== $_POST["password"]) || ($confirm_password !== $_POST["confirm_password"])) {
+
+
+        if ($password !== $confirmPassword || $password !== $_POST["password"] || $confirmPassword !== $_POST["confirmPassword"]) {
 
             $_SESSION["password_confirmed"] = false;
 
+
+            echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+            echo "GET ->"; print_r($_GET); echo "<hr><br>";
+            echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();
         } else {
 
             query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verifyPassword", $_SESSION["id"]);
-                // ta funkcja ustawia zmienna sesyjna $_SESSION['stare_haslo'] ktora przechowuje haslo (hash hasła) z BD;
+                // ta funkcja ustawia zmienna sesyjna $_SESSION["password_hashed"] ktora przechowuje haslo (hash hasła) z BD;
             // $_SESSION["password_hashed"] --> przechowuje aktualne (zahashowane) hasło z BD;
         }
 
-        if ( ! password_verify($password, $_SESSION["password_hashed"])) {
+        if ( !password_verify($password, $_SESSION["password_hashed"])) {
             // true? -> hasze sa takie same (podano poprawne hasło do konta)
             $_SESSION["password_confirmed"] = false; // podane złe hasło;
         }
@@ -47,8 +55,8 @@
         $_SESSION["password_confirmed"] = false;
     }
 
-    unset($_SESSION["stare_haslo"]);
+    unset($_SESSION["password_hashed"]);
 
     header('Location: ___remove_account.php'); // przekierowanie do strony remove_account.php
-    exit();
+        exit();
 ?>

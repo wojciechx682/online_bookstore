@@ -10,11 +10,7 @@
 
     require_once "../authenticate-user.php"; // check if user is logged-in, and user-type is "client" - if not, redirect to login page ;
 
-echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-echo "GET ->"; print_r($_GET); echo "<hr><br>";
-echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
-
-    if( isset($_SESSION["password_confirmed"]) && $_SESSION["password_confirmed"] ) { // podano poprawne hasło;
+    if (isset($_SESSION["password_confirmed"]) && $_SESSION["password_confirmed"] ) { // podano poprawne hasło;
 
         query("DELETE FROM klienci WHERE id_klienta='%s'", "", $_SESSION["id"]);
             // usunięcie konta klienta (+ ✓ jego zamówień, ✓ szczegółów zamówień, ✓płatności, ✓ koszyka) - Dzięki zastosowaniu relacji i ograniczeń kluczy obcych w tych tabelach (ON DELETE CASCADE, ON UPDATE CASCADE);
@@ -84,7 +80,9 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
                 <div id="content">
 
                     <?php
-                        //print_r($_SESSION);
+                        echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
                     ?>
 
                     <h3 class="account-header">Usuń konto</h3>
@@ -132,7 +130,7 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
                                         <button type="submit">Potwierdź</button>
                                     </div>
                                     <?php
-                                        if ( isset($_SESSION["password_confirmed"]) && ! $_SESSION["password_confirmed"] ) {
+                                        if ( isset($_SESSION["password_confirmed"]) && !$_SESSION["password_confirmed"] ) {
                                                 // confirm_password.php -> $_SESSION["password_confirmed"] == false ;
                                             echo '<span class="remove-account-password-error">Nieprawidłowe hasło</span>';
                                                 unset($_SESSION["password_confirmed"]);
@@ -163,8 +161,12 @@ echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
 
                                 <form id="confirm_password_form" action="confirm_password.php" method="post">
 
-                                    <div class="edit_data_right"><input type="password" id="haslo_confirm" name="password"></div>
-                                    <div class="edit_data_right"><input type="password" id="powtorz_haslo_confirm" name="confirm_password"></div>
+                                    <div class="edit_data_right">
+                                        <input type="password" name="password" id="haslo_confirm" required>
+                                    </div>
+                                    <div class="edit_data_right">
+                                        <input type="password" name="confirmPassword" id="powtorz_haslo_confirm" required>
+                                    </div>
 
                                     <div class="edit_data_button">
                                         <button type="submit" form="confirm_password_form">Edytuj dane</button>

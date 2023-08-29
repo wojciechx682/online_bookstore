@@ -92,69 +92,69 @@
                     $_SESSION["application-error"] = true;
 
                     unset($_POST, $title, $_SESSION["input-search-nav"]);
-                        header('Location: index.php', true,303);
-                            exit();
+                         /*header('Location: index.php', true,303);
+                            exit();*/
 
             } else { // validation passed ; - input-search-nav - nie pusty, posiada wartość, która przeszła walidację ;
 
-                /*unset($_SESSION["book_exists"]);
+                            /*unset($_SESSION["book_exists"]);
 
-                $values = [$_SESSION["input-search-nav"]];
+                            $values = [$_SESSION["input-search-nav"]];
 
-                $query = "SELECT
-                                ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
-                                kt.nazwa, sb.id_kategorii, sb.nazwa,
-                                au.imie, au.nazwisko,
-                                SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
-                            FROM 
-                                ksiazki AS ks
-                            JOIN 
-                                autor AS au ON ks.id_autora = au.id_autora
-                            JOIN 
-                                subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
-                            JOIN 
-                                kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
-                            LEFT JOIN 
-                                magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
-                            WHERE ks.tytul LIKE '%%%s%%'";
+                            $query = "SELECT
+                                            ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
+                                            kt.nazwa, sb.id_kategorii, sb.nazwa,
+                                            au.imie, au.nazwisko,
+                                            SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                                        FROM
+                                            ksiazki AS ks
+                                        JOIN
+                                            autor AS au ON ks.id_autora = au.id_autora
+                                        JOIN
+                                            subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                                        JOIN
+                                            kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                                        LEFT JOIN
+                                            magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                                        WHERE ks.tytul LIKE '%%%s%%'";
 
-                if($_SESSION["kategoria"] != "Wszystkie") { // kategoria zawsze jest ustawiona wsześniej, przyjmuje wartość "Wszystkie" lub dowolną inną z istniejących;
+                            if($_SESSION["kategoria"] != "Wszystkie") { // kategoria zawsze jest ustawiona wsześniej, przyjmuje wartość "Wszystkie" lub dowolną inną z istniejących;
 
-                    // jeśli kategoria to np. "Informatyka", "Horror", "Fantastyka";
+                                // jeśli kategoria to np. "Informatyka", "Horror", "Fantastyka";
 
-                    $where = []; // WHERE CONDITION
-                    // $where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
-                    $where[] = " AND kt.nazwa LIKE '%%%s%%'"; //%%%s%% // "Informatyka", "Horror", "Fantastyka";
-                    $values[] = $_SESSION['kategoria']; // dodanie do tablicy argumentów zmiennej kategoria - do użycia w funkcji query(); // od teraz values = ["input-search-nav" (tytul), "kategoria"];
+                                $where = []; // WHERE CONDITION
+                                // $where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
+                                $where[] = " AND kt.nazwa LIKE '%%%s%%'"; //%%%s%% // "Informatyka", "Horror", "Fantastyka";
+                                $values[] = $_SESSION['kategoria']; // dodanie do tablicy argumentów zmiennej kategoria - do użycia w funkcji query(); // od teraz values = ["input-search-nav" (tytul), "kategoria"];
 
-                    if(isset($_SESSION["subcategory"])) { // jeśli jest ustawiona pod-kateoria;
-                        $where[] = " AND sb.nazwa LIKE '%%%s%%'"; // szukaj w także w tej podkategorii;
-                        $values[] = $_SESSION['subcategory'];
-                    }
-                }
+                                if(isset($_SESSION["subcategory"])) { // jeśli jest ustawiona pod-kateoria;
+                                    $where[] = " AND sb.nazwa LIKE '%%%s%%'"; // szukaj w także w tej podkategorii;
+                                    $values[] = $_SESSION['subcategory'];
+                                }
+                            }
 
-                if (!empty($where)) { // dodanie do zapytania warunku  w którym kategoria to ->  "Informatyka", "Horror", "Fantastyka";
+                            if (!empty($where)) { // dodanie do zapytania warunku  w którym kategoria to ->  "Informatyka", "Horror", "Fantastyka";
 
-                    // combine the conditions into a single WHERE clause
-                    $query .= implode("", $where);
-
-
-                }
-
-                $query .= " GROUP BY ks.id_ksiazki";
-
-                query($query, "verifyBookExists", $values);
+                                // combine the conditions into a single WHERE clause
+                                $query .= implode("", $where);
 
 
-                if(empty($_SESSION["book_exists"])) {
-                    $_SESSION["no-results"] = "Brak wyników";
-                    unset($_POST, $title, $_SESSION["input-search-nav"]);
-                }*/
+                            }
 
-                // przekierowanie ! (może być na dowolny adres, niekoniecznie ten sam);
+                            $query .= " GROUP BY ks.id_ksiazki";
+
+                            query($query, "verifyBookExists", $values);
+
+
+                            if(empty($_SESSION["book_exists"])) {
+                                $_SESSION["no-results"] = "Brak wyników";
+                                unset($_POST, $title, $_SESSION["input-search-nav"]);
+                            }*/
+
+                /* // przekierowanie ! (może być na dowolny adres, niekoniecznie ten sam);
                 header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // prg - to prevent resubmitting the form
                     // $_SESSION["input-search-nav"]; <--
-                        exit();
+                        exit();*/
             }
 
         } elseif (isset($_POST["category"])) { // && ! empty($_POST['kategoria'])
@@ -169,7 +169,7 @@
                 $_SESSION["category"] = $category; // --> $category | FALSE
 
                 // check if THAT category exists in db (!) ;
-                unset($_SESSION["category-exists"]);
+                    unset($_SESSION["category-exists"]);
                 query("SELECT nazwa FROM kategorie WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["category"]);
                 // $_SESSION["category-exists"] --> true,                   jeśli taka kategoria (nazwa) istnieje;
                 // -------------||------------- --> zmienna NIE ISTNIEJE !, jeśli taka kategoria (nazwa) NIE istnieje;
@@ -185,8 +185,8 @@
                     // validation failed - redirect to main-page (index.php);
 
                     unset($_POST, $category, $_SESSION["category"], $_SESSION["category-exists"], $_SESSION["subcategory"], $_SESSION["subcategory-exists"]);
-                        header('Location: index.php', true,303);
-                            exit();
+                        /*header('Location: index.php', true,303);
+                            exit();*/
 
                 } else { // validation passed (category) - kategoria - nie pusty, posiada wartość, która przeszła walidację;
                          //                                          - istnieje kategoria o takiej nazwie
@@ -197,7 +197,7 @@
                         $_SESSION["subcategory"] = $subcategory;
 
                         // check if THAT sub-category exists in db (!) ;
-                        unset($_SESSION["subcategory-exists"]);
+                            unset($_SESSION["subcategory-exists"]);
                         query("SELECT nazwa FROM subkategorie WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // ✓ przestawi $_SESSION["subcategory-exists"] --> na true, jeśli taka pod-kategoria (nazwa) istnieje; // w przeciwnym wypadku --> $_SESSION["subcategory-exists"] --> zmienna NIE ISTNIEJE; - jeśli taka pod-kategoria (nazwa) nie istnieje !
 
                         if( empty($subcategory)  // pusta wartość podkategorii --> "", lub nie przeszła walidacji (false)
@@ -210,23 +210,23 @@
 
                             // validation failed - redirect to main page (index.php);
                             unset($_POST, $category, $subcategory, $_SESSION["category"], $_SESSION["subcategory"], $_SESSION["category-exists"], $_SESSION["subcategory-exists"]);
-                            header('Location: index.php', true, 303);
-                            exit();
+                                /*header('Location: index.php', true, 303);
+                                    exit();*/
                         }
 
                     } else {
                         unset($_SESSION["subcategory"]); // ✓ remove subcategory variable (SESSION), if it not exists in $_POST[] (!)
                     }
                     // kategoria + subkategoria (jeśli była ustawiona w POST) - przeszły walidację - ✓ przekierowanie (redirect) - 303;
-                    header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
-                    exit();
+                    /*header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
+                        exit();*/
                 }
 
             } else {
                 $_SESSION["category"] = "Wszystkie";
                 unset($_SESSION["subcategory"], $_SESSION["category-exists"], $_SESSION["subcategory-exists"]);
-                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
-                exit();
+                    /*header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
+                        exit();*/
             }
         }
 
@@ -247,13 +247,13 @@
                     $_SESSION["application-error"] = true;
 
                     unset($_POST, $search_value, $_SESSION["input-search"], $_SESSION["category"], $_SESSION["subcategory"], $_SESSION["category-exists"], $_SESSION["subcategory-exists"]);
-                        header('Location: index.php', true, 303);
-                            exit();
+                        /*header('Location: index.php', true, 303);
+                            exit();*/
             } else { // validation passed - input-search ;
 
                 unset($_SESSION["subcategory"]); // ✓ - ponieważ szukamy książek w każdej kategorii;
-                    header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
-                        exit();
+                    /*header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
+                        exit();*/
             }
         }
 
@@ -471,8 +471,8 @@
                 $_SESSION["application-error"] = true;
 
                 unset($_POST, $category, $_SESSION["adv-search-category"], $_SESSION["category"], $_SESSION["category-exists"], $title, $_SESSION["adv-search-title"], $author, $_SESSION["adv-search-author"], $_SESSION["max-author-id"], $_SESSION["author-exists"], $_SESSION["adv-search-query"], $year_min, $year_max, $_SESSION["year-min"], $_SESSION["year-max"]);
-                    header('Location: index.php', true, 303);
-                        exit();
+                    /*header('Location: index.php', true, 303);
+                        exit();*/
 
             } else { // $valid === true;
 
@@ -546,16 +546,19 @@
                     // (testing) - execute the query
                     // query($query, "get_books", $values);
 
-                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // prg - to prevent resubmitting the form
-                exit();
+                /*header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // prg - to prevent resubmitting the form
+                exit();*/
 
             } // $valid == true;
 
         }     // if ( isset($_POST["adv-search-title"]) && isset($_POST["adv-search-category"]) && ... )
 
+        header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // prg - to prevent resubmitting the form
+            exit();
+
     }         // if ( $_SERVER['REQUEST_METHOD'] === "POST" ) ...
 
-   if ( ! isset($_SESSION["category"]) || empty($_SESSION["category"]) ) {
+    if ( !isset($_SESSION["category"]) || empty($_SESSION["category"]) ) {
 
         $_SESSION["category"] = "Wszystkie"; // "normal" entry from main-page (index.php) ;
     }
@@ -630,7 +633,11 @@
                             <form method="post"> <!-- action="index.php" -->
                                     <!-- (szukaj tytułu w tej kategorii) -->
                                     <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
-                                <input type="submit" value="">
+                                <!--<input type="submit" value="">-->
+
+                                <button type="submit">
+                                    <i class="icon-search"></i>
+                                </button>
                             </form>
 
                         </div>
@@ -686,30 +693,13 @@
                             // ! $_GET['kategoria'] --> $_SESSION["kategoria"] --> "Wszystkie" (domyślnie)
                             // ✓ Kategoria jest ustawiona zawsze;
 
-                                // isset($_GET["input-search"])
-
-                                //  ̶ ̶k̶a̶t̶e̶g̶o̶r̶i̶a̶ ̶n̶i̶e̶ ̶b̶y̶ł̶a̶ ̶w̶ ̶p̶a̶r̶a̶m̶e̶t̶r̶z̶e̶ ̶G̶E̶T̶,̶ ̶w̶i̶ę̶c̶ ̶p̶r̶z̶y̶j̶m̶i̶e̶ ̶w̶a̶r̶t̶o̶ś̶ć̶ ̶"̶W̶s̶z̶y̶s̶t̶k̶i̶e̶"̶ ̶-̶ ̶l̶i̶n̶i̶a̶ ̶5̶2̶;̶
-
-                                // $_SESSION["input-search"]
-
-                            if ( isset($_SESSION["input-search"]) ) {
+                            if (isset($_SESSION["input-search"])) {
 
                                 // PRG -> jeśli jest ustawiona Z.S. input-search, to tutaj kategoria zawsze będzie wynosić "Wszyskie"
                                 // ponieważ input-search szuka książek we wszystkich kategoriach ;
 
-                                //if( ! empty($_GET["input-search"]) ) {
-
-                                    //echo "180 input-seach -> " . $_SESSION["input-search"] . "<br>";
-                                    // echo '<script> displayNav(); </script>'; // do usunięcia - to funkcja tutaj NIC NIE ROBI ale zostawiam jakby coś;
-                                    // input-search sanitization;
-                                    //$search_value = filter_input(INPUT_GET, 'input-search', FILTER_SANITIZE_STRING);
-
                                 $search_value = $_SESSION["input-search"];
-                                unset($_SESSION["input-search"]);
-
-                                    //echo " 180 input-seach (sanitized) -> " . $search_value . "<br>";
-
-                                    // ew warunek jeśli jest różne od oryginalnej wartości wejściowej -> wyświetlić komunikat "podaj poprawne dane";
+                                    unset($_SESSION["input-search"]);
 
                                     /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
                                                              kt.nazwa, sb.id_kategorii,
@@ -718,7 +708,7 @@
                                                              WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
                                                              AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value);*/ // kategorie => nazwa, id_kategorii;
 
-                                    // dodanie statusu - "dostępna / niedostępna" -->
+                                // dodanie statusu - "dostępna / niedostępna" -->
 
                                 query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                                               kt.nazwa, sb.id_kategorii, 
@@ -739,27 +729,15 @@
 
                             }
 
-                            /*elseif ( isset($_GET["input-search-nav"]) && !empty($_GET["input-search-nav"]) ) {*/
-
-                            /*elseif ( isset($_POST["input-search-nav"]) && !empty($_POST["input-search-nav"]) ) {*/
-
-                            elseif ( isset($_SESSION["input-search-nav"]) ) { //  && ! empty($_SESSION["input-search-nav"])
+                            elseif (isset($_SESSION["input-search-nav"])) { //  && ! empty($_SESSION["input-search-nav"])
                                                                               // wystarczy sprawdzić czy istnieje, bo sprawdzenie czy jest puste odbywa się wcześniej ;
 
                                 // ✓ tutaj zmienna sesyjna "kategoria" przyjmuje wartość "Wszystkie" lub dowolną inną kategorią z istniejących - ponieważ wsześniej zostaje ustawiona;
 
-                                            // echo "198 input-seach-nav -> " . $_GET["input-search-nav"] . "<br>";
-                                                // input-search-nav sanitization;
-                                           /* $title = filter_input(INPUT_GET, "input-search-nav", FILTER_SANITIZE_STRING);*/
+                                $search_value = $_SESSION["input-search-nav"];
+                                    unset($_SESSION["input-search-nav"]);
 
-                                /*$title = filter_input(INPUT_POST, "input-search-nav", FILTER_SANITIZE_STRING);*/
-
-                                $title = $_SESSION["input-search-nav"];
-                                unset($_SESSION["input-search-nav"]);
-
-                                //echo "198 input-seach-nav -> " . $title . "<br>";
-
-                                $values = [$title]; // VALUES USED AS ARGUMENTS
+                                $values = [$search_value]; // VALUES USED AS ARGUMENTS
 
                                 // budowanie kwerendy w zależności od tego czy kategoria == "Wszystkie" czy jest to konkretna kategoria;
 
@@ -773,12 +751,6 @@
                                                               subkategorie AS sb
                                                          WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
                                                          AND ks.tytul LIKE '%%%s%%'";*/
-
-                                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                                echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                                echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
-
-
 
                                 // dodanie statusu - "dostępna / niedostępna" -->
 
@@ -799,16 +771,16 @@
                                             magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
                                         WHERE ks.tytul LIKE '%%%s%%'";
 
-                                if($_SESSION["category"] != "Wszystkie") { // kategoria zawsze jest ustawiona wsześniej, przyjmuje wartość "Wszystkie" lub dowolną inną z istniejących;
-
-                                    // jeśli kategoria to np. "Informatyka", "Horror", "Fantastyka";
+                                if ($_SESSION["category"] !== "Wszystkie") {
+                                    // kategoria zawsze jest ustawiona wsześniej, przyjmuje wartość "Wszystkie" lub dowolną inną z istniejących;
+                                        // jeśli kategoria to np. "Informatyka", "Horror", "Fantastyka";
 
                                     $where = []; // WHERE CONDITION
                                         // $where[] = " AND ks.kategoria LIKE '%%%s%%'"; //%%%s%%
                                     $where[] = " AND kt.nazwa LIKE '%%%s%%'"; //%%%s%% // "Informatyka", "Horror", "Fantastyka";
                                     $values[] = $_SESSION["category"]; // dodanie do tablicy argumentów zmiennej kategoria - do użycia w funkcji query(); // od teraz values = ["input-search-nav" (tytul), "kategoria"];
 
-                                    if(isset($_SESSION["subcategory"])) { // jeśli jest ustawiona pod-kateoria;
+                                    if (isset($_SESSION["subcategory"])) { // jeśli jest ustawiona pod-kateoria;
                                         $where[] = " AND sb.nazwa LIKE '%%%s%%'"; // szukaj w także w tej podkategorii;
                                         $values[] = $_SESSION['subcategory'];
                                     }
@@ -816,182 +788,141 @@
 
                                 if (!empty($where)) { // dodanie do zapytania warunku  w którym kategoria to ->  "Informatyka", "Horror", "Fantastyka";
 
-                                    // combine the conditions into a single WHERE clause
-                                    $query .= implode("", $where);
-
-                                    /*echo "<br>283<br>";*/
+                                    $query .= implode("", $where);  // combine the conditions into a single WHERE clause
                                 }
 
                                 $query .= " GROUP BY ks.id_ksiazki";
 
-                                echo "<br><hr><br> query --> <br><br>";
-                                echo $query . "<br><br><hr><br>";
+                                /*echo "<br><hr><br> query --> <br><br>";
+                                echo $query . "<br><br><hr><br>";*/
 
                                 query($query, "getBooks", $values);
-
                             }
 
                             // wyszukiwanie zaawansowane - advanced search result (POST);
 
-                            elseif ( isset($_SESSION["adv-search-query"] ) ) {
+                            elseif (isset($_SESSION["adv-search-query"])) {
 
-                                echo "<br><hr><br>";
+                                /*echo "<br><hr><br>";
                                     echo "<br> adv-search-query --> <br><br>";
                                     echo $_SESSION["adv-search-query"];
-                                echo "<br><hr><br>";
+                                echo "<br><hr><br>";*/
 
-                                /*// set up the initial query string
-                                    // $query = "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki";
-                                $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
-                                  ks.rating,
-                                  kt.nazwa, sb.id_kategorii,
-                                   au.imie, au.nazwisko
-                                  FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb";
+                                            /*// set up the initial query string
+                                                // $query = "SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki";
+                                            $query = "SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania,
+                                              ks.rating,
+                                              kt.nazwa, sb.id_kategorii,
+                                               au.imie, au.nazwisko
+                                              FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb";
 
-                                // validate and sanitize input data (advanced search);
+                                            // validate and sanitize input data (advanced search);
 
-                                //                                $_POST =>
-                                //                                (
-                                //                                    [       adv-search-title       ] => "bbb"
-                                //                                    [       adv-search-category       ] => Komiks
-                                //                                    [       adv-search-author       ] => 13   // id_autora
-                                //                                    [       year-min       ] => 2005
-                                //                                    [       year-max       ] => 2018
-                                //                                )
+                                            //                                $_POST =>
+                                            //                                (
+                                            //                                    [       adv-search-title       ] => "bbb"
+                                            //                                    [       adv-search-category       ] => Komiks
+                                            //                                    [       adv-search-author       ] => 13   // id_autora
+                                            //                                    [       year-min       ] => 2005
+                                            //                                    [       year-max       ] => 2018
+                                            //                                )
 
 
-                                if ( isset($_POST["adv-search-title"]) && ! empty($_POST["adv-search-title"]) ) {
-                                    // sanitize adv-seatch-title;
-                                    $title = filter_input(INPUT_POST, "adv-search-title", FILTER_SANITIZE_STRING);
-                                }
-                                if ( isset($_POST["adv-search-category"]) && ! empty($_POST["adv-search-category"]) ) {
-                                    // sanitize category;
-                                    $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING);
-                                }
-                                if ( isset($_POST["adv-search-author"]) && ! empty($_POST["adv-search-author"]) ) {
-                                    // sanitize adv-search-author
-                                    $author = filter_input(INPUT_POST, "adv-search-author", FILTER_VALIDATE_INT);
-                                        // if (!$author || !is_numeric($_POST["adv-search-author"])) {
-                                            // Handle invalid input (e.g. display an error message)
-                                        //    $_SESSION["advanced-search-error"] = "Podaj poprawne dane";
-                                        //}
-                                }
+                                            if ( isset($_POST["adv-search-title"]) && ! empty($_POST["adv-search-title"]) ) {
+                                                // sanitize adv-seatch-title;
+                                                $title = filter_input(INPUT_POST, "adv-search-title", FILTER_SANITIZE_STRING);
+                                            }
+                                            if ( isset($_POST["adv-search-category"]) && ! empty($_POST["adv-search-category"]) ) {
+                                                // sanitize category;
+                                                $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING);
+                                            }
+                                            if ( isset($_POST["adv-search-author"]) && ! empty($_POST["adv-search-author"]) ) {
+                                                // sanitize adv-search-author
+                                                $author = filter_input(INPUT_POST, "adv-search-author", FILTER_VALIDATE_INT);
+                                                    // if (!$author || !is_numeric($_POST["adv-search-author"])) {
+                                                        // Handle invalid input (e.g. display an error message)
+                                                    //    $_SESSION["advanced-search-error"] = "Podaj poprawne dane";
+                                                    //}
+                                            }
 
-                                // Initialize an array to store the conditions for the WHERE clause;
+                                            // Initialize an array to store the conditions for the WHERE clause;
 
-                                $where = array();
-                                $values = array();
+                                            $where = array();
+                                            $values = array();
 
-                                // check if the user provided a book title;
-                                if (!empty($_POST['adv-search-title'])) {
-                                    // Add a condition for the book title (!)
-                                    // $where[] = "ks.tytul LIKE '%" . $_POST['adv-search-title'] . "%'";
-                                    $where[] = "ks.tytul LIKE '%%%s%%'"; //%%%s%%
-                                    $values[] = $_POST['adv-search-title']; // values += ["title"];
-                                }
+                                            // check if the user provided a book title;
+                                            if (!empty($_POST['adv-search-title'])) {
+                                                // Add a condition for the book title (!)
+                                                // $where[] = "ks.tytul LIKE '%" . $_POST['adv-search-title'] . "%'";
+                                                $where[] = "ks.tytul LIKE '%%%s%%'"; //%%%s%%
+                                                $values[] = $_POST['adv-search-title']; // values += ["title"];
+                                            }
 
-                                // check if the user selected a category
-                                if ($_POST['adv-search-category'] != 'Wszystkie') {
-                                    // Add a condition for the category
-                                        //$where[] = "ks.kategoria = '" . $_POST['adv-search-category'] . "'"; // do usunięcia - ponieważ zmiena POST może mieć wartość "Wszystkie" - a takiej nazwy nie ma w tabeli "kategorie" !
-                                    $where[] = "kt.nazwa = '%s'";
-                                    $values[] = $_POST['adv-search-category']; // values += ["kategoria"];
+                                            // check if the user selected a category
+                                            if ($_POST['adv-search-category'] != 'Wszystkie') {
+                                                // Add a condition for the category
+                                                    //$where[] = "ks.kategoria = '" . $_POST['adv-search-category'] . "'"; // do usunięcia - ponieważ zmiena POST może mieć wartość "Wszystkie" - a takiej nazwy nie ma w tabeli "kategorie" !
+                                                $where[] = "kt.nazwa = '%s'";
+                                                $values[] = $_POST['adv-search-category']; // values += ["kategoria"];
 
-                                    $_SESSION["kategoria"] = $_POST["adv-search-category"]; // ✓
-                                }
+                                                $_SESSION["kategoria"] = $_POST["adv-search-category"]; // ✓
+                                            }
 
-                                // Check if the user selected an author
-                                if (!empty($_POST['adv-search-author'])) {
-                                    // Add a condition for the author
-                                    //$where[] = "ks.id_autora = " . $_POST['adv-search-author'];
-                                    $where[] = "ks.id_autora = '%s'";
-                                    $values[] = $_POST['adv-search-author'];
-                                }
+                                            // Check if the user selected an author
+                                            if (!empty($_POST['adv-search-author'])) {
+                                                // Add a condition for the author
+                                                //$where[] = "ks.id_autora = " . $_POST['adv-search-author'];
+                                                $where[] = "ks.id_autora = '%s'";
+                                                $values[] = $_POST['adv-search-author'];
+                                            }
 
-                                // check if the user provided a minimum year
-                                if (!empty($_POST['year-min'])) {
-                                    // Add a condition for the minimum year
-                                    //$where[] = "ks.rok_wydania >= " . $_POST['year-min'];
-                                    $where[] = "ks.rok_wydania >= '%s'";
-                                    $values[] = $_POST['year-min'];
-                                }
+                                            // check if the user provided a minimum year
+                                            if (!empty($_POST['year-min'])) {
+                                                // Add a condition for the minimum year
+                                                //$where[] = "ks.rok_wydania >= " . $_POST['year-min'];
+                                                $where[] = "ks.rok_wydania >= '%s'";
+                                                $values[] = $_POST['year-min'];
+                                            }
 
-                                // check if the user provided a maximum year
-                                if (!empty($_POST['year-max'])) {
-                                    // Add a condition for the maximum year
-                                    //$where[] = "ks.rok_wydania <= " . $_POST['year-max'];
-                                    $where[] = "ks.rok_wydania <= '%s'";
-                                    $values[] = $_POST['year-max'];
-                                }
+                                            // check if the user provided a maximum year
+                                            if (!empty($_POST['year-max'])) {
+                                                // Add a condition for the maximum year
+                                                //$where[] = "ks.rok_wydania <= " . $_POST['year-max'];
+                                                $where[] = "ks.rok_wydania <= '%s'";
+                                                $values[] = $_POST['year-max'];
+                                            }
 
-                                // check if any conditions were added to the WHERE clause
-                                if (!empty($where)) {
-                                    // Combine the conditions into a single WHERE clause
-                                    $query .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where);
-                                }*/
-
-                                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                                echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                                echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+                                            // check if any conditions were added to the WHERE clause
+                                            if (!empty($where)) {
+                                                // Combine the conditions into a single WHERE clause
+                                                $query .= " WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii AND " . implode(" AND ", $where);
+                                            }*/
 
                                 // execute the query - advanced-search;
                                 query($_SESSION["adv-search-query"], "getBooks", $_SESSION["adv-search-values"]);
 
-                                unset($_SESSION["adv-search-query"], $_SESSION["adv-search-values"]);
-
-                                unset($_SESSION["adv-search-title"], $_SESSION["adv-search-category"], $_SESSION["adv-search-author"], $_SESSION["year-min"], $_SESSION["year-max"]);
-
+                                unset($_SESSION["adv-search-query"], $_SESSION["adv-search-values"], $_SESSION["adv-search-title"], $_SESSION["adv-search-category"], $_SESSION["adv-search-author"], $_SESSION["year-min"], $_SESSION["year-max"]);
                             }
-
-
-                            /*elseif ( !isset($_GET["input-search"]) ) {
-
-                                echo "<br> input-seach is not set <br>";
-
-                            }*/
                             else {
-                                // domyślnie - strona główna - LUB - POST kategoria
+                                // domyślnie - strona główna - LUB - POST kategoria;
 
-                                //echo "<br>strona główna - LUB - POST kategoria<br>";
+                                    /*sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; <script>alert("hahaha");</script>;
+                                    $kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8"); // do usunięcia;
+                                    $kategoria = strip_tags($kategoria); // do usunięcia
+                                    $_SESSION['kategoria'] = $kategoria; // do usunięcia
+                                    ~ (?) wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?); // (?);*/
 
-                                // echo '<script> console.log("170 --> \n\n"); displayNav(); </script>'; // odpala funkcję ale nie widać zmian z nav'em;
-
-                                /*sanityzacja danych wprowadzonych od użytkownika; html entities = encje html'a; <script>alert("hahaha");</script>;
-                                $kategoria = htmlentities($_GET['kategoria'], ENT_QUOTES, "UTF-8"); // do usunięcia;
-                                $kategoria = strip_tags($kategoria); // do usunięcia
-                                $_SESSION['kategoria'] = $kategoria; // do usunięcia
-                                ~ (?) wstawienie kategorii do zmiennej sesyjnej -> (koszyk_dodaj.php - walidacja danych - czy jest to liczba ?); // (?);*/
-                                /*echo '<div id="content">';
-                                    echo '<div id="content-books">';*/
-
-                                    if(isset($_SESSION["no-results"]) && !empty($_SESSION["no-results"])) {
-
-                                        /*echo '<div id="content">';
-                                            echo '<div id="content-books">';*/
-
+                                    if (isset($_SESSION["no-results"]) && !empty($_SESSION["no-results"])) {
                                         echo '<span class="main-page-search-result-error">' . $_SESSION["no-results"] . '</span>';
                                         unset($_SESSION["no-results"]);
-
-                                           /* echo '</div>'; // #content-books;
-                                        echo '</div>'; // #content;*/
-
-                                    } else {
-                                        if(isset($_SESSION["subcategory"])) {
+                                    }
+                                    else {
+                                        if (isset($_SESSION["subcategory"])) {
                                             displayBooksWithSubcategory($_SESSION["category"], $_SESSION["subcategory"]);
                                         } else {
                                             displayBooks($_SESSION["category"]);
                                         }
                                     }
-
-                                /*if(isset($_SESSION["subcategory"])) {
-                                    displayBooksWithSubcategory($_SESSION['kategoria'], $_SESSION["subcategory"]);
-                                } else {
-                                    displayBooks($_SESSION['kategoria']);
-                                }*/
-
-
-
-
 
                                     //displayBooks($_SESSION['kategoria']);
                                     //                            if($_SESSION['kategoria'] == "Wszystkie")
@@ -1009,17 +940,12 @@
 
                                     /*echo '</div>'; // #content-books;
                                 echo '</div>'; // #content;*/
-
                             }
-
                         ?>
 
                     </div>
-
                 </div>
-
             </main>
-
         </div> <!-- #container -->
 
         <?php require "../view/___footer.php"; ?>
@@ -1029,29 +955,20 @@
     <?php require "../view/app-error-window.php"; ?>
 
 <script>
-
-    // save selected sorting option IN LOCAL STORAGE - after page reload ;
-
-   /* var selectElement = document.getElementById("sortBy");
-
+    // save selected sorting option IN LOCAL STORAGE - after page reload;
+    /* var selectElement = document.getElementById("sortBy");
     selectElement.addEventListener("change", function() {
         var selectedValue = selectElement.value;
         localStorage.setItem("selectedValue", selectedValue); // "1" / "2" / "3" / ... / "6";
     });
-
     window.addEventListener("load", function() {
-
         var selectedValue = localStorage.getItem("selectedValue");
-
         if (selectedValue && selectElement) {
-
             selectElement.value = selectedValue;
-
             sortBooks(); // execute sorting function;
             //filterAuthors();
         }
-    });
-*/
+    }); */
 </script>
 
     <script src="../scripts/filter-book-status.js"></script>  <!-- filtrowanie - status -> "dostępna" / "niedostępna" -->
@@ -1059,15 +976,9 @@
 <script>
 
     function showCategories() { // dla widoku mobilnego ;
-
-        //console.log("\nshowCategories :)\n");
-
-        // pokazanie / ukrycie list kategorii, pod-kateorii;
-
+            // pokazanie / ukrycie list kategorii, pod-kateorii;
         let list = document.getElementById("categories-list"); // lista <ul> - Kategorie;
-        //console.log("\nlist -> ", list);
         let sublist = document.getElementById("subcategories-list");  // lista <ul> - pod-kategorie;
-
        if(list.style.display === "block") {
                 //list.removeAttribute("style");
            list.style.display = "none";
@@ -1079,44 +990,28 @@
             //sublist.style.visibility = "visible";
             sublist.style.display = "block";
         }
-
-        //console.log("\nlist.style.display -> ", list.style.display);
-        //list.classList.toggle('hidden');
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // kliknięcie na "Kategorie" wyświetla listę kategorii - click on "Kategorie" in top nav -> hiding/displaying <ul> list;
-
     let categoryButton = document.getElementById("a-categories-top-nav");
     //console.log("\ncategoryButton -> ", categoryButton); // "Kategorie";
-
     function isMobileDevice() {
         return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
-
     if (isMobileDevice()) {
         //console.log("This website is being accessed from a mobile device.");
         categoryButton.addEventListener("click", showCategories);
     }
-
 </script>
 
 <script>
     /*let bookData = '<?php //query("SELECT sb.id_subkategorii, sb.nazwa, kt.nazwa FROM subkategorie AS sb, kategorie AS kt WHERE sb.id_kategorii = kt.id_kategorii", "getSubcategories", ""); ?>';*/
 </script>
 
-
-<script>
-
-
-
-</script>
-
 <script>
     /*let styleSheet = document.styleSheets[0];
-
     console.log("\n\n styleSheet --> ", styleSheet);
-
     // Pobierz regułę CSS z arkusza stylów
     //var cssRule = null;
     for (let i = 0; i < styleSheet.cssRules.length; i++) {
@@ -1129,15 +1024,13 @@
             rule.style.visibility = "unset";
         }
     }*/
-
     // Jeśli znaleziono regułę, usuń właściwość visibility
     /*if (cssRule) {
         cssRule.style.visibility = "visible"; // Zmień na "visible", aby wyłączyć właściwość
     }*/
-
     if(isMobileDevice()) {
         let styleSheet = document.styleSheets[0];
-    //console.log("\n\n styleSheet --> ", styleSheet);
+        //console.log("\n\n styleSheet --> ", styleSheet);
         // Pobierz regułę CSS z arkusza stylów
         //var cssRule = null;
         for (let i = 0; i < styleSheet.cssRules.length; i++) {
@@ -1152,8 +1045,6 @@
             }
         }
     }
-
-
 </script>
 
 </body>

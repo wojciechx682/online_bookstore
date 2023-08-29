@@ -144,7 +144,7 @@
                     <?php
                         if (isset($_SESSION["password-changed"]) && $_SESSION["password-changed"]) {
                             // if variable EXISTS and has value egual to "TRUE";
-                            echo "<h3>Hasło zostało zmienione</h3>";
+                            echo "<h3 class='success'>Hasło zostało zmienione</h3>";
                             session_unset();
                             session_destroy();
                         }
@@ -176,7 +176,7 @@
 
                             unset($_SESSION["udanarejestracja"]);
 
-                            echo '<span style="font-weight: bold;">Rejestracja przebiegła pomyślnie, od teraz możesz zalogować się na swoje konto</span><br>';
+                            echo '<span class="success">Rejestracja przebiegła pomyślnie, od teraz możesz zalogować się na swoje konto</span><br>';
                         }
 
                         if(isset($_SESSION["deleted-successfully"]) && $_SESSION["deleted-successfully"])
