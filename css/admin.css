@@ -598,6 +598,7 @@ div.book-option form label {
     /*padding-right: 5%;*/
 
     margin-bottom: 10px;
+    text-align: right;
 }
 
 @media only screen and (max-width: 710px) {

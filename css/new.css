@@ -589,6 +589,19 @@ body {
     }
 }
 
+@media only screen and (max-width: 750px) {
+
+    div.order-sum > div#delivery-info {
+        width: 65% !important;
+        /*min-width: 335px;*/
+    }
+
+    div.order-sum > div#order-sum {
+        width: 35% !important;
+        /*min-width: 335px;*/
+    }
+}
+
 @media only screen and (max-width: 735px) {
 
     /* book-page */
@@ -4442,8 +4455,8 @@ div[class*="order-book-price"]:not([class$="1"])
     /*border: 1px ridge rgba(166, 166, 166, 0.38);*/
 
     padding: 20px 20px 20px 20px;
-    text-align: right;
     overflow-y: auto;
+    /*text-align: right;*/
 }
 .order-sum > span {
     margin-right: 5px;
@@ -4452,8 +4465,32 @@ div[class*="order-book-price"]:not([class$="1"])
 .order-sum > span.order-in-progress {
     text-align: left;
     max-width: 655px;
+}
+
+div.order-sum > div#delivery-info {
+    /*border: 1px solid blue;*/
+    width: 70%;
+    /*display: inline-block;*/
+    float: left;
+}
+
+div.order-sum > div#delivery-info span.order-in-progress {
+    display: block;
+    margin-bottom: 10px;
+}
+
+div.order-sum > div#order-sum {
+    /*display: inline-block;*/
+    /*border: 1px solid red;*/
+
+    float: left;
+    width: 30%;
+    text-align: right;
+
+    min-width: 135px;
 
 }
+
 
 .order hr {
     background-color: rgba(166, 166, 166, 0.38);
@@ -4471,10 +4508,14 @@ div.order-sum > span.order-in-progress {
 
     display: block;
     float: left;
-
-
-
 }
+
+div.order-sum div#delivery-info span.order-in-progress span.order-info {
+
+    display: inline-block;
+    min-width: 135px;
+}
+
 
 div.order-sum > span.order-sent {
     padding-top: 20px;

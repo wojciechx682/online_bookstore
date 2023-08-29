@@ -909,9 +909,7 @@ use PHPMailer\PHPMailer\SMTP;
 	}
 
 	function getOrders($result) { // get_orders // wywołanie w my_orders.php
-
-        // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia, komentarz, suma, sposob_platnosci;
-
+            // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia, komentarz, suma, sposob_platnosci;
         // id_zamowienia            - 1263
         // data_zlozenia            - 2023-08-29 14:32:31
         // status                   - Oczekujące na potwierdzenie
@@ -922,45 +920,31 @@ use PHPMailer\PHPMailer\SMTP;
         // forma_dostawy            - Kurier DPD
         // suma                     - 301.65
         // sposob_platnosci         - Blik
-
-        $i = 0;
-
-        // $row[] -->  id_zamowienia,  data_zlozenia_zamowienia,  status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
-
+            $i = 0;
 		while ($row = $result->fetch_assoc()) { // dla każdego wiersza z zamówieniem;
-
-                //getOrderSum("", $row["id_zamowienia"]); // suma zam; --> $_SESSION["order_sum"]; // ?
-                // ✓ zapisze sumę zamówienia w zmiennej sesyjnej; $_SESSION["order_sum"]; // ?
-
+                    //getOrderSum("", $row["id_zamowienia"]); // suma zam; --> $_SESSION["order_sum"]; // ?
+                    // ✓ zapisze sumę zamówienia w zmiennej sesyjnej; $_SESSION["order_sum"]; // ?
             // load the content from the external template file into string
-            $order = file_get_contents("../template/order-details.php"); // widok nagłówka tabeli z pojedynczym zamówieniem --> data, status, numer_zamówienia (ID), sposób_płatności
-
-            // replace fields in $order string to author data from $result, display result content as HTML;
-                //echo sprintf($order, $row['data_zlozenia_zamowienia'], $row["status"], $row["id_zamowienia"], $_SESSION["order_sum"]); // To jest tylko NAGŁÓWEK pojedynczego zamówienia;
-
-            // replace fields in $order string to author data from $result, display result content as HTML;
-            echo sprintf($order, $row["data_zlozenia_zamowienia"], $row["status"], $row["id_zamowienia"], $row["sposob_platnosci"]); // To jest tylko NAGŁÓWEK pojedynczego zamówienia;
-
+            $order = file_get_contents("../template/order-details.php"); // <div class="order">
+                // pojemnik na zamówienie - div class="order" --> widok nagłówka tabeli z pojedynczym zamówieniem --> data, status, numer_zamówienia (ID), sposób_płatności
+            // replace fields in $order string to order data from $result, display result content as HTML;
+            echo sprintf($order, $row["data_zlozenia_zamowienia"], $row["status"], $row["id_zamowienia"], $row["sposob_platnosci"]); // pojemnik na tabelę z zamówieniem, nagłówek tabeli;
             query("SELECT id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "getOrderDetails", $row["id_zamowienia"]);
-            // --> $_SESSION['order_details_books_id'];
-            // ✓ pojedyncze wiersze z danymi o książce w tym zamówieniu;
-            // wiele wierszy -> "id_ksiazki", "ilosc";
-
-
-            /*for($i = 0; $i < count($_SESSION['order_details_books_id']); $i++) {
-                $book_id = $_SESSION['order_details_books_id'][$i];
-                query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '%s'", "order_details_get_book", $book_id);
-            }*/
-
+            // $row --> ["id_ksiazki"], ["ilosc"] <-- ksiązki wchodzące w skład danego zamówienia (id_zamowienia);
+                // --> $_SESSION["order_details_books_id"];
+                // ✓ pojedyncze wiersze z danymi o książce w tym zamówieniu;
+                // wiele wierszy -> "id_ksiazki", "ilosc";
+                    /*for($i = 0; $i < count($_SESSION['order_details_books_id']); $i++) {
+                        $book_id = $_SESSION['order_details_books_id'][$i];
+                        query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '%s'", "order_details_get_book", $book_id);
+                    }*/
             $_SESSION["termin_dostawy"] = $row["termin_dostawy"];
             $_SESSION["data_wysłania_zamowienia"] = $row["data_wysłania_zamowienia"];
             $_SESSION["data_dostarczenia"] = $row["data_dostarczenia"];
-
-            /* echo "<br> 608 termin dostawy -> <br>" . $_SESSION["termin_dostawy"] . "<br>";
-            echo "<br> 608 data wysłania -> <br>" . $_SESSION["data_wysłania_zamowienia"] . "<br>";
-            echo "<br> 608 data wysłania -> <br>" . $_SESSION["data_wysłania_zamowienia"] . "<br>";
-            echo "<br> SUMA ZAMÓWIENIA -> <br>" . $_SESSION["order_sum"] . "<br>"; */
-
+                /* echo "<br> 608 termin dostawy -> <br>" . $_SESSION["termin_dostawy"] . "<br>";
+                echo "<br> 608 data wysłania -> <br>" . $_SESSION["data_wysłania_zamowienia"] . "<br>";
+                echo "<br> 608 data wysłania -> <br>" . $_SESSION["data_wysłania_zamowienia"] . "<br>";
+                echo "<br> SUMA ZAMÓWIENIA -> <br>" . $_SESSION["order_sum"] . "<br>"; */
 
                 // load the content from the external template file into string
                 // Stopka w tabeli tego zamówienia - wyświetla tylko SUMĘ zamówienia;
@@ -973,27 +957,25 @@ use PHPMailer\PHPMailer\SMTP;
         echo sprintf($payment, $row["sposob_platnosci"], $row["forma_dostawy"]);*/
 
 
-            if (
-                isset($_SESSION["termin_dostawy"]) && !empty($_SESSION["termin_dostawy"])
-                && $_SESSION["termin_dostawy"] !== "0000-00-00"
+            if ( isset($_SESSION["termin_dostawy"]) && !empty($_SESSION["termin_dostawy"]) &&
+                $_SESSION["termin_dostawy"] !== "0000-00-00" &&
                 /*&& $_SESSION["data_wysłania_zamowienia"] === "0000-00-00 00:00:00"
                 && $_SESSION["data_dostarczenia"] === "0000-00-00"*/
-                && $row["status"] === "W trakcie realizacji"
-            ) {
-                // status zamówienia to "W trakcie realizacji" --> termin_dostawy;
-                $order = file_get_contents("../template/order-sum-order-in-progress.php");
-                echo sprintf($order, $_SESSION["termin_dostawy"], $row["suma"]);
-            }
-            elseif (
-                isset($_SESSION["data_wysłania_zamowienia"]) && !empty($_SESSION["data_wysłania_zamowienia"])
-                && $_SESSION["termin_dostawy"] !== "0000-00-00"
-                && $_SESSION["data_wysłania_zamowienia"] !== "0000-00-00 00:00:00"
+                $row["status"] === "W trakcie realizacji" ) {
+
+                    // status zamówienia to "W trakcie realizacji" --> termin_dostawy;
+                    $order = file_get_contents("../template/order-sum-order-in-progress.php");
+                    echo sprintf($order, $row["forma_dostawy"], $_SESSION["termin_dostawy"], $row["suma"]);
+
+            } elseif ( isset($_SESSION["data_wysłania_zamowienia"]) && !empty($_SESSION["data_wysłania_zamowienia"]) &&
+                      $_SESSION["termin_dostawy"] !== "0000-00-00" &&
+                      $_SESSION["data_wysłania_zamowienia"] !== "0000-00-00 00:00:00"
                 /*&& $_SESSION["data_dostarczenia"] === "0000-00-00"*/
                 && $row["status"] === "Wysłano"
             ) {
                 // status zamówienia to "Wysłano" --> termin_dostawy, data_wyslania_zamowienia;
                 $order = file_get_contents("../template/order-sum-order-sent.php");
-                echo sprintf($order, $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"],  $row["suma"]);
+                echo sprintf($order, $row["forma_dostawy"], $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"],  $row["suma"]);
             } elseif (
                 isset($_SESSION["data_dostarczenia"]) && !empty($_SESSION["data_dostarczenia"])
                 && $_SESSION["data_dostarczenia"] !== "0000-00-00"
@@ -1029,129 +1011,58 @@ use PHPMailer\PHPMailer\SMTP;
 //		// echo '<script> alert("test123"); </script>';
 //	}
 
-    function getOrderDetails($result) { // get_order_details //  ___my_orders.php
-
-//        $_SESSION['order_details_books_id'] = array();
-//        $_SESSION['order_details_books_quantity'] = array();
-
-        $_SESSION["order_details_books_id"] = []; //
-        $_SESSION["order_details_books_quantity"] = []; //
-
-        $i = 0;
-
-        while ($row = $result->fetch_assoc()) // (!) - dla każdej książki (szczegoly_zamowienia) --> wiele wierszy - "id_książki", "ilość"
-        {
+    function getOrderDetails($result) { // get_order_details //  ___my_orders.php --> getOrders($result) --> szczegóły_zamówienia (ksążki wchodzące w skład danego zamówienia);
+        // $result (!) - szczegóły_zamówienia -->
+            //  id_ksiazki |  ilosc
+            // -----------------------
+            //      35     |    2
+            //      48     |    4
+        $_SESSION["order_details_books_id"] = [];
+        $_SESSION["order_details_books_quantity"] = [];
+            $i = 0;
+        while ($row = $result->fetch_assoc()) { // (!) - dla każdej książki ! (szczegoly_zamowienia) - wchodzącej w skład danego zamówienia (id_zamowienia) --> wiele wierszy - "id_książki", "ilość";
             // tutaj wyświetla w widoku pojedynczy wiesz (id_ksiazki, obrazek, informacje o książke, ...) w tabeli tego zamówienia;
-
-            /*echo "<br><strong>order_id  &rarr;</strong> " .$row['id_zamowienia'].", <strong>book_id  &rarr;</strong> ".$row['id_ksiazki'].", <strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";*/
-            //echo "<strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";
-
-            $_SESSION["order_details_books_id"][$i] =  $row["id_ksiazki"]; // przechowuje id książek (tablica)
-            //array_push($_SESSION['order_details_books_id'], $row['id_ksiazki']);
-
-            $_SESSION["order_details_books_quantity"][$i] =  $row["ilosc"]; // przechowuje ilosc (tablica) ! DO ZROBIENIA W PRZYSZŁOŚCI TAK JAK FUNKCJA order_details_get_book
-            //array_push($_SESSION['order_details_books_quantity'], $row['ilosc']);
-
-            // load the content from the external template file into string
-            /*$order = file_get_contents("../template/order-details-book.php");
-
-            // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, $row['ilosc']);*/
-
+                    /*echo "<br><strong>order_id  &rarr;</strong> " .$row['id_zamowienia'].", <strong>book_id  &rarr;</strong> ".$row['id_ksiazki'].", <strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";*/
+                    //echo "<strong>quantity &rarr;</strong> " .$row['ilosc']. "<br>";
+            $_SESSION["order_details_books_id"][$i] =  $row["id_ksiazki"]; // przechowuje id książek (tablica);
+                //array_push($_SESSION['order_details_books_id'], $row['id_ksiazki']);
+            $_SESSION["order_details_books_quantity"][$i] =  $row["ilosc"]; // przechowuje ilosc egz książki (tablica);
+                //array_push($_SESSION['order_details_books_quantity'], $row['ilosc']);
+                    // load the content from the external template file into string
+                    /*$order = file_get_contents("../template/order-details-book.php");
+                    // replace fields in $order string to author data from $result, display result content as HTML
+                    echo sprintf($order, $row['ilosc']);*/
             query("SELECT tytul, cena, au.imie, au.nazwisko, rok_wydania, image_url FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = '%s'", "orderDetailsGetBook", $_SESSION["order_details_books_id"][$i]); // To jest pojedynczy "Wiersz" - w widoku w tabeli - który wyświetla Pojedynczą książkę w Tym zamówieniu
-
             $i++;
         }
-
-        // load the content from the external template file into string
-            // Stopka w tabeli tego zamówienia - wyświetla tylko SUMĘ zamówienia;
-        //$order = file_get_contents("../template/order-sum.php");
-
-        // replace fields in $order string to author data from $result, display result content as HTML
-        //echo sprintf($order, $_SESSION["order_sum"]); // Stopka w tabeli tego zamówienia - wyświetla tylko SUMĘ zamówienia;
-
-        // sprawdzenie czy te zmienne istnieją, i czy mają wartości ine niż "0000-00-00";
-           /* echo "<br> 608 termin dostawy -> <br>" . $_SESSION["termin_dostawy"] . "<br>";
-            echo "<br> 608 data wysłania -> <br>" . $_SESSION["data_wysłania_zamowienia"] . "<br>";
-            echo "<br> 608 data_dostarczenia-> <br>" . $_SESSION["data_dostarczenia"] . "<br>";*/
-
-        /*if (
-            isset($_SESSION["termin_dostawy"]) && !empty($_SESSION["termin_dostawy"])
-            && $_SESSION["termin_dostawy"] !== "0000-00-00"
-            && $_SESSION["data_wysłania_zamowienia"] === "0000-00-00 00:00:00"
-            && $_SESSION["data_dostarczenia"] === "0000-00-00"
-        ) {
-            // status zamówienia to "W trakcie realizacji" --> termin_dostawy;
-            $order = file_get_contents("../template/order-sum-order-in-progress.php");
-            echo sprintf($order, $_SESSION["termin_dostawy"], $_SESSION["order_sum"]);
-        }
-        elseif (
-            isset($_SESSION["data_wysłania_zamowienia"]) && !empty($_SESSION["data_wysłania_zamowienia"])
-            && $_SESSION["termin_dostawy"] !== "0000-00-00"
-            && $_SESSION["data_wysłania_zamowienia"] !== "0000-00-00 00:00:00"
-            && $_SESSION["data_dostarczenia"] === "0000-00-00"
-        ) {
-            // status zamówienia to "Wysłano" --> termin_dostawy, data_wyslania_zamowienia;
-            $order = file_get_contents("../template/order-sum-order-sent.php");
-            echo sprintf($order, $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"],  $_SESSION["order_sum"]);
-        } else if (
-            isset($_SESSION["data_dostarczenia"]) && !empty($_SESSION["data_dostarczenia"])
-            && $_SESSION["data_dostarczenia"] !== "0000-00-00"
-        ) {
-            // status zamówienia to "Dostarczono" (zakończono) --> termin_dostawy?, data_wyslania_zamowienia?, data_dostarczenia;
-            $order = file_get_contents("../template/order-sum-order-delivered.php");
-            echo sprintf($order, $_SESSION["data_dostarczenia"], $_SESSION["order_sum"]);
-
-        }*/
-
-
-        //$result->free_result();
     }
 
-	function orderDetailsGetBook($result) // order_details_get_book
-	{
-        // Wyświetla wiersze z książkami w tabeli z danym zamówieniem;
-
-        // order_details.php?order_id=518
-
-        // $j =  0;
-
-       /* print_r($result->fetch_assoc()); echo "<br>";
-        print_r($_SESSION["order_details_books_quantity"]); echo "<br><br><br>";
-        echo count($_SESSION["order_details_books_quantity"]); echo "<br><br><br>";*/
-        //print_r($_SESSION["order_details_books_quantity"]); echo "<br><br><br>";
-
-		while ($row = $result->fetch_assoc())
-		{
-		  	//echo "<br><strong>tytul &rarr;</strong> " . $row['tytul']. ", <strong>cena &rarr;</strong> " .$row['cena'].", <strong>rok_wydania &rarr;</strong> ".$row['rok_wydania']."<br>";
-
-            // load the content from the external template file into string
-            $order = file_get_contents("../template/order-details-book.php");
-
-                //echo "<br> j --> " . $_SESSION['order_details_books_quantity'][$j] . "<br>";
-                //echo "<br> j --> " . $j .  "<br>";
-
-            //print_r($_SESSION['order_details_books_quantity']);
-
-            // użyto zapisu "count($_SESSION['order_details_books_quantity'])" - ponieważ w każdej iteracji ta tablica rośnie, i zawiera dokładnie tyle elementów - ile jest wierszy (książek) zamówieniu - stąd można użyć tego zapisu do numeracji (l.p.) -> "1", "2", "3" ...;
-                // innymi słowy - zmienna "count($_SESSION['order_details_books_quantity'])" - w danej iteracji posiada ROZMIAR, który OKREŚLA NUMER WIERSZA (1,2,3) -, oraz wartość tej tablicy w danej iteracji przechowuje ILOŚĆ TEJ KONKRETNEJ KSIĄŻKI  w tym zamówieniu;
-
-            // count($_SESSION['order_details_books_quantity']) - rozmiar tablicy w danej iteracji (numer wiersza - 1,2,3 ...);
-            // $_SESSION["order_details_books_quantity"][count($_SESSION['order_details_books_quantity'])-1]
+	function orderDetailsGetBook($result) { // order_details_get_book
+        // Wyświetla wiersze z książką w tabeli dla danego zamówienia;
+            // $result - (pojedyncza książka wchodząca w skład zamówienia) -->
+            // ---------------------------------------------------------------
+            // tytuł       - Java - Techniki zaawansowane Wydanie V
+            // cena        - 50
+            // imie        - Cezary
+            // nazwisko    - Sokołowski
+            // rok_wydania - 2018
+            // image_url   - Java_techniki_zaawansowane.png
+        // $_SESSION["order_details_books_id"][$i] <-- tablica przechowująca ID książek wchodzących w skład danego zamówienia;
+        // $_SESSION["order_details_books_quantity"][$i] <-- tablica przechowująca ILOŚCI EGZEMPLARZY książek wchodzących w skład danego zamówienia;
+		$row = $result->fetch_assoc();
+        // load the content from the external template file into string
+        $order = file_get_contents("../template/order-details-book.php");
+            // użyto zapisu "count($_SESSION["order_details_books_quantity"])" - ponieważ w każdej iteracji ta tablica rośnie, i zawiera dokładnie tyle elementów - ile jest wierszy (książek) w zamówieniu - stąd można użyć tego zapisu do numeracji (l.p.) -> "1", "2", "3" ...;
+            // innymi słowy - zmienna "count($_SESSION["order_details_books_quantity"])" - w danej iteracji posiada ROZMIAR, który OKREŚLA NUMER WIERSZA (1,2,3) -, oraz wartość tej tablicy w danej iteracji przechowuje ILOŚĆ TEJ KONKRETNEJ KSIĄŻKI w tym zamówieniu;
+        // count($_SESSION["order_details_books_quantity"]) <--- rozmiar tablicy w danej iteracji (numer wiersza - 1,2,3 ...);
+            // $_SESSION["order_details_books_quantity"][count($_SESSION["order_details_books_quantity"])-1]
                 // - ilość egzamplarzy tej książki w tym zamówieniu (w danej iteracji);
-
-            // $_SESSION["order_details_books_id"][count($_SESSION['order_details_books_id'])-1] - id_książki ;
-
-            // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, count($_SESSION['order_details_books_quantity']),
-                $_SESSION["order_details_books_id"][count($_SESSION['order_details_books_id'])-1],
-                $row["image_url"], $row['tytul'], $row['tytul'], $row['tytul'], $_SESSION["order_details_books_id"][count($_SESSION['order_details_books_id'])-1], $row['tytul'], $row['tytul'], $row['imie'], $row['nazwisko'], $row['rok_wydania'],
-                count($_SESSION['order_details_books_quantity']),
-                $_SESSION["order_details_books_quantity"][count($_SESSION['order_details_books_quantity'])-1],
-                count($_SESSION['order_details_books_quantity']),
-                $row["cena"]);
-		}
-		//$result->free_result();
+        // $_SESSION["order_details_books_id"][count($_SESSION['order_details_books_id'])-1] <-- id_książki ;
+            $productNo = count($_SESSION["order_details_books_quantity"]); // "1", "2", "3", ...
+            $bookId = $_SESSION["order_details_books_id"][count($_SESSION["order_details_books_id"])-1]; // 25, 48, 12, ...
+            $bookQuantity = $_SESSION["order_details_books_quantity"][count($_SESSION["order_details_books_quantity"])-1]; // 2, 8, 5, ...
+        // replace fields in $order string to author data from $result, display result content as HTML
+        echo sprintf($order, $productNo, $bookId, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $bookId, $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $productNo, $bookQuantity, $productNo, $row["cena"]);
 	}
 
     /*function get_order_sum($result = NULL, $order_id) {

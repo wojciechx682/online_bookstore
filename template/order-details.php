@@ -9,12 +9,9 @@
     <div class="order-id-title">Numer zamówienia</div>
     <div class="order-payment-method-title">Sposób płatności</div>
 
-    <!--<div style="clear:both;"></div>-->
-
     <div class="order-date">%s</div>
     <div class="order-status">%s</div>
     <div class="order-id">%s</div>
     <div class="order-payment-method">%s</div>
-    <!-- <hr> -->
 
     <div style="clear:both;"></div>

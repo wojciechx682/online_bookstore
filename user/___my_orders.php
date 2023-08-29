@@ -42,7 +42,7 @@
                     // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;
 
                     // id_zamowienia            - 1263
-                    // data_zlozenia            - 2023-08-29 14:32:31
+                    // data_zlozenia_zamowienia - 2023-08-29 14:32:31
                     // status                   - Oczekujące na potwierdzenie
                     // termin_dostawy           - 0000-00-00
                     // data_wysłania_zamowienia - 0000-00-00 00:00:00
