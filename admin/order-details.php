@@ -8,11 +8,11 @@
 
     if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶   GET / POST ...
 
-        if ( isset(array_keys($_POST)[0]) && ! empty(array_keys($_POST)[0]) ) { // check if POST value (order-id) exists and is not empty;
+        if (isset($_POST["order-id"]) && !empty($_POST["order-id"])) { // check if POST value (order-id) exists and is not empty;
 
-            unset($_SESSION["change-status"]); // reset boolean flag;
+            //unset($_SESSION["change-status"]); // reset boolean flag;
 
-            if ( isset(array_keys($_POST)[1]) && ! empty(array_keys($_POST)[1]) && array_keys($_POST)[1]) { // orders.php -> "Zmień status"
+            if (isset($_POST["change-status"])) && ! empty(array_keys($_POST)[1]) && array_keys($_POST)[1]) { // orders.php -> "Zmień status"
 
                 $_SESSION["change-status"] = true; // show update-status box (if there was second post parameter --> true);
             }
@@ -32,9 +32,9 @@
             $_SESSION['order-exists'] = false;
 
             // check if there is really an order with that id (post - order-id);
-            query("SELECT zm.id_zamowienia
-                            FROM zamowienia AS zm
-                         WHERE zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
+            query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, kl.imie, kl.nazwisko
+                            FROM zamowienia AS zm, klienci AS kl
+                         WHERE zm.id_klienta = kl.id_klienta AND zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
             // przestawi zmienną - $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie (o takim id), jeśli num_rows > 0 ;
 
             if ($orderId === false || $_SESSION["order-id"] === false || $_SESSION["order-exists"] === false || ($_SESSION["order-id"] !== array_keys($_POST)[0]) ) {
@@ -114,10 +114,14 @@
                 </header>
 
                 <?php
-                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 ?>
+
+                <h4 class="section-header order-details-header order-details-id">Zamówienie nr <span class="order-details-id"><?= $_SESSION["order-id"]; ?></h4>
+                <h4 class="section-header order-details-header order-details-date"><?= $_SESSION["order-date"]; ?></h4>
+                <h4 class="section-header order-details-header">Klient: <span class="order-details-id"><?= $_SESSION["client-name"], " ", $_SESSION["client-surname"] ?></span></h4>
 
                 <?php require "../view/admin/order-details-header.php"; // first row, header of columns ?>
 
@@ -161,6 +165,9 @@
                         // sposób_płatności, data_platnosci, forma_dostarczenia, status;
                     ?>
 
+
+
+
                     <div id="order-status">
 
                         <span>Status :</span>
@@ -188,6 +195,7 @@
 
 
                         <button class="update-order-status btn-link btn-link-static">Aktualizuj</button>
+
 
                     </div>
 
@@ -325,6 +333,11 @@
     let mainContainer = document.getElementById("main-container");
     let icon = document.querySelector('.icon-cancel');               // <i class="icon-cancel">
     let cancelBtn = document.querySelector('.cancel-order');         // przycisk "Anuluj"; button.cancel-order;
+
+    console.log("\nstatusBox #update-status --> ", statusBox);
+    console.log("\nmainContainer --> ", mainContainer);
+    console.log("\nicon --> ", icon);
+    console.log("\ncancelBtn --> ", cancelBtn);
 
             /* /!* v1 --> *!/ updateBtn.addEventListener("click", function() {
                 toggleBox(); // pojawienie się okienka po kliknięciu przycisku "Aktualizuj";  <div id="update-status">;
@@ -607,6 +620,47 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
 ?>
 
 <img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
+
+<!-- // ------------------------------------------------------------------------------------------------------------ -->
+
+<div class="update-status hidden" id="add-comment"> <!-- class -> update-status%s--> <!-- id_zamowienia -->
+
+    <h2>Dodaj komentarz do zamówienia</h2>
+
+    <i class="icon-cancel"></i><hr> <!-- icon-cancel%s - id_zamowienia -->
+
+    <div class="delivery-date"> <!--  delivery-date%s - id_zamowienia -->
+
+        <form class="add-order-comment" action="remove-order.php" method="post"> <!-- class zamienić na add-order-comment -->
+
+            <input type="hidden" name="order-id" value="<?= $_SESSION["order-id"]; ?>"> <!-- order-id -->
+
+            <span class="info">Dodaj komentarz do zamówienia</span>
+
+            <textarea name="comment" id="comment" class="comment" onfocus="resetError(this)" minlength="10" maxlength="255"></textarea>
+            <!-- maxlength="50" minlength="10" -->
+
+            <span class="remove-order-error">Komentarz powinien zawierać od 10 do 255 znaków, oraz nie zawierać znaków specjalnych</span>
+            <!-- add-order-comment-error -->
+            <div style="clear: both;"></div>
+
+            <button type="submit" class="update-order-status btn-link btn-link-static">Dodaj</button>
+
+        </form>
+
+        <button class="cancel-order update-order-status btn-link btn-link-static">Anuluj</button> <!-- cancel-order%s - id_zamowienia -->
+
+    </div> <!-- .delivery-date -->
+
+</div>
+
+<script>
+    // dodaj komentarz do zamówienia (okno) -->
+    document.getElementById("add-order-comment").addEventListener("click", () => {
+        let commentBox = document.getElementById("add-comment");
+        commentBox.classList.remove("hidden");
+    });
+</script>
 
 </body>
 </html>

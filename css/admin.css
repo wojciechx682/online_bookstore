@@ -348,6 +348,10 @@ div.category
     overflow-x: hidden;
 }
 
+span.order-details-id {
+    margin-right: 100px;
+}
+
 .order-id, .order-date, .order-client,  .order-total-sum, .order-payment, .order-status, .order-action,
 .category-id, .category-name, .category-name, .category-action
 {
@@ -620,7 +624,7 @@ div.book-option form label {
 .order-sum-pay-met, .order-sum-pay-date, .order-sum-del-meth {
     /*display: inline-block;
     width: 32%;*/
-    margin-bottom: 16px;
+    margin-bottom: 6px;
 }
 
 /*.order-sum-pay-date {
@@ -684,7 +688,7 @@ div#order-status button.update-order-status {
     !*width: 135px !important;*!
 }*/
 
-#update-status, .update-status {
+#update-status, .update-status, #add-comment {
     /*height: 310px;*/
     height: 360px;
     width: 660px;
@@ -705,7 +709,9 @@ div.update-status button {
     margin-top: 70px !important;
 }
 
-#update-status > h2, .update-status > h2 {
+#update-status > h2, .update-status > h2,
+#add-comment > h2
+{
     margin-left: 20px;
     margin-top: 25px;
     color: #FAFAFFFF;
@@ -722,7 +728,9 @@ div.update-status button {
 
 
 
-#update-status hr, .update-status hr {
+#update-status hr, .update-status hr,
+#add-comment hr
+{
     background-color: rgba(166, 166, 166, 0.7);
     border: none;
     height: 1px;
@@ -765,7 +773,7 @@ div.update-status button {
     filter: invert(100%);
 }
 
-#main-container .update-status {
+#main-container .update-status, #add-comment {
     filter: none;
 }
 
@@ -945,7 +953,10 @@ span.update-failed, span.update-failed
 
 span.archive-success, span.update-failed {
     display: block;
-    margin-top: 18px;
+    margin-top: 10px;
+
+    position: relative;
+    left: -10px;
 }
 
 div.add-book-result span,
@@ -959,8 +970,13 @@ div#update-status div.delivery-date span.update-failed {
 
 /* archiwizowanie zamówienia -> */
 
-.remove-order-error {
-    display: none;
+.remove-order-error,
+.add-order-comment-error
+{
+    /*display: none;*/
+
+    display: block;
+
     font-weight: bold;
     color: red;
     position: absolute;
@@ -1010,7 +1026,9 @@ span.info {
     margin-bottom: 12px;
 }
 
-form.remove-order span.info {
+form.remove-order span.info,
+form.add-order-comment span.info
+{
     margin-top: 10px;
 }
 
@@ -1552,4 +1570,33 @@ div.order:not(.order-content) div:not(.order-action)
 div.admin-books div.a-book-quantity span {
     /*display: unset;*/
     all: unset;
+}
+
+h4.order-details-header {
+    font-weight: normal;
+}
+
+h4.order-details-header span.order-details-id {
+    font-weight: bold;
+}
+
+h4.order-details-date {
+    font-size: 95%;
+    color: #dadada;
+    margin-top: 0;
+}
+
+h4.order-details-id {
+    margin-bottom: 5px;
+}
+
+div.order-summary span#add-order-comment {
+    /*color: #5478c0;*/
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 14.5px;
+}
+
+div.order-summary span#add-order-comment:hover {
+    text-decoration: underline;
 }

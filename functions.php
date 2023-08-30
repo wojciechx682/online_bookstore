@@ -1002,7 +1002,8 @@ use PHPMailer\PHPMailer\SMTP;
                 $row["status"] === "Zarchiwizowane"
             ) {
                 $order = file_get_contents("../template/order-sum-order-archived.php");
-                echo sprintf($order, $row["komentarz"], $row["suma"]);
+                //echo sprintf($order, $row["komentarz"], $row["suma"]);
+                echo sprintf($order, $row["forma_dostawy"], $row["koszt_dostawy"],  $kosztPlatnosci, $row["suma"]);
             }
             else { // status -> "Oczekujące na potwierdzenie";
                 $order = file_get_contents("../template/order-sum.php");
@@ -1342,6 +1343,10 @@ use PHPMailer\PHPMailer\SMTP;
         //echo "\n 1014 - function -> orderDetailsVerifyOrderExists \n\n";
 
         $_SESSION["order-exists"] = true;
+        $row = $result->fetch_assoc();
+        $_SESSION["order-date"] = $row["data_zlozenia_zamowienia"];
+        $_SESSION["client-name"] = $row["imie"];
+        $_SESSION["client-surname"] = $row["nazwisko"];
     }
 
 	function get_var_name($var)
@@ -1406,9 +1411,9 @@ use PHPMailer\PHPMailer\SMTP;
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// admin -->
 
-    function getAllOrders($result) {
+    function getAllOrders($result) { // get_all_orders // \admin\orders.php;
 
-        // get_all_orders // \admin\orders.php - wszystkie zamówienia złożone przez klientów, przypisane do zalogowanego pracownika;
+        // wszystkie zamówienia złożone przez klientów, przypisane do zalogowanego pracownika;
 
         require "../view/admin/order-header.php"; // table header;
 
@@ -1417,7 +1422,7 @@ use PHPMailer\PHPMailer\SMTP;
             // load the content from the external template file into string
             $order = file_get_contents("../template/admin/orders.php");
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, $row['id_zamowienia'], $row["data_zlozenia_zamowienia"], $row["imie"], $row["nazwisko"], $row["kwota"], $row["metoda_platnosci"], $row['id_zamowienia'], $row["status"], $row['id_zamowienia'], $row['id_zamowienia'], $row['id_zamowienia'], $row['id_zamowienia']);
+            echo sprintf($order, $row["id_zamowienia"], $row["data_zlozenia_zamowienia"], $row["imie"], $row["nazwisko"], $row["kwota"], $row["metoda_platnosci"], $row["id_zamowienia"], $row["status"], $row["id_zamowienia"], $row["id_zamowienia"], $row["id_zamowienia"], $row["id_zamowienia"]);
         }
         //$result->free_result();
     }
@@ -1550,11 +1555,9 @@ use PHPMailer\PHPMailer\SMTP;
 
     }
 
-    function archiveOrder($result) { // \admin\orders.php
-
-        $_SESSION["archive-successful"] = false;
-
-    }
+    /*function archiveOrder($result) { // \admin\orders.php
+        $_SESSION["archive-successful"] = false; // zamiast Z.S --> zapytanie typu UPDATE -> funkcja query zwraca true/false;
+    }*/
 
     function get_book_details($result) { // ̶ ̶a̶d̶m̶i̶n̶/̶b̶o̶o̶k̶-̶d̶e̶t̶a̶i̶l̶s̶.̶p̶h̶p̶?̶%̶s̶
 
@@ -1618,33 +1621,21 @@ use PHPMailer\PHPMailer\SMTP;
     // powyższe kilka funkcji można zoptymalizować tak, aby była to jedna (np używając tablicy num. a nie assocjacyjnych);
 
     function countBooksAvailable($result) { // zlicz sumę wszystkich książek w magazynie
-
         // \admin\admin.php
-
-        $row = $result->fetch_assoc();
-
+            $row = $result->fetch_assoc();
         $_SESSION["booksAmount"] = $row["liczba_ksiazek"];
-
     }
 
     function countpendingOrders($result) { // \admin\admin.php
-
         // liczba oczekujących zamówień (pending) --> status = "Oczekujące ..."
-
-        $row = $result->fetch_assoc();
-
+            $row = $result->fetch_assoc();
         $_SESSION["pendingOrders"] = $row["liczba_zamowien"];
-
     }
 
     function countTotalSales($result) { // zlicz sumę wszystkich książek w magazynie
-
-        // \admin\admin.php
-
-        $row = $result->fetch_assoc();
-
+            // \admin\admin.php
+            $row = $result->fetch_assoc();
         $_SESSION["totalSale"] = $row["totalSale"];
-
     }
 
     function getSubcategories($result) { //  \admin\edit-book.php,  \user\index.php (!)
@@ -2161,11 +2152,15 @@ function query($query, $fun, $values) {
 
     } catch(Exception $e) {
 
-        echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności ] </div>';
+        /*echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności ] </div>';
         // użycie "return" zamisat echo ?
         echo '<br><span style="color:red">Informacja developerska: </span>'.$e;
         // wyświetlenie komunikatu błędu - dla deweloperów
-        //exit(); // (?)
+        //exit(); // (?)*/
+
+        //http_response_code(500);
+        return false;
+
     }
 
 }

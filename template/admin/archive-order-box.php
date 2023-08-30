@@ -15,12 +15,13 @@
 
             <span class="info">Dodaj komentarz wyjaściajacy powód zarchiwizowania zamówienia</span>
 
-            <textarea name="comment" id="comment" class="comment" onfocus="resetError(this)"
-                      minlength="10" maxlength="255"></textarea> <!-- maxlength="50" minlength="10" -->
+            <textarea name="comment" id="comment" class="comment" onfocus="resetError(this)" maxlength="255"></textarea> <!-- maxlength="50" minlength="10" -->
 
-            <span class="remove-order-error">Opinia powinna zawierać od 10 do 255 znaków, oraz nie zawierać znaków specjalnych</span>
+            <span class="remove-order-error hidden">
+                Opinia powinna zawierać od 10 do 255 znaków, oraz nie zawierać znaków specjalnych
+            </span>
 
-            <div style="clear: both;"></div>
+            <!--<div style="clear: both;"></div>-->
 
             <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
 

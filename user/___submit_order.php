@@ -28,7 +28,7 @@
 
                 <div id="content" class="shopping-cart">
 
-                    <h3 id="cart-header">Koszyk</h3>
+                    <h3 id="cart-header">Złóż zamówienie</h3>
 
                     <?php
 

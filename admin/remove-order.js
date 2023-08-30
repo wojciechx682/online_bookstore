@@ -5,58 +5,54 @@
 
 //$("form.remove-order").on("submit", function(e) { // po wysłaniu formularza;
 
-document.querySelector('form.remove-order').addEventListener("submit", function(e) { // po wysłaniu formularza
-
-    // ̶"̶p̶l̶i̶k̶ ̶w̶i̶e̶,̶ ̶k̶t̶ó̶r̶y̶ ̶f̶o̶r̶m̶u̶l̶a̶r̶z̶ ̶z̶o̶s̶t̶a̶ł̶ ̶w̶y̶s̶ł̶a̶n̶y̶ ̶-̶ ̶j̶e̶s̶t̶ ̶t̶o̶ ̶t̶y̶l̶k̶o̶ ̶j̶e̶d̶e̶n̶ ̶-̶ ̶o̶d̶p̶o̶w̶i̶e̶d̶n̶i̶ ̶-̶ ̶a̶ ̶n̶i̶e̶ ̶w̶s̶z̶y̶s̶t̶i̶e̶ ̶f̶o̶r̶m̶u̶l̶a̶r̶z̶e̶ ̶-̶ ̶t̶j̶.̶ ̶t̶e̶ ̶k̶t̶ó̶r̶e̶ ̶i̶s̶t̶n̶i̶e̶j̶ą̶ ̶w̶ ̶k̶o̶d̶z̶i̶e̶ ̶i̶ ̶j̶e̶s̶t̶ ̶i̶c̶h̶ ̶t̶y̶l̶e̶ ̶i̶l̶e̶ ̶j̶e̶s̶t̶ ̶z̶a̶m̶ó̶w̶i̶e̶ń̶"̶;̶
-
-    // plik JS -> wysyłający formularz z wykorzystaniem AJAX;
-
-    // plik "remove-order.php" -> obsługuje żądanie, odbiera dane i wykonuje zapytanie do BD.
-
-    e.preventDefault(); // prevent form submission (default behaviour)
+document.querySelector("form.remove-order").addEventListener("submit", function(event) { // po wysłaniu formularza;
+    // plik JS -> wysyłający formularz z wykorzystaniem AJAX (jQuery);
+        // plik "remove-order.php" -> obsługuje żądanie, odbiera dane i wykonuje zapytanie do BD; zwraca komunikat błędu lub sukcesu;
+    event.preventDefault(); // prevent form submission (default behaviour);
+    let form = this; // element który wywołał zdarzenie (form) - obiekt DOM;
+        console.log("\nform -->\n", form);
+        console.log("\ntypeof form -->\n", typeof form);
 
     // pobranie danych z formularza;
-    let data = $(this); // obiekt jQuery zawierający formularz - <form>;
-
-        //console.log("\n\n data --> \n\n", data);
-        //console.log("\n\n typeof data --> \n\n", typeof data);
-
-    let orderId = data[0][0].value;        // id-zamówienia (✓ string);
+        //let data = $(this); // obiekt jQuery zawierający formularz - <form>;
+        //let orderId = data[0][0].value; // ✓ id-zamówienia (string);
+        //let orderId = this.querySelector('input[type="hidden"][name="order-id"]').value; // ✓ id-zamówienia (string);
+    let orderId = this.elements["order-id"].value; // ✓ id-zamówienia (string); this.elements["order-id"].value;
         console.log("\norderId => ", orderId);
         console.log("\norderId => ", typeof orderId);
-
-    let comment = data[0][1].value;        // komentarz (powód) archiwizowania (✓ string);
+    //let comment = data[0][1].value; // ✓ komentarz (powód) archiwizowania (string);
+    //let comment = this.querySelector('textarea[name="comment"][id="comment"]').value; // ✓ komentarz (powód) archiwizowania (string);
+    let comment = this.elements["comment"].value; // ✓ komentarz (powód) archiwizowania (string); this.elements.comment.value;
         console.log("\ncomment => ", comment);
         console.log("\ncomment => ", typeof comment);
-
-    //let textarea = data.find('textarea[name="comment"]'); // <textarea>;
-    let confirmButton = data.find('button[type="submit"]'); // "Potwierdź" - <button type="submit">;
-    let deliveryDateDiv = data.closest(".delivery-date"); // przodek formularza, <div class="delivery-date">;
-    let cancelButton = deliveryDateDiv.find(".cancel-order"); // "Anuluj"
+    console.log("\n form => ", this);
+    console.log("\nform elements => ", this.elements);
+    let confirmButton = this.querySelector('button[type="submit"]'); // "Potwierdź" - <button type="submit">;
+    let deliveryDateDiv = this.closest(".delivery-date"); // przodek formularza, <div class="delivery-date">;
+    let cancelButton = deliveryDateDiv.querySelector(".cancel-order"); // "Anuluj"
 
     // Sanityzacja danych wejściowych - Wyczyszczenie niebezpiecznych zapisów - Komentarz;
-
     const sanitizedComment = DOMPurify.sanitize(comment); // it works, but How ?
     //const sanitizedComment = DOMPurify.sanitize(comment, { USE_PROFILES: { html: true } });
-
     const sanitizedOrderId = DOMPurify.sanitize(orderId);
-
-    /*console.log('\n\n comment --> \n\n', comment);
-    console.log('\n\n sanitizedComment --> \n\n', sanitizedComment);*/
-
+        console.log('\n\n comment --> \n\n', comment);
+        console.log('\n\n sanitizedComment --> \n\n', sanitizedComment);
     // Walidacja wprowadzonych danych (niebezpieczne znaki, długość);
 
-    if(comment !== sanitizedComment ||
+    if (comment !== sanitizedComment ||
        sanitizedComment.length < 10 ||
        sanitizedComment.length > 255 ||
        orderId !== sanitizedOrderId ) {
-
-            // niebezpieczne znaki - lub - niepoprawna długość;
-        $('.remove-order-error').css('display', 'block'); // pokaż komunikat z błędem;
+        // niebezpieczne znaki - lub - niepoprawna długość;
+            //$('.remove-order-error').css('display', 'block'); // pokaż komunikat z błędem;
+            //$(".remove-order-error").removeClass("hidden"); // pokaż komunikat z błędem;
+        document.querySelector(".remove-order-error").classList.remove("hidden"); // pokaż komunikat z błędem;
 
     } else {
 
-        $('.remove-order-error').css('display', 'none'); // usuń komunikat z błędem
+        //$('.remove-order-error').css('display', 'none'); // usuń komunikat z błędem
+        //$(".remove-order-error").addClass("hidden");
+        document.querySelector(".remove-order-error").classList.add("hidden"); // pokaż komunikat z błędem;
 
         /*$.ajax({
             type: "POST",                    // GET or POST;
@@ -116,39 +112,102 @@ document.querySelector('form.remove-order').addEventListener("submit", function(
 
         // zamiana na użycie metod .done(), .fail(), always() - ponieważ success, error, complete - są przestarzałe (deprecated) -->
 
-        let dataSerialized = $(this).serialize(); // serializacja danych formularza (text);
+        //let dataSerialized = $(this).serialize(); // serializacja danych formularza (text);
+        //console.log("\n\n dataSerialized --> ", dataSerialized);
 
-        console.log("\n\n dataSerialized --> ", dataSerialized);
+        // order-id=1273&comment=asdasdasdasdasdasdasdasd
+
+        //return;
 
         $.ajax({
             type: "POST",
-            url: "remove-order.php",
-            data: dataSerialized,
+            url: "remove-orderr.php",
+            /*data: dataSerialized,*/
+            data: {
+                "order-id": sanitizedOrderId,
+                "comment": sanitizedComment
+            },
             timeout: 2000,
-
             beforeSend: function() { // before ajax - function called before sending the request;
                 $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
             }
+        }).done(function(data) { // (data, textStatus, jqXHR) // Success handler; // Handle the response data;
 
-        }).done(function(data) {
-            // Success handler; // Handle the response data;
+            /*$("div.order-status"+sanitizedOrderId).html("Zarchiwizowane"); // Pole ze statutem zamówienia w tabeli // div.order-status;
+                form.classList.add("hidden"); // "Potwierdź";
+                cancelButton.classList.add("hidden"); // "Anuluj";*!/
+            $("div.delivery-date").append(data);   // data - dane zwrócone z serwera;*/
 
-            let div = 'div.order-status'+orderId;  // Pole ze statutem zamówienia w tabeli
-            $(div).html("Zarchiwizowane");         // <table> -> div.order-status;
-                confirmButton.hide();              // "Potwierdź";
-                cancelButton.hide();               // "Anuluj";
-            $("div.delivery-date").append(data);   // data - dane zwrócone z serwera;
+            //if(data.status === "success") {
+            if(data.status === true) {
+                $("div.order-status" + sanitizedOrderId).html("Zarchiwizowane");
+                // ... inne akcje w przypadku sukcesu
+                form.classList.add("hidden"); // "Potwierdź";
+                cancelButton.classList.add("hidden"); // "Anuluj";
+                $("div.delivery-date").append("<span class='archive-success'>" + data.message + "</span>");
+
+            } else {
+                form.classList.add("hidden");
+                cancelButton.classList.add("hidden");
+                $("div.delivery-date").append("<span class='update-failed'>" + data.message + "</span>");
+            }
+
+        }).fail(function(jqXHR, textStatus, errorThrown) { // (jqXHR, textStatus, errorThrown); // Error handler // Handle the error condition;
+
+           /*   orm.classList.add("hidden");
+                cancelButton.classList.add("hidden");
+            $("div.delivery-date").append("<span class='update-failed'>Wystąpił problem. Nie udało się zarchiwizować zamówienia</span>"); // data - dane zwrócone z serwera;
+            //$("div.delivery-date").append("<span class='update-failed'>Odpowiedź z serwera: " + jqXHR.responseText + "</span>");
+            //$("div.delivery-date").append("<span class='update-failed'>Status: " + textStatus + "</span>"); // to samo co jqXHR.statusText
+            $("div.delivery-date").append("<span class='update-failed'>Status: " + jqXHR.statusText + "</span>");
+           //$("div.delivery-date").append("<span class='update-failed'>Błąd: " + errorThrown + "</span>");
+            console.log("Odpowiedź z serwera:", jqXHR);
+            console.log("Odpowiedź z serwera:", jqXHR.responseText);
+            console.log("Status:", textStatus);
+            //console.log("Błąd:", errorThrown);*/
 
 
-        }).fail(function(data) { // (xhr, status, error)
-            // Error handler // Handle the error condition;
+/*form.classList.add("hidden");
+cancelButton.classList.add("hidden");
+$("div.delivery-date").append("<span class='update-failed'>Wystąpił problem. Nie udało się zarchiwizować zamówienia</span>");
+$("div.delivery-date").append("<span class='update-failed'>Status: " + jqXHR.statusText + "</span>");
+//$("div.delivery-date").append("<span class='update-failed'>Status: " + textStatus + "</span>");
+    console.log("jqXHR:", jqXHR);
+    console.log("jqXHR:", jqXHR.status); // Kod statusu HTTP (np. 404 dla "Not Found" lub 200 dla "OK").
+    console.log("jqXHR:", jqXHR.statusText); // Tekst opisujący kod statusu HTTP (np. "Not Found" lub "OK").
+    console.log("jqXHR:", jqXHR.responseText); // Surowa odpowiedź zwrócona przez serwer.
+    //console.log("jqXHR:", jqXHR.responseJSON); // Jeżeli serwer zwraca odpowiedź w formacie JSON, jQuery automatycznie sparsuje ją i zapisze tutaj.
+    console.log("Status:", textStatus); // "timeout", "error", "abourt", "parseerror"
+    console.log("Error:", errorThrown);*/
 
-            // echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić zarchiwizować zamówienia</span>";
 
-            //$content.html('<div id="container">Please try again soon.</div>');
-                confirmButton.hide();  // "Potwierdź";
-                cancelButton.hide();   // "Anuluj";
-            $("div.delivery-date").append(data); // data - dane zwrócone z serwera;
+            form.classList.add("hidden");
+            cancelButton.classList.add("hidden");
+            /*let errorMsg = "Wystąpił problem. Nie udało się zarchiwizować zamówienia";
+                if (jqXHR.status === 404) {
+                    errorMsg = "Nie znaleziono serwera.";
+                } /!*else if (jqXHR.status === 500) {
+                    errorMsg = "Błąd serwera. Proszę spróbować później.";
+                } *!/ else if (textStatus === 'timeout') {
+                    errorMsg = "Przekroczony czas żądania.";
+                } else if (textStatus === 'abort') {
+                    errorMsg = "Żądanie zostało przerwane.";
+                } else if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                    errorMsg = jqXHR.responseJSON.message;
+                }*/
+            $("div.delivery-date").append("<span class='update-failed'>Wystąpił problem. Nie udało się zarchiwizować zamówienia</span>");
+            $("div.delivery-date").append("<span class='update-failed'>" + textStatus + " " + jqXHR.status + " " + jqXHR.statusText + "</span>");
+            //$("div.delivery-date").append("<span class='update-failed'> errorMessage - " + errorMsg + "</span>");
+
+                console.log("jqXHR - ", jqXHR);
+                console.log("jqXHR.status - ", jqXHR.status); // Kod statusu HTTP (np. 404 dla "Not Found" lub 200 dla "OK").
+            console.log("jqXHR.statusText - ", jqXHR.statusText); // Tekst opisujący kod statusu HTTP (np. "Not Found" lub "OK").
+                console.log("jqXHR.responseText - ", jqXHR.responseText); // Surowa odpowiedź zwrócona przez serwer.
+            //console.log("jqXHR:", jqXHR.responseJSON); // Jeżeli serwer zwraca odpowiedź w formacie JSON, jQuery automatycznie sparsuje ją i zapisze tutaj.
+            console.log("textStatus - ", textStatus); // "timeout", "error", "abourt", "parseerror", ... "success", "notmodified",
+            console.log("errorThrown - ", errorThrown); // "timeout", "error", "abourt", "parseerror"
+
+
         }).always(function() {
             $("img#loading-icon").toggleClass("not-visible");
         });

@@ -4,15 +4,15 @@
         // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
     require_once "../authenticate-admin.php";
 
-    query("SELECT SUM(ilosc_dostepnych_egzemplarzy) AS liczba_ksiazek FROM magazyn_ksiazki", "countBooksAvailable", ""); // liczba wszystkich książek (dostępnych na magazynie);
+    query("SELECT SUM(ilosc_dostepnych_egzemplarzy) AS liczba_ksiazek FROM magazyn_ksiazki", "countBooksAvailable", "");
+    // liczba wszystkich książek (dostępnych na magazynie);
 
-    query("SELECT COUNT(id_zamowienia) AS liczba_zamowien FROM zamowienia WHERE status='Oczekujące na potwierdzenie'", "countpendingOrders", ""); // liczba oczekujących zamówień (status = "Oczekujące ...");
+        /*query("SELECT COUNT(id_zamowienia) AS liczba_zamowien FROM zamowienia WHERE status='Oczekujące na potwierdzenie'", "countpendingOrders", ""); // liczba oczekujących zamówień (status = "Oczekujące ...");*/
+    query("SELECT COUNT(id_zamowienia) AS liczba_zamowien FROM zamowienia WHERE status='Oczekujące na potwierdzenie' AND id_pracownika='%s'", "countpendingOrders", $_SESSION["id"]); // liczba oczekujących zamówień - przypisanych do tego pracownika; (status = "Oczekujące ...");
 
     query("SELECT ROUND(SUM(pl.kwota),2) as totalSale
-          FROM zamowienia AS zm, platnosci AS pl 
-          WHERE zm.status='Dostarczono' AND zm.id_zamowienia = pl.id_zamowienia", "countTotalSales", ""); // całkowity przychód ze zrealizowanych zamówień;
-
-
+           FROM zamowienia AS zm, platnosci AS pl 
+           WHERE zm.status='Dostarczono' AND zm.id_zamowienia = pl.id_zamowienia", "countTotalSales", ""); // całkowity przychód ze zrealizowanych zamówień;
 ?>
 
 <!DOCTYPE HTML>
@@ -34,9 +34,11 @@
 
                 <div id="content">
 
-                    <?php /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>"*/ ?>
+                    <?php
+                        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr>"*/
+                    ?>
 
                     <style>
                         article#admin-main-page {
