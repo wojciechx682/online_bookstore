@@ -12,7 +12,6 @@ document.querySelector("form.remove-order").addEventListener("submit", function(
     let form = this; // element który wywołał zdarzenie (form) - obiekt DOM;
         console.log("\nform -->\n", form);
         console.log("\ntypeof form -->\n", typeof form);
-
     // pobranie danych z formularza;
         //let data = $(this); // obiekt jQuery zawierający formularz - <form>;
         //let orderId = data[0][0].value; // ✓ id-zamówienia (string);
@@ -121,7 +120,7 @@ document.querySelector("form.remove-order").addEventListener("submit", function(
 
         $.ajax({
             type: "POST",
-            url: "remove-orderr.php",
+            url: "remove-order.php",
             /*data: dataSerialized,*/
             data: {
                 "order-id": sanitizedOrderId,
@@ -139,7 +138,7 @@ document.querySelector("form.remove-order").addEventListener("submit", function(
             $("div.delivery-date").append(data);   // data - dane zwrócone z serwera;*/
 
             //if(data.status === "success") {
-            if(data.status === true) {
+            if(data.success === true) {
                 $("div.order-status" + sanitizedOrderId).html("Zarchiwizowane");
                 // ... inne akcje w przypadku sukcesu
                 form.classList.add("hidden"); // "Potwierdź";

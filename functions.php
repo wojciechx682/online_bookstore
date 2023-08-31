@@ -1521,11 +1521,9 @@ use PHPMailer\PHPMailer\SMTP;
         $_SESSION["employee_id"] = $row["id_pracownika"];
     }
 
-    function updateOrder($result) { // \admin\order-details.php
-
+    /*function updateOrder($result) { // \admin\order-details.php
         $_SESSION["update-successful"] = false;
-
-    }
+    }*/
 
     function showOrderStatusDate($result) {
 

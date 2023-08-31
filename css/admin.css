@@ -830,7 +830,12 @@ div.delivery-date {
     min-height: 90px;
 
     z-index: 1000;
+
+    clear: both;
 }
+
+
+
 
 div#update-status div.delivery-date {
     padding-top: 20px;
@@ -854,7 +859,7 @@ div.delivery-date input[type="time"] {
 }
 
 div.delivery-date input[type="time"] {
-    width: 110px;
+    width: 90px;
 }
 
 
@@ -872,13 +877,13 @@ div.delivery-date label:nth-of-type(2) {
 }
 
 div.delivery-date label:nth-of-type(2) {
-    display: none;
-    /* label - data dostawy - delivery date */
+   /* display: none;*/
+        /* label - data dostawy - delivery date */
 }
 
 div.delivery-date label:nth-of-type(3) {
 
-    display: none;
+    /*display: none;*/
 
     position: relative;
     /*top: 10px;*/
@@ -887,8 +892,8 @@ div.delivery-date label:nth-of-type(3) {
 
 
 div.delivery-date label:nth-of-type(4) { /* 3 */
-    display: none;
-    /* label - data dostawy - delivery date */
+   /* display: none;*/
+        /* label - data dostawy - delivery date */
     margin-bottom: 20px;
 }
 
@@ -973,6 +978,12 @@ span.archive-success, span.update-failed {
     left: -10px;
 }
 
+form#update-order-date span.update-failed {
+
+    left: -5px !important;
+    color: blue !important;
+}
+
 div.add-book-result span,
 div.edit-book-result span {
     margin-top: 3px !important;
@@ -980,6 +991,10 @@ div.edit-book-result span {
 
 div#update-status div.delivery-date span.update-failed {
     margin-top: 0;
+}
+
+span.update-failed {
+    margin-bottom: 8px;
 }
 
 /* archiwizowanie zamówienia -> */
@@ -1608,7 +1623,7 @@ div.order-summary span#add-order-comment {
     /*color: #5478c0;*/
     font-weight: bold;
     cursor: pointer;
-    margin-top: 14.5px;
+    /*margin-top: 14.5px;*/
 }
 
 div.order-summary span#add-order-comment:hover {

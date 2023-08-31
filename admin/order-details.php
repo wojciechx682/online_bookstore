@@ -170,12 +170,8 @@
                                      pl.id_metody_platnosci = mp.id_metody_platnosci AND
                                      zm.id_zamowienia='%s'",
                                "getOrderSummary", $_SESSION["order-id"]);
-
-                        // sposób_płatności, data_platnosci, forma_dostarczenia, status;
+                        // sposób_płatności, data_platnosci, forma_dostarczenia, dodaj_komentarz;
                     ?>
-
-
-
 
                     <div id="order-status">
 
@@ -185,7 +181,7 @@
 
                         <div id="order-details-status">
 
-                            <?php if(isset($_SESSION["status"]) && ! empty($_SESSION["status"]) && $_SESSION["status"] === "W trakcie realizacji") : ?>
+                            <?php if(isset($_SESSION["status"]) && !empty($_SESSION["status"]) && $_SESSION["status"] === "W trakcie realizacji") : ?>
 
                                 <?php query("SELECT zm.termin_dostawy FROM zamowienia AS zm WHERE zm.id_zamowienia='%s'", "showOrderStatusDate",  $_SESSION["order-id"]); ?>
 
@@ -201,14 +197,11 @@
 
                         </div>
 
-
-
                         <button class="update-order-status btn-link btn-link-static">Aktualizuj</button>
-
 
                     </div>
 
-                        <!--</div>--> <!-- #content -->
+                    <!--</div>--> <!-- #content -->
 
                     <!--<div style="clear: both"></div>-->
 
@@ -217,20 +210,16 @@
                 <?php
 
                     // przed zastosowaniem prg -->
-
                         // $_SESSION["order-id"] = array_keys($_GET)[0]; // $_GET -> id_zamówienia - "1038";
                     // $_SESSION["order-id"] = array_keys($_POST)[0]; // PRG
-
                         /*  $array = array(
                                 "name" => "John",
                                 "age" => 30,
                                 "city" => "New York",
                                 "gender" => "Male"
                             );
-
                             $keys = array_keys($array);
                             print_r($keys);
-
                             // output -->
                             Array
                             (
@@ -240,9 +229,7 @@
                                 [3] => gender
                             )
                         */
-
                         // var_dump($_SESSION);
-
                    /* query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'",
                         "get_order_details_admin", $_SESSION["order-id"]); // content of table;  $_SESSION['order_details_books_id'];
                                                                                 // (content) id_zamowienia, tytul, cena, ilosc, kwota;
@@ -269,7 +256,9 @@
                 <div style="clear: both"></div>-->
 
             </div> <!-- ✓ #order-det-container -->
-<span style="color: lightskyblue; font-weight: normal;">dodać tutaj informacje o tym, czy wybrane produkty są dostępne w magazynie.</span>
+
+            <!--<span style="color: lightskyblue; font-weight: normal;">dodać tutaj informacje o tym, czy wybrane produkty są dostępne w magazynie.</span>-->
+
             </div> <!-- ✓ #content -->
 
         </main>
@@ -287,13 +276,11 @@
     <h4 class="section-header-update-order status-title"><label for="status-list">Status:</label></h4>
 
     <select id="status-list">
-        <option>Oczekujące na potwierdzenie</option>
-        <option>W trakcie realizacji</option>
-        <option>Wysłano</option>
-        <option>Dostarczono</option>
+        <option value="pending">Oczekujące na potwierdzenie</option>
+        <option value="inProgress">W trakcie realizacji</option>
+        <option value="shipped">Wysłano</option>
+        <option value="delivered">Dostarczono</option>
     </select>
-
-    <div style="clear: both;"></div>
 
     <div class="delivery-date hidden">
 
@@ -304,19 +291,17 @@
             </label>
                 <div style="clear: both;"></div>
 
-            <label>
+            <label class="hidden">
                 <span class="order-label">Data wysłania</span><input type="date" name="dispatch-date">
             </label>
                 <div style="clear: both;"></div>
 
-            <label>
+            <label class="hidden">
                 <span class="order-label">Godzina wysłania</span><input type="time" name="dispatch-time" step="1">
             </label>
-            <div style="clear: both;"></div>
+                <div style="clear: both;"></div>
 
-
-
-            <label>
+            <label class="hidden">
                 <span class="order-label">Data dostarczenia</span><input type="date" name="delivered-date">
             </label>
                 <div style="clear: both;"></div>
@@ -335,13 +320,12 @@
 
 <script>
 
-    let updateBtn = document.querySelector('button.update-order-status');  // button - "Aktualizuj" zmianę statusu
-        console.log("\nupdateBtn --> ", updateBtn);
+    let updateBtn = document.querySelector("button.update-order-status");  // button - "Aktualizuj" zmianę statusu
 
-    let statusBox = document.getElementById("update-status");    // okiento zmiany statusu; div #update-status . hidden;
+    let statusBox = document.getElementById("update-status");    // okiento zmiany statusu; div #update-status .hidden;
     let mainContainer = document.getElementById("main-container");
-    let icon = document.querySelector('.icon-cancel');               // <i class="icon-cancel">
-    let cancelBtn = document.querySelector('.cancel-order');         // przycisk "Anuluj"; button.cancel-order;
+    let icon = document.querySelector(".icon-cancel");           // <i class="icon-cancel">
+    let cancelBtn = document.querySelector(".cancel-order");     // przycisk "Anuluj"; button.cancel-order;
 
     console.log("\nstatusBox #update-status --> ", statusBox);
     console.log("\nmainContainer --> ", mainContainer);
@@ -375,7 +359,7 @@
     });
 
     function toggleBox() {
-        // after clicking the button --> Aktualizuj  "X"   "Anuluj"
+        // after clicking the button --> "Aktualizuj"; "X"; "Anuluj"
         statusBox.classList.toggle("hidden");
             // przełączenie widoczności okna;
             mainContainer.classList.toggle("bright");
@@ -412,22 +396,33 @@
             // when changing status was succesfull - "Udało się zmienić ..."
         let form = document.getElementById("update-order-date");
         // zresetowanie zawartości okna - po jego zamknięciu;
-        if(form.style.display === "none") {
+
+        /*if(form.style.display === "none") {
             form.style.display = "block";
-        }
+        }*/
+        form.classList.toggle("hidden", false);
+
         let cancelBtn = document.querySelector('.cancel-order'); // "Anuluj";
-        if(cancelBtn.style.display === "none") {
+        /*if(cancelBtn.style.display === "none") {
             cancelBtn.style.display = "block";
-        }
+        }*/
+        cancelBtn.classList.toggle("hidden", false);
+
         $('.update-success').remove(); // "Udało się zmienić status zamówienia";
             $("span.date-error").hide(); // "Podaj poprawną datę"
                 $("span.update-failed").remove(); // "Wystąpił problem. Nie udało się zmienić statusu zamówienia"
 
         resetDateInputs();
+
+        let list = document.getElementById("status-list");
+        list.selectedIndex = 0;
+
+        let div = document.querySelector(".delivery-date");
+        div.classList.toggle("hidden", true);
     }
 
     function resetDateInputs() {
-        let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"]');
+        let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"], form#update-order-date input[type="time"]');
         dateInputs.forEach(function(dateInput) { // zmiana elementu listy wyboru resetuje zawartość inputów typu date;
             dateInput.value = "";
         });
@@ -436,7 +431,7 @@
     // -----------------------------------------------------------------------------------------------------------------
     // kliknięcie na datę usuwa kom. o błędzie;
 
-    let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"]'); // querySelectorAll() is a method of the Document object that allows you to select multiple elements in the document based on a CSS selector;
+    let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"], form#update-order-date input[type="time"]'); // querySelectorAll() is a method of the Document object that allows you to select multiple elements in the document based on a CSS selector;
 
     dateInputs.forEach(function(dateInput) { // loop through each input element;
         dateInput.addEventListener("focus", function() { // add the event listener to each input element;
@@ -479,23 +474,36 @@
 
             dateError.style.marginTop = "-2px";
 
-                    if(expDeliveryDate.style.display === "none") { // termin_dostawy
-                        expDeliveryDate.style.display = "block";
-                    }
-
-                    if(sentDate.style.display === "block") { // data_wysłania_zamowienia
-                        sentDate.style.display = "none";
-                    }
-                    if(sentTime.style.display === "block") {
-                        sentTime.style.display = "none";
-                    }
-                    if(dateDelivered.style.display === "block") { // data_dostarczenia
-                        dateDelivered.style.display = "none";
-                    }
-
-                    if(deliveryDate.style.paddingTop !== "20px") { // (?)
-                        deliveryDate.style.paddingTop = "20px";
-                    }
+            /*if(expDeliveryDate.style.display === "none") { // termin_dostawy
+                expDeliveryDate.style.display = "block";
+            }*/
+            if(expDeliveryDate.classList.contains("hidden")) { // termin_dostawy
+                expDeliveryDate.classList.remove("hidden");
+            }
+            /*if(sentDate.style.display === "block") { // data_wysłania_zamowienia
+                sentDate.style.display = "none";
+            }*/
+            if(!sentDate.classList.contains("hidden")) { // data_wysłania_zamowienia
+                sentDate.classList.add("hidden");
+            }
+            /*if(sentTime.style.display === "block") {
+                sentTime.style.display = "none";
+            }*/
+            if(!sentTime.classList.contains("hidden")) {
+                sentTime.classList.add("hidden");
+            }
+            /*if(dateDelivered.style.display === "block") { // data_dostarczenia
+                dateDelivered.style.display = "none";
+            }*/
+            if(!dateDelivered.classList.contains("hidden")) { // data_dostarczenia
+                dateDelivered.classList.add("hidden");
+            }
+            /*if(deliveryDate.style.paddingTop !== "20px") { // (?)
+                deliveryDate.style.paddingTop = "20px";
+            }*/
+            if(deliveryDate.style.paddingTop !== "20px") {
+                deliveryDate.style.paddingTop = "20px";
+            }
 
             $('div#update-status .update-order-status').each(function(index, element) { // <button> --> "Potwierdź", "Anuluj", (!)
                 $(element).css('margin-top', '90px');
@@ -508,19 +516,30 @@
             // form.style.display = "block"; // termin dostawy
             // console.log("\ndeliveryDate => ", deliveryDate);
 
-            sentDate.style.display = "block"; // data_wysłania
+            /*sentDate.style.display = "block"; // data_wysłania*/
+            sentDate.classList.remove("hidden");
+
             sentDate.style.marginBottom = "20px"; // (!)
 
             deliveryDate.style.paddingTop = "20px"; // div.delivery-date --> form
 
-            if(dateDelivered.style.display === "block") { // data_dostarczenia
+            /*if(dateDelivered.style.display === "block") { // data_dostarczenia
                 dateDelivered.style.display = "none";
+            }*/
+            if(!dateDelivered.classList.contains("hidden")) { // data_dostarczenia
+                dateDelivered.classList.add("hidden")
             }
 
-            if(expDeliveryDate.style.display === "none") { // termin dostawy;  <input type="date" ...>
+            /*if(expDeliveryDate.style.display === "none") { // termin dostawy;  <input type="date" ...>
                 expDeliveryDate.style.display = "block";
+            }*/
+            if(expDeliveryDate.classList.contains("hidden")) { // termin dostawy;  <input type="date" ...>
+                expDeliveryDate.classList.remove("hidden")
             }
-            sentTime.style.display = "block";
+            /*sentTime.style.display = "block";*/
+
+            sentTime.classList.remove("hidden");
+
 
 /*for(let i=0; i<btns.length; i++) {
 updateBtn[i].style.marginTop = "50px";
@@ -551,16 +570,24 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
 
             // form.style.display = "block";
 
-            expDeliveryDate.style.display = "none"; // termin_dostawy
+            /*expDeliveryDate.style.display = "none"; // termin_dostawy*/
+            expDeliveryDate.classList.add("hidden");
 
-            if(sentDate.style.display === "block") { // data_wysłania;
+            /*if(sentDate.style.display === "block") { // data_wysłania;
                 sentDate.style.display = "none";
+            }*/
+            if(!sentDate.classList.contains("hidden")) { // data_wysłania;
+                sentDate.classList.add("hidden");
             }
-            if(sentTime.style.display === "block") { // data_wysłania;
+            /*if(sentTime.style.display === "block") { // data_wysłania;
                 sentTime.style.display = "none";
+            }*/
+            if(!sentTime.classList.contains("hidden")) { // data_wysłania;
+                sentTime.classList.add("hidden");
             }
 
-            dateDelivered.style.display = "block"; // data_dostarczenia;
+            //dateDelivered.style.display = "block"; // data_dostarczenia;
+            dateDelivered.classList.remove("hidden"); // data_dostarczenia;
 
             if(deliveryDate.style.paddingTop !== "20px") { // (?)
                 deliveryDate.style.paddingTop = "20px";
@@ -573,7 +600,8 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
         } else {
             //deliveryDate.style.display = "none";
             deliveryDate.classList.toggle("hidden", true);
-            sentDate.style.display = "none";
+            //sentDate.style.display = "none";
+            sentDate.classList.add("hidden");
         }
     });
 
@@ -585,20 +613,23 @@ deliveryDate.setAttribute('name', 'delivery-date'); */
         // ukrycie formularza + buttona "Anuluj" - po pomyślnym zrealizowaniu zapytania typu update (.done(), .fail());
         const form = document.getElementById("update-order-date"); // ukrycie formularza (zawiera przycisk "Potwierdź") - <form #update-order-date>
         const btn = document.querySelector(".cancel-order");       // ukrycie przycisku "Anuluj"
-        form.style.display = "none";
-        btn.style.display = "none";
+        /*form.style.display = "none";
+        btn.style.display = "none";*/
+
+        form.classList.add("hidden");
+        btn.classList.add("hidden");
 
         let list = document.getElementById("status-list");  // <select> list;
         let option = list.options[list.selectedIndex];      // currently selected <option> element;
-        $("span.order-status-name").text(option.innerHTML); // zmiana wyświetlanego statusu po jego zmianie;
+        //$("span.order-status-name").text(option.innerHTML); // zmiana wyświetlanego statusu po jego zmianie;
     }
 
     // kliknięcie "Esc" zamyka okno zmiany statusu;
 
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener("keydown", function(event) {
         let statusBox = document.getElementById("update-status"); // całe okieno zmiany statusu; <div id="update-status">
         if(!statusBox.classList.contains("hidden")) { // jeśli element jest widoczny;
-            if (event.key === 'Escape') {
+            if (event.key === "Escape") {
                 //console.log('Esc key pressed'); // add code here to perform an action when Esc key is pressed
                 toggleBox(); // zamknięcie okna;
             }

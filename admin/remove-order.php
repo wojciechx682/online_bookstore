@@ -16,7 +16,6 @@ $response = [];
 
         $comment = filter_var($_POST["comment"],FILTER_SANITIZE_STRING); // sanityzacja (back-end);
         $orderId = filter_var($_POST["order-id"],FILTER_SANITIZE_NUMBER_INT);
-        $orderId = filter_var($orderId, FILTER_VALIDATE_INT);
 
         if ($comment === false || $orderId === false || $comment !== $_POST["comment"] || $orderId !== $_POST["order-id"]) { // dane nie przeszły walidacji;
 
@@ -31,14 +30,15 @@ $response = [];
         $archiveSuccessful = false;
     }
 
+
     if ($archiveSuccessful === true) {
         //http_response_code(200);
-        $response["status"] = true;
+        $response["success"] = true;
         $response["message"] = "Udało się zarchiwizować zamówienie";
         //echo "<span class='archive-success'>Udało się zmienić zarchiwizować zamówienie</span>";
     } else {
         //http_response_code(400);
-        $response["status"] = false;
+        $response["success"] = false;
         $response["message"] = "Wystąpił problem. Nie udało się zarchiwizować zamówienia";
         //echo "<span class='update-failed'>Wystąpił problem. Nie udało się zarchiwizować zamówienia</span>";
     }
