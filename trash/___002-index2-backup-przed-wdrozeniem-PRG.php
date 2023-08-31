@@ -136,7 +136,7 @@
                         </div>
 
                         <?php
-                            query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // <ul> authors list;
+                            query("SELECT DISTINCT imie, nazwisko, id_autora FROM authors", "get_authors", ""); // <ul> authors list;
                         ?>
 
                         <button id="filter-authors">Zastosuj</button>
@@ -182,7 +182,7 @@
                             query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                                                      kt.nazwa, sb.id_kategorii, 
                                                         au.imie, au.nazwisko 
-                                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
+                                                     FROM books AS ks, authors AS au, categories AS kt, subcategories AS sb 
                                                      WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
                                                      AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii;
                         } else { // puste pole wyszukiwania;
@@ -210,10 +210,10 @@
                                                  ks.rating,
                                                  kt.nazwa, sb.id_kategorii, 
                                                   au.imie, au.nazwisko 
-                                                 FROM ksiazki AS ks, 
-                                                      autor AS au, 
-                                                      kategorie AS kt, 
-                                                      subkategorie AS sb 
+                                                 FROM books AS ks, 
+                                                      authors AS au, 
+                                                      categories AS kt, 
+                                                      subcategories AS sb 
                                                  WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
                                                    
                                                  AND ks.tytul LIKE '%%%s%%'";
@@ -252,7 +252,7 @@
                           ks.rating,
                           kt.nazwa, sb.id_kategorii,  
                            au.imie, au.nazwisko 
-                          FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb";
+                          FROM books AS ks, authors AS au, categories AS kt, subcategories AS sb";
 
                         // validate and sanitize input data (advanced search);
 

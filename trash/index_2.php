@@ -92,7 +92,7 @@ require "../view/header-container.php"; ?>
             <nav id="category-nav">
                 <ul>
                     <?php
-                        query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categories", "");
+                        query("SELECT DISTINCT nazwa FROM categories ORDER BY nazwa ASC", "get_categories", "");
                     ?>
                 </ul>
             </nav>
@@ -196,7 +196,7 @@ require "../view/header-container.php"; ?>
                 <!--</div>-->
 
                 <?php
-                    query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // lista <ul> autorów
+                    query("SELECT DISTINCT imie, nazwisko, id_autora FROM authors", "get_authors", ""); // lista <ul> autorów
                 ?>
 
                 <button id="filter-authors">Zastosuj</button>
@@ -251,7 +251,7 @@ require "../view/header-container.php"; ?>
             echo '<div id="content"></div>';
                 $autor = [$_GET['autor']];
                 echo '<div id="content-books">';
-                    query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE id_autora='%s'", "get_books", $autor); // do zmiany -> id subkategoii
+                    query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM books WHERE id_autora='%s'", "get_books", $autor); // do zmiany -> id subkategoii
                 echo '</div>';
             echo '</div>';
         }
@@ -278,7 +278,7 @@ require "../view/header-container.php"; ?>
                         query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                                      kt.nazwa, sb.id_kategorii, 
                                         au.imie, au.nazwisko 
-                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
+                                     FROM books AS ks, authors AS au, categories AS kt, subcategories AS sb 
                                      WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
                                      AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii
 
@@ -320,10 +320,10 @@ require "../view/header-container.php"; ?>
                                          ks.rating,
                                          kt.nazwa, sb.id_kategorii, 
                                           au.imie, au.nazwisko 
-                                         FROM ksiazki AS ks, 
-                                              autor AS au, 
-                                              kategorie AS kt, 
-                                              subkategorie AS sb 
+                                         FROM books AS ks, 
+                                              authors AS au, 
+                                              categories AS kt, 
+                                              subcategories AS sb 
                                          WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
                                            
                                          AND ks.tytul LIKE '%%%s%%'";
@@ -429,7 +429,7 @@ require "../view/header-container.php"; ?>
                 array_push($values, $wyrazenie);
                 array_push($values, $wyrazenie);
 
-                query("SELECT id_ksiazki, autor.id_autora, tytul, cena, rok_wydania, kategoria FROM ksiazki, autor WHERE ksiazki.id_autora = autor.id_autora AND (autor.imie = '%s' OR autor.nazwisko = '%s')", "advanced_search", $values);
+                query("SELECT id_ksiazki, authors.id_autora, tytul, cena, rok_wydania, kategoria FROM books, authors WHERE books.id_autora = authors.id_autora AND (authors.imie = '%s' OR authors.nazwisko = '%s')", "advanced_search", $values);
                 // dalej -> stworzyć funckję advanced_search ...
 
                 //query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); //
@@ -442,7 +442,7 @@ require "../view/header-container.php"; ?>
 
                 // $wyrazenie = filter_input(INPUT_GET, 'wyrazenie', FILTER_SANITIZE_STRING); // ✓
 
-                query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $wyrazenie);
+                query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM books WHERE tytul LIKE '%%%s%%'", "get_books", $wyrazenie);
             }
         }
         ?>
@@ -516,7 +516,7 @@ require "../view/header-container.php"; ?>
                       ks.rating,
                       kt.nazwa, sb.id_kategorii,  
                        au.imie, au.nazwisko 
-                      FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb";
+                      FROM books AS ks, authors AS au, categories AS kt, subcategories AS sb";
 
             // Validate and sanitize input data
 

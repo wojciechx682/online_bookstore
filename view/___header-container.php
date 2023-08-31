@@ -31,7 +31,7 @@
                             Koszyk
                                 <?php
                                     if (isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true) {
-                                        query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
+                                        query("SELECT SUM(ilosc) AS suma FROM shopping_cart WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
                                         echo "(".$_SESSION["koszyk_ilosc_ksiazek"].")"; // "(3)"
                                     }
                                 ?>
@@ -59,7 +59,7 @@
                     Koszyk
                         <?php
                             if (isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] === true) {
-                                query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "countCartQuantity", $_SESSION['id']);
+                                query("SELECT SUM(ilosc) AS suma FROM shopping_cart WHERE id_klienta='%s'", "countCartQuantity", $_SESSION['id']);
                                 echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "(3)"
                             }
                         ?>
@@ -84,7 +84,7 @@
 
                             <ul id="categories-list">
                                 <?php
-                                    query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa", "getCategories", "");
+                                    query("SELECT DISTINCT nazwa FROM categories ORDER BY nazwa", "getCategories", "");
                                     // wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz <ul>
 
                                     /*<ul>
@@ -162,7 +162,7 @@
                         </span>
                             <select id="adv-search-category" name="adv-search-category">
                                 <?php
-                                    query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa", "getCategoriesAdvSearch", "");
+                                    query("SELECT DISTINCT nazwa FROM categories ORDER BY nazwa", "getCategoriesAdvSearch", "");
                                     // <option value="{nazwa_kategorii}">{nazwa_kategorii}</option>
                                 ?>
                             </select>
@@ -178,7 +178,7 @@
                             </span>
                                 <select id="adv-search-author" name="adv-search-author">
                                     <?php
-                                        query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie", "getAuthorsAdvSearch", "");
+                                        query("SELECT DISTINCT imie, nazwisko, id_autora FROM authors ORDER BY imie", "getAuthorsAdvSearch", "");
                                         // <option value="{id_autora}">{imie nazwisko}</option>
                                     ?>
                                 </select>

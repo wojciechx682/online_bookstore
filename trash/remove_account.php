@@ -12,8 +12,8 @@
 
     if(isset($_SESSION["password_confirmed"]) && $_SESSION["password_confirmed"]) {
         // podano poprawne hasło
-        query("DELETE FROM klienci WHERE id_klienta='%s'", "", $_SESSION["id"]); // usunięcie konta klienta (+ jego zamówień, szczegółów zamówień, płatności, + koszyka)
-        query("DELETE FROM komentarze WHERE id_klienta='%s'", "", $_SESSION["id"]); // usunięcie komentarzy dodaych prze usera
+        query("DELETE FROM clients WHERE id_klienta='%s'", "", $_SESSION["id"]); // usunięcie konta klienta (+ jego zamówień, szczegółów zamówień, płatności, + koszyka)
+        query("DELETE FROM comments WHERE id_klienta='%s'", "", $_SESSION["id"]); // usunięcie komentarzy dodaych prze usera
         query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["id"]); // usunięcie tokenów do resetowania hasłą, jeśli istniały jakies przypisane do tego usera;
         query("DELETE FROM ratings WHERE id_klienta='%s'", "", $_SESSION["id"]); // usunięcie komentarzy/opinii dodanych przez usera
         header('location: logout.php');

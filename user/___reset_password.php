@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {                 // Post - Redirect 
         } else { // email passed the validation (filter_var);
 
                 unset($_SESSION["email-exists"]);
-            query("SELECT id_klienta, imie, email FROM klienci WHERE email='%s'", "resetPasswordCheckEmail", $email);  // check if there is any user (client) with that email;
+            query("SELECT id_klienta, imie, email FROM clients WHERE email='%s'", "resetPasswordCheckEmail", $email);  // check if there is any user (client) with that email;
 
             // query("SELECT 'klient' AS user_type, imie, email FROM klienci WHERE BINARY email = '%s' UNION SELECT 'pracownik' AS user_type, imie, email FROM pracownicy WHERE BINARY email = '%s'", "resetPasswordCheckEmail", [$email, $email]);
 
@@ -273,7 +273,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {                 // Post - Redirect 
                 $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
                 $data = [$newPassword, $_SESSION["email"]];
                     //unset($_SESSION["e-haslo"]);
-                $updateSuccessful = query("UPDATE klienci SET haslo = '%s' WHERE email = '%s'", "", $data);
+                $updateSuccessful = query("UPDATE clients SET haslo = '%s' WHERE email = '%s'", "", $data);
 
                 if($updateSuccessful) {
 

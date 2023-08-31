@@ -25,7 +25,7 @@
 
             unset($_SESSION["book_exists"]);
             // check if there is really an order with that id (post - order-id);
-            query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExists", $_SESSION["book-id"]);
+            query("SELECT id_ksiazki FROM books WHERE id_ksiazki = '%s'", "verifyBookExists", $_SESSION["book-id"]);
             // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0    -> przestawi
             // $_SESSION['book_exists'] -> na true ;
 
@@ -132,18 +132,18 @@
                     query("SELECT ks.tytul, ks.cena, ks.rok_wydania, au.imie, au.nazwisko, wd.nazwa_wydawcy, ks.opis, ks.wymiary, ks.ilosc_stron, 
                                         ks.oprawa, ks.stan, ks.rating AS srednia_ocen, ks.image_url,
                                 (SELECT COUNT(*) FROM ratings WHERE ratings.id_ksiazki = ks.id_ksiazki) AS liczba_ocen, 
-                                (SELECT COUNT(*) FROM koszyk WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_klientow_posiadajacych_w_koszyku,
-                                (SELECT SUM(ilosc) FROM szczegoly_zamowienia WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_sprzedanych_egzemplarzy,						  
-                                (SELECT COUNT(*) FROM szczegoly_zamowienia, ksiazki WHERE szczegoly_zamowienia.id_ksiazki = ksiazki.id_ksiazki AND ksiazki.id_ksiazki='%s'
-                                GROUP BY szczegoly_zamowienia.id_ksiazki) AS ilosc_zamowien_w_ktorych_wystapila, 
+                                (SELECT COUNT(*) FROM shopping_cart WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_klientow_posiadajacych_w_koszyku,
+                                (SELECT SUM(ilosc) FROM order_details WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_sprzedanych_egzemplarzy,						  
+                                (SELECT COUNT(*) FROM order_details, books WHERE order_details.id_ksiazki = books.id_ksiazki AND books.id_ksiazki='%s'
+                                GROUP BY order_details.id_ksiazki) AS ilosc_zamowien_w_ktorych_wystapila, 
                                 kat.nazwa AS nazwa_kategorii, sub.nazwa AS nazwa_subkategorii, magks.ilosc_dostepnych_egzemplarzy, mag.nazwa AS nazwa_magazynu, mag.kraj, mag.wojewodztwo, mag.miejscowosc, mag.ulica, mag.numer_ulicy, mag.kod_pocztowy, mag.kod_miejscowosc
-                                    FROM ksiazki AS ks
-                                    JOIN autor AS au ON ks.id_autora = au.id_autora
-                                    JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                                    JOIN subkategorie AS sub ON ks.id_subkategorii = sub.id_subkategorii
-                                    JOIN kategorie AS kat ON sub.id_kategorii = kat.id_kategorii
-                                    JOIN magazyn_ksiazki AS magks ON ks.id_ksiazki = magks.id_ksiazki
-                                    JOIN magazyn AS mag ON magks.id_magazynu = mag.id_magazynu
+                                    FROM books AS ks
+                                    JOIN authors AS au ON ks.id_autora = au.id_autora
+                                    JOIN publishers AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                                    JOIN subcategories AS sub ON ks.id_subkategorii = sub.id_subkategorii
+                                    JOIN categories AS kat ON sub.id_kategorii = kat.id_kategorii
+                                    JOIN warehouse_books AS magks ON ks.id_ksiazki = magks.id_ksiazki
+                                    JOIN warehouse AS mag ON magks.id_magazynu = mag.id_magazynu
                                     WHERE ks.id_ksiazki = '%s' AND magks.id_magazynu = '%s'","get_book_details", [$_SESSION["book-id"], $_SESSION["book-id"], $_SESSION["book-id"], $_SESSION["book-id"], $_SESSION["warehouse-id"]]); // LIMIT 1
                         // dane szczegółowe książki i informacje o jej dostępności w magazynie;
                         // szczeółowe informacje o książce;
@@ -189,18 +189,18 @@
                         query("SELECT ks.tytul, ks.id_ksiazki, ks.cena, ks.rok_wydania, au.imie, au.nazwisko, wd.nazwa_wydawcy, ks.opis, ks.wymiary, ks.ilosc_stron,
                                        ks.oprawa, ks.stan, ks.rating AS srednia_ocen, ks.image_url,
                                        (SELECT COUNT(*) FROM ratings WHERE ratings.id_ksiazki = ks.id_ksiazki) AS liczba_ocen,
-                                       (SELECT COUNT(*) FROM koszyk WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_klientow_posiadajacych_w_koszyku,
-                                       (SELECT SUM(ilosc) FROM szczegoly_zamowienia WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_sprzedanych_egzemplarzy,
-                                       (SELECT COUNT(*) FROM szczegoly_zamowienia, ksiazki WHERE szczegoly_zamowienia.id_ksiazki = ksiazki.id_ksiazki AND ksiazki.id_ksiazki='%s'
-                                        GROUP BY szczegoly_zamowienia.id_ksiazki) AS ilosc_zamowien_w_ktorych_wystapila,
+                                       (SELECT COUNT(*) FROM shopping_cart WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_klientow_posiadajacych_w_koszyku,
+                                       (SELECT SUM(ilosc) FROM order_details WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_sprzedanych_egzemplarzy,
+                                       (SELECT COUNT(*) FROM order_details, books WHERE order_details.id_ksiazki = books.id_ksiazki AND books.id_ksiazki='%s'
+                                        GROUP BY order_details.id_ksiazki) AS ilosc_zamowien_w_ktorych_wystapila,
                                        kat.nazwa AS nazwa_kategorii, sub.nazwa AS nazwa_subkategorii, magks.ilosc_dostepnych_egzemplarzy, mag.nazwa, mag.id_magazynu AS nazwa_magazynu, mag.kraj, mag.wojewodztwo, mag.miejscowosc, mag.ulica, mag.numer_ulicy, mag.kod_pocztowy, mag.kod_miejscowosc
-                                FROM ksiazki AS ks
-                                         JOIN autor AS au ON ks.id_autora = au.id_autora
-                                         JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                                         JOIN subkategorie AS sub ON ks.id_subkategorii = sub.id_subkategorii
-                                         JOIN kategorie AS kat ON sub.id_kategorii = kat.id_kategorii
-                                         JOIN magazyn_ksiazki AS magks ON ks.id_ksiazki = magks.id_ksiazki
-                                         JOIN magazyn AS mag ON magks.id_magazynu = mag.id_magazynu
+                                FROM books AS ks
+                                         JOIN authors AS au ON ks.id_autora = au.id_autora
+                                         JOIN publishers AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                                         JOIN subcategories AS sub ON ks.id_subkategorii = sub.id_subkategorii
+                                         JOIN categories AS kat ON sub.id_kategorii = kat.id_kategorii
+                                         JOIN warehouse_books AS magks ON ks.id_ksiazki = magks.id_ksiazki
+                                         JOIN warehouse AS mag ON magks.id_magazynu = mag.id_magazynu
                                 WHERE ks.id_ksiazki = '%s' LIMIT 1", "get_book_details",  [$_SESSION["book-id"], $_SESSION["book-id"], $_SESSION["book-id"], $_SESSION["book-id"]]);
 
                     ?>

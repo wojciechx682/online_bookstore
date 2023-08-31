@@ -12,13 +12,13 @@
 
     if (isset($_SESSION["password_confirmed"]) && $_SESSION["password_confirmed"] ) { // podano poprawne hasło;
 
-        query("DELETE FROM klienci WHERE id_klienta='%s'", "", $_SESSION["id"]);
+        query("DELETE FROM clients WHERE id_klienta='%s'", "", $_SESSION["id"]);
             // usunięcie konta klienta (+ ✓ jego zamówień, ✓ szczegółów zamówień, ✓płatności, ✓ koszyka) - Dzięki zastosowaniu relacji i ograniczeń kluczy obcych w tych tabelach (ON DELETE CASCADE, ON UPDATE CASCADE);
 
             // ✓ Usunięcie klienta usuwa również jego ZAMÓWIENIA ->
                 // "Zamówienia" -> Ograniczenia klucza obcego -> id_klienta ON DELETE CASCADE ;
 
-        query("DELETE FROM adres WHERE adres_id='%s'", "", $_SESSION["adres_id"]);
+        query("DELETE FROM address WHERE adres_id='%s'", "", $_SESSION["adres_id"]);
             // usunięcie danych adresowych klienta (należy użyć osobnego zapytania ponieważ ON DELETE CASCADE usuwa klienta podczas usunięcia adresu (wiersza z adresem), a nie odwrotnie (wiersz z adresem pozostaje, jeśli usunięmy klienta) ; (✓✓✓ a wynika to z tego, że to w tabeli klientów jest klucz obcy "adres", a nie w tabeli adres KO "id_klienta") - ✓✓✓ a jest tak, ponieważ nie chciałem aby tabela "adres" przechowywała "id_klienta" oraz "id_pracownika"
 
         //query("DELETE FROM komentarze WHERE id_klienta='%s'", "", $_SESSION["id"]);

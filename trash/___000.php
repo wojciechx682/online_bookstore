@@ -145,7 +145,7 @@ if(isset($_GET["input-search"]))
                     </div>
 
                     <?php
-                    query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // lista <ul> autorów
+                    query("SELECT DISTINCT imie, nazwisko, id_autora FROM authors", "get_authors", ""); // lista <ul> autorów
                     ?>
 
                     <button id="filter-authors">Zastosuj</button>
@@ -260,7 +260,7 @@ if(isset($_GET["input-search"]))
                     query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                                                      kt.nazwa, sb.id_kategorii, 
                                                         au.imie, au.nazwisko 
-                                                     FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb 
+                                                     FROM books AS ks, authors AS au, categories AS kt, subcategories AS sb 
                                                      WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii 
                                                      AND ks.tytul LIKE '%%%s%%'", "get_books", $search_value); // kategorie => nazwa, id_kategorii;
 
@@ -304,10 +304,10 @@ if(isset($_GET["input-search"]))
                                                  ks.rating,
                                                  kt.nazwa, sb.id_kategorii, 
                                                   au.imie, au.nazwisko 
-                                                 FROM ksiazki AS ks, 
-                                                      autor AS au, 
-                                                      kategorie AS kt, 
-                                                      subkategorie AS sb 
+                                                 FROM books AS ks, 
+                                                      authors AS au, 
+                                                      categories AS kt, 
+                                                      subcategories AS sb 
                                                  WHERE ks.id_autora = au.id_autora AND sb.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = sb.id_subkategorii
                                                    
                                                  AND ks.tytul LIKE '%%%s%%'";
@@ -410,7 +410,7 @@ if(isset($_GET["input-search"]))
                     array_push($values, $wyrazenie);
                     array_push($values, $wyrazenie);
 
-                    query("SELECT id_ksiazki, autor.id_autora, tytul, cena, rok_wydania, kategoria FROM ksiazki, autor WHERE ksiazki.id_autora = autor.id_autora AND (autor.imie = '%s' OR autor.nazwisko = '%s')", "advanced_search", $values);
+                    query("SELECT id_ksiazki, authors.id_autora, tytul, cena, rok_wydania, kategoria FROM books, authors WHERE books.id_autora = authors.id_autora AND (authors.imie = '%s' OR authors.nazwisko = '%s')", "advanced_search", $values);
                     // dalej -> stworzyć funckję advanced_search ...
 
                     //query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC", "get_categories", ""); //
@@ -423,7 +423,7 @@ if(isset($_GET["input-search"]))
 
                     // $wyrazenie = filter_input(INPUT_GET, 'wyrazenie', FILTER_SANITIZE_STRING); // ✓
 
-                    query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM ksiazki WHERE tytul LIKE '%%%s%%'", "get_books", $wyrazenie);
+                    query("SELECT id_ksiazki, tytul, cena, rok_wydania, kategoria FROM books WHERE tytul LIKE '%%%s%%'", "get_books", $wyrazenie);
                 }
             }
             ?>
@@ -493,7 +493,7 @@ if(isset($_GET["input-search"]))
                           ks.rating,
                           kt.nazwa, sb.id_kategorii,  
                            au.imie, au.nazwisko 
-                          FROM ksiazki AS ks, autor AS au, kategorie AS kt, subkategorie AS sb";
+                          FROM books AS ks, authors AS au, categories AS kt, subcategories AS sb";
 
                 // Validate and sanitize input data
 

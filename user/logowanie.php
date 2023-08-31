@@ -74,7 +74,7 @@
 
 			query("SELECT kl.id_klienta, kl.haslo, kl.imie, kl.nazwisko, kl.telefon, kl.email, kl.adres_id,
                                 ad.miejscowosc, ad.ulica, ad.numer_domu, ad.kod_pocztowy, ad.kod_miejscowosc
-                         FROM klienci AS kl, adres AS ad 
+                         FROM clients AS kl, address AS ad 
                          WHERE kl.adres_id = ad.adres_id
                          AND BINARY kl.email='%s'", "log_in", $email);
             // funkcja log_in (odpowiedzialna za logowanie) uzyska hasło z tablicy $_POST["password"];
@@ -88,7 +88,7 @@
 
                 query("SELECT pr.id_pracownika, pr.haslo, pr.imie, pr.nazwisko, pr.telefon, pr.email, pr.stanowisko, pr.adres_id,
                                 ad.miejscowosc, ad.ulica, ad.numer_domu, ad.kod_pocztowy, ad.kod_miejscowosc
-                         FROM pracownicy AS pr, adres AS ad 
+                         FROM employees AS pr, address AS ad 
                          WHERE pr.adres_id = ad.adres_id
                          AND pr.email='%s'", "log_in", $email) ;
                 // problem implementacyjny --> ✓ zmodyfikować funkcję log_in ! // ✓ dodac instrukcję warunkową (if);

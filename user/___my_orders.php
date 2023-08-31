@@ -33,10 +33,10 @@
                                   fd.nazwa AS forma_dostawy, fd.cena AS koszt_dostawy, 
                                   pl.kwota AS suma, 
                                   mp.nazwa AS sposob_platnosci, mp.oplata AS koszt_platnosci
-                           FROM zamowienia AS zm, 
-                                formy_dostawy AS fd, 
-                                platnosci AS pl, 
-                                metody_platnosci AS mp 
+                           FROM orders AS zm, 
+                                delivery_types AS fd, 
+                                payments AS pl, 
+                                payment_methods AS mp 
                            WHERE zm.id_formy_dostawy = fd.id_formy_dostawy AND zm.id_zamowienia = pl.id_zamowienia AND pl.id_metody_platnosci = mp.id_metody_platnosci AND id_klienta = '%s'", "getOrders", $_SESSION['id']);
 
                     // zamówienia danego klienta; -- wiele wierszy --> id_zamowienia, data_zloz, status, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia;

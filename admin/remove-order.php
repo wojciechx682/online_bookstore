@@ -23,7 +23,7 @@ $response = [];
 
         } else {
 
-            $archiveSuccessful = query("UPDATE zamowienia SET komentarz='%s', status='%s' WHERE id_zamowienia = '%s'", "", [$comment, "Zarchiwizowane", $orderId]); // --> true / false;
+            $archiveSuccessful = query("UPDATE orders SET komentarz='%s', status='%s' WHERE id_zamowienia = '%s'", "", [$comment, "Zarchiwizowane", $orderId]); // --> true / false;
         }
     } else {
 

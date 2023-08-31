@@ -31,7 +31,7 @@
 
             // check if there is really an order with that id (post - order-id);
             query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, kl.imie, kl.nazwisko
-                            FROM zamowienia AS zm, klienci AS kl
+                            FROM orders AS zm, clients AS kl
                          WHERE zm.id_klienta = kl.id_klienta AND zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
             // przestawi zmienną --> $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie (o takim id), jeśli num_rows > 0 ;
 
@@ -143,7 +143,7 @@
                                       sz.ilosc, sz.id_ksiazki,
                                       ks.cena, ks.rok_wydania,
                                       pl.kwota, MIN(mgk.id_magazynu) AS id_magazynu
-                               FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm, autor AS au, magazyn_ksiazki AS mgk
+                               FROM books AS ks, payments AS pl, order_details AS sz, orders AS zm, authors AS au, warehouse_books AS mgk
                                WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND ks.id_ksiazki = mgk.id_ksiazki AND zm.id_zamowienia = '%s'
                                GROUP BY zm.id_zamowienia, ks.tytul, au.imie, au.nazwisko, sz.ilosc, sz.id_ksiazki, ks.cena, ks.rok_wydania, pl.kwota",
                                     "getOrderDetailsAdmin", $_SESSION["order-id"]);
@@ -154,7 +154,7 @@
                                            //               1121         php       5    10    327.75;
 
                         query("SELECT pl.kwota 
-                               FROM platnosci AS pl, zamowienia AS zm 
+                               FROM payments AS pl, orders AS zm 
                                WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
                                 "getOrderSumAdmin", $_SESSION["order-id"]);
                         // footer of table;
@@ -164,7 +164,7 @@
 
                         query("SELECT pl.id_metody_platnosci, pl.data_platnosci, 
                                       zm.id_formy_dostawy, zm.status, fd.nazwa AS forma_dostarczenia, mp.nazwa AS metoda_platnosci
-                               FROM zamowienia AS zm, platnosci AS pl, formy_dostawy AS fd, metody_platnosci AS mp
+                               FROM orders AS zm, payments AS pl, delivery_types AS fd, payment_methods AS mp
                                WHERE zm.id_zamowienia = pl.id_zamowienia AND 
                                      zm.id_formy_dostawy = fd.id_formy_dostawy AND
                                      pl.id_metody_platnosci = mp.id_metody_platnosci AND
@@ -183,15 +183,15 @@
 
                             <?php if(isset($_SESSION["status"]) && !empty($_SESSION["status"]) && $_SESSION["status"] === "W trakcie realizacji") : ?>
 
-                                <?php query("SELECT zm.termin_dostawy FROM zamowienia AS zm WHERE zm.id_zamowienia='%s'", "showOrderStatusDate",  $_SESSION["order-id"]); ?>
+                                <?php query("SELECT zm.termin_dostawy FROM orders AS zm WHERE zm.id_zamowienia='%s'", "showOrderStatusDate",  $_SESSION["order-id"]); ?>
 
                             <?php elseif(isset($_SESSION["status"]) && ! empty($_SESSION["status"]) && $_SESSION["status"] === "Wysłano") : ?>
 
-                                <?php query("SELECT zm.termin_dostawy, zm.data_wysłania_zamowienia FROM zamowienia AS zm WHERE zm.id_zamowienia='%s'", "showOrderStatusDate",  $_SESSION["order-id"]); ?>
+                                <?php query("SELECT zm.termin_dostawy, zm.data_wysłania_zamowienia FROM orders AS zm WHERE zm.id_zamowienia='%s'", "showOrderStatusDate",  $_SESSION["order-id"]); ?>
 
                             <?php elseif(isset($_SESSION["status"]) && ! empty($_SESSION["status"]) && $_SESSION["status"] === "Dostarczono") : ?>
 
-                                <?php query("SELECT zm.data_dostarczenia FROM zamowienia AS zm WHERE zm.id_zamowienia='%s'", "showOrderStatusDate",  $_SESSION["order-id"]); ?>
+                                <?php query("SELECT zm.data_dostarczenia FROM orders AS zm WHERE zm.id_zamowienia='%s'", "showOrderStatusDate",  $_SESSION["order-id"]); ?>
 
                             <?php endif; ?>
 

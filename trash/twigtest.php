@@ -31,7 +31,7 @@ $twig = new \Twig\Environment($loader);
 
 <ul id="my-list">
     <?php
-        query("SELECT DISTINCT nazwa FROM kategorie ORDER BY nazwa ASC", "get_categoriesTwig", "");
+        query("SELECT DISTINCT nazwa FROM categories ORDER BY nazwa ASC", "get_categoriesTwig", "");
     ?>
 </ul>
 

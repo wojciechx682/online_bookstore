@@ -162,7 +162,7 @@
 					array_push($values, $email);
 					array_push($values, $login);
 
-					echo query("UPDATE klienci SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", "", $values);
+					echo query("UPDATE clients SET imie='%s', nazwisko='%s', miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s', wojewodztwo='%s', kraj='%s', PESEL='%s', data_urodzenia='%s', telefon='%s', email='%s', login='%s' WHERE id_klienta='$id'", "", $values);
 
                     ////////////////////////////////////////////////////////////////////////////////////////////////////
 					// Aktualizacja zmiennych sesyjnych

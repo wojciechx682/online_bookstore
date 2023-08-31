@@ -89,7 +89,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
         // pobierz liczbę ocen książki, jeśli wynosi zero, zapisz ten stan do zmiennej -->
         query("SELECT ks.id_ksiazki, ks.tytul, ks.rating, (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki) AS liczba_ocen
-               FROM ksiazki AS ks
+               FROM books AS ks
                WHERE ks.id_ksiazki = '%s'", "updateBookRates", $_SESSION["book-id"]); // <-- UPDATE
 
         unset($_SESSION["rating"]);
@@ -134,16 +134,16 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
                             query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, ks.opis, kt.nazwa AS kategoria, sb.id_kategorii, sb.nazwa AS podkategoria,
        
-                                             (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki) AS liczba_komentarzy, 
+                                             (SELECT COUNT(*) FROM comments WHERE id_ksiazki = ks.id_ksiazki) AS liczba_komentarzy, 
                                              (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki) AS liczba_ocen, 
-                                             (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki) AS liczba_egzemplarzy, 
+                                             (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM warehouse_books WHERE id_ksiazki = ks.id_ksiazki) AS liczba_egzemplarzy, 
                                              
                                              au.imie, au.nazwisko, au.id_autora, ks.id_wydawcy, wd.nazwa_wydawcy 
-                                         FROM ksiazki AS ks 
-                                             JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii 
-                                             JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii 
-                                             JOIN autor AS au ON ks.id_autora = au.id_autora 
-                                             JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy 
+                                         FROM books AS ks 
+                                             JOIN subcategories AS sb ON ks.id_subkategorii = sb.id_subkategorii 
+                                             JOIN categories AS kt ON sb.id_kategorii = kt.id_kategorii 
+                                             JOIN authors AS au ON ks.id_autora = au.id_autora 
+                                             JOIN publishers AS wd ON ks.id_wydawcy = wd.id_wydawcy 
                                          WHERE ks.id_ksiazki = '%s'", "getBook", $_SESSION["book-id"]); // \template\book-page.php ;
 
                        /* echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";

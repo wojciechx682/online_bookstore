@@ -170,7 +170,7 @@
 
                 // check if THAT category exists in db (!) ;
                     unset($_SESSION["category-exists"]);
-                query("SELECT nazwa FROM kategorie WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["category"]);
+                query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["category"]);
                 // $_SESSION["category-exists"] --> true,                   jeśli taka kategoria (nazwa) istnieje;
                 // -------------||------------- --> zmienna NIE ISTNIEJE !, jeśli taka kategoria (nazwa) NIE istnieje;
 
@@ -198,7 +198,7 @@
 
                         // check if THAT sub-category exists in db (!) ;
                             unset($_SESSION["subcategory-exists"]);
-                        query("SELECT nazwa FROM subkategorie WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // ✓ przestawi $_SESSION["subcategory-exists"] --> na true, jeśli taka pod-kategoria (nazwa) istnieje; // w przeciwnym wypadku --> $_SESSION["subcategory-exists"] --> zmienna NIE ISTNIEJE; - jeśli taka pod-kategoria (nazwa) nie istnieje !
+                        query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // ✓ przestawi $_SESSION["subcategory-exists"] --> na true, jeśli taka pod-kategoria (nazwa) istnieje; // w przeciwnym wypadku --> $_SESSION["subcategory-exists"] --> zmienna NIE ISTNIEJE; - jeśli taka pod-kategoria (nazwa) nie istnieje !
 
                         if( empty($subcategory)  // pusta wartość podkategorii --> "", lub nie przeszła walidacji (false)
                             || ($_SESSION["subcategory"] !== $_POST["subcategory"]) // nazwa podkategorii inna po walidacji niż ta podana w POST
@@ -293,7 +293,7 @@
                 if ($_SESSION["adv-search-category"] != "Wszystkie") { // "Informatyka",  "Dla dzieci",  "Fantastyka", ...
 
                     unset($_SESSION["category-exists"]);
-                    query("SELECT nazwa FROM kategorie WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
+                    query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
                     // $_SESSION["category-exists"] ==> true/false; (zależnie od tego czy istnieje taka kategoria);
 
                     if (empty($_SESSION["category-exists"])) {
@@ -357,17 +357,17 @@
                                 ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
                                 kt.nazwa, sb.id_kategorii,
                                 au.imie, au.nazwisko,
-                                SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                                SUM(warehouse_books.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
                             FROM
-                                ksiazki AS ks
+                                books AS ks
                             JOIN
-                                autor AS au ON ks.id_autora = au.id_autora
+                                authors AS au ON ks.id_autora = au.id_autora
                             JOIN
-                                subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                                subcategories AS sb ON ks.id_subkategorii = sb.id_subkategorii
                             JOIN
-                                kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                                categories AS kt ON sb.id_kategorii = kt.id_kategorii
                             LEFT JOIN
-                                magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                                warehouse_books ON warehouse_books.id_ksiazki = ks.id_ksiazki
                             ";
 
 
@@ -391,7 +391,7 @@
 
                 // get highest author-id from database ;
                 unset($_SESSION["max-author-id"]);
-                query("SELECT MAX(id_autora) AS id_autora FROM autor", "getAuthorId", "");
+                query("SELECT MAX(id_autora) AS id_autora FROM authors", "getAuthorId", "");
                 // $_SESSION["max-author-id"] => id_autora --> "36";
 
                 $author = filter_input(INPUT_POST, "adv-search-author", FILTER_SANITIZE_NUMBER_INT);
@@ -408,7 +408,7 @@
 
                 // check if that author (id) exists in db ... ;
                 unset($_SESSION["author-exists"]);
-                query("SELECT id_autora FROM autor WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]);
+                query("SELECT id_autora FROM authors WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]);
                 // ✓ $_SESSION["author-exists"] --> true/false, (zależnie od tego, czy istnieje taki autor o takim id)
 
                 if( empty($author) // (false) - id nie przeszło walidacji
@@ -648,7 +648,7 @@
 
                         <ul id="ul-authors">
                             <?php
-                                query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor ORDER BY imie", "getAuthors", "");
+                                query("SELECT DISTINCT imie, nazwisko, id_autora FROM authors ORDER BY imie", "getAuthors", "");
                                 // filtrowanie autorów - <ul> authors list;
                             ?>
                         </ul>
@@ -713,17 +713,17 @@
                                 query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                                               kt.nazwa, sb.id_kategorii, 
                                               au.imie, au.nazwisko,
-                                              SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                                              SUM(warehouse_books.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
                                         FROM 
-                                              ksiazki AS ks
+                                              books AS ks
                                         JOIN 
-                                              autor AS au ON ks.id_autora = au.id_autora
+                                              authors AS au ON ks.id_autora = au.id_autora
                                         JOIN 
-                                              subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                                              subcategories AS sb ON ks.id_subkategorii = sb.id_subkategorii
                                         JOIN 
-                                              kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                                              categories AS kt ON sb.id_kategorii = kt.id_kategorii
                                         LEFT JOIN 
-                                              magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                                              warehouse_books ON warehouse_books.id_ksiazki = ks.id_ksiazki
                                         WHERE ks.tytul LIKE '%%%s%%' 
                                         GROUP BY ks.id_ksiazki", "getBooks", $search_value); // input-search => tytuł książki;
 
@@ -758,17 +758,17 @@
                                             ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                                             kt.nazwa, sb.id_kategorii, sb.nazwa,
                                             au.imie, au.nazwisko,
-                                            SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                                            SUM(warehouse_books.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
                                         FROM 
-                                            ksiazki AS ks
+                                            books AS ks
                                         JOIN 
-                                            autor AS au ON ks.id_autora = au.id_autora
+                                            authors AS au ON ks.id_autora = au.id_autora
                                         JOIN 
-                                            subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                                            subcategories AS sb ON ks.id_subkategorii = sb.id_subkategorii
                                         JOIN 
-                                            kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                                            categories AS kt ON sb.id_kategorii = kt.id_kategorii
                                         LEFT JOIN 
-                                            magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
+                                            warehouse_books ON warehouse_books.id_ksiazki = ks.id_ksiazki
                                         WHERE ks.tytul LIKE '%%%s%%'";
 
                                 if ($_SESSION["category"] !== "Wszystkie") {

@@ -145,7 +145,7 @@ if(isset($_GET["input-search"]))
                     </div>
 
                     <?php
-                    query("SELECT DISTINCT imie, nazwisko, id_autora FROM autor", "get_authors", ""); // lista <ul> autorów
+                    query("SELECT DISTINCT imie, nazwisko, id_autora FROM authors", "get_authors", ""); // lista <ul> autorów
                     ?>
 
                     <button id="filter-authors">Zastosuj</button>
