@@ -1,6 +1,10 @@
 <?php
 
     require_once "../authenticate-admin.php";
+
+
+unset($_SESSION["order-id"], $_SESSION["order-date"], $_SESSION["client-name"], $_SESSION["client-surname"], $_SESSION["status"]);
+
 ?>
 
 <!DOCTYPE HTML>
@@ -207,6 +211,8 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 </script>
+
+<?php require "../view/app-error-window.php"; ?>
 
 </body>
 </html>

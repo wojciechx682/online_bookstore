@@ -4439,7 +4439,7 @@ div[class*="order-book-price"]:not([class$="1"])
 {
     /*color: red;*/
 
-    /*padding-top: 25px;*/ /* (?) */
+    padding-top: 17px; /* (?) */
 
 }
 

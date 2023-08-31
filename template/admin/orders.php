@@ -40,7 +40,7 @@
                     </form>-->
 
                     <form method="post" action="order-details.php"> <!-- POST -> orderId -->
-                        <input type="hidden" name="%s"> <!-- order-id -->
+                        <input type="hidden" name="order-id" value="%s">  <!-- order-id -->
                         <button class="submit-order-form" type="submit">
                                 <!--<h3 class="book-title">Przeglądaj</h3>-->
                             Przeglądaj
@@ -53,8 +53,8 @@
                     <!--<a href="order-details.php?s status=true" onclick="">Zmień status</a>-->
 
                     <form method="post" action="order-details.php"> <!-- POST -> orderId -->
-                        <input type="hidden" name="%s"> <!-- order-id -->
-                        <input type="hidden" name="true"> <!-- "Zmień status" -> true -->
+                        <input type="hidden" name="order-id" value="%s"> <!-- order-id -->
+                        <input type="hidden" name="change-status" value="true"> <!-- "Zmień status" -> true -->
                         <button class="submit-order-form" type="submit">
                             <!--<h3 class="book-title">Przeglądaj</h3>-->
                             Zmień status

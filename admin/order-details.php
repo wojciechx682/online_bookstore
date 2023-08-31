@@ -10,17 +10,15 @@
 
         if (isset($_POST["order-id"]) && !empty($_POST["order-id"])) { // check if POST value (order-id) exists and is not empty;
 
-            //unset($_SESSION["change-status"]); // reset boolean flag;
+            unset($_SESSION["change-status"]); // reset boolean flag;
 
-            if (isset($_POST["change-status"])) && ! empty(array_keys($_POST)[1]) && array_keys($_POST)[1]) { // orders.php -> "Zmień status"
-
+            if (isset($_POST["change-status"]) && !empty($_POST["change-status"]) && $_POST["change-status"] === "true") { // orders.php -> "Zmień status"
                 $_SESSION["change-status"] = true; // show update-status box (if there was second post parameter --> true);
             }
 
             // Process the form data and perform necessary validations ;
 
-                // sanitize input - order-id ;
-            $orderId = filter_var(array_keys($_POST)[0], FILTER_SANITIZE_NUMBER_INT);
+            $orderId = filter_var($_POST["order-id"], FILTER_SANITIZE_NUMBER_INT); // sanitize input - order-id ;
                 // Sanitization -> remove all characters except digits, plus and minus sign.
                     // array_keys($_POST)[0] - order-id (id_zamówienia);
                     // "1135"
@@ -28,64 +26,74 @@
                 // validate order-id - ✓ valid integer ;
             $_SESSION["order-id"] = filter_var($orderId, FILTER_VALIDATE_INT); // ✓ it ensures that the value is an integer - order-id ;
 
-            // check if there is really a order with that id ;
-            $_SESSION['order-exists'] = false;
+            // check if there is really an order with that id ;
+            $_SESSION["order-exists"] = false;
 
             // check if there is really an order with that id (post - order-id);
             query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, kl.imie, kl.nazwisko
                             FROM zamowienia AS zm, klienci AS kl
                          WHERE zm.id_klienta = kl.id_klienta AND zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
-            // przestawi zmienną - $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie (o takim id), jeśli num_rows > 0 ;
+            // przestawi zmienną --> $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie (o takim id), jeśli num_rows > 0 ;
 
-            if ($orderId === false || $_SESSION["order-id"] === false || $_SESSION["order-exists"] === false || ($_SESSION["order-id"] !== array_keys($_POST)[0]) ) {
-                    // tutaj trzeba odpowiednio obsłużyć błąd ;
-                // ✓ id-zamówienia (order-id) nie przeszło walidacji, LUB ✓ nie istnieje zamówienie o takim id;
-                    // musi być komunikat o błędzie (np okienko) + exit() ! ;
-                //echo "<br><hr> 43 invalid order-id OR order doesnt exist ! <br><hr>";
-                // obsługa błędu - np przekierowanie na poprzednią stronę (orders.php) + wyświetlenie okienka z okmunikatem
-                // na stronie index.php można sprawdzić, czy np ustawiona wartość $_SESSION["error_costam"] ma wartosc true, i wtedy wyswietlic okienko
-                    // $_SESSION["error"] = true ;
-                unset($_POST, $orderId, $_SESSION["order-id"], $_SESSION['order-exists']);
-                        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                        echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
-                header('Location: orders.php'); exit();
+            if ($orderId === false || $_SESSION["order-id"] === false || $_SESSION["order-exists"] === false || ($_SESSION["order-id"] != $_POST["order-id"])) {
+                // ✓ id-zamówienia (order-id) nie przeszło walidacji, LUB ✓ nie istnieje zamówienie o takim id; // invalid order-id OR order doesnt exist";
+                // musi być komunikat o błędzie (np okienko) + exit() ! ;
+                    // obsługa błędu - np przekierowanie na poprzednią stronę (orders.php) + wyświetlenie okienka z okmunikatem
+                    // na stronie index.php można sprawdzić, czy np ustawiona wartość $_SESSION["error_costam"] ma wartosc true, i wtedy wyswietlic okienko
+                        // $_SESSION["error"] = true ;
+
+                $_SESSION["application-error"] = true;
+
+                /*unset($_POST, $orderId, $_SESSION["order-id"], $_SESSION["order-exists"]);
+                    header('Location: orders.php');
+                        exit();*/
+
+                unset($_SESSION["order-id"]);
 
             } else { // input is OK - order-id passed validation,    there is a order with that ID;
                 //               Valid order-id           and           order exist
                 // Execute code (such as database updates) here;
-                // Perform any required actions with the form data (e.g., database update)
+                // Perform any required actions with the form data (e.g., database update);
 
-                // ✓✓✓ valid book-id, book exist in db;
-                    //echo "\n 49 SESSION order-id -> " . $_SESSION["order-id"];
-                    //echo "<br> 51 Valid order-id and order exist ! <br><hr>"; exit();
-                unset($_POST, $orderId, $_SESSION["order-exists"]);
-                // redirect to the page itself
-                //header('Location: ___book.php', true, 303);
+                //unset($_POST, $orderId, $_SESSION["order-exists"]); // keep $_SESSION["order-id"]
+                    // redirect to the page itself
+                    // header('Location: ___book.php', true, 303);
 
-                // Redirect to prevent form resubmission
-                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
+                unset($_POST, $orderId, $_SESSION["order-exists"]); // $_SESSION["order-id"] <--
+
+                // Redirect to \order-details.php - prevent form resubmission
+                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);  // $_SESSION["order-id"] <--
+                    exit();
                 // to prevent resubmitting the form
             }
+
+            unset($_POST, $orderId, $_SESSION["order-exists"]);
 
         } else {
             // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/admin/order-details.php bez podania wartości w POST[] ;
                 //echo "<br> POST value (order-id) doesnt exist ! <br>" ;
-            header('Location: orders.php'); exit();
-                // $_SESSION["error"] = true ;
-                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
-                //exit();
-        }
-                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
 
-    } elseif (
-        $_SERVER['REQUEST_METHOD'] === "GET" && ( ! isset($_SESSION["order-id"]) || empty($_SESSION["order-id"]) )
-    ) {
-        header('Location: orders.php'); exit();
+            //echo "<br>70<br>"; exit();
+
+            $_SESSION["application-error"] = true;
+                /*header('Location: orders.php');
+                    exit();*/
+                            // $_SESSION["error"] = true ;
+                            /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                            echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                            echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+                            //exit();
+        }
+
+        header('Location: orders.php', true, 303);
+            exit();
+
+
+    } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (empty($_SESSION["order-id"]))) {
+
+        $_SESSION["application-error"] = true;
+            header('Location: orders.php', true, 303);
+                exit();
     }
 
 ?>
@@ -114,9 +122,9 @@
                 </header>
 
                 <?php
-                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";
                 ?>
 
                 <h4 class="section-header order-details-header order-details-id">Zamówienie nr <span class="order-details-id"><?= $_SESSION["order-id"]; ?></h4>
@@ -125,7 +133,7 @@
 
                 <?php require "../view/admin/order-details-header.php"; // first row, header of columns ?>
 
-                <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_SESSION["order-id"]) ) : ?>
+                <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && !empty($_SESSION["order-id"]) ) : ?>
                         <!-- prg -> orders.php -> POST - (order-id) -> order-details.php -->
 
                     <?php
@@ -139,17 +147,18 @@
                                           autor AS au
                                      WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND ks.id_autora = au.id_autora AND zm.id_zamowienia = '%s'",
                                     "getOrderDetailsAdmin", $_SESSION["order-id"]);
-                        // content of table;  $_SESSION['order_details_books_id'];
+                        // (!) content of table;  $_SESSION["order_details_books_id"];
+                        // template/admin/order-details.php
                         // szczegóły danego zamówienia;
                                            // (content) id_zamowienia,  tytul,   cena, ilosc, kwota;
-                                               //  1121   Symfonia C++ wydanie V   5     10   327.75
+                                           //               1121         php       5    10    327.75;
 
                         query("SELECT pl.kwota 
-                                     FROM platnosci AS pl, zamowienia AS zm 
-                                     WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
-                                    "getOrderSumAdmin", $_SESSION["order-id"]);
+                               FROM platnosci AS pl, zamowienia AS zm 
+                               WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
+                                "getOrderSumAdmin", $_SESSION["order-id"]);
                         // footer of table;
-                            // kwota (suma) zamówienia; // "SUMA 279.3 PLN";
+                        // kwota (suma) zamówienia; // "SUMA 279.3 PLN";
 
                         echo '<div id="order-det-container">';
 

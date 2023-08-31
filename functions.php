@@ -1483,7 +1483,7 @@ use PHPMailer\PHPMailer\SMTP;
         // replace fields in $order string to author data from $result, display result content as HTML
         echo sprintf($orderSum, $row["kwota"]);
 
-        $result->free_result();
+        //$result->free_result();
     }
 
     function getOrderSummary($result) { // get_order_summary // \admin\order-details.php

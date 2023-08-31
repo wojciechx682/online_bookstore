@@ -16,6 +16,7 @@ $response = [];
 
         $comment = filter_var($_POST["comment"],FILTER_SANITIZE_STRING); // sanityzacja (back-end);
         $orderId = filter_var($_POST["order-id"],FILTER_SANITIZE_NUMBER_INT);
+        $orderId = filter_var($orderId, FILTER_VALIDATE_INT);
 
         if ($comment === false || $orderId === false || $comment !== $_POST["comment"] || $orderId !== $_POST["order-id"]) { // dane nie przeszły walidacji;
 
