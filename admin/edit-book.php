@@ -39,6 +39,12 @@
                         <h3 class="section-header">Edytuj książkę</h3>
                     </header>
 
+                    <?php
+                        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+                    ?>
+
                     <!--<hr id="book-details-hr-edit-books">-->
 
                     <script>
@@ -322,19 +328,6 @@
                                        name="edit-book-quantity" id="edit-book-quantity">
                             </p>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                         <input type="hidden" value="" name="edit-book-id" id="edit-book-id"> <!-- id_ksiązki - int(11) -->
                         <input type="hidden" value="" name="edit-book-image_url" id="edit-book-image_url"> <!-- image_url -->

@@ -12,15 +12,15 @@ $("select#change-magazine").on("change", function(e) { // after changing <option
     $("form#change-magazine-form").submit(); // submit the <form>;
 });
 
-$("form#change-magazine-form").on("submit", function(e) { // after submitting form;
+$("form#change-magazine-form").on("submit", function(event) { // after submitting form;
 
-    e.preventDefault(); // prevent form submission (default behaviour)
+    event.preventDefault(); // prevent form submission (default behaviour)
 
         //let data = $(this).serialize(); // dane formularza do przesłania metodą post; // let data = $(this);
         //let postData = parseInt($(this).serialize().slice(16).trim()); // "change-magazine=1" => "1" (id_maazynu);
 
     let data = $(this); // obiekt jQ - <form>;
-    const selectElement = data.find('select#change-magazine'); // find <select> list inside the <form>;
+    const selectElement = data.find("select#change-magazine"); // find <select> list inside the <form>;
     const warehouseId = parseInt(selectElement.val()); // get value attribute of <select> list - this is warehouse-id (id-magazynu);
 
     console.log("\ndata => ", data); // jQ object;
@@ -45,7 +45,7 @@ console.log("\ndata val => ", data[0][0].value); // jQ object;
 
     // walidacja czy przesłano poprawne id-magazynu -->
 
-    if((warehouseId > 0) && Number.isInteger(warehouseId) && !isNaN(warehouseId)) {  // nie pusta (>0), liczba (int), nie jest to "NaN";
+    if((warehouseId > 0) && Number.isInteger(warehouseId) && !isNaN(warehouseId)) { // nie pusta (>0), liczba (int), nie jest to "NaN";
 
         let dataSerialized = data.serialize(); // serializacja danych formularza (id-magazynu);
 
@@ -91,35 +91,28 @@ console.log("\ndata val => ", data[0][0].value); // jQ object;
             beforeSend: function () {         // Before Ajax - function called before sending the request;
                 $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
             }
-        }).done(function(data) {
-            // Success handler; // Handle the response data;
+        }).done(function(data) { // Success handler; // Handle the response data;
 
             let booksHeader = document.querySelector('.admin-books'); // table header;
+
             if(booksHeader.style.display === 'none') {                // show table header (if was not-visible)
                 booksHeader.style.display = "block";
             }
+
             $("#books-content").html(data); // show content (data returned from server) - books;
 
             // --------------------------------------------------------------------------------
 
             //window.addEventListener("load", () => {
 
-                let isAscending = true;
-
+                /*let isAscending = true;
                 let orderRows = Array.from(document.querySelectorAll(".admin-books-content")); // wiersze z zamówieniami (rows)
-
                 let headers = Array.from(document.querySelectorAll('[data-sort]'));
-
                 headers.forEach(header => {
-
                     header.addEventListener("click", function() {
-
                         console.log("\n header --> ", header);
-
                         $(header).siblings().find("i").remove();
-
                         let icon = header.querySelector("i");
-
                         if (!icon) {
                             icon = document.createElement("i");
                             icon.classList.add("icon-up-open-1");
@@ -129,15 +122,10 @@ console.log("\ndata val => ", data[0][0].value); // jQ object;
                         } else {
                             icon.classList.replace("icon-up-open-1", "icon-down-open-1");
                         }
-
-
-
                         let sortOrder = this.dataset.sort;
-
                         orderRows.sort((a, b) => {
                             let valueA = $(a).find(`.${header.classList[0]}`).text().trim();
                             let valueB = $(b).find(`.${header.classList[0]}`).text().trim();
-
                             switch(sortOrder) {
                                 case "string":
                                     valueA = valueA.toLowerCase();
@@ -155,13 +143,12 @@ console.log("\ndata val => ", data[0][0].value); // jQ object;
                                     return 0;
                             }
                         });
-
                         isAscending = !isAscending;
-
                         $('.admin-books-content').remove();
                         $(orderRows).insertAfter($('.admin-books').last());
                     });
-                });
+                });*/
+
             //});
 
 

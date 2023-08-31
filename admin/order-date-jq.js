@@ -157,7 +157,7 @@ document.querySelector("form#update-order-date").addEventListener("submit", func
 
                 $.ajax({
                     type: "POST",
-                    url: "update-order-datee.php",
+                    url: "update-order-date.php",
                     data: dataSerialized,
                     timeout: 2000,
                     beforeSend: function() {                              // before ajax - function called before sending the request;

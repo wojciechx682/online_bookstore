@@ -62,7 +62,9 @@
                 <hr id="book-details-hr-books">
 
                 <div id="admin-search-books-div">
+
                     <form id="admin-search-books-form" action="change-magazine.php" method="post">
+
                         <span>Szukaj:</span><input type="search" name="admin-search-books-input" id="admin-search-books-input"> <!-- placeholder="tytuł książki" -->
                         <input type="hidden" name="change-magazine" value="">
 
@@ -81,7 +83,6 @@
                         </button>
                    </a>
 
-
                 </div>
 
                 <div style="clear:both;"></div>
@@ -97,9 +98,8 @@
 
                 <?php require "../view/admin/books-header.php"; // table header ?>
 
-                <div id="books-content"></div> <!-- here are inserted rows with information about books; - change-magazine.js - change-magazine.php - data from server; -->
-
-
+                <div id="books-content"> </div>
+                <!-- here are inserted rows with information about books; - change-magazine.js - change-magazine.php - data from server; -->
 
             </div> <!-- #content -->
 

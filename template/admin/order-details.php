@@ -8,6 +8,7 @@
             <!--<span>s</span>--> <!-- id_ksiazki -->
         <form method="post" action="book-details.php">
             <input type="hidden" name="book-id" value="%s">
+            <input type="hidden" name="warehouse-id" value="%s">
             <button class="submit-book-form" type="submit">
                 <h3 title="%s">%s</h3>
             </button>

@@ -29,7 +29,8 @@ require_once "../authenticate-admin.php";
         // all required fields are SET and NOT EMPTY; Perform the necessary actions or validations here; // For example, update the book data in the database;
 
                 echo "<br> success <br><br>";
-                    echo "<br> tytuł - " . $_POST['edit-book-title'];
+                echo "<br> success <br><br>";
+                    echo "<br> id ksiazki " . $_POST['edit-book-id'];
                     echo "<br> autor (id) - " . $_POST['edit-book-change-author'];
                     echo "<br> rok_wydania - " . $_POST['edit-book-release-year'];
                     echo "<br> cena - " . $_POST['edit-book-price'] ;
@@ -39,7 +40,9 @@ require_once "../authenticate-admin.php";
                     echo "<br> liczba_stron - " .$_POST['edit-book-pages'];
                     echo "<br> wymiary - " . $_POST['edit-book-dims'];
                 echo "<br> kategoria (id) - " . $_POST['edit-book-category'] ;
-                echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'] . "<br>";
+                echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'];
+                echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'];
+                echo "<br> ilosc - " . $_POST['edit-book-quantity'];
 
         // back-end validation;
 
@@ -58,11 +61,11 @@ require_once "../authenticate-admin.php";
 
         query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "getAuthorId", "");
         // get highest author-id from db; // $_SESSION["max-author-id"] => "36";
-        query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "get_publisher_id", "");
+        query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "getPublisherId", "");
         // get highest publisher-id from db; // $_SESSION["max-publisher-id"] => "2";
-        query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "get_category_id", "");
+        query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "getCategoryId", "");
         // get highest category-id from db; // $_SESSION["max-category-id"] => "7";
-        query("SELECT id_magazynu FROM magazyn ORDER BY id_magazynu DESC LIMIT 1", "get_magazine_id", "");
+        query("SELECT id_magazynu FROM magazyn ORDER BY id_magazynu DESC LIMIT 1", "getMagazineId", "");
         // get highest magazine-id from db; // $_SESSION["max-magazine-id"] => "2";
 
 
@@ -205,14 +208,27 @@ require_once "../authenticate-admin.php";
                 //echo "<br>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz<br>";
                 echo "<span class='update-failed'>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz</span>"; exit();
             } else {
+
                 query("UPDATE ksiazki SET tytul='%s', id_autora='%s', rok_wydania='%s', cena='%s', id_wydawcy='%s', image_url='%s', opis='%s', oprawa='%s', ilosc_stron='%s', wymiary='%s', id_subkategorii='%s' WHERE ksiazki.id_ksiazki='%s'", "updateBookData", [$title, $author, $year, $price, $publisher, $_FILES["edit-book-image"]["name"], $desc, $cover, $pages, $dims, $subcategory, $bookId]);
+
+                query("UPDATE magazyn_ksiazki SET ilosc_dostepnych_egzemplarzy='%s' WHERE magazyn_ksiazki.id_ksiazki='%s' AND magazyn_ksiazki.id_magazynu='%s'", "updateBookData", [$quantity, $bookId, $magazine]);
 
                 // update book-quantity (in-stock) in warehouse;
 
-                if($_SESSION["update-book-successful"] === false) { // jeśli udało się zrealizować powyższe zapytanie (update książki);
+                /*if($_SESSION["update-book-successful"] === false) { // jeśli udało się zrealizować powyższe zapytanie (update książki);
+
                     unset($_SESSION["update-book-successful"]);
+
+                    echo "<br>216<br>";
+
                     query("UPDATE magazyn_ksiazki SET ilosc_dostepnych_egzemplarzy='%s' WHERE magazyn_ksiazki.id_ksiazki='%s' AND magazyn_ksiazki.id_magazynu='%s'", "updateBookData", [$quantity, $bookId, $magazine]);
-                }
+
+                    echo "<br>220<br>";
+
+                    echo "<br><br>"; echo "<hr><br><br>";
+                        var_dump($_SESSION["update-book-successful"]);
+                    echo "<br><br>"; echo "<hr><br><br>";
+                }*/
             }
         }
 
@@ -221,7 +237,7 @@ require_once "../authenticate-admin.php";
         echo "<span class='update-failed'>Wystąpił problem. Nie udało się zaktualizować danych</span>"; exit();  // pola nie były ustawione (nie istniały) - lub były puste;
     }
 
-    if( isset($_SESSION["update-book-successful"]) && $_SESSION["update-book-successful"] === false ) {
+    if( isset($_SESSION["update-book-successful"]) && ($_SESSION["update-book-successful"] == false) ) {
         unset($_SESSION["update-book-successful"]);
         echo "<span class='archive-success'>Udało się zaktualizować dane</span>";
     } else {                                           // ture ;

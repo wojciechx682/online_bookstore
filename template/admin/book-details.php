@@ -2,11 +2,19 @@
 
 <!-- ---------------------------------------------------------------------------------- -->
 
+<form action="edit-book.php" method="post">
+    <input type="hidden" name="book-id" value="%s">
+    <input type="hidden" name="warehouse-id" value="%s">
+    <button class="edit-book-details-btn btn-link btn-link-static">Edytuj</button>
+</form>
+
+
+
 <article id="book-details">
 
     <div id="section-container">
         <figure id="book-details-figure">
-            <img src="../assets/books/%s" alt="%s">
+            <img src="../assets/books/%s" alt="%s" title="%s">
         </figure>
 
         <section id="basic-data">
@@ -15,9 +23,10 @@
             <div id="book-title">Tytuł</div> <div id="book-title-content">%s</div> <div style="clear:both;"></div>
             <div id="book-author">Autor</div> <div id="book-author-content">%s %s</div> <div style="clear:both;"></div>
             <div id="book-year">Rok wydania</div> <div id="book-year-content">%s</div> <div style="clear:both;"></div>
-            <div id="book-price">Cena</div> <div id="book-price-content">%s</div> <div style="clear:both;"></div>
+            <div id="book-price">Cena</div> <div id="book-price-content">%s PLN</div> <div style="clear:both;"></div>
             <div id="book-publisher">Wydawnictwo</div> <div id="book-publisher-content">%s</div> <div style="clear:both;"></div>
-
+            <div id="book-category-name">Kategoria</div><div id="book-category-name-content">%s</div> <div style="clear:both;"></div>
+            <div id="book-subcategory-name">Podkategoria</div><div id="book-subcategory-name-content">%s</div> <div style="clear:both;"></div>
         </section> <div style="clear:both;"></div>
     </div>
 
@@ -43,8 +52,8 @@
     <!--<div style="clear: both;"></div>-->
 
     <section id="statistics-information">
-        <div id="book-category-name">Kategoria</div><div id="book-category-name-content">%s</div> <div style="clear:both;"></div>
-        <div id="book-subcategory-name">Podkategoria</div><div id="book-subcategory-name-content">%s</div> <div style="clear:both;"></div>
+        <!--<div id="book-category-name">Kategoria</div><div id="book-category-name-content">s</div> <div style="clear:both;"></div>
+        <div id="book-subcategory-name">Podkategoria</div><div id="book-subcategory-name-content">s</div> <div style="clear:both;"></div>-->
         <div id="book-avg-rating">Średnia ocen</div><div id="book-avg-rating-content">%s</div> <div style="clear:both;"></div>
         <div id="book-ratings-amount">Liczba ocen</div><div id="book-ratings-amount-content">%s</div> <div style="clear:both;"></div>
         <div id="book-orders-count">Liczba zamówień, w których wystąpiła <del>(conajmniej raz)</del></div><div id="book-orders-count-content">%s</div> <div style="clear:both;"></div>

@@ -6,9 +6,8 @@
 
     if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶   POST;
 
-        if ( isset($_POST["book-id"]) && ! empty($_POST["book-id"])
-            && isset($_POST["warehouse-id"]) && ! empty($_POST["warehouse-id"])
-        ) {  // check if POST value (book-id,
+        if (isset($_POST["book-id"]) && !empty($_POST["book-id"]) && isset($_POST["warehouse-id"]) && !empty($_POST["warehouse-id"])) {
+            // check if POST value (book-id,
             //                       warehouse-id) exists and is not empty;
 
             // process the form data and perform necessary validations ;
@@ -69,8 +68,8 @@
             // \order-details.php --> \book-details.php
 
             $_SESSION["book-id"] = $_POST["book-id"];
-
-            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
+                header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+                    exit();
 
         }
         /*else {
@@ -109,7 +108,19 @@
 
             <div id="content">
 
-                <h3 class="section-header book-details-section-header">Szczegóły książki</h3>
+                <h3 class="section-header book-details-section-header">Szczegóły książki
+
+                </h3>
+
+                <!--<form action="edit-book.php" method="post">
+
+                    <input type="hidden" name="book-id" value="<?/*= $_SESSION["book-id"]; */?>">
+                    <button type=submit" class="edit-book-details-btn btn-link btn-link-static">Aktualizuj</button>
+
+                </form>
+-->
+
+
 
                 <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_SESSION["book-id"]) && isset($_SESSION["warehouse-id"]) ) : ?>
 
@@ -171,14 +182,18 @@
 
                     <?php
 
-                        query("SELECT ks.tytul, ks.cena, ks.rok_wydania, au.imie, au.nazwisko, wd.nazwa_wydawcy, ks.opis, ks.wymiary, ks.ilosc_stron,
+                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
+
+                        query("SELECT ks.tytul, ks.id_ksiazki, ks.cena, ks.rok_wydania, au.imie, au.nazwisko, wd.nazwa_wydawcy, ks.opis, ks.wymiary, ks.ilosc_stron,
                                        ks.oprawa, ks.stan, ks.rating AS srednia_ocen, ks.image_url,
                                        (SELECT COUNT(*) FROM ratings WHERE ratings.id_ksiazki = ks.id_ksiazki) AS liczba_ocen,
                                        (SELECT COUNT(*) FROM koszyk WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_klientow_posiadajacych_w_koszyku,
                                        (SELECT SUM(ilosc) FROM szczegoly_zamowienia WHERE id_ksiazki='%s' GROUP BY id_ksiazki) AS liczba_sprzedanych_egzemplarzy,
                                        (SELECT COUNT(*) FROM szczegoly_zamowienia, ksiazki WHERE szczegoly_zamowienia.id_ksiazki = ksiazki.id_ksiazki AND ksiazki.id_ksiazki='%s'
                                         GROUP BY szczegoly_zamowienia.id_ksiazki) AS ilosc_zamowien_w_ktorych_wystapila,
-                                       kat.nazwa AS nazwa_kategorii, sub.nazwa AS nazwa_subkategorii, magks.ilosc_dostepnych_egzemplarzy, mag.nazwa AS nazwa_magazynu, mag.kraj, mag.wojewodztwo, mag.miejscowosc, mag.ulica, mag.numer_ulicy, mag.kod_pocztowy, mag.kod_miejscowosc
+                                       kat.nazwa AS nazwa_kategorii, sub.nazwa AS nazwa_subkategorii, magks.ilosc_dostepnych_egzemplarzy, mag.nazwa, mag.id_magazynu AS nazwa_magazynu, mag.kraj, mag.wojewodztwo, mag.miejscowosc, mag.ulica, mag.numer_ulicy, mag.kod_pocztowy, mag.kod_miejscowosc
                                 FROM ksiazki AS ks
                                          JOIN autor AS au ON ks.id_autora = au.id_autora
                                          JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy

@@ -1432,9 +1432,9 @@ use PHPMailer\PHPMailer\SMTP;
             // load the content from the external template file into string
             $book = file_get_contents("../template/admin/books.php");
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($book, $row['id_ksiazki'], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row['nazwa_magazynu'], $row["ilosc_dostepnych_egzemplarzy"], $row['id_ksiazki'],  $row['id_ksiazki'], $row['id_magazynu'], $row['id_ksiazki'], $row['id_magazynu'], $row['id_ksiazki']);
+            echo sprintf($book, $row["id_ksiazki"], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row["nazwa_magazynu"], $row["ilosc_dostepnych_egzemplarzy"], $row["id_ksiazki"],  $row["id_ksiazki"], $row["id_magazynu"], $row["id_ksiazki"], $row["id_magazynu"], $row["id_ksiazki"]);
         }
-        $result->free_result();
+        //$result->free_result();
     }
 
     function get_orders_boxes($result) {
@@ -1461,7 +1461,7 @@ use PHPMailer\PHPMailer\SMTP;
             $order = file_get_contents("../template/admin/order-details.php");
 
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($order, $i, $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"],$row["rok_wydania"],$row["ilosc"], $row["cena"]);
+            echo sprintf($order, $i, $row["id_ksiazki"], $row["id_magazynu"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"],$row["rok_wydania"],$row["ilosc"], $row["cena"]);
 
                         /* if($i === 0) {
                             $order_f = file_get_contents("../template/admin/order-details-footer.php");
@@ -1570,14 +1570,16 @@ use PHPMailer\PHPMailer\SMTP;
 
             /*echo sprintf($book, $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["cena"], $row["nazwa_wydawcy"], $row["opis"], $row["wymiary"], $row["ilosc_stron"], $row["oprawa"], $row["stan"], $row["srednia_ocen"], $row["image_url"], $row["liczba_ocen"], $row["ile_razy_sprzedana"], $row["nazwa_kategorii"], $row["nazwa_subkategorii"], $row["ilosc_dostepnych_egzemplarzy"], $row["nazwa"], $row["miejscowosc"], $row["numer_ulicy"], $row["kod_pocztowy"] );*/
 
-        echo sprintf($book, $row["image_url"], $row["image_url"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["cena"], $row["nazwa_wydawcy"], $row["wymiary"], $row["ilosc_stron"], $row["oprawa"], $row["stan"], $row["opis"], $row["nazwa_kategorii"], $row["nazwa_subkategorii"], $row["srednia_ocen"], $row["liczba_ocen"], $row["ilosc_zamowien_w_ktorych_wystapila"], $row["liczba_klientow_posiadajacych_w_koszyku"], $row["liczba_sprzedanych_egzemplarzy"], $row["nazwa_magazynu"], $row["kraj"], $row["wojewodztwo"], $row["miejscowosc"], $row["ulica"], $row["numer_ulicy"], $row["kod_pocztowy"], $row["kod_miejscowosc"], $row["ilosc_dostepnych_egzemplarzy"]    );
+        echo sprintf($book, $row["id_ksiazki"], $row["nazwa_magazynu"], $row["image_url"], $row["image_url"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["cena"], $row["nazwa_wydawcy"], $row["nazwa_kategorii"], $row["nazwa_subkategorii"], $row["wymiary"], $row["ilosc_stron"], ucfirst($row["oprawa"]), ucfirst($row["stan"]), $row["opis"], $row["srednia_ocen"], $row["liczba_ocen"], $row["ilosc_zamowien_w_ktorych_wystapila"], $row["liczba_klientow_posiadajacych_w_koszyku"], $row["liczba_sprzedanych_egzemplarzy"], $row["nazwa_magazynu"], $row["kraj"], $row["wojewodztwo"], $row["miejscowosc"], $row["ulica"], $row["numer_ulicy"], $row["kod_pocztowy"], $row["kod_miejscowosc"], $row["ilosc_dostepnych_egzemplarzy"]    );
+
+        //$_SESSION["warehouse-id"] = $row["nazwa_magazynu"]; // przycisk "edytuj" --> book-details.php --> edit-book.php
 
         // pole "ile_razy_sprzedana" - określa liczbę zamówień, w których znalazła się ta książka. (nie jest to liczba sprzedanych sztuk!)
 
         //$result->free_result();
     }
 
-    function createMagazineSelectList($result) { // \admin\add-book.php
+    function createMagazineSelectList($result) { // \admin\add-book.php; \admin\books.php
 
         // create <option> elements inside <select> list based on warehouse names in database;
             // <option> elementy - są generowane dynamicznie na podstawie BD i danych o magazynach;
@@ -1585,7 +1587,7 @@ use PHPMailer\PHPMailer\SMTP;
             echo '<option value="'.$row["id_magazynu"].'">'.$row["nazwa"].'</option>';
         }
             /*echo '<option value="asdasd"></option>';*/ // remove thhat line in the future;
-        $result->free_result();
+        //$result->free_result();
     }
 
     function createAuthorSelectList($result) { // \admin\add-book.php, \edit-book.php
@@ -1877,7 +1879,7 @@ use PHPMailer\PHPMailer\SMTP;
         $_SESSION["categoryNameTaken"] = true;
     }
 
-    function updateBookData($result) {
+    function updateBookData($result) { // \admin\edit-boook.php
         $_SESSION["update-book-successful"] = false;
     }
 
