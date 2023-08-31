@@ -111,7 +111,7 @@
 
             // query("UPDATE klienci SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE id_klienta='%s'", "", $user_data);
 
-            $updateSuccessful = query("UPDATE address SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE adres_id='%s'", "", $user_data);
+            $updateSuccessful = query("UPDATE adres SET miejscowosc='%s', ulica='%s', numer_domu='%s', kod_pocztowy='%s', kod_miejscowosc='%s' WHERE adres_id='%s'", "", $user_data);
 
             if ($updateSuccessful) { // jeśli UDAŁO się zrealizować zapytanie UPDATE - ORAZ -  zmieniło ono stan bazy (affected-rows);
 

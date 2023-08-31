@@ -34,12 +34,12 @@
                                       ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, 
                                       au.imie, au.nazwisko,
                                       sb.nazwa AS podkategoria, kt.nazwa AS kategoria
-                               FROM clients AS kl, 
-                                    shopping_cart AS ko, 
-                                    books AS ks, 
-                                    authors AS au,
-                                    subcategories AS sb,
-                                    categories AS kt                                                                                   
+                               FROM klienci AS kl, 
+                                    koszyk AS ko, 
+                                    ksiazki AS ks, 
+                                    autor AS au,
+                                    subkategorie AS sb,
+                                    kategorie AS kt                                                                                   
                                WHERE kl.id_klienta = ko.id_klienta AND 
                                      ko.id_ksiazki = ks.id_ksiazki AND 
                                      ks.id_autora = au.id_autora AND    

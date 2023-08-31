@@ -116,7 +116,7 @@
 
                 //echo "<hr>" . print_r($_SESSION) . "<hr>";
 
-				query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM orders WHERE id_klienta = '%s'", "get_orders", $_SESSION['id']);
+				query("SELECT id_zamowienia, data_zlozenia_zamowienia, status FROM zamowienia WHERE id_klienta = '%s'", "get_orders", $_SESSION['id']);
 			?>
 
 			<br><br><a href="../user/logout.php">[ Wyloguj ]</a>

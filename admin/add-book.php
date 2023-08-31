@@ -61,7 +61,7 @@
                                 <select id="add-book-author" required
                                         name="add-book-author">
                                     <?php
-                                        query("SELECT au.id_autora, au.imie, au.nazwisko FROM authors AS au", "createAuthorSelectList", "");
+                                        query("SELECT au.id_autora, au.imie, au.nazwisko FROM autor AS au", "createAuthorSelectList", "");
                                     ?>
                                 </select>
                             </p>
@@ -104,7 +104,7 @@
                                 <select id="add-book-publisher" required
                                         name="add-book-publisher">
                                     <?php
-                                        query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM publishers AS wd", "createPublisherSelectList", "");
+                                        query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM wydawcy AS wd", "createPublisherSelectList", "");
                                     ?>
                                 </select>
                             </p>
@@ -224,7 +224,7 @@
                                         name="add-book-category"
                                         onchange="getSubcategories(this)">
                                     <?php
-                                        query("SELECT kt.id_kategorii, kt.nazwa FROM categories AS kt", "createCategorySelectList", "");
+                                        query("SELECT kt.id_kategorii, kt.nazwa FROM kategorie AS kt", "createCategorySelectList", "");
                                         // <option value={id-kategorii}> "28"
                                         // <option value={id-kategorii}> "34"
                                         // <option value={id-kategorii}> "26"
@@ -245,7 +245,7 @@
                                 <select id="book-subcategory" required
                                         name="add-book-subcategory">
                                     <?php
-                                        query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subcategories AS subkt", "createSubcategorySelectList", "");
+                                        query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subkategorie AS subkt", "createSubcategorySelectList", "");
 
                                         // <option value={id-PODkategorii} > "28"
                                         // <option value={id-PODkategorii} > "34"
@@ -268,7 +268,7 @@
                                 <select id="add-book-select-magazine" name="add-book-select-magazine">
 
                                     <?php
-                                        query("SELECT mg.id_magazynu, mg.nazwa FROM warehouse AS mg", "createMagazineSelectList", "");
+                                        query("SELECT mg.id_magazynu, mg.nazwa FROM magazyn AS mg", "createMagazineSelectList", "");
                                         // id_magazynu	   nazwa
                                         //      1	    magazyn nr 1
                                         //      2	    magazyn nr 2

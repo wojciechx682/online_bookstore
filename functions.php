@@ -236,7 +236,7 @@ use PHPMailer\PHPMailer\SMTP;
 
 
         if ($row["liczba_ocen"] == 0) {
-            query("UPDATE books SET rating = '' WHERE books.id_ksiazki = '%s'", "", $row["id_ksiazki"]);
+            query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $row["id_ksiazki"]);
         }
 
     }
@@ -321,7 +321,7 @@ use PHPMailer\PHPMailer\SMTP;
 
         $_SESSION["comments"] = [];
 
-        query("SELECT km.id_klienta, km.tresc, km.data, kl.imie, rt.ocena FROM comments AS km, clients AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "getComments", $_SESSION["id_ksiazki"]);
+        query("SELECT km.id_klienta, km.tresc, km.data, kl.imie, rt.ocena FROM komentarze AS km, klienci AS kl, ratings AS rt WHERE km.id_klienta = kl.id_klienta AND rt.id_klienta = kl.id_klienta AND km.id_ksiazki = rt.id_ksiazki AND km.id_ksiazki = '%s'", "getComments", $_SESSION["id_ksiazki"]);
         // (!) $_SESSION["comments"]; - ta zmienna zawiera wykorzystany szablon HTML (przechowuje wszystkie komentarze danej książki !);
 
 /*        $_SESSION["comments"] => Array
@@ -451,7 +451,7 @@ use PHPMailer\PHPMailer\SMTP;
 
         // get highest book-id from database ;
         unset($_SESSION["max-book-id"]);
-        query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM books", "getBookId", "");
+        query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM ksiazki", "getBookId", "");
         // $_SESSION["max-book-id"] => "35" or NULL;
         // - set variable to be applied in book-id filter below;
 
@@ -467,7 +467,7 @@ use PHPMailer\PHPMailer\SMTP;
 
         // check if there is really a book with that id ;
         unset($_SESSION["book_exists"]);
-        query("SELECT id_ksiazki FROM books WHERE id_ksiazki = '%s'", "verifyBookExists", $bookIdValidated);
+        query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExists", $bookIdValidated);
         // $_SESSION["book_exists"] --> true or NULL - zależnie od tego czy książka o takim ID istnieje;
 
         if (empty($bookIdSanitized) || empty($bookIdValidated) || empty($_SESSION["book_exists"]) || empty($_SESSION["max-book-id"]) || ($bookIdValidated != $bookId)) {
@@ -725,7 +725,7 @@ use PHPMailer\PHPMailer\SMTP;
         $_SESSION["suma_zamowienia"] = 0;
 
         query("SELECT ROUND(SUM(ko.ilosc * ks.cena),2) AS suma
-                     FROM clients AS kl, shopping_cart AS ko, books AS ks
+                     FROM klienci AS kl, koszyk AS ko, ksiazki AS ks
                      WHERE kl.id_klienta = '%s' AND kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki
                      GROUP BY kl.id_klienta", "countCartSum", $_SESSION["id"]); // <-- $_SESSION["suma_zamowienia"]
 
@@ -900,7 +900,7 @@ use PHPMailer\PHPMailer\SMTP;
 
             $cart = [$id_zamowienia, $id_ksiazki, $ilosc];
 
-		  	query("INSERT INTO order_details VALUES ('%s', '%s', '%s')", "", $cart);
+		  	query("INSERT INTO szczegoly_zamowienia VALUES ('%s', '%s', '%s')", "", $cart);
 
 		  	// echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
 		}
@@ -932,7 +932,7 @@ use PHPMailer\PHPMailer\SMTP;
 
             // replace fields in $order string to order data from $result, display result content as HTML;
             echo sprintf($order, $row["data_zlozenia_zamowienia"], $row["status"], $row["id_zamowienia"], $row["sposob_platnosci"]); // pojemnik na tabelę z zamówieniem, nagłówek tabeli;
-            query("SELECT id_ksiazki, ilosc FROM order_details WHERE id_zamowienia = '%s'", "getOrderDetails", $row["id_zamowienia"]);
+            query("SELECT id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "getOrderDetails", $row["id_zamowienia"]);
             // $row --> ["id_ksiazki"], ["ilosc"] <-- ksiązki wchodzące w skład danego zamówienia (id_zamowienia);
                 // --> $_SESSION["order_details_books_id"];
                 // ✓ pojedyncze wiersze z danymi o książce w tym zamówieniu;
@@ -1046,7 +1046,7 @@ use PHPMailer\PHPMailer\SMTP;
                     /*$order = file_get_contents("../template/order-details-book.php");
                     // replace fields in $order string to author data from $result, display result content as HTML
                     echo sprintf($order, $row['ilosc']);*/
-            query("SELECT tytul, cena, au.imie, au.nazwisko, rok_wydania, image_url FROM books AS ks, authors AS au WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = '%s'", "orderDetailsGetBook", $_SESSION["order_details_books_id"][$i]); // To jest pojedynczy "Wiersz" - w widoku w tabeli - który wyświetla Pojedynczą książkę w Tym zamówieniu
+            query("SELECT tytul, cena, au.imie, au.nazwisko, rok_wydania, image_url FROM ksiazki AS ks, autor AS au WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = '%s'", "orderDetailsGetBook", $_SESSION["order_details_books_id"][$i]); // To jest pojedynczy "Wiersz" - w widoku w tabeli - który wyświetla Pojedynczą książkę w Tym zamówieniu
             $i++;
         }
     }
@@ -1093,7 +1093,7 @@ use PHPMailer\PHPMailer\SMTP;
     function getOrderSum($result = null, $order_id = null) { // get_order_sum
 
         if (!($result instanceof mysqli_result)) { // dla funkcji get_orders();
-            query("SELECT kwota FROM payments WHERE id_zamowienia='%s'", "getOrderSum", $order_id);
+            query("SELECT kwota FROM platnosci WHERE id_zamowienia='%s'", "getOrderSum", $order_id);
         } else  {
             // to się wywoła rekurencyjnie z warunku wyżej - zapisze sumę zamówienia do zmiennej sesyjnej;
             // $result was passed, do something with it;
@@ -1191,7 +1191,7 @@ use PHPMailer\PHPMailer\SMTP;
                 $_SESSION["user-type"] = "klient";
 
                 query("SELECT SUM(ilosc) AS suma 
-                             FROM shopping_cart 
+                             FROM koszyk 
                              WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
                 // pobranie liczby książek znajdujących się w kosztku; countCartQuantity() -> $_SESSION['koszyk_ilosc_ksiazek'] -> zapis do zmiennej;
 
@@ -1934,17 +1934,17 @@ use PHPMailer\PHPMailer\SMTP;
                             ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                             kt.nazwa, sb.id_kategorii, 
                             au.imie, au.nazwisko,
-                            SUM(warehouse_books.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                            SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
                         FROM 
-                            books AS ks
+                            ksiazki AS ks
                         JOIN 
-                            authors AS au ON ks.id_autora = au.id_autora
+                            autor AS au ON ks.id_autora = au.id_autora
                         JOIN 
-                            subcategories AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                            subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
                         JOIN 
-                            categories AS kt ON sb.id_kategorii = kt.id_kategorii
+                            kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
                         LEFT JOIN 
-                            warehouse_books ON warehouse_books.id_ksiazki = ks.id_ksiazki
+                            magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
                         GROUP BY ks.id_ksiazki", "getBooks", ""); // dane o ksiażce + ilość egzemplarzy na stanie
         }
         else
@@ -1961,17 +1961,17 @@ use PHPMailer\PHPMailer\SMTP;
                             ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                             kt.nazwa, sb.id_kategorii, 
                             au.imie, au.nazwisko,
-                            SUM(warehouse_books.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                            SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
                         FROM 
-                            books AS ks
+                            ksiazki AS ks
                         JOIN 
-                            authors AS au ON ks.id_autora = au.id_autora
+                            autor AS au ON ks.id_autora = au.id_autora
                         JOIN 
-                            subcategories AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                            subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
                         JOIN 
-                            categories AS kt ON sb.id_kategorii = kt.id_kategorii
+                            kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
                         LEFT JOIN 
-                            warehouse_books ON warehouse_books.id_ksiazki = ks.id_ksiazki
+                            magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
                         WHERE kt.nazwa LIKE '%s'                                   
                         GROUP BY ks.id_ksiazki", "getBooks", $_SESSION["category"]); // dane o ksiażce + ilość egzemplarzy na stanie
 
@@ -1988,17 +1988,17 @@ use PHPMailer\PHPMailer\SMTP;
                         ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
                         kt.nazwa, sb.id_kategorii, 
                         au.imie, au.nazwisko,
-                        SUM(warehouse_books.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
+                        SUM(magazyn_ksiazki.ilosc_dostepnych_egzemplarzy) AS ilosc_egzemplarzy
                     FROM 
-                        books AS ks
+                        ksiazki AS ks
                     JOIN 
-                        authors AS au ON ks.id_autora = au.id_autora
+                        autor AS au ON ks.id_autora = au.id_autora
                     JOIN 
-                        subcategories AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                        subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
                     JOIN 
-                        categories AS kt ON sb.id_kategorii = kt.id_kategorii
+                        kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
                     LEFT JOIN 
-                        warehouse_books ON warehouse_books.id_ksiazki = ks.id_ksiazki
+                        magazyn_ksiazki ON magazyn_ksiazki.id_ksiazki = ks.id_ksiazki
                     WHERE kt.nazwa LIKE '%s' AND sb.nazwa LIKE '%s'                                  
                     GROUP BY ks.id_ksiazki", "getBooks", [$_SESSION["category"], $_SESSION["subcategory"]]); // dane o ksiażce + ilość egzemplarzy na stanie
     }

@@ -84,8 +84,8 @@ echo "SESSION ->"; var_dump($_SESSION); echo "<hr><br>";
         // get employee with the fewest orders assigned -->
         query("SELECT pr.id_pracownika, 
                       COUNT(zm.id_zamowienia) as liczba_zamowien 
-               FROM employees AS pr 
-               LEFT JOIN orders zm ON pr.id_pracownika = zm.id_pracownika 
+               FROM pracownicy AS pr 
+               LEFT JOIN zamowienia zm ON pr.id_pracownika = zm.id_pracownika 
                GROUP BY pr.id_pracownika 
                ORDER BY liczba_zamowien ASC 
                LIMIT 1", "getEmployeeId", ""); // $_SESSION["employee_id"] --> 4;
@@ -95,17 +95,17 @@ echo "SESSION ->"; var_dump($_SESSION); echo "<hr><br>";
         $order = [$_SESSION["id"], $orderDate, $expDeliveryDate, $dispatchDate, $deliveryDate, $_SESSION["delivery-types"][$deliveryType]["id"], $orderStatus, NULL, $_SESSION["employee_id"]];
         // order data informations;
 
-        query("INSERT INTO orders VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "getLastOrderId", $order);
+        query("INSERT INTO zamowienia VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "getLastOrderId", $order);
         // add new order - inserts data into the "orders" table,
         // gets the ID of the newly added order (row) -->
         // $_SESSION["last_order_id"]
 
         $payment = [$_SESSION["last_order_id"], $paymentDate, $orderSum, $_SESSION["payment-methods"][$paymentMethod]["id"]];
 
-        query("INSERT INTO payments VALUES (NULL, '%s', '%s', '%s', '%s')", "", $payment);
+        query("INSERT INTO platnosci VALUES (NULL, '%s', '%s', '%s', '%s')", "", $payment);
 
         query("SELECT id_klienta, id_ksiazki, ilosc 
-               FROM shopping_cart 
+               FROM koszyk 
                WHERE id_klienta='%s'", "insertOrderDetails", $_SESSION["id"]); // aktualizacja tabeli "szczegóły zamówienia"
 
     } else {

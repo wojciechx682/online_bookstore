@@ -191,7 +191,7 @@ if(!(isset($_SESSION['zalogowany']))) {
 
                 $order = [ $id_klienta, $data_zlozenia_zamowienia, $termin_dostawy, $data_wyslania_zamowienia, $data_dostarczenia_zamowienia, $forma_dostawy, $status ]; // an array that stores order data informations
 
-                query("INSERT INTO orders (id_zamowienia, id_klienta, data_zlozenia_zamowienia, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia, status) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "get_last_order_id", $order); // adds a new order - inserts data into the "orders" table, // gets the ID of the newly added order (row) -> $_SESSION['last_order_id']
+                query("INSERT INTO zamowienia (id_zamowienia, id_klienta, data_zlozenia_zamowienia, termin_dostawy, data_wysłania_zamowienia, data_dostarczenia, forma_dostarczenia, status) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "get_last_order_id", $order); // adds a new order - inserts data into the "orders" table, // gets the ID of the newly added order (row) -> $_SESSION['last_order_id']
 
                 unset($order);
 
@@ -204,7 +204,7 @@ if(!(isset($_SESSION['zalogowany']))) {
 
                 $payment = [$_SESSION['last_order_id'], $data_platnosci, $suma_zamowienia, $forma_platnosci]; // an array that stores payment data related to last order
 
-                query("INSERT INTO payments (id_platnosci, id_zamowienia, data_platnosci, kwota, sposob_platnosci) VALUES (NULL, '%s', '%s', '%s', '%s')", "", $payment);
+                query("INSERT INTO platnosci (id_platnosci, id_zamowienia, data_platnosci, kwota, sposob_platnosci) VALUES (NULL, '%s', '%s', '%s', '%s')", "", $payment);
 
                 unset($payment);
 
@@ -212,7 +212,7 @@ if(!(isset($_SESSION['zalogowany']))) {
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 // Aktualizacja tabeli --> Szczegóły zamówienia  ✓ (na podstawie tabeli KOSZYK)
 
-                query("SELECT id_klienta, id_ksiazki, ilosc FROM shopping_cart WHERE id_klienta='%s'", "insert_order_details", $_SESSION['id']); // wstawia dane do tabeli "szczegóły_zamowienia" - na podstawie tabeli koszyk - (zawartości koszyka danego klienta)
+                query("SELECT id_klienta, id_ksiazki, ilosc FROM koszyk WHERE id_klienta='%s'", "insert_order_details", $_SESSION['id']); // wstawia dane do tabeli "szczegóły_zamowienia" - na podstawie tabeli koszyk - (zawartości koszyka danego klienta)
 
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -222,7 +222,7 @@ if(!(isset($_SESSION['zalogowany']))) {
 
                     $order_id = htmlentities($_SESSION['last_order_id'], ENT_QUOTES, "UTF-8");
 
-                    query("SELECT id_zamowienia, id_ksiazki, ilosc FROM order_details WHERE id_zamowienia = '%s'", "get_order_details", $_SESSION['last_order_id']);
+                    query("SELECT id_zamowienia, id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "get_order_details", $_SESSION['last_order_id']);
 
                     $order_details_books_id = $_SESSION['order_details_books_id'];
 
@@ -232,7 +232,7 @@ if(!(isset($_SESSION['zalogowany']))) {
                     {
                         $book_id = $order_details_books_id[$i];
 
-                        query("SELECT tytul, cena, rok_wydania FROM books WHERE id_ksiazki = '$book_id'", "order_details_get_book", "$book_id");
+                        query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '$book_id'", "order_details_get_book", "$book_id");
                     }
 
                     unset($_SESSION['last_order_id']);

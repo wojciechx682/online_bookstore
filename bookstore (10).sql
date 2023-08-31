@@ -40,7 +40,7 @@ CREATE TABLE `adres` (
 -- Zrzut danych tabeli `adres`
 --
 
-INSERT INTO address (`adres_id`, `miejscowosc`, `ulica`, `numer_domu`, `kod_pocztowy`, `kod_miejscowosc`) VALUES
+INSERT INTO `adres` (`adres_id`, `miejscowosc`, `ulica`, `numer_domu`, `kod_pocztowy`, `kod_miejscowosc`) VALUES
 (32, 'Dębno', 'Mickiewicza', '52', '74-400', 'Dębno'),
 (33, 'Chojna', 'Mickiewicza', '52', '74-400', 'Dębno'),
 (174, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
@@ -66,7 +66,7 @@ CREATE TABLE `autor` (
 -- Zrzut danych tabeli `autor`
 --
 
-INSERT INTO authors (`id_autora`, `imie`, `nazwisko`, `narodowosc`, `okres_tworczosci`, `rodzaj_tworczosci`) VALUES
+INSERT INTO `autor` (`id_autora`, `imie`, `nazwisko`, `narodowosc`, `okres_tworczosci`, `rodzaj_tworczosci`) VALUES
 (1, 'Jerzy', 'Grębosz', 'Polska', '2001-2022', 'Literatura techniczna'),
 (2, 'Adam', 'Nowak', 'Polska', '2004-2018', 'Powieści'),
 (12, 'Kajetan', 'Bąk', 'Polska', '1980-1988', 'Biografie'),
@@ -110,7 +110,7 @@ CREATE TABLE `kategorie` (
 -- Zrzut danych tabeli `kategorie`
 --
 
-INSERT INTO categories (`id_kategorii`, `nazwa`) VALUES
+INSERT INTO `kategorie` (`id_kategorii`, `nazwa`) VALUES
 (1, 'Dla dzieci'),
 (2, 'Fantastyka'),
 (3, 'Horror'),
@@ -144,7 +144,7 @@ CREATE TABLE `klienci` (
 -- Zrzut danych tabeli `klienci`
 --
 
-INSERT INTO clients (`id_klienta`, `imie`, `nazwisko`, `wojewodztwo`, `kraj`, `PESEL`, `data_urodzenia`, `telefon`, `email`, `login`, `haslo`, `adres_id`) VALUES
+INSERT INTO `klienci` (`id_klienta`, `imie`, `nazwisko`, `wojewodztwo`, `kraj`, `PESEL`, `data_urodzenia`, `telefon`, `email`, `login`, `haslo`, `adres_id`) VALUES
 (335, 'Stefan', 'Doborowski', NULL, NULL, NULL, NULL, '505101303', 'sfetan.dob@wp.pl', NULL, '$2y$10$.yGt.tvlYDEh1az/9U.Cnu0wpL.XKnYUeTvFkRXiox.2gy.3QCcIa', 174),
 (336, 'Jakub', 'Wojciechowski', NULL, NULL, NULL, NULL, '505101303', 'jacoboc389@wp.pl', NULL, '$2y$10$ItJbyQdz5LnFsUeOUXIfRepaCzf4wKz9PzP4.bxNjSlvVTYomDxKu', 175),
 (337, 'Adam', 'Nowak', NULL, NULL, NULL, NULL, '505101303', 'adam.nowak222@wp.pl', NULL, '$2y$10$WhyJXRQYpJK1uXeUCFtIGeoQwhQobC7LiidxfWvgzl5cTyLVF9VEu', 176);
@@ -167,7 +167,7 @@ CREATE TABLE `komentarze` (
 -- Zrzut danych tabeli `komentarze`
 --
 
-INSERT INTO comments (`id_komentarza`, `id_ksiazki`, `id_klienta`, `tresc`, `data`) VALUES
+INSERT INTO `komentarze` (`id_komentarza`, `id_ksiazki`, `id_klienta`, `tresc`, `data`) VALUES
 (233, 7, 335, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', '2023-07-18 17:18:35'),
 (234, 2, 336, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', '2023-07-22 19:39:39'),
 (235, 36, 336, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', '2023-07-24 05:09:04'),
@@ -189,7 +189,7 @@ CREATE TABLE `koszyk` (
 -- Zrzut danych tabeli `koszyk`
 --
 
-INSERT INTO shopping_cart (`id_klienta`, `id_ksiazki`, `ilosc`) VALUES
+INSERT INTO `koszyk` (`id_klienta`, `id_ksiazki`, `ilosc`) VALUES
 (336, 1, 11),
 (336, 36, 11),
 (337, 35, 3);
@@ -221,7 +221,7 @@ CREATE TABLE `ksiazki` (
 -- Zrzut danych tabeli `ksiazki`
 --
 
-INSERT INTO books (`id_ksiazki`, `id_autora`, `tytul`, `cena`, `rok_wydania`, `opis`, `oprawa`, `id_wydawcy`, `image_url`, `rating`, `ilosc_stron`, `wymiary`, `stan`, `id_subkategorii`) VALUES
+INSERT INTO `ksiazki` (`id_ksiazki`, `id_autora`, `tytul`, `cena`, `rok_wydania`, `opis`, `oprawa`, `id_wydawcy`, `image_url`, `rating`, `ilosc_stron`, `wymiary`, `stan`, `id_subkategorii`) VALUES
 (1, 1, 'Symfonia C++ wydanie V', 10, 2008, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis tortor non sem euismod fermentum. Sed congue ultricies ipsum non porta. Morbi ut interdum ipsum. Morbi cursus diam semper, mattis ante rutrum, feugiat dolor. Nulla semper vulputate elit nec condimentum. Nam vel lacus eu odio facilisis tincidunt. Nullam a neque massa. Ut quis auctor quam. Sed accumsan dui in sem efficitur cursus. Duis vestibulum leo nisi, at fringilla quam dapibus et. Donec euismod velit id dolor pharetra tempor. Nulla auctor dictum urna eu gravida. Donec tristique in mauris tincidunt imperdiet. In at justo vel metus congue iaculis ut aliquam ex. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curaeLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis tortor non sem euismod fermentum. Sed congue ultricies ipsum non porta. Morbi ut interdum ipsum. Morbi cursus diam semper, mattis ante rutrum, feugiat dolor. Nulla semper vulputate elit nec condiment', 'twarda', 2, 'csymfoni_wyd_V.png', 3, 585, '411 x 382 x 178', 'nowa', 1),
 (2, 2, 'PHP i MySQL. Od podstaw. Wydanie IV', 75.5, 2012, 'Java jest dojrzałym językiem programowania, który pozwala na pisanie kodu dla wielu rodzajów komputerów służących do różnych celów i działających na różnych platformach. Jest świetnym wyborem dla programistów, którym zależy na tworzeniu bezpiecznych aplikacji o wyjątkowej jakości. Wokół Javy skupia się duża społeczność, dzięki której język ten wciąż się rozwija, unowocześnia i wzbogaca o nowe elementy. Osoby, które swoje zawodowe życie wiążą z pisaniem programów w Javie, muszą poznać zaawansowane zagadnienia i mniej oczywiste funkcjonalności Javy, również te niedawno zaimplementowane. To konieczność dla każdego profesjonalnego programisty Javy.  Oto kolejne, przejrzane, zaktualizowane i uzupełnione wydanie znakomitego podręcznika dla zawodowych programistów Javy. Znalazł się tu dokładny opis sposobów tworzenia interfejsu użytkownika, stosowania rozwiązań korporacyjnych, sieciowych i zabezpieczeń, a także nowości wprowadzonych w JDK 11. Przedstawiono techniki programowania baz danych or', 'twarda', 2, 'podstawy_PHP.png', 3, 748, '253 x 938 x 029', 'nowa', 2),
 (5, 33, 'Mała kaczka w rzece hahahahahaa. Mała kaczka w rzece hahahahahaa', 97.1, 2010, NULL, 'Twarda', 1, '', 1, 240, '432 x 65 x 31', 'nowa', 3),
@@ -274,7 +274,7 @@ CREATE TABLE `magazyn` (
 -- Zrzut danych tabeli `magazyn`
 --
 
-INSERT INTO warehouse (`id_magazynu`, `nazwa`, `kraj`, `wojewodztwo`, `miejscowosc`, `ulica`, `numer_ulicy`, `kod_pocztowy`, `kod_miejscowosc`) VALUES
+INSERT INTO `magazyn` (`id_magazynu`, `nazwa`, `kraj`, `wojewodztwo`, `miejscowosc`, `ulica`, `numer_ulicy`, `kod_pocztowy`, `kod_miejscowosc`) VALUES
 (1, 'magazyn nr 1', 'Polska', 'Zachodmiopomorskie', 'Szczecin', 'Fryderyka Chopina ', 3, '800-21', 'Szczecin'),
 (2, 'magazyn nr 2', 'Polska', 'Zachodmiopomorskie', 'Police', 'Fryderyka Chopina ', 3, '800-21', 'Szczecin');
 
@@ -294,7 +294,7 @@ CREATE TABLE `magazyn_ksiazki` (
 -- Zrzut danych tabeli `magazyn_ksiazki`
 --
 
-INSERT INTO warehouse_books (`id_magazynu`, `id_ksiazki`, `ilosc_dostepnych_egzemplarzy`) VALUES
+INSERT INTO `magazyn_ksiazki` (`id_magazynu`, `id_ksiazki`, `ilosc_dostepnych_egzemplarzy`) VALUES
 (1, 1, '0'),
 (1, 2, '235'),
 (1, 7, '15'),
@@ -333,7 +333,7 @@ CREATE TABLE `platnosci` (
 -- Zrzut danych tabeli `platnosci`
 --
 
-INSERT INTO payments (`id_platnosci`, `id_zamowienia`, `data_platnosci`, `kwota`, `sposob_platnosci`) VALUES
+INSERT INTO `platnosci` (`id_platnosci`, `id_zamowienia`, `data_platnosci`, `kwota`, `sposob_platnosci`) VALUES
 (811, 1145, '2023-07-24 07:17:45', 200, 'Blik'),
 (812, 1146, '2023-07-24 12:52:49', 160, 'Blik'),
 (813, 1147, '2023-07-24 12:52:57', 300, 'Blik'),
@@ -362,7 +362,7 @@ CREATE TABLE `pracownicy` (
 -- Zrzut danych tabeli `pracownicy`
 --
 
-INSERT INTO employees (`id_pracownika`, `imie`, `nazwisko`, `email`, `haslo`, `wynagrodzenie`, `stanowisko`, `data_zatrudnienia`, `telefon`, `adres_id`) VALUES
+INSERT INTO `pracownicy` (`id_pracownika`, `imie`, `nazwisko`, `email`, `haslo`, `wynagrodzenie`, `stanowisko`, `data_zatrudnienia`, `telefon`, `adres_id`) VALUES
 (4, 'Jan', 'Nowak', 'jan.nowak@wp.pl', '$2y$10$NEm7t60JIe9OD7OdHyHn.OosZRExCCnW13E/mDtH2PJ886IjbrzIu', '2758.00', 'sprzedawca', '2023-04-25', '647918229', 32),
 (6, 'Adam', 'Kowalski', 'adam.nowak@wp.pl', '$2y$10$r2v0wivXQWdE2nAwe4vXS.uKGcudxJSRjcFlOL4gtAdMgfle.SiBm', '3758.00', 'sprzedawca', '2023-04-25', '647918229', 33);
 
@@ -405,7 +405,7 @@ CREATE TABLE `subkategorie` (
 -- Zrzut danych tabeli `subkategorie`
 --
 
-INSERT INTO subcategories (`id_subkategorii`, `nazwa`, `id_kategorii`) VALUES
+INSERT INTO `subkategorie` (`id_subkategorii`, `nazwa`, `id_kategorii`) VALUES
 (1, 'Programowanie', 4),
 (2, 'Web development', 4),
 (3, 'Dla dzieci', 1),
@@ -431,7 +431,7 @@ CREATE TABLE `szczegoly_zamowienia` (
 -- Zrzut danych tabeli `szczegoly_zamowienia`
 --
 
-INSERT INTO order_details (`id_zamowienia`, `id_ksiazki`, `ilosc`) VALUES
+INSERT INTO `szczegoly_zamowienia` (`id_zamowienia`, `id_ksiazki`, `ilosc`) VALUES
 (1145, 36, 10),
 (1146, 36, 8),
 (1147, 36, 15),
@@ -455,7 +455,7 @@ CREATE TABLE `wydawcy` (
 -- Zrzut danych tabeli `wydawcy`
 --
 
-INSERT INTO publishers (`id_wydawcy`, `nazwa_wydawcy`, `adres`, `kod_pocztowy`, `telefon`) VALUES
+INSERT INTO `wydawcy` (`id_wydawcy`, `nazwa_wydawcy`, `adres`, `kod_pocztowy`, `telefon`) VALUES
 (1, 'Helion', 'Warszawa', '500-31', '+48 018 938 922'),
 (2, 'PWN', 'Warszawa', '02-460', '+48 839 771 829');
 
@@ -482,7 +482,7 @@ CREATE TABLE `zamowienia` (
 -- Zrzut danych tabeli `zamowienia`
 --
 
-INSERT INTO orders (`id_zamowienia`, `id_klienta`, `data_zlozenia_zamowienia`, `termin_dostawy`, `data_wysłania_zamowienia`, `data_dostarczenia`, `forma_dostarczenia`, `status`, `komentarz`, `id_pracownika`) VALUES
+INSERT INTO `zamowienia` (`id_zamowienia`, `id_klienta`, `data_zlozenia_zamowienia`, `termin_dostawy`, `data_wysłania_zamowienia`, `data_dostarczenia`, `forma_dostarczenia`, `status`, `komentarz`, `id_pracownika`) VALUES
 (1145, 336, '2023-07-24 07:17:45', '2023-07-30', '2023-07-28 21:21:21', '0000-00-00', 'Kurier DPD', 'Wysłano', 'Dodaj komentarz wyjaściajacy powód zarchiwizowania zamówienia\r\nDodaj komentarz wyjaściajacy powód zarchiwizowania zamówienia\r\nDodaj komentarz wyjaściajacy powód zarchiwizowania zamówienia\r\nDodaj komentarz wyjaściajacy powód zarchiwizowania zamówienia\r\nDod', 4),
 (1146, 337, '2023-07-24 12:52:49', '0000-00-00', '0000-00-00 00:00:00', '0000-00-00', 'Kurier DPD', 'Oczekujące na potwierdzenie', NULL, 6),
 (1147, 337, '2023-07-24 12:52:57', '0000-00-00', '0000-00-00 00:00:00', '2023-07-29', 'Kurier DPD', 'Dostarczono', NULL, 4),
@@ -495,25 +495,25 @@ INSERT INTO orders (`id_zamowienia`, `id_klienta`, `data_zlozenia_zamowienia`, `
 --
 -- Indeksy dla tabeli `adres`
 --
-ALTER TABLE address
+ALTER TABLE `adres`
   ADD PRIMARY KEY (`adres_id`);
 
 --
 -- Indeksy dla tabeli `autor`
 --
-ALTER TABLE authors
+ALTER TABLE `autor`
   ADD PRIMARY KEY (`id_autora`);
 
 --
 -- Indeksy dla tabeli `kategorie`
 --
-ALTER TABLE categories
+ALTER TABLE `kategorie`
   ADD PRIMARY KEY (`id_kategorii`);
 
 --
 -- Indeksy dla tabeli `klienci`
 --
-ALTER TABLE clients
+ALTER TABLE `klienci`
   ADD PRIMARY KEY (`id_klienta`),
   ADD UNIQUE KEY `adres_id` (`adres_id`),
   ADD KEY `email` (`email`);
@@ -521,7 +521,7 @@ ALTER TABLE clients
 --
 -- Indeksy dla tabeli `komentarze`
 --
-ALTER TABLE comments
+ALTER TABLE `komentarze`
   ADD PRIMARY KEY (`id_komentarza`),
   ADD UNIQUE KEY `id_ksiazki_2` (`id_ksiazki`,`id_klienta`),
   ADD KEY `id_ksiazki` (`id_ksiazki`),
@@ -530,14 +530,14 @@ ALTER TABLE comments
 --
 -- Indeksy dla tabeli `koszyk`
 --
-ALTER TABLE shopping_cart
+ALTER TABLE `koszyk`
   ADD PRIMARY KEY (`id_klienta`,`id_ksiazki`),
   ADD KEY `id_ksiazki` (`id_ksiazki`);
 
 --
 -- Indeksy dla tabeli `ksiazki`
 --
-ALTER TABLE books
+ALTER TABLE `ksiazki`
   ADD PRIMARY KEY (`id_ksiazki`),
   ADD KEY `id_autora` (`id_autora`),
   ADD KEY `id_wydawcy` (`id_wydawcy`),
@@ -546,13 +546,13 @@ ALTER TABLE books
 --
 -- Indeksy dla tabeli `magazyn`
 --
-ALTER TABLE warehouse
+ALTER TABLE `magazyn`
   ADD PRIMARY KEY (`id_magazynu`);
 
 --
 -- Indeksy dla tabeli `magazyn_ksiazki`
 --
-ALTER TABLE warehouse_books
+ALTER TABLE `magazyn_ksiazki`
   ADD PRIMARY KEY (`id_magazynu`,`id_ksiazki`),
   ADD KEY `id_ksiazki` (`id_ksiazki`);
 
@@ -566,14 +566,14 @@ ALTER TABLE `password_reset_tokens`
 --
 -- Indeksy dla tabeli `platnosci`
 --
-ALTER TABLE payments
+ALTER TABLE `platnosci`
   ADD PRIMARY KEY (`id_platnosci`),
   ADD KEY `id_zamowienia` (`id_zamowienia`);
 
 --
 -- Indeksy dla tabeli `pracownicy`
 --
-ALTER TABLE employees
+ALTER TABLE `pracownicy`
   ADD PRIMARY KEY (`id_pracownika`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `adres_id` (`adres_id`),
@@ -590,28 +590,28 @@ ALTER TABLE `ratings`
 --
 -- Indeksy dla tabeli `subkategorie`
 --
-ALTER TABLE subcategories
+ALTER TABLE `subkategorie`
   ADD PRIMARY KEY (`id_subkategorii`),
   ADD KEY `id_kategorii` (`id_kategorii`);
 
 --
 -- Indeksy dla tabeli `szczegoly_zamowienia`
 --
-ALTER TABLE order_details
+ALTER TABLE `szczegoly_zamowienia`
   ADD PRIMARY KEY (`id_zamowienia`,`id_ksiazki`),
   ADD KEY `id_ksiazki` (`id_ksiazki`);
 
 --
 -- Indeksy dla tabeli `wydawcy`
 --
-ALTER TABLE publishers
+ALTER TABLE `wydawcy`
   ADD PRIMARY KEY (`id_wydawcy`),
   ADD UNIQUE KEY `nazwa_wydawcy` (`nazwa_wydawcy`);
 
 --
 -- Indeksy dla tabeli `zamowienia`
 --
-ALTER TABLE orders
+ALTER TABLE `zamowienia`
   ADD PRIMARY KEY (`id_zamowienia`),
   ADD KEY `id_klienta` (`id_klienta`),
   ADD KEY `id_pracownika` (`id_pracownika`);
@@ -623,37 +623,37 @@ ALTER TABLE orders
 --
 -- AUTO_INCREMENT dla tabeli `adres`
 --
-ALTER TABLE address
+ALTER TABLE `adres`
   MODIFY `adres_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
 -- AUTO_INCREMENT dla tabeli `autor`
 --
-ALTER TABLE authors
+ALTER TABLE `autor`
   MODIFY `id_autora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT dla tabeli `kategorie`
 --
-ALTER TABLE categories
+ALTER TABLE `kategorie`
   MODIFY `id_kategorii` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT dla tabeli `klienci`
 --
-ALTER TABLE clients
+ALTER TABLE `klienci`
   MODIFY `id_klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=338;
 
 --
 -- AUTO_INCREMENT dla tabeli `komentarze`
 --
-ALTER TABLE comments
+ALTER TABLE `komentarze`
   MODIFY `id_komentarza` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=237;
 
 --
 -- AUTO_INCREMENT dla tabeli `ksiazki`
 --
-ALTER TABLE books
+ALTER TABLE `ksiazki`
   MODIFY `id_ksiazki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
@@ -665,13 +665,13 @@ ALTER TABLE `password_reset_tokens`
 --
 -- AUTO_INCREMENT dla tabeli `platnosci`
 --
-ALTER TABLE payments
+ALTER TABLE `platnosci`
   MODIFY `id_platnosci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=815;
 
 --
 -- AUTO_INCREMENT dla tabeli `pracownicy`
 --
-ALTER TABLE employees
+ALTER TABLE `pracownicy`
   MODIFY `id_pracownika` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id pracownika', AUTO_INCREMENT=7;
 
 --
@@ -683,13 +683,13 @@ ALTER TABLE `ratings`
 --
 -- AUTO_INCREMENT dla tabeli `subkategorie`
 --
-ALTER TABLE subcategories
+ALTER TABLE `subkategorie`
   MODIFY `id_subkategorii` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT dla tabeli `zamowienia`
 --
-ALTER TABLE orders
+ALTER TABLE `zamowienia`
   MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1149;
 
 --
@@ -699,82 +699,82 @@ ALTER TABLE orders
 --
 -- Ograniczenia dla tabeli `klienci`
 --
-ALTER TABLE clients
-  ADD CONSTRAINT `address_id` FOREIGN KEY (`adres_id`) REFERENCES address (`adres_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `klienci`
+  ADD CONSTRAINT `address_id` FOREIGN KEY (`adres_id`) REFERENCES `adres` (`adres_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `komentarze`
 --
-ALTER TABLE comments
-  ADD CONSTRAINT `komentarze_ibfk_1` FOREIGN KEY (`id_ksiazki`) REFERENCES books (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `komentarze_ibfk_2` FOREIGN KEY (`id_klienta`) REFERENCES clients (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `komentarze`
+  ADD CONSTRAINT `komentarze_ibfk_1` FOREIGN KEY (`id_ksiazki`) REFERENCES `ksiazki` (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `komentarze_ibfk_2` FOREIGN KEY (`id_klienta`) REFERENCES `klienci` (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `koszyk`
 --
-ALTER TABLE shopping_cart
-  ADD CONSTRAINT `koszyk_ibfk_1` FOREIGN KEY (`id_klienta`) REFERENCES clients (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `koszyk_ibfk_2` FOREIGN KEY (`id_ksiazki`) REFERENCES books (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `koszyk`
+  ADD CONSTRAINT `koszyk_ibfk_1` FOREIGN KEY (`id_klienta`) REFERENCES `klienci` (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `koszyk_ibfk_2` FOREIGN KEY (`id_ksiazki`) REFERENCES `ksiazki` (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `ksiazki`
 --
-ALTER TABLE books
-  ADD CONSTRAINT `ksiazki_ibfk_1` FOREIGN KEY (`id_autora`) REFERENCES authors (`id_autora`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ksiazki_ibfk_2` FOREIGN KEY (`id_wydawcy`) REFERENCES publishers (`id_wydawcy`) ON DELETE CASCADE,
-  ADD CONSTRAINT `ksiazki_ibfk_3` FOREIGN KEY (`id_subkategorii`) REFERENCES subcategories (`id_subkategorii`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `ksiazki`
+  ADD CONSTRAINT `ksiazki_ibfk_1` FOREIGN KEY (`id_autora`) REFERENCES `autor` (`id_autora`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ksiazki_ibfk_2` FOREIGN KEY (`id_wydawcy`) REFERENCES `wydawcy` (`id_wydawcy`) ON DELETE CASCADE,
+  ADD CONSTRAINT `ksiazki_ibfk_3` FOREIGN KEY (`id_subkategorii`) REFERENCES `subkategorie` (`id_subkategorii`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `magazyn_ksiazki`
 --
-ALTER TABLE warehouse_books
-  ADD CONSTRAINT `magazyn_ksiazki_ibfk_1` FOREIGN KEY (`id_magazynu`) REFERENCES warehouse (`id_magazynu`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `magazyn_ksiazki_ibfk_2` FOREIGN KEY (`id_ksiazki`) REFERENCES books (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `magazyn_ksiazki`
+  ADD CONSTRAINT `magazyn_ksiazki_ibfk_1` FOREIGN KEY (`id_magazynu`) REFERENCES `magazyn` (`id_magazynu`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `magazyn_ksiazki_ibfk_2` FOREIGN KEY (`id_ksiazki`) REFERENCES `ksiazki` (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
-  ADD CONSTRAINT `password_reset_tokens_ibfk_1` FOREIGN KEY (`email`) REFERENCES clients (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `password_reset_tokens_ibfk_1` FOREIGN KEY (`email`) REFERENCES `klienci` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `platnosci`
 --
-ALTER TABLE payments
-  ADD CONSTRAINT `platnosci_ibfk_1` FOREIGN KEY (`id_zamowienia`) REFERENCES orders (`id_zamowienia`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `platnosci`
+  ADD CONSTRAINT `platnosci_ibfk_1` FOREIGN KEY (`id_zamowienia`) REFERENCES `zamowienia` (`id_zamowienia`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `pracownicy`
 --
-ALTER TABLE employees
-  ADD CONSTRAINT `pracownicy_ibfk_1` FOREIGN KEY (`adres_id`) REFERENCES address (`adres_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `pracownicy`
+  ADD CONSTRAINT `pracownicy_ibfk_1` FOREIGN KEY (`adres_id`) REFERENCES `adres` (`adres_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `ratings`
 --
 ALTER TABLE `ratings`
-  ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`id_ksiazki`) REFERENCES books (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`id_klienta`) REFERENCES clients (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`id_ksiazki`) REFERENCES `ksiazki` (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`id_klienta`) REFERENCES `klienci` (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `subkategorie`
 --
-ALTER TABLE subcategories
-  ADD CONSTRAINT `subkategorie_ibfk_1` FOREIGN KEY (`id_kategorii`) REFERENCES categories (`id_kategorii`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `subkategorie`
+  ADD CONSTRAINT `subkategorie_ibfk_1` FOREIGN KEY (`id_kategorii`) REFERENCES `kategorie` (`id_kategorii`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `szczegoly_zamowienia`
 --
-ALTER TABLE order_details
-  ADD CONSTRAINT `szczegoly_zamowienia_ibfk_1` FOREIGN KEY (`id_zamowienia`) REFERENCES orders (`id_zamowienia`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `szczegoly_zamowienia_ibfk_2` FOREIGN KEY (`id_ksiazki`) REFERENCES books (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `szczegoly_zamowienia`
+  ADD CONSTRAINT `szczegoly_zamowienia_ibfk_1` FOREIGN KEY (`id_zamowienia`) REFERENCES `zamowienia` (`id_zamowienia`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `szczegoly_zamowienia_ibfk_2` FOREIGN KEY (`id_ksiazki`) REFERENCES `ksiazki` (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ograniczenia dla tabeli `zamowienia`
 --
-ALTER TABLE orders
-  ADD CONSTRAINT `zamowienia_ibfk_1` FOREIGN KEY (`id_klienta`) REFERENCES clients (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `zamowienia_ibfk_2` FOREIGN KEY (`id_pracownika`) REFERENCES employees (`id_pracownika`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `zamowienia`
+  ADD CONSTRAINT `zamowienia_ibfk_1` FOREIGN KEY (`id_klienta`) REFERENCES `klienci` (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `zamowienia_ibfk_2` FOREIGN KEY (`id_pracownika`) REFERENCES `pracownicy` (`id_pracownika`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

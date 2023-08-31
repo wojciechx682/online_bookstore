@@ -17,7 +17,7 @@ if (isset($_GET['category_id']) && ! empty($_GET['category_id'])) {
 
     if($category_id = filter_var($_GET['category_id'], FILTER_VALIDATE_INT)) { // category-id or false;
 
-        query("SELECT sb.id_subkategorii, sb.nazwa, sb.id_kategorii FROM subcategories AS sb, categories AS kt WHERE sb.id_kategorii = kt.id_kategorii AND sb.id_kategorii = '%s'", "getSubcategories", $category_id);
+        query("SELECT sb.id_subkategorii, sb.nazwa, sb.id_kategorii FROM subkategorie AS sb, kategorie AS kt WHERE sb.id_kategorii = kt.id_kategorii AND sb.id_kategorii = '%s'", "getSubcategories", $category_id);
         //              fetched subcategories;
         // id_subkategorii	    nazwa	     id_kategorii
         //     1	        Programowanie	     4

@@ -37,12 +37,12 @@
                                       ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, 
                                       au.imie, au.nazwisko,
                                       sb.nazwa AS podkategoria, kt.nazwa AS kategoria
-                               FROM clients AS kl, 
-                                    shopping_cart AS ko, 
-                                    books AS ks, 
-                                    authors AS au,
-                                    subcategories AS sb,
-                                    categories AS kt                                                                                   
+                               FROM klienci AS kl, 
+                                    koszyk AS ko, 
+                                    ksiazki AS ks, 
+                                    autor AS au,
+                                    subkategorie AS sb,
+                                    kategorie AS kt                                                                                   
                                WHERE kl.id_klienta = ko.id_klienta AND 
                                      ko.id_ksiazki = ks.id_ksiazki AND 
                                      ks.id_autora = au.id_autora AND    
@@ -50,9 +50,9 @@
                                      AND sb.id_kategorii = kt.id_kategorii AND
                                      kl.id_klienta='%s'", "getProductsFromCart", $_SESSION["id"]);
 
-                        query("SELECT fd.id_formy_dostawy AS id, fd.nazwa, fd.cena FROM delivery_types AS fd", "getDeliveryTypes", "");
+                        query("SELECT fd.id_formy_dostawy AS id, fd.nazwa, fd.cena FROM formy_dostawy AS fd", "getDeliveryTypes", "");
 
-                        query("SELECT mp.id_metody_platnosci AS id, mp.nazwa, mp.oplata FROM payment_methods AS mp", "getPaymentMethods", "");
+                        query("SELECT mp.id_metody_platnosci AS id, mp.nazwa, mp.oplata FROM metody_platnosci AS mp", "getPaymentMethods", "");
 
                     ?>
 

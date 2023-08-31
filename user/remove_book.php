@@ -24,7 +24,7 @@
 
 		$cart = [$id_klienta, $id_ksiazki];
 
-		query("DELETE FROM shopping_cart 
+		query("DELETE FROM koszyk 
 					 WHERE id_klienta='%s' AND 
 					       id_ksiazki='%s'", "", $cart);
 
@@ -32,14 +32,14 @@
 		unset($cart);
 
 		query("SELECT SUM(ilosc) AS suma 
-					 FROM shopping_cart
+					 FROM koszyk
 					 WHERE id_klienta='%s'", "countCartQuantity", $id_klienta);
 					 // funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po usunięciu książki);
 
 		$_SESSION["suma_zamowienia"] = 0;
 
 		query("SELECT ROUND(SUM(ko.ilosc * ks.cena),2) AS suma
-                     FROM clients AS kl, shopping_cart AS ko, books AS ks
+                     FROM klienci AS kl, koszyk AS ko, ksiazki AS ks
                      WHERE kl.id_klienta = '%s' AND kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki
                      GROUP BY kl.id_klienta", "countCartSum", $_SESSION["id"]); // <-- $_SESSION["suma_zamowienia"]
 

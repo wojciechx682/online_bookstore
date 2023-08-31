@@ -71,5 +71,5 @@
 include "../functions.php";
 session_start();
 
-    query("SELECT id_ksiazki FROM books WHERE id_ksiazki = '%s'", "cart_verify_book", "1");
+    query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "cart_verify_book", "1");
 ?>

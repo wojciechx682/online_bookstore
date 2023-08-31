@@ -41,7 +41,7 @@
             echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();
         } else {
 
-            query("SELECT haslo FROM clients WHERE id_klienta='%s'", "verifyPassword", $_SESSION["id"]);
+            query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verifyPassword", $_SESSION["id"]);
                 // ta funkcja ustawia zmienna sesyjna $_SESSION["password_hashed"] ktora przechowuje haslo (hash hasła) z BD;
             // $_SESSION["password_hashed"] --> przechowuje aktualne (zahashowane) hasło z BD;
         }

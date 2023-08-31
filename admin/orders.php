@@ -45,7 +45,7 @@ unset($_SESSION["order-id"], $_SESSION["order-date"], $_SESSION["client-name"], 
                                        zm.status,
                                        kl.imie, kl.nazwisko,
                                        pl.kwota, mp.nazwa AS metoda_platnosci
-                                FROM orders AS zm, clients AS kl, payments AS pl, payment_methods AS mp
+                                FROM zamowienia AS zm, klienci AS kl, platnosci AS pl, metody_platnosci AS mp
                                 WHERE zm.id_zamowienia = pl.id_zamowienia AND pl.id_metody_platnosci = mp.id_metody_platnosci AND zm.id_klienta = kl.id_klienta AND zm.id_pracownika = '%s'", "getAllOrders", $_SESSION["id"]);
                         // content of the table;
                         // wszystkie zamówienia złożone przez klientów - (przypisane do zalogowanego PRACOWNIKA);

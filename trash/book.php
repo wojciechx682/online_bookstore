@@ -108,16 +108,16 @@ require_once "../start-session.php";
 
                 query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,   
                             kt.nazwa, sb.id_kategorii,                                
-                                (SELECT COUNT(*) FROM comments WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
+                                (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
                                 (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
-                                (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM warehouse_books WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
+                                (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
                                 au.imie, au.nazwisko, au.id_autora,
                                 ks.id_wydawcy, wd.nazwa_wydawcy
-                            FROM books AS ks
-                            JOIN subcategories AS sb ON ks.id_subkategorii = sb.id_subkategorii
-                            JOIN categories AS kt ON sb.id_kategorii = kt.id_kategorii
-                            LEFT JOIN authors AS au ON ks.id_autora = au.id_autora                                    
-                            LEFT JOIN publishers AS wd ON ks.id_wydawcy = wd.id_wydawcy
+                            FROM ksiazki AS ks
+                            JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
+                            JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
+                            LEFT JOIN autor AS au ON ks.id_autora = au.id_autora                                    
+                            LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
                             WHERE ks.id_ksiazki = '%s'
 
                                 ", "get_book", $book);

@@ -68,7 +68,7 @@
     <br><hr><br>
 
     <?php
-        query("SELECT * FROM clients WHERE email='jakub.wojciechowski.682@gmail.com'", "checkClient", "");
+        query("SELECT * FROM klienci WHERE email='jakub.wojciechowski.682@gmail.com'", "checkClient", "");
 
         echo "<br><hr><br>";
 

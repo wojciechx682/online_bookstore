@@ -13,18 +13,18 @@
 
         $book = [$bookAmount, $_SESSION["id"], $bookId];
 
-		query("UPDATE shopping_cart 
+		query("UPDATE koszyk 
                      SET ilosc='%s' 
                      WHERE id_klienta='%s' AND 
                            id_ksiazki='%s'", "", $book);
 
         query("SELECT SUM(ilosc) AS suma 
-                             FROM shopping_cart 
+                             FROM koszyk 
                              WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
         //  $_SESSION["koszyk_ilosc_ksiazek"] <-- aktualna ilość książek klienta w koszykuksiazki
 
         query("SELECT ROUND(SUM(ko.ilosc * ks.cena),2) AS suma
-               FROM clients AS kl, shopping_cart AS ko, books AS ks
+               FROM klienci AS kl, koszyk AS ko, ksiazki AS ks
                WHERE kl.id_klienta = '%s' AND kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki
                GROUP BY kl.id_klienta", "countCartSum", $_SESSION["id"]); // <-- $_SESSION["suma_zamowienia"]
 
