@@ -122,9 +122,9 @@
                 </header>
 
                 <?php
-                    echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                     echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";
+                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                 ?>
 
                 <h4 class="section-header order-details-header order-details-id">Zamówienie nr <span class="order-details-id"><?= $_SESSION["order-id"]; ?></h4>

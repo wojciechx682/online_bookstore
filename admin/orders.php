@@ -34,9 +34,9 @@ unset($_SESSION["order-id"], $_SESSION["order-date"], $_SESSION["client-name"], 
 
                     <?php
                             //require "../view/admin/order-header.php"; // table header; // ?
-                        echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                         echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                        echo "SESSION ->"; print_r($_SESSION); echo "<hr>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                     ?>
 
                     <?php

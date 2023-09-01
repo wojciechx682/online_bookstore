@@ -122,11 +122,12 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
                         <?php
 
-                            echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                           /* echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                             echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                            echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
+                            echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
 
-                            echo '<a href="index.php">&larr; Wróć </a>'; // tymczasowe (!) ;
+                            echo '<div id="aaa"><a href="index.php" id="get-back-a"><i class="icon-down-open" id="book-page-get-back"></i>Wróć </a></div>';
+                            /*echo '<a href="index.php">&larr; Wróć </a>'; // tymczasowe (!) ;*/
 
                             if(isset($_SESSION["avg_rating"])) {
                                 unset($_SESSION["avg_rating"]); // $row["rating"];
@@ -174,8 +175,8 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                                 //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
                                 // The json_encode() function is used to encode a PHP value into a JSON string;
 
-                            echo "<hr><br>";
-                        echo "<b>".'$_SESSION["comments"] - comments  (PHP) -->'."</b><br><br>";
+                            /*echo "<hr><br>";*/
+                        /*echo "<b>".'$_SESSION["comments"] - comments  (PHP) -->'."</b><br><br>";
                         print_r($_SESSION["comments"]); echo "<br><br>";
                         var_dump($_SESSION["comments"]);
                                 echo "<b>".'$_SESSION["ratings"] - ratings array (PHP) -->'."</b><br><br>";
@@ -186,7 +187,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                                 echo "<br><br><b>".'$_SESSION["liczba_ocen"] - liczba_ocen --> '."</b><br><br>";
                                 print_r($_SESSION["liczba_ocen"] ); echo "<br><br>";
                                 var_dump($_SESSION["liczba_ocen"] );
-                            echo "<hr><br><br>";
+                            echo "<hr><br><br>";*/
                             /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                             echo "GET ->"; print_r($_GET); echo "<hr><br>";
                             echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/

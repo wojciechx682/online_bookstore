@@ -25,9 +25,9 @@
 
                 <?php
 
-                echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                 echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
+                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
 
                     query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, zm.status, zm.termin_dostawy, zm.data_wysłania_zamowienia, zm.data_dostarczenia, zm.komentarz, 
                                   fd.nazwa AS forma_dostawy, fd.cena AS koszt_dostawy, 

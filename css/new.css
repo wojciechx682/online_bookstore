@@ -4997,3 +4997,27 @@ span.main-page-search-result-error {
 
     margin: 15px 0 0 7px;
 }
+
+i#book-page-get-back::before {
+    transform: rotate(90deg);
+
+    color: #525252 !important;
+
+    font-size: 75%;
+
+    position: relative;
+    top: -1px;
+    left: -2px;
+
+
+
+}
+
+a#get-back-a {
+    color: #525252 !important;
+}
+
+div#aaa {
+    position: relative;
+    left: 8px;
+}

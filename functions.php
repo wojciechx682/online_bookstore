@@ -729,53 +729,8 @@ use PHPMailer\PHPMailer\SMTP;
                      WHERE kl.id_klienta = '%s' AND kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki
                      GROUP BY kl.id_klienta", "countCartSum", $_SESSION["id"]); // <-- $_SESSION["suma_zamowienia"]
 
-		while ($row = $result->fetch_assoc()) // tyle, ile jest książek w koszyku tego klienta
+		while ($row = $result->fetch_assoc())
 		{
-//		  	echo '<div id="book'.$i.'"> <span class="book-details">';
-//                echo '<div class="title">'.$row['tytul'].'</div>';
-//                echo '<div class="price">'.$row['cena'].'</div>';
-//                echo '<div class="year">'.$row['rok_wydania'].'</div></span>';
-//
-//		  		/*echo '<div class="quantity'.'">
-//			  			 <b>Ilość = </b>'.$row['ilosc'];
-//			  			 echo '<button type="button" onclick="increase()">+</button>';
-//						 echo '<button type="button" onclick="decrease()">-</button>';
-//	  			echo '</div>';*/
-//
-//	  			echo '<form class="change_quantity_form" id="change_quantity_form'.$row['id_ksiazki'].'" action="change_cart_quantity.php" method="post">';
-//					echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
-//					echo "<b>Ilosc: </b> ";
-//						/*echo '<select name="koszyk_ilosc">';
-//						    echo '<option value="1">1</option>';
-//						    echo '<option value="2">2</option>';
-//						    echo '<option value="3">3</option>';
-//						    echo '<option value="4">4</option>';
-//						    echo '<option value="5">5</option>';
-//						echo '</select>';*/
-//					//echo '<input type="text" id="koszyk_ilosc" name="koszyk_ilosc" value="'.$row['ilosc'].'">';
-//					echo '<input type="text" id="koszyk_ilosc'.$row['id_ksiazki'].'" name="koszyk_ilosc" value="'.$row['ilosc'].'">';
-//					echo '<button type="button" onclick="increase('.$row['id_ksiazki'].')">+</button>';
-//					echo '<button type="button" onclick="decrease('.$row['id_ksiazki'].')">-</button>';
-//					//echo '<br><br><input type="submit" value="Zapisz koszyk">';
-//				echo '</form>';
-//
-//		  	echo '<form id="remove_book_form" action="remove_book.php" method="post">';
-//		  		echo '<input type="hidden" name="id_klienta" value="'.$row['id_klienta'].'">';
-//		  		echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
-//		  		echo '<input type="hidden" name="ilosc" value="'.$row['ilosc'].'">';
-//		  		echo '<input type="submit" value="Usuń">';
-//		  	echo '</form>';
-//		  	echo "<br><hr><br>";
-//		  	/*echo '<form action="change_cart_quantity.php" method="post">';
-//					echo '<input type="hidden" name="id_ksiazki" value="'.$row['id_ksiazki'].'">';
-//					echo "<b>Ilosc: </b> ";
-//					echo '<input type="text" id="koszyk_ilosc" name="koszyk_ilosc" value="1">';
-//					echo '<button type="button" onclick="increase()">+</button>';
-//					echo '<button type="button" onclick="decrease()">-</button>';
-//					echo '<br><br><input type="submit" value="Zapisz koszyk">';
-//			echo '</form>';*/
-//		  	echo '</div>';
-
             // load the content from the external template file into string
             $book = file_get_contents("../template/cart-products.php");
 
@@ -784,15 +739,7 @@ use PHPMailer\PHPMailer\SMTP;
 
             $i++;
 
-		  	//$_SESSION["suma_zamowienia"] += $row["ilosc"] * $row["cena"];
 		}
-
-        /*echo '<span style="color: #c7c7c7;">';
-		    echo "$ _SESSION suma_zamowienia = ".$_SESSION['suma_zamowienia']."<br>";
-		    echo "<br> $ _SESSION koszyk_ilosc_ksiazek = ".$_SESSION['koszyk_ilosc_ksiazek']."<br>";
-        echo '</span></br>';*/
-
-		$result->free_result();
 	}
 
 //	function remove_product_from_cart($result) // remove_book.php
@@ -986,7 +933,7 @@ use PHPMailer\PHPMailer\SMTP;
             ) {
                 // status zamówienia to "Wysłano" --> termin_dostawy, data_wyslania_zamowienia;
                 $order = file_get_contents("../template/order-sum-order-sent.php");
-                echo sprintf($order, $row["forma_dostawy"], $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"],  $row["suma"]);
+                echo sprintf($order, $row["forma_dostawy"], $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"],  $row["koszt_dostawy"],  $kosztPlatnosci, $row["suma"]);
             }
             elseif (
                 isset($_SESSION["data_dostarczenia"]) && !empty($_SESSION["data_dostarczenia"])
@@ -2035,8 +1982,6 @@ function query($query, $fun, $values) {
 // jeśli nie udało się wykonać zapytania, $result zwróci false;
 // ---------------------------------------------------------------------------------------------------------------------
 
-
-
     require "connect.php";
 
     mysqli_report(MYSQLI_REPORT_STRICT);
@@ -2051,45 +1996,21 @@ function query($query, $fun, $values) {
 
         } else {
 
-            // connection successful
-
-            // zamiast tego --> mysqli --> prepared statements; - przygotowane zapytania mysqli
             if (!is_array($values)) {
                 $values = [$values];
             }
             for($i = 0; $i < count($values); $i++) {
                 $values[$i] = mysqli_real_escape_string($connection, $values[$i]);
             }
-            // zamiast tego --> mysqli --> prepared statements;
-
-            /*foreach ($values as &$value) {
-                $value = mysqli_real_escape_string($connection, $value);
-            }
-            unset($value); // Zalecane, aby uniknąć przypadkowych problemów z dalszym użyciem zmiennej $value.*/
-
-        //$connection->begin_transaction();
-
-
 
             if ($result = $connection->query(vsprintf($query, $values))) {
 
-                //echo "<br> query --> <br><br>".$query; exit();
+                if ($result instanceof mysqli_result) {
 
-
-
-                //$_SESSION["query"][] = $query;
-
-                // $result --> obiekt || true
-
-                if ($result instanceof mysqli_result) { // zapytanie typu SELECT <-- obiekt
-
-                    // SELECT --> mysqli $result -> wyniki zapytania
-
-                    if ($result->num_rows) { // 1, 2, 3, ...
+                    if ($result->num_rows) {
 
                         $fun($result);
 
-                        //$result->free_result();
                     } /*else {
 
                         // nie zrwócono żadnych wierszy ! (SELECT)
@@ -2097,50 +2018,27 @@ function query($query, $fun, $values) {
 
                 } elseif ($result === true) { // (bool - true) - dla zapytań INSERT, UPDATE, DELETE ...
 
-                    //echo "<br> query --> <br>" . vsprintf($query, $values) . "<br>"; exit();
-
-                    // jeśli wykonano zapytanie UPDATE z tymi samymi danymi które już istnieją w bazie, affected_rows - wynosi 0 (false)
-
-                    //echo "<br> query --> <br><br>".vsprintf($query, $values); exit();
-
                     if ($connection->affected_rows) { // && $fun
-
-                        // affected_rows - liczba zmodyfikowanych wierszy przez zapytanie (INSERT, UPDATE, DELETE) --> 1, 2, 3, 4, ...
-
-                        // Tutaj obsłuż przypadki, gdy zapytanie wpłynęło na co najmniej jeden wiersz
-
-                        // zaktualizowany / wstawiony / usunięty
-
-                        // $fun($result);
 
                         if ($fun) {
 
-                            $fun($connection); // order.php; // register.php - (adres + dane_usera <-- last_insert_id)
-
-                            // jeśli wymagane jest pobranie id ostatnio wstawionego wiersza - wywołaj funkcję;
+                            $fun($connection); // jeśli wymagane jest pobranie id ostatnio wstawionego wiersza - wywołaj funkcję;
 
                         } else {
 
-                            return true; // UPDATE, --> $updateSuccessful, if($updateSuccessful) { ... }
+                            return true;
 
-                            // udało się wykonać zapytanie i zmieniono stan bazy (wiersze) - INSERT - UPDATE - DELETE
                         }
 
 
                     } else {
-                        // Obsłuż przypadki, gdy zapytanie nie wpłynęło na żaden wiersz, ale nie wystąpiły błędy
 
                         return false;
 
-                        // tutaj wyświetlić excaptions ? dla dewelopera ?
-
-                        // TUTAJ, GDY NIE ZAKTUALIZOWANO WIERSZY, MIMO WYKONANIA INSERT, UPDATE, LUB DELETE !
                     }
                 }
 
             } else {
-
-                // nie udało się wykonać zapytania; <-- $result == false
 
                 throw new Exception($connection->error);
 
@@ -2152,13 +2050,6 @@ function query($query, $fun, $values) {
 
     } catch(Exception $e) {
 
-        /*echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności ] </div>';
-        // użycie "return" zamisat echo ?
-        echo '<br><span style="color:red">Informacja developerska: </span>'.$e;
-        // wyświetlenie komunikatu błędu - dla deweloperów
-        //exit(); // (?)*/
-
-        //http_response_code(500);
         return false;
 
     }
