@@ -98,9 +98,9 @@
                 <div id="content">
 
                     <?php
-                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit(); */
+                        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
                     ?>
 
                     <!-- Formularz Logowania -->
@@ -154,9 +154,9 @@
                         // pokazujemy zawartość tej zmiennej tylko jeśli podano NIEPRAWIDŁOWY login lub hasło;
                             // czyli, tylko wtedy, gdy taka zmienna ISTNIEJE W SESJI;
                         // normalne logowanie, podany zły login/hasło;
-                        if (isset($_SESSION["blad"])) {
-                            echo $_SESSION["blad"]; // wyświetlenie komunikatu "Nieprawidłowy e-mail lub hasło";
-                                unset($_SESSION["blad"]);
+                        if (isset($_SESSION["invalid_credentials"])) {
+                            echo $_SESSION["invalid_credentials"]; // wyświetlenie komunikatu "Nieprawidłowy e-mail lub hasło";
+                                unset($_SESSION["invalid_credentials"]);
                         }
                     ?>
 
