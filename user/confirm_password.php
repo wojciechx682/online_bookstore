@@ -36,9 +36,9 @@
             $_SESSION["password_confirmed"] = false;
 
 
-            echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+            /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
             echo "GET ->"; print_r($_GET); echo "<hr><br>";
-            echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();
+            echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; exit();*/
         } else {
 
             query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verifyPassword", $_SESSION["id"]);

@@ -80,9 +80,9 @@
                 <div id="content">
 
                     <?php
-                        echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
+                        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
                         echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";
+                        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
                     ?>
 
                     <h3 class="account-header">Usuń konto</h3>
