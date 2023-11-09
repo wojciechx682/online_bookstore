@@ -56,7 +56,7 @@ $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
 
     // check if category name is not already taken -->
         unset($_SESSION["category-exists"]);
-    query("SELECT kt.nazwa FROM kategorie AS kt WHERE kt.nazwa = '%s'", "verifyCategoryExists", $categoryName); // $_SESSION["categoryNameTaken"] --> true / NULL;
+    query("SELECT kt.nazwa FROM categories AS kt WHERE kt.nazwa = '%s'", "verifyCategoryExists", $categoryName); // $_SESSION["categoryNameTaken"] --> true / NULL;
 
     // Check if values pass the tests;
     if ( empty($categoryName) || empty($categoryId) ) {
@@ -72,7 +72,7 @@ $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
 
         // all values are valid; - fields PASSED validation;
 
-        $updateSuccessful = query("UPDATE kategorie SET nazwa='%s' WHERE id_kategorii='%s'", "", [$categoryName, $categoryId]);
+        $updateSuccessful = query("UPDATE categories SET nazwa='%s' WHERE id_kategorii='%s'", "", [$categoryName, $categoryId]);
 
         if($updateSuccessful && $_SESSION["update-category-successful"]) {
 

@@ -61,7 +61,7 @@
                 // $_SESSION["email_exists"] --> true / NULL
                 query("SELECT email FROM pracownicy WHERE BINARY email='%s'", "checkEmail", $email);*/
 
-                query("SELECT email FROM klienci WHERE BINARY email='%s' UNION SELECT email FROM pracownicy WHERE BINARY email='%s'", "checkEmail", [$email, $email]);
+                query("SELECT email FROM customers WHERE BINARY email='%s' UNION SELECT email FROM employees WHERE BINARY email='%s'", "checkEmail", [$email, $email]);
 
                 if (isset($_SESSION["email-exists"]) && $_SESSION["email-exists"]) {
                     $valid = false;
@@ -81,7 +81,7 @@
 
             $user_data = [$name, $surname, $email, $phone, $_SESSION["id"]];
 
-			$updateSuccessful = query("UPDATE klienci SET imie='%s', nazwisko='%s', email='%s', telefon='%s' WHERE id_klienta='%s'", "", $user_data); // true / false;
+			$updateSuccessful = query("UPDATE customers SET imie='%s', nazwisko='%s', email='%s', telefon='%s' WHERE id_klienta='%s'", "", $user_data); // true / false;
 
             if ($updateSuccessful) { // == true, jeśli udało się wykonać zapytanie I zmieniło ono stan bazy (wiersze);
 

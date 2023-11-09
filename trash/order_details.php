@@ -45,7 +45,7 @@
 
                         $order_id = htmlentities($_GET['order_id'], ENT_QUOTES, "UTF-8");
 
-                        query("SELECT id_zamowienia , id_ksiazki, ilosc FROM szczegoly_zamowienia WHERE id_zamowienia = '%s'", "get_order_details", $order_id);
+                        query("SELECT id_zamowienia , id_ksiazki, ilosc FROM order_details WHERE id_zamowienia = '%s'", "get_order_details", $order_id);
 
                         echo "<hr>";
 
@@ -55,7 +55,7 @@
 
                         for($i = 0; $i < count($order_details_books_id); $i++) {
                             $book_id = $order_details_books_id[$i];
-                            query("SELECT tytul, cena, rok_wydania FROM ksiazki WHERE id_ksiazki = '%s'", "order_details_get_book", $book_id);
+                            query("SELECT tytul, cena, rok_wydania FROM books WHERE id_ksiazki = '%s'", "order_details_get_book", $book_id);
                         }
                         unset($_SESSION['last_order_id']);
                         unset($_SESSION['order_details_books_id']);

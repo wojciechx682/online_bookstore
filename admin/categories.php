@@ -33,7 +33,7 @@
                 </header>
 
                 <?php
-                    query("SELECT kt.id_kategorii, kt.nazwa FROM kategorie AS kt", "getCategoriesAdmin", "");
+                    query("SELECT kt.id_kategorii, kt.nazwa FROM categories AS kt", "getCategoriesAdmin", "");
                 ?>
 
 

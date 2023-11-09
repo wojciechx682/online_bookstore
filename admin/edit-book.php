@@ -52,7 +52,7 @@
                             //let bookId = '<?php //echo $_POST["book-id"]; ?>'; // walidacja / sanityzacja ?
 
 
-                        let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.image_url, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii, mgk.id_magazynu, mgk.ilosc_dostepnych_egzemplarzy AS ilosc_egzemplarzy FROM ksiazki AS ks, subkategorie AS subkt, kategorie AS kt, magazyn_ksiazki AS mgk WHERE ks.id_ksiazki = '%s' AND mgk.id_magazynu = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii AND ks.id_ksiazki = mgk.id_ksiazki", "getBookData", [$bookId, $_SESSION["warehouseId"]]); ?>';
+                        let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.image_url, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii, mgk.id_magazynu, mgk.ilosc_dostepnych_egzemplarzy AS ilosc_egzemplarzy FROM books AS ks, subcategories AS subkt, categories AS kt, warehouse_books AS mgk WHERE ks.id_ksiazki = '%s' AND mgk.id_magazynu = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii AND ks.id_ksiazki = mgk.id_ksiazki", "getBookData", [$bookId, $_SESSION["warehouseId"]]); ?>';
                         // $_POST value is retrieved from admin\books.php -> "Edytuj" button (input type="submit");
 
                         // 1 | Symfonia C++ wydanie V | 1 | 2009 | 10 | 2 | Lorem ipsum dolor sit amet, consectetur adipiscing... | twarda | 585	| 411 x 382 x 178 | 1 | 4
@@ -97,7 +97,7 @@
                                 <select id="edit-book-change-author" required
                                         name="edit-book-change-author">
                                     <?php
-                                        query("SELECT au.id_autora, au.imie, au.nazwisko FROM autor AS au", "createAuthorSelectList", "");
+                                        query("SELECT au.id_autora, au.imie, au.nazwisko FROM author AS au", "createAuthorSelectList", "");
                                     ?>
                                 </select>
                             </p>
@@ -138,7 +138,7 @@
                                 <select id="edit-book-change-publisher" required
                                         name="edit-book-change-publisher">
                                     <?php
-                                        query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM wydawcy AS wd", "createPublisherSelectList", "");
+                                        query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM publishers AS wd", "createPublisherSelectList", "");
                                     ?>
                                 </select>
                             </p>
@@ -258,7 +258,7 @@
                                         name="edit-book-category"
                                         onchange="getSubcategories(this)">
                                     <?php
-                                        query("SELECT kt.id_kategorii, kt.nazwa FROM kategorie AS kt", "createCategorySelectList", "");
+                                        query("SELECT kt.id_kategorii, kt.nazwa FROM categories AS kt", "createCategorySelectList", "");
                                         // <option value={id-kategorii} > "28"
                                         // <option value={id-kategorii} > "34"
                                         // <option value={id-kategorii} > "26"
@@ -279,7 +279,7 @@
                                 <select id="book-subcategory" required
                                         name="edit-book-subcategory">
                                     <?php
-                                        query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subkategorie AS subkt", "createSubcategorySelectList", "");
+                                        query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subcategories AS subkt", "createSubcategorySelectList", "");
                                         // <option value={id-PODkategorii} > "28"
                                         // <option value={id-PODkategorii} > "34"
                                         // <option value={id-PODkategorii} > "26"

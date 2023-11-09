@@ -18,7 +18,7 @@ require_once "../authenticate-admin.php";
 
             $query = "SELECT ks.id_ksiazki, ks.tytul, ks.cena,
                      kt.nazwa AS nazwa_kategorii, mgk.ilosc_dostepnych_egzemplarzy, au.imie, au.nazwisko, mg.nazwa AS nazwa_magazynu, mg.id_magazynu
-                     FROM ksiazki AS ks, subkategorie AS sbk, kategorie AS kt, autor AS au, magazyn_ksiazki AS mgk, magazyn AS mg
+                     FROM books AS ks, subcategories AS sbk, categories AS kt, author AS au, warehouse_books AS mgk, warehouse AS mg
                      WHERE ks.id_subkategorii = sbk.id_subkategorii AND sbk.id_kategorii = kt.id_kategorii AND ks.id_autora = au.id_autora AND mgk.id_ksiazki = ks.id_ksiazki AND mgk.id_magazynu = mg.id_magazynu AND mg.id_magazynu='%s'";
 
             if(isset($_POST["admin-search-books-input"]) && ! empty($_POST["admin-search-books-input"])) {

@@ -10,7 +10,7 @@
     //query("SELECT sb.id_subkategorii, sb.nazwa, sb.id_kategorii FROM subkategorie AS sb, kategorie AS kt WHERE sb.id_kategorii = kt.id_kategorii AND sb.id_kategorii = '%s'", "getSubcategories", $category_id);
 
     if( $_SERVER['REQUEST_METHOD'] === "GET" ) {
-        query("SELECT sb.id_subkategorii, sb.nazwa, kt.nazwa AS id_kategorii FROM subkategorie AS sb, kategorie AS kt WHERE sb.id_kategorii = kt.id_kategorii", "getSubcategories", "");
+        query("SELECT sb.id_subkategorii, sb.nazwa, kt.nazwa AS id_kategorii FROM subcategories AS sb, categories AS kt WHERE sb.id_kategorii = kt.id_kategorii", "getSubcategories", "");
     }
 
 

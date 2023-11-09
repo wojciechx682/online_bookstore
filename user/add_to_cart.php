@@ -58,7 +58,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
 				unset($_SESSION["book-available"]);
 
-				query("SELECT ks.id_ksiazki, mgk.ilosc_dostepnych_egzemplarzy FROM ksiazki AS ks, magazyn_ksiazki AS mgk WHERE ks.id_ksiazki = mgk.id_ksiazki AND ks.id_ksiazki = '%s'", "checkBookAvailability", $bookId);
+				query("SELECT ks.id_ksiazki, mgk.ilosc_dostepnych_egzemplarzy FROM books AS ks, warehouse_books AS mgk WHERE ks.id_ksiazki = mgk.id_ksiazki AND ks.id_ksiazki = '%s'", "checkBookAvailability", $bookId);
 
 				if (empty($_SESSION["book-available"])) {
 
@@ -73,14 +73,14 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
 					unset($_SESSION["book_exists"]);
 
-					query("SELECT id_ksiazki FROM koszyk WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "verifyBookExists", [$_SESSION["id"], $bookId]);
+					query("SELECT id_ksiazki FROM shopping_cart WHERE id_klienta = '%s' AND id_ksiazki = '%s'", "verifyBookExists", [$_SESSION["id"], $bookId]);
 					// sprawdzenie, czy ta książka jest już w koszyku tego klienta; jeśli num_rows > 0 -> przestawi $_SESSION['book_exists'] -> na true ;
 
 					$book = [$bookAmount, $_SESSION["id"], $bookId];
 
 					if($_SESSION["book_exists"]) { // boox exists, update book quantity in shopping_cart ;
 
-						$updatedSuccessful = query("UPDATE koszyk SET ilosc=ilosc+'%s' WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $book);
+						$updatedSuccessful = query("UPDATE shopping_cart SET ilosc=ilosc+'%s' WHERE id_klienta='%s' AND id_ksiazki='%s'", "", $book);
 
 						if (empty($updatedSuccessful)) {
 							$_SESSION["application-error"] = true;
@@ -89,7 +89,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
 					} else {  // insert book to shopping cart
 
-						$insertSuccessful = query("INSERT INTO koszyk (ilosc, id_klienta, id_ksiazki) VALUES ('%s', '%s', '%s')", "", $book);
+						$insertSuccessful = query("INSERT INTO shopping_cart (ilosc, id_klienta, id_ksiazki) VALUES ('%s', '%s', '%s')", "", $book);
 
 						if (empty($insertSuccessful)) {
 							$_SESSION["application-error"] = true;
@@ -97,7 +97,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 						}
 					}
 
-					query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
+					query("SELECT SUM(ilosc) AS suma FROM shopping_cart WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
 
 					// funkcja count_cart_quantity - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku (aktualizacja po zmianie liczbie książek)
 

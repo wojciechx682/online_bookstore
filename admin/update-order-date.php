@@ -31,7 +31,7 @@ $response = [];
 
         $_SESSION["order-date"] = $_POST["order-date"]; // ?
 
-            $updateSuccessful = query("UPDATE zamowienia SET termin_dostawy='%s', data_wysłania_zamowienia='', data_dostarczenia='', status='W trakcie realizacji' WHERE id_zamowienia = '%s'", "", [$_POST["order-date"], $_SESSION["order-id"]]); // true / false;
+            $updateSuccessful = query("UPDATE orders SET termin_dostawy='%s', data_wysłania_zamowienia='', data_dostarczenia='', status='W trakcie realizacji' WHERE id_zamowienia = '%s'", "", [$_POST["order-date"], $_SESSION["order-id"]]); // true / false;
         }
     }
 
@@ -48,7 +48,7 @@ $response = [];
 
         } else { // valid date
         $_SESSION["dispatch-date"] = $_POST["dispatch-date"] . " " . $_POST["dispatch-time"]; // ?
-            $updateSuccessful = query("UPDATE zamowienia SET termin_dostawy='%s', data_wysłania_zamowienia='%s', data_dostarczenia='', status='Wysłano' WHERE id_zamowienia = '%s'", "", [$_POST["order-date"], $_SESSION["dispatch-date"], $_SESSION["order-id"]] ); // true/false;
+            $updateSuccessful = query("UPDATE orders SET termin_dostawy='%s', data_wysłania_zamowienia='%s', data_dostarczenia='', status='Wysłano' WHERE id_zamowienia = '%s'", "", [$_POST["order-date"], $_SESSION["dispatch-date"], $_SESSION["order-id"]] ); // true/false;
             // "Wysłano" -> data_wyslania_zamowienia;
         }
     }
@@ -63,7 +63,7 @@ $response = [];
             $updateSuccessful = false;
         } else { // valid date
             $_SESSION["delivered-date"] = $_POST["delivered-date"];
-            $updateSuccessful = query("UPDATE zamowienia SET data_dostarczenia='%s', termin_dostawy='', data_wysłania_zamowienia='', status='Dostarczono' WHERE id_zamowienia = '%s'", "", [$_POST["delivered-date"], $_SESSION["order-id"]]); // true / false;
+            $updateSuccessful = query("UPDATE orders SET data_dostarczenia='%s', termin_dostawy='', data_wysłania_zamowienia='', status='Dostarczono' WHERE id_zamowienia = '%s'", "", [$_POST["delivered-date"], $_SESSION["order-id"]]); // true / false;
             // "Dostarczono" -> data_dostarczenia;
         }
     }

@@ -24,7 +24,7 @@
             <select id="edit-book-change-author"
                     name="edit-book-change-author">
                 <?php
-                    query("SELECT au.id_autora, au.imie, au.nazwisko FROM autor AS au", "createAuthorSelectList", "");
+                    query("SELECT au.id_autora, au.imie, au.nazwisko FROM author AS au", "createAuthorSelectList", "");
                 ?>
             </select>
         </p>
@@ -65,7 +65,7 @@
             <select id="edit-book-change-publisher"
                     name="edit-book-change-publisher">
                 <?php
-                    query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM wydawcy AS wd", "createPublisherSelectList", "");
+                    query("SELECT wd.id_wydawcy, wd.nazwa_wydawcy FROM publishers AS wd", "createPublisherSelectList", "");
                 ?>
             </select>
         </p>
@@ -149,7 +149,7 @@
                     name="edit-book-category"
                     onchange="getSubcategories(this)">
                 <?php
-                    query("SELECT kt.id_kategorii, kt.nazwa FROM kategorie AS kt", "createCategorySelectList", "");
+                    query("SELECT kt.id_kategorii, kt.nazwa FROM categories AS kt", "createCategorySelectList", "");
                 ?>
             </select>
         </p>
@@ -166,7 +166,7 @@
             <select id="edit-book-subcategory"
                     name="edit-book-subcategory">
                 <?php
-                    query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subkategorie AS subkt", "createSubcategorySelectList", "");
+                    query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subcategories AS subkt", "createSubcategorySelectList", "");
                 ?>
             </select>
         </p>

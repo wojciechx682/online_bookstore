@@ -59,13 +59,13 @@ require_once "../authenticate-admin.php";
         $category = filter_var($_POST['edit-book-category'], FILTER_VALIDATE_INT);
         $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);*/
 
-        query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "getAuthorId", "");
+        query("SELECT id_autora FROM author ORDER BY id_autora DESC LIMIT 1", "getAuthorId", "");
         // get highest author-id from db; // $_SESSION["max-author-id"] => "36";
-        query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "getPublisherId", "");
+        query("SELECT id_wydawcy FROM publishers ORDER BY id_wydawcy DESC LIMIT 1", "getPublisherId", "");
         // get highest publisher-id from db; // $_SESSION["max-publisher-id"] => "2";
-        query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "getCategoryId", "");
+        query("SELECT id_kategorii FROM categories ORDER BY id_kategorii DESC LIMIT 1", "getCategoryId", "");
         // get highest category-id from db; // $_SESSION["max-category-id"] => "7";
-        query("SELECT id_magazynu FROM magazyn ORDER BY id_magazynu DESC LIMIT 1", "getMagazineId", "");
+        query("SELECT id_magazynu FROM warehouse ORDER BY id_magazynu DESC LIMIT 1", "getMagazineId", "");
         // get highest magazine-id from db; // $_SESSION["max-magazine-id"] => "2";
 
 
@@ -79,7 +79,7 @@ require_once "../authenticate-admin.php";
         ]);
         // check if there is really author with that id ;
         $_SESSION['author-exists'] = false;
-        query("SELECT id_autora FROM autor WHERE id_autora = '%s'", "verifyAuthorExists", $author);
+        query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $author);
             // sprawdzenie, czy ten autor istnieje w bd ; check if there is any author with given POST id; jeśli num_rows > 0 -> przestawi // $_SESSION['author-exists'] -> na true ;
         $year = filter_var($_POST['edit-book-release-year'], FILTER_VALIDATE_INT, [
             'options' => [
@@ -102,7 +102,7 @@ require_once "../authenticate-admin.php";
 
         // check if there is really publisher with that id ;
             $_SESSION['publisher-exists'] = false;
-        query("SELECT id_wydawcy FROM wydawcy WHERE id_wydawcy = '%s'", "verifyPublisherExists", $publisher);
+        query("SELECT id_wydawcy FROM publishers WHERE id_wydawcy = '%s'", "verifyPublisherExists", $publisher);
 
         $desc = filter_var($_POST['edit-book-desc'], FILTER_SANITIZE_STRING);
         $cover = filter_var($_POST['edit-book-cover'], FILTER_SANITIZE_STRING);
@@ -122,7 +122,7 @@ require_once "../authenticate-admin.php";
 
         // check if there is really category with that id ;
         $_SESSION['category-exists'] = false;
-        query("SELECT id_kategorii FROM kategorie WHERE id_kategorii = '%s'", "verifyCategoryExists", $category);
+        query("SELECT id_kategorii FROM categories WHERE id_kategorii = '%s'", "verifyCategoryExists", $category);
         // $_SESSION['category-exists'] = true;
 
         $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
@@ -209,9 +209,9 @@ require_once "../authenticate-admin.php";
                 echo "<span class='update-failed'>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz</span>"; exit();
             } else {
 
-                query("UPDATE ksiazki SET tytul='%s', id_autora='%s', rok_wydania='%s', cena='%s', id_wydawcy='%s', image_url='%s', opis='%s', oprawa='%s', ilosc_stron='%s', wymiary='%s', id_subkategorii='%s' WHERE ksiazki.id_ksiazki='%s'", "updateBookData", [$title, $author, $year, $price, $publisher, $_FILES["edit-book-image"]["name"], $desc, $cover, $pages, $dims, $subcategory, $bookId]);
+                query("UPDATE books SET tytul='%s', id_autora='%s', rok_wydania='%s', cena='%s', id_wydawcy='%s', image_url='%s', opis='%s', oprawa='%s', ilosc_stron='%s', wymiary='%s', id_subkategorii='%s' WHERE books.id_ksiazki='%s'", "updateBookData", [$title, $author, $year, $price, $publisher, $_FILES["edit-book-image"]["name"], $desc, $cover, $pages, $dims, $subcategory, $bookId]);
 
-                query("UPDATE magazyn_ksiazki SET ilosc_dostepnych_egzemplarzy='%s' WHERE magazyn_ksiazki.id_ksiazki='%s' AND magazyn_ksiazki.id_magazynu='%s'", "updateBookData", [$quantity, $bookId, $magazine]);
+                query("UPDATE warehouse_books SET ilosc_dostepnych_egzemplarzy='%s' WHERE warehouse_books.id_ksiazki='%s' AND warehouse_books.id_magazynu='%s'", "updateBookData", [$quantity, $bookId, $magazine]);
 
                 // update book-quantity (in-stock) in warehouse;
 

@@ -40,7 +40,7 @@
                         <!-- js manage "change" event for <select> list, and then sends the <form>; -->
 
                         <?php
-                            query("SELECT mg.id_magazynu, mg.nazwa FROM magazyn AS mg", "createMagazineSelectList", "");
+                            query("SELECT mg.id_magazynu, mg.nazwa FROM warehouse AS mg", "createMagazineSelectList", "");
                             // id_magazynu	   nazwa
                             //      1	    magazyn nr 1
                             //      2	    magazyn nr 2

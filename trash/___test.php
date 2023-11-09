@@ -22,7 +22,7 @@ $user_data = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $miasto, $id]; /
 
 echo "<br><hr><br>";
 
-query("SELECT haslo FROM klienci WHERE id_klienta='%s'", "verify_password", "220");
+query("SELECT haslo FROM customers WHERE id_klienta='%s'", "verify_password", "220");
 
 
 

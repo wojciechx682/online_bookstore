@@ -28,7 +28,7 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
 
         // sprawdzenie czy taki user (email) istnieje już w bazie, jeśli tak, to można zresetowac dla niego hasło
 
-        query("SELECT id_klienta, imie FROM klienci WHERE email='%s'", "check_email", $email);
+        query("SELECT id_klienta, imie FROM customers WHERE email='%s'", "check_email", $email);
         // ustawi zmienną       $_SESSION['email_exists'] -> na "true", jeśli jest taki user (email) - (jeśli zwrócono rekordy z BD - result);
         //                      $_SESSION["imie"];
 
@@ -374,7 +374,7 @@ if (isset($_POST["email"]) && !empty($_POST["email"])) {
                         } else {
                             $haslo = password_hash($new_password, PASSWORD_DEFAULT);
                             $data = [$haslo, $_SESSION["email"]];
-                            query("UPDATE klienci SET haslo = '%s' WHERE email = '%s'", "", $data);
+                            query("UPDATE customers SET haslo = '%s' WHERE email = '%s'", "", $data);
                             //echo "<br>udało się zaktualizować dane<br>";
 
                             $_SESSION["password-changed"] = true;

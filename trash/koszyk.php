@@ -33,9 +33,9 @@
 
                     $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
 
-                    query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM klienci AS kl, koszyk AS ko, ksiazki AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id); // książki które zamówił klient o danym ID;
+                    query("SELECT kl.id_klienta, ko.id_ksiazki, ko.ilosc, ks.tytul, ks.cena, ks.rok_wydania FROM customers AS kl, shopping_cart AS ko, books AS ks WHERE kl.id_klienta = ko.id_klienta AND ko.id_ksiazki = ks.id_ksiazki AND kl.id_klienta='%s'", "get_product_from_cart", $id); // książki które zamówił klient o danym ID;
 
-                    query("SELECT SUM(ilosc) AS suma FROM koszyk WHERE id_klienta='%s'", "count_cart_quantity", $id);
+                    query("SELECT SUM(ilosc) AS suma FROM shopping_cart WHERE id_klienta='%s'", "count_cart_quantity", $id);
                 ?>
 
                 <br><a href="submit_order.php">Złóż zamówienie</a>

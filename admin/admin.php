@@ -4,14 +4,14 @@
         // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
     require_once "../authenticate-admin.php";
 
-    query("SELECT SUM(ilosc_dostepnych_egzemplarzy) AS liczba_ksiazek FROM magazyn_ksiazki", "countBooksAvailable", "");
+    query("SELECT SUM(ilosc_dostepnych_egzemplarzy) AS liczba_ksiazek FROM warehouse_books", "countBooksAvailable", "");
     // liczba wszystkich książek (dostępnych na magazynie);
 
         /*query("SELECT COUNT(id_zamowienia) AS liczba_zamowien FROM zamowienia WHERE status='Oczekujące na potwierdzenie'", "countpendingOrders", ""); // liczba oczekujących zamówień (status = "Oczekujące ...");*/
-    query("SELECT COUNT(id_zamowienia) AS liczba_zamowien FROM zamowienia WHERE status='Oczekujące na potwierdzenie' AND id_pracownika='%s'", "countpendingOrders", $_SESSION["id"]); // liczba oczekujących zamówień - przypisanych do tego pracownika; (status = "Oczekujące ...");
+    query("SELECT COUNT(id_zamowienia) AS liczba_zamowien FROM orders WHERE status='Oczekujące na potwierdzenie' AND id_pracownika='%s'", "countpendingOrders", $_SESSION["id"]); // liczba oczekujących zamówień - przypisanych do tego pracownika; (status = "Oczekujące ...");
 
     query("SELECT ROUND(SUM(pl.kwota),2) as totalSale
-           FROM zamowienia AS zm, platnosci AS pl 
+           FROM orders AS zm, payments AS pl 
            WHERE zm.status='Dostarczono' AND zm.id_zamowienia = pl.id_zamowienia", "countTotalSales", ""); // całkowity przychód ze zrealizowanych zamówień;
 ?>
 

@@ -41,16 +41,16 @@ require_once "../authenticate-admin.php";
 
         // back-end validation;
 
-        query("SELECT id_autora FROM autor ORDER BY id_autora DESC LIMIT 1", "getAuthorId", ""); // get highest author-id from db;
+        query("SELECT id_autora FROM author ORDER BY id_autora DESC LIMIT 1", "getAuthorId", ""); // get highest author-id from db;
             // $_SESSION["max-author-id"] => "35";
 
-        query("SELECT id_wydawcy FROM wydawcy ORDER BY id_wydawcy DESC LIMIT 1", "getPublisherId", ""); // get highest publisher-id from db;
+        query("SELECT id_wydawcy FROM publishers ORDER BY id_wydawcy DESC LIMIT 1", "getPublisherId", ""); // get highest publisher-id from db;
             // $_SESSION["max-publisher-id"] => "5";
 
-        query("SELECT id_kategorii FROM kategorie ORDER BY id_kategorii DESC LIMIT 1", "getCategoryId", ""); // get highest category-id from db;
+        query("SELECT id_kategorii FROM categories ORDER BY id_kategorii DESC LIMIT 1", "getCategoryId", ""); // get highest category-id from db;
             // $_SESSION["max-category-id"] => "7";
 
-        query("SELECT id_magazynu FROM magazyn ORDER BY id_magazynu DESC LIMIT 1", "getMagazineId", ""); // get highest magazine-id from db;
+        query("SELECT id_magazynu FROM warehouse ORDER BY id_magazynu DESC LIMIT 1", "getMagazineId", ""); // get highest magazine-id from db;
             // $_SESSION["max-magazine-id"] => "2";
 
             $title = filter_var($_POST['add-book-title'], FILTER_SANITIZE_STRING);
@@ -62,7 +62,7 @@ require_once "../authenticate-admin.php";
             ]);
             // check if there is really author with that id ;
             $_SESSION['author-exists'] = false;
-            query("SELECT id_autora FROM autor WHERE id_autora = '%s'", "verifyAuthorExists", $author);
+            query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $author);
                 // sprawdzenie, czy ten autor istnieje w bd ; check if there is any author with given POST id; jeśli num_rows > 0 -> przestawi // $_SESSION['author-exists'] -> na true ;
             $year = filter_var($_POST['add-book-release-year'], FILTER_VALIDATE_INT, [
                 'options' => [
@@ -85,7 +85,7 @@ require_once "../authenticate-admin.php";
 
             // check if there is really publisher with that id ;
                 $_SESSION['publisher-exists'] = false;
-            query("SELECT id_wydawcy FROM wydawcy WHERE id_wydawcy = '%s'", "verifyPublisherExists", $publisher);
+            query("SELECT id_wydawcy FROM publishers WHERE id_wydawcy = '%s'", "verifyPublisherExists", $publisher);
 
             $desc = filter_var($_POST['add-book-desc'], FILTER_SANITIZE_STRING);
             $cover = filter_var($_POST['add-book-cover'], FILTER_SANITIZE_STRING);
@@ -105,7 +105,7 @@ require_once "../authenticate-admin.php";
 
         // check if there is really category with that id ;
         $_SESSION['category-exists'] = false;
-        query("SELECT id_kategorii FROM kategorie WHERE id_kategorii = '%s'", "verifyCategoryExists", $category);
+        query("SELECT id_kategorii FROM categories WHERE id_kategorii = '%s'", "verifyCategoryExists", $category);
         // $_SESSION['category-exists'] = true;
 
         $subcategory = filter_var($_POST['add-book-subcategory'], FILTER_VALIDATE_INT);
@@ -117,7 +117,7 @@ require_once "../authenticate-admin.php";
         ]);
         // check if there is really warehouse with that id ;
         $_SESSION['warehouse-exists'] = false;
-        query("SELECT id_magazynu FROM magazyn WHERE id_magazynu = '%s'", "verifyWarehouseExists", $magazine);
+        query("SELECT id_magazynu FROM warehouse WHERE id_magazynu = '%s'", "verifyWarehouseExists", $magazine);
 
         $quantity = filter_var($_POST['add-book-quantity'], FILTER_VALIDATE_INT, [
             'options' => [
@@ -170,10 +170,10 @@ require_once "../authenticate-admin.php";
                 echo "<span class='update-failed'>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz</span>"; exit();
             } else {
                 $bookData = [$author, $title, $price, $year, $desc, ucfirst($cover), $publisher, $_FILES["add-book-image"]["name"], $pages, $dims, "nowa", $subcategory];
-                query("INSERT INTO ksiazki (id_ksiazki, id_autora, tytul, cena, rok_wydania, opis, oprawa, id_wydawcy, image_url, ilosc_stron, wymiary, stan, id_subkategorii) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "get_last_book_id", $bookData); // $_SESSION["last-book-id"];
+                query("INSERT INTO books (id_ksiazki, id_autora, tytul, cena, rok_wydania, opis, oprawa, id_wydawcy, image_url, ilosc_stron, wymiary, stan, id_subkategorii) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "get_last_book_id", $bookData); // $_SESSION["last-book-id"];
 
                 $warehouse = [$magazine, $_SESSION["last-book-id"], $quantity];
-                query("INSERT INTO magazyn_ksiazki (id_magazynu, id_ksiazki, ilosc_dostepnych_egzemplarzy) VALUES ('%s', '%s', '%s')", "addBookIntoWarehouse", $warehouse); // $_SESSION["add-book-successful"];
+                query("INSERT INTO warehouse_books (id_magazynu, id_ksiazki, ilosc_dostepnych_egzemplarzy) VALUES ('%s', '%s', '%s')", "addBookIntoWarehouse", $warehouse); // $_SESSION["add-book-successful"];
             }
 
             //exit();

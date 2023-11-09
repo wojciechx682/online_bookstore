@@ -409,10 +409,10 @@
         */
 
 		// Sprawdzenie czy taki user (email) istnieje już w bazie;
-		query("SELECT id_klienta FROM klienci WHERE email='%s'", "registerVerifyEmail", $email_sanitized);
+		query("SELECT id_klienta FROM customers WHERE email='%s'", "registerVerifyEmail", $email_sanitized);
             // przestawi mi zmienną $_SESSION["valid"] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);    tzn że taki klient już jest;
         // jeśli pracownik posiada taki email ->
-        query("SELECT id_pracownika  FROM pracownicy WHERE email='%s'", "registerVerifyEmail", $email_sanitized);
+        query("SELECT id_pracownika  FROM employees WHERE email='%s'", "registerVerifyEmail", $email_sanitized);
             // przestawi mi zmienną $_SESSION["valid"] na false,  jeśli istnieje już taki email (tzn jeśli ZWRÓCI rekordy -> $result);
 
 
@@ -421,7 +421,7 @@
             $address = [$miejscowosc, $ulica, $numer_domu, $kod_pocztowy, $kod_miejscowosc];
             // należy pobrać id ostatnio wstawionego wiersza w tabeli klienci !
 
-            query("INSERT INTO adres (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address);
+            query("INSERT INTO address (adres_id, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc) VALUES (NULL, '%s', '%s', '%s', '%s', '%s')", "register", $address);
             // funkcja "register" --> $_SESSION["udanarejestracja"] = true,
             //                        $_SESSION["last_adres_id"] - pobiera ID ostatnio wstawioneo adresu (wiersza) - z właściwości obiektu "$polaczenie";
 
@@ -435,7 +435,7 @@
 
                 // query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, miejscowosc, ulica, numer_domu, kod_pocztowy, kod_miejscowosc, telefon, wojewodztwo, kraj, PESEL, data_urodzenia, login, haslo) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "register", $user);  // add new user to database;
 
-                $insertSuccessful = query("INSERT INTO klienci (id_klienta, imie, nazwisko, email, telefon, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
+                $insertSuccessful = query("INSERT INTO customers (id_klienta, imie, nazwisko, email, telefon, haslo, adres_id) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s')", "", $user);
                 // add new user to database;
 
                 if ($insertSuccessful) {
@@ -446,7 +446,7 @@
 
                 } else { // nie udało się dodać usera
 
-                    query("DELETE FROM adres WHERE adres_id = '%s'", "", $_SESSION["last_adres_id"]);
+                    query("DELETE FROM address WHERE adres_id = '%s'", "", $_SESSION["last_adres_id"]);
                         unset($_SESSION["udanarejestracja"], $_SESSION["last_adres_id"]);
                             $_SESSION["register-error"] = true;
                 }
