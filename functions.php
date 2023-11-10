@@ -1239,7 +1239,8 @@ use PHPMailer\PHPMailer\SMTP;
 
         // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
 
-        $_SESSION["author-exists"] = true;
+        //$_SESSION["author-exists"] = true;
+        return true;
     }
 
     function verifyPublisherExists($result) { // \admin\edit-book-data
@@ -1262,14 +1263,18 @@ use PHPMailer\PHPMailer\SMTP;
         // \user\index.php - PRG - spr, czy istnieje kategoria o takiej nazwie;
         // \admin\edit-category-data.php - (zmiana nazwy kategorii) -  czy już istnieje kategoria o takiej nazwie;
 
-        $_SESSION["category-exists"] = true;
+        //$_SESSION["category-exists"] = true;
+
+        return true;
     }
 
     function verifySubcategoryExists($result) {
 
         // \user\index.php - prg - spr, czy istnieje pod-kategoria o takiej nazwie;
 
-        $_SESSION["subcategory-exists"] = true;
+        //$_SESSION["subcategory-exists"] = true;
+
+        return true;
     }
 
     function verifyWarehouseExists($result) {
@@ -2009,7 +2014,8 @@ function query($query, $fun, $values) {
 
                     if ($result->num_rows) {
 
-                        $fun($result);
+                        //$fun($result);
+                        return $fun($result);
 
                     } /*else {
 

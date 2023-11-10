@@ -169,14 +169,17 @@
                 $_SESSION["category"] = $category; // --> $category | FALSE
 
                 // check if THAT category exists in db (!) ;
-                    unset($_SESSION["category-exists"]);
-                query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["category"]);
+                    //unset($_SESSION["category-exists"]);
+                $categoryExists = query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["category"]);
+
+                /*echo "<br>categoryExists = <br>" . $categoryExists; exit();*/
+
                 // $_SESSION["category-exists"] --> true,                   jeśli taka kategoria (nazwa) istnieje;
                 // -------------||------------- --> zmienna NIE ISTNIEJE !, jeśli taka kategoria (nazwa) NIE istnieje;
 
                 if ( empty($category) // pusta wartość "" (empty) - lub nie przeszła walidacji (false)
                     || ($_SESSION["category"] !== $_POST["category"]) // nazwa kategorii po walidacji inna, niż podana w żądaniu POST
-                    || empty($_SESSION["category-exists"])) { // kategoria nie istnieje
+                    || empty($categoryExists)) { // kategoria nie istnieje
 
                     //$_SESSION["no-results"] = "Brak wyników";
 
@@ -184,7 +187,7 @@
 
                     // validation failed - redirect to main-page (index.php);
 
-                    unset($_POST, $category, $_SESSION["category"], $_SESSION["category-exists"], $_SESSION["subcategory"], $_SESSION["subcategory-exists"]);
+                    unset($_POST, $category, $_SESSION["category"], $_SESSION["subcategory"], $subcategoryExists);
                         /*header('Location: index.php', true,303);
                             exit();*/
 
@@ -197,19 +200,19 @@
                         $_SESSION["subcategory"] = $subcategory;
 
                         // check if THAT sub-category exists in db (!) ;
-                            unset($_SESSION["subcategory-exists"]);
-                        query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // ✓ przestawi $_SESSION["subcategory-exists"] --> na true, jeśli taka pod-kategoria (nazwa) istnieje; // w przeciwnym wypadku --> $_SESSION["subcategory-exists"] --> zmienna NIE ISTNIEJE; - jeśli taka pod-kategoria (nazwa) nie istnieje !
+                            //unset($_SESSION["subcategory-exists"]);
+                        $subcategoryExists = query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // ✓ przestawi $_SESSION["subcategory-exists"] --> na true, jeśli taka pod-kategoria (nazwa) istnieje; // w przeciwnym wypadku --> $_SESSION["subcategory-exists"] --> zmienna NIE ISTNIEJE; - jeśli taka pod-kategoria (nazwa) nie istnieje !
 
                         if( empty($subcategory)  // pusta wartość podkategorii --> "", lub nie przeszła walidacji (false)
                             || ($_SESSION["subcategory"] !== $_POST["subcategory"]) // nazwa podkategorii inna po walidacji niż ta podana w POST
-                            || empty($_SESSION["subcategory-exists"]) ) { // podkategoria nie istnieje
+                            || empty($subcategoryExists) ) { // podkategoria nie istnieje
 
                             //$_SESSION["no-results"] = "Brak wyników";
 
                             $_SESSION["application-error"] = true;
 
                             // validation failed - redirect to main page (index.php);
-                            unset($_POST, $category, $subcategory, $_SESSION["category"], $_SESSION["subcategory"], $_SESSION["category-exists"], $_SESSION["subcategory-exists"]);
+                            unset($_POST, $category, $subcategory, $_SESSION["category"], $_SESSION["subcategory"], $categoryExists, $subcategoryExists);
                                 /*header('Location: index.php', true, 303);
                                     exit();*/
                         }
@@ -224,7 +227,7 @@
 
             } else {
                 $_SESSION["category"] = "Wszystkie";
-                unset($_SESSION["subcategory"], $_SESSION["category-exists"], $_SESSION["subcategory-exists"]);
+                unset($_SESSION["subcategory"], $categoryExists, $subcategoryExists);
                     /*header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); // to prevent resubmitting the form
                         exit();*/
             }
@@ -246,7 +249,7 @@
 
                     $_SESSION["application-error"] = true;
 
-                    unset($_POST, $search_value, $_SESSION["input-search"], $_SESSION["category"], $_SESSION["subcategory"], $_SESSION["category-exists"], $_SESSION["subcategory-exists"]);
+                    unset($_POST, $search_value, $_SESSION["input-search"], $_SESSION["category"], $_SESSION["subcategory"]);
                         /*header('Location: index.php', true, 303);
                             exit();*/
             } else { // validation passed - input-search ;
@@ -293,11 +296,11 @@
                 if ($_SESSION["adv-search-category"] != "Wszystkie") { // "Informatyka",  "Dla dzieci",  "Fantastyka", ...
 
                     unset($_SESSION["category-exists"]);
-                    query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
+                    $categoryExists = query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
                     // $_SESSION["category-exists"] ==> true/false; (zależnie od tego czy istnieje taka kategoria);
 
-                    if (empty($_SESSION["category-exists"])) {
-                        unset($_SESSION["category-exists"]);
+                    if (empty($categoryExists)) {
+                        unset($categoryExists);
                         $valid = false;
                     }
 
@@ -371,7 +374,7 @@
                             ";
 
 
-            if ( ! empty($_POST["adv-search-title"]) ) { // SANITIZE adv-seatch-title;
+            if (!empty($_POST["adv-search-title"])) { // SANITIZE adv-seatch-title;
 
                 $title = filter_input(INPUT_POST, "adv-search-title", FILTER_SANITIZE_STRING);
                 $_SESSION["adv-search-title"] = $title;
@@ -387,7 +390,7 @@
             //     // sanitize category;
             //     $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING);
             // }
-            if ( ! empty($_POST["adv-search-author"]) ) { // sanitize adv-search-author;
+            if (!empty($_POST["adv-search-author"])) { // sanitize adv-search-author;
 
                 // get highest author-id from database ;
                 unset($_SESSION["max-author-id"]);
@@ -408,19 +411,19 @@
 
                 // check if that author (id) exists in db ... ;
                 unset($_SESSION["author-exists"]);
-                query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]);
+                $authorExists = query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]);
                 // ✓ $_SESSION["author-exists"] --> true/false, (zależnie od tego, czy istnieje taki autor o takim id)
 
                 if( empty($author) // (false) - id nie przeszło walidacji
-                    || empty($_SESSION["adv-search-author"]) || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || empty($_SESSION["author-exists"]) ) {
+                    || empty($_SESSION["adv-search-author"]) || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || empty($authorExists) ) {
                     // author (id) didn't pass validation
                     $valid = false;
                 }
 
-                unset($author, $_SESSION["max-author-id"], $_SESSION["author-exists"]);
+                unset($author, $_SESSION["max-author-id"], $authorExists);
             }
 
-            if ( ! empty($_POST['year-min']) ) { // check if the user provided a minimum year
+            if (!empty($_POST['year-min'])) { // check if the user provided a minimum year
 
                 $year_min = filter_input(INPUT_POST, "year-min", FILTER_SANITIZE_NUMBER_INT);
 
@@ -437,7 +440,7 @@
                 }
             }
 
-            if ( ! empty($_POST['year-max']) ) { // check if the user provided a maximum year
+            if (!empty($_POST['year-max'])) { // check if the user provided a maximum year
 
                 $year_max = filter_input(INPUT_POST, "year-max", FILTER_SANITIZE_NUMBER_INT);
 
@@ -465,7 +468,7 @@
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            if ( $valid === false ) {
+            if ($valid === false) {
                 // validation failed - data didn't pass validation -  redirect to main-page (index.php);
 
                 $_SESSION["application-error"] = true;
@@ -485,42 +488,42 @@
                 $where = [];  // WHERE CONDITION
                 $values = []; // VALUES USED AS ARGUMENTS
 
-                if ( ! empty($_SESSION["adv-search-title"]) ) { // check if the user provided a book title;
+                if (!empty($_SESSION["adv-search-title"])) { // check if the user provided a book title;
                     // Add a condition for the book title (!)
                         // $where[] = "ks.tytul LIKE '%" . $_POST['adv-search-title'] . "%'";
                     $where[] = "ks.tytul LIKE '%%%s%%'"; //%%%s%%
                     $values[] = $_SESSION['adv-search-title']; // values += ["title"];
                 }
 
-                if ( $_SESSION["adv-search-category"] != "Wszystkie" ) { // check if the user selected a category;
+                if ($_SESSION["adv-search-category"] != "Wszystkie") { // check if the user selected a category;
                     // Add a condition for the category
                         // $where[] = "ks.kategoria = '" . $_POST['adv-search-category'] . "'"; // do usunięcia - ponieważ zmiena POST może mieć wartość "Wszystkie" - a takiej nazwy nie ma w tabeli "kategorie" !
                     $where[] = "kt.nazwa = '%s'";
                     $values[] = $_SESSION["adv-search-category"]; // values += ["kategoria"]; // ✓
                 }
 
-                if ( ! empty($_SESSION["adv-search-author"]) ) { // Check if the user selected an author (author-id)
+                if (!empty($_SESSION["adv-search-author"])) { // Check if the user selected an author (author-id)
                     // Add a condition for the author
                         // $where[] = "ks.id_autora = " . $_POST['adv-search-author'];
                     $where[] = "ks.id_autora = '%s'";
                     $values[] = $_SESSION["adv-search-author"];
                 }
 
-                if ( ! empty($_SESSION["year-min"]) ) { // check if the user provided a minimum year
+                if (!empty($_SESSION["year-min"])) { // check if the user provided a minimum year
                     // Add a condition for the minimum year
                         // $where[] = "ks.rok_wydania >= " . $_POST['year-min'];
                     $where[] = "ks.rok_wydania >= '%s'";
                     $values[] = $_SESSION["year-min"];
                 }
 
-                if ( ! empty($_SESSION["year-max"]) ) { // check if the user provided a maximum year
+                if (!empty($_SESSION["year-max"])) { // check if the user provided a maximum year
                     // Add a condition for the maximum year
                         // $where[] = "ks.rok_wydania <= " . $_POST['year-max'];
                     $where[] = "ks.rok_wydania <= '%s'";
                     $values[] = $_SESSION["year-max"];
                 }
 
-                if ( ! empty($where) ) { // check if any conditions were added to the WHERE clause
+                if (!empty($where)) { // check if any conditions were added to the WHERE clause
 
                     // Combine the conditions into a single WHERE clause
 
@@ -558,7 +561,7 @@
 
     }         // if ( $_SERVER['REQUEST_METHOD'] === "POST" ) ...
 
-    if ( !isset($_SESSION["category"]) || empty($_SESSION["category"]) ) {
+    if (!isset($_SESSION["category"]) || empty($_SESSION["category"])) {
 
         $_SESSION["category"] = "Wszystkie"; // "normal" entry from main-page (index.php) ;
     }
@@ -1043,7 +1046,7 @@
             } else if (rule.selectorText === "#n-top-nav ol > li:hover > ul") {
                 rule.style.visibility = "visible";
             }
-        }
+        }``
     }
 </script>
 
