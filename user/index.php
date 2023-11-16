@@ -146,18 +146,16 @@
 
             unset($_SESSION["subcategory"]);
 
-            if (empty($category) // pusta wartość --> "" (empty), lub nie przeszła walidacji (false)
-                || ($_SESSION["adv-search-category"] !== $_POST["adv-search-category"])
-                || strlen($category)>100 ) {
+            if (empty($category) || ($_SESSION["adv-search-category"] !== $_POST["adv-search-category"]) || strlen($category)>100) {
+                // pusta wartość --> "" (empty), lub nie przeszła walidacji (false)
                 // category empty ("") or failed validation ;
                     $valid = false;
             } else { // adv-search-category - passed validation;
 
                 if ($_SESSION["adv-search-category"] != "Wszystkie") { // "Informatyka",  "Dla dzieci",  "Fantastyka", ...
 
-                    unset($_SESSION["category-exists"]);
                     $categoryExists = query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
-                    // $_SESSION["category-exists"] ==> true/false; (zależnie od tego czy istnieje taka kategoria);
+                    // $_SESSION["category-exists"] ==> true/NULL; (zależnie od tego czy istnieje taka kategoria);
 
                     if (empty($categoryExists)) {
                         unset($categoryExists);
@@ -239,9 +237,8 @@
                 $title = filter_input(INPUT_POST, "adv-search-title", FILTER_SANITIZE_STRING);
                 $_SESSION["adv-search-title"] = $title;
 
-                if ( empty($title) // (false) - nie przeszedł walidacji,
-                    || ($_SESSION["adv-search-title"] !== $_POST["adv-search-title"])
-                    || strlen($title)>255 ) {
+                if (empty($title) || ($_SESSION["adv-search-title"] !== $_POST["adv-search-title"]) || strlen($title)>255 ) {
+                    // (false) - nie przeszedł walidacji,
                     $valid = false;
                 }
             }
@@ -253,8 +250,8 @@
             if (!empty($_POST["adv-search-author"])) { // sanitize adv-search-author;
 
                 // get highest author-id from database ;
-                unset($_SESSION["max-author-id"]);
-                query("SELECT MAX(id_autora) AS id_autora FROM author", "getAuthorId", "");
+                //unset($_SESSION["max-author-id"]);
+                $maxAuthorId = query("SELECT MAX(id_autora) AS id_autora FROM author", "getAuthorId", "");
                 // $_SESSION["max-author-id"] => id_autora --> "36";
 
                 $author = filter_input(INPUT_POST, "adv-search-author", FILTER_SANITIZE_NUMBER_INT);
@@ -264,13 +261,13 @@
                 $_SESSION["adv-search-author"] = filter_var($author, FILTER_VALIDATE_INT, [
                         'options' => [
                             'min_range' => 1,                         // Minimum allowed author-id value
-                            'max_range' => $_SESSION["max-author-id"] // Maximum allowed author-id value (highest author-id in database) ; functions() -> "get_author_id()"
+                            'max_range' => $maxAuthorId // Maximum allowed author-id value (highest author-id in database) ; functions() -> "get_author_id()"
                         ]
                     ]
                 ); // ✓ It ensures that the value is an integer within the specified range;
 
                 // check if that author (id) exists in db ... ;
-                unset($_SESSION["author-exists"]);
+                //unset($_SESSION["author-exists"]);
                 $authorExists = query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]);
                 // ✓ $_SESSION["author-exists"] --> true/false, (zależnie od tego, czy istnieje taki autor o takim id)
 
@@ -421,7 +418,7 @@
 
     }         // if ( $_SERVER['REQUEST_METHOD'] === "POST" ) ...
 
-    if (!isset($_SESSION["category"]) || empty($_SESSION["category"])) {
+    if (empty($_SESSION["category"])) {
 
         $_SESSION["category"] = "Wszystkie"; // "normal" entry from main-page (index.php) ;
     }

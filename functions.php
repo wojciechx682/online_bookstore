@@ -504,7 +504,8 @@ use PHPMailer\PHPMailer\SMTP;
 
         // get highest author-id from db to apply max-range filter in ..\admin\add-book-data, \edit-book-data (POST), \user\index.php - adv-search - prg;
         $row = $result->fetch_assoc();
-        $_SESSION["max-author-id"] = $row["id_autora"]; // "25"
+        //$_SESSION["max-author-id"] = $row["id_autora"]; // "25"
+        return $row["id_autora"]; // "25"
     }
 
     function getPublisherId($result) { // get_publisher_id
