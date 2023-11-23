@@ -12,22 +12,23 @@
 
             $bookId = validateBookId($_POST["book-id"]); // "35" or FALSE; <-- validate book-id - is it valid ID (integer) and is there a book with that ID ?
 
-            if (empty($bookId)) { // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
-
+            if (empty($bookId)) {
+                // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
                 $_SESSION["application-error"] = true; // \view\app-error-window.php <-- "Wystąpił błąd";
 
                 unset($_POST, $bookId);
                     header('Location: index.php', true, 303);
                         exit();
 
-            } else { // input OK - book-id passed validation,    there is a book with that ID;
+            } else {
+                // input OK - book-id passed validation,    there is a book with that ID;
                      //               Valid book-id           and           book-exists
 
                 $_SESSION["book-id"] = $bookId; // wartość po walidacji;
 
                 // --> keep $_SESSION["book-id"];
                 // Redirect to prevent form resubmission // to prevent resubmitting the form
-                unset($_POST, $bookId, $_SESSION["max-book-id"], $_SESSION["book_exists"]);
+                unset($_POST, $bookId);
                     header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
                         exit();
             }

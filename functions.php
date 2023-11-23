@@ -434,7 +434,8 @@ use PHPMailer\PHPMailer\SMTP;
     function getBookId($result) { //get_book_id
         // get highest book-id from db to apply max-range filter in \user\book.php (POST);
             $row = $result->fetch_assoc();
-        $_SESSION["max-book-id"] = $row["id_ksiazki"]; // "35"
+        //$_SESSION["max-book-id"] = $row["id_ksiazki"]; // "35"
+        return $row["id_ksiazki"];
     }
 
     function validateBookId($bookId) {
@@ -450,8 +451,8 @@ use PHPMailer\PHPMailer\SMTP;
         // remove any non-numeric characters. This filter will leave only the numeric characters.
 
         // get highest book-id from database ;
-        unset($_SESSION["max-book-id"]);
-        query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM books", "getBookId", "");
+            //unset($_SESSION["max-book-id"]);
+        $maxBookId = query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM books", "getBookId", "");
         // $_SESSION["max-book-id"] => "35" or NULL;
         // - set variable to be applied in book-id filter below;
 
@@ -459,20 +460,20 @@ use PHPMailer\PHPMailer\SMTP;
         $bookIdValidated  = filter_var($bookIdSanitized, FILTER_VALIDATE_INT, [
                 'options' => [
                     'min_range' => 1,                       // Minimum allowed book-id value
-                    'max_range' => $_SESSION["max-book-id"] // Maximum allowed book-id value (highest book-id in database) ; functions() -> "getBookId()"
+                    'max_range' => $maxBookId // Maximum allowed book-id value (highest book-id in database) ; functions() -> "getBookId()"
                 ]
             ]
         ); // ✓ It ensures that the value is an integer within the specified range;
 
 
         // check if there is really a book with that id ;
-        unset($_SESSION["book_exists"]);
-        query("SELECT id_ksiazki FROM books WHERE id_ksiazki = '%s'", "verifyBookExists", $bookIdValidated);
+        //unset($_SESSION["book_exists"]);
+        $bookExists = query("SELECT id_ksiazki FROM books WHERE id_ksiazki = '%s'", "verifyBookExists", $bookIdValidated);
         // $_SESSION["book_exists"] --> true or NULL - zależnie od tego czy książka o takim ID istnieje;
 
-        if (empty($bookIdSanitized) || empty($bookIdValidated) || empty($_SESSION["book_exists"]) || empty($_SESSION["max-book-id"]) || ($bookIdValidated != $bookId)) {
+        if (empty($bookIdSanitized) || empty($bookIdValidated) || empty($bookExists) || empty($maxBookId) || ($bookIdValidated != $bookId)) {
 
-                unset($_SESSION["max-book-id"], $_SESSION["book_exists"]);
+                unset($maxBookId, $bookExists);
             return false;
             // error - there is no book with that ID - or - bookID didn't pass validation;
         } else {
@@ -1224,8 +1225,8 @@ use PHPMailer\PHPMailer\SMTP;
 
         // \admin\book-details.php
 
-        $_SESSION["book_exists"] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
-
+        /*$_SESSION["book_exists"] = true;*/ // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
+        return true;
                 /*// \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
                 // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
                 $_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
