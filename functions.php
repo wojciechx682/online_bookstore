@@ -1373,7 +1373,7 @@ use PHPMailer\PHPMailer\SMTP;
 
         while($row = $result->fetch_assoc()) {
                         // echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
-            // load the content from the external template file into string
+            // load the content from the external tefmplate file into string
             $order = file_get_contents("../template/admin/orders.php");
             // replace fields in $order string to author data from $result, display result content as HTML
             echo sprintf($order, $row["id_zamowienia"], $row["data_zlozenia_zamowienia"], $row["imie"], $row["nazwisko"], $row["kwota"], $row["metoda_platnosci"], $row["id_zamowienia"], $row["status"], $row["id_zamowienia"], $row["id_zamowienia"], $row["id_zamowienia"], $row["id_zamowienia"]);
@@ -1805,7 +1805,8 @@ use PHPMailer\PHPMailer\SMTP;
             $bookData[] = $data; // what does that line do ? how does it do ?
         }
         //header('Content-Type: application/json');
-        echo json_encode($bookData);
+        //echo json_encode($bookData);
+        return $bookData;
     }
 
     function getCategoryData($result) {  // \admin\edit-category.php
