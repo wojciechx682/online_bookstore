@@ -30,12 +30,12 @@
             $_SESSION["order-exists"] = false;
 
             // check if there is really an order with that id (post - order-id);
-            query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, kl.imie, kl.nazwisko
+            $orderExists = query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, kl.imie, kl.nazwisko
                             FROM orders AS zm, customers AS kl
                          WHERE zm.id_klienta = kl.id_klienta AND zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
             // przestawi zmienną --> $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie (o takim id), jeśli num_rows > 0 ;
 
-            if ($orderId === false || $_SESSION["order-id"] === false || $_SESSION["order-exists"] === false || ($_SESSION["order-id"] != $_POST["order-id"])) {
+            if ($orderId === false || $_SESSION["order-id"] === false || empty($orderExists) || ($_SESSION["order-id"] != $_POST["order-id"])) {
                 // ✓ id-zamówienia (order-id) nie przeszło walidacji, LUB ✓ nie istnieje zamówienie o takim id; // invalid order-id OR order doesnt exist";
                 // musi być komunikat o błędzie (np okienko) + exit() ! ;
                     // obsługa błędu - np przekierowanie na poprzednią stronę (orders.php) + wyświetlenie okienka z okmunikatem
@@ -59,7 +59,7 @@
                     // redirect to the page itself
                     // header('Location: ___book.php', true, 303);
 
-                unset($_POST, $orderId, $_SESSION["order-exists"]); // $_SESSION["order-id"] <--
+                unset($_POST, $orderId, $orderExists); // $_SESSION["order-id"] <--
 
                 // Redirect to \order-details.php - prevent form resubmission
                 header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);  // $_SESSION["order-id"] <--
@@ -67,7 +67,7 @@
                 // to prevent resubmitting the form
             }
 
-            unset($_POST, $orderId, $_SESSION["order-exists"]);
+            unset($_POST, $orderId, $orderExists);
 
         } else {
             // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/admin/order-details.php bez podania wartości w POST[] ;
@@ -238,6 +238,7 @@
                                                                            // kwota (suma) zamówienia;
                     echo '<div id="order-det-container">';
                     query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
+                    query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
                         "get_order_summary", $_SESSION["order-id"]); // sposób_płatności, data_platnosci, forma_dostarczenia, status;*/
                 ?>
 
@@ -356,9 +357,9 @@
 
     <div class="delivery-date"> <!--  delivery-date%s - id_zamowienia -->
 
-        <form class="add-order-comment" action="remove-order.php" method="post"> <!-- class zamienić na add-order-comment -->
+        <form class="remove-order" action="remove-order.php" method="post"> <!-- class zamienić na add-order-comment -->
 
-            <input type="hidden" name="order-id" value="<?= $_SESSION["order-id"]; ?>"> <!-- order-id -->
+            <input type="hidden" name="order-id" id="orderId" value="<?= $_SESSION["order-id"]; ?>"> <!-- order-id -->
 
             <span class="info">Dodaj komentarz do zamówienia</span>
 
@@ -381,11 +382,22 @@
 
 <script>
     // dodaj komentarz do zamówienia (okno) -->
+
+
     document.getElementById("add-order-comment").addEventListener("click", () => {
-        let commentBox = document.getElementById("add-comment");
-        commentBox.classList.remove("hidden");
+        //let commentBox = document.getElementById("add-comment");
+        //commentBox.classList.remove("hidden");
+
+        let orderId = document.getElementById("orderId").value;
+
+        console.log("orderId --> ", orderId);
+        removeOrder(orderId);
     });
 </script>
+
+
+<script src="../scripts/admin-orders.js"></script>
+<script src="remove-order.js"></script> <!-- AJAX - admin\remove-order.js -->
 
 </body>
 </html>

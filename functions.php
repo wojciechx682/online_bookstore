@@ -1296,11 +1296,13 @@ use PHPMailer\PHPMailer\SMTP;
     function orderDetailsVerifyOrderExists($result) { // zwrócono rekordy a więc jest takie zamówienie (admin\order-details.php);
         //echo "\n 1014 - function -> orderDetailsVerifyOrderExists \n\n";
 
-        $_SESSION["order-exists"] = true;
+
         $row = $result->fetch_assoc();
         $_SESSION["order-date"] = $row["data_zlozenia_zamowienia"];
         $_SESSION["client-name"] = $row["imie"];
         $_SESSION["client-surname"] = $row["nazwisko"];
+        //$_SESSION["order-exists"] = true;
+        return true;
     }
 
 	function get_var_name($var)
