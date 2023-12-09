@@ -44,7 +44,15 @@
 
                 </div>
                 <div class="book-option">
-                    <a href="#" onclick="removeOrder(%s)">Usuń</a>
+                    <!--<a href="#" onclick="removeOrder(%s)">Usuń</a>-->
+
+                    <form action="remove-book.php" method="post">
+                        <input type="hidden" value="%s" name="book-id">
+                        <input type="hidden" value="%s" name="warehouse-id">
+                        <!--<label for="submit-form">Edytuj</label>-->
+                        <input type="submit" value="Usuń"> <!-- id="submit-form" -->
+                    </form>
+
                 </div>
             </div>
         </div>

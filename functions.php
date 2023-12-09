@@ -1385,7 +1385,7 @@ use PHPMailer\PHPMailer\SMTP;
             // load the content from the external template file into string
             $book = file_get_contents("../template/admin/books.php");
             // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($book, $row["id_ksiazki"], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row["nazwa_magazynu"], $row["ilosc_dostepnych_egzemplarzy"], $row["id_ksiazki"],  $row["id_ksiazki"], $row["id_magazynu"], $row["id_ksiazki"], $row["id_magazynu"], $row["id_ksiazki"]);
+            echo sprintf($book, $row["id_ksiazki"], $row["tytul"], $row["nazwa_kategorii"], $row["cena"], $row["imie"], $row["nazwisko"], $row["nazwa_magazynu"], $row["ilosc_dostepnych_egzemplarzy"], $row["id_ksiazki"],  $row["id_ksiazki"], $row["id_magazynu"], $row["id_ksiazki"], $row["id_magazynu"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_magazynu"]);
         }
         //$result->free_result();
     }
