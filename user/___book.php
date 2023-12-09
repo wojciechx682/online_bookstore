@@ -12,22 +12,23 @@
 
             $bookId = validateBookId($_POST["book-id"]); // "35" or FALSE; <-- validate book-id - is it valid ID (integer) and is there a book with that ID ?
 
-            if (empty($bookId)) { // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
-
+            if (empty($bookId)) {
+                // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
                 $_SESSION["application-error"] = true; // \view\app-error-window.php <-- "Wystąpił błąd";
 
                 unset($_POST, $bookId);
                     header('Location: index.php', true, 303);
                         exit();
 
-            } else { // input OK - book-id passed validation,    there is a book with that ID;
+            } else {
+                // input OK - book-id passed validation,    there is a book with that ID;
                      //               Valid book-id           and           book-exists
 
                 $_SESSION["book-id"] = $bookId; // wartość po walidacji;
 
                 // --> keep $_SESSION["book-id"];
                 // Redirect to prevent form resubmission // to prevent resubmitting the form
-                unset($_POST, $bookId, $_SESSION["max-book-id"], $_SESSION["book_exists"]);
+                unset($_POST, $bookId);
                     header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
                         exit();
             }
@@ -209,13 +210,16 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                     // - rozwiązaniem było dodanie funkcji usuwającej atrybuty "name" ze wszystkich gwiazdek - po kliknięciu na dowolną gwiazdkę;
                     // (atrybut "name" posiada tylko ten input, dla którego gwiazdka została kliknięta)
 
-                    // 3. Podczas odświeżania strony z książką poprzeż użycie klawiszy Ctrl + F5 - pojawiał się błąd polegający na nieodopowiednim umiejscowieniu szarych gwiazdek proporcjonalnie względem żółtych gwizdek (w sekcji #book-page-details - przy zdjęciu książki).
+                    // 3. Podczas odświeżania strony z książką poprzeż użycie klawiszy Ctrl + F5 - pojawiał się błąd polegający na nieodopowiednim umiejscowieniu szarych gwiazdek proporcjonalnie względem żółtych gwizdek (w sekcji #book-page-details - przy zdjęciu książki). - podczas resizowania okna przeglądarki
 
                     // ✖ rozwiązaniem było dodanie linii window.onload - "która czeka" na wczytanie wszystkich zasobów strony (w tym stylów CSS) - tak aby ostatecznie zachować poprawne umiejscowienie żółtych i szarych gwizdek względem siebie ;
+                    // 5. // ✓✓✓ ROZWIĄZANIE PROBLEMU IMPLEMENTACYJNEGO - zamiana position left z px na wartość % (!) - podczas resizowania nastąpiło błędne kalkulowanie tej pozycji, od teraz przy ZMIANIE ROZMIARU pozycja szarych gwiazdek względem złotych jest OK (!)
 
                     // ✓ rozwiązaniem było zastosowanie wartości procentowych (relatywnych) zamiast wartości wyrażonych w px - do ustalenia stylów tych elementów !
 
                     // 4. Animacja wypełniania okręgu na żółto (proporcjonalnie do średniej oceny) - OPISAĆ - jak zostało zrobione to, że wypełnienie zaczyna się od początku okręgu;
+
+
 
                     // -------------------------------------------------------------------------------------------------
 
@@ -923,7 +927,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
                 // ---------------------------------------------------------------------------------------------------------
 
-                content = document.getElementById("content"); // ustawienie wid div#content na 100%
+                content = document.getElementById("content"); // ustawienie width div#content na 100%
                 //console.log("content -> ", content);
                 content.style.width = "100%";
 

@@ -47,18 +47,30 @@
 
                     <!--<hr id="book-details-hr-edit-books">-->
 
+                    <?php
+
+                    $bookData = query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.image_url, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii, mgk.id_magazynu, mgk.ilosc_dostepnych_egzemplarzy AS ilosc_egzemplarzy FROM books AS ks, subcategories AS subkt, categories AS kt, warehouse_books AS mgk WHERE ks.id_ksiazki = '%s' AND mgk.id_magazynu = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii AND ks.id_ksiazki = mgk.id_ksiazki", "getBookData", [$bookId, $_SESSION["warehouseId"]]);
+
+                        echo " book data --> <br><br>";
+                        //echo $bookData; exit();
+
+                    ?>
+
                     <script>
 
                             //let bookId = '<?php //echo $_POST["book-id"]; ?>'; // walidacja / sanityzacja ?
 
 
-                        let bookData = '<?php query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.image_url, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii, mgk.id_magazynu, mgk.ilosc_dostepnych_egzemplarzy AS ilosc_egzemplarzy FROM books AS ks, subcategories AS subkt, categories AS kt, warehouse_books AS mgk WHERE ks.id_ksiazki = '%s' AND mgk.id_magazynu = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii AND ks.id_ksiazki = mgk.id_ksiazki", "getBookData", [$bookId, $_SESSION["warehouseId"]]); ?>';
+
+
                         // $_POST value is retrieved from admin\books.php -> "Edytuj" button (input type="submit");
 
                         // 1 | Symfonia C++ wydanie V | 1 | 2009 | 10 | 2 | Lorem ipsum dolor sit amet, consectetur adipiscing... | twarda | 585	| 411 x 382 x 178 | 1 | 4
 
-                        bookData = JSON.parse(bookData);
+                        //bookData = JSON.parse(bookData);
+                            let bookData = <?php echo json_encode($bookData); ?>;
                             console.log("\nbookData -> ", bookData);
+                            //console.log("\nbookData -> ", bookData);
 
                     </script>
 

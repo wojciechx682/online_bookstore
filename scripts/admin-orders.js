@@ -38,6 +38,8 @@ function removeOrder(orderId) { // po kliknięciu przycisku "Archiwizuj";  order
     buttons = [icon, cancelBtn]; // "✖", "Anuluj";
     buttons.forEach(function(button) {
         button.addEventListener("click", closeRemoveBox);
+
+        alert();
     });
     function closeRemoveBox() {
         console.log("\n 57 - admin-orders.js - closeRemoveBox function executed ! \n");
