@@ -944,7 +944,7 @@ use PHPMailer\PHPMailer\SMTP;
             ) {
                 // status zamówienia to "Dostarczono" (zakończono) --> termin_dostawy?, data_wyslania_zamowienia?, data_dostarczenia;
                 $order = file_get_contents("../template/order-sum-order-delivered.php");
-                echo sprintf($order, $_SESSION["data_dostarczenia"], $row["suma"]);
+                echo sprintf($order, $_SESSION["data_dostarczenia"], $row["koszt_dostawy"], $kosztPlatnosci, $row["suma"]);
 
             }
             elseif (
