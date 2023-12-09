@@ -59,7 +59,7 @@ require_once "../authenticate-admin.php";
         $category = filter_var($_POST['edit-book-category'], FILTER_VALIDATE_INT);
         $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);*/
 
-        query("SELECT id_autora FROM author ORDER BY id_autora DESC LIMIT 1", "getAuthorId", "");
+        $maxAuthorId = query("SELECT id_autora FROM author ORDER BY id_autora DESC LIMIT 1", "getAuthorId", "");
         // get highest author-id from db; // $_SESSION["max-author-id"] => "36";
         query("SELECT id_wydawcy FROM publishers ORDER BY id_wydawcy DESC LIMIT 1", "getPublisherId", "");
         // get highest publisher-id from db; // $_SESSION["max-publisher-id"] => "2";
@@ -74,12 +74,12 @@ require_once "../authenticate-admin.php";
         $author = filter_var($_POST['edit-book-change-author'], FILTER_VALIDATE_INT, [
             'options' => [
                 'min_range' => 1,                          // minimum allowed value;
-                'max_range' => $_SESSION["max-author-id"]  // maximum allowed value;
+                'max_range' => $maxAuthorId                // maximum allowed value;
             ]
         ]);
         // check if there is really author with that id ;
-        $_SESSION['author-exists'] = false;
-        query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $author);
+        //$_SESSION['author-exists'] = false;
+        $authorExists = query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $author);
             // sprawdzenie, czy ten autor istnieje w bd ; check if there is any author with given POST id; jeśli num_rows > 0 -> przestawi // $_SESSION['author-exists'] -> na true ;
         $year = filter_var($_POST['edit-book-release-year'], FILTER_VALIDATE_INT, [
             'options' => [
@@ -121,8 +121,9 @@ require_once "../authenticate-admin.php";
         ]);
 
         // check if there is really category with that id ;
-        $_SESSION['category-exists'] = false;
-        query("SELECT id_kategorii FROM categories WHERE id_kategorii = '%s'", "verifyCategoryExists", $category);
+        //$_SESSION['category-exists'] = false;
+
+        $categoryExists = query("SELECT id_kategorii FROM categories WHERE id_kategorii = '%s'", "verifyCategoryExists", $category);
         // $_SESSION['category-exists'] = true;
 
         $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
@@ -158,7 +159,7 @@ require_once "../authenticate-admin.php";
         if (
             $bookId === false ||
             $title === false || $title !== $_POST['edit-book-title'] || strlen($title) > 255 ||
-            $author === false || $_SESSION['author-exists'] === false ||
+            $author === false || empty($authorExists) ||
             $year === false || $year < 1900 || $year > 2023 ||
             $price === false || $price < 1 || $price > 500 ||
             $publisher === false || $_SESSION['publisher-exists'] === false ||
@@ -166,7 +167,7 @@ require_once "../authenticate-admin.php";
             $cover === false || $cover !== $_POST['edit-book-cover'] ||
             $desc === false || $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 1000 ||
             $dims === false || $dims !== $_POST['edit-book-dims'] || strlen($dims) > 15 ||
-            $category === false || $_SESSION['category-exists'] === false ||
+            $category === false || empty($categoryExists) ||
             $subcategory === false ||
             $magazine === false || $magazine !== $_SESSION["warehouseId"] ||
             $quantity === false
