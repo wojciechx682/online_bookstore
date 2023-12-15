@@ -7,10 +7,10 @@
 
 
     // check if that category exists (id);
-        unset($_SESSION["category-exists"]);
-    query("SELECT kt.nazwa FROM categories AS kt WHERE kt.id_kategorii = '%s' AND kt.nazwa = '%s'", "verifyCategoryExists", [$categoryId, $categoryName]); // $_SESSION["category-exists"] --> true / null;
+        //unset($_SESSION["category-exists"]);
+    $categoryExists = query("SELECT kt.nazwa FROM categories AS kt WHERE kt.id_kategorii = '%s' AND kt.nazwa = '%s'", "verifyCategoryExists", [$categoryId, $categoryName]); // $_SESSION["category-exists"] --> true / null;
 
-    if (empty($categoryId) || empty($_SESSION["category-exists"])) {
+    if (empty($categoryId) || empty($categoryExists)) {
 
         $_SESSION["application-error"] = true;
 

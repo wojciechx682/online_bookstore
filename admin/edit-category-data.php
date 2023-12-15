@@ -55,8 +55,8 @@ $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
     // get highest magazine-id from db; // $_SESSION["max-magazine-id"] => "2";*/
 
     // check if category name is not already taken -->
-        unset($_SESSION["category-exists"]);
-    query("SELECT kt.nazwa FROM categories AS kt WHERE kt.nazwa = '%s'", "verifyCategoryExists", $categoryName); // $_SESSION["categoryNameTaken"] --> true / NULL;
+        //unset($_SESSION["category-exists"]);
+    $categoryExists = query("SELECT kt.nazwa FROM categories AS kt WHERE kt.nazwa = '%s'", "verifyCategoryExists", $categoryName); // $_SESSION["categoryNameTaken"] --> true / NULL;
 
     // Check if values pass the tests;
     if ( empty($categoryName) || empty($categoryId) ) {
@@ -64,7 +64,7 @@ $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
         // categoryName - name didnt pass validation;
         echo "<span class='update-failed'>65 Wystąpił problem. Podaj poprawne dane</span>"; exit();
 
-    } elseif ( !empty($_SESSION["category-exists"]) ) {
+    } elseif ( !empty($categoryExists) ) {
 
         echo "<span class='update-failed'>Istnieje już kategoria o takiej nazwie. Spróbuj jeszcze raz</span>"; exit();
 
@@ -74,7 +74,7 @@ $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);
 
         $updateSuccessful = query("UPDATE categories SET nazwa='%s' WHERE id_kategorii='%s'", "", [$categoryName, $categoryId]);
 
-        if($updateSuccessful && $_SESSION["update-category-successful"]) {
+        if($updateSuccessful) {
 
             echo "<span class='archive-success'>Udało się zaktualizować dane</span>";
 
