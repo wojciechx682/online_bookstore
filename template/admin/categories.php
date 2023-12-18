@@ -41,9 +41,8 @@
                 <div class="category-option">
                     <!--<a href="order-details.php?s status=true" onclick="">Zmień status</a>-->
 
-                    <form method="post" action="category-details.php"> <!-- POST -> orderId -->
-                        <input type="hidden" name="%s"> <!-- order-id -->
-                        <input type="hidden" name="true"> <!-- "Zmień status" -> true -->
+                    <form method="post" action="remove-category.php"> <!-- POST -> orderId -->
+                        <input type="hidden" value='%s' name="categoryId"> <!-- category-id -->
                         <button class="submit-order-form" type="submit">
                             <!--<h3 class="book-title">Przeglądaj</h3>-->
                             Usuń
