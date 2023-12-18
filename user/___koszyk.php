@@ -25,9 +25,9 @@
 
                         // (!) Problem implementacyjny - (do zrobienia) - Zmiana użycia formularza do wysyłania i zapisywania ilości książek w koszyku na użycie technologii AJAX - ponieważ przy zmienie ilości książek w koszyku następuje każdorazowo odświeżenie strony ;
 
-                        echo "<br>"; echo "POST ->"; var_dump($_POST); echo "<hr><br>";
+                        /*echo "<br>"; echo "POST ->"; var_dump($_POST); echo "<hr><br>";
                         echo "GET ->"; var_dump($_GET); echo "<hr><br>";
-                        echo "SESSION ->"; var_dump($_SESSION); echo "<hr><br>";
+                        echo "SESSION ->"; var_dump($_SESSION); echo "<hr><br>";*/
 
                         query("SELECT kl.id_klienta, 
                                       ko.id_ksiazki, ko.ilosc, 
