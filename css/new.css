@@ -362,6 +362,7 @@ body {
         min-width: 165px !important;
         padding-left: 8px !important;
         float: left;
+        max-width: 65%;
     }
 
     /*.book-info {
@@ -813,6 +814,12 @@ body {
 
         top: -3px;
     }
+
+    /*.rating-num {
+
+        padding: 0 12px 0 28px !important;
+
+    }*/
 
     div#book-page-details,
     div#add-to-cart {
@@ -1972,6 +1979,9 @@ footer {
     /* czy poniższe dwie linie moga rozwiązać problem ze zmianą pozycji <li> w top-nav dla małych szerokosci (?) */
     overflow: hidden;
     white-space: nowrap; /* (!) */
+
+    position: relative;
+    border-top: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
 
@@ -2959,6 +2969,7 @@ button.reset-password-button {
 
     overflow: hidden !important;
     max-height: 17px;
+
 
 
 
@@ -4770,6 +4781,9 @@ div#advanced-search {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
 }
 
+div#advanced-search p {
+    padding-bottom: 2px;
+}
 div#advanced-search input[type="text"],
 div#advanced-search input[type="number"]
 {
