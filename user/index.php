@@ -1,15 +1,6 @@
 <?php
 
     require_once "../start-session.php";
-
-    // ✓ sprawdź połączenie z BD;
-
-    /*$value = []; // [] ;
-    array_push($value, "1");
-    query("SELECT * FROM kkklienci", "", $value); exit();*/
-
-    // ✓ w przypadku błędu połączenia z BD, wyświetli komunikat rzuconego wyjątku.
-    // należy dodać to do każdej podstrony, która korzysta z połączenia z BD (w ramach testów...)
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //
     // Implementacja wzorca PRG (Post-Redirect-Get);
@@ -28,10 +19,6 @@
                     // validation failed - redirect to main-page (index.php);
                     $_SESSION["application-error"] = true;
                     unset($_POST, $title, $_SESSION["input-search-nav"]);
-                    /*header('Location: index.php', true,303);
-                    exit();*/
-            } else {
-                // validation passed ; - input-search-nav - nie pusty, posiada wartość, która przeszła walidację;
             }
 
         } elseif (isset($_POST["category"])) {
@@ -559,7 +546,8 @@
                                 // ponieważ input-search szuka książek we wszystkich kategoriach ;
 
                                 $search_value = $_SESSION["input-search"];
-                                    unset($_SESSION["input-search"]);
+
+                                unset($_SESSION["input-search"]);
 
                                     /*query("SELECT ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
                                                              kt.nazwa, sb.id_kategorii,
