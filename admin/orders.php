@@ -1,18 +1,12 @@
 <?php
-
     require_once "../authenticate-admin.php";
-
-
-unset($_SESSION["order-id"], $_SESSION["order-date"], $_SESSION["client-name"], $_SESSION["client-surname"], $_SESSION["status"]);
-
+    unset($_SESSION["order-id"], $_SESSION["order-date"], $_SESSION["client-name"], $_SESSION["client-surname"], $_SESSION["status"]);
 ?>
 
 <!DOCTYPE HTML>
 <html lang="pl">
 
 <?php require "../view/head-admin.php"; ?>
-
-<!-- ✓✓✓ Zamówienia (orders) -> admin/orders.php --- POWINNY WYŚWEITLAĆ TYLKO TE ZAMÓWIENIA, KTÓRE SĄ PRZYPISANE DLA DANEGO (zalogowanego) PRACOWNIKA! -->
 
 <body>
 
