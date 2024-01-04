@@ -6,7 +6,6 @@
 
     query("SELECT SUM(ilosc_dostepnych_egzemplarzy) AS liczba_ksiazek FROM warehouse_books", "countBooksAvailable", ""); // liczba wszystkich książek (dostępnych na magazynie);
 
-
     /*query("SELECT COUNT(id_zamowienia) AS liczba_zamowien FROM zamowienia WHERE status='Oczekujące na potwierdzenie'", "countpendingOrders", ""); // liczba oczekujących zamówień (status = "Oczekujące ...");*/
     query("SELECT COUNT(id_zamowienia) AS liczba_zamowien FROM orders WHERE status='Oczekujące na potwierdzenie' AND id_pracownika='%s'", "countpendingOrders", $_SESSION["id"]); // liczba oczekujących zamówień - przypisanych do tego pracownika; (status = "Oczekujące ...");
 
@@ -94,7 +93,9 @@
                                     Ilość produktów <!-- Liczba książek -->
                                 </a>
                             </div>
-                            <div class="section-info"><span class="section-info-details"><?= $_SESSION["booksAmount"]; ?></span></div>
+                            <div class="section-info">
+                                <span class="section-info-details"><?= $_SESSION["booksAmount"]; ?></span>
+                            </div>
                         </section>
 
                         <section id="pending-orders">
@@ -108,14 +109,18 @@
                                     Oczekujące zamówienia
                                 </a>
                             </div>
-                            <div class="section-info"><span class="section-info-details"><?= $_SESSION["pendingOrders"]; ?></span></div>
+                            <div class="section-info">
+                                <span class="section-info-details"><?= $_SESSION["pendingOrders"]; ?></span>
+                            </div>
                         </section>
                         <section id="total-sales">
                             <div class="icon-container">
                                 <i class="icon-basket"></i>
                             </div>
                             <div class="section-info">Całkowity przychód</div>
-                            <div class="section-info"><span class="section-info-details"><?= empty($_SESSION["totalSale"]) ? "0" : $_SESSION["totalSale"] ?> PLN</span></div>
+                            <div class="section-info">
+                                <span class="section-info-details"><?= empty($_SESSION["totalSale"]) ? "0" : $_SESSION["totalSale"] ?> PLN</span>
+                            </div>
                         </section>
 
                     </article>
