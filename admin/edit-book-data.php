@@ -28,7 +28,7 @@ require_once "../authenticate-admin.php";
 
         // all required fields are SET and NOT EMPTY; Perform the necessary actions or validations here; // For example, update the book data in the database;
 
-                echo "<br> success <br><br>";
+                /*echo "<br> success <br><br>";
                 echo "<br> success <br><br>";
                     echo "<br> id ksiazki " . $_POST['edit-book-id'];
                     echo "<br> autor (id) - " . $_POST['edit-book-change-author'];
@@ -42,7 +42,7 @@ require_once "../authenticate-admin.php";
                 echo "<br> kategoria (id) - " . $_POST['edit-book-category'] ;
                 echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'];
                 echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'];
-                echo "<br> ilosc - " . $_POST['edit-book-quantity'];
+                echo "<br> ilosc - " . $_POST['edit-book-quantity'];*/
 
         // back-end validation;
 
@@ -173,7 +173,7 @@ require_once "../authenticate-admin.php";
             $quantity === false
         ) {
 
-            echo "<br><hr><br>";
+            /*echo "<br><hr><br>";
                 echo "<br> bookId-> " . $bookId;
                 echo "<br> title-> " . $title;
                 echo "<br> author-> " . $author;
@@ -194,7 +194,7 @@ require_once "../authenticate-admin.php";
                 } else {
                     echo "<br> quantity -> TRUE";
                 }
-            echo "<br><hr><br>";
+            echo "<br><hr><br>";*/
 
 
             //echo "POST Error: Invalid or missing values"; // fieldnt didn't pass validation;

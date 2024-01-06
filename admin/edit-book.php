@@ -51,7 +51,7 @@
 
                     $bookData = query("SELECT ks.id_ksiazki, ks.tytul, ks.id_autora, ks.rok_wydania, ks.cena, ks.id_wydawcy, ks.image_url, ks.opis, ks.oprawa, ks.ilosc_stron, ks.wymiary, ks.id_subkategorii, kt.id_kategorii, mgk.id_magazynu, mgk.ilosc_dostepnych_egzemplarzy AS ilosc_egzemplarzy FROM books AS ks, subcategories AS subkt, categories AS kt, warehouse_books AS mgk WHERE ks.id_ksiazki = '%s' AND mgk.id_magazynu = '%s' AND subkt.id_kategorii = kt.id_kategorii AND ks.id_subkategorii = subkt.id_subkategorii AND ks.id_ksiazki = mgk.id_ksiazki", "getBookData", [$bookId, $_SESSION["warehouseId"]]);
 
-                        echo " book data --> <br><br>";
+                        //echo " book data --> <br><br>";
                         //echo $bookData; exit();
 
                     ?>
