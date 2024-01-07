@@ -18,6 +18,4 @@
         <span class="header-option">Status</span>
     </div>
     <div class="order-action">Zarządzaj</div>
-    <!-- <hr> -->
-    <!--<div style="clear:both;"></div>-->
 </div>

@@ -1,23 +1,17 @@
 <?php
-    require_once "../authenticate-admin.php"; // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
+    require_once "../authenticate-admin.php";
 
-    // plik obsługujący żądanie POST - archiwizujące zamówienie + dodające komentarz (powód);
-    // plik PHP obsługujący żądanie AJAX;
-    // $orderId = $_POST["order-id"]; // id-zamówienia <input type="hidden">
-    // $comment = $_POST["comment"];  // komentarz <textarea>
-    // $_POST[] data =>  order-id=1039 & comment=test123;
-
-header('Content-Type: application/json');
-$response = [];
+    header('Content-Type: application/json');
+    $response = [];
 
     $archiveSuccessful = true;
 
     if (isset($_POST["comment"]) && !empty($_POST["comment"]) && isset($_POST["order-id"]) && !empty($_POST["order-id"])) {
 
-        $comment = filter_var($_POST["comment"],FILTER_SANITIZE_STRING); // sanityzacja (back-end);
+        $comment = filter_var($_POST["comment"],FILTER_SANITIZE_STRING);
         $orderId = filter_var($_POST["order-id"],FILTER_SANITIZE_NUMBER_INT);
 
-        if ($comment === false || $orderId === false || $comment !== $_POST["comment"] || $orderId !== $_POST["order-id"]) { // dane nie przeszły walidacji;
+        if ($comment === false || $orderId === false || $comment !== $_POST["comment"] || $orderId !== $_POST["order-id"]) {
 
             $archiveSuccessful = false;
 
@@ -32,15 +26,14 @@ $response = [];
 
 
     if ($archiveSuccessful === true) {
-        //http_response_code(200);
+
         $response["success"] = true;
         $response["message"] = "Udało się zarchiwizować zamówienie";
-        //echo "<span class='archive-success'>Udało się zmienić zarchiwizować zamówienie</span>";
+
     } else {
-        //http_response_code(400);
+
         $response["success"] = false;
         $response["message"] = "Wystąpił problem. Nie udało się zarchiwizować zamówienia";
-        //echo "<span class='update-failed'>Wystąpił problem. Nie udało się zarchiwizować zamówienia</span>";
     }
 
     echo json_encode($response);

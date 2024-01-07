@@ -1,13 +1,3 @@
-
-<!-- template used on order page (admin\orders.php) to display ALL orders made by clients (which are assigned to the logged-in employee !) -->
-
-<!-- // | 1121 | 2023-07-08 18:23:58 | Jakub | Wojciechowski | 327.75 | Blik     | Zarchiwizowane
-     // | 1122 | 2023-07-08 18:29:20 | Jakub | Wojciechowski | 222.5  | Pobranie | Oczekujące na potwierdzenie
-     // ...
-     // ... -->
-
-<!-- \admin\orders.php - szablon - pojedynczy wiersz w tabeli "orders" -->
-
 <div class="order order-content">
 
     <div class="order-id">%s</div>
@@ -19,8 +9,7 @@
 
     <div class="order-action">
 
-        <div class="order-action-button" id="order-action-button%s" onclick="showOptions(this.id)"> <!-- ✓ wyświetlenie / ukrycie listy opcji -->
-            <!-- scripts\show-order-options.js -->
+        <div class="order-action-button" id="order-action-button%s" onclick="showOptions(this.id)">
             Zarządzaj <i class="icon-down-open"></i>
         </div>
 
@@ -30,8 +19,8 @@
 
                 <div class="order-option">
 
-                    <form method="post" action="order-details.php"> <!-- POST -> orderId -->
-                        <input type="hidden" name="order-id" value="%s">  <!-- order-id -->
+                    <form method="post" action="order-details.php">
+                        <input type="hidden" name="order-id" value="%s">
                         <button class="submit-order-form" type="submit">
                             Przeglądaj
                         </button>
@@ -41,9 +30,9 @@
 
                 <div class="order-option">
 
-                    <form method="post" action="order-details.php"> <!-- POST -> orderId -->
-                        <input type="hidden" name="order-id" value="%s"> <!-- order-id -->
-                        <input type="hidden" name="change-status" value="true"> <!-- "Zmień status" -> true -->
+                    <form method="post" action="order-details.php">
+                        <input type="hidden" name="order-id" value="%s">
+                        <input type="hidden" name="change-status" value="true">
                         <button class="submit-order-form" type="submit">
                             Zmień status
                         </button>
@@ -51,14 +40,14 @@
 
                 </div>
 
-                <div class="order-option">    <!-- orderId -->
-                    <a href="#" onclick="removeOrder(%s)">Archiwizuj</a> <!-- scripts\remove-order.js -->
+                <div class="order-option">
+                    <a href="#" onclick="removeOrder(%s)">Archiwizuj</a>
                 </div>
 
-            </div> <!-- .order-action-options -->
+            </div>
 
-        </div> <!-- .order-options-container -->
+        </div>
 
-    </div> <!-- .order-action -->
+    </div>
 
-</div> <!-- .order order-content -->
+</div>

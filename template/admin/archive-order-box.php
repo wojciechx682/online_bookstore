@@ -5,9 +5,9 @@
 
     <h2>Archiwizuj zamówienie</h2>
 
-    <i class="icon-cancel"></i><hr> <!-- icon-cancel%s - id_zamowienia -->
+    <i class="icon-cancel"></i><hr>
 
-    <div class="delivery-date hidden"> <!--  delivery-date%s - id_zamowienia -->
+    <div class="delivery-date hidden">
 
         <form class="remove-order" action="remove-order.php" method="post">
 
@@ -15,19 +15,17 @@
 
             <span class="info">Dodaj komentarz wyjaściajacy powód zarchiwizowania zamówienia</span>
 
-            <textarea name="comment" id="comment" class="comment" onfocus="resetError(this)" maxlength="255"></textarea> <!-- maxlength="50" minlength="10" -->
+            <textarea name="comment" id="comment" class="comment" onfocus="resetError(this)" maxlength="255"></textarea> <!-- minlength="10" maxlength="255" -->
 
             <span class="remove-order-error hidden">
                 Opinia powinna zawierać od 10 do 255 znaków, oraz nie zawierać znaków specjalnych
             </span>
 
-            <!--<div style="clear: both;"></div>-->
-
             <button type="submit" class="update-order-status btn-link btn-link-static">Potwierdź</button>
 
         </form>
 
-        <button class="cancel-order update-order-status btn-link btn-link-static">Anuluj</button> <!-- cancel-order%s - id_zamowienia -->
+        <button class="cancel-order update-order-status btn-link btn-link-static">Anuluj</button>
 
     </div> <!-- .delivery-date -->
 

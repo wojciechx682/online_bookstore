@@ -16,7 +16,6 @@
 <?php if ( isset($_SESSION["application-error"]) && $_SESSION["application-error"] ) : ?>
 
     <?php unset($_SESSION["application-error"]); ?>
-    <?php //session_unset(); ?>
 
     <script>
         let statusBox = document.getElementById("application-error-message");
@@ -25,7 +24,6 @@
         container.classList.toggle("bright");
         let confirmBtn = document.getElementById("confirm-message");
         confirmBtn.addEventListener("click", function() {
-            //console.log("\nclicked ! ");
             statusBox.classList.toggle("hidden");
             container.classList.toggle("bright");
             container.style.pointerEvents = "none"; // ✓

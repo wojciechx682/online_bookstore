@@ -67,16 +67,6 @@
 
     window.addEventListener("load", () => {
 
-        /*let compare = {
-            name: function(a, b) {
-                if(a < b) {
-                    return -1;
-                } else {
-                    return a > b ? 1 : 0;
-                }
-            }
-        };*/
-
         let isAscending = true;
 
         let orderRows = Array.from(document.querySelectorAll(".order-content")); // zamówienie - wiersz w tabeli;
