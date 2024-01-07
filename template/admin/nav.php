@@ -3,7 +3,7 @@
 
 <aside id="admin-nav">
 
-    <div id="nav" class="nav-visible admin-nav"> <!-- ! html5 nav -->
+    <div id="nav" class="nav-visible admin-nav">
 
         <div id="admin-data">
 

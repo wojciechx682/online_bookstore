@@ -51,7 +51,7 @@ document.querySelector("form.remove-order").addEventListener("submit", function(
 
         //$('.remove-order-error').css('display', 'none'); // usuń komunikat z błędem
         //$(".remove-order-error").addClass("hidden");
-        document.querySelector(".remove-order-error").classList.add("hidden"); // pokaż komunikat z błędem;
+        document.querySelector(".remove-order-error").classList.add("hidden"); // ukryj komunikat z błędem;
 
         /*$.ajax({
             type: "POST",                    // GET or POST;
@@ -211,5 +211,4 @@ $("div.delivery-date").append("<span class='update-failed'>Status: " + jqXHR.sta
             $("img#loading-icon").toggleClass("not-visible");
         });
     }
-
 });

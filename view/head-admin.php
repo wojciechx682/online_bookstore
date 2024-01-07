@@ -9,6 +9,7 @@
             <link rel="stylesheet" href="../css/book-page.css">
             <link rel="stylesheet" href="../css/new.css">
             <link rel="stylesheet" href="../css/admin.css">
+            <link rel="stylesheet" href="../css/admin-main-page.css">
 
             <link href="../assets/fontello/css/fontello.css" rel="stylesheet" type="text/css"> <!-- <-- fontello -->
 
