@@ -27,13 +27,6 @@
                     </header>
 
                     <?php
-                            //require "../view/admin/order-header.php"; // table header; // ?
-                        /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                        echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
-                    ?>
-
-                    <?php
                         query("SELECT zm.id_zamowienia,
                                        zm.data_zlozenia_zamowienia,
                                        zm.status,
@@ -61,37 +54,20 @@
     </div> <!-- main-container -->
 
         <?php
-                /*query("SELECT zm.id_zamowienia,
-                                zm.data_zlozenia_zamowienia,
-                                kl.imie, kl.nazwisko,
-                                pl.kwota, pl.sposob_platnosci,
-                                zm.status
-                            FROM zamowienia AS zm, klienci AS kl, platnosci AS pl
-                            WHERE zm.id_zamowienia = pl.id_zamowienia AND
-                            zm.id_klienta = kl.id_klienta", "get_orders_boxes", "");
-                // remove (archive) order box; used another query because of the brightness effect - to be outside <div#all-container>*/
-
             // zamiana na pojedyncze okno Archiwizowania zamówienia -->
-
             require "../template/admin/archive-order-box.php"; // order-box - okno archiwizowania zamówienia;
         ?>
 
-<script>
-
-
-
-</script>
-
     <img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
 
-<script src="remove-order.js"></script> <!-- AJAX - admin\remove-order.js -->
-<script src="../scripts/admin-orders.js"></script> <!-- funkcje JS na stronie admin\orders.php - resetowanie okna Archiwizowania, -->
+    <script src="remove-order.js"></script> <!-- AJAX - admin\remove-order.js -->
+    <script src="../scripts/admin-orders.js"></script> <!-- funkcje JS na stronie admin\orders.php - resetowanie okna Archiwizowania, -->
 
 <script>
 
-    /*window.addEventListener("load", () => {
+    window.addEventListener("load", () => {
 
-        /!*let compare = {
+        /*let compare = {
             name: function(a, b) {
                 if(a < b) {
                     return -1;
@@ -99,7 +75,7 @@
                     return a > b ? 1 : 0;
                 }
             }
-        };*!/
+        };*/
 
         let isAscending = true;
 
@@ -131,12 +107,12 @@
             $('.order-content').remove();
             $(orderRows).insertAfter($('.order').last());
         });
-    });*/
+    });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // sortowanie zawartości (wierszy) - po kliknięciu nagłówka (pola)
 
-    /*window.addEventListener("load", () => {
+    window.addEventListener("load", () => {
 
         let isAscending = true;
 
@@ -194,7 +170,7 @@
                 $(orderRows).insertAfter($('.order').last());
             });
         });
-    });*/
+    });
 
     // Ten kod:
 
