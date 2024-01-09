@@ -99,7 +99,7 @@ document.querySelector("form#update-order-date").addEventListener("submit", func
             console.log("\n 88 todayDate.getTime() -> ", todayDate.getTime());*/
         error(5);
 
-    } else if (selectedOption.value === "shipped" && (isNaN(expDeliveryDate.getTime()) || isNaN(sentDate.getTime()) || isNaN(sentTime.getTime()) || expDeliveryDate < todayDate || sentDate < todayDate || sentTime < todayDate || expDeliveryDate < sentDate)) {
+    } else if (selectedOption.value === "shipped" && (isNaN(expDeliveryDate.getTime()) || isNaN(sentDate.getTime()) || isNaN(sentTime.getTime()) || expDeliveryDate < todayDate || sentDate < todayDate || expDeliveryDate < sentDate)) {
 
             // przeszła data, pusta (NaN), lub data_wysłania późniejsza niż termin_dostawy, ✔ godzina_wysłania (w dacie wysłania) wcześniejsza niż dzisiejsza data
         /*console.log("\n 87 expDeliveryDate.getTime() -> ", expDeliveryDate.getTime());

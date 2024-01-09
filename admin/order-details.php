@@ -1,12 +1,7 @@
 <?php
-
-
-    // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
     require_once "../authenticate-admin.php";
 
-    // PRG --> orders.php --> POST (order-id) --> order-details.php ;
-
-    if( $_SERVER['REQUEST_METHOD'] === "POST" ) { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶   GET / POST ...
+    if( $_SERVER['REQUEST_METHOD'] === "POST" ) {
 
         if (isset($_POST["order-id"]) && !empty($_POST["order-id"])) { // check if POST value (order-id) exists and is not empty;
 
@@ -18,12 +13,7 @@
 
             // Process the form data and perform necessary validations ;
 
-            $orderId = filter_var($_POST["order-id"], FILTER_SANITIZE_NUMBER_INT); // sanitize input - order-id ;
-                // Sanitization -> remove all characters except digits, plus and minus sign.
-                    // array_keys($_POST)[0] - order-id (id_zamówienia);
-                    // "1135"
-
-                // validate order-id - ✓ valid integer ;
+            $orderId = filter_var($_POST["order-id"], FILTER_SANITIZE_NUMBER_INT); // sanitize input - order-id;
             $_SESSION["order-id"] = filter_var($orderId, FILTER_VALIDATE_INT); // ✓ it ensures that the value is an integer - order-id ;
 
             // check if there is really an order with that id ;
@@ -31,58 +21,26 @@
 
             // check if there is really an order with that id (post - order-id);
             $orderExists = query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, kl.imie, kl.nazwisko
-                            FROM orders AS zm, customers AS kl
-                         WHERE zm.id_klienta = kl.id_klienta AND zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
+                                  FROM orders AS zm, customers AS kl
+                                  WHERE zm.id_klienta = kl.id_klienta AND zm.id_zamowienia = '%s'", "orderDetailsVerifyOrderExists", $_SESSION["order-id"]);
             // przestawi zmienną --> $_SESSION['order-exists'] na "true" - jeśli jest takie zamówienie (o takim id), jeśli num_rows > 0 ;
 
             if ($orderId === false || $_SESSION["order-id"] === false || empty($orderExists) || ($_SESSION["order-id"] != $_POST["order-id"])) {
-                // ✓ id-zamówienia (order-id) nie przeszło walidacji, LUB ✓ nie istnieje zamówienie o takim id; // invalid order-id OR order doesnt exist";
-                // musi być komunikat o błędzie (np okienko) + exit() ! ;
-                    // obsługa błędu - np przekierowanie na poprzednią stronę (orders.php) + wyświetlenie okienka z okmunikatem
-                    // na stronie index.php można sprawdzić, czy np ustawiona wartość $_SESSION["error_costam"] ma wartosc true, i wtedy wyswietlic okienko
-                        // $_SESSION["error"] = true ;
 
                 $_SESSION["application-error"] = true;
-
-                /*unset($_POST, $orderId, $_SESSION["order-id"], $_SESSION["order-exists"]);
-                    header('Location: orders.php');
-                        exit();*/
-
                 unset($_SESSION["order-id"]);
 
-            } else { // input is OK - order-id passed validation,    there is a order with that ID;
-                //               Valid order-id           and           order exist
-                // Execute code (such as database updates) here;
-                // Perform any required actions with the form data (e.g., database update);
-
-                //unset($_POST, $orderId, $_SESSION["order-exists"]); // keep $_SESSION["order-id"]
-                    // redirect to the page itself
-                    // header('Location: ___book.php', true, 303);
-
-                unset($_POST, $orderId, $orderExists); // $_SESSION["order-id"] <--
-
+            } else {
+                unset($_POST, $orderId, $orderExists);
                 // Redirect to \order-details.php - prevent form resubmission
                 header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);  // $_SESSION["order-id"] <--
                     exit();
-                // to prevent resubmitting the form
             }
 
             unset($_POST, $orderId, $orderExists);
 
         } else {
-            // zmienna POST nie istnieje,   nastąpiło wejście pod http://localhost:8080/online_bookstore/admin/order-details.php bez podania wartości w POST[] ;
-                //echo "<br> POST value (order-id) doesnt exist ! <br>" ;
-
-            //echo "<br>70<br>"; exit();
-
             $_SESSION["application-error"] = true;
-                /*header('Location: orders.php');
-                    exit();*/
-                            // $_SESSION["error"] = true ;
-                            /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                            echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                            echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
-                            //exit();
         }
 
         header('Location: orders.php', true, 303);
