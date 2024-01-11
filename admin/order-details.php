@@ -79,12 +79,6 @@
                     <h3 class="section-header">Szczegóły zamówienia</h3>
                 </header>
 
-                <?php
-                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
-                ?>
-
                 <h4 class="section-header order-details-header order-details-id">Zamówienie nr <span class="order-details-id"><?= $_SESSION["order-id"]; ?></h4>
                 <h4 class="section-header order-details-header order-details-date"><?= $_SESSION["order-date"]; ?></h4>
                 <h4 class="section-header order-details-header">Klient: <span class="order-details-id"><?= $_SESSION["client-name"], " ", $_SESSION["client-surname"] ?></span></h4>
@@ -307,42 +301,39 @@
 
 <!-- // ------------------------------------------------------------------------------------------------------------ -->
 
-<div class="update-status hidden" id="add-comment"> <!-- class -> update-status%s--> <!-- id_zamowienia -->
+<!--<div class="update-status hidden" id="add-comment">
 
     <h2>Dodaj komentarz do zamówienia</h2>
 
-    <i class="icon-cancel"></i><hr> <!-- icon-cancel%s - id_zamowienia -->
+    <i class="icon-cancel"></i><hr>
 
-    <div class="delivery-date"> <!--  delivery-date%s - id_zamowienia -->
+    <div class="delivery-date">
 
-        <form class="remove-order" action="remove-order.php" method="post"> <!-- class zamienić na add-order-comment -->
+        <form class="remove-order" action="remove-order.php" method="post">
 
-            <input type="hidden" name="order-id" id="orderId" value="<?= $_SESSION["order-id"]; ?>"> <!-- order-id -->
+            <input type="hidden" name="order-id" id="orderId" value="<?php /*= $_SESSION["order-id"]; */?>">
 
             <span class="info">Dodaj komentarz do zamówienia</span>
 
             <textarea name="comment" id="comment" class="comment" onfocus="resetError(this)" minlength="10" maxlength="255"></textarea>
-            <!-- maxlength="50" minlength="10" -->
 
             <span class="remove-order-error">Komentarz powinien zawierać od 10 do 255 znaków, oraz nie zawierać znaków specjalnych</span>
-            <!-- add-order-comment-error -->
+
             <div style="clear: both;"></div>
 
             <button type="submit" class="update-order-status btn-link btn-link-static">Dodaj</button>
 
         </form>
 
-        <button class="cancel-order update-order-status btn-link btn-link-static">Anuluj</button> <!-- cancel-order%s - id_zamowienia -->
+        <button class="cancel-order update-order-status btn-link btn-link-static">Anuluj</button>
 
-    </div> <!-- .delivery-date -->
+    </div>
 
-</div>
+</div>-->
 
 <script>
     // dodaj komentarz do zamówienia (okno) -->
-
-
-    document.getElementById("add-order-comment").addEventListener("click", () => {
+    /*document.getElementById("add-order-comment").addEventListener("click", () => {
         //let commentBox = document.getElementById("add-comment");
         //commentBox.classList.remove("hidden");
 
@@ -350,7 +341,7 @@
 
         console.log("orderId --> ", orderId);
         removeOrder(orderId);
-    });
+    });*/
 </script>
 
 

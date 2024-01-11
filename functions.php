@@ -1419,11 +1419,6 @@ use PHPMailer\PHPMailer\SMTP;
             // replace fields in $order string to author data from $result, display result content as HTML
             echo sprintf($order, $i, $row["id_ksiazki"], $row["id_magazynu"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"],$row["rok_wydania"],$row["ilosc"], $row["cena"]);
 
-                        /* if($i === 0) {
-                            $order_f = file_get_contents("../template/admin/order-details-footer.php");
-                            // replace fields in $order string to author data from $result, display result content as HTML
-                            echo sprintf($order_f, $row["kwota"]);
-                        } */
             $i++;
         }
 
