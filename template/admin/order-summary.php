@@ -8,7 +8,7 @@
 
     <!--<button class="update-order-status btn-link btn-link-static">Aktualizuj</button>-->
 
-    <span id="add-order-comment">Dodaj komentarz</span>
+    <!--<span id="add-order-comment">Dodaj komentarz</span>-->
 
 </div>
 
