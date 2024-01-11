@@ -509,6 +509,8 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
                 // -----------------------------------------------------------------------------------------------------
 
+                // Wyświetlenie ocen książki w postaci graficznych pasków. Każdy pasek reprezentuje ilość ocen dla danej wartości oceny (na przykład, ile razy książka otrzymała 5 gwiazdek, 4 gwiazdki itp.)
+
                 const bookRatingDetails = document.querySelectorAll(".book-rating-details"); // Kolekcja NodeList divów z żółtymi paskami ;
 
                 $ratings = <?= $_SESSION["raings_array"] ?>; // JSON -> obiekt JS -> (tablica z ocenami, key - ocena, value - ilosc ocen);
@@ -1009,7 +1011,7 @@ window.addEventListener('load', function() {
         let content = document.getElementById("content");
         let paddingLeftValue = ((Math.pow(window.innerWidth-800, 2))/1000)
 
-        if(paddingLeftValue < 0) {
+     z   if(paddingLeftValue < 0) {
             paddingLeftValue = 0;
         }
         content.style.paddingLeft = paddingLeftValue.toString() + "%";
