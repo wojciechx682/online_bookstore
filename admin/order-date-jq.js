@@ -23,15 +23,9 @@
 
 document.querySelector("form#update-order-date").addEventListener("submit", function(event) {
 
-    // use DOMPurify for date sanitization here
-
     event.preventDefault(); // event - obiekt zdarzenia;
     let form = this; // element który wywołał zdarzenie (form) - obiekt DOM;
-        console.log("\n form =>\n", form);
-        console.log("\n form.elements =>\n", form.elements);
-
     const todayDate = new Date(); // utworzenie obiektu klasy Date --> w calu walidacji daty; // bieżąda Data i Czas;
-        console.log("\ntodayDate =>\n", todayDate);
     let hours = todayDate.getHours();
     let minutes = todayDate.getMinutes();
     let seconds = todayDate.getSeconds();
@@ -44,10 +38,6 @@ document.querySelector("form#update-order-date").addEventListener("submit", func
         let sentTime = form.elements["dispatch-time"].value;           // godzina wysłania
         let [sentHour, sentMinute, sentSecond] = sentTime.split(":").map(Number);
         sentTime = new Date();
-        /*sentTime.setHours(sentHour);
-        sentTime.setMinutes(sentMinute);*/
-            //sentTime.setSeconds(seconds);
-    //let sentTime = new Date(form.elements["dispatch-time"].value);     // godzina wysłania
     let dateDelivered = new Date(form.elements["delivered-date"].value); // data_dostarczenia
 
     console.log("\n expDeliveryDate =>\n", expDeliveryDate);
