@@ -1,6 +1,5 @@
 <?php
-    // check if user is logged-in, and user-type is "admin" - if not, redirect to login page;
-    require_once "../authenticate-admin.php";
+    require_once "../authenticate-admin.php"; // check if user is logged-in, and user-type is "admin" - if not, redirect to login page;
 ?>
 
 <!DOCTYPE HTML>
@@ -125,7 +124,7 @@
                                 </label>
 
                                 <input
-                                    style="/*opacity: 0;*/ display: none;"
+                                    style="display: none;"
                                     type="file"
                                         name="add-book-image"
                                         id="add-book-image"
@@ -137,21 +136,6 @@
                             </p>
                         </div>
 
-                            <!--<label for="add-book-image" class="add-book-image btn-link btn-link-static">
-                                Wybierz plik
-                            </label>-->
-
-                        <!--<input
-                                style="/*opacity: 0;*/ display: none;"
-                                type="file"
-                                name="add-book-image"
-                                id="add-book-image"
-                                accept="image/*">
-
-                        <div class="preview">
-                            <p>No files currently selected for upload</p>
-                        </div>-->
-
                         <hr id="book-details-hr">
 
                         <div> <!-- opis - varchar(1000) -->
@@ -161,8 +145,6 @@
                                         Opis
                                     </label>
                                 </span>
-                                    <!--<input type="text" required
-                                       name="add-book-desc" id="add-book-desc">-->
 
                                 <textarea name="add-book-desc" id="add-book-desc"
                                           rows="5"
@@ -246,7 +228,6 @@
                                         name="add-book-subcategory">
                                     <?php
                                         query("SELECT subkt.id_subkategorii, subkt.nazwa, subkt.id_kategorii FROM subcategories AS subkt", "createSubcategorySelectList", "");
-
                                         // <option value={id-PODkategorii} > "28"
                                         // <option value={id-PODkategorii} > "34"
                                         // <option value={id-PODkategorii} > "26"
