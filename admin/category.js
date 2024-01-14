@@ -1,13 +1,10 @@
 
 // admin/edit-books.php;
 
-// DOMContentLoaded
-// load
+let select = document.querySelector('select[id$="book-category"]');
+window.addEventListener("load", getSubcategories(select));
 
-let select = document.querySelector('select[id$="book-category"]'); // subcategory select list;
-window.addEventListener("load", getSubcategories(select)); // init load;
-
-function getSubcategories(categorySelect) {      // categorySelect --> <select> element (kategoria);
+function getSubcategories(categorySelect) {
 
         // returns subcategories for given category (category-id);
 
@@ -31,9 +28,7 @@ function getSubcategories(categorySelect) {      // categorySelect --> <select> 
     // 	        <option value="7">Poezja</option>
     // </select>
 
-        //let categoryId = document.getElementById('edit-book-category').value;
     let categoryId = categorySelect.value;
-    // "2" - string; - (!) id_kategorii;
 
     // create XMLHttpRequest Object ; --> wysyłanie żądań AJAX  +  obsługa odpowiedzi ;
     // meotdy -->   .open()
@@ -41,8 +36,6 @@ function getSubcategories(categorySelect) {      // categorySelect --> <select> 
 
     console.log("\n\n categoryId --> ", categoryId);
     console.log("\n\n typeof categoryId --> ", typeof categoryId);
-
-    //return;
 
     // send an AJAX request to fetch the subcategories based on the selected category;
 
@@ -78,7 +71,6 @@ function getSubcategories(categorySelect) {      // categorySelect --> <select> 
 
                 // update the subcategories select list;
 
-                    //let subcategorySelect = document.getElementById('edit-book-subcategory');
                 let subcategorySelect = document.getElementById('book-subcategory'); // <select> list (POD-kategorie)
                 subcategorySelect.innerHTML = ''; // clear previous options
 
@@ -155,8 +147,6 @@ $("form.edit-book-data").on("submit", function(e) {
         console.log("\nbookQuantity -> ", bookQuantity);
         console.log("\nbookId -> ", bookId); // <script>alert()</script>
 
-    //return;
-
     if (
         bookTitle !== data[0][0].value || bookTitle.length > 255 ||   // check, if values were correct (if passed validation);
         bookAuthor !== data[0][1].value || isNaN(bookAuthor) ||
@@ -177,34 +167,6 @@ $("form.edit-book-data").on("submit", function(e) {
         // data didn't pass validation;
         result.innerHTML = "<span class='update-failed'>Wystąpił problem. Podaj poprawne dane</span>";
     } else {
-            /*$.ajax({                             // Handle AJAX request;
-                type: "POST",                    // GET or POST;
-                url: "edit-book-data.php",       // Path to file (that process the <form> data);
-                data: formData,                  //  ̶s̶e̶r̶i̶a̶l̶i̶z̶e̶d̶ ̶<̶f̶o̶r̶m̶>̶ ̶d̶a̶t̶a̶;̶ // Use the FormData object instead of serialized data;
-                    processData: false,              // (?) Prevent jQ from processing the data;
-                    contentType: false,              // (?) Let the browser set the content type automatically;
-                timeout: 2000,                   // Waiting time;
-                beforeSend: function() {         // Before Ajax - function called before sending the request;
-                    $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
-                },
-                complete: function() {           // Once finished - function called always after sending request;
-                    $("img#loading-icon").toggleClass("not-visible");
-                },
-                success: function(data) {        // Show content; // data - dane zwrócone z serwera !;
-                    $('div.result').html(data); // ✓ tutaj należy zastąpić tą linię danymi zwróconymi z serwera - to serwer udziela odpiwedzi czy udało się zaktualizować dane !;
-                        //confirmButton.hide();                  // "Potwierdź";
-                        //cancelButton.hide();                   // "Anuluj";
-                        //$("div.delivery-date").append(data);   // data - dane zwrócone z serwera;
-                            // finishArchive();
-                },
-                error: function(data) { /!*postData*!/                      // Show error msg;
-                    $('div.result').html(data); // tutaj należy zastąpić tą linię danymi zwróconymi z serwera - to serwer udziela odpiwedzi czy udało się zaktualizować dane !;
-                            //$content.html('<div id="container">Please try again soon.</div>');
-                        //confirmButton.hide(); // "Potwierdź";
-                        //cancelButton.hide();  // "Anuluj";
-                        //$("div.delivery-date").append(data).fadeIn(1000); // data - dane zwrócone z serwera;
-                }
-            });*/
 
         $.ajax({                             // Handle AJAX request;
             //type: "POST",                    // GET or POST;

@@ -25,20 +25,14 @@
                                       the code inside the file before redirecting. */
                         }
 
-	/*function advanced_search($result)
-	{
-        // - .../index2.php
-		get_books($result);
-	}*/
-
 require_once "vendor/autoload.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-    function getAuthors($result) // get_authors // \user\index.php - left <nav>
-    {
-        // tworzy elementy listy <li> - w których kazdy wyświetli imie i nazwisko autora ;
+    function getAuthors($result) {
+        // get_authors // \user\index.php - left <nav>
+        // tworzy elementy listy <li> - w których kazdy wyświetli imie i nazwisko autora;
 
         // funkcja "get_authors" wykona się tylko, jeśli $result zawiera rekordy - czyli jeśli istnieje conajmniej jeden autor !
 
@@ -57,7 +51,8 @@ use PHPMailer\PHPMailer\SMTP;
         }
     }
 
-    function getAuthorsAdvSearch($result) { // get_authors_adv_search // \user\index.php - header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
+    function getAuthorsAdvSearch($result) {
+        // get_authors_adv_search // \user\index.php - header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
 
         // load the content from the external template file into string
         $author = file_get_contents("../template/adv-search-authors.php");
@@ -66,32 +61,15 @@ use PHPMailer\PHPMailer\SMTP;
 
         while ($row = $result->fetch_assoc()) { // tyle ile jest autorów (imie, nazwisko, id_autora)
 
-            //echo "\n".'<option value="'.$row['id_autora'].'">'.$row['imie']." ".$row['nazwisko'].'</option>';
-
             // replace fields in $author string to author data from $result, display result content as HTML
             echo sprintf($author, $row["id_autora"], $row["imie"], $row["nazwisko"]);
         }
-
-        //$result->free_result();
-
-//        while ($row = $result->fetch_assoc())
-//        {
-//            // load the content from the external template file into string
-//            $author = file_get_contents("../template/adv-search-authors.php");
-//
-//            // replace fields in $author string to author data from $result, display result content as HTML
-//            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"]);
-//        }
-//
-//        echo '</ul>';
-//        $result->free_result();
     }
 
-	function getCategories($result) // get_categories // \user\index.php - top-nav - ol;
-	{
-        // wyświetla listę kategorii;   wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
+	function getCategories($result) {
 
-            /*echo "\n".'<li><a href="index.php?kategoria='.$category_name.'">'.$category_name.'</a></li>';*/ //  ̶Z̶a̶m̶i̶a̶n̶a̶ ̶n̶a̶ ̶j̶Q̶u̶e̶r̶y̶ ̶?̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶?̶
+	    // get_categories // \user\index.php - top-nav - ol;
+        // wyświetla listę kategorii;   wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
 
         $categoryName = "Wszystkie";
 
@@ -106,11 +84,11 @@ use PHPMailer\PHPMailer\SMTP;
             echo sprintf($listItem, $row["nazwa"], $row["nazwa"]);
 		}
 
-        //$result->free_result();
-	}
+    }
 
-    function getCategoriesAdvSearch($result) // get_categories_adv_search // \user\index.php // advanced_search --> <select> - lista kategorii;
-    {
+    function getCategoriesAdvSearch($result) {
+
+        // get_categories_adv_search // \user\index.php // advanced_search --> <select> - lista kategorii;
         $categoryName = "Wszystkie";
 
         // load the content from the external template file into string
@@ -119,109 +97,48 @@ use PHPMailer\PHPMailer\SMTP;
         echo sprintf($category, $categoryName, $categoryName);
 
         while ($row = $result->fetch_assoc()) { // tyle ile jest kategorii
-
             // replace fields in $author string to author data from $result, display result content as HTML
             echo sprintf($category, $row["nazwa"], $row["nazwa"]);
         }
-
-        //$result->free_result();
     }
 
     function getCategoriesAdmin($result) {
 
         require "../view/admin/categories-header.php"; // table header;
 
-        /*while($row = $result->fetch_assoc()) {
-
-            echo "<br> ".$row["id_kategorii"]." ".$row["nazwa"]." ";
-
-        }*/
-
         $i = 0;
 
         while($row = $result->fetch_assoc()) {
-            // echo "<br>" . $row["id_zamowienia"] . " | " . $row["data_zlozenia_zamowienia"] . " | " . $row["imie"] . " " . $row["nazwisko"] . " | " . $row["kwota"] . " | " . $row["sposob_platnosci"] . " | " . $row["status"] . "<br><hr>";
             // load the content from the external template file into string
             $category = file_get_contents("../template/admin/categories.php");
             // replace fields in $order string to author data from $result, display result content as HTML
             echo sprintf($category, $row['id_kategorii'], $row["nazwa"], $row["id_kategorii"], $row["id_kategorii"], $row["nazwa"], $row["id_kategorii"]);
+            $i++;
+        }
+    }
+
+	function getBooks($result) {
+
+        // get_books - content -> wyświetla wszystkie książki
+
+        // funkcja wykona się, tylko jeśli $result zawiera conajmniej jeden rekord;
+
+        $i = 0;
+
+        while ($row = $result->fetch_assoc()) {
+
+            // load the content from the external template file into string
+            $book = file_get_contents("../template/content-books.php");
+
+            $row["ilosc_egzemplarzy"] = ($row["ilosc_egzemplarzy"] === null) ? 'niedostępna' : ($row["ilosc_egzemplarzy"] > 0 ? 'dostępna' : 'niedostępna');
+
+            $button = ($row["ilosc_egzemplarzy"] === 'dostępna') ? '' : 'disabled'; // "Dodaj do koszyka" - <button> ;
+
+            // replace fields in $book string to book data from $result, display result content as HTML
+            echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"], $button);
 
             $i++;
         }
-
-    }
-
-	function getBooks($result) // get_books
-	{
-        // content -> wyświetla wszystkie książki
-
-        // funkcja wykona się, tylko jeśli $result zawiera conajmniej jeden rekord !
-
-        /*echo '<div id="content">';
-            echo '<div id="content-books">';*/
-
-                $i = 0;
-
-                //if($result->num_rows) { // 1, 2, 3, ...
-
-                    //echo "<br> 140 <br>"; exit();
-
-                    while ($row = $result->fetch_assoc())
-                    {
-
-                        //		  	echo '<div id="book'.$i.'" class="book">';
-                        //			  	echo '<div class="title">'.$_SESSION['tytul'].'</div><br>';
-                        //			  	echo '<div class="price">'.$_SESSION['cena'].'</div><br>';
-                        //			  	echo '<div class="year">'.$_SESSION['rok_wydania'].'</div><br>';
-                        //			  	echo '<form action="add_to_cart.php" method="post">';
-                        //			  		echo '<input type="hidden" name="id_ksiazki" value="'.$_SESSION['id_ksiazki'].'">';
-                        //			  		echo '<input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">';
-                        //			  		echo '<button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>';
-                        //			  	echo '</form>';
-                        //		  	echo '</div>';
-
-                        //            $book = '
-                        //                <div id="book%s" class="book">
-                        //                    <div class="title">%s</div><br>
-                        //                    <div class="price">%s</div><br>
-                        //                    <div class="year">%s</div><br>
-                        //                    <form action="add_to_cart.php" method="post">
-                        //                        <input type="hidden" name="id_ksiazki" value="%s">
-                        //                        <input type="hidden" name="koszyk_ilosc" id="koszyk_ilosc"  value="1">
-                        //                        <button type="submit" name="your_name" value="your_value" class="btn-link">Dodaj ko koszyka</button>
-                        //                    </form>
-                        //                </div>
-                        //            ';
-
-                        // load the content from the external template file into string
-                        $book = file_get_contents("../template/content-books.php");
-
-                        /*if($row["ilosc_egzemplarzy"] == null) {
-                            $row["ilosc_egzemplarzy"] = 'niedostępna';
-                        } else {
-                            if($row["ilosc_egzemplarzy"] > 0) {
-                                $row["ilosc_egzemplarzy"] = 'dostępna';
-                            }
-                        }*/
-                        $row["ilosc_egzemplarzy"] = ($row["ilosc_egzemplarzy"] === null) ? 'niedostępna' : ($row["ilosc_egzemplarzy"] > 0 ? 'dostępna' : 'niedostępna');
-
-                        $button = ($row["ilosc_egzemplarzy"] === 'dostępna') ? '' : 'disabled'; // "Dodaj do koszyka" - <button> ;
-
-                        // replace fields in $book string to book data from $result, display result content as HTML
-                        echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["rating"], $row["ilosc_egzemplarzy"], $row["id_ksiazki"], $button);
-
-                        $i++;
-                    }
-
-                /*} else {
-                    echo '<span class="main-page-search-result-error">Brak wyników</span>';
-
-                }*/
-
-            /*echo '</div>'; // #content-books;
-        echo '</div>'; // #content;*/
-
-		//$result->free_result();
 	}
 
     function updateBookRates($result) {
@@ -238,10 +155,9 @@ use PHPMailer\PHPMailer\SMTP;
         if ($row["liczba_ocen"] == 0) {
             query("UPDATE books SET rating = '' WHERE books.id_ksiazki = '%s'", "", $row["id_ksiazki"]);
         }
-
     }
 
-    function getBook($result) { // get_book
+    function getBook($result) {
 
         // get book-details on book.php - page ;
 
@@ -273,23 +189,18 @@ use PHPMailer\PHPMailer\SMTP;
         $book = file_get_contents("../template/book-page.php");
 
                 // wstaw do Z.S wartości zwrócone z Bazy (!);
-                $_SESSION["avg_rating"] = $row["rating"];   // average book rating - "4.25" ;
+                $_SESSION["avg_rating"] = $row["rating"];       // average book rating - "4.25" ;
                 $_SESSION["rating"] = $row["rating"];           // average book rating - "4.25" ;
-
                 $_SESSION["liczba_ocen"] = $row["liczba_ocen"]; // number of reviews - "2" ;
                 $_SESSION["id_ksiazki"] = $row["id_ksiazki"];   // book-id - "1" ;
 
-        /*if ($_SESSION["liczba_ocen"] == 0) {
-            query("UPDATE ksiazki SET rating = '' WHERE ksiazki.id_ksiazki = '%s'", "", $_SESSION["book-id"]); // afected rows !!!
-        }*/
 
-
-        if ( isset($_SESSION["rate-error"]) ) { // komunikat - błąd przy dodawaniu oceny przez klienta ;
+        if (isset($_SESSION["rate-error"])) { // komunikat - błąd przy dodawaniu oceny przez klienta ;
 
             $message = $_SESSION["rate-error"];
                 unset($_SESSION["rate-error"]);
 
-        } elseif ( isset($_SESSION["rate-success"]) ) {
+        } elseif (isset($_SESSION["rate-success"])) {
 
             $message = $_SESSION["rate-success"];
                 unset($_SESSION["rate-success"]);
@@ -299,23 +210,24 @@ use PHPMailer\PHPMailer\SMTP;
             $message = "";
         }
 
-                if( isset($row["liczba_egzemplarzy"]) && ! empty($row["liczba_egzemplarzy"]) ) { // wyświetlenie statusu o dostępności książki (na bazie staów magazynowych) + odpowiednia akcja na przycisku dodania do koszyka (jeśli nie ma ksążki w magazynie - wyłączenie przycisku dodania ksiązki do koszyka);
+        if( isset($row["liczba_egzemplarzy"]) && !empty($row["liczba_egzemplarzy"]) ) {
+            // wyświetlenie statusu o dostępności książki (na bazie staów magazynowych) + odpowiednia akcja na przycisku dodania do koszyka (jeśli nie ma ksążki w magazynie - wyłączenie przycisku dodania ksiązki do koszyka);
 
-                    if($row["liczba_egzemplarzy"] > 0) {
-                        $status = "dostępna";
-                        $submit = "enabled";
-                    } else {
-                        $status = "niedostępna";
-                        $submit = "disabled";
-                    }
-                } else {
-                    $status = "niedostępna";
-                    $submit = "disabled";
-                }
+            if($row["liczba_egzemplarzy"] > 0) {
+                $status = "dostępna";
+                $submit = "enabled";
+            } else {
+                $status = "niedostępna";
+                $submit = "disabled";
+            }
+        } else {
+            $status = "niedostępna";
+            $submit = "disabled";
+        }
 
         // replace fields in $book string to book data from $result, display result content as HTML ;
         echo sprintf($book, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["rating"], $row["liczba_ocen"], $row["liczba_komentarzy"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["cena"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $row["id_ksiazki"], $status, $submit);
-        // ../template/book-page.php ;
+        // ../template/book-page.php;
 
         // pobranie komentarzy do książki - (id_klienta, treść, data, imie_klienta, ocena (rt)) - należących do tej książki (id_ksiazki);
 
@@ -357,17 +269,16 @@ use PHPMailer\PHPMailer\SMTP;
 
         echo sprintf($book_page_tabs, $row["opis"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["nazwa_wydawcy"], $row["ilosc_stron"], $row["rok_wydania"], $row["wymiary"], ucfirst($row["oprawa"]), ucfirst($row["stan"]), $row["kategoria"], $row["podkategoria"], round($row["rating"],2), $message, implode($_SESSION["comments"]));
 
-        // file_put_contents("../template/book-page-tabs-modified.php", $modified);
     }
 
-    function getRatings($result) { // get_ratings // user\book.php   // "ocena", "liczba_ocen" ;
+    function getRatings($result) {
 
+        // get_ratings // user\book.php   // "ocena", "liczba_ocen";
         // wstawia do tablicy sesyjnej - ilości poszczególnych ocen dla książki ->   5 -> 4,  4 -> 26,  3 -> 15, ....
 
         // $_SESSION["ratings"] -> [5] => 2 [4] => 1, ... ;
 
         //    ocena      liczba_ocen
-
         //      5 	         2
         //      4 	         1
         //     ... 	        ...
@@ -380,20 +291,7 @@ use PHPMailer\PHPMailer\SMTP;
             $num_of_ratings = $row['liczba_ocen'];
 
             $_SESSION["ratings"][$book_rating] = $num_of_ratings;
-
         }
-           //  ̶$̶_̶S̶E̶S̶S̶I̶O̶N̶[̶"̶r̶a̶t̶i̶n̶g̶s̶"̶]̶ ̶-̶>̶ ̶[̶5̶]̶ ̶=̶>̶ ̶2̶ ̶[̶4̶]̶ ̶=̶>̶ ̶1̶,̶ ̶.̶.̶.̶ ̶;̶
-           // $_SESSION["ratings"] -> Array ( [5] => 2
-           //                                 [4] => 1
-           //                                 [3] => 3
-           //                                 [2] => 2 ) ;
-
-        /*echo "<br><hr><br>".'$_SESSION["ratings"] --> '."<br>";
-            print_r($_SESSION["ratings"]);
-            echo "<br><br>";
-        exit();*/
-
-        //$result->free_result();
     }
 
     function verifyRateExists($result = null) { // verify_rate_exists
@@ -403,9 +301,9 @@ use PHPMailer\PHPMailer\SMTP;
         $_SESSION["rate_exists"] = true;
     }
 
-    function getComments($result) { // get_comments // "km.id_klienta", "km.treść", "km.data", "kl.imie", "rt.ocena" ;
+    function getComments($result) {
 
-        // ̶$̶i̶ ̶=̶ ̶0̶;̶
+        // get_comments // "km.id_klienta", "km.treść", "km.data", "kl.imie", "rt.ocena" ;
 
         // 342   Mauris venenatis quis metus non faucibus. Duis id ... 	2023-06-23 00:30:04 	Adam 	3
         // 343   Maecenas nulla est, semper vestibulum bibendum ac,... 	2023-06-23 00:30:46 	Adam 	4
@@ -416,22 +314,18 @@ use PHPMailer\PHPMailer\SMTP;
 
         $_SESSION["comments"] = []; // stworzenie nowej pustej tablicy ;
 
-        while ( $row = $result->fetch_assoc() ) // tyle ile jest komentarzy do tej książki;
+        while ($row = $result->fetch_assoc()) // tyle ile jest komentarzy do tej książki;
         {
             // load the content from the external template file into string ;
             $comment = file_get_contents("../template/book-comment.php");
 
-            //  ̶r̶e̶p̶l̶a̶c̶e̶ ̶f̶i̶e̶l̶d̶s̶ ̶i̶n̶ ̶$̶b̶o̶o̶k̶ ̶s̶t̶r̶i̶n̶g̶ ̶t̶o̶ ̶b̶o̶o̶k̶ ̶d̶a̶t̶a̶ ̶f̶r̶o̶m̶ ̶$̶r̶e̶s̶u̶l̶t̶,̶ ̶d̶i̶s̶p̶l̶a̶y̶ ̶r̶e̶s̶u̶l̶t̶ ̶c̶o̶n̶t̶e̶n̶t̶ ̶a̶s̶ ̶H̶T̶M̶L̶ ̶;̶ ̶
-            $_SESSION["comments"][] = sprintf($comment, $row["imie"], $row["data"], $row["ocena"], $row["tresc"]); //  ̶r̶e̶t̶u̶r̶n̶ ̶
-
-            //$̶i̶+̶+̶;̶
+            //  ̶r̶e̶p̶l̶a̶c̶e̶ ̶f̶i̶e̶l̶d̶s̶ ̶i̶n̶ ̶$̶b̶o̶o̶k̶ ̶s̶t̶r̶i̶n̶g̶ ̶t̶o̶ ̶b̶o̶o̶k̶ ̶d̶a̶t̶a̶ ̶f̶r̶o̶m̶ ̶$̶r̶e̶s̶u̶l̶t̶ ̶d̶i̶s̶p̶l̶a̶y̶ ̶r̶e̶s̶u̶l̶t̶ ̶c̶o̶n̶t̶e̶n̶t̶ ̶a̶s̶ ̶H̶T̶M̶L̶ ̶;̶ ̶
+            $_SESSION["comments"][] = sprintf($comment, $row["imie"], $row["data"], $row["ocena"], $row["tresc"]);
         }
-
-        //$result->free_result();
     }
 
     // ..\user\book.php - POST ;
-    function getBookId($result) { //get_book_id
+    function getBookId($result) { // get_book_id
         // get highest book-id from db to apply max-range filter in \user\book.php (POST);
             $row = $result->fetch_assoc();
         //$_SESSION["max-book-id"] = $row["id_ksiazki"]; // "35"
@@ -459,7 +353,7 @@ use PHPMailer\PHPMailer\SMTP;
         // validate book-id - ✓ valid integer in specific range ;
         $bookIdValidated  = filter_var($bookIdSanitized, FILTER_VALIDATE_INT, [
                 'options' => [
-                    'min_range' => 1,                       // Minimum allowed book-id value
+                    'min_range' => 1,         // Minimum allowed book-id value
                     'max_range' => $maxBookId // Maximum allowed book-id value (highest book-id in database) ; functions() -> "getBookId()"
                 ]
             ]
@@ -467,7 +361,6 @@ use PHPMailer\PHPMailer\SMTP;
 
 
         // check if there is really a book with that id ;
-        //unset($_SESSION["book_exists"]);
         $bookExists = query("SELECT id_ksiazki FROM books WHERE id_ksiazki = '%s'", "verifyBookExists", $bookIdValidated);
         // $_SESSION["book_exists"] --> true or NULL - zależnie od tego czy książka o takim ID istnieje;
 
@@ -479,10 +372,11 @@ use PHPMailer\PHPMailer\SMTP;
         } else {
             return $bookIdValidated; // book-id - valid and exists (!) - return that ID
         }
-
     }
 
-    function checkBookAvailability($result) { // check if book is available in warehouse
+    function checkBookAvailability($result) {
+
+        // check if book is available in warehouse
         // add-to-cart.php
 
         $row = $result->fetch_assoc();
@@ -492,20 +386,15 @@ use PHPMailer\PHPMailer\SMTP;
         }
     }
 
+    function getAuthorId($result) {
 
+        // ..\admin\add-book-data, \edit-book-data - POST ;     \user\index.php - advanced-search - prg;
+        // get_author_id
 
-
-
-
-
-    // ..\admin\add-book-data, \edit-book-data - POST ;     \user\index.php - advanced-search - prg;
-    function getAuthorId($result) { // get_author_id
-
-        // wykona się tylko, jeśli zwrócono conajmniej 1 wiersz ! (num_rows)
+        // wykona się tylko, jeśli zwrócono conajmniej 1 wiersz; (num_rows)
 
         // get highest author-id from db to apply max-range filter in ..\admin\add-book-data, \edit-book-data (POST), \user\index.php - adv-search - prg;
         $row = $result->fetch_assoc();
-        //$_SESSION["max-author-id"] = $row["id_autora"]; // "25"
         return $row["id_autora"]; // "25"
     }
 

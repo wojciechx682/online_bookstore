@@ -1,28 +1,17 @@
 
 // admin/order-details.php ;
 
-// $.ajax({
-//   method: "POST",
-//   url: "some.php",
-//   data: { name: "John", location: "Boston" }
-// })
-//   .done(function( msg ) {
-//     alert( "Data Saved: " + msg );
-//   });
-
-//$("form#update-order-date").on("submit", function(e) {
-
 document.querySelector("form#update-order-date").addEventListener("submit", function(event) {
 
-    event.preventDefault(); // event - obiekt zdarzenia;
-    let form = this; // element który wywołał zdarzenie (form) - obiekt DOM;
-    const todayDate = new Date(); // utworzenie obiektu klasy Date --> w calu walidacji daty; // bieżąda Data i Czas;
+    event.preventDefault();
+    let form = this;
+    const todayDate = new Date();
     let hours = todayDate.getHours();
     let minutes = todayDate.getMinutes();
     let seconds = todayDate.getSeconds();
     let milliseconds = todayDate.getMilliseconds();
-        let list = document.getElementById("status-list");       // <select> list;
-        const selectedOption = list.options[list.selectedIndex]; // aktualnie wybrany element listy;
+        let list = document.getElementById("status-list");
+        const selectedOption = list.options[list.selectedIndex];
     let expDeliveryDate = new Date(form.elements["order-date"].value); // termin_dostawy
     let sentDate = new Date(form.elements["dispatch-date"].value);     // data_wysłania
         let sentTime = form.elements["dispatch-time"].value;           // godzina wysłania
@@ -104,7 +93,6 @@ document.querySelector("form#update-order-date").addEventListener("submit", func
                 $("div.delivery-date").append("<span class='update-failed'>" + data.message + "</span>");
 
             }
-
 
         }).fail(function(jqXHR, textStatus, errorThrown) {
             finishUpdate(); // hide <form> and Cancel <button>, set list <option> element to first one;
