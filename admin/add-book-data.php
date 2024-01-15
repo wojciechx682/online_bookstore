@@ -2,11 +2,7 @@
 
 //admin/category.js;
 
-/*session_start();
-include_once "../functions.php";*/
-
-// check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
-require_once "../authenticate-admin.php";
+require_once "../authenticate-admin.php"; // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
 
     if (
         isset($_POST['add-book-title']) && !empty($_POST['add-book-title']) &&
