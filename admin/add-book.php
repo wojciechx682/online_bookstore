@@ -287,22 +287,17 @@
 
         </div> <!-- #container -->
 
-        <!-- brauke footer'a w tym miejscu ? -->
-
     </div> <!-- #main-container -->
 
-        <img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
+    <img id="loading-icon" class="not-visible" src="../assets/loading-2-4-fast-update-status-date.gif" alt="loading-2">
 
-    <script src="category.js"></script> <!-- (!) nazwa robocza !!! -->
-
+    <script src="category.js"></script>
     <script src="add-book.js"></script> <!-- JS -> AJAX -> add-book-data.php -->
-        <script src="validate-file.js"></script> <!-- js input file validation -->
+    <script src="validate-file.js"></script> <!-- js input file validation -->
 
     <script>
         document.querySelector('textarea').value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
     </script>
-
-
 
 </body>
 </html>

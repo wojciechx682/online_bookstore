@@ -1,8 +1,8 @@
 <?php
 
-//admin/category.js;
+    //admin/category.js;
 
-require_once "../authenticate-admin.php"; // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
+    require_once "../authenticate-admin.php"; // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
 
     if (
         isset($_POST['add-book-title']) && !empty($_POST['add-book-title']) &&
@@ -18,80 +18,72 @@ require_once "../authenticate-admin.php"; // check if user is logged-in, and use
         isset($_POST['add-book-category']) && !empty($_POST['add-book-category']) &&
         isset($_POST['add-book-subcategory']) && !empty($_POST['add-book-subcategory']) &&
         isset($_POST['add-book-select-magazine']) && !empty($_POST['add-book-select-magazine']) &&
-        isset($_POST['add-book-quantity']) /*&& !empty($_POST['add-book-quantity'])*/
+        isset($_POST['add-book-quantity'])
     ) {
         // all required fields are SET and NOT EMPTY;   perform the necessary actions or validations here; // for example, add the book data in the database;
-
-                /* echo "<br> success <br><br>";
-                    echo "<br> tytuł - " . $_POST['edit-book-title'];
-                    echo "<br> autor (id) - " . $_POST['edit-book-change-author'];
-                    echo "<br> rok_wydania - " . $_POST['edit-book-release-year'];
-                    echo "<br> cena - " . $_POST['edit-book-price'] ;
-                    echo "<br> wydawca (id) - " . $_POST['edit-book-change-publisher'];
-                    echo "<br> opis - "  . $_POST['edit-book-desc'];
-                    echo "<br> oprawa - " . $_POST['edit-book-cover'];
-                    echo "<br> liczba_stron - " .$_POST['edit-book-pages'];
-                    echo "<br> wymiary - " . $_POST['edit-book-dims'];
-                echo "<br> kategoria (id) - " . $_POST['edit-book-category'] ;
-                echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'] . "<br>"; */
-
         // back-end validation;
-
         $maxAuthorId = query("SELECT id_autora FROM author ORDER BY id_autora DESC LIMIT 1", "getAuthorId", ""); // get highest author-id from db;
-            // $_SESSION["max-author-id"] => "35";
 
         query("SELECT id_wydawcy FROM publishers ORDER BY id_wydawcy DESC LIMIT 1", "getPublisherId", ""); // get highest publisher-id from db;
-            // $_SESSION["max-publisher-id"] => "5";
+        // $_SESSION["max-publisher-id"] => "5";
 
         query("SELECT id_kategorii FROM categories ORDER BY id_kategorii DESC LIMIT 1", "getCategoryId", ""); // get highest category-id from db;
-            // $_SESSION["max-category-id"] => "7";
+        // $_SESSION["max-category-id"] => "7";
 
         query("SELECT id_magazynu FROM warehouse ORDER BY id_magazynu DESC LIMIT 1", "getMagazineId", ""); // get highest magazine-id from db;
-            // $_SESSION["max-magazine-id"] => "2";
+        // $_SESSION["max-magazine-id"] => "2";
 
-            $title = filter_var($_POST['add-book-title'], FILTER_SANITIZE_STRING);
-            $author = filter_var($_POST['add-book-author'], FILTER_VALIDATE_INT, [
-                'options' => [
-                    'min_range' => 1,                          // minimum allowed value;
-                    'max_range' => $maxAuthorId                // maximum allowed value;
-                ]
-            ]);
-            // check if there is really author with that id ;
-            //$_SESSION['author-exists'] = false;
-            $authorExists = query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $author);
-                // sprawdzenie, czy ten autor istnieje w bd ; check if there is any author with given POST id; jeśli num_rows > 0 -> przestawi // $_SESSION['author-exists'] -> na true ;
-            $year = filter_var($_POST['add-book-release-year'], FILTER_VALIDATE_INT, [
-                'options' => [
-                    'min_range' => 1900, // minimum allowed value;
-                    'max_range' => 2023  // maximum allowed value;
-                ]
-            ]);
-            $price = filter_var($_POST['add-book-price'], FILTER_VALIDATE_FLOAT, [
-                'options' => [
-                    'min_range' => 1,    // minimum allowed value;
-                    'max_range' => 1000  // maximum allowed value;
-                ]
-            ]);
-            $publisher = filter_var($_POST['add-book-publisher'], FILTER_VALIDATE_INT, [
-                'options' => [
-                    'min_range' => 1,                             // minimum allowed value;
-                    'max_range' => $_SESSION["max-publisher-id"]  // maximum allowed value;
-                ]
-            ]);
+        $title = filter_var($_POST['add-book-title'], FILTER_SANITIZE_STRING);
 
-            // check if there is really publisher with that id ;
-                $_SESSION['publisher-exists'] = false;
-            query("SELECT id_wydawcy FROM publishers WHERE id_wydawcy = '%s'", "verifyPublisherExists", $publisher);
+        $author = filter_var($_POST['add-book-author'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,           // minimum allowed value;
+                'max_range' => $maxAuthorId // maximum allowed value;
+            ]
+        ]);
+        // check if there is really author with that id ;
 
-            $desc = filter_var($_POST['add-book-desc'], FILTER_SANITIZE_STRING);
-            $cover = filter_var($_POST['add-book-cover'], FILTER_SANITIZE_STRING);
-            $pages = filter_var($_POST['add-book-pages'], FILTER_VALIDATE_INT, [
-                'options' => [
-                    'min_range' => 1,    // minimum allowed value;
-                    'max_range' => 1500  // maximum allowed value;
-                ]
-            ]);
-            $dims = filter_var($_POST['add-book-dims'], FILTER_SANITIZE_STRING);
+        $authorExists = query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $author);
+        // sprawdzenie, czy ten autor istnieje w bd; check if there is any author with given POST id; jeśli num_rows > 0 -> zwróci true;
+
+        $year = filter_var($_POST['add-book-release-year'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1900, // minimum allowed value;
+                'max_range' => 2023  // maximum allowed value;
+            ]
+        ]);
+
+        $price = filter_var($_POST['add-book-price'], FILTER_VALIDATE_FLOAT, [
+            'options' => [
+                'min_range' => 1,    // minimum allowed value;
+                'max_range' => 1000  // maximum allowed value;
+            ]
+        ]);
+
+        $publisher = filter_var($_POST['add-book-publisher'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,                             // minimum allowed value;
+                'max_range' => $_SESSION["max-publisher-id"]  // maximum allowed value;
+            ]
+        ]);
+
+        // check if there is really publisher with that id ;
+        $_SESSION['publisher-exists'] = false;
+        query("SELECT id_wydawcy FROM publishers WHERE id_wydawcy = '%s'", "verifyPublisherExists", $publisher);
+
+        $desc = filter_var($_POST['add-book-desc'], FILTER_SANITIZE_STRING);
+
+        $cover = filter_var($_POST['add-book-cover'], FILTER_SANITIZE_STRING);
+
+        $pages = filter_var($_POST['add-book-pages'], FILTER_VALIDATE_INT, [
+            'options' => [
+                'min_range' => 1,    // minimum allowed value;
+                'max_range' => 1500  // maximum allowed value;
+            ]
+        ]);
+
+        $dims = filter_var($_POST['add-book-dims'], FILTER_SANITIZE_STRING);
+
         $category = filter_var($_POST['add-book-category'], FILTER_VALIDATE_INT, [
             'options' => [
                 'min_range' => 1,                           // minimum allowed value;
@@ -100,17 +92,17 @@ require_once "../authenticate-admin.php"; // check if user is logged-in, and use
         ]);
 
         // check if there is really category with that id ;
-        //$_SESSION['category-exists'] = false;
         $categoryExists = query("SELECT id_kategorii FROM categories WHERE id_kategorii = '%s'", "verifyCategoryExists", $category);
-        // $_SESSION['category-exists'] = true;
 
         $subcategory = filter_var($_POST['add-book-subcategory'], FILTER_VALIDATE_INT);
+
         $magazine = filter_var($_POST['add-book-select-magazine'], FILTER_VALIDATE_INT, [
             'options' => [
                 'min_range' => 1,                           // minimum allowed value;
                 'max_range' => $_SESSION["max-magazine-id"] // maximum allowed value;
             ]
         ]);
+
         // check if there is really warehouse with that id ;
         $_SESSION['warehouse-exists'] = false;
         query("SELECT id_magazynu FROM warehouse WHERE id_magazynu = '%s'", "verifyWarehouseExists", $magazine);
@@ -121,22 +113,6 @@ require_once "../authenticate-admin.php"; // check if user is logged-in, and use
                 'max_range' => 5000  // maximum allowed value;
             ]
         ]);
-
-        /* check -->
-            $title !== $_POST['edit-book-title']
-            $author === false (+ sprawdzenie czy istnieje taki autor - takie ID ?)
-            $year === false || < 1900 || > 2023
-            $price === false || < 1 || > 1000
-            $publisher === false
-            $pages === false
-            $cover !== $_POST['edit-book-cover']
-            $desc !== $_POST['...']
-            $cover - the same as above with proper name in POST
-            $dims  - the same as above with proper name in POST
-            $category === false
-            $subcategory === false;
-        */
-
 
         if (
             $title === false || $title !== $_POST['add-book-title'] || strlen($title) > 255 || // check if values pass the tests;
@@ -153,29 +129,24 @@ require_once "../authenticate-admin.php"; // check if user is logged-in, and use
             $magazine === false || $_SESSION['warehouse-exists'] === false ||
             $quantity === false
         ) {
-                //echo "<br>POST Error: Invalid or missing values<br> (Values didnt pass validation!)"; // fields didn't pass validation;
-            //echo "<span class='update-failed'>Wystąpił problem. Dodanie nowej książki nie powiodło się</span>"; exit();
             echo "<span class='update-failed'>Wystąpił problem. Podaj poprawne dane</span>"; exit();
-
         } else { // all values are valid; - fields PASSED validation;
-                                                          // perform the necessary actions or validations here;
-                                                          // for example, add the book data in the database;
-
+                // perform the necessary actions or validations here;
+                // for example, add the book data in the database;
             if(!validateFile("add-book-image")) {
                 //echo "<br>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz<br>";
                 echo "<span class='update-failed'>Wystąpił problem z przesłaniem pliku. Spróbuj jeszcze raz</span>"; exit();
             } else {
                 $bookData = [$author, $title, $price, $year, $desc, ucfirst($cover), $publisher, $_FILES["add-book-image"]["name"], $pages, $dims, "nowa", $subcategory];
-                query("INSERT INTO books (id_ksiazki, id_autora, tytul, cena, rok_wydania, opis, oprawa, id_wydawcy, image_url, ilosc_stron, wymiary, stan, id_subkategorii) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "get_last_book_id", $bookData); // $_SESSION["last-book-id"];
-
+                query("INSERT INTO books (id_ksiazki, id_autora, tytul, cena, rok_wydania, opis, oprawa, id_wydawcy, image_url, ilosc_stron, wymiary, stan, id_subkategorii) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", "get_last_book_id", $bookData);
+                // $_SESSION["last-book-id"];
                 $warehouse = [$magazine, $_SESSION["last-book-id"], $quantity];
-                query("INSERT INTO warehouse_books (id_magazynu, id_ksiazki, ilosc_dostepnych_egzemplarzy) VALUES ('%s', '%s', '%s')", "addBookIntoWarehouse", $warehouse); // $_SESSION["add-book-successful"];
+                query("INSERT INTO warehouse_books (id_magazynu, id_ksiazki, ilosc_dostepnych_egzemplarzy) VALUES ('%s', '%s', '%s')", "addBookIntoWarehouse", $warehouse);
+                // $_SESSION["add-book-successful"];
             }
 
-            //exit();
-
             // Array ( [add-book-image] => Array (
-            //                                      [name] => csymfoni_wyd_V.png            - original name of the file (on client machine)
+            //                                     [name] => csymfoni_wyd_V.png            - original name of the file (on client machine)
             //                                     [full_path] => csymfoni_wyd_V.png
             //                                     [type] => image/png                     - MIME type
             //                                     [tmp_name] => C:\xampp\tmp\php39AB.tmp  - tymczasowa nazwa pliku pod którą był on przechowywany na serwerze
@@ -211,7 +182,6 @@ require_once "../authenticate-admin.php"; // check if user is logged-in, and use
             // ✓ 4. Sanitization -
             //    sanitize NAME OF FILE !
 
-
             // whem <form> was sent without uploading the file -->
                 // Array ( [add-book-image] => Array (
                 // [name] =>
@@ -222,29 +192,18 @@ require_once "../authenticate-admin.php"; // check if user is logged-in, and use
                 // [size] => 0 ) )
         }
 
-    } else {                                           // some required fields are missing or empty; isset(), empty();
-                                                       // handle the error or display an error message to the user;
+    } else { // some required fields are missing or empty; isset(), empty();
+             // handle the error or display an error message to the user;
         echo "<span class='update-failed'>Wystąpił problem. Dodanie nowej książki nie powiodło się</span>"; exit();  // pola nie były ustawione (nie istniały) - lub były puste;
     }
 
-    if( isset($_SESSION["add-book-successful"]) && $_SESSION["add-book-successful"] === true ) {
+    if (isset($_SESSION["add-book-successful"]) && $_SESSION["add-book-successful"] === true) { // function addBookIntoWarehouse
         unset($_SESSION["add-book-successful"], $_SESSION["last-book-id"]);
 
         echo "<span class='archive-success'>Udało się dodać nowe dane</span>";
     } else { // false ;
         echo "<span class='update-failed'>Wystąpił problem. Dodanie nowej książki nie powiodło się</span>";
     }
-
-
-/*if( isset($_SESSION["update-book-successful"]) && $_SESSION["update-book-successful"] === false ) {
-    unset($_SESSION["update-book-successful"]);
-    echo "<span class='archive-success'>Udało się zmienić zaktualizować dane</span>";
-} else {                                           // ture ;
-    echo "<span class='update-failed'>Wystąpił problem. Nie udało się zmienić danych</span>";
-}*/
-
-
-
     /* if(isset($_FILES['edit-book-image'])) {
         $file = $_FILES['edit-book-image'];
         if (
@@ -260,7 +219,6 @@ require_once "../authenticate-admin.php"; // check if user is logged-in, and use
             echo "<br> ERROR (file NOT uploaded) <br>";
         }
     } */
-
     /*array(1) { ["edit-book-image"]=> array(6) {
                                                 ["name"]=> string(7) "111.bmp"
                                                 ["full_path"]=> string(7) "111.bmp"
@@ -270,9 +228,7 @@ require_once "../authenticate-admin.php"; // check if user is logged-in, and use
                                                 ["size"]=> int(7806006) - bytes
                                               }
              }
-
     Array ( [edit-book-image] => Array ( [name] => 111.bmp [full_path] => 111.bmp [type] => image/bmp [tmp_name] => C:\xampp\tmp\php8CD9.tmp [error] => 0 [size] => 7806006 ) )
-
     $_FILES['field_name'] = [            // name attribute of <input type="file">
         'name' => 'file_name.ext',       // The original name of the file
         'type' => 'file_type',           // The MIME type of the file

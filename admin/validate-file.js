@@ -1,21 +1,14 @@
 
 // edit-book.php, add-book.php
-
 // JS file to validate uploaded file in input type="file";
 
 // input type file - validation and sanitization (JS);
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file ;
 
-//let input = document.querySelector('#edit-book-image');
-let input = document.querySelector('input[type="file"]'); // get input by type "file", to make it work more universal (there is only one input type file on the page!);
+let input = document.querySelector('input[type="file"]');
 let div = document.querySelector('.preview');
 
-console.log('\n input type="file" --> \n', input)
-
-// input.style.opacity = "0"; // display: none; ? visibility: hidden; ?
-// Note: opacity is used to hide the file input instead of visibility: hidden or display: none, because assistive technology interprets the latter two styles to mean the file input isn't interactive;
-
-input.addEventListener("change", validateImage); // when file is selected (uploaded);
+input.addEventListener("change", validateImage);
 
 function validateImage() {
 
@@ -23,7 +16,7 @@ function validateImage() {
         div.removeChild(div.firstChild); // clear current content of div ".preview";
     }
 
-    let curFiles = input.files;  // FileList object - contains information about file;
+    let curFiles = input.files; // FileList object - contains information about file;
 
     if (curFiles.length === 0) { // check if any file was selected;
         const p = document.createElement('p');
@@ -39,7 +32,6 @@ function validateImage() {
             const li = document.createElement('li');
             const p = document.createElement('p');
             if (validFileType(file)) { // check if file is in proper img type (accept)
-                //p.textContent = `Nazwa pliku - ${file.name}, rozmiar - ${returnFileSize(file.size)}.`;
                 p.innerHTML = `Nazwa pliku - ${file.name}`+"<br>";
                 p.innerHTML += `Rozmiar - ${returnFileSize(file.size)}`;
                     const image = document.createElement('img');
@@ -73,12 +65,14 @@ const fileTypes = [ // https://developer.mozilla.org/en-US/docs/Web/Media/Format
     "image/png"
 ];
 
-function validFileType(file) { // check if file is correct type (e.g. the image types specified in the accept attribute);
+function validFileType(file) {
+    // check if file is correct type (e.g. the image types specified in the accept attribute);
     // takes a File object as a parameter, then uses Array.prototype.includes() to check if any value in the fileTypes matches the file's type property. If a match is found, the function returns true. If no match is found, it returns false.
     return fileTypes.includes(file.type);
 }
 
-function returnFileSize(number) { // returns a nicely-formatted version of the size in bytes/KB/MB (by default the browser reports the size in absolute bytes).
+function returnFileSize(number) {
+    // returns a nicely-formatted version of the size in bytes/KB/MB (by default the browser reports the size in absolute bytes).
     // number - number (of bytes, taken from the current file's size property);
     if (number < 1024) {
         return `${number} bytes`;

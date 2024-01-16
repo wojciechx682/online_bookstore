@@ -42,7 +42,7 @@ $("form.add-book-data").on("submit", function(e) {
     ) {
         result.innerHTML = "<span class='update-failed'>Wystąpił problem. Podaj poprawne dane</span>";
     } else {
-        $.ajax({                             // Handle AJAX request;
+        $.ajax({                         // Handle AJAX request;
             type: "POST",                    // GET or POST;
             url: "add-book-data.php",        // Path to file (that process the <form> data);
             data: formData,                  // Use the FormData object instead of serialized data;

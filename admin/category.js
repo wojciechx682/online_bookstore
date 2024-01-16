@@ -6,79 +6,23 @@ window.addEventListener("load", getSubcategories(select));
 
 function getSubcategories(categorySelect) {
 
-        // returns subcategories for given category (category-id);
-
-        // <select id="edit-book-category"
-        //             name="edit-book-category"
-        //  ! ---> onchange="getSubcategories(this)">
-                // <option value={id-kategorii} > "28"
-                // <option value={id-kategorii} > "34"
-                // <option value={id-kategorii} > "26"
-
-    // <select id="add-book-category" name="add-book-category"
-    //
-    // 		onchange="getSubcategories(this)">
-    //
-    // 	        <option value="1">Dla dzieci</option>
-    // 	        <option value="2">Fantastyka</option>
-    // 	        <option value="3">Horror</option>
-    // 	        <option value="4">Informatyka</option>
-    // 	        <option value="5">Komiks</option>
-    // 	        <option value="6">Kryminał</option>
-    // 	        <option value="7">Poezja</option>
-    // </select>
-
     let categoryId = categorySelect.value;
 
-    // create XMLHttpRequest Object ; --> wysyłanie żądań AJAX  +  obsługa odpowiedzi ;
-    // meotdy -->   .open()
-    //              .send()
+    let xhr = new XMLHttpRequest();
 
-    console.log("\n\n categoryId --> ", categoryId);
-    console.log("\n\n typeof categoryId --> ", typeof categoryId);
+    xhr.onreadystatechange = function() {
 
-    // send an AJAX request to fetch the subcategories based on the selected category;
+        if (xhr.readyState === XMLHttpRequest.DONE) {
 
-    let xhr = new XMLHttpRequest(); // create XMLHttpRequest object, store it in "xhr" variable;
+            if (xhr.status === 200) {
 
-    xhr.onreadystatechange = function() {           // xhr.onload = function(); - otrzymanie i wczytanie odpowiedzi z serwera;
-                                                    //              wywołanie funkcji anonimowej;
+                let subcategories = JSON.parse(xhr.responseText);
 
-    // po zmianie właściwośći "readyState" obiektu XMLHttpRequest ;
+                let subcategorySelect = document.getElementById('book-subcategory');
+                subcategorySelect.innerHTML = '';
 
-        // "xhr.onreadystatechange" - This event handler is triggered whenever the "readyState" property of the XMLHttpRequest object changes.
-        // The "readyState" property represents the current state of the request
-
-            // "readyState" - (property) - possible values :
-                // 0: UNSENT - The request has not been initialized.
-                // 1: OPENED - The request has been set up (the open() method has been called).
-                // 2: HEADERS_RECEIVED - The request has been sent, and the headers and status are available.
-                // 3: LOADING - The response is being received (usually some data is being transferred).
-                // 4: DONE - The operation is complete.
-
-        if (xhr.readyState === XMLHttpRequest.DONE) { // "DONE" == 4 - Complete (request)
-
-            if (xhr.status === 200) {              // after response from server, if response is correct;
-
-                // sprawdzenie właściwości "status" obiektu xhr - w celu sprawdzenia, czy odpowiedź otrzymana z serwera jest prawidłowa - 200 OK) ;
-
-                // Poniżej kod odpowiedzialny za Przetworzenie odpowiedzi - udzielonej przez serwer ;
-
-                let subcategories = JSON.parse(xhr.responseText); // object
-
-                    console.log("\nxhr.responseText -> \n", xhr.responseText, "\n");
-                    console.log("\n77 subcategories -> \n", subcategories, "\n");
-
-                // update the subcategories select list;
-
-                let subcategorySelect = document.getElementById('book-subcategory'); // <select> list (POD-kategorie)
-                subcategorySelect.innerHTML = ''; // clear previous options
-
-                for (let i = 0; i < subcategories.length; i++) { // for every sub-category (every element in object);
+                for (let i = 0; i < subcategories.length; i++) {
                     let option = document.createElement('option');
-                    //option.value = subcategories[i].id; // object - id pod-kategorii;
-                    //option.textContent = subcategories[i].name; // nazwa pod-kategorii;
-
                     option.value = subcategories[i][0]; // object - id pod-kategorii;
                     option.textContent = subcategories[i][1]; // nazwa pod-kategorii;
                     subcategorySelect.appendChild(option);
@@ -90,30 +34,15 @@ function getSubcategories(categorySelect) {
     };
 
     xhr.open('GET', 'get-subcategories.php?category_id=' + categoryId, true);
-        // przygotowanie Żądania (Ajax);
-        //           adres strony Obsługującej żądanie;                async ? (true/false)
-        //    nazwa metody HTTP
     xhr.send();
-        // wysłanie do serwera przygotowanego wcześniej Żądania; (informacje dodatkowe w nawiasach);
 }
 
 $("form.edit-book-data").on("submit", function(e) {
 
-    e.preventDefault(); // prevent default <form> action which is submitted;
-
-    let data = $(this); // jQ object that holds <form> data;
-        // let postData = $(this).serialize(); // serialized <form> data;
-    let formData = new FormData(this); // https://developer.mozilla.org/en-US/docs/Web/API/FormData
-    // Create a new FormData object
-    // need to use the FormData object to send the form data, including the image file.
+    e.preventDefault();
+    let data = $(this);
+    let formData = new FormData(this);
     let result = document.querySelector('div.result');
-
-    console.log("\n46 data -> ", data);
-    console.log("\n46 typeof data -> ", typeof data);
-    console.log("\n46 formData -> ", formData);
-    console.log("\n46 typeof formData -> ", typeof formData);
-
-    // front-end validation;
 
     let bookTitle = DOMPurify.sanitize(data[0][0].value);
     let bookAuthor = DOMPurify.sanitize(data[0][1].value); // id_autora / number / input#edit-book-title;
@@ -131,24 +60,8 @@ $("form.edit-book-data").on("submit", function(e) {
         let bookQuantity = DOMPurify.sanitize(data[0][14].value); // ilosc-egzemplarzy / number / select#edit-book-quantity;
     let bookId = DOMPurify.sanitize(data[0][15].value); // id_ksiazki / number / input#edit-book-id
 
-        console.log("\nbookTitle -> ", bookTitle);
-        console.log("\nbookAuthor -> ", bookAuthor);
-        console.log("\nbookYear -> ", bookYear);
-        console.log("\nbookPrice -> ", bookPrice);
-        console.log("\npublisher -> ", publisher);
-        console.log("\nbookImage -> ", bookImage);
-        console.log("\nbookDesc -> ", bookDesc);
-        console.log("\nbookCover -> ", bookCover);
-        console.log("\nbookPages -> ", bookPages);
-        console.log("\nbookDims -> ", bookDims);
-        console.log("\nbookCat -> ", bookCat);
-        console.log("\nbookSubcat -> ", bookSubcat);
-        console.log("\nbookMagazine (warehouse-id) -> ", bookMagazine);
-        console.log("\nbookQuantity -> ", bookQuantity);
-        console.log("\nbookId -> ", bookId); // <script>alert()</script>
-
     if (
-        bookTitle !== data[0][0].value || bookTitle.length > 255 ||   // check, if values were correct (if passed validation);
+        bookTitle !== data[0][0].value || bookTitle.length > 255 ||
         bookAuthor !== data[0][1].value || isNaN(bookAuthor) ||
         bookYear !== data[0][2].value || isNaN(bookYear) || bookYear < 1900 || bookYear > 2023 ||
         bookPrice !== data[0][3].value || isNaN(bookPrice) || bookPrice > 1000 ||
@@ -164,25 +77,24 @@ $("form.edit-book-data").on("submit", function(e) {
             bookQuantity !== data[0][14].value || isNaN(bookQuantity) ||
         bookId !== data[0][15].value || isNaN(bookId)
     ) {
-        // data didn't pass validation;
         result.innerHTML = "<span class='update-failed'>Wystąpił problem. Podaj poprawne dane</span>";
     } else {
 
-        $.ajax({                             // Handle AJAX request;
+        $.ajax({                           // Handle AJAX request;
             //type: "POST",                    // GET or POST;
             method: "POST",
             url: "edit-book-data.php",       // Path to file (that process the <form> data);
-            data: formData,                  //  ̶s̶e̶r̶i̶a̶l̶i̶z̶e̶d̶ ̶<̶f̶o̶r̶m̶>̶ ̶d̶a̶t̶a̶;̶ // Use the FormData object instead of serialized data;
+            data: formData,                  // Use the FormData object instead of serialized data;
                 processData: false,              // (?) Prevent jQ from processing the data;
                 contentType: false,              // (?) Let the browser set the content type automatically;
             timeout: 2000,                   // Waiting time;
-            beforeSend: function() {         // Before Ajax - function called before sending the request;
+            beforeSend: function() {   // Before Ajax - function called before sending the request;
                 $("img#loading-icon").toggleClass("not-visible"); // show loading animation;
             }
-        }).done(function(data) { // methods of the jqXHR object -> .done(), .fail(), .always()
+        }).done(function(data) {  // methods of the jqXHR object -> .done(), .fail(), .always()
             $('div.result').html(data); // data - dane zwrócone z serwera;
         }).fail(function(data) {
-            $('div.result').html(data); // data - dane zwrócone z serwera;
+            $('div.result').html(data);
         }).always(function() {
             $("img#loading-icon").toggleClass("not-visible"); // Once finished - function called always after sending request;
         });
