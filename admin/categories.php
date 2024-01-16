@@ -44,8 +44,6 @@
 
     </div> <!-- #container -->
 
-    <!-- brauke footer'a w tym miejscu ? -->
-
 </div> <!-- #main-container -->
 
 <?php require "../view/app-error-window.php"; ?>
