@@ -1103,25 +1103,12 @@ use PHPMailer\PHPMailer\SMTP;
         //echo "<br> 993 <br>";
     }
 
-	function verifyBookExists($result) // cart_verify_book // zmienić nazwę na "verifyBookExists" (?)
-	{
-                /*echo "<br>1038 -> cart_verify_book <br><hr> -->";
-                print_r($result); //exit();*/
-
-        // \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
-
+	function verifyBookExists($result) {
+        // cart_verify_book // zmienić nazwę na "verifyBookExists"
+        // \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable;
         // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
-
         // \admin\book-details.php
-
-        /*$_SESSION["book_exists"] = true;*/ // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
         return true;
-                /*// \user\book.php - check if book with given ID (in POST request) exist, if book exist - return true in that session variable ;
-                // add_to_cart.php -> ta funkcja wykona się tylko, gdy BD zwróci rezultat, czyli ta książka jest już w koszyku
-                $_SESSION['book_exists'] = true; // add_to_cart.php - sprawdza, czy książka już istnieje w koszyku (przestawia zmienną - jeśli tak)
-                //echo "<br>448<br>";
-                //echo $_SESSION['book_exists']; exit();
-                $result->free_result();*/
 	}
 
     function verifyAuthorExists($result) {
@@ -1410,7 +1397,7 @@ use PHPMailer\PHPMailer\SMTP;
 
             /*echo sprintf($book, $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["cena"], $row["nazwa_wydawcy"], $row["opis"], $row["wymiary"], $row["ilosc_stron"], $row["oprawa"], $row["stan"], $row["srednia_ocen"], $row["image_url"], $row["liczba_ocen"], $row["ile_razy_sprzedana"], $row["nazwa_kategorii"], $row["nazwa_subkategorii"], $row["ilosc_dostepnych_egzemplarzy"], $row["nazwa"], $row["miejscowosc"], $row["numer_ulicy"], $row["kod_pocztowy"] );*/
 
-        echo sprintf($book, $row["id_ksiazki"], $row["nazwa_magazynu"], $row["image_url"], $row["image_url"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["cena"], $row["nazwa_wydawcy"], $row["nazwa_kategorii"], $row["nazwa_subkategorii"], $row["wymiary"], $row["ilosc_stron"], ucfirst($row["oprawa"]), ucfirst($row["stan"]), $row["opis"], $row["srednia_ocen"], $row["liczba_ocen"], $row["ilosc_zamowien_w_ktorych_wystapila"], $row["liczba_klientow_posiadajacych_w_koszyku"], $row["liczba_sprzedanych_egzemplarzy"], $row["nazwa_magazynu"], $row["kraj"], $row["wojewodztwo"], $row["miejscowosc"], $row["ulica"], $row["numer_ulicy"], $row["kod_pocztowy"], $row["kod_miejscowosc"], $row["ilosc_dostepnych_egzemplarzy"]    );
+        echo sprintf($book, $row["id_ksiazki"], $row["nazwa_magazynu"], $row["image_url"], $row["image_url"], $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $row["cena"], $row["nazwa_wydawcy"], $row["nazwa_kategorii"], $row["nazwa_subkategorii"], $row["wymiary"], $row["ilosc_stron"], ucfirst($row["oprawa"]), ucfirst($row["stan"]), $row["opis"], $row["srednia_ocen"], $row["liczba_ocen"], $row["ilosc_zamowien_w_ktorych_wystapila"], $row["liczba_klientow_posiadajacych_w_koszyku"], $row["liczba_sprzedanych_egzemplarzy"], $row["nazwa_magazynu"], $row["kraj"], $row["wojewodztwo"], $row["miejscowosc"], $row["ulica"], $row["numer_ulicy"], $row["kod_pocztowy"], $row["kod_miejscowosc"], $row["ilosc_dostepnych_egzemplarzy"]);
 
         //$_SESSION["warehouse-id"] = $row["nazwa_magazynu"]; // przycisk "edytuj" --> book-details.php --> edit-book.php
 

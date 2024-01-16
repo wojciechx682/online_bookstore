@@ -160,5 +160,8 @@
     });*/
 </script>
 
+
+<?php require "../view/app-error-window.php"; ?>
+
 </body>
 </html>

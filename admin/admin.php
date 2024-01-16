@@ -1,8 +1,6 @@
 <?php
-
-    // Uwierzytelnienie administratora, przed dostępem do panelu admina - Czy jest zalogowany ? Czy jest to pracownik ?
-    // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
-    require_once "../authenticate-admin.php";
+    require_once "../authenticate-admin.php"; // Uwierzytelnienie administratora, przed dostępem do panelu admina - Czy jest zalogowany ? Czy jest to pracownik ?
+                                              // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
 
     query("SELECT SUM(ilosc_dostepnych_egzemplarzy) AS liczba_ksiazek FROM warehouse_books", "countBooksAvailable", ""); // liczba wszystkich książek (dostępnych na magazynie);
 
@@ -41,7 +39,7 @@
                             </a>
                             <div class="section-info">
                                 <a href="books.php">
-                                    Ilość produktów <!-- Liczba książek -->
+                                    Ilość produktów
                                 </a>
                             </div>
                             <div class="section-info">
@@ -82,10 +80,7 @@
 
         </div> <!-- #container -->
 
-        <!-- brauke footer'a w tym miejscu ? -->
-
     </div> <!-- #main-container -->
 
 </body>
-
 </html>
