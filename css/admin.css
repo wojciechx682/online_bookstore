@@ -167,12 +167,12 @@ div#content {
 }
 
 h3.section-header {
-    margin-top: 5px;
+    margin-top: 15px;
     font-size: 1.2em;
     /*border: 1px solid #2d6eff;*/
     /*border-bottom: 1px ridge #3a3a3a;*/
-    border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
-    margin-bottom: 20px;
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.53);*/
+    margin-bottom: 2px;
     padding-bottom: 15px;
         user-select: none;
 }
@@ -375,7 +375,18 @@ span.order-details-id {
 }
 
 .category-id, .category-name, .category-name, .category-action {
-    width: 25%;
+    width: 12.5%;
+}
+
+h3.categories-header {
+    width: 80%;
+    float: left;
+}
+
+div.categories-hr {
+    margin: 0 0 10px 0;
+    padding: 0;
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
 }
 
 .a-book-id, .a-book-title, .a-book-category, .a-book-price, .a-book-author, .a-book-magazine, .a-book-quantity, .book-action  {
@@ -1352,7 +1363,8 @@ img#loading-icon {
 
 #content form#edit-book-data input#input-submit-edit-book-data,
 #content form#add-book-data input#input-submit-add-book-data,
-#content form#edit-category input#input-submit-edit-category
+#content form#edit-category input#input-submit-edit-category,
+#content form#add-category input#input-submit-edit-category
 {
         /*width: 15%;*/
     margin-left: 0;
@@ -1381,7 +1393,8 @@ img#loading-icon {
 #content form#edit-book-data input#input-submit-edit-book-data:hover,
 #content form#add-book-data input#input-submit-add-book-data:hover,
 
-#content form#edit-category input#input-submit-edit-category:hover
+#content form#edit-category input#input-submit-edit-category:hover,
+#content form#add-category input#input-submit-edit-category:hover
 {
     cursor: pointer;
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
@@ -1416,7 +1429,8 @@ span#span-book-desc {
 #content form#add-book-data input[type="number"], /* \admin\add-book.php */
 #content form#add-book-data textarea,              /* \admin\add-book.php */
 
-#content form#edit-category input[type="text"]
+#content form#edit-category input[type="text"],
+#content form#add-category input[type="text"]
 {
                     /*!*margin-left: 5px;*!
                     !*width: 200px;*!
@@ -1480,7 +1494,8 @@ span#span-book-desc {
 #content form#add-book-data textarea:hover,              /* \admin\add-book.php */
 #content form#add-book-data select:not([disabled]):hover,
 
-#content form#edit-category input[type="text"]:hover
+#content form#edit-category input[type="text"]:hover,
+#content form#add-category input[type="text"]:hover
 {
     cursor: pointer;
     /*-webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);

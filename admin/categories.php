@@ -29,14 +29,22 @@
                     echo "SESSION ->"; print_r($_SESSION); echo "<hr>"*/ ?>
 
                 <header>
-                    <h3 class="section-header">Kategorie</h3>
+                    <h3 class="section-header categories-header">Kategorie</h3>
+
+                    <a href="add-category.php">
+                        <button class="add-book-button btn-link btn-link-static">
+                            Dodaj
+                        </button>
+                    </a>
                 </header>
+
+                <div style="clear: both;"></div>
+
+                <div class="categories-hr"></div>
 
                 <?php
                     query("SELECT kt.id_kategorii, kt.nazwa FROM categories AS kt", "getCategoriesAdmin", "");
                 ?>
-
-
 
             </div> <!-- #content -->
 
