@@ -42,7 +42,7 @@
     <section id="statistics-information">
         <div id="book-avg-rating">Średnia ocen</div><div id="book-avg-rating-content">%s</div> <div style="clear:both;"></div>
         <div id="book-ratings-amount">Liczba ocen</div><div id="book-ratings-amount-content">%s</div> <div style="clear:both;"></div>
-        <div id="book-orders-count">Liczba zamówień, w których wystąpiła (conajmniej raz)</div><div id="book-orders-count-content">%s</div> <div style="clear:both;"></div>
+        <div id="book-orders-count">Liczba zamówień, w których wystąpiła</div><div id="book-orders-count-content">%s</div> <div style="clear:both;"></div>
         <div id="book-cart-count">Ilość klietnów posiadających w koszyku</div><div id="book-cart-count-content">%s</div> <div style="clear:both;"></div>
         <div id="book-items-sold">Ilość sprzedanych sztuk</div><div id="book-items-sold-content">%s</div> <div style="clear:both;"></div>
     </section>

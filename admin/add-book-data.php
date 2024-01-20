@@ -189,7 +189,7 @@
                 // [type] =>
                 // [tmp_name] =>
                 // [error] => 4
-                // [size] => 0 ) )
+                // [size] => 0 ))
         }
 
     } else { // some required fields are missing or empty; isset(), empty();
@@ -201,39 +201,7 @@
         unset($_SESSION["add-book-successful"], $_SESSION["last-book-id"]);
 
         echo "<span class='archive-success'>Udało się dodać nowe dane</span>";
-    } else { // false ;
+    } else {
         echo "<span class='update-failed'>Wystąpił problem. Dodanie nowej książki nie powiodło się</span>";
     }
-    /* if(isset($_FILES['edit-book-image'])) {
-        $file = $_FILES['edit-book-image'];
-        if (
-            isset($file["name"]) && !empty($file["name"]) &&
-            isset($file["full_path"]) && !empty($file["full_path"]) &&
-            isset($file["type"]) && !empty($file["type"]) &&
-            isset($file["tmp_name"]) && !empty($file["tmp_name"]) &&
-            $file['error'] === UPLOAD_ERR_OK
-
-        ) {
-            echo "<br> success (file uploaded) <br>";
-        } else {
-            echo "<br> ERROR (file NOT uploaded) <br>";
-        }
-    } */
-    /*array(1) { ["edit-book-image"]=> array(6) {
-                                                ["name"]=> string(7) "111.bmp"
-                                                ["full_path"]=> string(7) "111.bmp"
-                                                ["type"]=> string(9) "image/bmp"
-                                                ["tmp_name"]=> string(24) "C:\xampp\tmp\php8CD9.tmp"
-                                                ["error"]=> int(0)
-                                                ["size"]=> int(7806006) - bytes
-                                              }
-             }
-    Array ( [edit-book-image] => Array ( [name] => 111.bmp [full_path] => 111.bmp [type] => image/bmp [tmp_name] => C:\xampp\tmp\php8CD9.tmp [error] => 0 [size] => 7806006 ) )
-    $_FILES['field_name'] = [            // name attribute of <input type="file">
-        'name' => 'file_name.ext',       // The original name of the file
-        'type' => 'file_type',           // The MIME type of the file
-        'tmp_name' => 'tmp_file_path',   // The temporary path of the uploaded file on the server
-        'error' => 'error_code',         // Error code (0 if no error occurred)
-        'size' => 'file_size'            // The size of the file in bytes
-    ];*/
 ?>

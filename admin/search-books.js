@@ -14,9 +14,9 @@ $("form#admin-search-books-form").on("submit", function(e) { // after submitting
         console.log("\nwarehouseId => ", warehouseId); // object jq - warehouseId;
         console.log("\n typeof warehouseId => ", typeof warehouseId); // object jq - warehouseId;
 
-    // walidacja czy przesłano poprawne id-magazynu i bookTitle -->
-
     if((warehouseId > 0) && Number.isInteger(warehouseId) && !isNaN(warehouseId) && bookTitle === data[0][0].value) {  // nie pusta (>0), liczba (int), nie jest to "NaN";
+
+        // walidacja czy przesłano poprawne id-magazynu i bookTitle <--
 
         let dataSerialized = data.serialize(); // serializacja danych formularza (id-magazynu);
 

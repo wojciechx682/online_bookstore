@@ -48,7 +48,7 @@
 
                     <form id="admin-search-books-form" action="change-magazine.php" method="post">
 
-                        <span>Szukaj:</span><input type="search" name="admin-search-books-input" id="admin-search-books-input"> <!-- placeholder="tytuł książki" -->
+                        <span>Szukaj:</span><input type="search" name="admin-search-books-input" id="admin-search-books-input"> 
                         <input type="hidden" name="change-magazine" value="">
 
                     </form>
