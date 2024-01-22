@@ -80,6 +80,9 @@
 
                     <div class="result edit-book-result"></div>
 
+
+
+
                 </div> <!-- #content -->
 
             </main>
