@@ -340,12 +340,10 @@ use PHPMailer\PHPMailer\SMTP;
         // --> book (ID) exist in database (book exists) ?
         // --> has valid ID (that passing validation) ?
 
-        // sanitize book-id;
-        $bookIdSanitized = filter_var($bookId, FILTER_SANITIZE_NUMBER_INT); // "35" or FALSE;
-        // remove any non-numeric characters. This filter will leave only the numeric characters.
+
+        $bookIdSanitized = filter_var($bookId, FILTER_SANITIZE_NUMBER_INT); // "35" or FALSE; // sanitize book-id; // remove any non-numeric characters. This filter will leave only the numeric characters;
 
         // get highest book-id from database ;
-            //unset($_SESSION["max-book-id"]);
         $maxBookId = query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM books", "getBookId", "");
         // $_SESSION["max-book-id"] => "35" or NULL;
         // - set variable to be applied in book-id filter below;
@@ -419,11 +417,7 @@ use PHPMailer\PHPMailer\SMTP;
 	function checkEmail($result) { // check_email
 
         // change_user_data.php - (zmiana danych usera), sprawdza, czy istnieje juz taki email, ustawia zmienna sesyjną; (zmiana danych konta);
-
         // remove_account.php     - sprawdza, -----------||--------------  ---------||-----------;  (resetowanie hasła);
-
-
-
         $_SESSION["email-exists"] = true;
 	}
 
@@ -456,29 +450,11 @@ use PHPMailer\PHPMailer\SMTP;
         }
     }
 
-    /*function generate_token($length = 12) {
-
-        try {
-            //$token = bin2hex(random_bytes(32)); // generate random token;
-            //return hash("sha256", $token); // hash user token using sha256 algorithm; return the generated token;
-
-            $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            $charactersLength = strlen($characters);
-            $token = "";
-            for ($i = 0; $i < $length; $i++) {
-                $token .= $characters[random_int(0, $charactersLength - 1)];
-            }
-            return $token; // return the generated token (plain, not hased);
-            return hash("sha256", $token); return the generated token (plain, not hased);
-
-        } catch (Exception $e) {
-            return false;
-        }
-    }*/
-
-    function verifyToken($result) // verify_token // reset-password-form.php ;
+    function verifyToken($result)
     {
-        // check, if there is any token assigned to that e-mail
+        // verify_token
+        // reset-password-form.php;
+        // check, if there is any token assigned to that e-mail;
 
             $row = $result->fetch_assoc();
         $_SESSION["token-exists"] = true;
@@ -487,12 +463,11 @@ use PHPMailer\PHPMailer\SMTP;
         $_SESSION["token"] = $row["token"]; // hashed token (sha256)
     }
 
-    // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // send email function;
+
 
     function sendEmail($message, $sendTo, $subject) {
 
-        try {
+        try { // send email function;
 
             /*require_once "vendor/autoload.php";
             use PHPMailer\PHPMailer\PHPMailer;
@@ -552,22 +527,11 @@ use PHPMailer\PHPMailer\SMTP;
     }
 
 
-    // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	function countCartQuantity($result) {
 
-//	function get_books_by_id($result) // koszyk_dodaj.php - nieużywane - do wyrzuczenia
-//	{
-//		while ($row = $result->fetch_assoc())
-//		{
-//		  	$_SESSION['tytul'] = $row["tytul"];
-//		  	$_SESSION['cena'] = $row["cena"];
-//		  	$_SESSION['rok_wydania'] = $row["rok_wydania"];
-//		  	echo $_SESSION['tytul'].", || ".$_SESSION['cena'].", || ".$_SESSION['rok_wydania']." ";
-//		}
-//		$result->free_result();
-//	}
+        // count_cart_quantity // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku;
+        // \user\index.php - pobiera ilość książek klienta w koszyku;
 
-	function countCartQuantity($result) { // count_cart_quantity // add_to_cart.php - zapisuje do zmiennej sesyjnej ilość książek klienta w koszyku;
-                                            // \user\index.php - pobiera ilość książek klienta w koszyku;
 		$row = $result->fetch_assoc();
 
 //		if($row['suma'] == NULL) {
@@ -595,7 +559,9 @@ use PHPMailer\PHPMailer\SMTP;
 
     }
 
-	function getProductsFromCart($result) { // get_product_from_cart // koszyk.php,  order.php
+	function getProductsFromCart($result) {
+
+        // get_product_from_cart // koszyk.php,  order.php
 
 		// $row[] -> kl.id_klienta, 		klient
 		//		     ko.id_ksiazki,        	 	     koszyk
@@ -632,67 +598,6 @@ use PHPMailer\PHPMailer\SMTP;
 
 		}
 	}
-
-//	function remove_product_from_cart($result) // remove_book.php
-//	{
-//
-//	}
-
-//	function add_product_to_cart($id_ksiazki, $quantity) // old (unused) function for adding products to shopping cart
-//	{
-//        // delete that fucking thing !
-//
-//		require "connect.php";
-//
-//		mysqli_report(MYSQLI_REPORT_STRICT);
-//
-//		try // spróbuj połączyć się z bazą danych
-//		{
-//
-//			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);	// A CO Z "UNIWERSALNĄ" funkcją query(...) !?!?!
-//				// @ - operator kontroli błędów - w przypadku blędu, php nie wyświetla informacji o błędzie
-//
-//			// sprawdzamy, czy udało się połaczyć z bazą danych
-//
-//			if($polaczenie->connect_errno!=0) // błąd połączenia
-//			{
-//				// 0  = false           = udane połączenie
-//				// !0 = true (1,2, ...) = błąd połączenia
-//
-//					//echo "[ Błąd połączenia ] (".$conn->connect_errno."), Opis: ".$conn->connect_error;
-//				//echo "[ Błąd połączenia ] (".$polaczenie->connect_errno.") <br>";
-//				throw new Exception(mysqli_connect_errno()); // rzuć nowy wyjątek
-//			}
-//			else // udane polaczenie
-//			{
-//				//echo "<hr> -> kategoria = ".$kategoria."<br>";
-//					//$kategorie = $polaczenie->query("SELECT DISTINCT kategoria FROM ksiazki ORDER BY kategoria ASC");
-//
-//                $id_klienta = $_SESSION['id'];
-//
-//				if($ksiazki = $polaczenie->query(" INSERT INTO koszyk (id_klienta, id_ksiazki, ilosc) VALUES ('$id_klienta', '$id_ksiazki', '$quantity')           ")   )
-//				{
-//					//$ksiazki->free_result();
-//				}
-//				else
-//				{
-//					throw new Exception($polaczenie->error);
-//				}
-//
-//				$polaczenie->close();
-//			}
-//		}
-//		catch(Exception $e) // Exception - wyjątek
-//		{
-//			//echo '<span style="color: red;"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o rejestrację w innym terminie! ]</span>';
-//
-//			echo '<div class="error"> [ Błąd serwera. Przepraszamy za niegodności i prosimy o sprawdzenie serwisu w innym terminie! ]</div>';
-//
-//			echo '<br><span style="color:red">Informacja developerska: </span>'.$e; // wyświetlenie komunikatu błędu - DLA DEWELOPERÓW
-//
-//			exit(); // (?)
-//		}
-//	}
 
     function getDeliveryTypes($result) { // \user\submit_order.php - pobierz możliwe formy dostawy z bazy danych;
 
@@ -855,13 +760,9 @@ use PHPMailer\PHPMailer\SMTP;
 
         unset($_SESSION["order_details_books_id"], $_SESSION["order_details_books_quantity"], $_SESSION["termin_dostawy"], $_SESSION["data_wysłania_zamowienia"], $_SESSION["data_dostarczenia"], $_SESSION["book-id"], $_SESSION["avg_rating"], $_SESSION["rating"], $_SESSION["id_ksiazki"], $_SESSION["comments"]);
 
-		//$result->free_result();
+
 	}
 
-//	function validate_form()
-//	{
-//		// echo '<script> alert("test123"); </script>';
-//	}
 
     function getOrderDetails($result) { // get_order_details //  ___my_orders.php --> getOrders($result) --> szczegóły_zamówienia (ksążki wchodzące w skład danego zamówienia);
         // $result (!) - szczegóły_zamówienia -->
@@ -916,17 +817,6 @@ use PHPMailer\PHPMailer\SMTP;
         // replace fields in $order string to author data from $result, display result content as HTML
         echo sprintf($order, $productNo, $bookId, $row["image_url"], $row["tytul"], $row["tytul"], $row["tytul"], $bookId, $row["tytul"], $row["tytul"], $row["imie"], $row["nazwisko"], $row["rok_wydania"], $productNo, $bookQuantity, $productNo, $row["cena"]);
 	}
-
-    /*function get_order_sum($result = NULL, $order_id) {
-        if($result !== NULL && !($result instanceof mysqli_result)) {
-            // error
-        } else if ($result !== NULL) {
-            $row = $result->fetch_assoc();
-            return $row["kwota"];
-        } else {
-             query("SELECT kwota FROM platnosci WHERE id_zamowienia='%s'", "get_order_sum", $order_id);
-        }
-    }*/
 
     function getOrderSum($result = null, $order_id = null) { // get_order_sum
 
@@ -1112,11 +1002,8 @@ use PHPMailer\PHPMailer\SMTP;
 	}
 
     function verifyAuthorExists($result) {
-
         // \admin\edit-book-data,    \user\index.php - advanced-search (prg)
-
-        // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable ;
-
+        // \admin\edit-book.php - check if author with given ID (in POST request) exist, if author exist - return true in that session variable;
         //$_SESSION["author-exists"] = true;
         return true;
     }
