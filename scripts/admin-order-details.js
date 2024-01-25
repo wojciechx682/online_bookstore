@@ -1,125 +1,51 @@
 
-let updateBtn = document.querySelector("button.update-order-status");  // button - "Aktualizuj" zmianę statusu
-
-let statusBox = document.getElementById("update-status");    // okiento zmiany statusu; div #update-status .hidden;
+let updateBtn = document.querySelector("button.update-order-status");
+let statusBox = document.getElementById("update-status");
 let mainContainer = document.getElementById("main-container");
-let icon = document.querySelector(".icon-cancel");           // <i class="icon-cancel">
-let cancelBtn = document.querySelector(".cancel-order");     // przycisk "Anuluj"; button.cancel-order;
-
-console.log("\nstatusBox #update-status --> ", statusBox);
-console.log("\nmainContainer --> ", mainContainer);
-console.log("\nicon --> ", icon);
-console.log("\ncancelBtn --> ", cancelBtn);
-
-/* /!* v1 --> *!/ updateBtn.addEventListener("click", function() {
-    toggleBox(); // pojawienie się okienka po kliknięciu przycisku "Aktualizuj";  <div id="update-status">;
-                 // toggle class="hidden"; + resetBox();
-});
-icon.addEventListener("click", function() {
-    toggleBox(); // zamknięcie okna po kliknięciu "x";
-});
-cancelBtn.addEventListener("click", function() {
-    toggleBox(); // przycisk "Anuluj";
-});*/
-
-/* /!* v2 --> *!/ updateBtn.addEventListener("click", toggleBox);
-icon.addEventListener("click", toggleBox);
-cancelBtn.addEventListener("click", toggleBox);*/
-
+let icon = document.querySelector(".icon-cancel");
+let cancelBtn = document.querySelector(".cancel-order");
 let buttons = [updateBtn, icon, cancelBtn];
-//             Aktualizuj  "X"   "Anuluj"
-
-/*for(let i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener("click", toggleBox);
-}*/
 
 buttons.forEach(function(button) {
     button.addEventListener("click", toggleBox);
 });
 
 function toggleBox() {
-    // after clicking the button --> "Aktualizuj"; "X"; "Anuluj"
     statusBox.classList.toggle("hidden");
-    // przełączenie widoczności okna;
     mainContainer.classList.toggle("bright");
     mainContainer.classList.toggle("unreachable");
-    resetBox(); // po pomyślnej zmianie statusu - "Udało się zmienić ..."
+    resetBox();
 }
 
-// po kliknięciu dowolnego przycisku z tablicy `buttons` (zakładając, że tablica została poprawnie wypełniona elementami przycisków), zostanie wywołana funkcja `toggleBox`. Ta funkcja przełącza widoczność elementu `statusBox`, zmienia wygląd `mainContainer` i potencjalnie wykonuje dodatkowe działania, jeśli `resetBox` jest zdefiniowane i wywołane w ramach funkcji.
-
-/* function resetUrl() {
-     // Get the current URL without the query parameters
-     // let urlWithoutParams = window.location.href.split('?')[0];
-     // Replace the current URL without query parameters in the browser's history
-     // window.history.replaceState({}, document.title, urlWithoutParams);
-
-     // Get the current URL
-     var url = new URL(window.location.href);
-     //var url = JSON.parse(window.location.href);
-     // Create a URLSearchParams object from the URL's search parameters
-     var searchParams = new URLSearchParams(url.search);
-     // Remove the specific parameter
-     searchParams.delete('status');
-     // Replace the current URL's search parameters with the updated ones
-     url.search = searchParams.toString();
-     // Get the modified URL without the specified parameter
-     var modifiedURL = url.toString();
-     console.log("\n modifiedURL -> ", modifiedURL);
-     //window.location.href = modifiedURL; // ta linia zmienia URL na taki, aby nie wyskakiwało okno zmiany statusu po odświeżeniu;
-                                           // można to przenieść (?) gdzie indziej, np po kliknięciu (zamknięciu) okna zmiany statusu - tak aby po odświeżeniu storny nie pojawiało się ono ponownie;
- }
-*/
 function resetBox() {
-    // after clicking the button --> Aktualizuj  "X"   "Anuluj"
-    // when changing status was succesfull - "Udało się zmienić ..."
-    let form = document.getElementById("update-order-date");
-    // zresetowanie zawartości okna - po jego zamknięciu;
-
-    /*if(form.style.display === "none") {
-        form.style.display = "block";
-    }*/
+    let form = document.getElementById("update-order-date");1
     form.classList.toggle("hidden", false);
-
-    let cancelBtn = document.querySelector('.cancel-order'); // "Anuluj";
-    /*if(cancelBtn.style.display === "none") {
-        cancelBtn.style.display = "block";
-    }*/
+    let cancelBtn = document.querySelector('.cancel-order');
     cancelBtn.classList.toggle("hidden", false);
-
-    $('.update-success').remove(); // "Udało się zmienić status zamówienia";
-    $("span.date-error").hide(); // "Podaj poprawną datę"
-    $("span.update-failed").remove(); // "Wystąpił problem. Nie udało się zmienić statusu zamówienia"
-
+    $('.update-success').remove();
+    $("span.date-error").hide();
+    $("span.update-failed").remove();
     resetDateInputs();
-
     let list = document.getElementById("status-list");
     list.selectedIndex = 0;
-
     let div = document.querySelector(".delivery-date");
     div.classList.toggle("hidden", true);
 }
 
 function resetDateInputs() {
     let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"], form#update-order-date input[type="time"]');
-    dateInputs.forEach(function(dateInput) { // zmiana elementu listy wyboru resetuje zawartość inputów typu date;
+    dateInputs.forEach(function(dateInput) {
         dateInput.value = "";
     });
 }
 
-// -----------------------------------------------------------------------------------------------------------------
-// kliknięcie na datę usuwa kom. o błędzie;
+let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"], form#update-order-date input[type="time"]');
 
-let dateInputs = document.querySelectorAll('form#update-order-date input[type="date"], form#update-order-date input[type="time"]'); // querySelectorAll() is a method of the Document object that allows you to select multiple elements in the document based on a CSS selector;
-
-dateInputs.forEach(function(dateInput) { // loop through each input element;
-    dateInput.addEventListener("focus", function() { // add the event listener to each input element;
-        $("span.date-error").hide(); // perform your desired actions when the input is focused;
-        //$("div.delivery-date button").css('margin-top', '70px'); // (?)
+dateInputs.forEach(function(dateInput) {
+    dateInput.addEventListener("focus", function() {
+        $("span.date-error").hide();
     });
 });
-
-// -----------------------------------------------------------------------------------------------------------------
 
 let list = document.getElementById("status-list"); // lista <select> - zmiana opcji wyboru;
 

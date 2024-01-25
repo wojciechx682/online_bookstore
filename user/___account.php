@@ -1,25 +1,5 @@
 <?php
     require_once "../authenticate-user.php";
-
-    // $_SESSION["imie"]
-    // $_SESSION["nazwisko"]
-    // $_SESSION["email"]
-    // $_SESSION["telefon"]
-        // $_SESSION["user_data_error_message"]
-        // $_SESSION["is_user_data_changed"]
-
-    // $_SESSION["miejscowosc"]
-    // $_SESSION["ulica"]
-    // $_SESSION["numer_domu"]
-    // $_SESSION["kod_pocztowy"]
-    // $_SESSION["kod_miejscowosc"]
-        // $_SESSION["address-data-error"]
-        // $_SESSION["is_address_data_changed"]
-
-    // $_SESSION["error_password_message"]
-    // $_SESSION["is_password_changed"]
-
-    //unset($_SESSION["id"]);
 ?>
 
 <!DOCTYPE HTML>
@@ -36,18 +16,12 @@
 	<div id="container">
 
         <main>
-
             <?php require "../view/account-nav.php"; ?>
+
 
             <div id="content">
 
                 <h3 class="account-header">Moje konto</h3>
-
-                <?php
-                    /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                    echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                    echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
-                ?>
 
                 <div class="dane_konta">
 
@@ -241,7 +215,6 @@
                 </h3>
 
                 <script> displayNav(); </script>
-                <!-- ustawia szerokość lewego nava na 25% oraz odpowiednią szerokość dla diva "content" -->
 
 		    </div>
 
@@ -250,60 +223,6 @@
 	</div>
 
     <?php require "../view/___footer.php"; ?>
-
-    <!--<script>
-        document.getElementById("edit_data_form").addEventListener("submit", (event) => {
-
-            event.preventDefault();
-
-            let form = event.currentTarget;
-            let inputs = form.elements;
-            let result = document.querySelector(".data-changed");
-            let errorMsg;
-
-            let name = inputs.name.value;
-            let surname = inputs.surname.value;
-            let email = inputs.email.value;
-            let phone = inputs.phone.value;
-
-            let valid = true;
-
-            let nameRegex = /^[A-ZŁŚŻ][a-ząęółśżźćń]+$/;
-            let maxNameLength = 255;
-
-            if (!nameRegex.test(name) || !isNaN(name) || name.length > maxNameLength) {
-                valid = false;
-                errorMsg = "Podaj poprawne imię";
-            }
-
-            if (!nameRegex.test(surname) || !isNaN(surname) || surname.length > maxNameLength) {
-                valid = false;
-                errorMsg = "Podaj poprawne nazwisko";
-            }
-
-            let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-
-            if (!emailRegex.test(email)) {
-                valid = false;
-                errorMsg = "Podaj poprawny adres e-mail";
-            }
-
-            let phoneRegex = /^\d+$/;
-            let maxPhoneLength = 15;
-
-            if (!phoneRegex.test(phone) || phone.length > maxPhoneLength) {
-                valid = false;
-                errorMsg = "Podaj poprawny numer telefonu";
-            }
-
-            if(valid) {
-                form.submit();
-            } else {
-                result.innerHTML = errorMsg;
-            }
-
-        });
-    </script>-->
 
 </div>
 

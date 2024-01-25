@@ -1,24 +1,11 @@
 <?php
-/*session_start();
-include_once "../functions.php";*/
-
-require_once "../start-session.php";
-
-// reCaptcha - site-key -> linia 376
+    require_once "../start-session.php"; // reCaptcha - site-key -> linia 376
 ?>
 
 <!DOCTYPE HTML>
 <html lang="pl">
 
 <?php require "../view/___head.php"; ?>
-
-<style>
-    div.error {
-        /*color: #d41515;*/
-        /*margin-top: 10px;*/
-        /*font-weight: bold;*/
-    }
-</style>
 
 <body>
 
@@ -31,8 +18,6 @@ require_once "../start-session.php";
         <main>
 
             <div id="content">
-
-                <!-- Formularz rejestracji -->
 
                 <form method="post" action="rejestracja.php" id="register-form">
 
@@ -232,70 +217,6 @@ require_once "../start-session.php";
                             </label>
                         </span>
 
-                        <!-- Województwo: <br> <input type="text" name="wojewodztwo" value="<?php /*
-                            if(isset($_SESSION['fr_kod_wojewodztwo']))
-                            {
-                                echo $_SESSION['fr_kod_wojewodztwo'];
-                                unset($_SESSION['fr_kod_wojewodztwo']);
-                            }
-                        */ ?>"> <br>
-
-                        <?php /*
-                            if(isset($_SESSION['e_kod_wojewodztwo']))
-                            {
-                                echo '<div class="error">'.$_SESSION['e_kod_wojewodztwo'].'</div>';
-                                unset($_SESSION['e_kod_wojewodztwo']);
-                            } */
-                        ?>
-
-                        Kraj: <br> <input type="text" name="kraj" value="<?php /*
-                            if(isset($_SESSION['fr_kraj']))
-                            {
-                                echo $_SESSION['fr_kraj'];
-                                unset($_SESSION['fr_kraj']);
-                            }	*/
-                        ?>"> <br>
-
-                        <?php	/*
-                            if(isset($_SESSION['e_kraj']))
-                            {
-                                echo '<div class="error">'.$_SESSION['e_kraj'].'</div>';
-                                unset($_SESSION['e_kraj']);
-                            }	*/
-                        ?> -->
-
-                        <!-- Pesel: <br> <input type="text" name="pesel" value="<?php /*
-                            if(isset($_SESSION['fr_pesel']))
-                            {
-                                echo $_SESSION['fr_pesel'];
-                                unset($_SESSION['fr_pesel']);
-                            }
-                        */ ?>"> <br>	-->
-
-                        <?php /*
-                            if(isset($_SESSION['e_pesel']))
-                            {
-                                echo '<div class="error">'.$_SESSION['e_pesel'].'</div>';
-                                unset($_SESSION['e_pesel']);
-                            }
-                        */ ?>
-
-                        <!-- Data urodzenia: <br> <input type="text" name="data_urodzenia" value="<?php /*
-                            if(isset($_SESSION['fr_data_urodzenia']))
-                            {
-                                echo $_SESSION['fr_data_urodzenia'];
-                                unset($_SESSION['fr_data_urodzenia']);
-                            }
-                        */ ?>"> <br>
-
-                        <?php /*
-                            if(isset($_SESSION['e_data_urodzenia']))
-                            {
-                                echo '<div class="error">'.$_SESSION['e_data_urodzenia'].'</div>';
-                                unset($_SESSION['e_data_urodzenia']);
-                            }	*/
-                        ?> -->
-
                         <span class="row">
                             <label>
                                 Telefon (PL +48): <input type="tel" name="telefon" value="<?php
@@ -367,9 +288,8 @@ require_once "../start-session.php";
                         }
                     ?>
 
-
-
-                    <!-- reCAPTCHA (v2) - jan.nowak.6820@gmail.com
+                    <?php
+                        /*reCAPTCHA (v2) - jan.nowak.6820@gmail.com
 
                         klucze reCAPTCHA (v2) :
                             Site key = klucz jawny (HTML)
@@ -389,42 +309,40 @@ require_once "../start-session.php";
                         Secret Key : 		(PHP)    	6LcW48gfAAAAALDhZZERPDMpGD5aYMcLJ3s_IszG
 
                         Umieszceznie reCAPTCHA w html :
-                        -> v3 Documentation
-                    -->
+                        -> v3 Documentation*/
+                    ?>
 
                 </form>
 
-            </div> <!-- #content -->
+            </div>
 
         </main>
 
         <script>
 
-            // validate password length (JS) -->
-
             function checkUsername(e, minLength) {
-                let elMsg = document.getElementById("feedback"); // <div> znajdujący się poniżej pola z hasłem
-                let elUsernmae = document.getElementById("haslo1"); // hasło - <input type="password">
+                let elMsg = document.getElementById("feedback");
+                let elUsernmae = document.getElementById("haslo1");
 
                 let eventElement = e.target;
-                console.log("eventElement = ", eventElement); // <input type="password">
-                let elementParent = eventElement.parentElement; // eventElement.parentNode;
-                console.log("elementParent = ", elementParent); // <label> - rodzic;
+                console.log("eventElement = ", eventElement);
+                let elementParent = eventElement.parentElement;
+                console.log("elementParent = ", elementParent);
                 let elementGrandParent = eventElement.parentNode.parentNode;
-                console.log("elementGrandParent = ", elementGrandParent); // <span class="row"> - dziadek;
+                console.log("elementGrandParent = ", elementGrandParent);
 
                 if(elUsernmae.value.length < minLength) {
                     elMsg.textContent = "Hasło musi mieć conajmniej " + minLength + " znaków ";
 
                 } else {
-                    elMsg.textContent = ""; // usunięcie komunikatu;
+                    elMsg.textContent = "";
                 }
             }
 
             function removeMsg(e) {
                 let elMsg = document.getElementById("feedback");
 
-                let eventElement = e.target; // <input type="password">
+                let eventElement = e.target;
                 console.log("eventElement = ", eventElement);
 
                 if(elMsg.textContent !== "") {
@@ -432,7 +350,7 @@ require_once "../start-session.php";
                 }
             }
 
-            let el = document.getElementById("haslo1"); // hasło - <input type="password">
+            let el = document.getElementById("haslo1");
 
             el.addEventListener("blur", function(e) {
                 checkUsername(e, 10);
@@ -444,18 +362,14 @@ require_once "../start-session.php";
 
         </script>
 
-    </div> <!-- #container -->
+    </div>
 
     <?php require "../view/___footer.php" ?>
 
-</div> <!-- #main-container -->
-
-
+</div>
 
 <script>
-    // ustawienie width div#content na 100%;
     content = document.getElementById("content");
-    // console.log("content -> ", content);
     content.style.width = "100%";
 </script>
 
