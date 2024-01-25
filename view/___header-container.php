@@ -5,7 +5,7 @@
 
             <div id="n-top-header">
 
-                <div id="header-title"> Księgarnia internetowa </div> <!-- top-header -->
+                <div id="header-title"> Księgarnia internetowa </div>
 
                 <div id="btn-parent">
 
@@ -32,7 +32,7 @@
                                 <?php
                                     if (isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true) {
                                         query("SELECT SUM(ilosc) AS suma FROM shopping_cart WHERE id_klienta='%s'", "countCartQuantity", $_SESSION["id"]);
-                                        echo "(".$_SESSION["koszyk_ilosc_ksiazek"].")"; // "(3)"
+                                        echo "(".$_SESSION["koszyk_ilosc_ksiazek"].")";
                                     }
                                 ?>
                         </div>
@@ -60,7 +60,7 @@
                         <?php
                             if (isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] === true) {
                                 query("SELECT SUM(ilosc) AS suma FROM shopping_cart WHERE id_klienta='%s'", "countCartQuantity", $_SESSION['id']);
-                                echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")"; // "(3)"
+                                echo "(".$_SESSION['koszyk_ilosc_ksiazek'].")";
                             }
                         ?>
                 </div>
@@ -79,52 +79,19 @@
                             <a href="index.php">Strona główna</a>
                         </li>
                         <li class="btn from-center">
-                                <!--<a href="___kategorie.php">Kategorie</a>-->
                             <a href="#" id="a-categories-top-nav">Kategorie</a>
 
                             <ul id="categories-list">
                                 <?php
                                     query("SELECT DISTINCT nazwa FROM categories ORDER BY nazwa", "getCategories", "");
-                                    // wyświetla listę kategorii; wypisuje elementy listy <li> - wewnątrz <ul>
-
-                                    /*<ul>
-                                        <li>
-                                            <form method="post" action="index.php">
-                                                <input type="hidden" name="category" value="Wszystkie">
-                                                <button class="submit-book-form" type="submit">Wszystkie</button>
-                                            </form>
-                                        </li>
-                                            // ...
-                                        <li>
-                                            <form method="post" action="index.php">
-                                                <input type="hidden" name="category" value="Fantastyka">
-                                                <button class="submit-book-form" type="submit">Fantastyka</button>
-                                            </form>
-                                        </li>
-                                        // ...
-                                        // ...
-                                    </ul> */
                                 ?>
                             </ul>
 
-                            <ul id="subcategories-list"> <!-- pod-kategorie -->
-                                <!--
-                                // ...
-                                // ...
-                                    <li>
-                                        <form method="post" action="index.php">
-                                            <input type="hidden" name="kategoria" value="Dla dzieci">
-                                            <input type="hidden" name="subcategory" value="Bajki">
-                                            <button class="submit-book-form" type="submit" style="width: 90%;">Dla dzieci</button>
-                                        </form>
-                                    </li>
-                                // ...
-                                // ... -->
+                            <ul id="subcategories-list">
+
                             </ul>
 
                         </li>
-
-                        <!-- advanced search (!) -->
 
                         <li class="btn from-center">
                             <span id="search-arrow">Wyszukiwanie zaawansowane</span>
@@ -133,12 +100,10 @@
                     </ol>
 
                 </div>
+
             </div>
 
             <div id="advanced-search" class="advanced-search-invisible">
-
-                <!-- animacja płynnego przejścia menu
-                     https://www.kirupa.com/html5/creating_a_smooth_sliding_menu.htm# -->
 
                 <form method="post" action="index.php" id="advanced-search-form">
 
@@ -163,8 +128,8 @@
                             <select id="adv-search-category" name="adv-search-category">
                                 <?php
                                     query("SELECT DISTINCT nazwa FROM categories ORDER BY nazwa", "getCategoriesAdvSearch", "");
-                                    // <option value="{nazwa_kategorii}">{nazwa_kategorii}</option>
                                 ?>
+
                             </select>
                         </p>
                     </div>
@@ -176,12 +141,12 @@
                                     Autor
                                 </label>
                             </span>
-                                <select id="adv-search-author" name="adv-search-author">
-                                    <?php
-                                        query("SELECT DISTINCT imie, nazwisko, id_autora FROM author ORDER BY imie", "getAuthorsAdvSearch", "");
-                                        // <option value="{id_autora}">{imie nazwisko}</option>
-                                    ?>
-                                </select>
+                            <select id="adv-search-author" name="adv-search-author">
+                                <?php
+                                    query("SELECT DISTINCT imie, nazwisko, id_autora FROM author ORDER BY imie", "getAuthorsAdvSearch", "");
+                                ?>
+
+                            </select>
                         </p>
                     </div>
 
@@ -199,7 +164,7 @@
                                 do <input type="number" id="year-max" name="year-max">
                             </label>
 
-                            <div id="adv-search-year-slider"></div> <!-- jQuery NoUISlider -->
+                            <div id="adv-search-year-slider"></div>
 
                         </div>
 
@@ -207,31 +172,10 @@
 
                     <input type="submit" value="Szukaj">
 
-                    <!--<span id="advanced-search-error">
-                        display error message from JS HERE
-                    </span>
+                </form>
 
-                    <script>
-                        const form = document.getElementById("advanced-search-form");
-                        const input = document.getElementById("adv-search-author");
-                        const errorMessage = document.getElementById("advanced-search-error");
+            </div>
 
-                        form.addEventListener("submit", function (event) {
-                            if (!isNumeric(input.value) && input.value) {
-                                event.preventDefault();
-                                errorMessage.innerText = "Podaj poprawne dane";
-                            }
-                        });
-                        function isNumeric(value) {
-                            return /^\d+$/.test(value);
-                        }
-                    </script>-->
-
-                </form> <!-- #advanced-search-form -->
-
-            </div> <!-- #advanced-search -->
-
-
-        </nav> <!-- #main-nav -->
+        </nav>
 
     </header>

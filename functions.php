@@ -37,10 +37,10 @@ use PHPMailer\PHPMailer\SMTP;
         // funkcja "get_authors" wykona się tylko, jeśli $result zawiera rekordy - czyli jeśli istnieje conajmniej jeden autor !
 
         echo '<li>
-                  <label>
-                      <input type="checkbox" name="author-checkbox" class="author-checkbox" id="all-authors">Wszyscy
-                  </label>
-              </li>';
+                                <label>
+                                <input type="checkbox" name="author-checkbox" class="author-checkbox" id="all-authors">Wszyscy
+                                </label>
+                            </li>';
 
         // load the content from the external template file into string
         $author = file_get_contents("../template/content-authors.php");
@@ -1874,7 +1874,6 @@ function query($query, $fun, $values) {
         if ($connection->connect_errno) {
 
             throw new Exception(mysqli_connect_errno()); // failed to connect to DB;
-
         } else {
 
             if (!is_array($values)) {

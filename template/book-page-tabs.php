@@ -1,11 +1,9 @@
 
-<!-- // template used on the book page (book.php) to display the book tabs -->
-
-<section class="book-page"> <!-- book-page-tabs -->
+<section class="book-page">
 
     <div class="book-tabs">
 
-        <ul class="tab-list"> <!-- .tab-list -->
+        <ul class="tab-list">
 
             <li>
                 <a class="tab-control" href="#tab-1">
@@ -23,59 +21,44 @@
                 </a>
             </li>
 
-        </ul> <!-- ul.tab-list -->
+        </ul>
 
-        <div class="tab-panel" id="tab-1"> <!-- tab-panel -->
+        <div class="tab-panel" id="tab-1">
 
-            <p>%s</p> <!-- $row["opis"] -->
+            <p>%s</p>
         </div>
 
         <div class="tab-panel" id="tab-2">
-            <p><span class="book-details-tab">Tytuł</span><strong>%s</strong></p> <!-- $row["tytul"] -->
-            <p><span class="book-details-tab">Autor</span><strong>%s %s</strong></p> <!--  $row["imie"], $row["nazwisko"] -->
-            <p><span class="book-details-tab">Wydawnictwo</span><strong>%s</strong></p> <!-- $row["nazwa_wydawcy"] -->
-            <p><span class="book-details-tab">Ilość stron</span><strong>%s</strong></p> <!-- $row["ilosc_stron"] -->
-            <p><span class="book-details-tab">Rok wydania</span><strong>%s</strong></p> <!-- $row["rok_wydania"] -->
-            <p><span class="book-details-tab">Wymiary (mm)</span><strong>%s</strong></p> <!-- $row["wymiary"] -->
-            <p><span class="book-details-tab">Oprawa</span><strong>%s</strong></p> <!-- $row["oprawa"] -->
-            <p><span class="book-details-tab">Stan</span><strong>%s</strong></p> <!-- $row["stan"] -->
-            <!--<p><span class="book-details-tab">Numer (id) książki</span><strong>s</strong></p>--> <!-- $row["id_ksiazki"] -->
-            <p><span class="book-details-tab">Kategoria</span><strong>%s</strong></p> <!-- $row["id_ksiazki"] -->
-            <p><span class="book-details-tab">Podkategoria</span><strong>%s</strong></p> <!-- $row["id_ksiazki"] -->
+            <p><span class="book-details-tab">Tytuł</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Autor</span><strong>%s %s</strong></p>
+            <p><span class="book-details-tab">Wydawnictwo</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Ilość stron</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Rok wydania</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Wymiary (mm)</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Oprawa</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Stan</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Kategoria</span><strong>%s</strong></p>
+            <p><span class="book-details-tab">Podkategoria</span><strong>%s</strong></p>
         </div>
 
         <div class="tab-panel active" id="tab-3">
 
-            <!-- <div id="book-page-rate-circle">
-                <div id="book-page-rate-circle">
-                    <div class="rating-circle"></div>
-                    <span class="rating-num-circle"></span>
-                </div>
-            </div> -->
+        <div id="circle-plot">
 
-<div id="circle-plot">
+            <svg viewBox="0 0 100 100">
 
-    <svg viewBox="0 0 100 100">
+                <circle cx="15" cy="17" r="10" stroke="#D3D3D3" stroke-width="1" fill="none" />
 
-        <circle cx="15" cy="17" r="10" stroke="#D3D3D3" stroke-width="1" fill="none" /> <!-- szare kółko -->
+                <circle id="rating-circle" cx="15" cy="17" r="10" stroke="#ffc107" stroke-width="1" fill="none"></circle>
 
-        <circle id="rating-circle" cx="15" cy="17" r="10" stroke="#ffc107" stroke-width="1" fill="none"> <!-- stroke-dasharray="100"
-                           stroke-dashoffset="100" -->
-        </circle>
+                <text x="15" y="18.5" text-anchor="middle" font-size="3">
+                    <tspan x="15" dy="-0.5em">średnia</tspan>
+                    <tspan x="15" dy="1.2em">%s</tspan>
+                </text>
+            </svg>
 
-        <!--  stroke-dasharray - określa DŁUGOŚCI przerywanych ODCINKÓW oraz DŁUGOŚCI PRZERW między nimi -->
+        </div>
 
-        <text x="15" y="18.5" text-anchor="middle" font-size="3">
-            <tspan x="15" dy="-0.5em">średnia</tspan>
-            <tspan x="15" dy="1.2em">%s</tspan> <!-- $row["rating"] -->
-        </text>
-    </svg>
-
-</div>
-           <!-- <svg>
-                <circle cx="50" cy="50" r="40" stroke="black" stroke-width="1" fill="none"
-                        stroke-dasharray="20" />
-            </svg> -->
 
             <div id="book-rating-details">
 
@@ -84,10 +67,10 @@
                     <div class="rate">5</div>
 
                     <div class="line">
-                        <div class="rated"></div>   <!-- żółty pasek -->
-                        <div class="unrated"></div> <!-- cały pasek (szary) -->
+                        <div class="rated"></div>
+                        <div class="unrated"></div>
                     </div>
-                    <div class="no-rates"></div> <!-- JS -> (0) / (15) / (63) ... -->
+                    <div class="no-rates"></div>
 
                 </div>
 
@@ -96,8 +79,8 @@
                     <div class="rate">4</div>
 
                     <div class="line">
-                        <div class="rated"></div>   <!-- żółty pasek -->
-                        <div class="unrated"></div> <!-- szary pasek -->
+                        <div class="rated"></div>
+                        <div class="unrated"></div>
                     </div>
                     <div class="no-rates"></div>
 
@@ -108,8 +91,8 @@
                     <div class="rate">3</div>
 
                     <div class="line">
-                        <div class="rated"></div>   <!-- żółty pasek -->
-                        <div class="unrated"></div> <!-- szary pasek -->
+                        <div class="rated"></div>
+                        <div class="unrated"></div>
                     </div>
                     <div class="no-rates"></div>
 
@@ -120,8 +103,8 @@
                     <div class="rate">2</div>
 
                     <div class="line">
-                        <div class="rated"></div>   <!-- żółty pasek -->
-                        <div class="unrated"></div> <!-- szary pasek -->
+                        <div class="rated"></div>
+                        <div class="unrated"></div>
                     </div>
                     <div class="no-rates"></div>
 
@@ -132,8 +115,8 @@
                     <div class="rate">1</div>
 
                     <div class="line">
-                        <div class="rated"></div>   <!-- żółty pasek -->
-                        <div class="unrated"></div> <!-- szary pasek -->
+                        <div class="rated"></div>
+                        <div class="unrated"></div>
                     </div>
                     <div class="no-rates"></div>
 
@@ -189,20 +172,14 @@
                 </form>
 
                     <div id="error-message">%s</div>
-                    <!-- $message - komunikat informujący czy udało się dodać komentarz (success/fail) -->
 
-            </div> <!-- #add-review -->
+            </div>
 
-            <article id="book-comments"> <!-- article - html5 -->
-                <!--<hr>-->
+            <article id="book-comments">
                     %s
-                <!--<hr>-->             <!-- /template/book-comment.php <-- $_SESSION["comments"]  -->
             </article>
 
-        </div> <!-- .tab-panel #tab-3 -->
+        </div>
+    </div>
 
-    </div> <!-- .book-tabs -->
-
-    <!--</div> ? -->
-
-</section> <!-- .book-page -->
+</section>
