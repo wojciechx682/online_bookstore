@@ -10,7 +10,7 @@ function removeOrder(orderId) {
     let icon = document.querySelector(".icon-cancel");
     let cancelBtn = document.querySelector(".cancel-order");
 
-    buttons = [icon, cancelBtn]; // "✖", "Anuluj";
+    buttons = [icon, cancelBtn];
     buttons.forEach(function(button) {
         button.addEventListener("click", closeRemoveBox);
     });
@@ -69,9 +69,9 @@ document.addEventListener("keydown", function(event) {
             if (errorMsg) {
                 errorMsg.remove();
             }
-            let cancelButton = removeBox.querySelector('button.cancel-order'); // "Anuluj"*
+            let cancelButton = removeBox.querySelector('button.cancel-order');
             let form = removeBox.querySelector('.remove-order');
-            let textarea = removeBox.querySelector('textarea[name="comment"]'); // <textarea>
+            let textarea = removeBox.querySelector('textarea[name="comment"]');
             cancelButton.classList.toggle("hidden", false);
             form.classList.toggle("hidden", false);
         }

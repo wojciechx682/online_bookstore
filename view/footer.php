@@ -10,7 +10,6 @@
     <script src="../scripts/jquery.nouislider.js"></script> <!-- można te skrypty przenieść do stopki <footer> -->
     <script src="../scripts/filtrowanie.js"></script>
     <script src="../scripts/sortowanie_v3_2.js"></script>
-    <script src="../scripts/display-slider.js"></script>
 
     <!-- advanced search -->
 
