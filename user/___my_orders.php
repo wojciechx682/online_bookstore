@@ -21,13 +21,9 @@
 
             <div id="content">
 
-                <h3 class="account-header">Historia zamówień</h3> <!-- <h3>Zamówienia</h3><hr> -->
+                <h3 class="account-header">Historia zamówień</h3>
 
                 <?php
-
-                /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
 
                     query("SELECT zm.id_zamowienia, zm.data_zlozenia_zamowienia, zm.status, zm.termin_dostawy, zm.data_wysłania_zamowienia, zm.data_dostarczenia, zm.komentarz, 
                                   fd.nazwa AS forma_dostawy, fd.cena AS koszt_dostawy, 
@@ -53,12 +49,11 @@
                         // sposob_platnosci         - Blik
                 ?>
 
-                <!--<br><br><a href="logout.php">[ Wyloguj ]</a>-->
+            </div>
 
-            </div> <!-- #content -->
         </main>
 
-    </div> <!-- #container -->
+    </div>
 
     <script>displayNav();</script>
 
@@ -69,7 +64,7 @@
 <script>
 
     content = document.getElementById("content");
-        content.style.overflow = "auto";
+    content.style.overflow = "auto";
 
     // set order status "Zarchiwizowane" text-color to green;
 

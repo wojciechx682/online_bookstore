@@ -645,6 +645,8 @@ use PHPMailer\PHPMailer\SMTP;
 
 		  	query("INSERT INTO order_details VALUES ('%s', '%s', '%s')", "", $cart);
 
+            //query("UPDATE warehouse_books SET ilosc_dostepnych_egzemplarzy=ilosc_dostepnych_egzemplarzy-'%s' WHERE id_ksiazki='%s'", "", [$ilosc, $id_ksiazki]);
+
 		  	// echo '<a href="order_details.php?order_id='.$row['id_zamowienia'].' "> Szczegóły zamówienia </a><br>';
 		}
 

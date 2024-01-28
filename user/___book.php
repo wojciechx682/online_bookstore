@@ -2,100 +2,49 @@
 
     require_once "../start-session.php";
 
-    // Implementacja wzorca PRG (Post-Redirect-Get);
+    if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
-    if ($_SERVER['REQUEST_METHOD'] === "POST") { // isset($_POST)  ̶&̶&̶ ̶!̶ ̶e̶m̶p̶t̶y̶(̶$̶_̶P̶O̶S̶T̶)̶
+        if (isset($_POST["book-id"]) && !empty($_POST["book-id"])) {
 
-        if (isset($_POST["book-id"]) && !empty($_POST["book-id"])) { // "35" ; // check if POST value (id_ksiazki) exists and is not empty;
-
-            // Process the form data and perform necessary validations ;
-
-            $bookId = validateBookId($_POST["book-id"]); // "35" or FALSE; <-- validate book-id - is it valid ID (integer) and is there a book with that ID ?
+            $bookId = validateBookId($_POST["book-id"]);
 
             if (empty($bookId)) {
-                // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
-                $_SESSION["application-error"] = true; // \view\app-error-window.php <-- "Wystąpił błąd";
+
+                $_SESSION["application-error"] = true;
 
                 unset($_POST, $bookId);
                     header('Location: index.php', true, 303);
                         exit();
 
             } else {
-                // input OK - book-id passed validation,    there is a book with that ID;
-                     //               Valid book-id           and           book-exists
 
-                $_SESSION["book-id"] = $bookId; // wartość po walidacji;
+                $_SESSION["book-id"] = $bookId;
 
-                // --> keep $_SESSION["book-id"];
-                // Redirect to prevent form resubmission // to prevent resubmitting the form
                 unset($_POST, $bookId);
                     header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
                         exit();
             }
 
-
-/*// sanitize input - book-id ;
-$book = filter_var($_POST["book-id"], FILTER_SANITIZE_NUMBER_INT); // "35" or FALSE;
-unset($_SESSION["max-book-id"]);
-query("SELECT MAX(id_ksiazki) AS id_ksiazki FROM ksiazki", "getBookId", ""); // get highest book-id from database ;
-// $_SESSION["max-book-id"] = "35"
-// - set variable to be applied in book-id filter below;
-// (if book-id is higher than maximum id number in db - manage the error - redirect to index.php);
-// validate book-id - ✓ valid integer in specific range ;
-$_SESSION["book-id"] = filter_var($book, FILTER_VALIDATE_INT, [
-        'options' => [
-            'min_range' => 1,                       // Minimum allowed book-id value
-            'max_range' => $_SESSION["max-book-id"] // Maximum allowed book-id value (highest book-id in database) ; functions() -> "getBookId()"
-        ]
-    ]
-); // It ensures that the value is an integer within the specified range;
-// check if there is really a book with that id ;
-unset($_SESSION["book_exists"]);
-query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExists", $_SESSION["book-id"]);
-    // sprawdzenie, czy ta książka istnieje w bd ; check if there is any book with given POST id; jeśli num_rows > 0;
-// $_SESSION["book_exists"] --> true - zależnie od tego czy książka o takim ID istnieje ; NULL otherwise (!)*/
-
-        /*if ( $book === false || $_SESSION["book-id"] === false || empty($_SESSION["book_exists"]) || empty($_SESSION["max-book-id"]) || ($_SESSION["book-id"] != $_POST["book-id"])) {
-
-            // ✓ id-książki nie przeszło walidacji, LUB ✓ nie istnieje książka o takim id;
-
-            unset($_POST, $book, $_SESSION["book-id"], $_SESSION["max-book-id"], $_SESSION["book_exists"]);
-
-            header('Location: index.php', true, 303); exit();
-
-        } else { // input OK - book-id passed validation,    there is a book with that ID;
-                 //               Valid book-id           and           book-exists
-            // Execute code (such as database updates) here;
-            // Perform any required actions with the form data (e.g., database update);
-
-                unset($_POST, $_SESSION["max-book-id"], $book, $_SESSION["book_exists"]); // keep $_SESSION["book-id"];
-
-            // Redirect to prevent form resubmission // to prevent resubmitting the form
-            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
-        }*/
-
         } else {
-            // zmienna POST nie istnieje,   nastąpiło wejście pod /user/___book.php bez podania wartości w POST[] ;
-            //echo "<br> POST value (book-id) doesnt exist <br>" ;
             $_SESSION["application-error"] = true;
-            header('Location: index.php', true, 303); exit();
+                header('Location: index.php', true, 303);
+                    exit();
         }
 
     } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (empty($_SESSION["book-id"])) ) {
-        // wejście pod adres \user\book.php - (GET) - poprzez URL - zmienna $_SESSION["book-id"] nie istnieje;
         $_SESSION["application-error"] = true;
-        header('Location: index.php', true, 303); exit();
+            header('Location: index.php', true, 303);
+                exit();
 
     } elseif ($_SERVER['REQUEST_METHOD'] === "GET" && (!empty($_SESSION["book-id"])) && (!empty($_SESSION["rating"])) )  {
 
-        // pobierz liczbę ocen książki, jeśli wynosi zero, zapisz ten stan do zmiennej -->
         query("SELECT ks.id_ksiazki, ks.tytul, ks.rating, (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki) AS liczba_ocen
                FROM books AS ks
                WHERE ks.id_ksiazki = '%s'", "updateBookRates", $_SESSION["book-id"]); // <-- UPDATE
 
         unset($_SESSION["rating"]);
-        // Redirect to prevent form resubmission // to prevent resubmitting the form
-        header('Location: ' . $_SERVER['REQUEST_URI'], true, 303); exit();
+            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+                exit();
     }
 
 ?>
@@ -119,19 +68,12 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
                     <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_SESSION["book-id"]) ) : ?>
 
-                        <!--query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, kt.nazwa, sb.id_kategorii, (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy, (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen, (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy, au.imie, au.nazwisko, au.id_autora, ks.id_wydawcy, wd.nazwa_wydawcy FROM ksiazki AS ks JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii LEFT JOIN autor AS au ON ks.id_autora = au.id_autora LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]);-->
-
                         <?php
 
-                           /* echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                            echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                            echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
-
                             echo '<div id="aaa"><a href="index.php" id="get-back-a"><i class="icon-down-open" id="book-page-get-back"></i>Wróć </a></div>';
-                            /*echo '<a href="index.php">&larr; Wróć </a>'; // tymczasowe (!) ;*/
 
                             if(isset($_SESSION["avg_rating"])) {
-                                unset($_SESSION["avg_rating"]); // $row["rating"];
+                                unset($_SESSION["avg_rating"]);
                             }
 
                             query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, ks.opis, kt.nazwa AS kategoria, sb.id_kategorii, sb.nazwa AS podkategoria,
@@ -148,234 +90,42 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
                                              JOIN publishers AS wd ON ks.id_wydawcy = wd.id_wydawcy 
                                          WHERE ks.id_ksiazki = '%s'", "getBook", $_SESSION["book-id"]); // \template\book-page.php ;
 
-                       /* echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                        echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                        echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>";*/
+
 
                             $_SESSION["ratings"] = [];
 
-                            query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "getRatings", $_SESSION["book-id"]); // $_SESSION["ratings"] <--
-
-                            /*if(empty($_SESSION["ratings"])) {
-                                $_SESSION["ratings"] = [];
-                            }*/
-
-                                // ✓ potrzebne w widoku w sekcji "Recenzje" ; poziome paski z ocenami (żółte/szare) ;
-
-                                // $_SESSION['ratings'] -> key => ocena,  value => ilosc_ocen;
-
-                                // ocena  liczba_ocen
-                                //   5	      1
-                                //   4	      1
-                                                             // $_SESSION["ratings"] -> [5] => 2
-                                                             //                         [4] => 1 ;
+                            query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "getRatings", $_SESSION["book-id"]);
 
                             $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]); // JSON string;
 
-                                // funstions -> get_ratings() -> to pass that array (PHP) to JS
-                                //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
-                                // The json_encode() function is used to encode a PHP value into a JSON string;
 
-                            /*echo "<hr><br>";*/
-                        /*echo "<b>".'$_SESSION["comments"] - comments  (PHP) -->'."</b><br><br>";
-                        print_r($_SESSION["comments"]); echo "<br><br>";
-                        var_dump($_SESSION["comments"]);
-                                echo "<b>".'$_SESSION["ratings"] - ratings array (PHP) -->'."</b><br><br>";
-                                print_r($_SESSION["ratings"]); echo "<br><br>";
-                                var_dump($_SESSION["ratings"]);
-                                echo "<br><br><b>".'$_SESSION["raings_array"] - ratings array (JS) -->'."</b><br><br>";
-                                print_r($_SESSION["raings_array"] );
-                                echo "<br><br><b>".'$_SESSION["liczba_ocen"] - liczba_ocen --> '."</b><br><br>";
-                                print_r($_SESSION["liczba_ocen"] ); echo "<br><br>";
-                                var_dump($_SESSION["liczba_ocen"] );
-                            echo "<hr><br><br>";*/
-                            /*echo "<br>"; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                            echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                            echo "SESSION ->"; print_r($_SESSION); echo "<hr>";*/
                         ?>
 
                     <?php endif; ?>
 
-                    <?php //exit(); ?>
-
                     <?php
 
-                    // -------------------------------------------------------------------------------------------------
-                    // Problemy implementacyjne ->
+                        // -------------------------------------------------------------------------------------------------
+                        // Problemy implementacyjne ->
 
-                    // 1. Po kliknięciu gwiazdki przy dodawaniu opinii, -- zostały one resetowane po najechaniu na inną gwiazdkę.
-                    //    - Od teraz, po kiknięciu, gwiazdki zostają zapisane. (najechanie na inną gwiazdkę nie zmienia ich stanu - jedynie dopiero kliknięcie)
+                        // 1. Po kliknięciu gwiazdki przy dodawaniu opinii, -- zostały one resetowane po najechaniu na inną gwiazdkę.
+                        //    - Od teraz, po kiknięciu, gwiazdki zostają zapisane. (najechanie na inną gwiazdkę nie zmienia ich stanu - jedynie dopiero kliknięcie)
 
-                    // 2. Podczas dodawania opinii, przy kliknięciu dwóch gwiazdek w następującej po sobie kolejności, wystąpił błąd polegający na dodaniu niewłaściwej oceny w skali 5/5 (Np. jeśli użytkownik kliknął "3", a potem "2" - ocena została zapisana jako "3")
-                    // - rozwiązaniem było dodanie funkcji usuwającej atrybuty "name" ze wszystkich gwiazdek - po kliknięciu na dowolną gwiazdkę;
-                    // (atrybut "name" posiada tylko ten input, dla którego gwiazdka została kliknięta)
+                        // 2. Podczas dodawania opinii, przy kliknięciu dwóch gwiazdek w następującej po sobie kolejności, wystąpił błąd polegający na dodaniu niewłaściwej oceny w skali 5/5 (Np. jeśli użytkownik kliknął "3", a potem "2" - ocena została zapisana jako "3")
+                        // - rozwiązaniem było dodanie funkcji usuwającej atrybuty "name" ze wszystkich gwiazdek - po kliknięciu na dowolną gwiazdkę;
+                        // (atrybut "name" posiada tylko ten input, dla którego gwiazdka została kliknięta)
 
-                    // 3. Podczas odświeżania strony z książką poprzeż użycie klawiszy Ctrl + F5 - pojawiał się błąd polegający na nieodopowiednim umiejscowieniu szarych gwiazdek proporcjonalnie względem żółtych gwizdek (w sekcji #book-page-details - przy zdjęciu książki). - podczas resizowania okna przeglądarki
+                        // 3. Podczas odświeżania strony z książką poprzeż użycie klawiszy Ctrl + F5 - pojawiał się błąd polegający na nieodopowiednim umiejscowieniu szarych gwiazdek proporcjonalnie względem żółtych gwizdek (w sekcji #book-page-details - przy zdjęciu książki). - podczas resizowania okna przeglądarki
 
-                    // ✖ rozwiązaniem było dodanie linii window.onload - "która czeka" na wczytanie wszystkich zasobów strony (w tym stylów CSS) - tak aby ostatecznie zachować poprawne umiejscowienie żółtych i szarych gwizdek względem siebie ;
-                    // 5. // ✓✓✓ ROZWIĄZANIE PROBLEMU IMPLEMENTACYJNEGO - zamiana position left z px na wartość % (!) - podczas resizowania nastąpiło błędne kalkulowanie tej pozycji, od teraz przy ZMIANIE ROZMIARU pozycja szarych gwiazdek względem złotych jest OK (!)
+                        // ✖ rozwiązaniem było dodanie linii window.onload - "która czeka" na wczytanie wszystkich zasobów strony (w tym stylów CSS) - tak aby ostatecznie zachować poprawne umiejscowienie żółtych i szarych gwizdek względem siebie ;
+                        // 5. // ✓✓✓ ROZWIĄZANIE PROBLEMU IMPLEMENTACYJNEGO - zamiana position left z px na wartość % (!) - podczas resizowania nastąpiło błędne kalkulowanie tej pozycji, od teraz przy ZMIANIE ROZMIARU pozycja szarych gwiazdek względem złotych jest OK (!)
 
-                    // ✓ rozwiązaniem było zastosowanie wartości procentowych (relatywnych) zamiast wartości wyrażonych w px - do ustalenia stylów tych elementów !
+                        // ✓ rozwiązaniem było zastosowanie wartości procentowych (relatywnych) zamiast wartości wyrażonych w px - do ustalenia stylów tych elementów !
 
-                    // 4. Animacja wypełniania okręgu na żółto (proporcjonalnie do średniej oceny) - OPISAĆ - jak zostało zrobione to, że wypełnienie zaczyna się od początku okręgu;
+                        // 4. Animacja wypełniania okręgu na żółto (proporcjonalnie do średniej oceny) - OPISAĆ - jak zostało zrobione to, że wypełnienie zaczyna się od początku okręgu;
 
+                        // -------------------------------------------------------------------------------------------------
 
-
-                    // -------------------------------------------------------------------------------------------------
-
-
-
-                    //query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.image_url, ks.rating,
-                    //km.id_klienta, km.tresc,
-                    //rt.ocena, rt.id_klienta,
-                    //au.imie, au.nazwisko,
-                    //ks.id_wydawcy, wd.nazwa_wydawcy,
-                    //mg.ilosc_dostepnych_egzemplarzy
-                    //FROM ksiazki AS ks, autor AS au, komentarze AS km, ratings AS rt, magazyn_ksiazki AS mg, wydawcy AS wd
-                    //WHERE ks.id_autora = au.id_autora AND  ks.id_ksiazki = km.id_ksiazki AND ks.id_ksiazki = rt.id_ksiazki AND ks.id_wydawcy wd.id_wydawcy AND ks.id_ksiazki = mg.id_ksiazki AND ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);
-
-                    //$book = filter_var(filter_input(INPUT_GET, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
-                    //$book = filter_var(filter_input(INPUT_POST, 'book', FILTER_SANITIZE_NUMBER_INT), FILTER_VALIDATE_INT);
-
-                    // validate book's id ;
-
-                    /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating,
-                                 COUNT(km.id_ksiazki) AS liczba_komentarzy,
-                                 COUNT(rt.ocena) AS liczba_ocen,
-                                 au.imie, au.nazwisko,
-                                 ks.id_wydawcy, wd.nazwa_wydawcy,
-                                 mg.ilosc_dostepnych_egzemplarzy
-                                 FROM ksiazki AS ks
-                                     LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
-                                     LEFT JOIN komentarze AS km ON ks.id_ksiazki = km.id_ksiazki
-                                     LEFT JOIN ratings AS rt ON ks.id_ksiazki = rt.id_ksiazki
-                                     LEFT JOIN magazyn_ksiazki AS mg ON ks.id_ksiazki = mg.id_ksiazki
-                                     LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                                 WHERE ks.id_ksiazki = '%s'", "get_book", $_GET["book"]);*/  // ERROR - nie zwraca poprawnej ilości ocen i komentarzy !
-                    // The issue with your query is that you are using LEFT JOIN to join the ksiazki table with the komentarze and ratings tables. This means that for each row in the ksiazki table, all matching rows in the komentarze and ratings tables are returned. If there are multiple comments or ratings for a single book, each row for that book in the ksiazki table will be duplicated for each comment or rating. To fix this, you can use subqueries to count the number of comments and ratings for each book instead of joining the tables. Here's an example query that should give you the correct results
-
-                    /* Solution below - This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.
-                    This query uses subqueries to count the number of comments and ratings for each book by filtering the komentarze and ratings tables based on the book's id_ksiazki. This ensures that each book is only counted once, regardless of the number of comments or ratings it has.*/
-
-                    /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
-                                (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
-                                (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
-                                    au.imie, au.nazwisko,
-                                    ks.id_wydawcy, wd.nazwa_wydawcy,
-                                    mg.ilosc_dostepnych_egzemplarzy
-                                FROM ksiazki AS ks
-                                    LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
-                                    LEFT JOIN magazyn_ksiazki AS mg ON ks.id_ksiazki = mg.id_ksiazki
-                                    LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                                WHERE ks.id_ksiazki = '%s';
-                                ", "get_book", $book);*/ // foregins key => id_autora, id_ksiazki, id_wydawcy
-
-                    // wynik zapytania -->
-                    // 35	Java - Techniki zaawansowane Wydanie V	44.5	2018	2 (id_subkategori)	twarda	325	Java_techniki_zaawansowane.png	4.5	370 x 337 x 76	nowa	2 (liczba_kom) 	2   (liczba_ocen)	Cezary	Sokołowski	1	Helion	126 (ilosc dost. egzemplarzy)
-
-                    /* query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.kategoria, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
-                                    (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
-                                    (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
-
-                                    (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
-
-                                        au.imie, au.nazwisko,
-                                        ks.id_wydawcy, wd.nazwa_wydawcy
-
-                                    FROM ksiazki AS ks
-                                        LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
-                                        LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                                    WHERE ks.id_ksiazki = '%s';
-                                    ", "get_book", $book);*/
-
-                    // wynik zapytania (taki sam jak poprzednio) -->
-                    // 35	Java - Techniki zaawansowane Wydanie V	44.5	2018	2	twarda	325	Java_techniki_zaawansowane.png	4.5	370 x 337 x 76	nowa	2	2	126	Cezary	Sokołowski	1	Helion
-
-                    // ✓ zmiana kwerendy po dodaniu subkategorii ->
-
-                    /*query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan,
-                                    kt.nazwa, sb.id_kategorii,
-                                        (SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy,
-                                        (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen,
-                                        (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy,
-                                        au.imie, au.nazwisko, au.id_autora,
-                                        ks.id_wydawcy, wd.nazwa_wydawcy
-                                    FROM ksiazki AS ks
-                                    JOIN subkategorie AS sb ON ks.id_subkategorii = sb.id_subkategorii
-                                    JOIN kategorie AS kt ON sb.id_kategorii = kt.id_kategorii
-                                    LEFT JOIN autor AS au ON ks.id_autora = au.id_autora
-                                    LEFT JOIN wydawcy AS wd ON ks.id_wydawcy = wd.id_wydawcy
-                                    WHERE ks.id_ksiazki = '%s'", "get_book", $_SESSION["book-id"]); */ // It is used to retrieve detailed information about a specific book (based on $_GET["book-id"])
-
-                    // $_SESSION["book-id"]
-                    // $book
-
-                    /*
-                        The given query retrieves data from multiple tables using various JOIN clauses and calculates additional fields using subqueries. Let's break it down step by step:
-
-                        1. The SELECT statement specifies the columns to be retrieved from the tables.
-
-                        2. The main table being queried is `ksiazki`, aliased as `ks`. Other tables are joined using the JOIN and LEFT JOIN clauses.
-
-                        3. The JOIN clause connects the `ksiazki` table with the `subkategorie` table on the condition that the `id_subkategorii` values match.
-
-                        4. Another JOIN clause connects the `subkategorie` table with the `kategorie` table on the condition that the `id_kategorii` values match.
-
-                        5. The LEFT JOIN clauses connect the `ksiazki` table with the `autor` and `wydawcy` tables based on the respective IDs. LEFT JOIN is used to include records from the `ksiazki` table even if there is no matching record in the joined tables.
-
-                        6. The WHERE clause filters the results based on the condition `ks.id_ksiazki = '%s'`. The `%s` placeholder suggests that the query is likely prepared or parameterized, and the actual value for `id_ksiazki` would be provided during runtime.
-
-                        7. Within the SELECT statement, there are subqueries used to calculate additional fields:
-                        - `(SELECT COUNT(*) FROM komentarze WHERE id_ksiazki = ks.id_ksiazki AND tresc IS NOT NULL) AS liczba_komentarzy` calculates the count of non-null comments for the given book.
-                        - `(SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki AND ocena IS NOT NULL) AS liczba_ocen` calculates the count of non-null ratings for the given book.
-                        - `(SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM magazyn_ksiazki WHERE id_ksiazki = ks.id_ksiazki AND ilosc_dostepnych_egzemplarzy IS NOT NULL) AS liczba_egzemplarzy` calculates the sum of available copies for the given book.
-
-                        In summary, this query fetches data from multiple tables, joins them based on specific conditions, and includes calculated fields using subqueries. It is used to retrieve detailed information about a specific book (`ks.id_ksiazki`) along with associated category, author, publisher, comment count, rating count, and available copies.
-                     */
-
-                    // wynik_zapytania -->
-
-                    // 35	Java - Techniki zaawansowane Wydanie V	44.5	2018	32	twarda	325	Java_techniki_zaawansowane.png	4.5	370 x 337 x 76	nowa	Informatyka	4	2	2	126	Cezary	Sokołowski	32	1	Helion
-
-                    // retrieves column =>
-                    // id_ksiazki: The ID of the book.
-                    // tytul: The title of the book.
-                    // cena: The price of the book.
-                    // rok_wydania: The year the book was published.
-                    // kategoria: The category of the book.
-                    // oprawa: The binding type of the book.
-                    // ilosc_stron: The number of pages in the book.
-                    // image_url: The URL of the book's cover image.
-                    // rating: The average rating of the book.
-                    // liczba_komentarzy: The number of comments on the book.
-                    // liczba_ocen: The number of ratings for that specific book (!);
-
-                    // imie: The first name of the book's author.
-                    // nazwisko: The last name of the book's author.
-                    // id_wydawcy: The ID of the book's publisher.
-                    // nazwa_wydawcy: The name of the book's publisher.
-                    // ilosc_dostepnych_egzemplarzy: The number of available copies of the book in the warehouse.
-
-                    // pobranie ilości każdej oceny (5 - ilość 3, 4 - ilość 2, itd .... ->
-                    // SD -> problem implementacyjny ;
-
-                    // Oceny + Ich ilości dla tej książki ;
-                    /*query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings
-                                        WHERE id_ksiazki = '%s'
-                                        GROUP BY ocena
-                                        ORDER BY ocena DESC
-                                        ", "get_ratings", $book); */// ✓ potrzebne w widoku w sekcji "Recenzje" ; poziome paski z ocenami (żółte/szare) ;
-
-                                    // $_SESSION['ratings'] -> key => ocena, value => ilosc_ocen;
-                                    // $_SESSION["ratings"] -> [5] => 2 [4] => 1 ;
-
-                    //$_SESSION["raings_array"] = json_encode($_SESSION["ratings"]);
-                        // funstions -> get_ratings() -> to pass that array (PHP) to JS
-
-                        //       { "5" : "2", "4" : "1" }           <-- type "string" - zwraca JSON'a !
-                        // The json_encode() function is used to encode a PHP value into a JSON string;
-
-                                                        //unset($_SESSION["book-id"]);
                     ?>
 
                 </div> <!-- #content -->
@@ -385,11 +135,11 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
             <script>
 
                 const rating = document.getElementById("book-rate").textContent;
-                    // <span id="book-rate" style="display: none;"> %s </span> <!-- $row["rating"] - "4" -->
-                    // "4.5" - type "string";    type "hidden" - "4.5",   ̶l̶u̶b̶ ̶ ̶n̶u̶l̶l̶ ̶ lub "0" ;
+                // <span id="book-rate" style="display: none;"> %s </span> <!-- $row["rating"] - "4" -->
+                // "4.5" - type "string";    type "hidden" - "4.5",   ̶l̶u̶b̶ ̶ ̶n̶u̶l̶l̶ ̶ lub "0" ;
 
-                    console.log("\n\n 471 rating -->", rating);
-                    console.log("\n\n typeof rating -->", typeof rating);
+                console.log("\n\n 471 rating -->", rating);
+                console.log("\n\n typeof rating -->", typeof rating);
 
 
                 /*let circleTest = document.getElementById("rating-circle"); // <circle id="rating-circle" ...>

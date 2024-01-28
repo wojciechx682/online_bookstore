@@ -1,31 +1,27 @@
 <?php
 
-    // (!) dodać zabezpieczenie przed ponownym przesłaniem formularza (PRG !);
-
-    // check if user is logged-in, and user-type is "client" - if not, redirect to login page ;
     require_once "../authenticate-user.php";
 
-    if ( isset($_POST["delivery-type"]) && !empty($_POST["delivery-type"]) &&
-         isset($_POST["payment-method"]) && !empty($_POST["payment-method"]) ) {
+    if (isset($_POST["delivery-type"]) && !empty($_POST["delivery-type"]) &&
+        isset($_POST["payment-method"]) && !empty($_POST["payment-method"])) {
 
-        // validate and sanitize user input;
         $deliveryType = filter_input(INPUT_POST, "delivery-type", FILTER_SANITIZE_STRING);
         $paymentMethod = filter_input(INPUT_POST, "payment-method", FILTER_SANITIZE_STRING);
 
-        if ( empty($deliveryType) || ($deliveryType !== $_POST["delivery-type"]) || !array_key_exists($_POST["delivery-type"], $_SESSION["delivery-types"]) ) {
+        if (empty($deliveryType) || ($deliveryType !== $_POST["delivery-type"]) || !array_key_exists($_POST["delivery-type"], $_SESSION["delivery-types"])) {
 
             $_SESSION["order-error"] = "Podaj poprawną formę dostawy";
 
-        } elseif ( empty($paymentMethod) || ($paymentMethod !== $_POST["payment-method"]) || !array_key_exists($_POST["payment-method"], $_SESSION["payment-methods"]) ) {
+        } elseif (empty($paymentMethod) || ($paymentMethod !== $_POST["payment-method"]) || !array_key_exists($_POST["payment-method"], $_SESSION["payment-methods"])) {
 
             $_SESSION["order-error"] = "Podaj poprawną formę płatności";
 
-        } elseif ( !isset($_SESSION["koszyk_ilosc_ksiazek"]) || $_SESSION["koszyk_ilosc_ksiazek"] === 0) {
+        } elseif (!isset($_SESSION["koszyk_ilosc_ksiazek"]) || $_SESSION["koszyk_ilosc_ksiazek"] === 0) {
 
             $_SESSION["order-error"] = "Aby złożyć zamówienie, dodaj książki do koszyka";
         }
 
-        if ( isset($_SESSION["order-error"]) && !empty($_SESSION["order-error"]) ) {
+        if (isset($_SESSION["order-error"]) && !empty($_SESSION["order-error"])) {
 
             header('Location: ___submit_order.php', true, 303); exit();
         }
@@ -40,7 +36,8 @@
 
         $deliveryDate = NULL; // data dostarczenia (date);
 
-        $orderStatus =  "Oczekujące na potwierdzenie"; // status zamówienia - (varchar - 255); - ["Oczekujące na potwierdzenie", "W trakcie realizacji", "Wysłano", "Dostarczono", "Zrealizowano/Zakończono"];
+        $orderStatus =  "Oczekujące na potwierdzenie";
+        // status zamówienia - (varchar - 255); - ["Oczekujące na potwierdzenie", "W trakcie realizacji", "Wysłano", "Dostarczono", "Zrealizowano/Zakończono"];
 
         $paymentDate = $orderDate; // data płatności (datetime);
 
@@ -72,6 +69,10 @@
         query("SELECT id_klienta, id_ksiazki, ilosc 
                FROM shopping_cart 
                WHERE id_klienta='%s'", "insertOrderDetails", $_SESSION["id"]); // aktualizacja tabeli "szczegóły zamówienia"
+
+        // zmniejszenie stanów magazynowych o ilość egzemplarzy -->
+
+
 
         header('Location: order-summary.php', true, 303); exit();
 
