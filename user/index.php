@@ -360,7 +360,7 @@
                                         LEFT JOIN 
                                               warehouse_books ON warehouse_books.id_ksiazki = ks.id_ksiazki
                                         WHERE ks.tytul LIKE '%%%s%%' 
-                                        GROUP BY ks.id_ksiazki", "f", $search_value);
+                                        GROUP BY ks.id_ksiazki", "getBooks", $search_value);
                             }
 
                             elseif (isset($_SESSION["input-search-nav"])) {
