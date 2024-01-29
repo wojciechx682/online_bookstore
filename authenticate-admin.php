@@ -9,7 +9,7 @@
 
     // sprawdzenie, czy user jest zalogowany, i czy jest to admin (w plikach \admin) -->
 
-    if ( ! isset($_SESSION['zalogowany']) ||
+    if (!isset($_SESSION['zalogowany']) ||
            $_SESSION['zalogowany'] !== true ||
            $_SESSION["user-type"] !== "admin" ) {
         // - nie jesteśmy zalogowani,
