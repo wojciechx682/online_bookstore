@@ -1,5 +1,5 @@
 
-const searchArrow = document.getElementById("search-arrow"); x
+const searchArrow = document.getElementById("search-arrow");
 const advancedSearchDiv = document.getElementById("advanced-search");
 
 searchArrow.addEventListener("click", () => {

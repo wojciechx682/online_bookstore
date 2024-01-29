@@ -1763,11 +1763,13 @@ function query($query, $fun, $values) {
         if ($connection->connect_errno) {
 
             throw new Exception(mysqli_connect_errno()); // failed to connect to DB;
+
         } else {
 
             if (!is_array($values)) {
                 $values = [$values];
             }
+
             for($i = 0; $i < count($values); $i++) {
                 $values[$i] = mysqli_real_escape_string($connection, $values[$i]);
             }

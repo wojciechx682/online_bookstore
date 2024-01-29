@@ -1,100 +1,57 @@
 
-// return sum of the widths of all elements of the collection; // koszyk.php
+function getTotalWidth(elements) { // koszyk.php
+    let totalWidth = 0;
+    for (let i = 0; i < elements.length; i++) {
+        totalWidth += elements[i].offsetWidth;
+    }
+    return totalWidth;
+}
 
-// window.onload = function() {
+function setSpanWidthv2() {
 
-    function getTotalWidth(elements) {
-        let totalWidth = 0;
-        for (let i = 0; i < elements.length; i++) {
-            totalWidth += elements[i].offsetWidth;
-        }
-        return totalWidth;
+    let spans = document.querySelectorAll("span.adv-search, span.book-details-tab");
+
+    for (let i = 0; i < spans.length; i++) {
+        const width = spans[i].offsetWidth;
+        console.log(`Width of span ${i+1}: ${width}px`);
     }
 
-    function setSpanWidthv2() {
-        // ten skrypt pobiera maksymalną szerokość spana na stronie, i ustawia szerokość każdego spana na tą wartość
+    const firstSpanWidth = spans[0].offsetWidth;
 
-        //let spans = document.getElementsByTagName("span"); // you can change it to querySelectorAll
+    var theSameWidth = true;
 
-        let spans = document.querySelectorAll("span.adv-search, span.book-details-tab"); // spany w wyszukiwaniu zaawansowanym
-        console.log("spans ->", spans);
+    for (let i = 0; i < spans.length; i++) {
+        const width = spans[i].offsetWidth;
 
+        if (width !== firstSpanWidth) {
 
-
-
-        // for( let i=0; i<spans.length; i++){
-        //     console.log("span item -> ", spans.item(i).offsetWidth)
-        //
-        // }
-
-        for (let i = 0; i < spans.length; i++) {
-            const width = spans[i].offsetWidth;
-            console.log(`Width of span ${i+1}: ${width}px`);
+            theSameWidth = false;
+            break;
         }
-
-        // sprawdzenie czy każdy span ma taką samą dlugość, jeśli tak, to nie zmieniamy ich wymiarów - ponieważ zadanie tego sałego skryptu jest spełnione !
-
-        const firstSpanWidth = spans[0].offsetWidth;
-
-        var theSameWidth = true;
-
-        for (let i = 0; i < spans.length; i++) {
-            const width = spans[i].offsetWidth;
-            console.log(`Width of span ${i+1}: ${width}px`);
-
-            if (width !== firstSpanWidth) {
-                console.log("Spans do not have the same width");
-                theSameWidth = false;
-                break;
-            }
-        }
-
-        //return;
-
-        if(theSameWidth === false) {
-            let max_width = 0;
-
-            tab = [];
-            for( let i=0; i<spans.length; i++){
-                console.log("span item -> ", spans.item(i))
-                tab.push(spans.item(i).offsetWidth);
-            }
-            console.log("tab -->", tab);
-            //return;
-            max_width = Math.max(...tab);
-            console.log("max ->", max_width);
-            for( let i=0; i<spans.length; i++) {
-                spans.item(i).style.width = max_width + 10 + "px";
-                spans.item(i).style.display = "block";
-                spans.item(i).style.float = "left";
-            }
-        }
-
-
-
-        //console.log(spans);
     }
 
-    //setSpanWidth();
+    if(theSameWidth === false) {
+        let max_width = 0;
 
-// }
+        tab = [];
+        for( let i=0; i<spans.length; i++){
 
-// function clear_result() {
-//     let result = document.getElementById("result");
-//     result.innerHTML = "";
-// }
-/*function abcde() {
-let result = document.getElementById("result");
-if(result.innerHTML) {
-clear_result();
+            tab.push(spans.item(i).offsetWidth);
+        }
+
+
+        max_width = Math.max(...tab);
+
+        for( let i=0; i<spans.length; i++) {
+            spans.item(i).style.width = max_width + 10 + "px";
+            spans.item(i).style.display = "block";
+            spans.item(i).style.float = "left";
+        }
+    }
+
+
+
+
 }
-}
-/*(function test() {
-let result = document.getElementById("result").innerHTML;
-if(result != "") {
-console.log(result); // display WITHOUT WHITESPACE;
-result = "";
-document.getElementById("result").innerHTML = result;
-console.log(result);
-}
-}*/
+
+
