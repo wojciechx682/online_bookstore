@@ -1,5 +1,4 @@
 
-const searchArrow = document.getElementById("search-arrow"); 
 const searchArrow = document.getElementById("search-arrow");
 const advancedSearchDiv = document.getElementById("advanced-search");
 
