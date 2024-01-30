@@ -11,8 +11,8 @@
 
     // sprawdzenie, czy user jest zalogowany, i czy jest to klient (w plikach \user) -->
 
-    if ( ! isset($_SESSION['zalogowany']) ||
-         ! isset($_SESSION['id']) ||
+    if ( !isset($_SESSION['zalogowany']) ||
+         !isset($_SESSION['id']) ||
            $_SESSION['zalogowany'] !== true ||
            $_SESSION["user-type"] !== "klient" ) {
         // - nie jesteśmy zalogowani,

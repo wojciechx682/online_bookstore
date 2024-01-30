@@ -1,4 +1,4 @@
-<?php
+`<?php
 
     require_once "../authenticate-admin.php"; // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
 

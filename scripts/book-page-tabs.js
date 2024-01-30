@@ -21,7 +21,6 @@ $('.tab-list').each(function(){
 });
 
 $(document).ready(function() {
-    // set the width of <span> elements
 
     const ul = document.querySelector("ul.tab-list");
 

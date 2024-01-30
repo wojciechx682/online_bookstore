@@ -47,7 +47,7 @@ dateInputs.forEach(function(dateInput) {
     });
 });
 
-let list = document.getElementById("status-list"); // lista <select> - zmiana opcji wyboru;
+let list = document.getElementById("status-list");
 
 list.addEventListener("change", function() {
 

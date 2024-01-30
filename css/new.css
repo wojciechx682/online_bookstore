@@ -1341,111 +1341,49 @@ button#confirm-message {
     text-align: center !important;
 }
 
-/*.book-cover img,*/
-.book-cover > form button.book-img-button img
-    /* index.php - <form> - button/submit - (prg) */
-{
-    /*position: absolute;
-    top: 0;
-    left: 0;
-    width: 70%;
-    height: 100%;
-    object-fit: cover;
-
-    border-radius: 5px;*/
-
-
-    /*position: absolute;
-    top: 0;
-    left: 0;*/
-
-    /*margin: 0 auto;*/
-
-    width: 95%; /* 100% (?) !!!!!!! */
-
+.book-cover > form button.book-img-button img {
+    width: 95%;
     margin-top: 2px;
     max-width: 160px;
-
     box-shadow: 0px 0px 4px -1px rgb(66 68 90 / 59%);
-
 }
 
 .book-cover > form button.book-img-button img:hover {
     cursor: pointer;
 }
 
-/*.book-cover > a,*/
-.book-cover > form /* ? - ZASTANOWIĆ SIE KTÓRY ELEMENT TUTAJ WYBRAĆ */
-    /* index.php - <form> - button/submit - (prg) */
-{
+
+.book-cover > form {
     margin: 0 auto;
     display: block;
     width: 100%;
-
     text-align: center;
 }
 
 .book-info {
-    /* padding: 1rem; */
     padding: 0;
-/*    display: flex;
-    flex-direction: column;
-    justify-content: space-between;*/
     height: 100%;
-
-    /*position: relative;
-    top: -40px;*/
 }
-
-
-/* koszyk.php */
 
 div.cart-book span.book-details > form:first-child {
     float: left;
     width: 100px;
-    /*-webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
-    -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
-    box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);*/
     margin-right: 5px;
     border-radius: 2px;
 }
-
-/*span.book-details img { 2907
-    float: left;
-    width: 100px;
-    -webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
-    -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
-    box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
-    margin-right: 5px;
-    border-radius: 2px;
-}*/
-
-
-
-/* .book-info > form:first-child {
-    min-height: 50px;
-} */
-
-
 .book-info > form button.submit-book-form,
-div.book-url > form button.book-img-button, /* \user\orders.php */
+div.book-url > form button.book-img-button,
 .book-cover > form button.book-img-button,
-    /* index.php - <form> - button/submit - (prg) */
-.book-details > form button.book-img-button, /* koszyk.php */
-.cart-book > span.book-details form button.submit-book-form, /* koszyk.php - tytuł książki (!) */
-div#n-top-nav-content ol li ul li form button.submit-book-form, /* index - lista <ul> z kategoriami - button */
-div.order div.order-action div.order-options-container > div.order-action-options form button.submit-order-form,  /* \admin\orders.php - przycisk "Przeglądaj" -> order-id - PRG */
-div.admin-books div.book-action div.book-options-container > div.book-action-options form button.submit-book-form,  /* \admin\books.php - przycisk "Przeglądaj" -> book-id - PRG */
-button.reset-password-button, /* "Spróbuj jeszcze raz" -- reset_password.php */
-div.book-desc form button.submit-book-form, /* my-orders.php */
-div.order button.submit-book-form,    /* admin -> order-details - kliknięcie na tytuł ksiązki --> przejście na stronę z książką */
 
-div.category div.category-action div.category-options-container > div.category-action-options form button.submit-order-form
-{
-    /*margin: 0;
-    padding: 0;
-    border: 0;
-    background-color: transparent;*/
+.book-details > form button.book-img-button,
+.cart-book > span.book-details form button.submit-book-form,
+div#n-top-nav-content ol li ul li form button.submit-book-form,
+div.order div.order-action div.order-options-container > div.order-action-options form button.submit-order-form,
+div.admin-books div.book-action div.book-options-container > div.book-action-options form button.submit-book-form,
+button.reset-password-button,
+div.book-desc form button.submit-book-form,
+div.order button.submit-book-form,
+div.category div.category-action div.category-options-container > div.category-action-options form button.submit-order-form {
     background: none;
     border: none;
     padding: 0;
@@ -1471,11 +1409,7 @@ div.order button.submit-book-form h3:hover {
     text-align: center;
 }
 
-.book-info > form button.submit-book-form h3.book-title {
-    /*font-weight: 400;*/
-}
 .book-info > form button.submit-book-form h3.book-title:hover,
-
 .cart-book form button.submit-book-form h3.book-title:hover,
 button.reset-password-button:hover
 {
@@ -1487,81 +1421,28 @@ button.reset-password-button {
     color: #551a8b;
     text-decoration: underline;
     margin-bottom: 4px;
-    /*font-weight: 600;*/
 }
 
 .book-title {
-    /*margin: 15px 0 15px 0;*/
     margin: 15px 0 5px 0;
     font-size: 0.9rem;
-
     overflow: hidden !important;
     max-height: 17px;
-
-
-
-
-
     color: #551a8b;
-
-    /*height: 40px;*/
-    /*overflow: visible !important;*/
-
-    /* position: relative;
-     top: 0;
-     left: 0;*/
 }
 
-.cart-book form button.submit-book-form h3.book-title { /* koszyk - formularz - tytuł książki */
+.cart-book form button.submit-book-form h3.book-title {
     margin: 0;
     font-size: initial;
-    /*margin: 10px;*/
     padding-bottom: 22px;
-    /*margin-bottom: 25px;*/
-
-
-    /*border: 1px solid blue;*/
-
 }
-
-/*.book:hover .book-title {
-
-
-
-    max-height: 34px;
-
-
-
-
-    position: relative;
-    top: 0;
-    left: 0;
-
-    z-index: 200 !important;
-}*/
-
 
 .book-price {
     font-weight: bold;
     font-size: 0.9rem;
-
     margin-top: 2px;
-    /*margin-top: 25px;*/
-
-    /*z-index: 1 !important;*/
-
     display: unset;
 }
-
-/*.book:hover .book-price,
-.book:hover .book-year,
-.book:hover .book-author,
-.book:hover .btn-link
-{
-    position: relative;
-    top: -17px;
-}*/
-
 
 .book-author {
     color: #666;
@@ -1584,23 +1465,8 @@ button.reset-password-button {
 }
 
 
-/*<!-- HTML !-->
-<button class="button-22" role="button">Button 22</button>*/
-
-.btn-link { /* form acion "dodaj do koszyka" - button */
-
-    /*border: none;
-    outline: none;
-    background: none;
-    cursor: pointer;
-    color: #0000EE;
-    padding: 0;
-    text-decoration: underline;
-    font-family: inherit;
-    font-size: inherit;*/
-
+.btn-link {
     align-items: center;
-    /*appearance: button;*/
     background-color: #5478c0;
     border-radius: 8px;
     border-style: none;
@@ -1612,7 +1478,6 @@ button.reset-password-button {
     flex-direction: row;
     flex-shrink: 0;
     font-family: "RM Neue",sans-serif;
-    /*font-size: 100%;*/
     line-height: 1.15;
     margin: 0 0 5px 0;
     padding: 10px 21px;
@@ -1625,42 +1490,16 @@ button.reset-password-button {
     outline: none;
 }
 
-button.btn-link[disabled=disabled], button.btn-link:disabled { /* form acion "dodaj do koszyka" - button */
-
-
+button.btn-link[disabled=disabled], button.btn-link:disabled {
     background-color: #b5b5b5 !important;
-
     text-decoration: line-through;
-
-
-
-
-
-
 }
-
-
-
-/* CSS */
-
 
 .btn-link:active {
-    /*background-color: #006AE8;*/
-
     background-color: #698bbb;
-
-
-
-
 }
 
-
-
-
-
 .btn-link:hover {
-    /*background-color: #1C84FF;*/
-
     background-color: #698bbb;
 }
 
@@ -1673,45 +1512,26 @@ button.btn-link[disabled=disabled], button.btn-link:disabled { /* form acion "do
     width: 175px !important;
     padding: 10px 21px !important;
     font-size: 85% !important;
-
     display: block;
-
     margin-top: 15px;
 }
-
-
-
-
-
-/* formularz rejestracji --> -------------------------------------------------------------------------- */
 
 form#register-form {
     padding-top: 5px;
 }
 
-form#register-form input:not([type="checkbox"])
-{
+form#register-form input:not([type="checkbox"]) {
     margin-left: 5px;
-
-    /*width: 200px;*/
     min-width: 150px;
     width: calc(100% * 0.5);
-
-
-    /*background-color: rgb(255, 255, 255);*/
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /*font-size: 20px;*/
     font-weight: bold;
     padding: 8px;
     box-sizing: border-box;
     outline: none;
-    /*margin-top: 10px;*/
-
 }
-
-
 
 form#register-form input:not([type="checkbox"]):hover {
     cursor: pointer;
@@ -1721,37 +1541,23 @@ form#register-form input:not([type="checkbox"]):hover {
 }
 
 form#register-form input[type="submit"]:hover {
-
     box-sizing: border-box;
-
     border-color: #b4b4b4;
     background-color: #f3f3f3;
     cursor: pointer;
-    /* Add search icon as background image */
-    /* background-image: url('../assets/search-icon.png');*/
-    /*    background-repeat: no-repeat;
-        background-position: right 8px center;
-        background-size: 16px;*/
-    /*padding-right: 32px;*/
-
-
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
-
 }
 
 form#register-form label {
     cursor: pointer;
-
 }
 
 form#register-form input[type="submit"] {
     width: 15%;
-
     margin-bottom: 15px;
 }
-
 
 form#register-form input[type="checkbox"] {
     margin-right: 15px;
@@ -1763,12 +1569,10 @@ form#register-form hr.register-form-hr-line:nth-of-type(1) {
 
 hr.register-form-hr-line,
 hr#submit-order {
-
     background-color: rgba(166, 166, 166, 0.7);
     border: none;
     height: 1px;
     margin: 15px 0px 15px 0px;
-    /*max-width: 255px;*/
 }
 
 hr#submit-order {
@@ -1779,12 +1583,8 @@ hr.login-form-hr-line {
     margin-top: 20px;
 }
 
-
-
 .error {
-    /*color: #d41515;*/
-    color: #aa1c1c;;
-
+    color: #aa1c1c;
     font-weight: bold;
     display: block;
     margin-top: 15px;
@@ -1792,7 +1592,6 @@ hr.login-form-hr-line {
 
 .success {
     color: #085d05;
-
     font-weight: bold;
     display: block;
     margin-top: 15px;
@@ -1811,28 +1610,14 @@ form#register-form input[type="submit"] {
     margin-top: 18px;
 }
 
-.form-section { /* alredy exists in main.css */
-    /*width: 300px;*/
-
+.form-section {
     width: calc(100% / 3.3);
-    /*float: left;*/
     margin: 4px 50px 25px 4px;
-
-    /*display: inline-block;*/
-
     min-width: 275px;
-
-    /*border: 1px solid blue;*/
-
-
-
-
-
 }
 
 .form-section input {
     float: right;
-
 }
 
 form#register-form .form-section:nth-of-type(3) {
@@ -1843,96 +1628,19 @@ form#register-form .form-section:nth-of-type(3) {
 span.row {
     display: block;
     width: 100%;
-
     overflow: hidden;
-
     margin: 10px 0 10px 0;
-
     line-height: 215%;
-
-    /*min-width: 275px;*/
-
-}
-
-/*#div-search > form#search-form > input#input-search {
-
-    min-width: 165px;
-    width: calc(100% * 0.75);
-
-
-    !*background-color: rgb(255, 255, 255);*!
-    color: #707070;
-    border: 1px ridge #b7b7b7;
-    border-radius: 5px;
-    !*font-size: 20px;*!
-    font-weight: bold;
-    padding: 8px;
-    box-sizing: border-box;
-    outline: none;
-    margin-top: 10px;
-
-    !*transition: all 0.125s ease-in-out;*!
-
-}
-
-form#register-form input#input-search:focus,
-#div-search > form#search-form > input#input-search:hover
-
-{
-    !*    -webkit-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
-        -moz-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
-        box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);*!
-
-    !*    border: 1px ridge #a2bbcb;
-        background-color: #f1f6ff;
-        color: #464646;*!
-    cursor: pointer;
-
-    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
-    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
-    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-/*div {
-    border: 1px dashed rgba(122, 122, 122, 0.2);
-    box-sizing: border-box;
-}*/
-
-
-/* formularz logowania --> -------------------------------------------------------------------------- */
-
-.login-row {
-
 }
 
 span.login-row {
     display: block;
-    /*width: 100%;*/
-
     overflow: hidden;
-
     margin: 18px 0 15px 0;
-
     line-height: 215%;
-
-    /*min-width: 275px;*/
-
-    /*color: red;*/
 }
 
-div#content form#login-form div.login-form-section label:hover
-{
+div#content form#login-form div.login-form-section label:hover {
     cursor: pointer;
 }
 
@@ -1951,38 +1659,24 @@ form#login-form div.login-form-section {
 
 
 .login-form-section {
-    /*background-color: #cbcbcb;*/
-
     width: 345px;
-
-
 }
 
-form#login-form input
-{
-    /*margin-left: 5px;*/
-    /*width: 200px;*/
+form#login-form input {
     min-width: 150px;
-    /*width: calc(100% * 0.218);*/
     width: 235px;
-
-    /*background-color: rgb(255, 255, 255);*/
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /*font-size: 20px;*/
     font-weight: bold;
     padding: 8px;
     box-sizing: border-box;
     outline: none;
-    /*margin-top: 10px;*/
-
     margin-left: 24px;
 }
 
 form#login-form input:hover,
-form#login-form input:focus
-{
+form#login-form input:focus {
     cursor: pointer;
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
@@ -1999,8 +1693,6 @@ form#password-reset-input .login-form-section input:not([type="submit"]) {
     float: right;
 }
 
-/* linki "Przypomnij hasło", ... */
-
 a.a-login-page-link {
     display: block;
     margin: 18px 0 18px 0;
@@ -2009,44 +1701,24 @@ a.a-login-page-link {
 
 div.g-recaptcha-login {
     margin-bottom: 20px;
-
-    /*transform: scale(1.14);
-    -webkit-transform: scale(1.14);
-    transform-origin:0 0;
-    -webkit-transform-origin:0 0;*/
 }
-
-
-
-/* koszyk.php --> --------------------------------------------- */
 
 h3#cart-header {
     margin-bottom: 20px;
-
     padding-bottom: 16px;
-
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
-
     font-size: 120%;
 }
 
 form.remove_book_form input[type="submit"] {
-    /* margin-left: 5px; */
-    /* width: 200px; */
     min-width: 55px;
-    /* width: calc(100% * 0.218); */
-    /*width: 235px;*/
-    /* background-color: rgb(255, 255, 255); */
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /* font-size: 20px; */
     font-weight: bold;
     padding: 4px;
     box-sizing: border-box;
     outline: none;
-    /* margin-top: 10px; */
-    /*margin-left: 15px;*/
 }
 
 
@@ -2055,27 +1727,18 @@ form.remove_book_form input[type="submit"]:hover {
     -webkit-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
-
     color: rgba(255, 0, 0, 0.7);
 }
 
 
 form.change_quantity_form button[type="button"] {
-    /* margin-left: 5px; */
-    /* width: 200px; */
     min-width: 25px;
-    /* width: calc(100% * 0.218); */
-    /*width: 235px;*/
-    /* background-color: rgb(255, 255, 255); */
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /* font-size: 20px; */
     font-weight: bold;
     padding: 2px;
     box-sizing: border-box;
-
-    /* margin-top: 10px; */
     margin-right: 2px;
 }
 
@@ -2091,70 +1754,37 @@ form.change_quantity_form button[type="button"]:nth-of-type(2) span {
     top: -1.7px;
 }
 
-
 span.book-details img {
     float: left;
-
     width: 100px;
-
     -webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
     -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
     box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
-
     margin-right: 5px;
-
     border-radius: 2px;
 }
 
 span.book-details img:hover {
-
     transform: scale(101%);
-
     filter: grayscale(25%);
-
 }
-
-
 
 span.book-details {
     display: block;
-
     overflow: hidden !important;
-
-    /*width: 300px;*/
-
-    /*width: 50%;*/
-
-    /*background-color: #a2c3f6;*/
-
-    /* min-width: 730px !important;*/ /* (!) */
-
     height: 150px;
-
-    /*background-color: lightblue;*/
-
-
 }
 
 .cart-book {
-
     position: relative;
-
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
     margin-bottom: 25px;
     padding-bottom: 25px;
-
-    /*overflow: hidden !important;*/
-
-
 }
-
 
 .change_quantity_form,
 .book-description,
-.remove_book_form
-
-{
+.remove_book_form {
     float: left;
 }
 
@@ -2162,15 +1792,8 @@ span.book-details {
     min-width: 300px;
     margin-left: 10px;
     margin-right: 40px;
-
-
-    /*width: 50%;*/
     transition: margin .3s;
-
-    /*min-height: 135px;*/
     min-height: 150px;
-
-    /*overflow: hidden;*/
 }
 
 span.book-details div.book-description div.title {
@@ -2180,47 +1803,24 @@ span.book-details div.book-description div.title {
 
 .change_quantity_form, .remove_book_form {
     margin-top: 42px;
-
-
 }
-
-/*
-div.cart-book > span.book-details div.book-description div.price,
-div.cart-book > span.book-details div.book-description div.year,
-div.cart-book > span.book-details div.book-description div.author {
-    user-select: none;
-}
-*/
 
 .change_quantity_form b {
-
     position: relative;
     top: 1px;
-
-
 }
 
-/*.koszyk_ilosc {*/
-
-.book-amount
-{
+.book-amount {
     min-width: 55px;
-    /*width: calc(100% * 0.75);*/
-    /*background-color: rgb(255, 255, 255);*/
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /*font-size: 20px;*/
     font-weight: bold;
     padding: 8px;
     box-sizing: border-box;
     outline: none;
     margin-top: 10px;
     margin-left: 10px;
-
-
-
-    /*transition: all 0.125s ease-in-out;*/
 }
 
 .cart-book div.price,
@@ -2239,19 +1839,9 @@ div.cart-book > span.book-details div.book-description div.author {
     margin: 0 !important;
 }
 
-
-
 .koszyk_ilosc:focus,
 .koszyk_ilosc:hover {
-    /*    -webkit-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
-        -moz-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
-        box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);*/
-
-    /*    border: 1px ridge #a2bbcb;
-        background-color: #f1f6ff;
-        color: #464646;*/
     cursor: pointer;
-
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
@@ -2268,12 +1858,9 @@ div.cart-book > span.book-details div.book-description div.author {
     margin-left: 4px;
     border: 1px solid #a9a9a9;
     border-radius: 2px;
-
 }
 
 .remove_book_form input[type="submit"] {
-
-
     margin-left: 20px;
 }
 
@@ -2291,80 +1878,44 @@ span.order-sum-cart {
     padding: 0;
 }
 
-
-
-/* submit_order.php --> ------------------------------------------------------------------------------ */
-
-
 form#submit-order p.option {
     border: 1px ridge rgba(185, 185, 185, 0.78);
-    /* display: inline-block;*/
     border-radius: 5px;
-
     margin: 5px;
     padding: 15px 15px 22px 15px;
-
     float: left;
-
-
     transition: all 45ms cubic-bezier(0.4, 0, 1, 1);
-
     width: 32%;
     min-width: 412px;
-
 }
 
 form#submit-order p.payment-option {
     min-width: 345px;
 }
 
-/*form#submit-order p.clear-float {
-    clear: both;
-}*/
-
 div#delivery-type, div#payment-method {
    overflow: auto;
 }
 
-
 form#submit-order p.option:hover {
     border: 1px ridge rgb(117, 117, 117);
-
     cursor: pointer;
-
-
-
-
-
 }
 
 form#submit-order p.option img {
-
     width: 20px;
-
     position: relative;
     top: 5px;
-
     margin-right: 8px;
-
 }
 
 form#submit-order p.option span:not(.delivery-price, .payment-price) {
-
-
     margin-left: 8px;
-
-
 }
 
-/* order.php --> -     -------------------------------------------------------------- */
-
 h3#order-summary-header {
-
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
     padding-bottom: 10px;
-
-
 }
 
 h3#order-summary-header + p {
@@ -2372,83 +1923,41 @@ h3#order-summary-header + p {
     padding-bottom: 20px;
 }
 
-/* account.php -->    --------------------------------------------------------------- */
-
 .dane_konta {
-    /*border: 1px solid grey;*/
-
     border: 1px ridge rgba(166, 166, 166, 0.7);
     border-radius: 15px;
-
     float: left;
     padding: 4px 15px 24px 24px;
     margin-top: 10px;
     width: 100%;
-
     min-width: 400px;
-
-    /*min-height: 290px;*/
-
-    /*overflow-y: clip;*/
-
     margin-bottom: 15px;
-
-
 }
 
-/*.dane_konta:first-of-type,*/
 .dane-konta-form {
-    /*min-height: 280px;*/
-
     height: 475px;
-}
-
-#content .dane_konta:nth-of-type(3) {
-    /*min-height: 348px;*/
 }
 
 #content .dane_konta:nth-of-type(4) {
     min-height: 245px;
 }
 
-
-
-
 .edit_data_container {
-    /*float: left;*/
-
     width: 100%;
-
     min-width: 375px;
-
-
-
-    /*border: 1px solid blue;*/
 }
 
 .edit_data_left-container {
-    /*width: 125px;*/
-
-
-
     width: 15%;
-
     min-width: 101px;
-
-
-
     float: left;
 }
 
 div.remove_account div.edit_data_left {
     padding-top: 0;
 }
-
-
-
 .edit_data_left-container hr,
-.edit_data_right-container hr
-{
+.edit_data_right-container hr {
     background-color: rgba(166, 166, 166, 0.7);
     border: none;
     height: 1px;
@@ -2457,34 +1966,17 @@ div.remove_account div.edit_data_left {
 }
 
 .edit_data_right-container {
-    /* width: 200px; */
     float: left;
-
-    /*width: 50%;*/
-
     min-width: 245px;
-
-
-    /*border: 1px solid green;*/
-
-
 }
 
 .edit_data_right-container input[type="text"],
 .edit_data_right-container input[type="password"],
 .edit_data_right-container input[type="email"],
-.edit_data_right-container input[type="tel"]
-
-{
-
+.edit_data_right-container input[type="tel"] {
     padding-top: 6.5px !important;
     padding-bottom: 6.5px !important;
-
-
-
-
 }
-
 
 .edit_data_left, .edit_data_right {
     margin-top: 10px;
@@ -2502,21 +1994,10 @@ div.edit_data_left-container > label {
 
 .edit_data_button {
     text-align: right;
-
-    /*width: 46%;*/
-
-    /*max-width: 624px;*/
-
-    /*width: 50%;*/
-
     min-width: 225px;
-
     float: right;
-
     height: 20px;
-
 }
-
 
 .edit_data_button button {
     position: relative;
@@ -2524,13 +2005,9 @@ div.edit_data_left-container > label {
 }
 
 .edit-data-button-left {
-
     width: 15% !important;
-
     min-width: 120px;
-
     height: 20px;
-
     float: left;
 }
 
@@ -2543,21 +2020,14 @@ div.edit_data_left-container > label {
     width: 399px !important;
 }
 
-
-
-/* --------------------------------------------------------------- */
-
 .edit_data_right > input[type="text"]:hover,
 .edit_data_right > input[type="password"]:hover,
 .edit_data_right > input[type="email"]:hover,
 .edit_data_right > input[type="tel"]:hover,
-
-
 .edit_data_right > input[type="text"]:focus,
 .edit_data_right > input[type="password"]:focus,
 .edit_data_right > input[type="email"]:focus,
 .edit_data_right > input[type="tel"]:focus
-
 {
     cursor: pointer;
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
@@ -2568,53 +2038,34 @@ div.edit_data_left-container > label {
 .edit_data_right > input[type="text"],
 .edit_data_right > input[type="password"],
 .edit_data_right > input[type="email"],
-.edit_data_right > input[type="tel"]
-{
-    /*min-width: 165px;*/
-    /*width: calc(100% * 0.75);*/
-    /* background-color: rgb(255, 255, 255); */
-
+.edit_data_right > input[type="tel"] {
     width: 94%;
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /* font-size: 20px; */
     font-weight: bold;
     padding: 20px 10px 2px 10px;
     box-sizing: border-box;
     outline: none;
-
     margin-left: 15px;
-    /*transition: all 0.125s ease-in-out; */
 }
 
-
-
 .account-header {
-
     border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
     padding-bottom: 15px;
-
 }
 
 #content > .account-header:nth-child(1):not(.reset-password-header) {
     font-size: 120%;
-
     margin-top: 2px;
     margin-bottom: 10px;
 }
 
 .dane_konta button[type="submit"] {
-    /* margin-left: 5px; */
-    /* width: 200px; */
     min-width: 140px;
-    /* width: calc(100% * 0.218); */
-    /*width: 235px;*/
-    /* background-color: rgb(255, 255, 255); */
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /* font-size: 20px; */
     font-weight: bold;
     padding: 6.5px;
     box-sizing: border-box;
@@ -2646,8 +2097,6 @@ div#container > main > aside.account-data > div#nav a:hover {
 div#container > main > aside.account-data > div#nav a h3 {
     margin-top: 0px;
     margin-bottom: 0;
-
-    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
     padding-bottom: 15px;
     padding-left: 15px;
     padding-right: 15px;
@@ -2655,17 +2104,11 @@ div#container > main > aside.account-data > div#nav a h3 {
     user-select: none;
 }
 
-/*div#container > main > aside.account-data > div#nav a h3:hover {
-    background-color: #e5e5e5;
-}*/
-
 div#container > main > aside.account-data > div#nav hr {
-    /*background-color: rgba(166, 166, 166, 0.7);*/
     background-color: rgba(166, 166, 166, 0.45);
     border: none;
     height: 1px;
     margin: 5px 0 0 1px;
-    /*max-width: 255px;*/
 }
 
 div#container > main aside.account-data > div#nav {
@@ -2673,42 +2116,25 @@ div#container > main aside.account-data > div#nav {
     padding-right: 0px !important;
     padding-bottom: 0px !important;
     padding-left: 0px !important;
-
-
     position: relative;
     top: 0;
     z-index: 0;
 }
 
-
-
-/* remove_account.php -->    --------------------------------------------------------------- */
-
-
-
-input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
-
+input.confirm-delete {
     margin-right: 18px;
     cursor: pointer;
-
     position: relative;
     top: 2px;
 
 }
-
-.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
-
-
+.confirm-delete {
     cursor: pointer;
-
 }
 
-.confirm-delete:hover { /* (main.css) potwierdzenie usunięcia konta */
-
+.confirm-delete:hover {
     text-decoration: underline;
-
     cursor: pointer;
-
 }
 
 .remove_account {
@@ -2716,8 +2142,7 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
 }
 
 .content-invisible {
-    display: none !important; /* (main.css) */
-
+    display: none !important;
     overflow-y: scroll;
 }
 
@@ -2727,22 +2152,15 @@ input.confirm-delete { /* (main.css) potwierdzenie usunięcia konta */
 }
 
 .insert-password div.edit_data_left,
-.insert-password div.edit_data_right
-{
+.insert-password div.edit_data_right {
     margin-bottom: 20px;
 }
 
-/* komunikat "Złe hasło" - po podaniu złego hasła przy próbie usunięcia konta,
-   oraz "Zaznacz checkbox" */
-
 div.remove_account span.remove-account-password-error,
 div.remove_account span.remove-account-confirm-error {
-
     display: block;
-
     margin-top: 42px;
     margin-left: 2px;
-
     color: #cb2f2f;
     font-weight: bold;
 }
@@ -2751,63 +2169,29 @@ div.remove_account button[type="submit"] {
     margin-top: 27px;
 }
 
-/* my_orders.php -->    --------------------------------------------------------------- */
-
 .order, div.admin-books,
 .category {
-    /*border: 1px dashed black;*/
     border: 1px ridge rgba(166, 166, 166, 0.38);
-
     border-radius: 15px;
-    /*margin: 20px auto 40px auto;*/
     margin: 0px auto 40px auto;
-
-    /*padding: 10px 0 10px 10px;*/
-    /*padding: 5px;*/
-    /*background-color: #606686;*/
-
     overflow: auto;
     text-align: left !important;
 }
 .order-date-title, .order-status-title, .order-id-title,
 .order-date, .order-status, .order-id, .a-book-id, .a-book-title, .a-book-category, .a-book-price, .a-book-author, .a-book-magazine, .a-book-quantity,
 .order-payment-method-title, .order-payment-method,
-.order-delivery-method-title, .order-delivery-method
-{
-    /*border: 1px dashed black;*/
-
+.order-delivery-method-title, .order-delivery-method {
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
-
     float: left;
     width: 25%;
     text-align: center;
-
-
     padding-bottom: 10px;
     padding-top: 10px;
 }
 
-/*.order-payment-method-title,
-.order-delivery-method-title {
-    width: 50%;
-
-    text-align: left;
-
-}*/
-
 .order-payment-method {
     border-left: 1px ridge rgba(166, 166, 166, 0.38);
 }
-
-
-/*.order-payment-method,
-.order-delivery-method {
-    width: 50%;
-    text-align: left;
-    padding-left: 15px;
-}*/
-
-
 
 .order-date-title, .order-status-title, .order-id-title,
 .order-payment-method-title {
@@ -2818,9 +2202,7 @@ div.remove_account button[type="submit"] {
 
 .order-date-title {
     border-top-left-radius: 10px;
-
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
-
     background-color: #f3f3f3;
 }
 
@@ -2834,16 +2216,13 @@ div.remove_account button[type="submit"] {
     border-right: none;
 }
 
-
 .order-status-title {
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
-
     background-color: #f3f3f3;
 }
 
 .order-id-title {
     border-top-right-radius: 10px;
-
     background-color: #f3f3f3;
 }
 
@@ -2852,37 +2231,20 @@ div.remove_account button[type="submit"] {
 }
 
 .book-no {
-    /*border: 1px dashed black;*/
-
-    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
-
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
-
     float: left;
-
     text-align: center;
     padding-top: 68px;
-
-
-
     height: 155px;
-
-    /*width: 35px;*/
     min-width: 35px;
     width: 5%;
-
 }
 .book-url {
-    /*border: 1px dashed black;*/
-    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
-
     padding-top: 5px;
-
     float: left;
     text-align: center;
     height: 155px;
-
     min-width: 150px;
     width: 20%;
 }
@@ -2892,27 +2254,14 @@ div.remove_account button[type="submit"] {
 }
 
 .book-desc {
-    /*border: 1px dashed black;*/
-
-    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
-
     padding-top: 5px;
-
     float: left;
-
-
     text-align: left;
-
     height: 155px;
-
     min-width: 200px;
     width: 55%;
-
     padding: 12px 12px 12px 15px;
-
-
-
 }
 
 div.book-desc span.order-book-desc-row {
@@ -2925,89 +2274,46 @@ div.book-desc span.order-book-desc-row strong {
     text-decoration: underline;
     cursor:pointer
 }
-
-
-
 .book-quan {
-    /*border: 1px dashed black;*/
-
-    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
-
     padding-top: 5px;
-
     float: left;
-
     text-align: left;
     height: 155px;
-
     min-width: 50px;
     width: 10%;
-
 }
 
-/*div.order div.book-quan:last-of-type {
-    color: red !important;
-}*/
-
 div[class*="book-quan"] span,
-div[class*="order-book-price"] span
-{
-    /*color: blue;*/
-
-
+div[class*="order-book-price"] span {
     text-align: center;
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
-
     padding-bottom: 5px;
-
     display: block;
-
 }
 
 div[class*="book-quan"]:not([class$="1"]) span,
-div[class*="order-book-price"]:not([class$="1"]) span
-{
-    /*color: red;*/
-
+div[class*="order-book-price"]:not([class$="1"]) span {
     display: none;
 }
 
 div[class*="book-quan"]:not([class$="1"]),
-div[class*="order-book-price"]:not([class$="1"])
-{
-    /*color: red;*/
-
-    padding-top: 17px; /* (?) */
-
+div[class*="order-book-price"]:not([class$="1"]) {
+    padding-top: 17px;
 }
 
 .order-book-price {
-    /*border: 1px dashed black;*/
-
-    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
-
     padding-top: 5px;
-
     float: left;
-
-
     text-align: left;
-
     height: 155px;
-
     min-width: 50px;
     width: 10%;
 }
 
 .order-sum {
-    /*border: 1px dashed black;*/
-
-    /*border: 1px ridge rgba(166, 166, 166, 0.38);*/
-
     padding: 20px 20px 20px 20px;
     overflow: auto;
-    /*text-align: right;*/
 }
 .order-sum > span {
     margin-right: 5px;
@@ -3018,71 +2324,36 @@ div[class*="order-book-price"]:not([class$="1"])
     max-width: 655px;
 }
 
-div.order-sum > div#delivery-info span.order-in-progress span.order-delivered {
-
-    /*min-width: 150px !important;*/
-
-
-}
-
 div.order-sum > div#delivery-info {
-    /*border: 1px solid blue;*/
     width: 60%;
-    /*display: inline-block;*/
-
-    /*min-height: 75px;*/
-
     float: left;
-
 }
 
 div.order-sum > div#delivery-info span.order-in-progress {
     display: block;
-    /*margin-bottom: 10px;*/
 }
 
 div.order-sum div#delivery-info span.order-in-progress:not(:nth-of-type(1)) {
-    /*color: red;*/
-    /*line-height: 15px;*/
     margin-top: 8px;
 }
 
 div.order-sum div.order-sum-info span {
-    /*margin-right: 20px;*/
-
     float: left;
-
-    /*min-width: 100px;*/
-
 }
 
 div.order-sum div.order-sum-info:not(:nth-of-type(1)) {
-    /*color: blue;*/
-
     margin-top: 8px;
 }
 
 div.order-sum > div.order-sum-info {
-    /*display: inline-block;*/
     border: 1px solid red;
-
-    /*float: right;*/
-    /*width: 20%;*/
     text-align: right;
-
-    /*min-width: 135px;*/
     width: 150px;
-
     display: inline-block;
-
 }
 
 div#test123 {
-    /*border: 1px solid rebeccapurple;*/
-
-    /*display: inline-block;*/
     float: right;
-
     text-align: right;
     width: 190px;
 }
@@ -3092,37 +2363,25 @@ div#test123 div#total-sum {
     font-size: 105%;
 }
 
-
-
-
 .order hr {
     background-color: rgba(166, 166, 166, 0.38);
-
     border: none;
     height: 1px;
-
     margin: 0;
-
-    /*max-width: 255px;*/
 }
 
 div.order-sum > span.order-in-progress {
-    /*display: inline-block;*/
-
     display: block;
     float: left;
 }
 
 div.order-sum div#delivery-info span.order-in-progress span.order-info {
-
     display: inline-block;
     min-width: 135px;
 }
 
-
 div.order-sum > span.order-sent {
     padding-top: 20px;
-    /*padding-bottom: 20px;*/
 }
 
 div.order-sum > div.order-in-progress {
@@ -3130,35 +2389,19 @@ div.order-sum > div.order-in-progress {
     float: right !important;
 }
 
-/* div#content div.order div.book-url a > img, */
-div#content div.order div.book-url > form button.book-img-button > img
-    /* \user\orders.php */
-    /*.book-cover > form button.book-img-button img*/
-    /* \user\index.php */
-{
+div#content div.order div.book-url > form button.book-img-button > img {
     -webkit-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
     -moz-box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
     box-shadow: 0px 0px 4px -1px rgba(66, 68, 90, 1);
-
     border-radius: 2px;
 }
-
-
-
-/*div#content div.order div.book-url a > img:hover,*/
-div#content div.order div.book-url > form button.book-img-button > img:hover
-    /* \user\orders.php */ {
-
+div#content div.order div.book-url > form button.book-img-button > img:hover {
     transform: scale(101%);
     filter: grayscale(25%);
     cursor: pointer;
 }
 
-
-/* ___reset_password.php -->    --------------------------------------------------------------- */
-
 form#reset-form {
-    /*padding-top: 5px;*/
     margin-bottom: 24px;
 }
 
@@ -3166,17 +2409,10 @@ hr.reset-form-hr-line {
     margin-bottom: 20px;
 }
 
-
-form#reset-form > h3.account-header {
-    /*width: 343px;*/
-}
-
 h3.reset-password-header {
     margin-top: 0;
     padding-top: 5px;
     padding-bottom: 20px;
-
-    /*font-size: 0.8em;*/
 }
 
 form#reset-form div#get-email label:hover {
@@ -3185,36 +2421,23 @@ form#reset-form div#get-email label:hover {
 
 form#reset-form input,
 form#send-token input,
-form#password-reset-input input
-{
-
-    /*margin-left: 5px;*/
-    /*width: 200px;*/
+form#password-reset-input input {
     min-width: 150px;
-    /*width: calc(100% * 0.218);*/
     width: 235px;
-
-    /*background-color: rgb(255, 255, 255);*/
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /*font-size: 20px;*/
     font-weight: bold;
     padding: 8px;
     box-sizing: border-box;
     outline: none;
-    /*margin-top: 10px;*/
-
     margin-left: 17px;
     margin-top: .5px;
-
 }
 
 form#send-token input {
     margin-left: 0;
-
     display: block;
-
     margin-bottom: 15px;
 }
 
@@ -3222,11 +2445,9 @@ form#send-token input {
 form#reset-form input:hover,
 form#send-token input:hover,
 form#password-reset-input input:hover,
-
 form#reset-form input:focus,
 form#send-token input:focus,
-form#password-reset-input input:focus
-{
+form#password-reset-input input:focus {
     cursor: pointer;
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
@@ -3235,17 +2456,13 @@ form#password-reset-input input:focus
 
 form#reset-form input[type="submit"],
 form#send-token  input[type="submit"],
-form#password-reset-input input[type="submit"]
-{
-
+form#password-reset-input input[type="submit"] {
     width: 150px;
-
     margin-left: 0;
     margin-top: 5px;
 }
 
 form#send-token input[type="submit"] {
-
     margin-top: 23px !important;
     margin-bottom: 24px;
 }
@@ -3272,50 +2489,30 @@ form[action="logowanie.php"] input:not([type="submit"]) {
     margin-left: 0 !important;
 }
 
-/* advanced-search --> --------------------------------------------------------- */
-
 div#advanced-search {
-
-    /*background-color: rgb(252, 252, 252);*/
     background-color: #f8f8f8;
-
     position: absolute;
-    /*top: 35px;*/
-
-    /*display: none;*/
-    /*height: 350px;*/
-
-    /*width: 1375px;*/
-
     max-width: 1375px;
     min-width:500px;
     width: 100%;
-
-
     border-left: 1px ridge rgba(166, 166, 166, 0.38);
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
-
     padding: 20px;
     overflow: auto;
-    /*background-color: #5362b7;*/
-
     text-align: initial;
-
     z-index: 2000;
-
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
-
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
 }
 
 div#advanced-search p {
     padding-bottom: 2px;
 }
+
 div#advanced-search input[type="text"],
-div#advanced-search input[type="number"]
-{
+div#advanced-search input[type="number"] {
     background-color: white !important;
 }
 
@@ -3334,17 +2531,9 @@ div#advanced-search input[type="number"]
 span.adv-search {
     display: inline-block;
     min-width: 101px !important;
-
     position: relative;
     top: 1px;
 }
-
-
-
-/*div#year-range label {
-    position: relative;
-    top: 10px;
-}*/
 
 input#year-min {
     margin-right: 5px;
@@ -3360,11 +2549,9 @@ input#year-min {
     width: 296px;
 }
 
-#price-slider { /* year-min, year-max */
+#price-slider {
     margin-top: 50px;
     margin-bottom: 15px;
-
-
     padding: 0 16px 0 10.3px;
 }
 
@@ -3372,45 +2559,23 @@ div#adv-search-year-slider {
     padding: 0 16px 0 4px;
 }
 
-
 div#advanced-search form#advanced-search-form input[type="text"],
 div#advanced-search form#advanced-search-form input[type="number"] {
     outline: none;
-    /*background-color: rgb(255, 255, 255);*/
     color: #494949;
     border: none;
-
-
     border-bottom: 1px ridge rgb(183, 183, 183);
-
-    /*border-top: 1px ridge rgba(183, 183, 183, 0.33);
-    border-right: 1px ridge rgba(183, 183, 183, 0.33);
-    border-left: 1px ridge rgba(183, 183, 183, 0.33);*/
-
-
-    /*border-top-left-radius: 5px;
-    border-top-right-radius: 5px;*/
-
-    /*font-size: 20px;*/
-    /*font-weight: 700;*/
     padding: 4px 8px;
     box-sizing: border-box;
-    /*width: 50%;*/
     position: relative;
     top: .42px;
-    /*height: 24px !important;*/
     height: 28px !important;
-
     cursor: pointer;
-
     background-color: rgba(238, 238, 238, 0.09);
-
     margin-bottom: 2px;
-
     -webkit-box-shadow: 0px 0px 2px -1px rgba(0, 0, 0, 1);
     -moz-box-shadow: 0px 0px 2px -1px rgba(0, 0, 0, 1);
     box-shadow: 0px 0px 2px -1px rgba(0, 0, 0, 1);
-
     border-radius: 3px;
 }
 
@@ -3431,27 +2596,17 @@ div#advanced-search form#advanced-search-form select {
     margin-bottom: 5px;
 }
 
-
 div#advanced-search form#advanced-search-form input[type="number"] {
     max-width: 66px;
 }
 
 div#advanced-search form#advanced-search-form select {
-    /*margin-top: 15px;
-    margin-bottom: 15px;*/
     outline: none;
-    /* background-color: rgb(255, 255, 255); */
     color: #494949;
     border: 1px ridge #cbcbcb;
     border-radius: 5px;
-    /* font-size: 20px; */
-    /*font-weight: bold;*/
     padding: 3px 5px 3px 5px;
     box-sizing: border-box;
-    /*outline: none;*/
-    /*margin-top: 10px;*/
-    /* transition: all 0.125s ease-in-out;*/
-    /*width: 50%;*/
     height: 28px;
     cursor: pointer;
 }
@@ -3461,22 +2616,15 @@ div#advanced-search #year-range input[type="number"] {
 }
 
 div#advanced-search input[type="submit"] {
-    /* margin-left: 5px; */
-    /* width: 200px; */
     min-width: 85px;
-    /* width: calc(100% * 0.218); */
-    /*width: 235px;*/
-    /* background-color: rgb(255, 255, 255); */
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /* font-size: 20px; */
     font-weight: bold;
     padding: 5px 22px 6px 22px;
     box-sizing: border-box;
     outline: none;
     margin-top: 10px;
-    /*margin-left: 15px;*/
 }
 
 
@@ -3487,25 +2635,8 @@ div#advanced-search input[type="submit"]:hover {
     box-shadow: inset 0px 0px 3px -2px rgba(66, 68, 90, 1);
 }
 
-/*
-div {
-    border: 1px dashed rgba(121, 121, 121, 0.49);
-}*/
-/*
-
-div#add-to-cart, div#add-to-cart * {
-    border: 1px dashed #e72b2b !important;
-}*/
-
-/* --------------------------------------------------------------------------------------------------------- */
-
 .outer-book {
-    /*display: inline-block;*/
-
     display: none;
-
-    /*overflow: auto;
-    width: 270px;*/
     margin: 0;
     padding: 0;
 }
@@ -3524,36 +2655,23 @@ p#insert-token {
     margin-top: 21px;
 }
 
-input#token {
-    /*width: 350px !important;*/
-}
-
 form#password-reset-input label:hover {
     cursor: pointer;
 }
 
-/* --------------------------------------------------------------------------------------------------------- */
-
 span.main-page-search-result-error {
     display: block;
     font-weight: bold;
-
     margin: 15px 0 0 7px;
 }
 
 i#book-page-get-back::before {
     transform: rotate(90deg);
-
     color: #525252 !important;
-
     font-size: 75%;
-
     position: relative;
     top: -1px;
     left: -2px;
-
-
-
 }
 
 a#get-back-a {
