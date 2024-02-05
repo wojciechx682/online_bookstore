@@ -1,8 +1,6 @@
 <?php
-
-// Uwierzytelnienie administratora, przed dostępem do panelu admina - Czy jest zalogowany ? Czy jest to pracownik ?
-// check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
-    require_once "../authenticate-admin.php";
+    require_once "../authenticate-admin.php"; // Uwierzytelnienie administratora, przed dostępem do panelu admina - Czy jest zalogowany ? Czy jest to pracownik ?
+                                              // check if user is logged-in, and user-type is "admin" - if not, redirect to login page ;
 ?>
 
 <!DOCTYPE HTML>
@@ -46,13 +44,13 @@
                     query("SELECT kt.id_kategorii, kt.nazwa FROM categories AS kt", "getCategoriesAdmin", "");
                 ?>
 
-            </div> <!-- #content -->
+            </div>
 
         </main>
 
-    </div> <!-- #container -->
+    </div>
 
-</div> <!-- #main-container -->
+</div>
 
 <?php require "../view/app-error-window.php"; ?>
 

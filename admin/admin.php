@@ -74,13 +74,13 @@
 
                     </article>
 
-                </div> <!-- #content -->
+                </div>
 
             </main>
 
-        </div> <!-- #container -->
+        </div>
 
-    </div> <!-- #main-container -->
+    </div>
 
 </body>
 </html>

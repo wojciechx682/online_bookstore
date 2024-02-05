@@ -25,7 +25,7 @@ require_once "../authenticate-admin.php";
             <div id="content">
 
                 <header>
-                    <h3 class="section-header">Edytuj kategorię</h3>
+                    <h3 class="section-header">Dodaj kategorię</h3>
                 </header>
 
                 <!-- Zmiana nazwy kategorii -->

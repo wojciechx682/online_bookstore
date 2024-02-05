@@ -396,10 +396,6 @@ echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
 
             <div id="content">
 
-                <?php echo "<br> --> "; echo "POST ->"; print_r($_POST); echo "<hr><br>";
-                echo "GET ->"; print_r($_GET); echo "<hr><br>";
-                echo "SESSION ->"; print_r($_SESSION); echo "<hr><br>"; ?>
-
                 <h3 class="account-header reset-password-header">Przypomnij hasło</h3>
 
                 <?php if ($_SERVER['REQUEST_METHOD'] === "GET" && empty($_SESSION["email-sent"]) && empty($_SESSION["token-valid"]) ) : ?>

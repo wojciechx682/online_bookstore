@@ -159,41 +159,6 @@
 
                 <?php endif; ?>
 
-                <?php
-
-                    // przed zastosowaniem prg -->
-                        // $_SESSION["order-id"] = array_keys($_GET)[0]; // $_GET -> id_zamówienia - "1038";
-                    // $_SESSION["order-id"] = array_keys($_POST)[0]; // PRG
-                        /*  $array = array(
-                                "name" => "John",
-                                "age" => 30,
-                                "city" => "New York",
-                                "gender" => "Male"
-                            );
-                            $keys = array_keys($array);
-                            print_r($keys);
-                            // output -->
-                            Array
-                            (
-                                [0] => name
-                                [1] => age
-                                [2] => city
-                                [3] => gender
-                            )
-                        */
-                        // var_dump($_SESSION);
-                   /* query("SELECT zm.id_zamowienia, ks.tytul, ks.cena, sz.ilosc, pl.kwota FROM ksiazki AS ks, platnosci AS pl, szczegoly_zamowienia AS sz, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND sz.id_zamowienia = zm.id_zamowienia AND sz.id_ksiazki = ks.id_ksiazki AND zm.id_zamowienia = '%s'",
-                        "get_order_details_admin", $_SESSION["order-id"]); // content of table;  $_SESSION['order_details_books_id'];
-                                                                                // (content) id_zamowienia, tytul, cena, ilosc, kwota;
-                    query("SELECT pl.kwota FROM platnosci AS pl, zamowienia AS zm WHERE pl.id_zamowienia = zm.id_zamowienia AND zm.id_zamowienia = '%s'",
-                        "get_order_sum_admin", $_SESSION["order-id"]); // footer of table;
-                                                                           // kwota (suma) zamówienia;
-                    echo '<div id="order-det-container">';
-                    query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
-                    query("SELECT pl.sposob_platnosci, pl.data_platnosci, zm.forma_dostarczenia, zm.status FROM zamowienia AS zm, platnosci AS pl WHERE zm.id_zamowienia = pl.id_zamowienia AND zm.id_zamowienia='%s'",
-                        "get_order_summary", $_SESSION["order-id"]); // sposób_płatności, data_platnosci, forma_dostarczenia, status;*/
-                ?>
-
                 <!--<div id="order-status">
 
                     <span>Status :</span>

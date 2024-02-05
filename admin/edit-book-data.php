@@ -28,36 +28,9 @@ require_once "../authenticate-admin.php";
 
         // all required fields are SET and NOT EMPTY; Perform the necessary actions or validations here; // For example, update the book data in the database;
 
-                /*echo "<br> success <br><br>";
-                echo "<br> success <br><br>";
-                    echo "<br> id ksiazki " . $_POST['edit-book-id'];
-                    echo "<br> autor (id) - " . $_POST['edit-book-change-author'];
-                    echo "<br> rok_wydania - " . $_POST['edit-book-release-year'];
-                    echo "<br> cena - " . $_POST['edit-book-price'] ;
-                    echo "<br> wydawca (id) - " . $_POST['edit-book-change-publisher'];
-                    echo "<br> opis - "  . $_POST['edit-book-desc'];
-                    echo "<br> oprawa - " . $_POST['edit-book-cover'];
-                    echo "<br> liczba_stron - " .$_POST['edit-book-pages'];
-                    echo "<br> wymiary - " . $_POST['edit-book-dims'];
-                echo "<br> kategoria (id) - " . $_POST['edit-book-category'] ;
-                echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'];
-                echo "<br> podkategoria (id) - " . $_POST['edit-book-subcategory'];
-                echo "<br> ilosc - " . $_POST['edit-book-quantity'];*/
-
         // back-end validation;
 
-       $bookId = filter_var($_POST['edit-book-id'], FILTER_VALIDATE_INT);
-             /*$title = filter_var($_POST['edit-book-title'], FILTER_SANITIZE_STRING);
-            $author = filter_var($_POST['edit-book-change-author'], FILTER_VALIDATE_INT);
-            $year = filter_var($_POST['edit-book-release-year'], FILTER_VALIDATE_INT);
-            $price = filter_var($_POST['edit-book-price'], FILTER_VALIDATE_FLOAT);
-            $publisher = filter_var($_POST['edit-book-change-publisher'], FILTER_VALIDATE_INT);
-        $desc = filter_var($_POST['edit-book-desc'], FILTER_SANITIZE_STRING);
-        $cover = filter_var($_POST['edit-book-cover'], FILTER_SANITIZE_STRING);
-        $pages = filter_var($_POST['edit-book-pages'], FILTER_VALIDATE_INT);
-        $dims = filter_var($_POST['edit-book-dims'], FILTER_SANITIZE_STRING);
-        $category = filter_var($_POST['edit-book-category'], FILTER_VALIDATE_INT);
-        $subcategory = filter_var($_POST['edit-book-subcategory'], FILTER_VALIDATE_INT);*/
+        $bookId = filter_var($_POST['edit-book-id'], FILTER_VALIDATE_INT);
 
         $maxAuthorId = query("SELECT id_autora FROM author ORDER BY id_autora DESC LIMIT 1", "getAuthorId", "");
         // get highest author-id from db; // $_SESSION["max-author-id"] => "36";
@@ -67,8 +40,6 @@ require_once "../authenticate-admin.php";
         // get highest category-id from db; // $_SESSION["max-category-id"] => "7";
         query("SELECT id_magazynu FROM warehouse ORDER BY id_magazynu DESC LIMIT 1", "getMagazineId", "");
         // get highest magazine-id from db; // $_SESSION["max-magazine-id"] => "2";
-
-
 
         $title = filter_var($_POST['edit-book-title'], FILTER_SANITIZE_STRING);
         $author = filter_var($_POST['edit-book-change-author'], FILTER_VALIDATE_INT, [
