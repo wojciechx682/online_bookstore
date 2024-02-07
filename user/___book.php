@@ -134,24 +134,8 @@
 
             <script>
 
-                const rating = document.getElementById("book-rate").textContent;
-                // <span id="book-rate" style="display: none;"> %s </span> <!-- $row["rating"] - "4" -->
-                // "4.5" - type "string";    type "hidden" - "4.5",   ̶l̶u̶b̶ ̶ ̶n̶u̶l̶l̶ ̶ lub "0" ;
-
-                console.log("\n\n 471 rating -->", rating);
-                console.log("\n\n typeof rating -->", typeof rating);
-
-
-                /*let circleTest = document.getElementById("rating-circle"); // <circle id="rating-circle" ...>
-                let circumferenceTest = parseFloat(circleTest.getAttribute('r')) * 2 * Math.PI; // obwód koła;
-                    console.log("\n250 circumferenceTest -> ", circumferenceTest); // "62.83185307179586" - type = "number";
-                    console.log("\n250 typeof circumferenceTest -> ", typeof circumferenceTest);
-                    //console.log("\n250 circumferenceTest -> ", circumferenceTest);
-                    //circleTest.style.strokeDasharray = `circumferenceTest`;
-                    //circleTest.style.strokeDashoffset = `circumferenceTest`;
-                circleTest.style.strokeDasharray = circumferenceTest;
-                circleTest.style.strokeDashoffset  = circumferenceTest;*/
-
+                const rating = document.getElementById("book-rate").textContent; // <span id="book-rate" style="display: none;"> %s </span> <!-- $row["rating"] - "4" -->
+                                                                                 // "4.5" - type "string";    type "hidden" - "4.5",   ̶l̶u̶b̶ ̶ ̶n̶u̶l̶l̶ ̶ lub "0" ;
 
                 // (!) właściwość stroke-dasharray - definiuje długość złotej linii (ob - obwodu koła), oraz długości odstępów (przerw),  ̶,̶ ̶a̶ ̶w̶i̶ę̶c̶ ̶a̶b̶y̶ ̶p̶o̶c̶z̶ą̶t̶k̶o̶w̶o̶ ̶u̶k̶r̶y̶ć̶ ̶z̶ł̶o̶t̶y̶ ̶o̶k̶r̶ą̶g̶,̶ ̶n̶a̶l̶e̶ż̶y̶ ̶u̶s̶t̶a̶w̶i̶ć̶ ̶ ̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶=̶"̶ ̶"̶ ̶n̶a̶ ̶w̶a̶r̶t̶o̶ś̶ć̶ ̶r̶ó̶w̶n̶ą̶ ̶O̶B̶W̶O̶D̶O̶W̶I̶ ̶K̶O̶Ł̶A̶ ̶-̶ ̶d̶z̶i̶ę̶k̶i̶ ̶c̶z̶e̶m̶u̶ ̶p̶r̶z̶e̶r̶w̶a̶ ̶p̶o̶m̶i̶ę̶d̶z̶y̶ ̶w̶z̶o̶r̶e̶m̶ ̶w̶y̶n̶i̶e̶s̶i̶e̶ ̶d̶o̶k̶ł̶a̶d̶n̶i̶e̶ ̶t̶y̶l̶e̶ ̶c̶o̶ ̶o̶b̶w̶ó̶d̶ ̶k̶o̶ł̶a̶,̶ ̶c̶z̶y̶l̶i̶ ̶z̶ł̶o̶t̶y̶ ̶o̶k̶r̶ą̶g̶ ̶b̶ę̶d̶z̶i̶e̶ ̶n̶i̶e̶w̶i̶d̶o̶c̶z̶n̶y̶ ̶;̶
 
@@ -184,36 +168,19 @@
                     const totalRate = 5;
 
                     const percentageRate = (rating / totalRate) * 100; // (4.5 / 5) * 100 => "90"
-                    // "90" <- "number" // Ocena wyrażona w procentach;
+                                                                       // "90" <- "number" // Ocena wyrażona w procentach;
 
-                    const percentageRateRounded = `${Math.round(percentageRate / 10) * 10}%`;
-                    // "90%"  <- "string"
-                        // Zaokrąglona wartość średniej oceny (do najbliższej dziesiątki);
+                    const percentageRateRounded = `${Math.round(percentageRate / 10) * 10}%`; // "90%"  <- "string"
+                                                                                              // Zaokrąglona wartość średniej oceny (do najbliższej dziesiątki);
 
-                    const percentageRateBase = `${100 - Math.round(percentageRate / 10) * 10}%`;
-                    // "10%" <- "String"
-                        // to będzie szerokość diva z Szarymi gwiazdkami;
+                    const percentageRateBase = `${100 - Math.round(percentageRate / 10) * 10}%`; // "10%" <- "String"
+                                                                                                 // to będzie szerokość diva z Szarymi gwiazdkami;
 
-                        /*console.log("\n525 percentageRate -> ", percentageRate);
-                        console.log("\npercentageRateRounded -> ", percentageRateRounded);
-                        console.log("\npercentageRateBase -> ", percentageRateBase);*/
-
-                    document.querySelector('.rate-inner').style.width = percentageRateRounded; // width: 70%;
-                    // ✓ szerokość diva z Żółtymi gwiazdkami ;
-                    document.querySelector('.rate-inner-base').style.width = percentageRateBase; // width: 30%;
-                    // ✓ szerokość diva z Szarymi gwiazdkami ;
-
-                    /*const rateOuter = document.querySelector('.rate-outer'); // ✓ pojemnik na divy z żółtymi i Szarymi gwiazdkami ;
-                    const rateOuterWidth = rateOuter.offsetWidth;*/ // ✓ szerokość tego pojemnika (CSS -> "width");
-                    // "105" <- "number"                            <- szerokosć (px) diva na Żółte i Szare gwiazdki ;
-
-                        /*console.log("\n 193 rateOuterWidth ->", rateOuterWidth);
-                        console.log("\n 193 rateOuterWidth ->", typeof rateOuterWidth);*/
+                    document.querySelector('.rate-inner').style.width = percentageRateRounded; // width: 70%;   // ✓ szerokość diva z Żółtymi gwiazdkami ;
+                    document.querySelector('.rate-inner-base').style.width = percentageRateBase; // width: 30%; // ✓ szerokość diva z Szarymi gwiazdkami ;
 
                     document.querySelector('.rate-inner-base').style.position = "relative";
-                    //document.querySelector('.rate-inner-base').style.left = `${rateOuterWidth *  (Math.round(percentageRate / 10) * 10) / 100}px`; // -> 100 * (0,7) --> 70 (px) ;
-                    document.querySelector('.rate-inner-base').style.left = percentageRateRounded;
-                    // -> 100 * (0,7) --> 70 (px) ;
+                    document.querySelector('.rate-inner-base').style.left = percentageRateRounded; // -> 100 * (0,7) --> 70 (px) ;
 
                     // ✓✓✓ ROZWIĄZANIE PROBLEMU IMPLEMENTACYJNEGO - zamiana position left z px na wartość % (!) - podczas resizowania nastąpiło błędne kalkulowanie tej pozycji, od teraz przy ZMIANIE ROZMIARU pozycja szarych gwiazdek względem złotych jest OK (!)
 
@@ -237,21 +204,10 @@
                         //  ̶M̶a̶k̶e̶ ̶s̶u̶r̶e̶ ̶t̶o̶ ̶e̶x̶e̶c̶u̶t̶e̶ ̶t̶h̶i̶s̶ ̶c̶o̶d̶e̶ ̶a̶f̶t̶e̶r̶ ̶t̶h̶e̶ ̶p̶a̶g̶e̶ ̶h̶a̶s̶ ̶l̶o̶a̶d̶e̶d̶,̶ ̶e̶i̶t̶h̶e̶r̶ ̶b̶y̶ ̶p̶l̶a̶c̶i̶n̶g̶ ̶i̶t̶ ̶w̶i̶t̶h̶i̶n̶ ̶a̶ ̶D̶O̶M̶C̶o̶n̶t̶e̶n̶t̶L̶o̶a̶d̶e̶d̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶o̶r̶ ̶a̶t̶ ̶t̶h̶e̶ ̶e̶n̶d̶ ̶o̶f̶ ̶t̶h̶e̶ ̶b̶o̶d̶y̶ ̶t̶a̶g̶.̶
 
                     const circle = document.getElementById("rating-circle"); // żółte kółko ;
-                        //console.log("\ncircle --> ", circle);
+
 
                     const circumference = parseFloat(circle.getAttribute('r')) * 2 * Math.PI; // obwód koła; // circumference of the circle
-                    // "62.83185307179586" <- number;
-
-                        //console.log("\n\n 584 circumference (obwód) koła)->", circumference, "\n\n\n");
-
-                                // const offset = circumference * (1 - (rating / 5));
-                                // zmienna określająca stopień wypełnienia koła ;
-                                // "31,4159" (dla średniej_oceny 2.5) ;
-
-                        /*const offset = circumference * (1 - (rating / 5)); // Calculate the stroke dash offset ; "Przesunięcie kreski obrysu " ;
-                        console.log("\n circumference -> ", circumference);
-                        console.log("\n offset -> ", offset);
-                        circle.style.strokeDashoffset = `${offset}`;*/
+                                                                                              // "62.83185307179586" <- number;
 
                     circle.style.strokeDasharray = `${rating*(circumference/5)}, ${circumference}`;
 
