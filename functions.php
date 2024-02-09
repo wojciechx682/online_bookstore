@@ -1802,7 +1802,6 @@ function query($query, $fun, $values) {
 
                         }
 
-
                     } else {
 
                         return false;

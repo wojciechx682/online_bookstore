@@ -217,7 +217,7 @@
 
                 // Wyświetlenie ocen książki w postaci graficznych pasków. Każdy pasek reprezentuje ilość ocen dla danej wartości oceny (na przykład, ile razy książka otrzymała 5 gwiazdek, 4 gwiazdki itp.)
 
-                const bookRatingDetails = document.querySelectorAll(".book-rating-details"); // Kolekcja NodeList divów z żółtymi paskami ;
+                const bookRatingDetails = document.querySelectorAll(".book-rating-details"); // Kolekcja NodeList divów z żółtymi paskami;
 
                 $ratings = <?= $_SESSION["raings_array"] ?>; // JSON -> obiekt JS -> (tablica z ocenami, key - ocena, value - ilosc ocen);
 
@@ -228,19 +228,6 @@
                 // }
 
                 $no_ratings =  <?= json_encode($_SESSION["liczba_ocen"]) ?>;      // "4" <- "String" - LICZBA wszystkich OCEN;
-
-                    /*console.log("\n 298 $ratings -> ", $ratings);                     // [5] => 2 [4] => 1 ; --> { "5" : "2", "4" : "1" }
-                    console.log("\n 298 $ratings[0] -> ", $ratings[5]);                     // [5] => 2 [4] => 1 ; --> { "5" : "2", "4" : "1" }
-                    console.log("\n 298 typeof $ratings -> ", typeof $ratings);       // "Object"
-
-                    console.log("\n 298 $no_ratings -> ", $no_ratings);               // "12" lub np "0" ;    // liczba_ocen
-                    console.log("\n 298 typeof $no_ratings -> ", typeof $no_ratings); // String ;
-
-                console.log("\n\n przed pętlą --> \n\n");
-                console.log("----------------------------------------------------------------------------------------");*/
-
-                //      bookRatingDetails.length == 5           (tyle ile jest divów - pasków poziomych z ocenami) ;
-
 
                 window.onload = function() { // <!-- zamienić na event listener !!!!!!
 
@@ -263,30 +250,14 @@
                         //          .rated   - żółty pasek (div) ;
                         //          .unrated - cały pasek (div) ;
 
-                        /*console.log("\n\n line -> ", line, "\n");*/
-
-                        // Do something with each element ;
 
                         let rated = line.querySelector(".rated");                      // ✓ żółty pasek ;
-                        let norates = bookRatingDetails[j].querySelector(".no-rates"); // ✓ pojemnik na ilość_ocen ;
+                        let norates = bookRatingDetails[j].querySelector(".no-rates"); // ✓ pojemnik na ilość_ocen;
 
-                        /*console.log("\n\n321 norates -> ", norates); // <div class="no-rates">*/
-
-                        //console.log("rated -> ", rated);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
-                        //console.log("norates -> ", norates);
-                        //console.log("no_ratings -> ", $no_ratings);   // złoty pasek wypełnienia - długość zgodna z ilością ocen
-                        //console.log("rated -> ",  );   // złoty pasek wypełnienia - długość zgodna z ilością ocen
-
-                        //let style = getComputedStyle(rated); // "125px" <- (read only) - szerokość (właściwość CSS) żółteo paska ✓ ;
                         let style = getComputedStyle(line); // "125px" <- (read only) - szerokość (właściwość CSS) żółteo paska ✓ ;
-                            /*console.log("\n\n 342 .rated - style.width -> ", style.width);*/ // 125 px;
 
                         let width = parseInt(style.width)-10, newWidth, numberOfRates; // width - szerokość żółtego paska (125px);
                         // "125" - (px) <- "number" ;
-
-                            /*console.log("\n351 -- width --> ", width); // 125 - type "number "; - szerokość żółteo paska ✓
-                            console.log("\n351 width --> ", typeof width);
-                            console.log("\n $ratings --> ", $ratings); // "object" - tablica z ocenami i ilością tych ocen dla danej książki;*/
 
                         //          5
                         if($ratings[i] === undefined) { // ✓ jeśli dana ocena nie wystąpiła ani razu ;
@@ -315,9 +286,6 @@
                 }
 
                 // -----------------------------------------------------------------------------------------------------
-
-                /*console.log("----------------------------------------------------------------------------------------");*/
-
                 // -----------------------------------------------------------------------------------------------------
                 //  ̶a̶d̶d̶ ̶n̶e̶w̶ ̶r̶a̶t̶i̶n̶g̶ ̶(̶5̶ ̶s̶t̶a̶r̶s̶,̶ ̶h̶o̶v̶e̶r̶ ̶e̶f̶f̶e̶c̶t̶)̶ ̶-̶ ̶J̶S̶ ̶;̶
 
