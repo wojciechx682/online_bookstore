@@ -134,83 +134,35 @@
 
             <script>
 
-                const rating = document.getElementById("book-rate").textContent; // <span id="book-rate" style="display: none;"> %s </span> <!-- $row["rating"] - "4" -->
-                                                                                 // "4.5" - type "string";    type "hidden" - "4.5",   ̶l̶u̶b̶ ̶ ̶n̶u̶l̶l̶ ̶ lub "0" ;
-
-                // (!) właściwość stroke-dasharray - definiuje długość złotej linii (ob - obwodu koła), oraz długości odstępów (przerw),  ̶,̶ ̶a̶ ̶w̶i̶ę̶c̶ ̶a̶b̶y̶ ̶p̶o̶c̶z̶ą̶t̶k̶o̶w̶o̶ ̶u̶k̶r̶y̶ć̶ ̶z̶ł̶o̶t̶y̶ ̶o̶k̶r̶ą̶g̶,̶ ̶n̶a̶l̶e̶ż̶y̶ ̶u̶s̶t̶a̶w̶i̶ć̶ ̶ ̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶=̶"̶ ̶"̶ ̶n̶a̶ ̶w̶a̶r̶t̶o̶ś̶ć̶ ̶r̶ó̶w̶n̶ą̶ ̶O̶B̶W̶O̶D̶O̶W̶I̶ ̶K̶O̶Ł̶A̶ ̶-̶ ̶d̶z̶i̶ę̶k̶i̶ ̶c̶z̶e̶m̶u̶ ̶p̶r̶z̶e̶r̶w̶a̶ ̶p̶o̶m̶i̶ę̶d̶z̶y̶ ̶w̶z̶o̶r̶e̶m̶ ̶w̶y̶n̶i̶e̶s̶i̶e̶ ̶d̶o̶k̶ł̶a̶d̶n̶i̶e̶ ̶t̶y̶l̶e̶ ̶c̶o̶ ̶o̶b̶w̶ó̶d̶ ̶k̶o̶ł̶a̶,̶ ̶c̶z̶y̶l̶i̶ ̶z̶ł̶o̶t̶y̶ ̶o̶k̶r̶ą̶g̶ ̶b̶ę̶d̶z̶i̶e̶ ̶n̶i̶e̶w̶i̶d̶o̶c̶z̶n̶y̶ ̶;̶
-
-                //  ̶"̶ ̶i̶t̶ ̶c̶r̶e̶a̶t̶e̶s̶ ̶a̶ ̶d̶a̶s̶h̶ ̶p̶a̶t̶t̶e̶r̶n̶ ̶w̶i̶t̶h̶ ̶a̶ ̶d̶a̶s̶h̶ ̶l̶e̶n̶g̶t̶h̶ ̶e̶q̶u̶a̶l̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶"̶;̶
-
-                //  ̶p̶o̶n̶i̶ż̶e̶j̶ ̶t̶r̶o̶c̶h̶e̶ ̶o̶ ̶w̶ł̶a̶ś̶c̶i̶w̶o̶ś̶c̶i̶a̶c̶h̶ ̶s̶t̶r̶o̶n̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶ ̶i̶ ̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶e̶s̶t̶,̶ ̶o̶r̶a̶z̶ ̶d̶l̶a̶c̶z̶e̶g̶o̶ ̶u̶s̶t̶a̶w̶i̶e̶n̶i̶e̶ ̶o̶b̶u̶ ̶t̶y̶c̶h̶ ̶w̶a̶r̶t̶o̶ś̶c̶i̶ ̶n̶a̶ ̶w̶a̶r̶t̶o̶ś̶ć̶ ̶r̶ó̶w̶n̶ą̶ ̶o̶b̶w̶o̶d̶o̶w̶i̶ ̶k̶o̶ł̶a̶ ̶-̶ ̶u̶k̶r̶y̶w̶a̶ ̶p̶o̶c̶z̶ą̶t̶k̶o̶w̶o̶ ̶z̶ł̶o̶t̶y̶ ̶o̶k̶r̶ą̶g̶ ̶;̶
-
-                //  ̶"̶S̶e̶t̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶v̶a̶l̶u̶e̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶e̶f̶f̶e̶c̶t̶i̶v̶e̶l̶y̶ ̶h̶i̶d̶e̶s̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶c̶i̶r̶c̶l̶e̶ ̶(̶m̶a̶k̶e̶s̶ ̶i̶t̶ ̶i̶n̶v̶i̶s̶i̶b̶l̶e̶)̶ ̶b̶e̶c̶a̶u̶s̶e̶ ̶i̶t̶ ̶c̶r̶e̶a̶t̶e̶s̶ ̶a̶ ̶d̶a̶s̶h̶ ̶p̶a̶t̶t̶e̶r̶n̶ ̶w̶i̶t̶h̶ ̶a̶ ̶d̶a̶s̶h̶ ̶l̶e̶n̶g̶t̶h̶ ̶e̶q̶u̶a̶l̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶,̶ ̶a̶n̶d̶ ̶n̶o̶ ̶g̶a̶p̶s̶ ̶i̶n̶ ̶b̶e̶t̶w̶e̶e̶n̶.̶
-                //
-                // Here's why this works:
-                //
-                //  ̶1̶.̶ ̶W̶h̶e̶n̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶i̶s̶ ̶s̶e̶t̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶,̶ ̶e̶a̶c̶h̶ ̶d̶a̶s̶h̶ ̶i̶n̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶ ̶p̶a̶t̶t̶e̶r̶n̶ ̶h̶a̶s̶ ̶t̶h̶e̶ ̶s̶a̶m̶e̶ ̶l̶e̶n̶g̶t̶h̶ ̶a̶s̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶.̶ ̶S̶i̶n̶c̶e̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶i̶s̶ ̶t̶h̶e̶ ̶t̶o̶t̶a̶l̶ ̶l̶e̶n̶g̶t̶h̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶'̶s̶ ̶p̶e̶r̶i̶m̶e̶t̶e̶r̶,̶ ̶s̶e̶t̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶ ̶l̶e̶n̶g̶t̶h̶ ̶t̶o̶ ̶t̶h̶i̶s̶ ̶v̶a̶l̶u̶e̶ ̶m̶e̶a̶n̶s̶ ̶t̶h̶a̶t̶ ̶e̶a̶c̶h̶ ̶d̶a̶s̶h̶ ̶w̶i̶l̶l̶ ̶c̶o̶v̶e̶r̶ ̶t̶h̶e̶ ̶e̶n̶t̶i̶r̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶.̶
-                //
-                //  ̶2̶.̶ ̶B̶y̶ ̶n̶o̶t̶ ̶s̶p̶e̶c̶i̶f̶y̶i̶n̶g̶ ̶a̶n̶y̶ ̶g̶a̶p̶s̶ ̶b̶e̶t̶w̶e̶e̶n̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶e̶s̶ ̶(̶i̶.̶e̶.̶,̶ ̶n̶o̶t̶ ̶p̶r̶o̶v̶i̶d̶i̶n̶g̶ ̶a̶ ̶s̶e̶c̶o̶n̶d̶ ̶v̶a̶l̶u̶e̶ ̶i̶n̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶p̶r̶o̶p̶e̶r̶t̶y̶)̶,̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶e̶s̶ ̶w̶i̶l̶l̶ ̶b̶e̶ ̶p̶l̶a̶c̶e̶d̶ ̶e̶n̶d̶-̶t̶o̶-̶e̶n̶d̶ ̶w̶i̶t̶h̶o̶u̶t̶ ̶a̶n̶y̶ ̶g̶a̶p̶s̶.̶ ̶T̶h̶i̶s̶ ̶e̶f̶f̶e̶c̶t̶i̶v̶e̶l̶y̶ ̶f̶i̶l̶l̶s̶ ̶t̶h̶e̶ ̶e̶n̶t̶i̶r̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶w̶i̶t̶h̶ ̶d̶a̶s̶h̶e̶s̶.̶
-                //
-                //  ̶3̶.̶ ̶S̶i̶n̶c̶e̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶i̶s̶ ̶i̶n̶i̶t̶i̶a̶l̶l̶y̶ ̶s̶e̶t̶ ̶t̶o̶ ̶t̶h̶e̶ ̶s̶a̶m̶e̶ ̶v̶a̶l̶u̶e̶ ̶a̶s̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶(̶i̶n̶ ̶t̶h̶i̶s̶ ̶c̶a̶s̶e̶,̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶)̶,̶ ̶t̶h̶e̶ ̶e̶n̶t̶i̶r̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶c̶i̶r̶c̶l̶e̶ ̶i̶s̶ ̶i̶n̶i̶t̶i̶a̶l̶l̶y̶ ̶h̶i̶d̶d̶e̶n̶ ̶b̶y̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶ ̶p̶a̶t̶t̶e̶r̶n̶.̶ ̶T̶h̶e̶ ̶d̶a̶s̶h̶e̶s̶ ̶c̶o̶v̶e̶r̶ ̶t̶h̶e̶ ̶e̶n̶t̶i̶r̶e̶ ̶p̶e̶r̶i̶m̶e̶t̶e̶r̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶,̶ ̶m̶a̶k̶i̶n̶g̶ ̶i̶t̶ ̶a̶p̶p̶e̶a̶r̶ ̶a̶s̶ ̶i̶f̶ ̶i̶t̶'̶s̶ ̶n̶o̶t̶ ̶f̶i̶l̶l̶e̶d̶.̶
-                //
-                //  ̶T̶o̶ ̶m̶a̶k̶e̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶c̶i̶r̶c̶l̶e̶ ̶v̶i̶s̶i̶b̶l̶e̶ ̶a̶n̶d̶ ̶s̶h̶o̶w̶ ̶t̶h̶e̶ ̶f̶i̶l̶l̶i̶n̶g̶ ̶e̶f̶f̶e̶c̶t̶,̶ ̶y̶o̶u̶ ̶u̶p̶d̶a̶t̶e̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶v̶a̶l̶u̶e̶ ̶t̶o̶ ̶a̶ ̶s̶m̶a̶l̶l̶e̶r̶ ̶v̶a̶l̶u̶e̶ ̶b̶a̶s̶e̶d̶ ̶o̶n̶ ̶t̶h̶e̶ ̶d̶e̶s̶i̶r̶e̶d̶ ̶f̶i̶l̶l̶ ̶a̶m̶o̶u̶n̶t̶.̶ ̶A̶s̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶d̶e̶c̶r̶e̶a̶s̶e̶s̶,̶ ̶t̶h̶e̶ ̶d̶a̶s̶h̶ ̶p̶a̶t̶t̶e̶r̶n̶ ̶s̶h̶i̶f̶t̶s̶ ̶a̶l̶o̶n̶g̶ ̶t̶h̶e̶ ̶p̶a̶t̶h̶,̶ ̶r̶e̶v̶e̶a̶l̶i̶n̶g̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶p̶o̶r̶t̶i̶o̶n̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶.̶ ̶B̶y̶ ̶a̶d̶j̶u̶s̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶f̶r̶o̶m̶ ̶t̶h̶e̶ ̶i̶n̶i̶t̶i̶a̶l̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶t̶o̶ ̶a̶ ̶s̶m̶a̶l̶l̶e̶r̶ ̶v̶a̶l̶u̶e̶,̶ ̶y̶o̶u̶ ̶c̶o̶n̶t̶r̶o̶l̶ ̶t̶h̶e̶ ̶e̶x̶t̶e̶n̶t̶ ̶o̶f̶ ̶t̶h̶e̶ ̶f̶i̶l̶l̶ ̶a̶n̶d̶ ̶a̶n̶i̶m̶a̶t̶e̶ ̶t̶h̶e̶ ̶f̶i̶l̶l̶i̶n̶g̶ ̶e̶f̶f̶e̶c̶t̶.̶
-                //
-                //  ̶I̶n̶ ̶s̶u̶m̶m̶a̶r̶y̶,̶ ̶s̶e̶t̶t̶i̶n̶g̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶a̶r̶r̶a̶y̶`̶ ̶t̶o̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶a̶n̶d̶ ̶i̶n̶i̶t̶i̶a̶l̶l̶y̶ ̶s̶e̶t̶t̶i̶n̶g̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶t̶o̶ ̶t̶h̶e̶ ̶s̶a̶m̶e̶ ̶v̶a̶l̶u̶e̶ ̶e̶f̶f̶e̶c̶t̶i̶v̶e̶l̶y̶ ̶h̶i̶d̶e̶s̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶c̶i̶r̶c̶l̶e̶ ̶b̶y̶ ̶c̶o̶v̶e̶r̶i̶n̶g̶ ̶i̶t̶ ̶w̶i̶t̶h̶ ̶d̶a̶s̶h̶e̶s̶.̶ ̶A̶d̶j̶u̶s̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶`̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶`̶ ̶v̶a̶l̶u̶e̶ ̶s̶u̶b̶s̶e̶q̶u̶e̶n̶t̶l̶y̶ ̶r̶e̶v̶e̶a̶l̶s̶ ̶t̶h̶e̶ ̶y̶e̶l̶l̶o̶w̶ ̶p̶o̶r̶t̶i̶o̶n̶ ̶a̶n̶d̶ ̶c̶r̶e̶a̶t̶e̶s̶ ̶t̶h̶e̶ ̶f̶i̶l̶l̶i̶n̶g̶ ̶e̶f̶f̶e̶c̶t̶.̶
+                const rating = document.getElementById("book-rate").textContent;
 
                 window.addEventListener("load", function() {
 
-                    // Strona została w pełni załadowana; // Kod do wykonania po pełnym załadowaniu strony (i wszystkich zasobów) ;
-
-                    // SD - problem implementacyjny - ustawienie pozycji diva z szarymi gwiazdkami (w sekcji #book-page-details - przy zdjęciu książki) - rozwiązanie - poczekanie aż wszystkie zasoby strony (w tym CSS) się załadują
-
-                    // przedstaw ten problem jeszcze raz tak jakby nie był rozwiązany - i opisz w PD (problemy implementacyjne) ;
-
                     const totalRate = 5;
-
-                    const percentageRate = (rating / totalRate) * 100; // (4.5 / 5) * 100 => "90"
-                                                                       // "90" <- "number" // Ocena wyrażona w procentach;
+                    const percentageRate = (rating / totalRate) * 100; // (4.5 / 5) * 100 => "90" <- "number" // Ocena wyrażona w procentach;
 
                     const percentageRateRounded = `${Math.round(percentageRate / 10) * 10}%`; // "90%"  <- "string"
-                                                                                              // Zaokrąglona wartość średniej oceny (do najbliższej dziesiątki);
+                    // Zaokrąglona wartość średniej oceny (do najbliższej dziesiątki);
 
                     const percentageRateBase = `${100 - Math.round(percentageRate / 10) * 10}%`; // "10%" <- "String"
-                                                                                                 // to będzie szerokość diva z Szarymi gwiazdkami;
+                     // to będzie szerokość diva z Szarymi gwiazdkami;
 
-                    document.querySelector('.rate-inner').style.width = percentageRateRounded; // width: 70%;   // ✓ szerokość diva z Żółtymi gwiazdkami ;
-                    document.querySelector('.rate-inner-base').style.width = percentageRateBase; // width: 30%; // ✓ szerokość diva z Szarymi gwiazdkami ;
-
+                    document.querySelector('.rate-inner').style.width = percentageRateRounded; // width: 90%;   // szerokość diva z Żółtymi gwiazdkami;
+                    document.querySelector('.rate-inner-base').style.width = percentageRateBase; // width: 10%; // szerokość diva z Szarymi gwiazdkami;
                     document.querySelector('.rate-inner-base').style.position = "relative";
-                    document.querySelector('.rate-inner-base').style.left = percentageRateRounded; // -> 100 * (0,7) --> 70 (px) ;
-
-                    // ✓✓✓ ROZWIĄZANIE PROBLEMU IMPLEMENTACYJNEGO - zamiana position left z px na wartość % (!) - podczas resizowania nastąpiło błędne kalkulowanie tej pozycji, od teraz przy ZMIANIE ROZMIARU pozycja szarych gwiazdek względem złotych jest OK (!)
-
-                    // tutał był problem (ponieważ po Ctrl+F5 - szerokość rateOuterWidth była źle kalkulowana" - problemy implementacyjne - SD " ;
-
+                    document.querySelector('.rate-inner-base').style.left = percentageRateRounded; // -> 100 * (0,9) --> 90 (%) ;
 
                     if(rating !== "") {
-                        document.querySelector('.rating-num').innerHTML = Math.round(rating*100)/100 ;
-                        // zaokrąglenie --> pomnożyć przez 10, zaokrąglić, podzielić przez 10 ;
+                        document.querySelector('.rating-num').innerHTML = Math.round(rating*100)/100;
                     } else {
                         document.querySelector('.rating-num').innerHTML = "" ;
                     }
 
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                    // Proporcjonalne wypełnienie okręgu ;
-
-                        //  ̶T̶o̶ ̶f̶i̶l̶l̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶p̶r̶o̶p̶o̶r̶t̶i̶o̶n̶a̶l̶l̶y̶ ̶b̶a̶s̶e̶d̶ ̶o̶n̶ ̶t̶h̶e̶ ̶a̶v̶e̶r̶a̶g̶e̶ ̶r̶a̶t̶i̶n̶g̶ ̶u̶s̶i̶n̶g̶ ̶J̶a̶v̶a̶S̶c̶r̶i̶p̶t̶,̶ ̶y̶o̶u̶ ̶c̶a̶n̶ ̶d̶y̶n̶a̶m̶i̶c̶a̶l̶l̶y̶ ̶c̶a̶l̶c̶u̶l̶a̶t̶e̶ ̶t̶h̶e̶ ̶s̶t̶r̶o̶k̶e̶-̶d̶a̶s̶h̶o̶f̶f̶s̶e̶t̶ ̶v̶a̶l̶u̶e̶ ̶b̶a̶s̶e̶d̶ ̶o̶n̶ ̶t̶h̶e̶ ̶r̶a̶t̶i̶n̶g̶.̶ ̶H̶e̶r̶e̶'̶s̶ ̶a̶n̶ ̶e̶x̶a̶m̶p̶l̶e̶ ̶o̶f̶ ̶h̶o̶w̶ ̶y̶o̶u̶ ̶c̶a̶n̶ ̶a̶c̶h̶i̶e̶v̶e̶ ̶t̶h̶i̶s̶:̶
-                        //  ̶A̶s̶s̶u̶m̶i̶n̶g̶ ̶y̶o̶u̶ ̶h̶a̶v̶e̶ ̶a̶ ̶v̶a̶r̶i̶a̶b̶l̶e̶ ̶n̶a̶m̶e̶d̶ ̶'̶r̶a̶t̶i̶n̶g̶'̶ ̶t̶h̶a̶t̶ ̶h̶o̶l̶d̶s̶ ̶t̶h̶e̶ ̶a̶v̶e̶r̶a̶g̶e̶ ̶r̶a̶t̶i̶n̶g̶ ̶v̶a̶l̶u̶e̶̶;̶
-                        //  ̶I̶n̶ ̶t̶h̶i̶s̶ ̶c̶o̶d̶e̶,̶ ̶w̶e̶ ̶c̶a̶l̶c̶u̶l̶a̶t̶e̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶u̶s̶i̶n̶g̶ ̶t̶h̶e̶ ̶f̶o̶r̶m̶u̶l̶a̶ ̶2̶ ̶*̶ ̶π̶ ̶*̶ ̶r̶,̶ ̶w̶h̶e̶r̶e̶ ̶r̶ ̶i̶s̶ ̶t̶h̶e̶ ̶r̶a̶d̶i̶u̶s̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶(̶i̶n̶ ̶y̶o̶u̶r̶ ̶c̶a̶s̶e̶,̶ ̶i̶t̶'̶s̶ ̶1̶0̶)̶.̶ ̶T̶h̶e̶n̶ ̶w̶e̶ ̶c̶a̶l̶c̶u̶l̶a̶t̶e̶ ̶t̶h̶e̶ ̶d̶e̶s̶i̶r̶e̶d̶ ̶o̶f̶f̶s̶e̶t̶ ̶b̶y̶ ̶s̶u̶b̶t̶r̶a̶c̶t̶i̶n̶g̶ ̶t̶h̶e̶ ̶p̶r̶o̶p̶o̶r̶t̶i̶o̶n̶a̶l̶ ̶v̶a̶l̶u̶e̶ ̶f̶r̶o̶m̶ ̶t̶h̶e̶ ̶t̶o̶t̶a̶l̶ ̶c̶i̶r̶c̶u̶m̶f̶e̶r̶e̶n̶c̶e̶.̶ ̶T̶h̶e̶ ̶p̶r̶o̶p̶o̶r̶t̶i̶o̶n̶a̶l̶ ̶v̶a̶l̶u̶e̶ ̶i̶s̶ ̶o̶b̶t̶a̶i̶n̶e̶d̶ ̶b̶y̶ ̶d̶i̶v̶i̶d̶i̶n̶g̶ ̶t̶h̶e̶ ̶r̶a̶t̶i̶n̶g̶ ̶b̶y̶ ̶t̶h̶e̶ ̶m̶a̶x̶i̶m̶u̶m̶ ̶r̶a̶t̶i̶n̶g̶ ̶(̶i̶n̶ ̶t̶h̶i̶s̶ ̶e̶x̶a̶m̶p̶l̶e̶,̶ ̶w̶e̶ ̶a̶s̶s̶u̶m̶e̶ ̶i̶t̶'̶s̶ ̶5̶)̶.̶ ̶F̶i̶n̶a̶l̶l̶y̶,̶ ̶w̶e̶ ̶u̶p̶d̶a̶t̶e̶ ̶t̶h̶e̶ ̶s̶t̶r̶o̶k̶e̶D̶a̶s̶h̶a̶r̶r̶a̶y̶ ̶a̶n̶d̶ ̶s̶t̶r̶o̶k̶e̶D̶a̶s̶h̶o̶f̶f̶s̶e̶t̶ ̶s̶t̶y̶l̶e̶s̶ ̶o̶f̶ ̶t̶h̶e̶ ̶c̶i̶r̶c̶l̶e̶ ̶e̶l̶e̶m̶e̶n̶t̶ ̶t̶o̶ ̶a̶c̶h̶i̶e̶v̶e̶ ̶t̶h̶e̶ ̶d̶e̶s̶i̶r̶e̶d̶ ̶f̶i̶l̶l̶i̶n̶g̶ ̶e̶f̶f̶e̶c̶t̶ ̶;̶
-                        //  ̶M̶a̶k̶e̶ ̶s̶u̶r̶e̶ ̶t̶o̶ ̶e̶x̶e̶c̶u̶t̶e̶ ̶t̶h̶i̶s̶ ̶c̶o̶d̶e̶ ̶a̶f̶t̶e̶r̶ ̶t̶h̶e̶ ̶p̶a̶g̶e̶ ̶h̶a̶s̶ ̶l̶o̶a̶d̶e̶d̶,̶ ̶e̶i̶t̶h̶e̶r̶ ̶b̶y̶ ̶p̶l̶a̶c̶i̶n̶g̶ ̶i̶t̶ ̶w̶i̶t̶h̶i̶n̶ ̶a̶ ̶D̶O̶M̶C̶o̶n̶t̶e̶n̶t̶L̶o̶a̶d̶e̶d̶ ̶e̶v̶e̶n̶t̶ ̶l̶i̶s̶t̶e̶n̶e̶r̶ ̶o̶r̶ ̶a̶t̶ ̶t̶h̶e̶ ̶e̶n̶d̶ ̶o̶f̶ ̶t̶h̶e̶ ̶b̶o̶d̶y̶ ̶t̶a̶g̶.̶
-
-                    const circle = document.getElementById("rating-circle"); // żółte kółko ;
-
+                    const circle = document.getElementById("rating-circle"); // żółte kółko;
 
                     const circumference = parseFloat(circle.getAttribute('r')) * 2 * Math.PI; // obwód koła; // circumference of the circle
                                                                                               // "62.83185307179586" <- number;
-
                     circle.style.strokeDasharray = `${rating*(circumference/5)}, ${circumference}`;
-
                 });
 
                 // -----------------------------------------------------------------------------------------------------
