@@ -115,12 +115,12 @@
                         // - rozwiązaniem było dodanie funkcji usuwającej atrybuty "name" ze wszystkich gwiazdek - po kliknięciu na dowolną gwiazdkę;
                         // (atrybut "name" posiada tylko ten input, dla którego gwiazdka została kliknięta)
 
-                        // 3. Podczas odświeżania strony z książką poprzeż użycie klawiszy Ctrl + F5 - pojawiał się błąd polegający na nieodopowiednim umiejscowieniu szarych gwiazdek proporcjonalnie względem żółtych gwizdek (w sekcji #book-page-details - przy zdjęciu książki). - podczas resizowania okna przeglądarki
+                            // 3. ✓✓✓ Podczas odświeżania strony z książką poprzeż użycie klawiszy Ctrl + F5 - pojawiał się błąd polegający na nieodopowiednim umiejscowieniu szarych gwiazdek proporcjonalnie względem żółtych gwizdek (w sekcji #book-page-details - przy zdjęciu książki). - podczas resizowania okna przeglądarki
 
-                        // ✖ rozwiązaniem było dodanie linii window.onload - "która czeka" na wczytanie wszystkich zasobów strony (w tym stylów CSS) - tak aby ostatecznie zachować poprawne umiejscowienie żółtych i szarych gwizdek względem siebie ;
-                        // 5. // ✓✓✓ ROZWIĄZANIE PROBLEMU IMPLEMENTACYJNEGO - zamiana position left z px na wartość % (!) - podczas resizowania nastąpiło błędne kalkulowanie tej pozycji, od teraz przy ZMIANIE ROZMIARU pozycja szarych gwiazdek względem złotych jest OK (!)
+                            // ✓✓✓ rozwiązaniem było dodanie linii window.onload - "która czeka" na wczytanie wszystkich zasobów strony (w tym stylów CSS) - tak aby ostatecznie zachować poprawne umiejscowienie żółtych i szarych gwizdek względem siebie ;
+                            // 5. // ✓✓✓ ROZWIĄZANIE PROBLEMU IMPLEMENTACYJNEGO - zamiana position left z px na wartość % (!) - podczas resizowania nastąpiło błędne kalkulowanie tej pozycji, od teraz przy ZMIANIE ROZMIARU pozycja szarych gwiazdek względem złotych jest OK (!)
 
-                        // ✓ rozwiązaniem było zastosowanie wartości procentowych (relatywnych) zamiast wartości wyrażonych w px - do ustalenia stylów tych elementów !
+                            // ✓ rozwiązaniem było zastosowanie wartości procentowych (relatywnych) zamiast wartości wyrażonych w px - do ustalenia stylów tych elementów !
 
                         // 4. Animacja wypełniania okręgu na żółto (proporcjonalnie do średniej oceny) - OPISAĆ - jak zostało zrobione to, że wypełnienie zaczyna się od początku okręgu;
 
@@ -388,17 +388,17 @@
     } */
 
                 function removeNameAttribute(stars) {
-                        // remove "name" attribute In every <input typ hidden> in star <span> collection
-                        // ✓ SD - problem implementayjny - rozwiązanie ;
-                    for (let i = 0; i < stars.length; i++) { // NodeList Collection ;
 
-                        let input = stars[i].querySelector('input[type="hidden"]'); // i-ty (!) input wewnątrz spana z gwiazdką ;
+                    for (let i = 0; i < stars.length; i++) {
+
+                        let input = stars[i].querySelector('input[type="hidden"]');
 
                         if(input.hasAttribute("name")) {
                             input.removeAttribute("name");
                         }
                     }
                 }
+
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 for (let i = 0; i < stars.length; i++) { // dla każdego elementu <span> z gwiazdką ;
 
