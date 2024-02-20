@@ -108,10 +108,10 @@
                         // -------------------------------------------------------------------------------------------------
                         // Problemy implementacyjne ->
 
-                        // 1. Po kliknięciu gwiazdki przy dodawaniu opinii, -- zostały one resetowane po najechaniu na inną gwiazdkę.
+                        // 1. ✓✓✓ Po kliknięciu gwiazdki przy dodawaniu opinii, -- zostały one resetowane po najechaniu na inną gwiazdkę.
                         //    - Od teraz, po kiknięciu, gwiazdki zostają zapisane. (najechanie na inną gwiazdkę nie zmienia ich stanu - jedynie dopiero kliknięcie)
 
-                        // 2. Podczas dodawania opinii, przy kliknięciu dwóch gwiazdek w następującej po sobie kolejności, wystąpił błąd polegający na dodaniu niewłaściwej oceny w skali 5/5 (Np. jeśli użytkownik kliknął "3", a potem "2" - ocena została zapisana jako "3")
+                        // 2. ✓✓✓ Podczas dodawania opinii, przy kliknięciu dwóch gwiazdek w następującej po sobie kolejności, wystąpił błąd polegający na dodaniu niewłaściwej oceny w skali 5/5 (Np. jeśli użytkownik kliknął "3", a potem "2" - ocena została zapisana jako "3")
                         // - rozwiązaniem było dodanie funkcji usuwającej atrybuty "name" ze wszystkich gwiazdek - po kliknięciu na dowolną gwiazdkę;
                         // (atrybut "name" posiada tylko ten input, dla którego gwiazdka została kliknięta)
 
@@ -213,10 +213,8 @@
 
                         //          5
                         if($ratings[i] === undefined) { // ✓ jeśli dana ocena nie wystąpiła ani razu ;
-                            //newWidth = 100;     // szerokość paska ;
-                            numberOfRates = 0;    // ilość_ocen ;
-
-                            //rated.style.visibility = "hidden"; // ukrycie (i-tego) żółtego paska ;
+                            //newWidth = 100;     // szerokość paska;
+                            numberOfRates = 0;    // ilość_ocen;
                             rated.classList.add("hidden-rate");  // visibility: hidden;
                         } else {
                             // ✓ ustaw odpowiednią (proporcjonalną !) szerokość żółtego paska, zależnie od ilości ocen (!) ;
@@ -230,11 +228,8 @@
                             rated.style.width = newWidth + "px"; // ustaw szerokość żółtego paska (jeśli nie było ocen - będzie on niewidoczny ) ;
                         }
 
-                        //console.log("newWidth --> ", newWidth);
-
                         norates.innerHTML = "("+numberOfRates+")"; // ilość ocen (np 2 razy wystąpiła ocena "5");
                     }
-
                 }
 
                 // -----------------------------------------------------------------------------------------------------
@@ -246,28 +241,17 @@
                 const stars = document.querySelectorAll('.star'); // # add-rate -> # add-rate-outer -> .star ;
                 // Kolekcja typu NodeList ; // ✓ Kolekcja spanów z gwiazdkami ;
 
-                    /*console.log("\n stars -> ", stars); // Kolekcja NodeList // ✓ Kolekcja spanów z gwiazdkami ;
-                    console.log("\n typeof stars -> ", typeof stars); // "object"*/
-
-                // let goldStars = 0;
-
                 let keepStars = false; // == true po kliknięciu ("click") na gwiazdkę
 
                 function updateStars(event) {
-
-                        /*console.log("\n 392 - keepStars -> ", keepStars) ;*/
 
                     const currentStar = event.currentTarget; // <span> z gwiazdką; // który zostal kliknięty;
                         // <span class="star" id="star-1">
                         //      1 <input type="hidden" value="1">
                         // </span>
-                            const currentStarId = currentStar.id; // id klikniętej gwiazdki; // "star-1", "star-4", ... // #star-1, ... #star-5;
+                    const currentStarId = currentStar.id; // id klikniętej gwiazdki; // "star-1", "star-4", ... // #star-1, ... #star-5;
                     const starNumber = Number(currentStarId.split('-')[1]); // "1", ... "5" ; <- "number"
                     // id klikniętej gwiazdki ;
-
-                        /*console.log("\n\n 593 currentStar --> ", currentStar);     // przykładowo --> <span class="star" id="star-1">
-                        console.log("\n\n 593 currentStarId --> ", currentStarId);
-                        console.log("\n\n 593 starNumber --> ", starNumber);       // id klikniętej gwiazdki ;*/
 
                     let eventType = event.type; // typ wywołanego zdarzenia ; - "click", "mouseenter", "mouseout" ...
 
@@ -287,18 +271,12 @@
                             const number = Number(starId.split('-')[1]); // "1", "2", ..., "5"
                             // id-tej gwiazdki --> "1" / "2" / ... / "5"
 
-                            /*console.log("number --> ", number);*/
-
                             if (number <= starNumber) { // ✓ jeśli i-ty element (<span> z gw.) jest mniejszy niz ten klikniety (event) ;
                                 // number - id i-tej gwiazki,
                                 // starNumber - id kliknietej gwiazdki ;
                                 star.classList.add('gold');
-                            } /*else {
-                                star.classList.remove('gold');
-                                //goldStars--;
-                            }*/
+                            }
                         }
-                        // keepStars = false; // ?
                     }
 
                     else if (eventType === "mouseout" && keepStars === false) {
@@ -316,15 +294,12 @@
 
                             let input = star.querySelector('input[type="hidden"]');
 
-                            //console.log("\n\n 644 input --> \n\n", input);
-
                             if (input.hasAttribute('name')) {
                                 //alert();
                                 input.removeAttribute('name');
                             }
                         }
                     }
-                    // <--- ;
 
                     else if (eventType === "click") {
 
@@ -368,24 +343,8 @@
                         //keepStars = ! keepStars;
                         keepStars = true; // SD - rozwiązanie problemu implementacyjnego ;
                     }
-
-                    //console.log("\n 486 keepStars -> ", keepStars);
                 }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /*function hasGoldStars(stars) {  // stars - NodeList collection (spany z gwiazdkami)
-
-        // CHECK, IF THERE IS ANY GOLD STAR ;
-
-        // ̶ ̶S̶D̶ ̶-̶ ̶p̶r̶o̶b̶l̶e̶m̶ ̶i̶m̶p̶l̶e̶m̶e̶n̶t̶a̶y̶j̶n̶y̶ ̶-̶ ̶r̶o̶z̶w̶i̶ą̶z̶a̶n̶i̶e̶ ̶;̶
-
-        for (let i = 0; i < stars.length; i++) { // NodeList Collection ;
-
-            if(stars[i].classList.contains("gold")) {
-                return true;
-            }
-        }
-        return false;
-    } */
 
                 function removeNameAttribute(stars) {
 
@@ -440,26 +399,6 @@
                     commentsRate.querySelector(".comment-rate-inner-base").style.left = ((rating / 5) * 100) + "%";
                 });
 
-                /*if(commentRate) {
-                        console.log("\n\n 1002 commentRate -> ", commentRate);
-                    commentRate = commentRate.textContent.trim(); //$row["ocena"] - "1", "2", ..., "4", "5"
-                        console.log("\n\n 986 commentRate -> ", commentRate);
-                    let commentRateInner = document.querySelector(".comment-rate-inner"); // <div class="comment-rate-inner">
-                    commentRateInner.style.width = (commentRate / 5) * 100 + "%"; // ustawienie szerokości pojemnika na gwiazdki - zależnie od ilości gwiazdek ;
-                    let commentRates = document.querySelectorAll(".comment-rate") // kolekcja NodeList - pojemników (całych !) na wszystkie gwiazdki *przy komentarzach) ;
-                    // console.log("commentRate -> ", commentRates);
-                    for (let i = 0; i < commentRates.length; i++) { // dla każdego pojemnika na gwiazdki (przy komentarzach) ;
-                        let rate = commentRates[i].textContent.trim(); // "4"
-                        commentRates[i].querySelector(".comment-rate-inner").style.width = ((rate / 5) * 100) + "%";
-                    }
-                    //let commentRateInner = document.querySelector(".comment-rate-inner"); // <div class="comment-rate-inner">
-                    //commentRateInner.style.width = (commentRate / 5) * 100 + "%";
-                    // book-page-tabs -->
-                    /!* el = document.getElementById("tab-2");
-                    el.addEventListener("click", setSpanWidthv2);*!/
-                } else {
-                }*/
-
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 // Karty - zapis ostatnio wybranej w localStorage ;
@@ -508,8 +447,6 @@
                     });
                 });
 
-
-
                 function getCurrentIndex() {
                     // return index of currently selected tab ;
                     for (let i = 0; i < liEls.length; i++) {
@@ -518,7 +455,6 @@
                             return i;
                         }
                     }
-                    //return 0;
                 }
 
                 if(window.sessionStorage) {
@@ -572,85 +508,7 @@
     //console.log("content -> ", content);
     content.style.width = "100%";
 
-    // get the window width -->
 
-    //let width = window.innerWidth;
-
-    /*imgContainer = document.getElementById("book-page-image");
-    imgContainer.style.marginRight = width;*/
-
-    /*console.log(width);
-    console.log(typeof(width));*/
-
-    /*window.addEventListener('resize', function() {
-
-        if(window.innerWidth <= "845" && window.innerWidth >= "825") {
-
-            let imgContainer = document.getElementById("book-page-image");
-            let marginRightValue = ((Math.pow(window.innerWidth-824, 2))/85)
-
-            if(marginRightValue < 0) {
-                marginRightValue = 0;
-            }
-            imgContainer.style.marginRight = marginRightValue.toString() + "%";
-
-        } else if(window.innerWidth > "845") {
-            let imgContainer = document.getElementById("book-page-image");
-            imgContainer.style.marginRight = "42px";
-
-            let content = document.getElementById("content");
-            content.style.paddingLeft = "15px";
-        }
-        if(window.innerWidth < "845" && window.innerWidth > "800") {
-
-            let content = document.getElementById("content");
-            let paddingLeftValue = ((Math.pow(window.innerWidth-800, 2))/1000)
-
-            if(paddingLeftValue < 0) {
-                paddingLeftValue = 0;
-            }
-            content.style.paddingLeft = paddingLeftValue.toString() + "%";
-        }
-    });
-
-window.addEventListener('load', function() {
-
-    if(window.innerWidth <= "845" && window.innerWidth >= "820") {
-
-        let imgContainer = document.getElementById("book-page-image");
-        let marginRightValue = ((Math.pow(window.innerWidth-824, 2))/85)
-
-        if(marginRightValue < 0) {
-            marginRightValue = 0;
-        }
-        imgContainer.style.marginRight = marginRightValue.toString() + "%";
-
-    } else if(window.innerWidth > "845") {
-        let imgContainer = document.getElementById("book-page-image");
-        imgContainer.style.marginRight = "42px";
-
-        let content = document.getElementById("content");
-        content.style.paddingLeft = "15px";
-    }
-    if(window.innerWidth < "845" && window.innerWidth > "800") {
-
-        let content = document.getElementById("content");
-        let paddingLeftValue = ((Math.pow(window.innerWidth-800, 2))/1000)
-
-     z   if(paddingLeftValue < 0) {
-            paddingLeftValue = 0;
-        }
-        content.style.paddingLeft = paddingLeftValue.toString() + "%";
-    }
-    if(window.innerWidth <= "820") {
-
-        let imgContainer = document.getElementById("book-page-image");
-        imgContainer.style.marginRight = "0";
-
-        let content = document.getElementById("content");
-        content.style.paddingLeft = "0";
-    }
-});*/
 
 </script>
 
