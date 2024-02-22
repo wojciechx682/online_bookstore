@@ -444,14 +444,14 @@
 
     <?php require "../view/app-error-window.php"; ?>
 
-    <script src="../scripts/filter-book-status.js"></script>  <!-- filtrowanie - status -> "dostępna" / "niedostępna" -->
+    <script src="../scripts/filter-book-status.js"></script>
 
 <script>
 
-    function showCategories() { // dla widoku mobilnego; // pokazanie / ukrycie list kategorii, pod-kateorii;
+    function showCategories() {
 
-        let list = document.getElementById("categories-list"); // lista <ul> - Kategorie;
-        let sublist = document.getElementById("subcategories-list");  // lista <ul> - pod-kategorie;
+        let list = document.getElementById("categories-list");
+        let sublist = document.getElementById("subcategories-list");
        if(list.style.display === "block") {
            list.style.display = "none";
            sublist.style.display = "none";
@@ -461,7 +461,7 @@
         }
     }
 
-    let categoryButton = document.getElementById("a-categories-top-nav"); // kliknięcie na "Kategorie" wyświetla listę kategorii - click on "Kategorie" in top nav -> hiding/displaying <ul> list;
+    let categoryButton = document.getElementById("a-categories-top-nav");
 
     function isMobileDevice() {
         return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -469,26 +469,19 @@
     if (isMobileDevice()) {
         categoryButton.addEventListener("click", showCategories);
     }
-</script>
-
-<script>
 
     if(isMobileDevice()) {
         let styleSheet = document.styleSheets[0];
-        //console.log("\n\n styleSheet --> ", styleSheet);
-        // Pobierz regułę CSS z arkusza stylów
-        //var cssRule = null;
+
         for (let i = 0; i < styleSheet.cssRules.length; i++) {
             let rule = styleSheet.cssRules[i];
             if (rule.selectorText === "#n-top-nav-content ol li ul") {
-                //cssRule = rule;
-                //break;
                 rule.style.visibility = "unset";
                 rule.style.display = "none";
             } else if (rule.selectorText === "#n-top-nav ol > li:hover > ul") {
                 rule.style.visibility = "visible";
             }
-        }``
+        }
     }
 </script>
 

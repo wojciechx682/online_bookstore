@@ -1,6 +1,5 @@
 <?php
-    // check if user is logged-in, and user-type is "client" - if not, redirect to login page ;
-    require_once "../authenticate-user.php";
+    require_once "../authenticate-user.php"; // check if user is logged-in, and user-type is "client" - if not, redirect to login page;
 ?>
 
 <!DOCTYPE HTML>
@@ -17,8 +16,6 @@
     <div id="container">
 
         <main>
-
-            <!-- <aside> <div id="nav"></div> </aside> -->
 
             <div id="content" style="width: 100% !important;">
 
