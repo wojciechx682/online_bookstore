@@ -16,8 +16,8 @@
 	<div id="container">
 
         <main>
-            <?php require "../view/account-nav.php"; ?>
 
+            <?php require "../view/account-nav.php"; ?>
 
             <div id="content">
 
