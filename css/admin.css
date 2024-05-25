@@ -1,0 +1,1715 @@
+
+
+
+body > div#main-container {
+    margin: initial;
+    margin-top: -8px; /* ustawić na -10px */
+    width: initial;
+    --content: #4d4d4d;
+    --top-nav: #656565;
+    --text-color: #fafaff;
+
+    z-index: 100;
+}
+
+body {
+    /*background-color: var(--content);*/
+    /*background-image: url("../assets/1.png");*/
+    background-image: linear-gradient(#4d4d4d, #4d4d4d);
+}
+
+div#container {
+    border: none;
+    background-color: var(--content);
+}
+
+main {
+    margin: 0;
+}
+
+div#content {
+    background-color: var(--content);
+    /*float: initial;
+    width: 100%;*/
+    color: white;
+    font-weight: bold;
+    /*background-color: lightblue;*/
+    float: none;
+    overflow: hidden;
+    width: unset;
+    /*max-width: 1175px;*/
+}
+
+div#nav {
+    background-color: #003566;
+    /*color: #ebf2fa;*/ /* lekko niebieski */
+    color: var(--text-color);
+    max-width: 375px;
+    min-width: 250px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+
+aside#admin-nav > div#nav > div#admin-data div#admin-name span:nth-child(2) {
+    display: block;
+    padding-top: 5px;
+}
+
+div#nav a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+div#nav a:hover {
+    text-decoration: underline;
+}
+
+/*
+* {
+    border: 1px solid lightgray;
+}*/
+
+/* nav --> --------------------------------------------------------------------------------- */
+
+/*aside#admin-nav div#nav h3:first-child a {
+    color: red !important;
+}*/
+
+aside#admin-nav div#nav h3 {
+    margin-top: 0px;
+    margin-bottom: 0;
+
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    user-select: none;
+}
+
+aside#admin-nav div#nav h3:hover {
+    background-color: #003e75;
+}
+
+aside#admin-nav div#nav h3 + hr {
+    background-color: rgba(166, 166, 166, 0.7);
+    border: none;
+    height: 1px;
+    margin: 5px 15px 5px 15px;
+    /*max-width: 255px;*/
+}
+
+aside#admin-nav > div#nav > div#admin-data {
+    /*width: 100%;*/
+    padding-top: 12px;
+    background-color: #06437a;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+aside#admin-nav > div#nav > div#admin-data > img {
+    width: 90px;
+    float: left;
+}
+
+aside#admin-nav > div#nav > div#admin-data div#admin-name {
+    padding-top: 16px;
+}
+
+aside#admin-nav > div#nav > div#admin-data div#admin-name span:first-of-type:hover {
+    color: #ffffff;
+    /*text-decoration: underline;*/
+    border-bottom: 1px solid white;
+    cursor: pointer;
+    user-select: none;
+    /*padding-left: 2px;*/
+}
+
+aside#admin-nav > div#nav > div#admin-data div#admin-name span:nth-of-type(2) {
+    font-size: 12px;
+    /*padding-left: 2px;*/
+    user-select: none;
+}
+
+div#top-nav {
+    height: 50px;
+    background-color: var(--top-nav);
+}
+
+#main-container > #container > main header > div#top-nav button.btn-link {
+    width: 110px !important;
+    background-color: #2f2f2f4a !important;
+    border-radius: 6px;
+    float: right;
+    margin-right: 15px;
+    margin-top: 29px;
+}
+
+h3 {
+    /*border: 1px solid red;*/
+}
+
+/* top-nav --> --------------------------------------------------------------------------------- */
+
+
+div#container main div#top-nav {
+    height: 86px;
+    color: var(--text-color);
+
+    overflow: hidden;
+}
+
+/* content --> --------------------------------------------------------------------------------- */
+
+div#content {
+    /*border: 1px solid #2d6eff;*/
+    padding-left: 20px;
+}
+
+h3.section-header {
+    margin-top: 15px;
+    font-size: 1.2em;
+    /*border: 1px solid #2d6eff;*/
+    /*border-bottom: 1px ridge #3a3a3a;*/
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.53);*/
+    margin-bottom: 2px;
+    padding-bottom: 15px;
+        user-select: none;
+}
+
+/*h3.section-header:hover {
+   cursor: pointer;
+}*/
+
+h3.book-details-section-header {
+    margin-bottom: 25px;
+}
+
+h3.section-header-books {
+    border: none;
+    /*border: 1px solid red;*/
+    /*width: 300px;*/
+
+/*float: left;*/
+    display: inline-block;
+    margin-top: 14px;
+    padding-bottom: 7px;
+}
+
+div#admin-search-books-div {
+    /*border: 1px solid lightcoral;*/
+
+    overflow: auto;
+
+    min-width: 430px;
+
+    margin-bottom: 15px;
+}
+
+div#admin-search-books-div form#admin-search-books-form {
+    font-weight: normal;
+    /*margin-bottom: 15px;*/
+
+    float: left;
+
+/*position: relative;
+top: -10px;*/
+
+    /*border: 1px solid lightskyblue;*/
+    width: 265px;
+}
+
+div#admin-search-books-div form#admin-search-books-form > span {
+    display: block;
+    float: left;
+    padding-top: 17px;
+}
+
+div#admin-search-books-div form#admin-search-books-form > input[type="search"] {
+    margin-left: 10px;
+    background-color: transparent;
+    /*border: none;*/
+        /*min-width: 165px;
+        width: calc(100% * 0.75);*/
+            /*background-color: rgb(255, 255, 255);*/
+    color: #ffffff;
+    border: 1px ridge rgba(210, 210, 210, 0.38);
+    border-radius: 4px;
+    /*font-size: 20px;*/
+    /*font-weight: bold;*/
+    padding: 8px;
+    box-sizing: border-box;
+    outline: none;
+    margin-top: 10px;
+    /*transition: all 0.125s ease-in-out;*/
+}
+
+
+
+/*#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin !* admin/books.php *!
+{
+    width: 100px;
+    display: inline;
+    border: 1px solid lightskyblue;
+    position: relative;
+    top: -3px;
+    margin-left: 15px;
+}
+
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin form !* admin/books.php *!
+{
+    display: inline;
+}
+
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin > form#search-books-form-admin > input#input-search-books-admin:focus,
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin > form#search-books-form-admin  > input#input-search-books-admin:hover {
+    cursor: pointer !important;
+    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+}
+
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin > form#search-books-form-admin > input[type="submit"]
+{
+    padding: 8px 32px 8px 2px;
+    margin-left: 8px;
+    border: 1px solid #a9a9a9;
+    border-radius: 2px;
+    background-image: url('../assets/search-icon.png');
+    background-repeat: no-repeat;
+    background-position: right 10px top 8px;
+    background-size: 16px;
+
+}
+
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin > form#search-books-form-admin > input[type="submit"]:hover {
+
+    border-color: #818181;
+    background-color: #f3f3f3;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+}
+
+#main-container > #container > main div#content > div#admin-books-header-container div#div-search-books-admin > form#search-books-form-admin > input#input-search-books-admin {
+    color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 8px;
+    box-sizing: border-box;
+    outline: none;
+    margin-top: 10px;
+}*/
+
+
+
+
+
+
+
+
+
+h4.section-header {
+    margin-top: 5px;
+    font-size: 1.1em;
+    /*border: 1px solid #2d6eff;*/
+    /*border-bottom: 1px ridge #3a3a3a;*/
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
+    margin-bottom: 20px;
+    padding-bottom: 15px;*/
+    margin-bottom: 20px;
+}
+
+h4.section-header-update-order {
+    margin-top: 20px;
+    font-size: 1.1em;
+    /*border: 1px solid #2d6eff;*/
+    /*border-bottom: 1px ridge #3a3a3a;*/
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
+    margin-bottom: 20px;
+    padding-bottom: 15px;*/
+    color: #fafaff;
+}
+
+.section-header {
+    color: #fafaff;
+}
+
+div.order, div.admin-books,
+div.category
+{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 0;
+    overflow-x: hidden;
+}
+
+span.order-details-id {
+    margin-right: 100px;
+}
+
+.order-id, .order-date, .order-client,  .order-total-sum, .order-payment, .order-status, .order-action,
+.category-id, .category-name, .category-name, .category-action
+{
+    /* border: 1px dashed black; */
+    /* border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
+    border-right: 1px ridge rgba(166, 166, 166, 0.38);
+    float: left;
+    /*width: 16.66%;*/
+    width: 14.28%;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    color: var(--text-color);
+    border-bottom: none;
+    font-weight: normal;
+    min-height: 30px;
+    height: 45px;
+    overflow: hidden;
+    padding-top: 12px;
+    z-index: 0;
+}
+
+.category-id, .category-name, .category-name, .category-action {
+    width: 12.5%;
+}
+
+h3.categories-header {
+    width: 80%;
+    float: left;
+}
+
+div.categories-hr {
+    margin: 0 0 10px 0;
+    padding: 0;
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.53);
+}
+
+.a-book-id, .a-book-title, .a-book-category, .a-book-price, .a-book-author, .a-book-magazine, .a-book-quantity, .book-action  {
+    border-right: 1px ridge rgba(166, 166, 166, 0.38);
+    float: left;
+    /*width: 16.66%;*/
+    width: 12.5%;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    color: var(--text-color);
+    border-bottom: none;
+    font-weight: normal;
+    min-height: 30px;
+    height: 45px;
+    overflow: hidden;
+    padding-top: 12px;
+    z-index: 0;
+}
+
+div.order-action, div.book-action,
+div.category-action {
+    border-right: none;
+    /*position: relative;*/
+}
+
+div.order-content,
+div.category-content
+{
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+
+div.order div.order-action-button, div.book-action-button,
+div.category-action-button {
+    position: relative;
+    top: -3px;
+    border: 1px ridge rgba(166, 166, 166, 0.38);
+    border-radius: 3px;
+    width: 120px;
+    padding: 3px 3px 4px 10px;
+    margin: 0 auto 0 auto;
+    user-select: none;
+}
+
+div.order div.order-action-button:hover, div.book-action-button:hover,
+div.category-action-button:hover
+{
+    border: 1px ridge rgba(210, 210, 210, 0.38);
+    user-select: none;
+    cursor: pointer;
+}
+
+div.order div.order-action-options, div.book-action-options, /*,
+div.book-option form label*/
+div.category-action-options
+{
+    z-index: 100;
+    position: absolute;
+    /*top: 20px;*/
+    margin: 0 auto 0 auto;
+    border: 1px solid white;
+    /*margin-left: auto;*/
+    text-align: center !important;
+    /*display: none;*/
+    background-color: var(--content);
+    /*padding: 0 20px 0 20px;*/ /* (!) */
+    width: 120px;
+
+    border-radius: 3px;
+}
+
+.book-option form input[type="submit"] {
+    /* opacity: 0;
+     height: 0;
+     width: 0;
+     margin: 0;
+     padding: 0;
+     border: 0;*/
+
+    background-color: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    font-weight: normal;
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
+.book-option form input[type="text"] {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+
+.book-option form {
+    margin: 0 auto;
+    text-align: center;
+    /*cursor: pointer;*/
+}
+
+.book-option form label {
+    cursor: pointer;
+}
+
+div.order-options-container, div.book-options-container,
+div.category-options-container{
+    /*border: 1px solid red;*/
+    width: 120px;
+    height: 55px;
+    text-align: center !important;
+    margin: 0 auto;
+    padding-left: 2px;
+}
+
+div.order-option, div.book-option,
+div.category-option {
+    border-bottom: 1px ridge rgba(210, 210, 210, 0.38);
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-radius: 2px;
+}
+
+div.order-option:hover, div.book-option:hover,
+div.category-option:hover {
+    background-color: #626262;
+}
+
+div.order-option a, div.book-option a,
+div.book-option form label {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+/*div.book-option form {
+    margin: 0;
+    padding: 0;
+}*/
+
+.order-det-lp, .order-det-product, .order-det-quan, .order-det-price, .order-det-sum {
+    border-right: 1px ridge rgba(166, 166, 166, 0.38);
+    float: left;
+    /*width: 16.66%;*/
+    text-align: center;
+    padding-bottom: 5px;
+    /*padding-top: 5px;*/
+    color: var(--text-color);
+    border-bottom: none;
+    font-weight: normal;
+    min-height: 30px;
+    /*height: 45px;*/
+    height: 60px;
+    overflow: hidden;
+    padding-top: 20px;
+    z-index: 0;
+    /*width: 25%;*/
+    width: 30%;
+}
+
+.order-det-price {
+    border-right: none;
+}
+
+.order-det-lp {
+    width: 10%;
+}
+
+.order-det-product {
+    width: 60%;
+}
+
+.order-content .order-det-product:not(:first-of-type) {
+    text-align: left;
+    padding-left: 15px;
+    padding-top: 12px;
+}
+
+.order-det-product span {
+    display: block;
+}
+
+.order-det-product span:not(:first-of-type) {
+    font-style: italic;
+    font-size: .9rem;
+    margin-top: 4px;
+}
+
+
+.order-det-quan, .order-det-price {
+    width: 15%;
+}
+
+.order-det-sum {
+    border-right: none;
+}
+
+.order-summary {
+    font-weight: normal;
+    border: none;
+    margin-top: 10px;
+    width: 50%;
+    margin-left: 0;
+    /*border: 1px ridge #3c9ce0;*/
+    /*min-width: 380px;*/   /* (!) */
+    float: left;
+    /*display: inline-block;*/
+}
+.order-summary span {
+    display: inline-block;
+    /*min-width: 160px;*/
+    margin-bottom: 8px;
+    /*font-weight: normal;*/
+    margin-right: 20px;
+}
+
+.order-sum {
+    font-weight: normal;
+    border: 1px ridge rgba(166, 166, 166, 0.38);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    /*padding-right: 5%;*/
+
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.order-sum-admin {
+    font-weight: bold;
+    font-size: 105%;
+}
+
+.order-sum-admin span {
+    font-weight: normal;
+
+}
+
+@media only screen and (max-width: 710px) {
+    .order-sum {
+        min-width: 475px !important;
+    }
+}
+
+@media only screen and (max-width: 1445px) { /* admin/book-details --> */
+    /*#statistics-information{
+        margin-top: 20px;
+    }*/
+    /*#warehouse-information {
+        margin-top: 20px;
+    }*/
+}
+
+
+.order-sum-pay-met, .order-sum-pay-date, .order-sum-del-meth {
+    /*display: inline-block;
+    width: 32%;*/
+    margin-bottom: 6px;
+}
+
+/*.order-sum-pay-date {
+    min-width: 280px;
+}*/
+
+#order-status {
+    /*border: 1px ridge white;*/
+    width: 45%;
+    /*display: inline-block;*/
+    float: left;
+    /*min-width: 315px;*/
+    margin-top: 10px;
+    font-weight: normal;
+}
+
+#order-status > div#order-details-status {
+    margin-top: 15px;
+}
+
+#order-status > div#order-details-status span {
+    margin-left: 15px;
+    /*display: block;*/
+}
+
+#order-status > div#order-details-status div {
+    margin-top: 15px;
+}
+
+
+
+#order-status > span {
+    margin-right: 35px;
+}
+
+#order-det-container {
+    overflow: hidden;
+}
+
+/* button --> --------------------------------------------------------------------------------- */
+
+.update-order-status,
+div#content button.add-book-button
+/* \admin\book.php - przycisk dodawania ksiązki */
+{
+    width: 135px !important;
+}
+
+div#content button.add-book-button {
+    margin-top: 7px;
+
+    float: right;
+
+}
+
+div#order-status button.update-order-status {
+    margin-top: 20px;
+}
+
+/*.update-order-status:nth-of-type(2) {
+    !*width: 135px !important;*!
+}*/
+
+#update-status, .update-status, #add-comment {
+    /*height: 310px;*/
+    height: 360px;
+    width: 660px;
+    background-color: #545454;
+    /*position: fixed;
+    top: 25em;
+    left: 45em;*/
+    position: absolute;
+    top: 50%;
+    /*left: 60%;*/
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 90;
+    border-radius: 5px;
+}
+
+div.update-status button {
+    margin-top: 70px !important;
+}
+
+#update-status > h2, .update-status > h2,
+#add-comment > h2
+{
+    margin-left: 20px;
+    margin-top: 25px;
+    color: #FAFAFFFF;
+    /*border-bottom: 1px ridge rgba(166, 166, 166, 0.38);*/
+    font-size: 1.2rem;
+    width: 595px;
+    display: inline-block;
+    user-select: none;
+}
+
+#update-status > h2:hover, .update-status > h2:hover {
+    cursor: pointer;
+}
+
+
+
+#update-status hr, .update-status hr,
+#add-comment hr
+{
+    background-color: rgba(166, 166, 166, 0.7);
+    border: none;
+    height: 1px;
+    margin: 5px 15px 5px 15px;
+    /*max-width: 255px;*/
+}
+
+#update-status select#status-list, .update-status select#status-list {
+    /*appearance: none;*/
+    outline: 0;
+    background-color: #dadada;
+    height: 35px;
+    width: 227px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-left: 30px;
+    float: left;
+    margin-right: 25px;
+    position: relative;
+    top: 9px;
+    padding-left: 7px;
+}
+
+#update-status select#status-list:hover,
+.update-status select#status-list:hover
+{
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.bright {
+    filter: brightness(50%);
+}
+
+.normal {
+    /*filter: brightness(100%);*/
+    filter: invert(100%);
+}
+
+#main-container .update-status, #add-comment {
+    filter: none;
+}
+
+
+.icon-cancel {
+    display: inline-block;
+    padding-bottom: 2px;
+    position: relative;
+    top: -3px;
+
+    border-radius: 3px;
+}
+
+.icon-cancel:hover {
+    cursor: pointer;
+    user-select: none;
+    /*color: #1f1f1f;*/
+    color: #c71616;
+    background-color: rgba(14, 14, 14, 0.4);
+}
+
+.status-title {
+    margin-left: 25px;
+    width: 40px;
+    margin-right: 0;
+    float: left;
+}
+
+.status-title > label {
+    user-select: none;
+    cursor: pointer;
+}
+
+div.delivery-date {
+    /*display: none;*/
+    color: #fafaff;
+    /*border: 1px ridge darkblue;*/
+    padding: 6px 20px 20px 29px;
+
+    min-height: 90px;
+
+    z-index: 1000;
+
+    clear: both;
+}
+
+
+
+
+div#update-status div.delivery-date {
+    padding-top: 20px;
+}
+
+div.delivery-date input[type="date"],
+div.delivery-date input[type="time"] {
+    margin-left: 26px;
+    width: 140px;
+    height: 30px;
+    outline: 0;
+    border: 0;
+    border-radius: 3px;
+    padding-left: 20px;
+    background-color: #dadada;
+    position: relative;
+    top: -1px;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: .5px;
+}
+
+div.delivery-date input[type="time"] {
+    width: 90px;
+}
+
+
+div.delivery-date label {
+    float: left;
+    cursor: pointer;
+
+}
+div.delivery-date label:nth-of-type(1) {
+    margin-bottom: 25px;
+}
+
+div.delivery-date label:nth-of-type(2) {
+    position: absolute;
+}
+
+div.delivery-date label:nth-of-type(2) {
+   /* display: none;*/
+        /* label - data dostawy - delivery date */
+}
+
+div.delivery-date label:nth-of-type(3) {
+
+    /*display: none;*/
+
+    position: relative;
+    /*top: 10px;*/
+    left: 330px;
+}
+
+
+div.delivery-date label:nth-of-type(4) { /* 3 */
+   /* display: none;*/
+        /* label - data dostawy - delivery date */
+    margin-bottom: 20px;
+}
+
+div.delivery-date button {
+    margin-top: 41px;
+    /*margin-right: 25px;*/
+    margin-right: 18px;
+    float: left;
+}
+
+div#update-status div.delivery-date button {
+    margin-top: 70px;
+}
+
+/*div.delivery-date button:nth-of-type(2) {*/
+button.cancel-order {
+    background-color: #8a8a8a;
+}
+
+/*div.delivery-date button:nth-of-type(2):hover {*/
+button.cancel-order:hover {
+    background-color: #797979;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    /*display: none;*/
+    position: relative;
+    top: 1px;
+    right: 5px;
+}
+
+form#update-order-date {
+    /*border: 1px ridge lightcoral;*/
+
+    /*height: 50px;*/
+}
+
+span.date-error {
+    display: none;
+    font-weight: bold;
+    color: red !important;
+    position: absolute;
+    margin-top: 12px;
+    margin-left: 143px;
+}
+
+span.admin-books-error {
+    display: none;
+    font-weight: bold;
+    color: red !important;
+    /*position: absolute;
+    margin-top: 15px;
+    margin-left: 129px;*/
+}
+
+span.update-success, span.archive-success {
+    font-weight: bold;
+    /*color: #3fce3f;*/
+    color: #00ac00;
+    user-select: none;
+}
+
+span.update-success, span.update-failed {
+    position: relative;
+    left: -4px;
+}
+
+span.update-failed, span.update-failed
+{
+    font-weight: bold;
+    /*color: #3fce3f;*/
+    /*color: #ac0000;*/
+    color: #FF0000;
+    user-select: none;
+}
+
+span.archive-success, span.update-failed {
+    display: block;
+    margin-top: 10px;
+
+    position: relative;
+    left: -10px;
+}
+
+div.delivery-date span.update-failed {
+
+    left: -6px !important;
+
+}
+
+div.add-book-result span,
+div.edit-book-result span {
+    margin-top: 3px !important;
+}
+
+div#update-status div.delivery-date span.update-failed {
+    margin-top: 0;
+}
+
+span.update-failed {
+    margin-bottom: 8px;
+}
+
+/* archiwizowanie zamówienia -> */
+
+.remove-order-error,
+.add-order-comment-error
+{
+    /*display: none;*/
+
+    display: block;
+
+    font-weight: bold;
+    color: red;
+    position: absolute;
+    top: 255px;
+    /*margin-top: 15px;
+    margin-left: 129px;*/
+}
+
+/*form#update-order-date button.update-order-status:nth-of-type(1) {
+    margin-left: -14px !important;
+}*/
+
+form#update-order-date span.order-label {
+    display: inline-block;
+    min-width: 127px;
+}
+
+.visible {
+    display: block !important;
+}
+
+textarea#comment {
+    /* komentarz dodany przez pracownika - przy usuwaniu zamówienia */
+    width: 600px; /* Set the desired width */
+    height: 110px; /* Set the desired height */
+    resize: none; /* Prevent resizing of the textarea */
+    outline: none;
+
+    color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+    padding: 8px;
+    box-sizing: border-box;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    /*display: inline-block;*/
+    float: left;
+
+    /*position: relative;
+    top: 15px;*/
+}
+
+span.info {
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+form.remove-order span.info,
+form.add-order-comment span.info
+{
+    margin-top: 10px;
+}
+
+/*  admin/book-details --> --------------------------------------------------------------- */
+
+article#book-details {
+    /*border: 1px solid blue;*/
+    height: 450px;
+    font-weight: normal;
+}
+
+figure#book-details-figure {
+    margin: 0 25px 0 0;
+    float: left;
+    /*margin-right: 25px;*/
+}
+
+div#content article#book-details > div#section-container > figure > img {
+    max-width: 145px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(62, 62, 62, 1);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(62, 62, 62, 1);
+    box-shadow: 0px 0px 10px 1px rgba(62, 62, 62, 1);
+}
+
+section#basic-data {
+    width: 502px;
+}
+
+section#basic-data, section#detailed-information, section#statistics-information, section#warehouse-information {
+    float: left;
+    border: 1px ridge rgba(166, 166, 166, 0.38);
+    border-radius: 4px;
+}
+
+section#detailed-information {
+    margin-right: 20px;
+}
+
+div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state, div#book-description-content, div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content,
+div#book-avg-rating, div#book-ratings-amount, div#book-orders-count, div#book-category-name, div#book-subcategory-name,
+div#book-avg-rating-content, div#book-ratings-amount-content, div#book-orders-count-content, div#book-category-name-content, div#book-subcategory-name-content, div#book-cart-count, div#book-cart-count-content, div#book-items-sold, div#book-items-sold-content,
+div#warehouse-name, div#warehouse-location-name, div#warehouse-name-content, div#warehouse-location-name-content-country, div#warehouse-address, div#warehouse-post-code, div#warehouse-address-content-city, div#warehouse-post-code-content, div#warehouse-number-of-books-available, div#warehouse-number-of-books-available-content {
+    float: left;
+    padding: 5px 5px 5px 10px;
+}
+
+div#book-title, div#book-author, div#book-year, div#book-price, div#book-publisher, div#book-description, div#book-dimensions, div#book-pages, div#book-cover, div#book-state, div#book-avg-rating, div#book-ratings-amount, div#book-orders-count, div#book-category-name, div#book-subcategory-name, div#book-cart-count, div#book-items-sold,
+div#warehouse-name, div#warehouse-location-name, div#warehouse-address, div#warehouse-post-code, div#warehouse-number-of-books-available {
+    /*width: 128px;*/
+}
+
+div#book-title, div#book-author, div#book-year, div#book-price, div#book-state,
+div#book-dimensions, div#book-pages, div#book-cover,
+div#book-avg-rating, div#book-ratings-amount, div#book-category-name, div#book-subcategory-name, div#book-orders-count, div#book-cart-count,
+div#warehouse-name, div#warehouse-location-name, div#warehouse-address,
+div#book-publisher {
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
+    border-right: 1px ridge rgba(166, 166, 166, 0.38);
+
+    width: 25%;
+
+    min-width: 100px;
+}
+
+div#book-avg-rating, div#book-ratings-amount, div#book-orders-count, div#book-cart-count, div#book-items-sold {
+    min-width: 110px;
+}
+
+
+div#book-publisher, div#book-state, div#book-description, div#book-orders-count, div#book-cart-count, div#book-cart-count, div#book-items-sold, div#warehouse-post-code, div#warehouse-number-of-books-available
+{
+    border-right: 1px ridge rgba(166, 166, 166, 0.38);
+
+    width: 25%;
+}
+
+div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content,
+div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content,
+div#book-avg-rating-content, div#book-ratings-amount-content, div#book-category-name-content,
+/*div#book-subcategory-name-content,*/ div#book-orders-count-content, div#book-cart-count-content, div#warehouse-name-content, div#warehouse-location-name, div#warehouse-location-name-content-country, div#warehouse-address, div#warehouse-address-content-city, div#warehouse-post-code, div#warehouse-post-code-content,
+div#book-publisher-content
+{
+    border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
+}
+
+div#book-subcategory-name {
+    border-bottom: none;
+}
+
+div#book-description-content, div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content {
+    /*min-width: 300px;*/
+}
+
+
+
+div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content {
+    min-width: 200px;
+}
+
+section#detailed-information,
+section#statistics-information,
+section#warehouse-information {
+    /*width: 100%;*/
+
+    /*height: 200px;*/
+
+    /*border: 1px solid red;*/
+
+    margin-bottom: 20px;
+
+
+    /*width: 725px;*/
+
+    width: 45%;
+    min-width: 445px;
+}
+
+section#statistics-information {
+    /*margin-top: 20px;*/ /* (!) */
+    min-width: 445px;
+}
+
+/*section#warehouse-information {
+    margin-top: 20px;
+}*/
+
+
+
+/* wspólna szerokość dla drugich kolumn -> */
+
+div#book-title-content, div#book-author-content, div#book-year-content, div#book-price-content, div#book-publisher-content,
+div#book-publisher-content, div#book-category-name-content, div#book-subcategory-name-content {
+    /*min-width: 424px;*/
+
+    width: 75%;
+}
+
+div#book-dimensions-content, div#book-pages-content, div#book-cover-content, div#book-state-content, div#book-description-content,
+div#book-avg-rating-content, div#book-ratings-amount-content, div#book-orders-count-content, /*div#book-category-name-content, div#book-subcategory-name-content,*/ div#book-cart-count-content, div#book-items-sold-content,
+div#warehouse-name-content, div#warehouse-location-name-content-country, div#warehouse-address-content-city, div#warehouse-post-code-content, div#warehouse-number-of-books-available-content {
+    /*min-width: 592px;*/
+
+    width: 75%;
+}
+
+/* opis - osobne wymiary -> */
+
+div#book-description, div#book-description-content {
+    height: 245px;
+}
+
+div#book-description {
+    width: 25%;
+
+    min-width: 100px;
+}
+
+div#book-description-content {
+    /*width: 414px !important;*/
+
+    overflow-y: scroll;
+
+    width: 75%;
+}
+
+div#book-description-content::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+}
+
+div#book-description-content::-webkit-scrollbar::-webkit-scrollbar-track {
+    background: #c9c9c9;        /* color of the tracking area */
+    border-radius: 10px;
+}
+
+div#book-description-content::-webkit-scrollbar-thumb {
+    background: #727272;     /* color of the scroll thumb */
+    border-radius: 12px;       /* roundness of the scroll thumb */
+    /*border: 3px solid orange;*/  /* creates padding around scroll thumb */
+}
+
+hr#book-details-hr {
+    background-color: rgba(166, 166, 166, 0.53);
+    border: none;
+    height: 1px;
+    margin: 20px 0 20px 0;
+    /*max-width: 255px;*/
+}
+
+hr#book-details-hr-books {
+    background-color: rgba(166, 166, 166, 0.53);
+    border: none;
+    height: 1px;
+    margin: -5px 0 10px 0;
+    /*max-width: 255px;*/
+}
+
+hr#book-details-hr-edit-books {
+    background-color: rgba(166, 166, 166, 0.53);
+    border: none;
+    height: 1px;
+    margin: -15px 0 25px 0;
+    /*max-width: 255px;*/
+}
+
+div#book-orders-count, div#book-orders-count-content {
+    height: 110px;
+}
+
+div#book-cart-count, div#book-cart-count-content {
+    height: 68px;
+}
+
+div#section-container { /* to avoid float left glitching */
+    /*border: 1px solid blue;*/
+    float: left;
+    min-width: 780px;
+}
+
+select#change-magazine { /* lista <select> do zmiany magazynu - admin/books.php */
+    background-color: transparent;
+
+    position: relative;
+    top: -3px;
+    border: 1px ridge rgba(166, 166, 166, 0.38);
+    border-radius: 3px;
+    width: 120px;
+    padding: 3px 3px 4px 10px;
+    margin: 0 auto 0 auto;
+    user-select: none;
+
+    outline: none;
+
+    color: var(--text-color);
+}
+
+select#change-magazine:hover {
+    cursor: pointer;
+    border: 1px ridge rgba(210, 210, 210, 0.38);
+    user-select: none;
+
+}
+
+select#change-magazine option {
+    /*background-color: var(--content);*/
+    background-color: #656565;
+}
+select#change-magazine option:hover {
+    cursor: pointer;
+}
+
+form#change-magazine-form,
+form.change-magazine-form
+{
+    float: right;
+    margin-top: 15px;
+}
+
+div#admin-books-header-container {
+    /*border: 1px solid #002aff;*/
+}
+
+div#warehouse-name, div#warehouse-name-content {
+    height: 50px;
+}
+
+/* ilość dostępnych egzemplarzy --> */
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+
+/* ikona ładowania (ajax) --> */
+
+img#loading-icon {
+    margin: 0;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    color: white;
+
+    z-index: 100;
+
+    width: 108.5px;
+    height: 108.5px;
+}
+
+.not-visible {
+    display: none;
+}
+
+/* admin\edit-book ---------------------------------------------------------------------- */
+
+#content form#edit-book-data input#input-submit-edit-book-data,
+#content form#add-book-data input#input-submit-add-book-data,
+#content form#edit-category input#input-submit-edit-category,
+#content form#add-category input#input-submit-edit-category
+{
+        /*width: 15%;*/
+    margin-left: 0;
+    /*margin-top: 5px;*/
+
+        /*margin-left: 5px;*/
+        /*width: 200px;*/
+    /*min-width: 150px;*/
+        /*width: calc(100% * 0.218);*/
+    width: 135px;
+
+    /*background-color: rgb(255, 255, 255);*/
+    color: #707070;
+    border: 1px ridge #b7b7b7;
+    border-radius: 5px;
+    /*font-size: 20px;*/
+    font-weight: bold;
+    padding: 8px;
+    box-sizing: border-box;
+    outline: none;
+    /*margin-top: 10px;*/
+
+    margin-top: 10px;
+}
+
+#content form#edit-book-data input#input-submit-edit-book-data:hover,
+#content form#add-book-data input#input-submit-add-book-data:hover,
+
+#content form#edit-category input#input-submit-edit-category:hover,
+#content form#add-category input#input-submit-edit-category:hover
+{
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+}
+
+#content form#edit-book-data textarea,
+#content form#add-book-data textarea {
+    resize: none;
+    overflow: hidden;
+
+    width: 425px !important;
+    height: 145px!important;
+    /*margin: 10px 0 10px 0;*/
+    margin: 0;
+    border: 1px solid #4d4d4d;
+    outline: none;
+    padding: 5px 5px;
+}
+
+span#span-book-desc {
+    float: left;
+    margin-top: 2px;
+}
+
+#content form#edit-book-data input[type="text"],  /* \admin\edit-book.php */
+#content form#edit-book-data input[type="number"],
+#content form#edit-book-data textarea,
+
+#content form#add-book-data input[type="text"],
+#content form#add-book-data input[type="number"], /* \admin\add-book.php */
+#content form#add-book-data textarea,              /* \admin\add-book.php */
+
+#content form#edit-category input[type="text"],
+#content form#add-category input[type="text"]
+{
+                    /*!*margin-left: 5px;*!
+                    !*width: 200px;*!
+                    min-width: 150px;
+                    !*width: calc(100% * 0.218);*!
+                    width: 235px;
+                    !*background-color: rgb(255, 255, 255);*!
+                    color: #707070;
+                    border: 1px ridge #b7b7b7;
+                    border-radius: 5px;
+                    !*font-size: 20px;*!
+                    font-weight: bold;
+                    padding: 8px;
+                    box-sizing: border-box;
+                    outline: none;
+                    !*margin-top: 10px;*!
+                    !*margin-left: 15px;*! !* (?) *!*/
+
+    min-width: 150px;
+    width: 235px;
+    /*margin-left: 10px;*/
+    background-color: transparent;
+    /*border: none;*/
+    /*min-width: 165px;
+    width: calc(100% * 0.75);*/
+    /*background-color: rgb(255, 255, 255);*/
+    color: #ffffff;
+    border: 1px ridge rgba(210, 210, 210, 0.38);
+    border-radius: 5px;
+    /*font-weight: bold;*/
+    /*font-size: 20px;*/
+    font-weight: normal;
+    padding: 8px;
+    box-sizing: border-box;
+    outline: none;
+    /*margin-top: 10px;*/
+    /*transition: all 0.125s ease-in-out;*/
+}
+
+/* remove the default arrow styling (that appears in input type number)*/
+#content form#edit-book-data input[type="number"]::-webkit-inner-spin-button,
+#content form#edit-book-data input[type="number"]::-webkit-outer-spin-button,
+#content form#add-book-data input[type="number"]::-webkit-inner-spin-button,
+#content form#add-book-data input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* Ensure arrows don't create extra space */
+}
+
+/*#content form#add-book-data input[type="text"],
+#content form#add-book-data input[type="number"], !* \admin\add-book.php *!
+#content form#add-book-data textarea*/
+
+
+#content form#edit-book-data input[type="text"]:hover,  /* \admin\edit-book.php */
+#content form#edit-book-data input[type="number"]:not([disabled]):hover,
+#content form#edit-book-data textarea:hover,
+#content form#edit-book-data select:not([disabled]):hover,
+
+#content form#add-book-data input[type="text"]:hover,
+#content form#add-book-data input[type="number"]:not([disabled]):hover, /* \admin\add-book.php */
+#content form#add-book-data textarea:hover,              /* \admin\add-book.php */
+#content form#add-book-data select:not([disabled]):hover,
+
+#content form#edit-category input[type="text"]:hover,
+#content form#add-category input[type="text"]:hover
+{
+    cursor: pointer;
+    /*-webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);*/
+    border: 1px ridge rgba(224, 224, 224, 0.47);
+}
+
+#content form#edit-book-data label[for="edit-book-select-magazine"] {
+    user-select: none;
+    cursor: unset;
+}
+
+#content form#edit-book-data select,
+#content form#add-book-data select
+{
+                   /* !*margin-top: 15px;
+                    margin-bottom: 15px;*!
+                    outline: none;
+                    !* background-color: rgb(255, 255, 255); *!
+                    color: #494949;
+                    border: 1px ridge #cbcbcb;
+                    border-radius: 5px;
+                    !* font-size: 20px; *!
+                    !*font-weight: bold;*!
+                    padding: 3px 5px 3px 5px;
+                    box-sizing: border-box;
+                    !*outline: none;*!
+                    !*margin-top: 10px;*!
+                    !* transition: all 0.125s ease-in-out;*!
+                    !*width: 50%;*!*/
+
+    background-color: transparent;
+/*position: relative;
+top: -3px;*/
+    /*border: 1px ridge rgba(166, 166, 166, 0.38);*/
+    border: 1px ridge rgba(210, 210, 210, 0.38);
+    border-radius: 3px;
+/*width: 120px;*/
+    width: 235px;
+        /*padding: 3px 3px 4px 10px;*/
+    /*padding: 3px 5px 3px 5px;*/
+    padding: 8px;
+    margin: 0 auto 0 auto;
+    user-select: none;
+    outline: none;
+    color: var(--text-color);
+}
+
+#content form#edit-book-data select:hover,
+#content form#add-book-data select:hover {
+    /*cursor: pointer;
+    border: 1px ridge rgba(210, 210, 210, 0.38);
+    user-select: none;*/
+}
+
+#content form#edit-book-data select option,
+#content form#add-book-data select option
+{
+    /*background-color: var(--content);*/
+    background-color: #656565;
+}
+#content form#edit-book-data select option:hover,
+#content form#add-book-data select option:hover
+{
+    cursor: pointer;
+}
+
+
+/*
+!* Style the scrollbar track *!
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+!* Style the scrollbar handle (thumb) *!
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+    height: 2px;
+}
+
+!* Style the scrollbar handle when hovered *!
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+*/
+
+
+
+
+
+
+
+
+
+div.result {
+    margin-top: 5px;
+    padding-top: 8px;
+}
+
+div.preview ol img {
+    width: 150px;
+    border-radius: 5px;
+}
+
+form#edit-book-data div p span,
+form#add-book-data div p span, /* \admin\add-book.php */
+form#edit-category div p span /* \admin\edit-category.php */
+{
+    display: inline-block;
+    min-width: 150px;
+
+    /*border: 1px solid lightblue;*/
+
+    position: relative;
+    top: 2px;
+}
+
+/*form#add-book-data div p span !* \admin\add-book.php *!
+{
+    min-width: 150px;
+}*/
+
+form#edit-book-data div p span label:hover,
+form#add-book-data div p span label:hover, /* \admin\add-book.php */
+
+form#edit-category div p span label:hover
+{
+    cursor: pointer;
+}
+
+div.preview {
+    position: relative;
+    top: -5px;
+    margin-left: 150px;
+    font-weight: normal;
+}
+
+.edit-book-image,
+.add-book-image
+{
+    margin-top: 5px !important;
+
+    display: inline-block;
+}
+
+/*
+div#update-status  * {
+    border: 1px dashed lightskyblue;
+}*/
+
+.unreachable {
+    pointer-events: none;
+    user-select: none;
+}
+
+div#application-error-message {
+    background-color: #545454;
+    color: white;
+}
+
+span.header-option {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+div.admin-books:not(.admin-books-content) div:not(.a-book-magazine):not(.book-action),
+div.order:not(.order-content) div:not(.order-action)
+{
+    cursor: pointer;
+    /*display: initial !important;*/
+}
+
+div.admin-books div.a-book-quantity span {
+    /*display: unset;*/
+    all: unset;
+}
+
+h4.order-details-header {
+    font-weight: normal;
+}
+
+h4.order-details-header span.order-details-id {
+    font-weight: bold;
+}
+
+h4.order-details-date {
+    font-size: 95%;
+    color: #dadada;
+    margin-top: 0;
+}
+
+h4.order-details-id {
+    margin-bottom: 5px;
+}
+
+div.order-summary span#add-order-comment {
+    /*color: #5478c0;*/
+    font-weight: bold;
+    cursor: pointer;
+    /*margin-top: 14.5px;*/
+}
+
+div.order-summary span#add-order-comment:hover {
+    text-decoration: underline;
+}
+
+div#content button.edit-book-details-btn {
+    float: right;
+
+    position: relative;
+
+    top: -87px;
+
+    width: 135px !important;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "online_bookstore",
+  "version": "1.0.0",
+  "description": "online bookstore web application",
+  "main": "user\\index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wojciechx682/online_bookstore.git"
+  },
+  "keywords": [
+    "online",
+    "bookstore",
+    "web",
+    "application",
+    "e-commerce"
+  ],
+  "author": "Jakub Wojciechowski",
+  "bugs": {
+    "url": "https://github.com/wojciechx682/online_bookstore/issues"
+  },
+  "homepage": "https://github.com/wojciechx682/online_bookstore#readme",
+  "dependencies": {
+    "dompurify": "^3.0.5",
+    "nouislider": "^15.7.1"
+  }
+}

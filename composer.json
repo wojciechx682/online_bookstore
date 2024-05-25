@@ -1,0 +1,20 @@
+{
+    "name": "jakub/online_bookstore",
+    "autoload": {
+        "psr-4": {
+            "Jakub\\OnlineBookstore\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jakub Wojciechowski",
+            "email": "jakub.wojciechowski.682@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.8",
+      "ext-mbstring": "*",
+      "ext-mysqli": "*",
+      "ext-ctype": "*"
+    }
+}

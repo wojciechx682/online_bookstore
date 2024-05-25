@@ -1,5 +1,0 @@
-1. dodawanie kolejno posortowanych divów, 
-   
-	jak ten div został dodany, to dodajemy do TABLICY (A) indeks w którym był ten element w nieposortowanej tablicy indekstów)
-
-2. Kolejny dodany element to element posortowany, którego indeks nie zawiera się  w tablicy A 

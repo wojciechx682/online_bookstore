@@ -1,0 +1,144 @@
+// ✓ podczas składania zamówienia przez klienta zostaje przypisany pracownik z najmniejszą liczbą zamówień;
+
+// Status => Oczekujące na potwierdzenie,
+             W trakcie realizacji,      (pakowane i przygotowywane do wysyłki)
+             Wysłano,
+             Dostarczeono.              (zrealizowane);
+
+// ✓ (!) ZMIANA STATUSU ZAMÓWIENIA - odbywa się z pomoca AJAX;
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+Archiwizacja zamówienia ->
+
+Walidacja + Sanityzacja Komentarza (comment) :
+
+- moduły walidacyjne (validator modules)
+
+  XSS,  SQL Injection
+
+-> validator.js (SANITYZACJA)
+   - świetny i łatwy w użyciu moduł sprawdzania poprawności danych wejściowych.
+   - (JS)
+
+   A library of string validators and sanitizers.
+
+    import validator from 'validator'; // 62.8k size;
+    import isEmpty from 'validator/lib/isEmpty'; // 2.2k;
+    import isEmail from 'validator/lib/isEmail'; // 6.9k;
+    --------------------------------------------------------------------------------------------------------------------
+    import validator from 'validator'; // 62.8k size;
+    const data = {
+      name: 'Ruben',
+      about: 'I like long walks in the beach.',
+      email: 'test@mail.com',
+    };
+    // Check if name or about field is empty
+    if (validator.isEmpty(data.name) || validator.isEmpty(data.about)) {
+      console.log('Name or about field is empty')
+    }
+    // Check if email format is correct
+    if (!validator.isEmail(data.email)) {
+      console.log('Email format is incorrect')
+    }
+
+    const age = 20;
+    console.log(typeof `${age}`); // string
+
+    const age = 20;
+    console.log(age + ''); // '20'
+
+------------------------------------------------------------------------------------------------------------------------
+-> DOMPurify    (SANIZYTACJA);
+   "lepszy niż validator.js";
+
+    ✓ (!) - PLIK JavaScript musi być poprawnie skonfigurowany jako moduł. Oto kroki, które należy wykonać:
+
+    ====================================================================================================
+    INSTALACJA DOM PURIFY ->
+
+    1 - cmd (w folderze projektu) (wymagany Node.js) ->
+
+        ✓ npm install dompurify
+
+    2. Dodanie biblioteki poprzez CDN ->
+
+       ✓ <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.2/dist/purify.min.js"></script>
+
+       (!) -> https://cdnjs.com/libraries/dompurify
+
+    3. Plik JS korzystający z biblioteki ->
+
+        <script type="module" src="js.js"></script>
+
+        let comment = "This is the content of my variable";
+        let text = "<script>alert('XSS Attack!')</script>This is the content of my variable";
+        console.log("comment -> ", comment);
+        console.log("comment -> ", text);
+        const sanitizedComment = DOMPurify.sanitize(comment);
+        const sanitizedText = DOMPurify.sanitize(text);
+        console.log("sanitizedComment -> ", sanitizedComment);
+        console.log("sanitizedText -> ", sanitizedText);
+    ====================================================================================================
+
+------------------------------------------------------------------------------------------------------------------------
+-> NPM - Nojde.js
+   https://docs.npmjs.com/getting-started
+        npm install npm@latest -g
+        npm install dompurify
+------------------------------------------------------------------------------------------------------------------------
+-> yup (WALIDACJA)
+   "najlepsze rozwiązanie" -> do walidacji
+------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+-> Notatki z projektu -->
+
+admin/order-date-jq.js ->
+
+// można zamienić ten String na Obiekt (Object) / lub Tablicę;
+// można to zrobić za pomocą metod -> $.parseParams() , lub - $.deparam();
+// jeśli dane są w postaci obiektu, możemy uzyskac do nich dostęp za pomocą notacji key-value;
+// let dataObject = $.deparam(details); // (nie działa...);
+// let dateValue = dataObject.name;
+// let object = JSON.parse(details);
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+admin/edit-book-data.php -->
+
+Przy formularzu dodawania pliku na serwer trzeba będzie to skonfigurować na Hostingu.
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+<!-- form       (!) label           fieldset + legend      -->
+
+                    <!-- input      text
+                                password
+                                number                      -> step=""
+                                search
+                                checkbox                    checked
+                                radio                       selected
+                                tel                         disabled    required
+                                email
+                                date                        placeholder
+                                month
+                                week
+                                time                        submit
+                                color                       button
+                                                            -->
+                    <!-- <select>   size=""
+                         <select multiple>     <textarea>
+                                    <button>   submit       -->
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+edit-book.php -> ... . js (AJAX) --> get_subcategories.php
+
+                                     zwraca DANE w postaci JSON (!)
+                                     (można by to opisać)
+
+
+Array ( [edit-book-title] => tytuł książki [edit-book-change-author] => 1 [edit-book-release-year] => 1999 [edit-book-price] => 85 [edit-book-change-publisher] => 1 [edit-book-desc] => opis książki [edit-book-cover] => twarda [edit-book-pages] => 450 [edit-book-dims] => 255 x 746 x 982 [edit-book-category] => 1 [edit-book-subcategory] => 1 )
