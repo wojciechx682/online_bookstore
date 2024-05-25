@@ -379,8 +379,8 @@
                 [imie] => Adam
                 [nazwisko] => Nowak
                 [email] => adam.nowak@wp.pl
-                [haslo1] => PassJacob33#
-                [haslo2] => PassJacob33#
+                [haslo1] =>
+                [haslo2] =>
                 [miejscowosc] => Dolna odra
                 [ulica] => Słoneczna
                 [numer_domu] => 61
