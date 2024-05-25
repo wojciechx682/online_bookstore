@@ -314,7 +314,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Sprawdzenie zaznaczenie checkbox'a CAPTCHA
 
-        // $secret = "6LcW48gfAAAAALDhZZERPDMpGD5aYMcLJ3s_IszG"; // secret key for recaptcha API, used to authenticate and verify that the reCAPTCHA response sent from your website to Google's servers is valid and coming from your website
+        // secret key for recaptcha API, used to authenticate and verify that the reCAPTCHA response sent from your website to Google's servers is valid and coming from your website
 
         require('C:\xampp\apache\conf\config.php');
         $secret = RECAPTCHA_SECRET_KEY; // secret-key / klucz tajny;
