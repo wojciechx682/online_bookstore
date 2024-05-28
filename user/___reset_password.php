@@ -380,7 +380,7 @@ echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
 <!DOCTYPE HTML>
 <html lang="pl">
 
-<?php require "../view/___head.php"; ?>
+<?php require "../view/head.php"; ?>
 
 <body>
 

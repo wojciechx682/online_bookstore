@@ -28,7 +28,7 @@
 <!DOCTYPE HTML>
 <html lang="pl">
 
-<?php require "../view/___head.php" ?>
+<?php require "../view/head.php" ?>
 
 <body>
 
