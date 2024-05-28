@@ -5,7 +5,7 @@
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if (isset($_POST["input-search-nav"])) {
-
+            // title of the book from left nav-bar
             $title = filter_input(INPUT_POST, "input-search-nav", FILTER_SANITIZE_STRING);
             $_SESSION["input-search-nav"] = $title;
 
@@ -28,11 +28,12 @@
                         unset($_POST, $category, $_SESSION["category"], $_SESSION["subcategory"], $categoryExists, $subcategoryExists);
 
                 } else {
+
                     if (isset($_POST["subcategory"])) {
 
                         $subcategory = filter_input(INPUT_POST, "subcategory", FILTER_SANITIZE_STRING);
                         $_SESSION["subcategory"] = $subcategory;
-                        $subcategoryExists = query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]);
+                        $subcategoryExists = query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // --> true - if subcaterogy exists;
 
                         if (empty($subcategory) || ($_SESSION["subcategory"] !== $_POST["subcategory"]) || empty($subcategoryExists)) {
 
@@ -57,7 +58,7 @@
 
             if (empty($search_value) || ($_SESSION["input-search"] !== $_POST["input-search"])) {
                 $_SESSION["application-error"] = true;
-                unset($_POST, $search_value, $_SESSION["input-search"], $_SESSION["category"], $_SESSION["subcategory"]);
+                    unset($_POST, $search_value, $_SESSION["input-search"], $_SESSION["category"], $_SESSION["subcategory"]);
 
             } else {
                 unset($_SESSION["subcategory"]);
@@ -130,8 +131,7 @@
                 );
                 $authorExists = query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]);
 
-                if( empty($author)
-                    || empty($_SESSION["adv-search-author"]) || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || empty($authorExists) ) {
+                if (empty($author) || empty($_SESSION["adv-search-author"]) || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || empty($authorExists) ) {
                     $valid = false;
                 }
 
@@ -150,7 +150,7 @@
                     ]
                 );
 
-                if( $year_min === false || $_SESSION["year-min"] === false ) {
+                if ($year_min === false || $_SESSION["year-min"] === false) {
                     $valid = false;
                 }
             }
@@ -167,7 +167,7 @@
                     ]
                 );
 
-                if( $year_max === false || $_SESSION["year-max"] === false ) {
+                if ($year_max === false || $_SESSION["year-max"] === false) {
                     $valid = false;
                 }
 

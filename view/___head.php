@@ -40,6 +40,7 @@
     </style>
 
     <script>
+
         $(document).ready(function() {
             let NavY = $('#main-nav').offset().top;
 
