@@ -5,6 +5,6 @@
                                             type="checkbox"
                                             name="%s"
                                             class="author-checkbox"
-                                            value="%s %s">%s %s
+                                            value="%s %s">%s %s (%s)
                                 </labeL>
                             </li>

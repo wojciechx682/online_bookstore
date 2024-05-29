@@ -5,7 +5,7 @@
     if ( !isset($_SESSION["koszyk_ilosc_ksiazek"]) || $_SESSION['koszyk_ilosc_ksiazek'] === 0) {
 
         $_SESSION["order-error"] = "Aby złożyć zamówienie, dodaj książki do koszyka";
-        header('Location: ___koszyk.php', true, 303); exit();
+        header('Location: koszyk.php', true, 303); exit();
     }
 
     unset($_SESSION["delivery-price"], $_SESSION["payment-price"]);

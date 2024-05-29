@@ -4,7 +4,7 @@
 	include_once "../functions.php";
     if( ! isset($_SESSION['zalogowany']) ) {
         $_SESSION["login-error"] = true;
-        header("Location: ___zaloguj.php");
+        header("Location: zaloguj.php");
         exit();
     }*/
 

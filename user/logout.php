@@ -7,7 +7,7 @@
 			session_destroy();
 		session_start();
 		$_SESSION['udanarejestracja'] = true;
-			header('Location: ___zaloguj.php');
+			header('Location: zaloguj.php');
 				exit();
 	}
 	elseif (isset($_SESSION["password_confirmed"])) { // redirect from remove_password.php (usunięcie konta klienta)
@@ -15,7 +15,7 @@
 			session_destroy();
 		session_start();
 		$_SESSION["deleted-successfully"] = true;
-			header('Location: ___zaloguj.php');
+			header('Location: zaloguj.php');
 				exit();
 	}
 	else // wylogowanie z konta poprzez naciśnięcie "wyloguj" przez użytkowika
@@ -30,7 +30,7 @@
 		if(isset($_POST["reset-password-form"])) {
 			header('Location: ___reset_password.php');
 		} else {
-			header('Location: ___zaloguj.php');
+			header('Location: zaloguj.php');
 				exit();
 		}
 	}

@@ -16,17 +16,17 @@
                               </a>';
                           }
                           else {
-                              echo '<a href="___zaloguj.php">
+                              echo '<a href="zaloguj.php">
                                    <div class="btn from-center">Zaloguj</div>
                               </a>';
                           }
                     ?>
 
-                    <a href="___zarejestruj.php">
+                    <a href="zarejestruj.php">
                         <div class="btn from-center">Zarejestruj</div>
                     </a>
 
-                    <a class="top-nav-right" href="___koszyk.php">
+                    <a class="top-nav-right" href="koszyk.php">
                         <div class="btn from-center">
                             Koszyk
                                 <?php
@@ -54,7 +54,7 @@
                 </form>
             </div>
 
-            <a class="top-nav-right" href="___koszyk.php">
+            <a class="top-nav-right" href="koszyk.php">
                 <div class="btn from-center btn-cart-main">
                     Koszyk
                         <?php

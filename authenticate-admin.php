@@ -17,7 +17,7 @@
         // - typ usera to nie admin (mimo że jest zalogowany)
 
         $_SESSION["login-error"] = true;
-            header("Location: ../user/___zaloguj.php");
+            header("Location: ../user/zaloguj.php");
                 exit();
     }
 ?>

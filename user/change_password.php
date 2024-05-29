@@ -19,7 +19,7 @@ switch ($userType) {
 	default:
 		// Przekieruj do strony logowania lub innej strony błędu, ponieważ brak jest zalogowanego użytkownika
 		$_SESSION["login-error"] = true;
-		header("Location: ___zaloguj.php");
+		header("Location: zaloguj.php");
 		exit();
 }
 

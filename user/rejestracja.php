@@ -441,7 +441,7 @@
                 if ($insertSuccessful) {
 
                     unset($_SESSION["last_adres_id"]);
-                        header('Location: ___zaloguj.php'); // $_SESSION["udana-rejestracja"]
+                        header('Location: zaloguj.php'); // $_SESSION["udana-rejestracja"]
                             exit();
 
                 } else { // nie udało się dodać usera

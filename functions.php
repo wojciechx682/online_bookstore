@@ -47,7 +47,13 @@ use PHPMailer\PHPMailer\SMTP;
 
         while ($row = $result->fetch_assoc())
         {   // replace fields in $author string to author data from $result, display result content as HTML
-            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"]);
+
+            /*if ($_SESSION["category"] != "Wszystkie") {
+
+            } else {
+
+            }*/
+            echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"], $row["ilosc_ksiazek"]);
         }
     }
 
@@ -938,7 +944,7 @@ use PHPMailer\PHPMailer\SMTP;
 		} else { // istniejący e-mail, złe (niepoprawne) hasło;
 			$_SESSION["invalid_credentials"] = '<span class="error">Nieprawidłowy e-mail lub hasło</span>';
             // błędne dane logowania (niepoprawne HASŁO) -> przekierowanie do zaloguj.php + komunikat;
-			    header('Location: ___zaloguj.php');
+			    header('Location: zaloguj.php');
                     exit();
 		}
 	}
@@ -959,7 +965,7 @@ use PHPMailer\PHPMailer\SMTP;
                         // pobranie ID ostatnio wstawionego klienta ->
                             query("SELECT id_klienta FROM klienci ORDER BY id_klienta DESC LIMIT 1", "get_client_id", ""); // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
                         //unset($_SESSION['wszystko_OK']); $_SESSION["valid"]
-                        header('Location: ___zaloguj.php');*/
+                        header('Location: zaloguj.php');*/
 
         /*echo "<br> result --> " . "<br>";       // 1
         print_r($result);
@@ -990,7 +996,7 @@ use PHPMailer\PHPMailer\SMTP;
 
                 // $_SESSION['last_client_id'] --> id ostatnio dodanego klienta;
                 //unset($_SESSION['wszystko_OK']); $_SESSION["valid"]
-                //header('Location: ___zaloguj.php');
+                //header('Location: zaloguj.php');
 
         //echo "<br> 993 <br>";
     }

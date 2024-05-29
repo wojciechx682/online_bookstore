@@ -5,7 +5,7 @@
 	if ((!isset($_POST["email"]) || !isset($_POST["password"])) ||              // jeśli nie ustawiono loginu/hasła;
          (isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true)) { // lub jesteśmy zalogowani (byliśmy zalogowani wcześniej)
 
-		header('Location: ___zaloguj.php');
+		header('Location: zaloguj.php');
             exit();
 
 	} else { // zmienne $_POST["email"], $_POST["password"] - istnieją (mogą być puste), ORAZ (AND) NIE jesteśmy zalogowani;
@@ -15,7 +15,7 @@
 
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL) || empty($email) || ($email !== $_POST["email"])) { // email nie przeszedł walidacji;
 			$_SESSION["invalid_credentials"] = '<span class="error">Podaj poprawny adres e-mail</span>';
-			    header('Location: ___zaloguj.php');
+			    header('Location: zaloguj.php');
                     exit();
         } else { // email is correct; (email is valid - filter_var);
 
@@ -28,7 +28,7 @@
             // $response => stdClass Object ( [success] => 1 [challenge_ts] => 2023-08-15T15:41:42Z [hostname] => localhost )
             if (!$response->success) {
                 $_SESSION["e_recaptcha"] = '<span class="error">Weryfikacja reCaptcha nie przebiegła pomyślnie</span>';
-                    header('Location: ___zaloguj.php');
+                    header('Location: zaloguj.php');
                         exit();
             }
 
@@ -55,7 +55,7 @@
                 // problem implementacyjny --> ✓ zmodyfikować funkcję log_in ! // ✓ dodac instrukcję warunkową (if);
             }
 
-            header('Location: ___zaloguj.php');
+            header('Location: zaloguj.php');
                 exit(); // zmienna $_SESSION["invalid_credentials"] jest ustawiona, podano adres e-mail który nie należy ani do klienta, ani do pracownika; | lub | podano złe hasło (do istniejącego konta);
                 // jeśli nie nastąpiło wcześniej przekierowanie w funkcji log_in - (w przypadku podania nie-istniejącaego adresu e-mail - który nie należy ani do klienta, ani do pracownika) - funkcja log_in() zwraca return (nie następuje przekierowanie);   zmienna $_SESSION["blad"] jest ustawiona, zostanie wyświetlony komunikat w zaloguj.php; (to się wykona, jeśli podany e-mail który nie należy do żadnego klienta ani do żadnego pracownika);
 		}

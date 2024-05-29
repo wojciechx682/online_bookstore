@@ -19,7 +19,7 @@
             // lub
         // - typ usera to nie klient (mimo że jest zalogowany)
         $_SESSION["login-error"] = true;
-            header("Location: ___zaloguj.php");
+            header("Location: zaloguj.php");
                 exit();
     }
 ?>

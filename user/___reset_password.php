@@ -281,7 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {                 // Post - Redirect 
 
                     query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["email"]);
 
-                    header('Location: ___zaloguj.php', true, 303); exit(); // redirect with HTTP 303 response code;
+                    header('Location: zaloguj.php', true, 303); exit(); // redirect with HTTP 303 response code;
 
                 } else {
 

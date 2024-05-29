@@ -45,6 +45,6 @@
 
 	}
 
-	header('Location: ___koszyk.php');
+	header('Location: koszyk.php');
 	exit();
 ?>

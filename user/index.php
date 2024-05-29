@@ -307,7 +307,22 @@
 
                         <ul id="ul-authors">
                             <?php
-                                query("SELECT DISTINCT imie, nazwisko, id_autora FROM author ORDER BY imie", "getAuthors", "");
+                                //query("SELECT DISTINCT imie, nazwisko, id_autora FROM author ORDER BY imie", "getAuthors", "");
+
+                                if ($_SESSION["category"] != "Wszystkie") {
+                                    query("SELECT au.id_autora, au.imie, au.nazwisko, COUNT(bk.id_autora) AS ilosc_ksiazek
+                                                 FROM author AS au, books AS bk, subcategories AS sb, categories AS kt
+                                                 WHERE au.id_autora = bk.id_autora AND bk.id_subkategorii = sb.id_subkategorii AND sb.id_kategorii = kt.id_kategorii AND kt.nazwa = '%s'
+                                                 GROUP BY au.id_autora", "getAuthors", $_SESSION["category"]);
+                                } else {
+                                    query("SELECT au.id_autora, au.imie, au.nazwisko, COUNT(bk.id_autora) AS ilosc_ksiazek
+                                                 FROM author AS au, books AS bk, subcategories AS sb, categories AS kt
+                                                 WHERE au.id_autora = bk.id_autora AND bk.id_subkategorii = sb.id_subkategorii AND sb.id_kategorii = kt.id_kategorii
+                                                 GROUP BY au.id_autora", "getAuthors", $_SESSION["category"]);
+                                }
+
+
+
                             ?>
                         </ul>
 

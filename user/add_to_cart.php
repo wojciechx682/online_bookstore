@@ -108,7 +108,7 @@ query("SELECT id_ksiazki FROM ksiazki WHERE id_ksiazki = '%s'", "verifyBookExist
 
 	}
 
-	header('Location: ___koszyk.php'); // redirect to "cart" when POST variables were not set;
+	header('Location: koszyk.php'); // redirect to "cart" when POST variables were not set;
 		exit();
 ?>
 
