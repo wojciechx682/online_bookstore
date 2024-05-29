@@ -105,7 +105,7 @@
         $_SESSION["user_data_error_message"] = "Podaj dane, które różnią się od istniejących";
 	}
 
-    header('Location: ___account.php', true, 303);
+    header('Location: account.php', true, 303);
         exit();
 
 ?>

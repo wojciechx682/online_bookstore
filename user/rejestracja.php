@@ -461,7 +461,7 @@
         $_SESSION["e_fields"] = "<h3>Uzupełnij wszystkie pola</h3>";
     }
 
-    header('Location: ___zarejestruj.php');
+    header('Location: zarejestruj.php');
         exit();
 
 ?>

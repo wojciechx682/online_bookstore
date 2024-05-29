@@ -133,7 +133,7 @@
         /*else // dane nie przeszły walidacji;
         {
             //echo '<script> alert("Niepoprawne dane") </script>';
-            header('Location: ___account.php');
+            header('Location: account.php');
                 exit();
         }*/
 
@@ -143,7 +143,7 @@
 
 	}
 
-    header('Location: ___account.php', true, 303);
+    header('Location: account.php', true, 303);
         exit();
 ?>
 

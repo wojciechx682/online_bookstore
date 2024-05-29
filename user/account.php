@@ -11,7 +11,7 @@
 
 <div id="main-container">
 
-    <?php require "../view/___header-container.php"; ?>
+    <?php require "../view/header-container.php"; ?>
 
 	<div id="container">
 

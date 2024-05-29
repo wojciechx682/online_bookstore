@@ -388,7 +388,7 @@ echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
 
     <script src="../scripts/hide-field.js"></script>
 
-    <?php require "../view/___header-container.php"; ?>
+    <?php require "../view/header-container.php"; ?>
 
     <div id="container">
 

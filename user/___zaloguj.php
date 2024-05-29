@@ -5,7 +5,7 @@
 	if (isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true &&
         !isset($_SESSION["udanarejestracja"]) &&
         !isset($_SESSION["login-error"]) ) {
-		    header("Location: ___account.php");
+		    header("Location: account.php");
 		        exit();
 	}
 	elseif (isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true &&
@@ -34,7 +34,7 @@
 
     <div id="main-container">
 
-        <?php require "../view/___header-container.php" ?>
+        <?php require "../view/header-container.php" ?>
 
         <div id="container">
 
@@ -73,7 +73,7 @@
 
                     <a href="___reset_password.php" class="a-login-page-link">Przypomnij hasło</a>
 
-                    <a href="___zarejestruj.php" class="a-login-page-link">Nie posiadasz konta? Zarejestruj się</a>
+                    <a href="zarejestruj.php" class="a-login-page-link">Nie posiadasz konta? Zarejestruj się</a>
 
 
                     <?php

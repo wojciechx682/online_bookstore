@@ -117,7 +117,7 @@ switch ($userType) {
 	}
 
 	unset($_POST);
-		header('Location: ___account.php', true, 303);
+		header('Location: account.php', true, 303);
 			exit();
 
 // ___reset_password - odzyskiwanie hasła -->
