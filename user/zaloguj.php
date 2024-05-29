@@ -123,7 +123,7 @@
             content.style.width = "100%";
         </script>
 
-        <?php require "../view/___footer.php" ?>
+        <?php require "../view/footer.php" ?>
 
     </div>
 

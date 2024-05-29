@@ -41,7 +41,7 @@
                 // Perform any required actions with the form data (e.g., database update);
                 unset($_POST, $bookId, $warehouseId, $_SESSION["book-exists"], $_SESSION["warehouse-id"]);
                 // redirect to the page itself
-                //header('Location: ___book.php', true, 303);
+                //header('Location: book.php', true, 303);
 
                 // Redirect to prevent form resubmission
                 header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);

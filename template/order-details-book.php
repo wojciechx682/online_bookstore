@@ -7,7 +7,7 @@
             <!--<a href="../user/___book.php?book=& s">
                 <img src="../assets/books/& s" alt="book">
             </a>-->
-        <form method="post" action="../user/___book.php"> <!-- GET -> na POST <form> - użycie techniki PRG -->
+        <form method="post" action="../user/book.php"> <!-- GET -> na POST <form> - użycie techniki PRG -->
             <input type="hidden" name="book-id" value="%s">
             <button type="submit" class="book-img-button">
                 <img src="../assets/books/%s" alt="%s" title="%s">

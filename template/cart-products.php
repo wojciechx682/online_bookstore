@@ -4,7 +4,7 @@
 <div id="book%s" class="cart-book">
 
     <span class="book-details">
-        <form method="post" action="../user/___book.php">
+        <form method="post" action="../user/book.php">
             <input type="hidden" name="book-id" value="%s"> <!-- $row["id_ksiazki"] -->
             <button type="submit" class="book-img-button">
                 <img src="../assets/books/%s" alt="%s" title="%s">
@@ -15,7 +15,7 @@
 
             <div class="title">
 
-                <form method="post" action="../user/___book.php">
+                <form method="post" action="../user/book.php">
                     <input type="hidden" name="book-id" value="%s"> <!-- $row["id_ksiazki"] -->
                     <button class="submit-book-form" type="submit">
                         <h3 class="book-title" title="%s">%s</h3>

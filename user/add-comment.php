@@ -14,7 +14,7 @@
 
 			$_SESSION["rate-error"] = "<h3 class='data-changed'>Wystąpił błąd. Spróbuj jeszcze raz</h3>";
 
-			header('Location: ___book.php'); exit();
+			header('Location: book.php'); exit();
 		}
 
 		$comment_data = [$_SESSION["id"], $_SESSION["id_ksiazki"]];
@@ -31,7 +31,7 @@
 		if (!empty($_SESSION["rate_exists"])) {
 
 			$_SESSION["rate-error"] = "<h3 class='data-changed'>Dodałeś już opinię dla tej książki</h3>";
-			header('Location: ___book.php'); exit();
+			header('Location: book.php'); exit();
 
 		} else {
 
@@ -60,12 +60,12 @@
 				$_SESSION["rate-error"] = "<h3 class='data-changed'>Wystąpił błąd. Spróbuj jeszcze raz</h3>";
 			}
 
-			header('Location: ___book.php');	exit();
+			header('Location: book.php');	exit();
 		}
 	}
 	else {
 		$_SESSION["rate-error"] = "<h3 class='data-changed'>Uzupełnij wszystkie pola</h3>";
-		header('Location: ___book.php');
+		header('Location: book.php');
 		exit();
 	}
 ?>

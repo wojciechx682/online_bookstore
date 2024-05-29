@@ -5,7 +5,7 @@
 
                                 <div class="book-cover">
 
-                                    <form method="post" action="../user/___book.php">
+                                    <form method="post" action="../user/book.php">
                                         <input type="hidden" name="book-id" value="%s">
                                         <button type="submit" class="book-img-button">
                                             <img src="../assets/books/%s" alt="%s" title="%s">
@@ -16,7 +16,7 @@
 
                                 <div class="book-info">
 
-                                    <form method="post" action="../user/___book.php">
+                                    <form method="post" action="../user/book.php">
                                         <input type="hidden" name="book-id" value="%s">
                                         <button class="submit-book-form" type="submit">
                                             <h3 class="book-title" title="%s">%s</h3>

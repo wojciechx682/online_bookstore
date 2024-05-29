@@ -70,7 +70,7 @@
 
         </div>
 
-        <?php require "../view/___footer.php"; ?>
+        <?php require "../view/footer.php"; ?>
 
     </div>
 

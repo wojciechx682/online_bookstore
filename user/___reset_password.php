@@ -523,7 +523,7 @@ echo "PHP_SELF ->"; print_r($_SERVER['PHP_SELF']); echo "<hr><br>"; exit();*/
 
     </div>
 
-    <?php require "../view/___footer.php"; ?>
+    <?php require "../view/footer.php"; ?>
 
 </div>
 
