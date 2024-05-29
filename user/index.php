@@ -320,9 +320,6 @@
                                                  WHERE au.id_autora = bk.id_autora AND bk.id_subkategorii = sb.id_subkategorii AND sb.id_kategorii = kt.id_kategorii
                                                  GROUP BY au.id_autora", "getAuthors", $_SESSION["category"]);
                                 }
-
-
-
                             ?>
                         </ul>
 
