@@ -28,7 +28,7 @@
 		session_destroy();
 
 		if(isset($_POST["reset-password-form"])) {
-			header('Location: ___reset_password.php');
+			header('Location: reset_password.php');
 		} else {
 			header('Location: zaloguj.php');
 				exit();

@@ -57,6 +57,6 @@
 
     unset($_SESSION["password_hashed"]);
 
-    header('Location: ___remove_account.php'); // przekierowanie do strony remove_account.php
+    header('Location: remove_account.php'); // przekierowanie do strony remove_account.php
         exit();
 ?>
