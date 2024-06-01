@@ -1228,7 +1228,7 @@ use PHPMailer\PHPMailer\SMTP;
             $result->free_result();
     }
 
-    function getEmployeeId($result) { // get_employee_id // ___order.php - pobranie id pracownika z najmniejszą liczbą zamówień;
+    function getEmployeeId($result) { // get_employee_id // order.php - pobranie id pracownika z najmniejszą liczbą zamówień;
 
         $row = $result->fetch_assoc();
 

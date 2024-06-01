@@ -56,7 +56,7 @@
 
                     ?>
 
-                    <form action="___order.php" method="post" id="submit-order">
+                    <form action="order.php" method="post" id="submit-order">
 
                         <p>
                             <strong>

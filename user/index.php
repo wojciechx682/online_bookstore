@@ -349,6 +349,7 @@
                 <div id="content">
 
                     <div id="content-books">
+
                         <?php
 
                             if (isset($_SESSION["input-search"])) {
