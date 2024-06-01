@@ -2081,12 +2081,7 @@ function query($query, $fun, $values) {
 }*/
 
 
-function get_first_word($string)
-    {
-    	// ta funkcja zwraca pierwsze słowo ze stringa
-        $arr = explode(' ', trim($string));
-        return isset($arr[0]) ? $arr[0] : $string;
-    }
+
 ?>
 
 
