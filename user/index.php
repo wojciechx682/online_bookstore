@@ -283,7 +283,7 @@
                                     <input type="number" id="max-price" step="1" max="150">
                             </label>
 
-                            <div id="price-slider"></div>
+                            <div id="price-slider"> </div>
                         </div>
 
                         <div id="input-search-nav-div">

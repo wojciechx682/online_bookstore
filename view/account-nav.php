@@ -9,7 +9,7 @@
                         </div>
                     </a> <hr>
 
-                    <a href="___account.php">
+                    <a href="account.php">
                         <div class="btn from-center account-btn">
                             <h3>Edytuj dane użytkownika</h3>
                         </div>
