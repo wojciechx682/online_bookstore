@@ -23,7 +23,7 @@
 
         if (isset($_SESSION["order-error"]) && !empty($_SESSION["order-error"])) {
 
-            header('Location: ___submit_order.php', true, 303); exit();
+            header('Location: submit_order.php', true, 303); exit();
         }
 
         $datetime = new DateTimeImmutable(); // current date and time
@@ -78,7 +78,7 @@
 
     } else {
         $_SESSION["order-error"] = "Aby złożyć zamówienie, wybierz formę dostawy i metodę płatności";
-        header('Location: ___submit_order.php', true, 303); exit();
+        header('Location: submit_order.php', true, 303); exit();
     }
 
 ?>

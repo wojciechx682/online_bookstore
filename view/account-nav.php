@@ -3,7 +3,7 @@
 
                 <div id="nav">
 
-                    <a href="___my_orders.php">
+                    <a href="my_orders.php">
                         <div class="btn from-center account-btn">
                             <h3>Zamówienia</h3>
                         </div>
@@ -15,7 +15,7 @@
                         </div>
                     </a> <hr>
 
-                    <a href="___remove_account.php">
+                    <a href="remove_account.php">
                         <div class="btn from-center account-btn">
                             <h3>Usuń konto</h3>
                         </div>

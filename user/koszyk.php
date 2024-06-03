@@ -54,7 +54,7 @@
                     </h3>
 
                     <button class="btn-link btn-link-static">
-                        <a href="___submit_order.php">Złóż zamówienie</a>
+                        <a href="submit_order.php">Złóż zamówienie</a>
                     </button>
 
                     <?php

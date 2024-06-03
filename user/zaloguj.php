@@ -71,7 +71,7 @@
 
                     <hr class="register-form-hr-line">
 
-                    <a href="___reset_password.php" class="a-login-page-link">Przypomnij hasło</a>
+                    <a href="reset_password.php" class="a-login-page-link">Przypomnij hasło</a>
 
                     <a href="zarejestruj.php" class="a-login-page-link">Nie posiadasz konta? Zarejestruj się</a>
 
