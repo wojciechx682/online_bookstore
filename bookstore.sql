@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Cze 15, 2024 at 04:40 PM
+-- Generation Time: Cze 15, 2024 at 05:55 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -117,7 +117,8 @@ INSERT INTO `author` (`id_autora`, `imie`, `nazwisko`, `narodowosc`, `okres_twor
 (42, 'Keith ', 'J. Grant', 'USA', '2012-2023', 'Informatyka'),
 (43, 'Marcin', 'Karbowski', 'Polska', '2003-2023', 'Informatyka'),
 (44, 'Chavez ', 'Conrad', 'USA', '2010-2023', 'Informatyka'),
-(45, 'Cathy ', 'Tanimura', 'USA', '2008-2023', 'Informatyka');
+(45, 'Cathy ', 'Tanimura', 'USA', '2008-2023', 'Informatyka'),
+(46, 'Sylwia', 'Winnik ', 'Polska', '2015-2024', 'Dla dzieci');
 
 -- --------------------------------------------------------
 
@@ -131,7 +132,7 @@ CREATE TABLE `books` (
   `tytul` varchar(255) CHARACTER SET utf8 COLLATE utf8_polish_ci DEFAULT NULL,
   `cena` float DEFAULT NULL,
   `rok_wydania` year(4) DEFAULT NULL,
-  `opis` varchar(1000) CHARACTER SET utf8 COLLATE utf8_polish_ci DEFAULT NULL COMMENT 'opis książki',
+  `opis` varchar(10000) CHARACTER SET utf8 COLLATE utf8_polish_ci DEFAULT NULL COMMENT 'opis książki',
   `oprawa` varchar(255) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
   `id_wydawcy` int(11) NOT NULL,
   `image_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL COMMENT 'file path to the book image stored on disk',
@@ -147,50 +148,19 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id_ksiazki`, `id_autora`, `tytul`, `cena`, `rok_wydania`, `opis`, `oprawa`, `id_wydawcy`, `image_url`, `rating`, `ilosc_stron`, `wymiary`, `stan`, `id_subkategorii`) VALUES
-(1, 1, 'Symfonia C++ wydanie V ', 55.55, '2010', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent purus elit, tristique posuere mi sit amet, ullamcorper rutrum ante. Aenean tristique urn>a nec erat ullamcorper commodo. Aenean molestie erat sit amet ante semper vulputate. Morbi ante dolor, mollis a justo eget, semper tempus metus. Sed aliquet vestibulum erat elementum tempus. Pellentesque justo massa, rhoncus in rutrum at, iaculis finibus augue. Sed aliquet tempus nulla, id fringilla quam varius dapibus. Mauris ultricies lectus nisi, nec pulvinar diam dapibus at. Morbi tempus tincidunt odio eget tincidunt. Ut quis varius urna, eget posuere magna. Nulla feugiat laoreet ligula, ac efficitur orci pulvinar sed. Pellentesque ligula urna, congue vitae congue et, hendrerit eget sem. Phasellus posuere, ex eu gravida ullamcorper, sapien justo suscipit quam, in varius turpis ex ut quam. Nulla in efficitur quam. Vivamus ut elementum lectus.', 'twarda', 1, 'csymfoni_wyd_V.png', 0, 520, '138 x 928 x 281', 'nowa', 1),
 (2, 2, 'PHP i MySQL. Od podstaw. Wydanie IV', 54.5, '2016', 'PHP i MySQL to duet, na którym opiera się ogromna większość ciut bardziej zaawansowanych stron w sieci. Czemu zawdzięcza on swą popularność? Niezwykłemu dopasowaniu do potrzeb, łatwej konfiguracji oraz ogromnej społeczności, zawsze chętnej do pomocy. Kiedy zaprzęgniesz ten zestaw do pracy, już po kilku godzinach zobaczysz jej pierwsze efekty!\r\n\r\nCo zrobić, żeby osiągnąć jeszcze więcej? Nic prostszego! Sięgnij po tę książkę i zacznij swoją przygodę z PHP oraz MySQL. Na samym początku dowiesz się, jak przygotować środowisko pracy, oraz poznasz podstawy programowania w języku PHP. Potem płynnie przejdziesz do zdobywania wiedzy na temat programowania obiektowego, wyrażeń regularnych, obsługi formularzy HTML oraz integracji z usługami katalogowymi LDAP. Nauczysz się wykorzystywać mechanizm sesji, technologię AJAX oraz Zend Framework. Po przeprowadzeniu Cię przez komplet informacji na temat PHP autor przedstawi Ci bazę danych MySQL. Poznasz jej mocne elementy, sposoby podłączania klientów or', 'twarda', 2, 'podstawy_PHP.png', 4, 668, '253 x 938 x 029', 'nowa', 2),
-(5, 33, 'Mała kaczka w rzece hahahahahaa. Mała kaczka w rzece hahahahahaa', 97.1, '2010', NULL, 'Twarda', 1, '', 4, 240, '432 x 65 x 31', 'nowa', 3),
-(6, 22, 'Nadzieja dla mojej dziewczyny', 14.54, '2000', NULL, 'Miękka', 1, '', 0, 358, '460 x 209 x 165', 'nowa', 8),
-(7, 33, 'Duchy i lisy', 58.82, '2006', 'Lorem Ipsum', 'twarda', 1, '002.png', 0, 117, '200 x 50 x 426', 'nowa', 3),
-(8, 19, 'Witaj w moim kraju', 96.55, '2003', NULL, 'Miękka', 1, '', 4, 263, '117 x 305 x 173', 'nowa', 4),
-(9, 23, 'Drzewa i przestępcy', 15.35, '2011', NULL, 'Twarda', 1, '', 2, 866, '453 x 247 x 375', 'nowa', 7),
-(10, 17, 'Dzieci w mojej szafie', 31.08, '2012', NULL, 'Twarda', 1, '', 3, 889, '135 x 48 x 339', 'nowa', 5),
-(11, 17, 'Demony i sępy', 72.73, '2012', NULL, 'Twarda', 1, '', 0, 896, '51 x 239 x 40', 'nowa', 5),
-(12, 17, 'Pokusa na cmentarzu', 59.99, '2005', NULL, 'Miękka', 1, '', NULL, 861, '485 x 307 x 77', 'nowa', 5),
-(13, 22, '', 27.11, '2003', NULL, 'Miękka', 1, '', 4, 667, '467 x 104 x 121', 'nowa', 8),
-(14, 19, 'Prześladowca bez sumienia', 92.53, '1997', NULL, 'Twarda', 1, '', 0, 652, '294 x 108 x 156', 'nowa', 4),
-(16, 19, 'Kobiety i złodzieje', 40.5, '1995', NULL, 'Miękka', 1, '', 4, 336, '178 x 210 x 17', 'nowa', 4),
-(18, 18, 'D', 8, '1996', NULL, 'Twarda', 1, '', NULL, 472, '416 x 446 x 483', 'nowa', 6),
-(20, 36, 'Świętowanie wodą', 81.59, '2006', NULL, 'Twarda', 1, '', NULL, 293, '76 x 433 x 438', 'nowa', 3),
-(21, 23, 'Wrogowie gwiazdy', 16.29, '2014', NULL, 'Twarda', 1, '', 4, 799, '391 x 143 x 40', 'nowa', 7),
-(22, 25, 'Biesy i upiory', 85.07, '1993', NULL, 'Miękka', 1, '', 0, 463, '274 x 250 x 430', 'nowa', 5),
-(23, 17, 'Sępy i sępy', 45.61, '2008', NULL, 'Miękka', 1, '', 3, 669, '400 x 211 x 353', 'nowa', 5),
-(24, 19, 'Wrogowie z determinacją', 81.12, '2003', NULL, 'Twarda', 1, '', 4, 155, '136 x 119 x 188', 'nowa', 4),
-(25, 25, 'Symbole w Bibliotece', 20.66, '1995', NULL, 'Miękka', 1, '', 0, 370, '83 x 352 x 45', 'nowa', 5),
-(26, 25, 'Pokusa na cmentarzu 2', 87.4, '1994', NULL, 'Miękka', 1, '', 5, 433, '495 x 444 x 238', 'nowa', 5),
-(27, 23, 'Bohaterowie i psy', 85.6, '2017', NULL, 'Miękka', 1, '', 4, 108, '359 x 81 x 330', 'nowa', 7),
-(28, 19, 'Schronienie w magii', 40.9, '1994', NULL, 'Twarda', 1, '', 0, 840, '407 x 45 x 35', 'nowa', 4),
-(29, 19, 'Żołnierze Ognia', 32.16, '2003', NULL, 'Twarda', 1, '', 4, 375, '383 x 404 x 374', 'nowa', 4),
-(30, 2, 'A', 7, '2000', NULL, 'miękka', 1, '', 3, 105, '159 x 173 x 390', 'nowa', 6),
-(31, 32, 'B', 17, '2002', NULL, 'miękka', 1, '', 0, 151, '431 x 485 x 134', 'nowa', 6),
-(32, 32, 'Ą', 13, '2001', NULL, 'twarda', 1, '', 0, 341, '212 x 161 x 171', 'nowa', 6),
 (35, 32, 'CSS. Nieoficjalny podręcznik', 89, '2018', 'CSS jest świetnym narzędziem do budowania profesjonalnych stron internetowych. Opanowanie jego tajników może wydawać się dość trudnym zadaniem, jednak wysiłek ten bardzo się opłaca. CSS wciąż zaskakuje nieoczekiwanymi możliwościami, dalece wykraczającymi poza proste ozdabianie stron WWW. Technologia ta pozwala na tworzenie znakomicie wyglądających witryn o przebogatej funkcjonalności. Co jakiś czas pojawiają się nowe narzędzia i modele, jeszcze bardziej poszerzające warsztat projektanta. CSS jest jedną z tych technik, które wymagają nieustannego uczenia się i zapoznawania z nowościami.\r\n\r\nNiniejsza książka to niezwykle wartościowy podręcznik dla projektantów stron o różnym poziomie zaawansowania. Zawarto tu zwięzłe wprowadzenie do języka HTML w zakresie niezbędnym dla każdego, kto chce programować w CSS. Przedstawiono wyczerpujące i dokładne wskazówki tworzenia stron WWW w CSS, wyjaśniając poszczególne niuanse tej technologii. W dobie rozwoju urządzeń mobilnych niezwykle cenne są infor', 'twarda', 1, 'CSS_Nieoficjalny_podręcznik.png', 0, 656, '370 x 337 x 76', 'nowa', 29),
 (36, 42, 'CSS od podszewki', 39.5, '2016', 'W ostatnich latach CSS bardzo się rozwinął. Mimo że istnieje od kilku dekad, wciąż jest ważnym elementem warsztatu profesjonalnych projektantów stron internetowych. Co prawda przyswojenie podstaw CSS nie jest specjalnie trudne, ale osiągnięcie prawdziwej biegłości w korzystaniu z tego języka wymaga stałego uczenia się i ciągłych ćwiczeń. Trzeba dobrze zrozumieć wszystkie części kodu CSS, a także sposób, w jaki są do siebie dopasowane. Wysiłek włożony w doskonałe opanowanie języka szybko się zwróci: CSS pozwala zwiększyć wygodę użytkownika, przyspieszyć proces projektowania, uniknąć potencjalnych błędów, a także urozmaicić i ożywić aplikację.\r\n\r\nTa książka jest kompleksowym przewodnikiem po języku CSS dla osób na różnych poziomach biegłości w stosowaniu kaskadowych arkuszy stylów. Zawiera kluczowe informacje o podstawach języka, dzięki czemu będzie nieocenioną pomocą dla początkujących. Szczegółowo opisano tu również nowości i ulepszenia, które pojawiły się w języku na przestrzeni ostat', 'twarda', 1, 'css-od-podszewki-b-iext135439318.webp', 0, 480, '837 x 773 x 253', 'nowa', 1),
 (48, 41, 'Czysty kod. Podręcznik dobrego programisty', 49.45, '2014', 'Poznaj najlepsze metody tworzenia doskonałego kodu\r\n\r\nJak pisać dobry kod, a zły przekształcić w dobry?\r\nJak formatować kod, aby osiągnąć maksymalną czytelność?\r\nJak implementować pełną obsługę błędów bez zaśmiecania logiki kodu?\r\nO tym, ile problemów sprawia niedbale napisany kod, wie każdy programista. Nie wszyscy jednak wiedzą, jak napisać ten świetny, „czysty” kod i czym właściwie powinien się on charakteryzować. Co więcej – jak odróżnić dobry kod od złego? Odpowiedź na te pytania oraz sposoby tworzenia czystego, czytelnego kodu znajdziesz właśnie w tej książce. Podręcznik jest obowiązkową pozycją dla każdego, kto chce poznać techniki rzetelnego i efektywnego programowania.\r\n\r\nW książce „Czysty kod. Podręcznik dobrego programisty” szczegółowo omówione zostały zasady, wzorce i najlepsze praktyki pisania czystego kodu. Podręcznik zawiera także kilka analiz przypadków o coraz większej złożoności, z których każda jest doskonałym ćwiczeniem porządkowania zanieczyszczonego bądź nieudaneg', 'miękka', 1, 'czysty-kod-podrecznik-dobrego-programisty-b-iext133438979.webp', 0, 425, '237 x 20 x 167', 'nowa', 1),
-(113, 14, 'nowa super ksiazka', 12.12, '2013', '12 12 12 12 12 12 12 ', 'twarda', 2, '00000.jpg', 0, 1212, '121 x 121 x 121', 'nowa', 7),
 (114, 40, 'Sztuczna inteligencja od podstaw', 32.57, '2023', 'Nie ma wątpliwości, że sztuczna inteligencja (AI) zrewolucjonizuje w najbliższych dekadach nasze życie. Wśród największych autorytetów świata nauki panuje przekonanie, że stoimy w obliczu przełomu porównywalnego z wynalezieniem i zastosowaniami elektryczności.\r\n\r\nSztuczna inteligencja od podstaw to pozycja, która począwszy od opisu klasycznych metod SI, takich jak algorytm genetyczny, algorytm mrówkowy, systemy ekspertowe czy sztuczne życie, zapoznaje Czytelnika z najbardziej zaawansowanymi modelami opartymi na sztucznych sieciach neuronowych.', 'miękka', 1, 'sztuczna-inteligencja-od-podstaw-b-iext131736947.webp', 0, 192, '210 x 10 x 150', 'nowa', 1),
-(115, 1, 'Symfonia C++', 65.55, '2015', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Twarda', 1, 'csymfoni_wyd_V.png', 0, 425, '125 x 730 x 310', 'nowa', 3),
 (116, 38, 'PHP i MySQL. Tworzenie stron WWW. Vademecum profesjonalisty', 109, '2021', 'Język PHP i serwer bazy danych MySQL to niezwykle popularne narzędzia o otwartym kodzie źródłowym. Wiele świetnych, dynamicznych stron WWW powstało właśnie dzięki połączeniu tych dwóch narzędzi. Ogromne możliwości PHP oraz elastyczność i szybkość MySQL, bezustanne rozwijanie tych technologii, a także niezawodna i chętna do pomocy społeczność sprawiają, że tworzenie profesjonalnych, interaktywnych witryn WWW z wykorzystaniem synergii PHP i MySQL jest pracą przyjemną, efektywną i satysfakcjonującą!', 'twarda', 1, 'php-i-mysql-tworzenie-stron-www-vademecum-profesjonalisty-b-iext67290707.webp', 0, 712, '125 x 730 x 310', 'nowa', 1),
 (117, 39, 'Python od podstaw', 32.7, '2022', 'Ta książka zacznie Twoją przygodę z programowaniem. Prezentuje wiedzę w praktyczny, przystępny i zrozumiały sposób. Pomaga zbudować solidne podwaliny pod naukę języka Python oraz wytyczyć dalszy kierunek. Jeśli chcesz nauczyć się programowania albo zastanawia Cię czym ono jest, to jest to książka dla Ciebie.\r\n\r\nRazem z tą książką wejdziesz krok po kroku do świata języka Python. Pokaże Ci, że programowanie to świetna zabawa, a przy tym znacznie bardziej przydatna i dostępna umiejętność niż może się wydawać. Dowiesz się z niej:', 'miękka', 2, 'python-od-podstaw-b-iext117047464.webp', 0, 312, '200 x 20 x 140', 'nowa', 1),
-(118, 2, 'Java - Techniki zaawansowane Wydanie V', 26, '2000', NULL, 'miękka', 1, '', 0, 105, '159 x 173 x 390', 'nowa', 3),
-(119, 1, '333 Symfonia C++', 65.55, '2015', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Twarda', 1, '001.png', NULL, 425, '125 x 730 x 310', 'nowa', 4),
-(120, 1, 'Symfonia C++', 65.55, '2015', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Twarda', 1, '001.png', NULL, 425, '125 x 730 x 310', 'nowa', 3),
-(122, 1, '123 Symfonia C++', 65.55, '2015', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Twarda', 1, '279440432_426598368798280_10347903888580628_n.png', NULL, 425, '125 x 730 x 310', 'nowa', 3),
-(123, 1, 'Symfonia C++', 65.55, '2015', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Twarda', 1, 'Java_techniki_zaawansowane.png', NULL, 425, '125 x 730 x 310', 'nowa', 3),
 (124, 37, 'Linux dla admina. Najlepsze praktyki. O czym pamiętać podczas projektowania i zarządzania systemami', 56, '2023', 'Popularność systemów linuksowych cały czas rośnie. Mimo to bardzo niewielu administratorów stara się dokładnie opanować sztukę zarządzania Linuksem, większość ogranicza się do kilku rutynowych zadań. Tak administrowane systemy oczywiście mogą dłuższy czas działać poprawnie, jednak dopiero dogłębne zapoznanie się ze sposobem działania Linuksa pozwoli na pełniejsze skorzystanie z jego niesamowitych możliwości.\r\n\r\nTo książka przeznaczona dla profesjonalnych administratorów i użytkowników Linuksa. Dzięki niej szybciej zrozumiesz, w jakim stopniu dobre zarządzanie systemami na poziomie systemu operacyjnego może wynieść działanie infrastruktury biznesowej na zupełnie inny poziom. Znajdziesz tu najlepsze praktyki zarządzania systemami ― począwszy od wyboru optymalnej dystrybucji Linuksa, poprzez zaprojektowanie architektury systemu, skończywszy na strategiach zarządzania przeprowadzanymi w nim poprawkami i aktualizacjami.', 'miękka', 1, 'linux-dla-admina-najlepsze-praktyki-o-czym-pamietac-podczas-projektowania-i-zarzadzania-systemami-b-iext140747274.webp', NULL, 382, '230 x 28 x 160', 'nowa', 34),
 (125, 43, 'Podstawy kryptografii', 51.13, '2017', 'Przekonaj się, jak fascynująca jest kryptografia!\r\n\r\nPoznaj historię rozwoju kryptografii\r\nOpanuj jej matematyczne podstawy\r\nRozpracuj najważniejsze algorytmy kryptograficzne\r\nDowiedz się, jak zastosować je w praktyce\r\nKryptografia to dziedzina nauki, której sedno stanowią sposoby bezpiecznego przekazywania informacji. Jest ona niemal tak stara, jak nasza cywilizacja, a dziś rozwija się w sposób niezwykle dynamiczny. Gdy tylko narodziły się pierwsze metody zapisu i komunikowania się, pojawiła się też konieczność zabezpieczenia informacji przed tymi, którzy mogliby wykorzystać je na niekorzyść osób dysponujących tymi informacjami. Od bezpieczeństwa ważnych informacji zależały często losy całych państw i narodów. O rozstrzygnięciach wielkich bitew nierzadko decydowały inteligencja i determinacja pojedynczych osób, które potrafiły odpowiednio skutecznie szyfrować (bądź też deszyfrować) nadawane (lub przechwytywane) komunikaty.', 'miękka', 1, 'podstawy-kryptografii-b-iext135315404.webp', NULL, 328, '240 x 20 x 160', 'nowa', 22),
 (126, 44, 'Adobe Photoshop PL. Oficjalny podręcznik. Edycja 2023', 68.48, '2023', '\"Adobe Photoshop\" w pełni zasłużył na miano kultowego. Jest używany przez najsławniejszych artystów. Oferuje wysoce zaawansowane narzędzia do obróbki obrazów cyfrowych, w tym funkcje wzbogacone o algorytmy uczenia maszynowego. Dzięki niemu przygotujesz materiały na potrzeby druku, internetu i wideo. Do tego obecnie korzystanie ze wspaniałych możliwości Photoshopa jest prostsze niż kiedykolwiek wcześniej.\r\n\r\nTo kolejne, zaktualizowane wydanie oficjalnego podręcznika firmy Adobe - najlepszej pomocy do nauki Photoshopa. Zawiera setki przydatnych wskazówek, dzięki którym praca z Photoshopem będzie efektywniejsza i o wiele bardziej satysfakcjonująca. Czytelnik dowie się, jak korygować cyfrowe obrazy, w tym usuwać bez śladu niepotrzebne obiekty ze zdjęć, a także pozna nowe funkcje Photoshopa, takie jak usprawnione narzędzia do tworzenia zaznaczeń, nowe filtry neuronalne i funkcje maskowania dostępne w Adobe Camera Raw. Podręcznik składa się z 15 lekcji, dzięki którym można się nauczyć zarówn', 'miękka', 1, 'adobe-photoshop-pl-oficjalny-podrecznik-edycja-2023-b-iext140836051.webp', 4, 408, '230 x 15 x 175', 'nowa', 29),
-(127, 45, 'Analiza danych z wykorzystaniem SQL-a. Zaawansowane techniki przekształcania danych we wnioski', 45.77, '2022', 'Język SQL został stworzony jako narzędzie do przetwarzania danych. Mimo że zwykle jest używany do pracy z bazami danych, jego możliwości są o wiele większe. Poprawny kod SQL ułatwia przetwarzanie potężnych zbiorów danych z dużą szybkością. Szczególnie obiecującą perspektywą jest zastosowanie języka SQL na wielkich zbiorach danych przechowywanych w chmurze. Dzięki nieco bardziej złożonym konstrukcjom SQL analityk danych może z dużą efektywnością wydobywać z nich wiedzę.\r\n\r\nTa praktyczna książka jest przeznaczona dla analityków danych i danologów, którzy chcą używać SQL-a do eksploracji dużych zbiorów danych. Pokazuje zarówno popularne, jak i nieco mniej znane techniki budowania zapytań SQL, dzięki czemu możliwe staje się rozwiązywanie nawet bardzo zawiłych problemów i optymalne wykorzystanie właściwości tego języka w pracy na danych. W nowy, innowacyjny sposób przedstawiono tu takie pojęcia jak złączenia, funkcje okna, podzapytania i wyrażenia regularne. Zademonstrowano, jak łączyć różn', 'miękka', 1, 'analiza-danych-z-wykorzystaniem-sql-a-zaawansowane-techniki-przeksztalcania-danych-we-wnioski-b-iext138845735.webp', 0, 304, '240 x 170 x 5', 'nowa', 34);
+(127, 45, 'Analiza danych z wykorzystaniem SQL-a. Zaawansowane techniki przekształcania danych we wnioski', 45.77, '2022', 'Język SQL został stworzony jako narzędzie do przetwarzania danych. Mimo że zwykle jest używany do pracy z bazami danych, jego możliwości są o wiele większe. Poprawny kod SQL ułatwia przetwarzanie potężnych zbiorów danych z dużą szybkością. Szczególnie obiecującą perspektywą jest zastosowanie języka SQL na wielkich zbiorach danych przechowywanych w chmurze. Dzięki nieco bardziej złożonym konstrukcjom SQL analityk danych może z dużą efektywnością wydobywać z nich wiedzę.\r\n\r\nTa praktyczna książka jest przeznaczona dla analityków danych i danologów, którzy chcą używać SQL-a do eksploracji dużych zbiorów danych. Pokazuje zarówno popularne, jak i nieco mniej znane techniki budowania zapytań SQL, dzięki czemu możliwe staje się rozwiązywanie nawet bardzo zawiłych problemów i optymalne wykorzystanie właściwości tego języka w pracy na danych. W nowy, innowacyjny sposób przedstawiono tu takie pojęcia jak złączenia, funkcje okna, podzapytania i wyrażenia regularne. Zademonstrowano, jak łączyć różn', 'miękka', 1, 'analiza-danych-z-wykorzystaniem-sql-a-zaawansowane-techniki-przeksztalcania-danych-we-wnioski-b-iext138845735.webp', 0, 304, '240 x 170 x 5', 'nowa', 34),
+(129, 46, 'Wanda Panda wita lato', 8.99, '2023', 'asdasdasdasd', 'twarda', 3, 'Wanda Panda wita lato.png', NULL, 25, '125 x 730 x 310', 'nowa', 1),
+(130, 46, 'Wielka księga łamigłówek przedszkolaka', 19.99, '2023', 'aaaaaaaaaaaaaaa\r\n\r\n', 'Miekka', 3, 'Wielka księga łamigłówek przedszkolaka.png', NULL, 128, '250 x 215 x 150', 'nowa', 35);
 
 -- --------------------------------------------------------
 
@@ -367,7 +337,6 @@ CREATE TABLE `order_details` (
 --
 
 INSERT INTO `order_details` (`id_zamowienia`, `id_ksiazki`, `ilosc`) VALUES
-(1411, 1, 2),
 (1411, 2, 4);
 
 -- --------------------------------------------------------
@@ -452,7 +421,8 @@ CREATE TABLE `publishers` (
 
 INSERT INTO `publishers` (`id_wydawcy`, `nazwa_wydawcy`, `adres`, `kod_pocztowy`, `telefon`) VALUES
 (1, 'Helion', 'Warszawa', '500-31', '+48 018 938 922'),
-(2, 'PWN', 'Warszawa', '02-460', '+48 839 771 829');
+(2, 'PWN', 'Warszawa', '02-460', '+48 839 771 829'),
+(3, 'Wydawnictwo MUZA S.A.', 'Warszawa\r\n', '03-751', '+48 701 928 732');
 
 -- --------------------------------------------------------
 
@@ -491,11 +461,8 @@ CREATE TABLE `shopping_cart` (
 --
 
 INSERT INTO `shopping_cart` (`id_klienta`, `id_ksiazki`, `ilosc`) VALUES
-(386, 1, 4),
 (386, 48, 4),
-(400, 1, 2),
 (400, 2, 4),
-(401, 1, 1),
 (402, 48, 5);
 
 -- --------------------------------------------------------
@@ -517,12 +484,6 @@ CREATE TABLE `subcategories` (
 INSERT INTO `subcategories` (`id_subkategorii`, `nazwa`, `id_kategorii`) VALUES
 (1, 'Programowanie', 4),
 (2, 'Web development', 4),
-(3, 'Dla dzieci', 1),
-(4, 'Fantastyka', 2),
-(5, 'Horror', 3),
-(6, 'Komiks', 5),
-(7, 'Kryminał', 6),
-(8, 'Poezja', 7),
 (22, 'Cybersecurity', 4),
 (23, 'Mobile App Development', 4),
 (24, 'Artificial Intelligence', 4),
@@ -531,10 +492,10 @@ INSERT INTO `subcategories` (`id_subkategorii`, `nazwa`, `id_kategorii`) VALUES
 (27, 'Game Development', 4),
 (28, 'Network Administration', 4),
 (29, 'UX/UI Design', 4),
-(30, 'Game Development 1', 4),
-(31, 'Network Administration 2', 4),
-(32, 'Cybersecurity 3', 4),
-(34, 'Data bases', 4);
+(34, 'Data bases', 4),
+(35, 'Wiek 3-5', 1),
+(36, 'Wiek 6-8', 1),
+(37, 'Wiek 9-12', 1);
 
 -- --------------------------------------------------------
 
@@ -583,20 +544,15 @@ INSERT INTO `warehouse_books` (`id_magazynu`, `id_ksiazki`, `ilosc_dostepnych_eg
 (1, 36, '0'),
 (1, 48, '60'),
 (1, 114, '132'),
-(1, 115, '125'),
 (1, 116, '125'),
-(1, 120, '125'),
-(1, 122, '125'),
-(1, 123, '125'),
 (1, 124, '125'),
 (1, 126, '85'),
 (1, 127, '78'),
-(2, 1, '15'),
 (2, 2, '1'),
-(2, 7, '15'),
 (2, 35, '0'),
-(2, 113, '121'),
-(2, 125, '67');
+(2, 125, '67'),
+(2, 129, '50'),
+(2, 130, '50');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -755,13 +711,13 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id_autora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id_autora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id_ksiazki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id_ksiazki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -827,7 +783,7 @@ ALTER TABLE `ratings`
 -- AUTO_INCREMENT for table `subcategories`
 --
 ALTER TABLE `subcategories`
-  MODIFY `id_subkategorii` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_subkategorii` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Constraints for dumped tables
