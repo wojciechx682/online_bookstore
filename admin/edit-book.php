@@ -212,7 +212,7 @@
                                     <textarea name="edit-book-desc" id="edit-book-desc"
                                               rows="5"
                                               minlength="10"
-                                              maxlength="1000" required></textarea>
+                                              maxlength="10000" required></textarea>
                             </p>
                         </div>
 

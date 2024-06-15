@@ -3,6 +3,10 @@ let button = document.getElementById("filter-authors");
 let firstCheckbox = document.getElementById("all-authors");
 let items = document.querySelectorAll('#ul-authors input[type="checkbox"]:not(#all-authors)');
 
+
+console.log("items --> ", items);
+
+
 const updateAll = () => {
     items.forEach(item => {
         item.checked = firstCheckbox.checked;
@@ -29,6 +33,8 @@ window.addEventListener("load", function() {
 });
 
 const filterAuthors = () => {
+
+    console.log("items --> ", items);
 
     const checkedAuthors = Array.from(
         document.querySelectorAll('#ul-authors input[type="checkbox"]:checked:not(#all-authors)')

@@ -120,7 +120,7 @@
             $publisher === false || $_SESSION['publisher-exists'] === false ||
             $pages === false || $pages < 1 || $pages > 1500 ||
             $cover === false || $cover !== $_POST['add-book-cover'] ||
-            $desc === false || $desc !== $_POST['add-book-desc'] || strlen($desc) < 10 || strlen($desc) > 1000 ||
+            $desc === false || $desc !== $_POST['add-book-desc'] || strlen($desc) < 10 || strlen($desc) > 10000 ||
             $dims === false || $dims !== $_POST['add-book-dims'] || strlen($dims) > 15 ||
             $category === false || empty($categoryExists) ||
             $subcategory === false ||

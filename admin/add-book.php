@@ -148,7 +148,7 @@
 
                                 <textarea name="add-book-desc" id="add-book-desc"
                                           rows="5"
-                                          minlength="10" maxlength="1000" required></textarea>
+                                          minlength="10" maxlength="10000" required></textarea>
                             </p>
                         </div>
 

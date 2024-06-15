@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2023 at 02:12 PM
+-- Generation Time: Cze 15, 2024 at 04:40 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -147,8 +147,8 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id_ksiazki`, `id_autora`, `tytul`, `cena`, `rok_wydania`, `opis`, `oprawa`, `id_wydawcy`, `image_url`, `rating`, `ilosc_stron`, `wymiary`, `stan`, `id_subkategorii`) VALUES
-(1, 1, 'Symfonia C++ wydanie V ', 55.55, '2010', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent purus elit, tristique posuere mi sit amet, ullamcorper rutrum ante. Aenean tristique urn>a nec erat ullamcorper commodo. Aenean molestie erat sit amet ante semper vulputate. Morbi ante dolor, mollis a justo eget, semper tempus metus. Sed aliquet vestibulum erat elementum tempus. Pellentesque justo massa, rhoncus in rutrum at, iaculis finibus augue. Sed aliquet tempus nulla, id fringilla quam varius dapibus. Mauris ultricies lectus nisi, nec pulvinar diam dapibus at. Morbi tempus tincidunt odio eget tincidunt. Ut quis varius urna, eget posuere magna. Nulla feugiat laoreet ligula, ac efficitur orci pulvinar sed. Pellentesque ligula urna, congue vitae congue et, hendrerit eget sem. Phasellus posuere, ex eu gravida ullamcorper, sapien justo suscipit quam, in varius turpis ex ut quam. Nulla in efficitur quam. Vivamus ut elementum lectus.', 'twarda', 1, 'csymfoni_wyd_V.png', 4.5, 520, '138 x 928 x 281', 'nowa', 1),
-(2, 2, 'PHP i MySQL. Od podstaw. Wydanie IV', 54.5, '2016', 'PHP i MySQL to duet, na którym opiera się ogromna większość ciut bardziej zaawansowanych stron w sieci. Czemu zawdzięcza on swą popularność? Niezwykłemu dopasowaniu do potrzeb, łatwej konfiguracji oraz ogromnej społeczności, zawsze chętnej do pomocy. Kiedy zaprzęgniesz ten zestaw do pracy, już po kilku godzinach zobaczysz jej pierwsze efekty!\r\n\r\nCo zrobić, żeby osiągnąć jeszcze więcej? Nic prostszego! Sięgnij po tę książkę i zacznij swoją przygodę z PHP oraz MySQL. Na samym początku dowiesz się, jak przygotować środowisko pracy, oraz poznasz podstawy programowania w języku PHP. Potem płynnie przejdziesz do zdobywania wiedzy na temat programowania obiektowego, wyrażeń regularnych, obsługi formularzy HTML oraz integracji z usługami katalogowymi LDAP. Nauczysz się wykorzystywać mechanizm sesji, technologię AJAX oraz Zend Framework. Po przeprowadzeniu Cię przez komplet informacji na temat PHP autor przedstawi Ci bazę danych MySQL. Poznasz jej mocne elementy, sposoby podłączania klientów or', 'twarda', 2, 'podstawy_PHP.png', 0, 668, '253 x 938 x 029', 'nowa', 2),
+(1, 1, 'Symfonia C++ wydanie V ', 55.55, '2010', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent purus elit, tristique posuere mi sit amet, ullamcorper rutrum ante. Aenean tristique urn>a nec erat ullamcorper commodo. Aenean molestie erat sit amet ante semper vulputate. Morbi ante dolor, mollis a justo eget, semper tempus metus. Sed aliquet vestibulum erat elementum tempus. Pellentesque justo massa, rhoncus in rutrum at, iaculis finibus augue. Sed aliquet tempus nulla, id fringilla quam varius dapibus. Mauris ultricies lectus nisi, nec pulvinar diam dapibus at. Morbi tempus tincidunt odio eget tincidunt. Ut quis varius urna, eget posuere magna. Nulla feugiat laoreet ligula, ac efficitur orci pulvinar sed. Pellentesque ligula urna, congue vitae congue et, hendrerit eget sem. Phasellus posuere, ex eu gravida ullamcorper, sapien justo suscipit quam, in varius turpis ex ut quam. Nulla in efficitur quam. Vivamus ut elementum lectus.', 'twarda', 1, 'csymfoni_wyd_V.png', 0, 520, '138 x 928 x 281', 'nowa', 1),
+(2, 2, 'PHP i MySQL. Od podstaw. Wydanie IV', 54.5, '2016', 'PHP i MySQL to duet, na którym opiera się ogromna większość ciut bardziej zaawansowanych stron w sieci. Czemu zawdzięcza on swą popularność? Niezwykłemu dopasowaniu do potrzeb, łatwej konfiguracji oraz ogromnej społeczności, zawsze chętnej do pomocy. Kiedy zaprzęgniesz ten zestaw do pracy, już po kilku godzinach zobaczysz jej pierwsze efekty!\r\n\r\nCo zrobić, żeby osiągnąć jeszcze więcej? Nic prostszego! Sięgnij po tę książkę i zacznij swoją przygodę z PHP oraz MySQL. Na samym początku dowiesz się, jak przygotować środowisko pracy, oraz poznasz podstawy programowania w języku PHP. Potem płynnie przejdziesz do zdobywania wiedzy na temat programowania obiektowego, wyrażeń regularnych, obsługi formularzy HTML oraz integracji z usługami katalogowymi LDAP. Nauczysz się wykorzystywać mechanizm sesji, technologię AJAX oraz Zend Framework. Po przeprowadzeniu Cię przez komplet informacji na temat PHP autor przedstawi Ci bazę danych MySQL. Poznasz jej mocne elementy, sposoby podłączania klientów or', 'twarda', 2, 'podstawy_PHP.png', 4, 668, '253 x 938 x 029', 'nowa', 2),
 (5, 33, 'Mała kaczka w rzece hahahahahaa. Mała kaczka w rzece hahahahahaa', 97.1, '2010', NULL, 'Twarda', 1, '', 4, 240, '432 x 65 x 31', 'nowa', 3),
 (6, 22, 'Nadzieja dla mojej dziewczyny', 14.54, '2000', NULL, 'Miękka', 1, '', 0, 358, '460 x 209 x 165', 'nowa', 8),
 (7, 33, 'Duchy i lisy', 58.82, '2006', 'Lorem Ipsum', 'twarda', 1, '002.png', 0, 117, '200 x 50 x 426', 'nowa', 3),
@@ -189,8 +189,8 @@ INSERT INTO `books` (`id_ksiazki`, `id_autora`, `tytul`, `cena`, `rok_wydania`, 
 (123, 1, 'Symfonia C++', 65.55, '2015', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Twarda', 1, 'Java_techniki_zaawansowane.png', NULL, 425, '125 x 730 x 310', 'nowa', 3),
 (124, 37, 'Linux dla admina. Najlepsze praktyki. O czym pamiętać podczas projektowania i zarządzania systemami', 56, '2023', 'Popularność systemów linuksowych cały czas rośnie. Mimo to bardzo niewielu administratorów stara się dokładnie opanować sztukę zarządzania Linuksem, większość ogranicza się do kilku rutynowych zadań. Tak administrowane systemy oczywiście mogą dłuższy czas działać poprawnie, jednak dopiero dogłębne zapoznanie się ze sposobem działania Linuksa pozwoli na pełniejsze skorzystanie z jego niesamowitych możliwości.\r\n\r\nTo książka przeznaczona dla profesjonalnych administratorów i użytkowników Linuksa. Dzięki niej szybciej zrozumiesz, w jakim stopniu dobre zarządzanie systemami na poziomie systemu operacyjnego może wynieść działanie infrastruktury biznesowej na zupełnie inny poziom. Znajdziesz tu najlepsze praktyki zarządzania systemami ― począwszy od wyboru optymalnej dystrybucji Linuksa, poprzez zaprojektowanie architektury systemu, skończywszy na strategiach zarządzania przeprowadzanymi w nim poprawkami i aktualizacjami.', 'miękka', 1, 'linux-dla-admina-najlepsze-praktyki-o-czym-pamietac-podczas-projektowania-i-zarzadzania-systemami-b-iext140747274.webp', NULL, 382, '230 x 28 x 160', 'nowa', 34),
 (125, 43, 'Podstawy kryptografii', 51.13, '2017', 'Przekonaj się, jak fascynująca jest kryptografia!\r\n\r\nPoznaj historię rozwoju kryptografii\r\nOpanuj jej matematyczne podstawy\r\nRozpracuj najważniejsze algorytmy kryptograficzne\r\nDowiedz się, jak zastosować je w praktyce\r\nKryptografia to dziedzina nauki, której sedno stanowią sposoby bezpiecznego przekazywania informacji. Jest ona niemal tak stara, jak nasza cywilizacja, a dziś rozwija się w sposób niezwykle dynamiczny. Gdy tylko narodziły się pierwsze metody zapisu i komunikowania się, pojawiła się też konieczność zabezpieczenia informacji przed tymi, którzy mogliby wykorzystać je na niekorzyść osób dysponujących tymi informacjami. Od bezpieczeństwa ważnych informacji zależały często losy całych państw i narodów. O rozstrzygnięciach wielkich bitew nierzadko decydowały inteligencja i determinacja pojedynczych osób, które potrafiły odpowiednio skutecznie szyfrować (bądź też deszyfrować) nadawane (lub przechwytywane) komunikaty.', 'miękka', 1, 'podstawy-kryptografii-b-iext135315404.webp', NULL, 328, '240 x 20 x 160', 'nowa', 22),
-(126, 44, 'Adobe Photoshop PL. Oficjalny podręcznik. Edycja 2023', 68.48, '2023', '\"Adobe Photoshop\" w pełni zasłużył na miano kultowego. Jest używany przez najsławniejszych artystów. Oferuje wysoce zaawansowane narzędzia do obróbki obrazów cyfrowych, w tym funkcje wzbogacone o algorytmy uczenia maszynowego. Dzięki niemu przygotujesz materiały na potrzeby druku, internetu i wideo. Do tego obecnie korzystanie ze wspaniałych możliwości Photoshopa jest prostsze niż kiedykolwiek wcześniej.\r\n\r\nTo kolejne, zaktualizowane wydanie oficjalnego podręcznika firmy Adobe - najlepszej pomocy do nauki Photoshopa. Zawiera setki przydatnych wskazówek, dzięki którym praca z Photoshopem będzie efektywniejsza i o wiele bardziej satysfakcjonująca. Czytelnik dowie się, jak korygować cyfrowe obrazy, w tym usuwać bez śladu niepotrzebne obiekty ze zdjęć, a także pozna nowe funkcje Photoshopa, takie jak usprawnione narzędzia do tworzenia zaznaczeń, nowe filtry neuronalne i funkcje maskowania dostępne w Adobe Camera Raw. Podręcznik składa się z 15 lekcji, dzięki którym można się nauczyć zarówn', 'miękka', 1, 'adobe-photoshop-pl-oficjalny-podrecznik-edycja-2023-b-iext140836051.webp', NULL, 408, '230 x 15 x 175', 'nowa', 29),
-(127, 45, 'Analiza danych z wykorzystaniem SQL-a. Zaawansowane techniki przekształcania danych we wnioski', 45.77, '2022', 'Język SQL został stworzony jako narzędzie do przetwarzania danych. Mimo że zwykle jest używany do pracy z bazami danych, jego możliwości są o wiele większe. Poprawny kod SQL ułatwia przetwarzanie potężnych zbiorów danych z dużą szybkością. Szczególnie obiecującą perspektywą jest zastosowanie języka SQL na wielkich zbiorach danych przechowywanych w chmurze. Dzięki nieco bardziej złożonym konstrukcjom SQL analityk danych może z dużą efektywnością wydobywać z nich wiedzę.\r\n\r\nTa praktyczna książka jest przeznaczona dla analityków danych i danologów, którzy chcą używać SQL-a do eksploracji dużych zbiorów danych. Pokazuje zarówno popularne, jak i nieco mniej znane techniki budowania zapytań SQL, dzięki czemu możliwe staje się rozwiązywanie nawet bardzo zawiłych problemów i optymalne wykorzystanie właściwości tego języka w pracy na danych. W nowy, innowacyjny sposób przedstawiono tu takie pojęcia jak złączenia, funkcje okna, podzapytania i wyrażenia regularne. Zademonstrowano, jak łączyć różn', 'miękka', 1, 'analiza-danych-z-wykorzystaniem-sql-a-zaawansowane-techniki-przeksztalcania-danych-we-wnioski-b-iext138845735.webp', NULL, 304, '240 x 170 x 5', 'nowa', 34);
+(126, 44, 'Adobe Photoshop PL. Oficjalny podręcznik. Edycja 2023', 68.48, '2023', '\"Adobe Photoshop\" w pełni zasłużył na miano kultowego. Jest używany przez najsławniejszych artystów. Oferuje wysoce zaawansowane narzędzia do obróbki obrazów cyfrowych, w tym funkcje wzbogacone o algorytmy uczenia maszynowego. Dzięki niemu przygotujesz materiały na potrzeby druku, internetu i wideo. Do tego obecnie korzystanie ze wspaniałych możliwości Photoshopa jest prostsze niż kiedykolwiek wcześniej.\r\n\r\nTo kolejne, zaktualizowane wydanie oficjalnego podręcznika firmy Adobe - najlepszej pomocy do nauki Photoshopa. Zawiera setki przydatnych wskazówek, dzięki którym praca z Photoshopem będzie efektywniejsza i o wiele bardziej satysfakcjonująca. Czytelnik dowie się, jak korygować cyfrowe obrazy, w tym usuwać bez śladu niepotrzebne obiekty ze zdjęć, a także pozna nowe funkcje Photoshopa, takie jak usprawnione narzędzia do tworzenia zaznaczeń, nowe filtry neuronalne i funkcje maskowania dostępne w Adobe Camera Raw. Podręcznik składa się z 15 lekcji, dzięki którym można się nauczyć zarówn', 'miękka', 1, 'adobe-photoshop-pl-oficjalny-podrecznik-edycja-2023-b-iext140836051.webp', 4, 408, '230 x 15 x 175', 'nowa', 29),
+(127, 45, 'Analiza danych z wykorzystaniem SQL-a. Zaawansowane techniki przekształcania danych we wnioski', 45.77, '2022', 'Język SQL został stworzony jako narzędzie do przetwarzania danych. Mimo że zwykle jest używany do pracy z bazami danych, jego możliwości są o wiele większe. Poprawny kod SQL ułatwia przetwarzanie potężnych zbiorów danych z dużą szybkością. Szczególnie obiecującą perspektywą jest zastosowanie języka SQL na wielkich zbiorach danych przechowywanych w chmurze. Dzięki nieco bardziej złożonym konstrukcjom SQL analityk danych może z dużą efektywnością wydobywać z nich wiedzę.\r\n\r\nTa praktyczna książka jest przeznaczona dla analityków danych i danologów, którzy chcą używać SQL-a do eksploracji dużych zbiorów danych. Pokazuje zarówno popularne, jak i nieco mniej znane techniki budowania zapytań SQL, dzięki czemu możliwe staje się rozwiązywanie nawet bardzo zawiłych problemów i optymalne wykorzystanie właściwości tego języka w pracy na danych. W nowy, innowacyjny sposób przedstawiono tu takie pojęcia jak złączenia, funkcje okna, podzapytania i wyrażenia regularne. Zademonstrowano, jak łączyć różn', 'miękka', 1, 'analiza-danych-z-wykorzystaniem-sql-a-zaawansowane-techniki-przeksztalcania-danych-we-wnioski-b-iext138845735.webp', 0, 304, '240 x 170 x 5', 'nowa', 34);
 
 -- --------------------------------------------------------
 
@@ -214,8 +214,7 @@ INSERT INTO `categories` (`id_kategorii`, `nazwa`) VALUES
 (4, 'Informatyka'),
 (5, 'Komiks'),
 (6, 'Kryminał'),
-(7, 'Poezja'),
-(9, 'Poezja 2');
+(7, 'Poezja');
 
 -- --------------------------------------------------------
 
@@ -236,16 +235,7 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id_komentarza`, `id_ksiazki`, `id_klienta`, `tresc`, `data`) VALUES
-(314, 2, 386, ' wasda ds as das dasd ', '2023-08-31 10:32:10'),
-(317, 117, 394, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus vehicula leo eget molestie. Duis in ultricies nibh. Maecenas eget dignissim nunc, vitae lobortis turpis.', '2023-08-31 21:14:00'),
-(318, 117, 395, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus vehicula leo eget molestie. Duis in ultricies nibh. Maecenas eget dignissim nunc, vitae lobortis turpis.', '2023-08-31 21:14:40'),
-(319, 117, 396, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus vehicula leo eget molestie. Duis in ultricies nibh. Maecenas eget dignissim nunc, vitae lobortis turpis.', '2023-08-31 21:15:16'),
-(320, 117, 397, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus vehicula leo eget molestie. Duis in ultricies nibh. Maecenas eget dignissim nunc, vitae lobortis turpis.', '2023-08-31 21:15:43'),
-(321, 117, 398, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus vehicula leo eget molestie. Duis in ultricies nibh. Maecenas eget dignissim nunc, vitae lobortis turpis.', '2023-08-31 21:16:12'),
-(322, 2, 400, 'wasda ds as das dasd 2', '2023-09-27 16:25:18'),
-(323, 1, 400, 'a sdasdsa da da as das da d', '2023-09-28 08:32:41'),
-(324, 48, 402, 'asoid oisa jdoia jdsoijsaoi odsaij asd', '2023-10-20 12:18:55'),
-(325, 1, 401, ' sadasdad asdad asdas asasd asd  sadasd', '2023-11-09 12:29:22');
+(327, 2, 400, 'Lorem ipsum', '2024-06-01 15:58:53');
 
 -- --------------------------------------------------------
 
@@ -358,13 +348,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id_zamowienia`, `id_klienta`, `data_zlozenia_zamowienia`, `termin_dostawy`, `data_wysłania_zamowienia`, `data_dostarczenia`, `id_formy_dostawy`, `status`, `komentarz`, `id_pracownika`) VALUES
-(1386, 400, '2023-09-08 04:47:36', '2023-11-12', '2023-11-10 15:15:15', '0000-00-00', 2, 'Wysłano', '', 6),
-(1387, 400, '2023-09-27 18:26:03', '2023-10-01', '0000-00-00 00:00:00', '0000-00-00', 1, 'W trakcie realizacji', 'aosid uaosiud oaisudoiusadsa d', 4),
-(1388, 402, '2023-10-20 14:18:35', '0000-00-00', '0000-00-00 00:00:00', '0000-00-00', 1, 'Oczekujące na potwierdzenie', '', 4),
-(1389, 400, '2023-11-08 14:10:59', '2023-11-29', '0000-00-00 00:00:00', '0000-00-00', 1, 'W trakcie realizacji', '', 6),
-(1390, 400, '2023-11-08 14:11:10', '0000-00-00', '0000-00-00 00:00:00', '0000-00-00', 1, 'Oczekujące na potwierdzenie', '', 4),
-(1391, 400, '2023-11-09 13:27:43', '2023-11-30', '2023-11-29 15:35:13', '0000-00-00', 1, 'Wysłano', '', 6),
-(1392, 401, '2023-11-09 13:32:52', '0000-00-00', '0000-00-00 00:00:00', '0000-00-00', 1, 'Oczekujące na potwierdzenie', '', 4);
+(1411, 400, '2024-06-01 18:10:11', '0000-00-00', '0000-00-00 00:00:00', '0000-00-00', 1, 'Oczekujące na potwierdzenie', '', 4);
 
 -- --------------------------------------------------------
 
@@ -383,13 +367,8 @@ CREATE TABLE `order_details` (
 --
 
 INSERT INTO `order_details` (`id_zamowienia`, `id_ksiazki`, `ilosc`) VALUES
-(1386, 2, 5),
-(1387, 2, 10),
-(1388, 48, 5),
-(1389, 2, 15),
-(1390, 2, 166),
-(1391, 1, 1),
-(1392, 1, 1);
+(1411, 1, 2),
+(1411, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -409,7 +388,7 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 INSERT INTO `password_reset_tokens` (`token_id`, `token`, `email`, `exp_time`) VALUES
-(987, 'a2d5f1d9982198c32f94baeb42d113e69d96262477d6929cdb5c9823a8e7c981', 'b7cfr0na@flymail.tk', '2023-09-07 22:20:44');
+(989, 'b50f7a0f22751d8e627da217273cb6c89030567820c72ef7688ad27028c88208', 'adam.nowak1@wp.pl', '2024-06-01 18:31:40');
 
 -- --------------------------------------------------------
 
@@ -430,13 +409,7 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id_platnosci`, `id_zamowienia`, `data_platnosci`, `kwota`, `id_metody_platnosci`) VALUES
-(1048, 1386, '2023-09-08 04:47:36', 399, 2),
-(1049, 1387, '2023-09-27 18:26:03', 765, 2),
-(1050, 1388, '2023-10-20 14:18:35', 384.95, 1),
-(1051, 1389, '2023-11-08 14:10:59', 1137.5, 1),
-(1052, 1390, '2023-11-08 14:11:10', 12538, 1),
-(1053, 1391, '2023-11-09 13:27:43', 60.55, 1),
-(1054, 1392, '2023-11-09 13:32:52', 65.55, 2);
+(1073, 1411, '2024-06-01 18:10:11', 329.1, 1);
 
 -- --------------------------------------------------------
 
@@ -499,16 +472,7 @@ CREATE TABLE `ratings` (
 --
 
 INSERT INTO `ratings` (`id_oceny`, `id_ksiazki`, `ocena`, `id_klienta`) VALUES
-(299, 2, 4, 386),
-(302, 117, 4, 394),
-(303, 117, 2, 395),
-(304, 117, 4, 396),
-(305, 117, 4, 397),
-(306, 117, 5, 398),
-(307, 2, 4, 400),
-(308, 1, 4, 400),
-(309, 48, 4, 402),
-(310, 1, 5, 401);
+(312, 2, 4, 400);
 
 -- --------------------------------------------------------
 
@@ -529,6 +493,8 @@ CREATE TABLE `shopping_cart` (
 INSERT INTO `shopping_cart` (`id_klienta`, `id_ksiazki`, `ilosc`) VALUES
 (386, 1, 4),
 (386, 48, 4),
+(400, 1, 2),
+(400, 2, 4),
 (401, 1, 1),
 (402, 48, 5);
 
@@ -568,7 +534,6 @@ INSERT INTO `subcategories` (`id_subkategorii`, `nazwa`, `id_kategorii`) VALUES
 (30, 'Game Development 1', 4),
 (31, 'Network Administration 2', 4),
 (32, 'Cybersecurity 3', 4),
-(33, 'Poezja 2', 9),
 (34, 'Data bases', 4);
 
 -- --------------------------------------------------------
@@ -623,11 +588,15 @@ INSERT INTO `warehouse_books` (`id_magazynu`, `id_ksiazki`, `ilosc_dostepnych_eg
 (1, 120, '125'),
 (1, 122, '125'),
 (1, 123, '125'),
+(1, 124, '125'),
+(1, 126, '85'),
+(1, 127, '78'),
 (2, 1, '15'),
 (2, 2, '1'),
 (2, 7, '15'),
 (2, 35, '0'),
-(2, 113, '121');
+(2, 113, '121'),
+(2, 125, '67');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -804,7 +773,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id_komentarza` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
+  MODIFY `id_komentarza` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -828,19 +797,19 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1393;
+  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1412;
 
 --
 -- AUTO_INCREMENT for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
-  MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=989;
+  MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=990;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id_platnosci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1055;
+  MODIFY `id_platnosci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1074;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
@@ -852,7 +821,7 @@ ALTER TABLE `payment_methods`
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id_oceny` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
+  MODIFY `id_oceny` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=313;
 
 --
 -- AUTO_INCREMENT for table `subcategories`
