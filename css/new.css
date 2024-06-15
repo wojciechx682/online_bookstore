@@ -422,6 +422,7 @@ body {
     div#book-page-rate span.rating-num {
         position: relative;
         top: -3px;
+        padding-left: 28px !important;
     }
 
     div#book-page-details,
