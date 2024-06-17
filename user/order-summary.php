@@ -21,7 +21,7 @@
 
                 <h3 id="order-summary-header">Podsumowanie zamówienia</h3>
 
-                <p>Twoje zamówienie zostało przekazane do realizacji, aby śledzić postęp zamówienia przejdź do zakładki <a href="___my_orders.php"><strong>Moje konto / Zamówienia</strong></a></p>
+                <p>Twoje zamówienie zostało przekazane do realizacji, aby śledzić postęp zamówienia przejdź do zakładki <a href="my_orders.php"><strong>Moje konto / Zamówienia</strong></a></p>
 
             </div>
 

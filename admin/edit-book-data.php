@@ -136,7 +136,7 @@ require_once "../authenticate-admin.php";
             $publisher === false || $_SESSION['publisher-exists'] === false ||
             $pages === false || $pages < 1 || $pages > 1500 ||
             $cover === false || $cover !== $_POST['edit-book-cover'] ||
-            $desc === false || $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 10000 ||
+            $desc === false || $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 100000 ||
             $dims === false || $dims !== $_POST['edit-book-dims'] || strlen($dims) > 15 ||
             $category === false || empty($categoryExists) ||
             $subcategory === false ||
@@ -169,7 +169,7 @@ require_once "../authenticate-admin.php";
 
 
             //echo "POST Error: Invalid or missing values"; // fieldnt didn't pass validation;
-            echo "<span class='update-failed'>172 Wystąpił problem. Podaj poprawne dane</span>"; exit();
+            echo "<span class='update-failed'>Wystąpił problem. Podaj poprawne dane</span>"; exit();
 
         } else {                                          // all values are valid; - fields PASSED validation;
                                                           // perform the necessary actions or validations here;

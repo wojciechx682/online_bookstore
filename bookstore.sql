@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Cze 15, 2024 at 05:55 PM
+-- Generation Time: Cze 17, 2024 at 02:23 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -118,7 +118,9 @@ INSERT INTO `author` (`id_autora`, `imie`, `nazwisko`, `narodowosc`, `okres_twor
 (43, 'Marcin', 'Karbowski', 'Polska', '2003-2023', 'Informatyka'),
 (44, 'Chavez ', 'Conrad', 'USA', '2010-2023', 'Informatyka'),
 (45, 'Cathy ', 'Tanimura', 'USA', '2008-2023', 'Informatyka'),
-(46, 'Sylwia', 'Winnik ', 'Polska', '2015-2024', 'Dla dzieci');
+(46, 'Sylwia', 'Winnik ', 'Polska', '2015-2024', 'Dla dzieci'),
+(47, 'Jim', 'Field ', 'USA', '2004-2023', 'Dla dzieci'),
+(48, 'Zuzanna', 'Osuchowska', 'Polska', '2015-2023', 'Dla dzieci');
 
 -- --------------------------------------------------------
 
@@ -132,7 +134,7 @@ CREATE TABLE `books` (
   `tytul` varchar(255) CHARACTER SET utf8 COLLATE utf8_polish_ci DEFAULT NULL,
   `cena` float DEFAULT NULL,
   `rok_wydania` year(4) DEFAULT NULL,
-  `opis` varchar(10000) CHARACTER SET utf8 COLLATE utf8_polish_ci DEFAULT NULL COMMENT 'opis książki',
+  `opis` mediumtext CHARACTER SET utf8 COLLATE utf8_polish_ci DEFAULT NULL COMMENT 'opis książki',
   `oprawa` varchar(255) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
   `id_wydawcy` int(11) NOT NULL,
   `image_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL COMMENT 'file path to the book image stored on disk',
@@ -159,8 +161,10 @@ INSERT INTO `books` (`id_ksiazki`, `id_autora`, `tytul`, `cena`, `rok_wydania`, 
 (125, 43, 'Podstawy kryptografii', 51.13, '2017', 'Przekonaj się, jak fascynująca jest kryptografia!\r\n\r\nPoznaj historię rozwoju kryptografii\r\nOpanuj jej matematyczne podstawy\r\nRozpracuj najważniejsze algorytmy kryptograficzne\r\nDowiedz się, jak zastosować je w praktyce\r\nKryptografia to dziedzina nauki, której sedno stanowią sposoby bezpiecznego przekazywania informacji. Jest ona niemal tak stara, jak nasza cywilizacja, a dziś rozwija się w sposób niezwykle dynamiczny. Gdy tylko narodziły się pierwsze metody zapisu i komunikowania się, pojawiła się też konieczność zabezpieczenia informacji przed tymi, którzy mogliby wykorzystać je na niekorzyść osób dysponujących tymi informacjami. Od bezpieczeństwa ważnych informacji zależały często losy całych państw i narodów. O rozstrzygnięciach wielkich bitew nierzadko decydowały inteligencja i determinacja pojedynczych osób, które potrafiły odpowiednio skutecznie szyfrować (bądź też deszyfrować) nadawane (lub przechwytywane) komunikaty.', 'miękka', 1, 'podstawy-kryptografii-b-iext135315404.webp', NULL, 328, '240 x 20 x 160', 'nowa', 22),
 (126, 44, 'Adobe Photoshop PL. Oficjalny podręcznik. Edycja 2023', 68.48, '2023', '\"Adobe Photoshop\" w pełni zasłużył na miano kultowego. Jest używany przez najsławniejszych artystów. Oferuje wysoce zaawansowane narzędzia do obróbki obrazów cyfrowych, w tym funkcje wzbogacone o algorytmy uczenia maszynowego. Dzięki niemu przygotujesz materiały na potrzeby druku, internetu i wideo. Do tego obecnie korzystanie ze wspaniałych możliwości Photoshopa jest prostsze niż kiedykolwiek wcześniej.\r\n\r\nTo kolejne, zaktualizowane wydanie oficjalnego podręcznika firmy Adobe - najlepszej pomocy do nauki Photoshopa. Zawiera setki przydatnych wskazówek, dzięki którym praca z Photoshopem będzie efektywniejsza i o wiele bardziej satysfakcjonująca. Czytelnik dowie się, jak korygować cyfrowe obrazy, w tym usuwać bez śladu niepotrzebne obiekty ze zdjęć, a także pozna nowe funkcje Photoshopa, takie jak usprawnione narzędzia do tworzenia zaznaczeń, nowe filtry neuronalne i funkcje maskowania dostępne w Adobe Camera Raw. Podręcznik składa się z 15 lekcji, dzięki którym można się nauczyć zarówn', 'miękka', 1, 'adobe-photoshop-pl-oficjalny-podrecznik-edycja-2023-b-iext140836051.webp', 4, 408, '230 x 15 x 175', 'nowa', 29),
 (127, 45, 'Analiza danych z wykorzystaniem SQL-a. Zaawansowane techniki przekształcania danych we wnioski', 45.77, '2022', 'Język SQL został stworzony jako narzędzie do przetwarzania danych. Mimo że zwykle jest używany do pracy z bazami danych, jego możliwości są o wiele większe. Poprawny kod SQL ułatwia przetwarzanie potężnych zbiorów danych z dużą szybkością. Szczególnie obiecującą perspektywą jest zastosowanie języka SQL na wielkich zbiorach danych przechowywanych w chmurze. Dzięki nieco bardziej złożonym konstrukcjom SQL analityk danych może z dużą efektywnością wydobywać z nich wiedzę.\r\n\r\nTa praktyczna książka jest przeznaczona dla analityków danych i danologów, którzy chcą używać SQL-a do eksploracji dużych zbiorów danych. Pokazuje zarówno popularne, jak i nieco mniej znane techniki budowania zapytań SQL, dzięki czemu możliwe staje się rozwiązywanie nawet bardzo zawiłych problemów i optymalne wykorzystanie właściwości tego języka w pracy na danych. W nowy, innowacyjny sposób przedstawiono tu takie pojęcia jak złączenia, funkcje okna, podzapytania i wyrażenia regularne. Zademonstrowano, jak łączyć różn', 'miękka', 1, 'analiza-danych-z-wykorzystaniem-sql-a-zaawansowane-techniki-przeksztalcania-danych-we-wnioski-b-iext138845735.webp', 0, 304, '240 x 170 x 5', 'nowa', 34),
-(129, 46, 'Wanda Panda wita lato', 8.99, '2023', 'asdasdasdasd', 'twarda', 3, 'Wanda Panda wita lato.png', NULL, 25, '125 x 730 x 310', 'nowa', 1),
-(130, 46, 'Wielka księga łamigłówek przedszkolaka', 19.99, '2023', 'aaaaaaaaaaaaaaa\r\n\r\n', 'Miekka', 3, 'Wielka księga łamigłówek przedszkolaka.png', NULL, 128, '250 x 215 x 150', 'nowa', 35);
+(129, 46, 'Wanda Panda wita lato', 8.99, '2023', 'Wakacje czas zacząć! Wanda spędzi z rodziną aktywnie letni dzień. Odkryje zapach skoszonej trawy, smak świeżych owoców, ciepły deszczyk i zabawy na świeżym powietrzu. Bo takie właśnie jest lato!\n\n„Wanda Panda\" to seria książeczek dla najmłodszych do rodzinnego czytania i wspólnego odkrywania świata. Autorka skupia się na codzienności małych dzieci, które każdego dnia napotykają różnego rodzaju wyzwania i poznają zaskakujące fakty o sobie samych i o tym, co nas otacza.\n\nKsiążka jest tworzona we współpracy z psychologiem dziecięcym, dzięki czemu może z powodzeniem wspierać dorosłych w wychowaniu najmłodszych.', 'twarda', 3, 'Wanda Panda wita lato.png', NULL, 25, '125 x 730 x 310', 'nowa', 35),
+(130, 46, 'Wielka księga łamigłówek przedszkolaka', 19.99, '2023', 'Wyruszcie w edukacyjną przygodę z \"Wielką księgą łamigłówek przedszkolaka\"! To fantastyczna propozycja dla dzieci, które nie lubią się nudzić. Znajdziecie tu fantastyczne łamigłówki, ciekawe zadania, kolorowanki, wyszukiwanki to wspaniały sposób na spędzenie czasu i super zabawę!\n\nZadania wspierają kształtowanie elementarnych umiejętności poznawczych przedszkolaków. Dzięki zadaniom dziecko będzie kształtować logiczne myślenie i rozwijać motorykę dłoni, a przede wszystkim świetnie się bawić!', 'Miekka', 3, 'Wielka księga łamigłówek przedszkolaka.png', NULL, 128, '250 x 215 x 150', 'nowa', 35),
+(131, 47, 'Pan Oskar na wakacjach', 25.59, '2023', 'Wyrusz z Panem Oskarem w niezapomnianą podróż! A przy okazji poznaj angielskie słówka.\n\nPan Oskar postanawia udać się na wyprawę życia. Dociera nad morze i w góry, biwakuje, żegluje i zjeżdża na nartach. Przy okazji odwiedza swoich przyjaciół. Dołącz do Oskara oraz jego złotej rybki Kory – wspólnie odkryjcie nie tylko nowe miejsca, ale także angielskie słowa i zwroty.\n\nWesoła, rewelacyjnie zilustrowana opowieść, której dodatkowym atutem jest nauka podstawowych wyrażeń z języka angielskiego. Autorem książki jest znany i ceniony na całym świecie Jim Field (twórca m.in. bestsellerowych picturebooków „Mysz, która chciała być lwem”, „Pandki, które obiecały”).', 'Twarda', 1, 'Pan Oskar na wakacjach.png', NULL, 32, '295 x 255 x 9', 'nowa', 35),
+(132, 48, 'Quiz dla 3-latka', 22.42, '2023', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Miekka', 3, 'Quiz dla 3-latka.png', NULL, 20, '125 x 730 x 310', 'nowa', 35);
 
 -- --------------------------------------------------------
 
@@ -552,7 +556,9 @@ INSERT INTO `warehouse_books` (`id_magazynu`, `id_ksiazki`, `ilosc_dostepnych_eg
 (2, 35, '0'),
 (2, 125, '67'),
 (2, 129, '50'),
-(2, 130, '50');
+(2, 130, '50'),
+(2, 131, '50'),
+(2, 132, '50');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -711,13 +717,13 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id_autora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_autora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id_ksiazki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id_ksiazki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- AUTO_INCREMENT for table `categories`

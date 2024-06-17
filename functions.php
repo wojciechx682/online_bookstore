@@ -772,7 +772,7 @@ use PHPMailer\PHPMailer\SMTP;
 	}
 
 
-    function getOrderDetails($result) { // get_order_details //  ___my_orders.php --> getOrders($result) --> szczegóły_zamówienia (ksążki wchodzące w skład danego zamówienia);
+    function getOrderDetails($result) { // get_order_details //  my_orders.php --> getOrders($result) --> szczegóły_zamówienia (ksążki wchodzące w skład danego zamówienia);
         // $result (!) - szczegóły_zamówienia -->
             //  id_ksiazki |  ilosc
             // -----------------------
