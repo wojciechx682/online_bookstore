@@ -293,7 +293,7 @@
                             </label>
 
                             <form method="post">
-                                    <input type="search" name="input-search-nav" id="input-search-nav" placeholder="tytuł książki">
+                                    <input type="search" name="input-search-nav" id="input-search-nav" placeholder="Tytuł książki">
                                 <button type="submit">
                                     <i class="icon-search"></i>
                                 </button>
@@ -457,7 +457,6 @@
     </div>
 
     <?php require "../view/app-error-window.php"; ?>
-
 
 </body>
 </html>

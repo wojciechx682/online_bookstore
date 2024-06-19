@@ -13,7 +13,7 @@
 </div>
 
 
-<?php if ( isset($_SESSION["application-error"]) && $_SESSION["application-error"] ) : ?>
+<?php if (isset($_SESSION["application-error"]) && $_SESSION["application-error"]) : ?>
 
     <?php unset($_SESSION["application-error"]); ?>
 
@@ -34,7 +34,7 @@
 
     <script>
         let container = document.querySelector(".background");
-        container.style.pointerEvents = "none"; // ✓
+        container.style.pointerEvents = "none";
     </script>
 
 <?php endif; ?>
