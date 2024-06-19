@@ -458,8 +458,6 @@
 
     <?php require "../view/app-error-window.php"; ?>
 
-    <script src="../scripts/filter-book-status.js"></script>
-    <script src="../scripts/mobile-device.js"></script>
 
 </body>
 </html>
