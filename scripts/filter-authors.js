@@ -8,14 +8,14 @@ const updateAll = () => {
     items.forEach(item => {
         item.checked = firstCheckbox.checked;
     });
-    //filterAuthors(); // Dodajemy, aby natychmiast zastosować filtrację po zaznaczeniu/odznaczeniu "Wszyscy"
+    filterAuthors(); // Dodajemy, aby natychmiast zastosować filtrację po zaznaczeniu/odznaczeniu "Wszyscy"
 }
 
 window.addEventListener("load", function() {
 
 });
 
-/*window.addEventListener("load", function() {
+window.addEventListener("load", function() {
     if (window.sessionStorage) {
         let authors = JSON.parse(sessionStorage.getItem("authors"));
         console.log("Authors from sessionStorage --> ", authors); // Debugowanie
@@ -31,7 +31,7 @@ window.addEventListener("load", function() {
             filterAuthors();
         }
     }
-});*/
+});
 
 const filterAuthors = () => {
     console.log("items --> ", items);

@@ -19,26 +19,5 @@
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="../scripts/display-nav.js"></script>
     <script src="../node_modules/dompurify/dist/purify.min.js"></script>
-    <style>
-        .sticky {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 3000;
-            width: 100% !important;
-        }
-
-        .stickyContainer {
-            position: relative;
-            top: 37px;
-        }
-
-        div.sticky-adv-search {
-            position: initial !important;
-            margin: 0 auto;
-        }
-    </style>
-
-
-
+    <link rel="stylesheet" href="../css/stickyMenu.css">
 </head>
