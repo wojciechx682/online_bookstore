@@ -70,9 +70,9 @@
 
                         <?php
 
-                            echo "SESSION -> "; print_r($_SESSION); echo "<br>";
+                            /*echo "SESSION -> "; print_r($_SESSION); echo "<br>";
                             echo "POST -> "; print_r($_POST); echo "<br>";
-                            echo "GET -> "; print_r($_GET); echo "<br>";
+                            echo "GET -> "; print_r($_GET); echo "<br>";*/
 
                             echo '<div id="aaa"><a href="index.php" id="get-back-a"><i class="icon-down-open" id="book-page-get-back"></i>Wróć </a></div>';
 
