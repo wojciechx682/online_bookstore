@@ -70,34 +70,33 @@
 
                         <?php
 
+                            echo "SESSION -> "; print_r($_SESSION); echo "<br>";
+                            echo "POST -> "; print_r($_POST); echo "<br>";
+                            echo "GET -> "; print_r($_GET); echo "<br>";
+
                             echo '<div id="aaa"><a href="index.php" id="get-back-a"><i class="icon-down-open" id="book-page-get-back"></i>Wróć </a></div>';
 
                             if(isset($_SESSION["avg_rating"])) {
                                 unset($_SESSION["avg_rating"]);
                             }
 
-                            query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, ks.opis, kt.nazwa AS kategoria, sb.id_kategorii, sb.nazwa AS podkategoria,
-       
-                                             (SELECT COUNT(*) FROM comments WHERE id_ksiazki = ks.id_ksiazki) AS liczba_komentarzy, 
-                                             (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki) AS liczba_ocen, 
-                                             (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM warehouse_books WHERE id_ksiazki = ks.id_ksiazki) AS liczba_egzemplarzy, 
-                                             
-                                             au.imie, au.nazwisko, au.id_autora, ks.id_wydawcy, wd.nazwa_wydawcy 
+                            query("SELECT ks.id_ksiazki, ks.tytul, ks.cena, ks.rok_wydania, ks.id_autora, ks.oprawa, ks.ilosc_stron, ks.image_url, ks.rating, ks.wymiary, ks.stan, ks.opis, kt.nazwa AS kategoria, sb.id_kategorii, sb.nazwa AS podkategoria,       
+                                         (SELECT COUNT(*) FROM comments WHERE id_ksiazki = ks.id_ksiazki) AS liczba_komentarzy, 
+                                         (SELECT COUNT(*) FROM ratings WHERE id_ksiazki = ks.id_ksiazki) AS liczba_ocen, 
+                                         (SELECT SUM(ilosc_dostepnych_egzemplarzy) FROM warehouse_books WHERE id_ksiazki = ks.id_ksiazki) AS liczba_egzemplarzy, 
+                                         au.imie, au.nazwisko, au.id_autora, ks.id_wydawcy, wd.nazwa_wydawcy 
                                          FROM books AS ks 
                                              JOIN subcategories AS sb ON ks.id_subkategorii = sb.id_subkategorii 
                                              JOIN categories AS kt ON sb.id_kategorii = kt.id_kategorii 
                                              JOIN author AS au ON ks.id_autora = au.id_autora 
                                              JOIN publishers AS wd ON ks.id_wydawcy = wd.id_wydawcy 
-                                         WHERE ks.id_ksiazki = '%s'", "getBook", $_SESSION["book-id"]); // \template\book-page.php ;
-
-
+                                         WHERE ks.id_ksiazki = '%s'", "getBook", $_SESSION["book-id"]); // \template\book-page.php;
 
                             $_SESSION["ratings"] = [];
 
                             query("SELECT ocena, COUNT(ocena) AS liczba_ocen FROM ratings WHERE id_ksiazki = '%s' GROUP BY ocena ORDER BY ocena DESC", "getRatings", $_SESSION["book-id"]);
 
                             $_SESSION["raings_array"] = json_encode($_SESSION["ratings"]); // JSON string;
-
 
                         ?>
 
@@ -137,15 +136,10 @@
                 const rating = document.getElementById("book-rate").textContent;
 
                 window.addEventListener("load", function() {
-
                     const totalRate = 5;
                     const percentageRate = (rating / totalRate) * 100; // (4.5 / 5) * 100 => "90" <- "number" // Ocena wyrażona w procentach;
-
-                    const percentageRateRounded = `${Math.round(percentageRate / 10) * 10}%`; // "90%"  <- "string"
-                    // Zaokrąglona wartość średniej oceny (do najbliższej dziesiątki);
-
-                    const percentageRateBase = `${100 - Math.round(percentageRate / 10) * 10}%`; // "10%" <- "String"
-                     // to będzie szerokość diva z Szarymi gwiazdkami;
+                    const percentageRateRounded = `${Math.round(percentageRate / 10) * 10}%`; // "90%"  <- "string" // Zaokrąglona wartość średniej oceny (do najbliższej dziesiątki);
+                    const percentageRateBase = `${100 - Math.round(percentageRate / 10) * 10}%`; // "10%" <- "String" // to będzie szerokość diva z Szarymi gwiazdkami;
 
                     document.querySelector('.rate-inner').style.width = percentageRateRounded; // width: 90%;   // szerokość diva z Żółtymi gwiazdkami;
                     document.querySelector('.rate-inner-base').style.width = percentageRateBase; // width: 10%; // szerokość diva z Szarymi gwiazdkami;
@@ -157,15 +151,10 @@
                     } else {
                         document.querySelector('.rating-num').innerHTML = "" ;
                     }
-
                     const circle = document.getElementById("rating-circle"); // żółte kółko;
-
-                    const circumference = parseFloat(circle.getAttribute('r')) * 2 * Math.PI; // obwód koła; // circumference of the circle
-                                                                                              // "62.83185307179586" <- number;
+                    const circumference = parseFloat(circle.getAttribute('r')) * 2 * Math.PI; // obwód koła; // circumference of the circle // "62.83185307179586" <- number;
                     circle.style.strokeDasharray = `${rating*(circumference/5)}, ${circumference}`;
                 });
-
-                // -----------------------------------------------------------------------------------------------------
 
                 // Wyświetlenie ocen książki w postaci graficznych pasków. Każdy pasek reprezentuje ilość ocen dla danej wartości oceny (na przykład, ile razy książka otrzymała 5 gwiazdek, 4 gwiazdki itp.)
 
@@ -507,16 +496,9 @@
     content = document.getElementById("content"); // ustawienie wid div#content na 100%
     //console.log("content -> ", content);
     content.style.width = "100%";
-
-
-
 </script>
-
-<!--<script src="../scripts/...js"></script>-->
 
     <?php require "../view/app-error-window.php"; ?>
 
 </body>
 </html>
-
-<?php /*endif*/ ?>

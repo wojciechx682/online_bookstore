@@ -201,7 +201,7 @@ use PHPMailer\PHPMailer\SMTP;
                 $_SESSION["id_ksiazki"] = $row["id_ksiazki"];   // book-id - "1" ;
 
 
-        if (isset($_SESSION["rate-error"])) { // komunikat - błąd przy dodawaniu oceny przez klienta ;
+        if (isset($_SESSION["rate-error"])) { // komunikat - błąd przy dodawaniu oceny przez klienta;
 
             $message = $_SESSION["rate-error"];
                 unset($_SESSION["rate-error"]);
@@ -216,7 +216,7 @@ use PHPMailer\PHPMailer\SMTP;
             $message = "";
         }
 
-        if( isset($row["liczba_egzemplarzy"]) && !empty($row["liczba_egzemplarzy"]) ) {
+        if (isset($row["liczba_egzemplarzy"]) && !empty($row["liczba_egzemplarzy"])) {
             // wyświetlenie statusu o dostępności książki (na bazie staów magazynowych) + odpowiednia akcja na przycisku dodania do koszyka (jeśli nie ma ksążki w magazynie - wyłączenie przycisku dodania ksiązki do koszyka);
 
             if($row["liczba_egzemplarzy"] > 0) {
@@ -289,7 +289,7 @@ use PHPMailer\PHPMailer\SMTP;
         //      4 	         1
         //     ... 	        ...
 
-        $_SESSION["ratings"] = []; // create new empty array ;
+        $_SESSION["ratings"] = []; // create new empty array;
 
         while($row = $result->fetch_assoc()) { // "ocena", "liczba_ocen";
 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Cze 18, 2024 at 02:35 PM
--- Wersja serwera: 10.4.32-MariaDB
--- Wersja PHP: 8.2.12
+-- Czas generowania: 26 Cze 2024, 20:04
+-- Wersja serwera: 10.4.27-MariaDB
+-- Wersja PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bookstore`
+-- Baza danych: `bookstore`
 --
 
 -- --------------------------------------------------------
@@ -37,7 +37,7 @@ CREATE TABLE `address` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `address`
+-- Zrzut danych tabeli `address`
 --
 
 INSERT INTO `address` (`adres_id`, `miejscowosc`, `ulica`, `numer_domu`, `kod_pocztowy`, `kod_miejscowosc`) VALUES
@@ -78,7 +78,7 @@ CREATE TABLE `author` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `author`
+-- Zrzut danych tabeli `author`
 --
 
 INSERT INTO `author` (`id_autora`, `imie`, `nazwisko`, `narodowosc`, `okres_tworczosci`, `rodzaj_tworczosci`) VALUES
@@ -147,26 +147,26 @@ CREATE TABLE `books` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `books`
+-- Zrzut danych tabeli `books`
 --
 
 INSERT INTO `books` (`id_ksiazki`, `id_autora`, `tytul`, `cena`, `rok_wydania`, `opis`, `oprawa`, `id_wydawcy`, `image_url`, `rating`, `ilosc_stron`, `wymiary`, `stan`, `id_subkategorii`) VALUES
-(2, 2, 'PHP i MySQL. Od podstaw. Wydanie IV', 54.5, '2016', 'PHP i MySQL to duet, na którym opiera się ogromna większość ciut bardziej zaawansowanych stron w sieci. Czemu zawdzięcza on swą popularność? Niezwykłemu dopasowaniu do potrzeb, łatwej konfiguracji oraz ogromnej społeczności, zawsze chętnej do pomocy. Kiedy zaprzęgniesz ten zestaw do pracy, już po kilku godzinach zobaczysz jej pierwsze efekty!\r\n\r\nCo zrobić, żeby osiągnąć jeszcze więcej? Nic prostszego! Sięgnij po tę książkę i zacznij swoją przygodę z PHP oraz MySQL. Na samym początku dowiesz się, jak przygotować środowisko pracy, oraz poznasz podstawy programowania w języku PHP. Potem płynnie przejdziesz do zdobywania wiedzy na temat programowania obiektowego, wyrażeń regularnych, obsługi formularzy HTML oraz integracji z usługami katalogowymi LDAP. Nauczysz się wykorzystywać mechanizm sesji, technologię AJAX oraz Zend Framework. Po przeprowadzeniu Cię przez komplet informacji na temat PHP autor przedstawi Ci bazę danych MySQL. Poznasz jej mocne elementy, sposoby podłączania klientów or', 'twarda', 2, 'podstawy_PHP.png', 4, 668, '253 x 938 x 029', 'nowa', 2),
-(35, 32, 'CSS. Nieoficjalny podręcznik', 89, '2018', 'CSS jest świetnym narzędziem do budowania profesjonalnych stron internetowych. Opanowanie jego tajników może wydawać się dość trudnym zadaniem, jednak wysiłek ten bardzo się opłaca. CSS wciąż zaskakuje nieoczekiwanymi możliwościami, dalece wykraczającymi poza proste ozdabianie stron WWW. Technologia ta pozwala na tworzenie znakomicie wyglądających witryn o przebogatej funkcjonalności. Co jakiś czas pojawiają się nowe narzędzia i modele, jeszcze bardziej poszerzające warsztat projektanta. CSS jest jedną z tych technik, które wymagają nieustannego uczenia się i zapoznawania z nowościami.\r\n\r\nNiniejsza książka to niezwykle wartościowy podręcznik dla projektantów stron o różnym poziomie zaawansowania. Zawarto tu zwięzłe wprowadzenie do języka HTML w zakresie niezbędnym dla każdego, kto chce programować w CSS. Przedstawiono wyczerpujące i dokładne wskazówki tworzenia stron WWW w CSS, wyjaśniając poszczególne niuanse tej technologii. W dobie rozwoju urządzeń mobilnych niezwykle cenne są infor', 'twarda', 1, 'CSS_Nieoficjalny_podręcznik.png', 0, 656, '370 x 337 x 76', 'nowa', 29),
-(36, 42, 'CSS od podszewki', 39.5, '2016', 'W ostatnich latach CSS bardzo się rozwinął. Mimo że istnieje od kilku dekad, wciąż jest ważnym elementem warsztatu profesjonalnych projektantów stron internetowych. Co prawda przyswojenie podstaw CSS nie jest specjalnie trudne, ale osiągnięcie prawdziwej biegłości w korzystaniu z tego języka wymaga stałego uczenia się i ciągłych ćwiczeń. Trzeba dobrze zrozumieć wszystkie części kodu CSS, a także sposób, w jaki są do siebie dopasowane. Wysiłek włożony w doskonałe opanowanie języka szybko się zwróci: CSS pozwala zwiększyć wygodę użytkownika, przyspieszyć proces projektowania, uniknąć potencjalnych błędów, a także urozmaicić i ożywić aplikację.\r\n\r\nTa książka jest kompleksowym przewodnikiem po języku CSS dla osób na różnych poziomach biegłości w stosowaniu kaskadowych arkuszy stylów. Zawiera kluczowe informacje o podstawach języka, dzięki czemu będzie nieocenioną pomocą dla początkujących. Szczegółowo opisano tu również nowości i ulepszenia, które pojawiły się w języku na przestrzeni ostat', 'twarda', 1, 'css-od-podszewki-b-iext135439318.webp', 0, 480, '837 x 773 x 253', 'nowa', 1),
-(48, 41, 'Czysty kod. Podręcznik dobrego programisty', 49.45, '2014', 'Poznaj najlepsze metody tworzenia doskonałego kodu\r\n\r\nJak pisać dobry kod, a zły przekształcić w dobry?\r\nJak formatować kod, aby osiągnąć maksymalną czytelność?\r\nJak implementować pełną obsługę błędów bez zaśmiecania logiki kodu?\r\nO tym, ile problemów sprawia niedbale napisany kod, wie każdy programista. Nie wszyscy jednak wiedzą, jak napisać ten świetny, „czysty” kod i czym właściwie powinien się on charakteryzować. Co więcej – jak odróżnić dobry kod od złego? Odpowiedź na te pytania oraz sposoby tworzenia czystego, czytelnego kodu znajdziesz właśnie w tej książce. Podręcznik jest obowiązkową pozycją dla każdego, kto chce poznać techniki rzetelnego i efektywnego programowania.\r\n\r\nW książce „Czysty kod. Podręcznik dobrego programisty” szczegółowo omówione zostały zasady, wzorce i najlepsze praktyki pisania czystego kodu. Podręcznik zawiera także kilka analiz przypadków o coraz większej złożoności, z których każda jest doskonałym ćwiczeniem porządkowania zanieczyszczonego bądź nieudaneg', 'miękka', 1, 'czysty-kod-podrecznik-dobrego-programisty-b-iext133438979.webp', 0, 425, '237 x 20 x 167', 'nowa', 1),
-(114, 40, 'Sztuczna inteligencja od podstaw', 32.57, '2023', 'Nie ma wątpliwości, że sztuczna inteligencja (AI) zrewolucjonizuje w najbliższych dekadach nasze życie. Wśród największych autorytetów świata nauki panuje przekonanie, że stoimy w obliczu przełomu porównywalnego z wynalezieniem i zastosowaniami elektryczności.\r\n\r\nSztuczna inteligencja od podstaw to pozycja, która począwszy od opisu klasycznych metod SI, takich jak algorytm genetyczny, algorytm mrówkowy, systemy ekspertowe czy sztuczne życie, zapoznaje Czytelnika z najbardziej zaawansowanymi modelami opartymi na sztucznych sieciach neuronowych.', 'miękka', 1, 'sztuczna-inteligencja-od-podstaw-b-iext131736947.webp', 4, 192, '210 x 10 x 150', 'nowa', 1),
-(116, 38, 'PHP i MySQL. Tworzenie stron WWW. Vademecum profesjonalisty', 109, '2021', 'Język PHP i serwer bazy danych MySQL to niezwykle popularne narzędzia o otwartym kodzie źródłowym. Wiele świetnych, dynamicznych stron WWW powstało właśnie dzięki połączeniu tych dwóch narzędzi. Ogromne możliwości PHP oraz elastyczność i szybkość MySQL, bezustanne rozwijanie tych technologii, a także niezawodna i chętna do pomocy społeczność sprawiają, że tworzenie profesjonalnych, interaktywnych witryn WWW z wykorzystaniem synergii PHP i MySQL jest pracą przyjemną, efektywną i satysfakcjonującą!', 'twarda', 1, 'php-i-mysql-tworzenie-stron-www-vademecum-profesjonalisty-b-iext67290707.webp', 0, 712, '125 x 730 x 310', 'nowa', 1),
-(117, 39, 'Python od podstaw', 32.7, '2022', 'Ta książka zacznie Twoją przygodę z programowaniem. Prezentuje wiedzę w praktyczny, przystępny i zrozumiały sposób. Pomaga zbudować solidne podwaliny pod naukę języka Python oraz wytyczyć dalszy kierunek. Jeśli chcesz nauczyć się programowania albo zastanawia Cię czym ono jest, to jest to książka dla Ciebie.\r\n\r\nRazem z tą książką wejdziesz krok po kroku do świata języka Python. Pokaże Ci, że programowanie to świetna zabawa, a przy tym znacznie bardziej przydatna i dostępna umiejętność niż może się wydawać. Dowiesz się z niej:', 'miękka', 2, 'python-od-podstaw-b-iext117047464.webp', 0, 312, '200 x 20 x 140', 'nowa', 1),
-(124, 37, 'Linux dla admina. Najlepsze praktyki. O czym pamiętać podczas projektowania i zarządzania systemami', 56, '2023', 'Popularność systemów linuksowych cały czas rośnie. Mimo to bardzo niewielu administratorów stara się dokładnie opanować sztukę zarządzania Linuksem, większość ogranicza się do kilku rutynowych zadań. Tak administrowane systemy oczywiście mogą dłuższy czas działać poprawnie, jednak dopiero dogłębne zapoznanie się ze sposobem działania Linuksa pozwoli na pełniejsze skorzystanie z jego niesamowitych możliwości.\r\n\r\nTo książka przeznaczona dla profesjonalnych administratorów i użytkowników Linuksa. Dzięki niej szybciej zrozumiesz, w jakim stopniu dobre zarządzanie systemami na poziomie systemu operacyjnego może wynieść działanie infrastruktury biznesowej na zupełnie inny poziom. Znajdziesz tu najlepsze praktyki zarządzania systemami ― począwszy od wyboru optymalnej dystrybucji Linuksa, poprzez zaprojektowanie architektury systemu, skończywszy na strategiach zarządzania przeprowadzanymi w nim poprawkami i aktualizacjami.', 'miękka', 1, 'linux-dla-admina-najlepsze-praktyki-o-czym-pamietac-podczas-projektowania-i-zarzadzania-systemami-b-iext140747274.webp', 0, 382, '230 x 28 x 160', 'nowa', 34),
-(125, 43, 'Podstawy kryptografii', 51.13, '2017', 'Przekonaj się, jak fascynująca jest kryptografia!\r\n\r\nPoznaj historię rozwoju kryptografii\r\nOpanuj jej matematyczne podstawy\r\nRozpracuj najważniejsze algorytmy kryptograficzne\r\nDowiedz się, jak zastosować je w praktyce\r\nKryptografia to dziedzina nauki, której sedno stanowią sposoby bezpiecznego przekazywania informacji. Jest ona niemal tak stara, jak nasza cywilizacja, a dziś rozwija się w sposób niezwykle dynamiczny. Gdy tylko narodziły się pierwsze metody zapisu i komunikowania się, pojawiła się też konieczność zabezpieczenia informacji przed tymi, którzy mogliby wykorzystać je na niekorzyść osób dysponujących tymi informacjami. Od bezpieczeństwa ważnych informacji zależały często losy całych państw i narodów. O rozstrzygnięciach wielkich bitew nierzadko decydowały inteligencja i determinacja pojedynczych osób, które potrafiły odpowiednio skutecznie szyfrować (bądź też deszyfrować) nadawane (lub przechwytywane) komunikaty.', 'miękka', 1, 'podstawy-kryptografii-b-iext135315404.webp', NULL, 328, '240 x 20 x 160', 'nowa', 22),
-(126, 44, 'Adobe Photoshop PL. Oficjalny podręcznik. Edycja 2023', 68.48, '2023', '\"Adobe Photoshop\" w pełni zasłużył na miano kultowego. Jest używany przez najsławniejszych artystów. Oferuje wysoce zaawansowane narzędzia do obróbki obrazów cyfrowych, w tym funkcje wzbogacone o algorytmy uczenia maszynowego. Dzięki niemu przygotujesz materiały na potrzeby druku, internetu i wideo. Do tego obecnie korzystanie ze wspaniałych możliwości Photoshopa jest prostsze niż kiedykolwiek wcześniej.\r\n\r\nTo kolejne, zaktualizowane wydanie oficjalnego podręcznika firmy Adobe - najlepszej pomocy do nauki Photoshopa. Zawiera setki przydatnych wskazówek, dzięki którym praca z Photoshopem będzie efektywniejsza i o wiele bardziej satysfakcjonująca. Czytelnik dowie się, jak korygować cyfrowe obrazy, w tym usuwać bez śladu niepotrzebne obiekty ze zdjęć, a także pozna nowe funkcje Photoshopa, takie jak usprawnione narzędzia do tworzenia zaznaczeń, nowe filtry neuronalne i funkcje maskowania dostępne w Adobe Camera Raw. Podręcznik składa się z 15 lekcji, dzięki którym można się nauczyć zarówn', 'miękka', 1, 'adobe-photoshop-pl-oficjalny-podrecznik-edycja-2023-b-iext140836051.webp', 4, 408, '230 x 15 x 175', 'nowa', 29),
-(127, 45, 'Analiza danych z wykorzystaniem SQL-a. Zaawansowane techniki przekształcania danych we wnioski', 45.77, '2022', 'Język SQL został stworzony jako narzędzie do przetwarzania danych. Mimo że zwykle jest używany do pracy z bazami danych, jego możliwości są o wiele większe. Poprawny kod SQL ułatwia przetwarzanie potężnych zbiorów danych z dużą szybkością. Szczególnie obiecującą perspektywą jest zastosowanie języka SQL na wielkich zbiorach danych przechowywanych w chmurze. Dzięki nieco bardziej złożonym konstrukcjom SQL analityk danych może z dużą efektywnością wydobywać z nich wiedzę.\r\n\r\nTa praktyczna książka jest przeznaczona dla analityków danych i danologów, którzy chcą używać SQL-a do eksploracji dużych zbiorów danych. Pokazuje zarówno popularne, jak i nieco mniej znane techniki budowania zapytań SQL, dzięki czemu możliwe staje się rozwiązywanie nawet bardzo zawiłych problemów i optymalne wykorzystanie właściwości tego języka w pracy na danych. W nowy, innowacyjny sposób przedstawiono tu takie pojęcia jak złączenia, funkcje okna, podzapytania i wyrażenia regularne. Zademonstrowano, jak łączyć różn', 'miękka', 1, 'analiza-danych-z-wykorzystaniem-sql-a-zaawansowane-techniki-przeksztalcania-danych-we-wnioski-b-iext138845735.webp', 0, 304, '240 x 170 x 5', 'nowa', 34),
-(129, 46, 'Wanda Panda wita lato', 8.99, '2023', 'Wakacje czas zacząć! Wanda spędzi z rodziną aktywnie letni dzień. Odkryje zapach skoszonej trawy, smak świeżych owoców, ciepły deszczyk i zabawy na świeżym powietrzu. Bo takie właśnie jest lato!\n\n„Wanda Panda\" to seria książeczek dla najmłodszych do rodzinnego czytania i wspólnego odkrywania świata. Autorka skupia się na codzienności małych dzieci, które każdego dnia napotykają różnego rodzaju wyzwania i poznają zaskakujące fakty o sobie samych i o tym, co nas otacza.\n\nKsiążka jest tworzona we współpracy z psychologiem dziecięcym, dzięki czemu może z powodzeniem wspierać dorosłych w wychowaniu najmłodszych.', 'twarda', 3, 'Wanda Panda wita lato.png', NULL, 25, '125 x 730 x 310', 'nowa', 35),
-(130, 46, 'Wielka księga łamigłówek przedszkolaka', 19.99, '2023', 'Wyruszcie w edukacyjną przygodę z \"Wielką księgą łamigłówek przedszkolaka\"! To fantastyczna propozycja dla dzieci, które nie lubią się nudzić. Znajdziecie tu fantastyczne łamigłówki, ciekawe zadania, kolorowanki, wyszukiwanki to wspaniały sposób na spędzenie czasu i super zabawę!\n\nZadania wspierają kształtowanie elementarnych umiejętności poznawczych przedszkolaków. Dzięki zadaniom dziecko będzie kształtować logiczne myślenie i rozwijać motorykę dłoni, a przede wszystkim świetnie się bawić!', 'Miekka', 3, 'Wielka księga łamigłówek przedszkolaka.png', NULL, 128, '250 x 215 x 150', 'nowa', 35),
-(131, 47, 'Pan Oskar na wakacjach', 25.59, '2023', 'Wyrusz z Panem Oskarem w niezapomnianą podróż! A przy okazji poznaj angielskie słówka.\n\nPan Oskar postanawia udać się na wyprawę życia. Dociera nad morze i w góry, biwakuje, żegluje i zjeżdża na nartach. Przy okazji odwiedza swoich przyjaciół. Dołącz do Oskara oraz jego złotej rybki Kory – wspólnie odkryjcie nie tylko nowe miejsca, ale także angielskie słowa i zwroty.\n\nWesoła, rewelacyjnie zilustrowana opowieść, której dodatkowym atutem jest nauka podstawowych wyrażeń z języka angielskiego. Autorem książki jest znany i ceniony na całym świecie Jim Field (twórca m.in. bestsellerowych picturebooków „Mysz, która chciała być lwem”, „Pandki, które obiecały”).', 'Twarda', 1, 'Pan Oskar na wakacjach.png', NULL, 32, '295 x 255 x 9', 'nowa', 35),
-(132, 48, 'Quiz dla 3-latka', 22.42, '2023', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Miekka', 3, 'Quiz dla 3-latka.png', NULL, 20, '125 x 730 x 310', 'nowa', 35),
-(133, 49, 'SQL w mgnieniu oka. Opanuj język zapytań w 10 minut dziennie', 38.12, '2020', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Miekka', 1, 'SQL w mgnieniu oka. Opanuj język zapytań w 10 minut dziennie.png', NULL, 256, '240 x 150 x 10', 'nowa', 34);
+(2, 2, 'PHP i MySQL. Od podstaw. Wydanie IV', 54.5, 2016, 'PHP i MySQL to duet, na którym opiera się ogromna większość ciut bardziej zaawansowanych stron w sieci. Czemu zawdzięcza on swą popularność? Niezwykłemu dopasowaniu do potrzeb, łatwej konfiguracji oraz ogromnej społeczności, zawsze chętnej do pomocy. Kiedy zaprzęgniesz ten zestaw do pracy, już po kilku godzinach zobaczysz jej pierwsze efekty!\r\n\r\nCo zrobić, żeby osiągnąć jeszcze więcej? Nic prostszego! Sięgnij po tę książkę i zacznij swoją przygodę z PHP oraz MySQL. Na samym początku dowiesz się, jak przygotować środowisko pracy, oraz poznasz podstawy programowania w języku PHP. Potem płynnie przejdziesz do zdobywania wiedzy na temat programowania obiektowego, wyrażeń regularnych, obsługi formularzy HTML oraz integracji z usługami katalogowymi LDAP. Nauczysz się wykorzystywać mechanizm sesji, technologię AJAX oraz Zend Framework. Po przeprowadzeniu Cię przez komplet informacji na temat PHP autor przedstawi Ci bazę danych MySQL. Poznasz jej mocne elementy, sposoby podłączania klientów or', 'twarda', 2, 'podstawy_PHP.png', 4, 668, '253 x 938 x 029', 'nowa', 2),
+(35, 32, 'CSS. Nieoficjalny podręcznik', 89, 2018, 'CSS jest świetnym narzędziem do budowania profesjonalnych stron internetowych. Opanowanie jego tajników może wydawać się dość trudnym zadaniem, jednak wysiłek ten bardzo się opłaca. CSS wciąż zaskakuje nieoczekiwanymi możliwościami, dalece wykraczającymi poza proste ozdabianie stron WWW. Technologia ta pozwala na tworzenie znakomicie wyglądających witryn o przebogatej funkcjonalności. Co jakiś czas pojawiają się nowe narzędzia i modele, jeszcze bardziej poszerzające warsztat projektanta. CSS jest jedną z tych technik, które wymagają nieustannego uczenia się i zapoznawania z nowościami.\r\n\r\nNiniejsza książka to niezwykle wartościowy podręcznik dla projektantów stron o różnym poziomie zaawansowania. Zawarto tu zwięzłe wprowadzenie do języka HTML w zakresie niezbędnym dla każdego, kto chce programować w CSS. Przedstawiono wyczerpujące i dokładne wskazówki tworzenia stron WWW w CSS, wyjaśniając poszczególne niuanse tej technologii. W dobie rozwoju urządzeń mobilnych niezwykle cenne są infor', 'twarda', 1, 'CSS_Nieoficjalny_podręcznik.png', 0, 656, '370 x 337 x 76', 'nowa', 29),
+(36, 42, 'CSS od podszewki', 39.5, 2016, 'W ostatnich latach CSS bardzo się rozwinął. Mimo że istnieje od kilku dekad, wciąż jest ważnym elementem warsztatu profesjonalnych projektantów stron internetowych. Co prawda przyswojenie podstaw CSS nie jest specjalnie trudne, ale osiągnięcie prawdziwej biegłości w korzystaniu z tego języka wymaga stałego uczenia się i ciągłych ćwiczeń. Trzeba dobrze zrozumieć wszystkie części kodu CSS, a także sposób, w jaki są do siebie dopasowane. Wysiłek włożony w doskonałe opanowanie języka szybko się zwróci: CSS pozwala zwiększyć wygodę użytkownika, przyspieszyć proces projektowania, uniknąć potencjalnych błędów, a także urozmaicić i ożywić aplikację.\r\n\r\nTa książka jest kompleksowym przewodnikiem po języku CSS dla osób na różnych poziomach biegłości w stosowaniu kaskadowych arkuszy stylów. Zawiera kluczowe informacje o podstawach języka, dzięki czemu będzie nieocenioną pomocą dla początkujących. Szczegółowo opisano tu również nowości i ulepszenia, które pojawiły się w języku na przestrzeni ostat', 'twarda', 1, 'css-od-podszewki-b-iext135439318.webp', 0, 480, '837 x 773 x 253', 'nowa', 1),
+(48, 41, 'Czysty kod. Podręcznik dobrego programisty', 49.45, 2014, 'Poznaj najlepsze metody tworzenia doskonałego kodu\r\n\r\nJak pisać dobry kod, a zły przekształcić w dobry?\r\nJak formatować kod, aby osiągnąć maksymalną czytelność?\r\nJak implementować pełną obsługę błędów bez zaśmiecania logiki kodu?\r\nO tym, ile problemów sprawia niedbale napisany kod, wie każdy programista. Nie wszyscy jednak wiedzą, jak napisać ten świetny, „czysty” kod i czym właściwie powinien się on charakteryzować. Co więcej – jak odróżnić dobry kod od złego? Odpowiedź na te pytania oraz sposoby tworzenia czystego, czytelnego kodu znajdziesz właśnie w tej książce. Podręcznik jest obowiązkową pozycją dla każdego, kto chce poznać techniki rzetelnego i efektywnego programowania.\r\n\r\nW książce „Czysty kod. Podręcznik dobrego programisty” szczegółowo omówione zostały zasady, wzorce i najlepsze praktyki pisania czystego kodu. Podręcznik zawiera także kilka analiz przypadków o coraz większej złożoności, z których każda jest doskonałym ćwiczeniem porządkowania zanieczyszczonego bądź nieudaneg', 'miękka', 1, 'czysty-kod-podrecznik-dobrego-programisty-b-iext133438979.webp', 0, 425, '237 x 20 x 167', 'nowa', 1),
+(114, 40, 'Sztuczna inteligencja od podstaw', 32.57, 2023, 'Nie ma wątpliwości, że sztuczna inteligencja (AI) zrewolucjonizuje w najbliższych dekadach nasze życie. Wśród największych autorytetów świata nauki panuje przekonanie, że stoimy w obliczu przełomu porównywalnego z wynalezieniem i zastosowaniami elektryczności.\r\n\r\nSztuczna inteligencja od podstaw to pozycja, która począwszy od opisu klasycznych metod SI, takich jak algorytm genetyczny, algorytm mrówkowy, systemy ekspertowe czy sztuczne życie, zapoznaje Czytelnika z najbardziej zaawansowanymi modelami opartymi na sztucznych sieciach neuronowych.', 'miękka', 1, 'sztuczna-inteligencja-od-podstaw-b-iext131736947.webp', 4, 192, '210 x 10 x 150', 'nowa', 1),
+(116, 38, 'PHP i MySQL. Tworzenie stron WWW. Vademecum profesjonalisty', 109, 2021, 'Język PHP i serwer bazy danych MySQL to niezwykle popularne narzędzia o otwartym kodzie źródłowym. Wiele świetnych, dynamicznych stron WWW powstało właśnie dzięki połączeniu tych dwóch narzędzi. Ogromne możliwości PHP oraz elastyczność i szybkość MySQL, bezustanne rozwijanie tych technologii, a także niezawodna i chętna do pomocy społeczność sprawiają, że tworzenie profesjonalnych, interaktywnych witryn WWW z wykorzystaniem synergii PHP i MySQL jest pracą przyjemną, efektywną i satysfakcjonującą!', 'twarda', 1, 'php-i-mysql-tworzenie-stron-www-vademecum-profesjonalisty-b-iext67290707.webp', 0, 712, '125 x 730 x 310', 'nowa', 1),
+(117, 39, 'Python od podstaw', 32.7, 2022, 'Ta książka zacznie Twoją przygodę z programowaniem. Prezentuje wiedzę w praktyczny, przystępny i zrozumiały sposób. Pomaga zbudować solidne podwaliny pod naukę języka Python oraz wytyczyć dalszy kierunek. Jeśli chcesz nauczyć się programowania albo zastanawia Cię czym ono jest, to jest to książka dla Ciebie.\r\n\r\nRazem z tą książką wejdziesz krok po kroku do świata języka Python. Pokaże Ci, że programowanie to świetna zabawa, a przy tym znacznie bardziej przydatna i dostępna umiejętność niż może się wydawać. Dowiesz się z niej:', 'miękka', 2, 'python-od-podstaw-b-iext117047464.webp', 0, 312, '200 x 20 x 140', 'nowa', 1),
+(124, 37, 'Linux dla admina. Najlepsze praktyki. O czym pamiętać podczas projektowania i zarządzania systemami', 56, 2023, 'Popularność systemów linuksowych cały czas rośnie. Mimo to bardzo niewielu administratorów stara się dokładnie opanować sztukę zarządzania Linuksem, większość ogranicza się do kilku rutynowych zadań. Tak administrowane systemy oczywiście mogą dłuższy czas działać poprawnie, jednak dopiero dogłębne zapoznanie się ze sposobem działania Linuksa pozwoli na pełniejsze skorzystanie z jego niesamowitych możliwości.\r\n\r\nTo książka przeznaczona dla profesjonalnych administratorów i użytkowników Linuksa. Dzięki niej szybciej zrozumiesz, w jakim stopniu dobre zarządzanie systemami na poziomie systemu operacyjnego może wynieść działanie infrastruktury biznesowej na zupełnie inny poziom. Znajdziesz tu najlepsze praktyki zarządzania systemami ― począwszy od wyboru optymalnej dystrybucji Linuksa, poprzez zaprojektowanie architektury systemu, skończywszy na strategiach zarządzania przeprowadzanymi w nim poprawkami i aktualizacjami.', 'miękka', 1, 'linux-dla-admina-najlepsze-praktyki-o-czym-pamietac-podczas-projektowania-i-zarzadzania-systemami-b-iext140747274.webp', 0, 382, '230 x 28 x 160', 'nowa', 34),
+(125, 43, 'Podstawy kryptografii', 51.13, 2017, 'Przekonaj się, jak fascynująca jest kryptografia!\r\n\r\nPoznaj historię rozwoju kryptografii\r\nOpanuj jej matematyczne podstawy\r\nRozpracuj najważniejsze algorytmy kryptograficzne\r\nDowiedz się, jak zastosować je w praktyce\r\nKryptografia to dziedzina nauki, której sedno stanowią sposoby bezpiecznego przekazywania informacji. Jest ona niemal tak stara, jak nasza cywilizacja, a dziś rozwija się w sposób niezwykle dynamiczny. Gdy tylko narodziły się pierwsze metody zapisu i komunikowania się, pojawiła się też konieczność zabezpieczenia informacji przed tymi, którzy mogliby wykorzystać je na niekorzyść osób dysponujących tymi informacjami. Od bezpieczeństwa ważnych informacji zależały często losy całych państw i narodów. O rozstrzygnięciach wielkich bitew nierzadko decydowały inteligencja i determinacja pojedynczych osób, które potrafiły odpowiednio skutecznie szyfrować (bądź też deszyfrować) nadawane (lub przechwytywane) komunikaty.', 'miękka', 1, 'podstawy-kryptografii-b-iext135315404.webp', NULL, 328, '240 x 20 x 160', 'nowa', 22),
+(126, 44, 'Adobe Photoshop PL. Oficjalny podręcznik. Edycja 2023', 68.48, 2023, '\"Adobe Photoshop\" w pełni zasłużył na miano kultowego. Jest używany przez najsławniejszych artystów. Oferuje wysoce zaawansowane narzędzia do obróbki obrazów cyfrowych, w tym funkcje wzbogacone o algorytmy uczenia maszynowego. Dzięki niemu przygotujesz materiały na potrzeby druku, internetu i wideo. Do tego obecnie korzystanie ze wspaniałych możliwości Photoshopa jest prostsze niż kiedykolwiek wcześniej.\r\n\r\nTo kolejne, zaktualizowane wydanie oficjalnego podręcznika firmy Adobe - najlepszej pomocy do nauki Photoshopa. Zawiera setki przydatnych wskazówek, dzięki którym praca z Photoshopem będzie efektywniejsza i o wiele bardziej satysfakcjonująca. Czytelnik dowie się, jak korygować cyfrowe obrazy, w tym usuwać bez śladu niepotrzebne obiekty ze zdjęć, a także pozna nowe funkcje Photoshopa, takie jak usprawnione narzędzia do tworzenia zaznaczeń, nowe filtry neuronalne i funkcje maskowania dostępne w Adobe Camera Raw. Podręcznik składa się z 15 lekcji, dzięki którym można się nauczyć zarówn', 'miękka', 1, 'adobe-photoshop-pl-oficjalny-podrecznik-edycja-2023-b-iext140836051.webp', 4, 408, '230 x 15 x 175', 'nowa', 29),
+(127, 45, 'Analiza danych z wykorzystaniem SQL-a. Zaawansowane techniki przekształcania danych we wnioski', 45.77, 2022, 'Język SQL został stworzony jako narzędzie do przetwarzania danych. Mimo że zwykle jest używany do pracy z bazami danych, jego możliwości są o wiele większe. Poprawny kod SQL ułatwia przetwarzanie potężnych zbiorów danych z dużą szybkością. Szczególnie obiecującą perspektywą jest zastosowanie języka SQL na wielkich zbiorach danych przechowywanych w chmurze. Dzięki nieco bardziej złożonym konstrukcjom SQL analityk danych może z dużą efektywnością wydobywać z nich wiedzę.\r\n\r\nTa praktyczna książka jest przeznaczona dla analityków danych i danologów, którzy chcą używać SQL-a do eksploracji dużych zbiorów danych. Pokazuje zarówno popularne, jak i nieco mniej znane techniki budowania zapytań SQL, dzięki czemu możliwe staje się rozwiązywanie nawet bardzo zawiłych problemów i optymalne wykorzystanie właściwości tego języka w pracy na danych. W nowy, innowacyjny sposób przedstawiono tu takie pojęcia jak złączenia, funkcje okna, podzapytania i wyrażenia regularne. Zademonstrowano, jak łączyć różn', 'miękka', 1, 'analiza-danych-z-wykorzystaniem-sql-a-zaawansowane-techniki-przeksztalcania-danych-we-wnioski-b-iext138845735.webp', 0, 304, '240 x 170 x 5', 'nowa', 34),
+(129, 46, 'Wanda Panda wita lato', 8.99, 2023, 'Wakacje czas zacząć! Wanda spędzi z rodziną aktywnie letni dzień. Odkryje zapach skoszonej trawy, smak świeżych owoców, ciepły deszczyk i zabawy na świeżym powietrzu. Bo takie właśnie jest lato!\n\n„Wanda Panda\" to seria książeczek dla najmłodszych do rodzinnego czytania i wspólnego odkrywania świata. Autorka skupia się na codzienności małych dzieci, które każdego dnia napotykają różnego rodzaju wyzwania i poznają zaskakujące fakty o sobie samych i o tym, co nas otacza.\n\nKsiążka jest tworzona we współpracy z psychologiem dziecięcym, dzięki czemu może z powodzeniem wspierać dorosłych w wychowaniu najmłodszych.', 'twarda', 3, 'Wanda Panda wita lato.png', NULL, 25, '125 x 730 x 310', 'nowa', 35),
+(130, 46, 'Wielka księga łamigłówek przedszkolaka', 19.99, 2023, 'Wyruszcie w edukacyjną przygodę z \"Wielką księgą łamigłówek przedszkolaka\"! To fantastyczna propozycja dla dzieci, które nie lubią się nudzić. Znajdziecie tu fantastyczne łamigłówki, ciekawe zadania, kolorowanki, wyszukiwanki to wspaniały sposób na spędzenie czasu i super zabawę!\n\nZadania wspierają kształtowanie elementarnych umiejętności poznawczych przedszkolaków. Dzięki zadaniom dziecko będzie kształtować logiczne myślenie i rozwijać motorykę dłoni, a przede wszystkim świetnie się bawić!', 'Miekka', 3, 'Wielka księga łamigłówek przedszkolaka.png', NULL, 128, '250 x 215 x 150', 'nowa', 35),
+(131, 47, 'Pan Oskar na wakacjach', 25.59, 2023, 'Wyrusz z Panem Oskarem w niezapomnianą podróż! A przy okazji poznaj angielskie słówka.\n\nPan Oskar postanawia udać się na wyprawę życia. Dociera nad morze i w góry, biwakuje, żegluje i zjeżdża na nartach. Przy okazji odwiedza swoich przyjaciół. Dołącz do Oskara oraz jego złotej rybki Kory – wspólnie odkryjcie nie tylko nowe miejsca, ale także angielskie słowa i zwroty.\n\nWesoła, rewelacyjnie zilustrowana opowieść, której dodatkowym atutem jest nauka podstawowych wyrażeń z języka angielskiego. Autorem książki jest znany i ceniony na całym świecie Jim Field (twórca m.in. bestsellerowych picturebooków „Mysz, która chciała być lwem”, „Pandki, które obiecały”).', 'Twarda', 1, 'Pan Oskar na wakacjach.png', NULL, 32, '295 x 255 x 9', 'nowa', 35),
+(132, 48, 'Quiz dla 3-latka', 22.42, 2023, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Miekka', 3, 'Quiz dla 3-latka.png', NULL, 20, '125 x 730 x 310', 'nowa', 35),
+(133, 49, 'SQL w mgnieniu oka. Opanuj język zapytań w 10 minut dziennie', 38.12, 2020, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Miekka', 1, 'SQL w mgnieniu oka. Opanuj język zapytań w 10 minut dziennie.png', NULL, 256, '240 x 150 x 10', 'nowa', 34);
 
 -- --------------------------------------------------------
 
@@ -180,7 +180,7 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `categories`
+-- Zrzut danych tabeli `categories`
 --
 
 INSERT INTO `categories` (`id_kategorii`, `nazwa`) VALUES
@@ -206,14 +206,6 @@ CREATE TABLE `comments` (
   `data` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`id_komentarza`, `id_ksiazki`, `id_klienta`, `tresc`, `data`) VALUES
-(327, 2, 400, 'Lorem ipsum', '2024-06-01 15:58:53'),
-(328, 114, 400, 'asd asd asd ', '2024-06-17 12:27:31');
-
 -- --------------------------------------------------------
 
 --
@@ -236,7 +228,7 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `customers`
+-- Zrzut danych tabeli `customers`
 --
 
 INSERT INTO `customers` (`id_klienta`, `imie`, `nazwisko`, `wojewodztwo`, `kraj`, `PESEL`, `data_urodzenia`, `telefon`, `email`, `login`, `haslo`, `adres_id`) VALUES
@@ -264,15 +256,15 @@ CREATE TABLE `delivery_methods` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `delivery_methods`
+-- Zrzut danych tabeli `delivery_methods`
 --
 
 INSERT INTO `delivery_methods` (`id_formy_dostawy`, `nazwa`, `cena`) VALUES
-(1, 'Kurier DPD', 5.00),
-(2, 'Kurier Inpost', 16.50),
-(3, 'Paczkomaty 24/7 (Inpost)', 14.99),
-(4, 'Odbiór w punkcie (Poczta polska)', 9.99),
-(5, 'Odbiór w sklepie (Księgarnia)', 0.00);
+(1, 'Kurier DPD', '5.00'),
+(2, 'Kurier Inpost', '16.50'),
+(3, 'Paczkomaty 24/7 (Inpost)', '14.99'),
+(4, 'Odbiór w punkcie (Poczta polska)', '9.99'),
+(5, 'Odbiór w sklepie (Księgarnia)', '0.00');
 
 -- --------------------------------------------------------
 
@@ -294,12 +286,12 @@ CREATE TABLE `employees` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `employees`
+-- Zrzut danych tabeli `employees`
 --
 
 INSERT INTO `employees` (`id_pracownika`, `imie`, `nazwisko`, `email`, `haslo`, `wynagrodzenie`, `stanowisko`, `data_zatrudnienia`, `telefon`, `adres_id`) VALUES
-(4, 'Jan', 'Nowak', 'jan.nowak@wp.pl', '$2y$10$NEm7t60JIe9OD7OdHyHn.OosZRExCCnW13E/mDtH2PJ886IjbrzIu', 2758.00, 'sprzedawca', '2023-04-25', '647918229', 32),
-(6, 'Adam', 'Kowalski', 'adam.nowak@wp.pl', '$2y$10$r2v0wivXQWdE2nAwe4vXS.uKGcudxJSRjcFlOL4gtAdMgfle.SiBm', 3758.00, 'sprzedawca', '2023-04-25', '647918229', 33);
+(4, 'Jan', 'Nowak', 'jan.nowak@wp.pl', '$2y$10$NEm7t60JIe9OD7OdHyHn.OosZRExCCnW13E/mDtH2PJ886IjbrzIu', '2758.00', 'sprzedawca', '2023-04-25', '647918229', 32),
+(6, 'Adam', 'Kowalski', 'adam.nowak@wp.pl', '$2y$10$r2v0wivXQWdE2nAwe4vXS.uKGcudxJSRjcFlOL4gtAdMgfle.SiBm', '3758.00', 'sprzedawca', '2023-04-25', '647918229', 33);
 
 -- --------------------------------------------------------
 
@@ -321,7 +313,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `orders`
+-- Zrzut danych tabeli `orders`
 --
 
 INSERT INTO `orders` (`id_zamowienia`, `id_klienta`, `data_zlozenia_zamowienia`, `termin_dostawy`, `data_wysłania_zamowienia`, `data_dostarczenia`, `id_formy_dostawy`, `status`, `komentarz`, `id_pracownika`) VALUES
@@ -341,7 +333,7 @@ CREATE TABLE `order_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `order_details`
+-- Zrzut danych tabeli `order_details`
 --
 
 INSERT INTO `order_details` (`id_zamowienia`, `id_ksiazki`, `ilosc`) VALUES
@@ -365,11 +357,11 @@ CREATE TABLE `password_reset_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `password_reset_tokens`
+-- Zrzut danych tabeli `password_reset_tokens`
 --
 
 INSERT INTO `password_reset_tokens` (`token_id`, `token`, `email`, `exp_time`) VALUES
-(989, 'b50f7a0f22751d8e627da217273cb6c89030567820c72ef7688ad27028c88208', 'adam.nowak1@wp.pl', '2024-06-01 18:31:40');
+(990, '3200b8f5c19c7595191585a62946ae9701567a6458fac106b23787e796579eb0', 'adam.nowak1@wp.pl', '2024-06-22 19:43:55');
 
 -- --------------------------------------------------------
 
@@ -386,7 +378,7 @@ CREATE TABLE `payments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `payments`
+-- Zrzut danych tabeli `payments`
 --
 
 INSERT INTO `payments` (`id_platnosci`, `id_zamowienia`, `data_platnosci`, `kwota`, `id_metody_platnosci`) VALUES
@@ -406,13 +398,13 @@ CREATE TABLE `payment_methods` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `payment_methods`
+-- Zrzut danych tabeli `payment_methods`
 --
 
 INSERT INTO `payment_methods` (`id_metody_platnosci`, `nazwa`, `oplata`) VALUES
-(1, 'Blik', 0.00),
-(2, 'Pobranie', 5.00),
-(3, 'Karta płatnicza (online)', 0.00);
+(1, 'Blik', '0.00'),
+(2, 'Pobranie', '5.00'),
+(3, 'Karta płatnicza (online)', '0.00');
 
 -- --------------------------------------------------------
 
@@ -429,7 +421,7 @@ CREATE TABLE `publishers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `publishers`
+-- Zrzut danych tabeli `publishers`
 --
 
 INSERT INTO `publishers` (`id_wydawcy`, `nazwa_wydawcy`, `adres`, `kod_pocztowy`, `telefon`) VALUES
@@ -450,14 +442,6 @@ CREATE TABLE `ratings` (
   `id_klienta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
---
--- Dumping data for table `ratings`
---
-
-INSERT INTO `ratings` (`id_oceny`, `id_ksiazki`, `ocena`, `id_klienta`) VALUES
-(312, 2, 4, 400),
-(313, 114, 4, 400);
-
 -- --------------------------------------------------------
 
 --
@@ -471,7 +455,7 @@ CREATE TABLE `shopping_cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `shopping_cart`
+-- Zrzut danych tabeli `shopping_cart`
 --
 
 INSERT INTO `shopping_cart` (`id_klienta`, `id_ksiazki`, `ilosc`) VALUES
@@ -495,7 +479,7 @@ CREATE TABLE `subcategories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `subcategories`
+-- Zrzut danych tabeli `subcategories`
 --
 
 INSERT INTO `subcategories` (`id_subkategorii`, `nazwa`, `id_kategorii`) VALUES
@@ -533,7 +517,7 @@ CREATE TABLE `warehouse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `warehouse`
+-- Zrzut danych tabeli `warehouse`
 --
 
 INSERT INTO `warehouse` (`id_magazynu`, `nazwa`, `kraj`, `wojewodztwo`, `miejscowosc`, `ulica`, `numer_ulicy`, `kod_pocztowy`, `kod_miejscowosc`) VALUES
@@ -553,7 +537,7 @@ CREATE TABLE `warehouse_books` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
--- Dumping data for table `warehouse_books`
+-- Zrzut danych tabeli `warehouse_books`
 --
 
 INSERT INTO `warehouse_books` (`id_magazynu`, `id_ksiazki`, `ilosc_dostepnych_egzemplarzy`) VALUES
@@ -718,99 +702,99 @@ ALTER TABLE `warehouse_books`
   ADD KEY `id_ksiazki` (`id_ksiazki`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT dla zrzuconych tabel
 --
 
 --
--- AUTO_INCREMENT for table `address`
+-- AUTO_INCREMENT dla tabeli `address`
 --
 ALTER TABLE `address`
   MODIFY `adres_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250;
 
 --
--- AUTO_INCREMENT for table `author`
+-- AUTO_INCREMENT dla tabeli `author`
 --
 ALTER TABLE `author`
   MODIFY `id_autora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
--- AUTO_INCREMENT for table `books`
+-- AUTO_INCREMENT dla tabeli `books`
 --
 ALTER TABLE `books`
   MODIFY `id_ksiazki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
--- AUTO_INCREMENT for table `categories`
+-- AUTO_INCREMENT dla tabeli `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id_kategorii` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `comments`
+-- AUTO_INCREMENT dla tabeli `comments`
 --
 ALTER TABLE `comments`
   MODIFY `id_komentarza` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
 
 --
--- AUTO_INCREMENT for table `customers`
+-- AUTO_INCREMENT dla tabeli `customers`
 --
 ALTER TABLE `customers`
   MODIFY `id_klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=403;
 
 --
--- AUTO_INCREMENT for table `delivery_methods`
+-- AUTO_INCREMENT dla tabeli `delivery_methods`
 --
 ALTER TABLE `delivery_methods`
   MODIFY `id_formy_dostawy` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `employees`
+-- AUTO_INCREMENT dla tabeli `employees`
 --
 ALTER TABLE `employees`
   MODIFY `id_pracownika` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id pracownika', AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
   MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1413;
 
 --
--- AUTO_INCREMENT for table `password_reset_tokens`
+-- AUTO_INCREMENT dla tabeli `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
-  MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=990;
+  MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=991;
 
 --
--- AUTO_INCREMENT for table `payments`
+-- AUTO_INCREMENT dla tabeli `payments`
 --
 ALTER TABLE `payments`
   MODIFY `id_platnosci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1075;
 
 --
--- AUTO_INCREMENT for table `payment_methods`
+-- AUTO_INCREMENT dla tabeli `payment_methods`
 --
 ALTER TABLE `payment_methods`
   MODIFY `id_metody_platnosci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `ratings`
+-- AUTO_INCREMENT dla tabeli `ratings`
 --
 ALTER TABLE `ratings`
   MODIFY `id_oceny` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=314;
 
 --
--- AUTO_INCREMENT for table `subcategories`
+-- AUTO_INCREMENT dla tabeli `subcategories`
 --
 ALTER TABLE `subcategories`
   MODIFY `id_subkategorii` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- Constraints for dumped tables
+-- Ograniczenia dla zrzutów tabel
 --
 
 --
--- Constraints for table `books`
+-- Ograniczenia dla tabeli `books`
 --
 ALTER TABLE `books`
   ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`id_autora`) REFERENCES `author` (`id_autora`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -818,26 +802,26 @@ ALTER TABLE `books`
   ADD CONSTRAINT `books_ibfk_3` FOREIGN KEY (`id_subkategorii`) REFERENCES `subcategories` (`id_subkategorii`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `comments`
+-- Ograniczenia dla tabeli `comments`
 --
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`id_ksiazki`) REFERENCES `books` (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`id_klienta`) REFERENCES `customers` (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `customers`
+-- Ograniczenia dla tabeli `customers`
 --
 ALTER TABLE `customers`
   ADD CONSTRAINT `address_id` FOREIGN KEY (`adres_id`) REFERENCES `address` (`adres_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `employees`
+-- Ograniczenia dla tabeli `employees`
 --
 ALTER TABLE `employees`
   ADD CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`adres_id`) REFERENCES `address` (`adres_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `orders`
+-- Ograniczenia dla tabeli `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id_klienta`) REFERENCES `customers` (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -845,47 +829,47 @@ ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`id_formy_dostawy`) REFERENCES `delivery_methods` (`id_formy_dostawy`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `order_details`
+-- Ograniczenia dla tabeli `order_details`
 --
 ALTER TABLE `order_details`
   ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`id_zamowienia`) REFERENCES `orders` (`id_zamowienia`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`id_ksiazki`) REFERENCES `books` (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `password_reset_tokens`
+-- Ograniczenia dla tabeli `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
   ADD CONSTRAINT `password_reset_tokens_ibfk_1` FOREIGN KEY (`email`) REFERENCES `customers` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `payments`
+-- Ograniczenia dla tabeli `payments`
 --
 ALTER TABLE `payments`
   ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`id_zamowienia`) REFERENCES `orders` (`id_zamowienia`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `payments_ibfk_2` FOREIGN KEY (`id_metody_platnosci`) REFERENCES `payment_methods` (`id_metody_platnosci`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `ratings`
+-- Ograniczenia dla tabeli `ratings`
 --
 ALTER TABLE `ratings`
   ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`id_ksiazki`) REFERENCES `books` (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`id_klienta`) REFERENCES `customers` (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `shopping_cart`
+-- Ograniczenia dla tabeli `shopping_cart`
 --
 ALTER TABLE `shopping_cart`
   ADD CONSTRAINT `shopping_cart_ibfk_1` FOREIGN KEY (`id_klienta`) REFERENCES `customers` (`id_klienta`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `shopping_cart_ibfk_2` FOREIGN KEY (`id_ksiazki`) REFERENCES `books` (`id_ksiazki`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `subcategories`
+-- Ograniczenia dla tabeli `subcategories`
 --
 ALTER TABLE `subcategories`
   ADD CONSTRAINT `subcategories_ibfk_1` FOREIGN KEY (`id_kategorii`) REFERENCES `categories` (`id_kategorii`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `warehouse_books`
+-- Ograniczenia dla tabeli `warehouse_books`
 --
 ALTER TABLE `warehouse_books`
   ADD CONSTRAINT `warehouse_books_ibfk_1` FOREIGN KEY (`id_magazynu`) REFERENCES `warehouse` (`id_magazynu`) ON DELETE CASCADE ON UPDATE CASCADE,

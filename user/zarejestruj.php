@@ -88,7 +88,7 @@
                         <span class="row">
                             <label>
                                 Hasło: <input type="password" name="haslo1" maxlength="30" id="haslo1"
-                                              required value="PassJacob33#">
+                                              required>
 
                                 <div id="feedback" style="color:red;"></div>
 
@@ -104,7 +104,7 @@
                         <span class="row">
                             <label>
                                 Powtórz hasło: <input type="password" name="haslo2" maxlength="30"
-                                                      required value="PassJacob33#">
+                                                      required>
                             </label>
                         </span>
 

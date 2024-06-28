@@ -56,7 +56,7 @@
 
                             <span class="login-row">
                                 <label>
-                                    Hasło <input type="password" name="password" required value="adam1" autocomplete="off">
+                                    Hasło <input type="password" name="password" required autocomplete="off">
                                 </label>
                             </span>
 
