@@ -128,43 +128,80 @@ require_once "../authenticate-admin.php";
 
         // Check if values pass the tests;
         if (
-            $bookId === false ||
-            $title === false || $title !== $_POST['edit-book-title'] || strlen($title) > 255 ||
-            $author === false || empty($authorExists) ||
-            $year === false || $year < 1900 || $year > 2023 ||
-            $price === false || $price < 1 || $price > 500 ||
-            $publisher === false || $_SESSION['publisher-exists'] === false ||
-            $pages === false || $pages < 1 || $pages > 1500 ||
-            $cover === false || $cover !== $_POST['edit-book-cover'] ||
-            $desc === false || $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 100000 ||
-            $dims === false || $dims !== $_POST['edit-book-dims'] || strlen($dims) > 15 ||
-            $category === false || empty($categoryExists) ||
-            $subcategory === false ||
-            $magazine === false || $magazine !== $_SESSION["warehouseId"] ||
-            $quantity === false
+                    $bookId === false ||
+                $title === false || $title !== $_POST['edit-book-title'] || strlen($title) > 255 ||
+                $author === false || empty($authorExists) ||
+                $year === false || $year < 1900 || $year > 2023 ||
+                $price === false || $price < 1 || $price > 500 ||
+                $publisher === false || $_SESSION['publisher-exists'] === false ||
+                $pages === false || $pages < 1 || $pages > 1500 ||
+                $cover === false || $cover !== $_POST['edit-book-cover'] ||
+                $desc === false || $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 100000 ||
+                $dims === false || $dims !== $_POST['edit-book-dims'] || strlen($dims) > 15 ||
+                $category === false || empty($categoryExists) ||
+                $subcategory === false ||
+                $magazine === false || $magazine !== $_SESSION["warehouseId"] ||
+                $quantity === false
         ) {
 
             echo "<br><hr><br>";
-                echo "<br> bookId-> " . $bookId;
-                echo "<br> title-> " . $title;
-                echo "<br> author-> " . $author;
-                echo "<br> year -> " . $year;
-                echo "<br> price -> " . $price;
-                echo "<br> publisher -> " . $publisher;
-                echo "<br> pages -> " . $pages;
-                echo "<br> cover -> " . $cover;
-                echo "<br> desc -> " . $desc;
-                echo "<br> dims -> " . $dims;
-                echo "<br> category -> " . $category;
-                echo "<br> subcategory -> " . $subcategory;
-                echo "<br> magazine -> " . $magazine;
-                echo "<br> quantity -> " . $quantity;
 
-                if($quantity === false) {
-                    echo "<br> quantity -> FALSE";
-                } else {
-                    echo "<br> quantity -> TRUE";
-                }
+            if($bookId === false) {
+                echo "<br> bookId === false --> " . $bookId;
+            }
+
+            if($title === false || $title !== $_POST['edit-book-title'] || strlen($title) > 255) {
+                echo "<br> title === false " . $title;
+                echo "<br> title, POST[title] -->" . $title . ", " . $_POST['edit-book-title'];
+                echo "<br> strlen(title) --> " . strlen($title);
+            }
+            if($author === false || empty($authorExists)) {
+                echo "<br> author --> " . $author;
+                echo "<br> empty(authorExists) --> " . empty($authorExists);
+            }
+            if($year === false || $year < 1900 || $year > 2023) {
+                echo "<br> year --> " . $year;
+            }
+            if($price === false || $price < 1 || $price > 500) {
+                echo "<br> price --> " . $price;
+            }
+            if($publisher === false || $_SESSION['publisher-exists'] === false) {
+                echo "<br> publisher --> " . $publisher;
+                echo "<br> ESSION[publisher-exists] --> " . $_SESSION['publisher-exists'];
+            }
+            if($pages === false || $pages < 1 || $pages > 1500) {
+                echo "<br> pages --> " . $pages;
+            }
+            if($cover === false || $cover !== $_POST['edit-book-cover']) {
+                echo "<br> cover --> " . $cover;
+                echo "<br> POST[edit-book-cover] --> " . $_POST['edit-book-cover'];
+            }
+            if($desc === false || $desc !== $_POST['edit-book-desc'] || strlen($desc) < 10 || strlen($desc) > 100000) {
+                echo "<br> desc --> " . $desc;
+                echo "<br> POST[edit-book-desc] --> " . $_POST['edit-book-desc'];
+                echo "<br> strlen(desc) --> " . strlen($desc);
+            }
+            if($dims === false || $dims !== $_POST['edit-book-dims'] || strlen($dims) > 15) {
+                echo "<br> dims --> " . $dims;
+                echo "<br> POST[edit-book-dims] --> " . $_POST['edit-book-dims'];
+                echo "<br> strlen(dims) --> " . strlen($dims);
+            }
+            if($category === false || empty($categoryExists)) {
+                echo "<br> category --> " . $category;
+                echo "<br> empty(categoryExists) --> " . empty($categoryExists);
+            }
+            if($subcategory === false) {
+                echo "<br> subcategory --> " . $subcategory;
+            }
+            if($magazine === false || $magazine !== $_SESSION["warehouseId"]) {
+                echo "<br> magazine --> " . $magazine;
+                echo "<br> SESSION[warehouseId] --> " . $_SESSION["warehouseId"];
+            }
+
+            if($quantity === false) {
+                echo "<br> quantity --> " . $quantity;
+            }
+
             echo "<br><hr><br>";
 
 

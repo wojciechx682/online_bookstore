@@ -199,7 +199,7 @@
 
                         <hr id="book-details-hr">
 
-                        <div> <!-- opis - varchar(1000) -->
+                        <div> <!-- opis - varchar(10000) -->
                             <p>
                                 <span id="span-book-desc">
                                     <label for="edit-book-desc">

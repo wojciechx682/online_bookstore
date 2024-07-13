@@ -31,7 +31,7 @@ $("form.add-book-data").on("submit", function(e) {
         bookPrice !== data[0][3].value || isNaN(bookPrice) || bookPrice > 1000 ||
         publisher !== data[0][4].value || isNaN(publisher) ||
         bookImage !== data[0][5].value ||
-        bookDesc !== data[0][6].value || bookDesc.length < 10 || bookDesc.length > 1000 ||
+        bookDesc !== data[0][6].value || bookDesc.length < 10 || bookDesc.length > 100000 ||
         bookCover !== data[0][7].value ||
         bookPages !== data[0][8].value || isNaN(bookPages) || bookPages > 1500 ||
         bookDims !== data[0][9].value || bookDims.length > 15 ||

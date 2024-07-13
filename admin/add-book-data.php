@@ -113,21 +113,78 @@
         ]);
 
         if (
-            $title === false || $title !== $_POST['add-book-title'] || strlen($title) > 255 || // check if values pass the tests;
-            $author === false || empty($authorExists) ||
-            $year === false || $year < 1900 || $year > 2023 ||
-            $price === false || $price < 1 || $price > 500 ||
-            $publisher === false || $_SESSION['publisher-exists'] === false ||
-            $pages === false || $pages < 1 || $pages > 1500 ||
-            $cover === false || $cover !== $_POST['add-book-cover'] ||
-            $desc === false || $desc !== $_POST['add-book-desc'] || strlen($desc) < 10 || strlen($desc) > 100000 ||
-            $dims === false || $dims !== $_POST['add-book-dims'] || strlen($dims) > 15 ||
-            $category === false || empty($categoryExists) ||
-            $subcategory === false ||
-            $magazine === false || $_SESSION['warehouse-exists'] === false ||
-            $quantity === false
+                $title === false || $title !== $_POST['add-book-title'] || strlen($title) > 255 || // check if values pass the tests;
+                $author === false || empty($authorExists) ||
+                $year === false || $year < 1900 || $year > 2023 ||
+                $price === false || $price < 1 || $price > 500 ||
+                $publisher === false || $_SESSION['publisher-exists'] === false ||
+                $pages === false || $pages < 1 || $pages > 1500 ||
+                $cover === false || $cover !== $_POST['add-book-cover'] ||
+                $desc === false || $desc !== $_POST['add-book-desc'] || strlen($desc) < 10 || strlen($desc) > 100000 ||
+                $dims === false || $dims !== $_POST['add-book-dims'] || strlen($dims) > 15 ||
+                $category === false || empty($categoryExists) ||
+                $subcategory === false ||
+                $magazine === false || $_SESSION['warehouse-exists'] === false ||
+                $quantity === false
         ) {
-            echo "<span class='update-failed'>Wystąpił problem. Podaj poprawne dane</span>"; exit();
+
+            echo "<br><hr><br>";
+
+            if($title === false || $title !== $_POST['add-book-title'] || strlen($title) > 255) {
+                echo "<br> title === false " . $title;
+                echo "<br> title, POST[title] -->" . $title . ", " . $_POST['add-book-title'];
+                echo "<br> strlen(title) --> " . strlen($title);
+            }
+            if($author === false || empty($authorExists)) {
+                echo "<br> author --> " . $author;
+                echo "<br> empty(authorExists) --> " . empty($authorExists);
+            }
+            if($year === false || $year < 1900 || $year > 2023) {
+                echo "<br> year --> " . $year;
+            }
+            if($price === false || $price < 1 || $price > 500) {
+                echo "<br> price --> " . $price;
+            }
+            if($publisher === false || $_SESSION['publisher-exists'] === false) {
+                echo "<br> publisher --> " . $publisher;
+                echo "<br> SESSION[publisher-exists] --> " . $_SESSION['publisher-exists'];
+            }
+            if($pages === false || $pages < 1 || $pages > 1500) {
+                echo "<br> pages --> " . $pages;
+            }
+            if($cover === false || $cover !== $_POST['add-book-cover']) {
+                echo "<br> cover --> " . $cover;
+                echo "<br> POST[add-book-cover] --> " . $_POST['add-book-cover'];
+            }
+            if($desc === false || $desc !== $_POST['add-book-desc'] || strlen($desc) < 10 || strlen($desc) > 100000) {
+                echo "<br> desc --> " . $desc;
+                echo "<br> POST[edit-book-desc] --> " . $_POST['edit-book-desc'];
+                echo "<br> strlen(desc) --> " . strlen($desc);
+            }
+            if($dims === false || $dims !== $_POST['add-book-dims'] || strlen($dims) > 15) {
+                echo "<br> dims --> " . $dims;
+                echo "<br> POST[add-book-dims] --> " . $_POST['add-book-dims'];
+                echo "<br> strlen(dims) --> " . strlen($dims);
+            }
+            if($category === false || empty($categoryExists)) {
+                echo "<br> category --> " . $category;
+                echo "<br> empty(categoryExists) --> " . empty($categoryExists);
+            }
+            if($subcategory === false) {
+                echo "<br> subcategory --> " . $subcategory;
+            }
+            if($magazine === false || $_SESSION['warehouse-exists'] === false) {
+                echo "<br> magazine --> " . $magazine;
+                echo "<br> SESSION[warehouse-exists] --> " . $_SESSION["warehouse-exists"];
+            }
+            if($quantity === false) {
+                echo "<br> quantity --> " . $quantity;
+            }
+
+            echo "<br><hr><br>";
+
+
+            echo "<span class='update-failed'>1 Wystąpił problem. Podaj poprawne dane</span>"; exit();
         } else { // all values are valid; - fields PASSED validation;
                 // perform the necessary actions or validations here;
                 // for example, add the book data in the database;
