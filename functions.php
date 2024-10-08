@@ -2079,9 +2079,6 @@ function query($query, $fun, $values) {
         exit();
     }
 }*/
-
-
-
 ?>
 
 

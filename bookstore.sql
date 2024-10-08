@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 26 Cze 2024, 20:04
+-- Czas generowania: 08 Paź 2024, 19:23
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.2.0
 
@@ -41,26 +41,9 @@ CREATE TABLE `address` (
 --
 
 INSERT INTO `address` (`adres_id`, `miejscowosc`, `ulica`, `numer_domu`, `kod_pocztowy`, `kod_miejscowosc`) VALUES
-(32, 'Dębno', 'Mickiewicza', '52', '74-400', 'Dębno'),
-(33, 'Chojna', 'Mickiewicza', '52', '74-400', 'Dębno'),
-(223, 'Szczecin', 'Chopina', '123-AAA', '74-400', 'Kostrzyn nad odrą'),
-(225, 'Dębno', '', '67/4', '74-400', 'Dębno'),
-(226, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(227, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(228, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(229, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(230, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(231, 'Smolnica', '', '67/4', '74-400', 'Dębno'),
-(232, 'Smolnica', '', '67/4', '74-400', 'Dębno'),
-(241, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(242, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(243, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(244, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(245, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(246, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(247, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(248, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno'),
-(249, 'Dolna odra', 'Słoneczna', '61', '64-600', 'Dębno');
+(32, 'Łódź', 'Wojska Polskiego', '15', '70-471', 'Łódź'),
+(33, 'Katowice', 'Mickiewicza', '52', '00-202', 'Katowice'),
+(253, 'Warszawa', 'Nowogrodzka', '12', '00-511', 'Warszawa');
 
 -- --------------------------------------------------------
 
@@ -151,11 +134,11 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id_ksiazki`, `id_autora`, `tytul`, `cena`, `rok_wydania`, `opis`, `oprawa`, `id_wydawcy`, `image_url`, `rating`, `ilosc_stron`, `wymiary`, `stan`, `id_subkategorii`) VALUES
-(2, 2, 'PHP i MySQL. Od podstaw. Wydanie IV', 54.5, 2016, 'PHP i MySQL to duet, na którym opiera się ogromna większość ciut bardziej zaawansowanych stron w sieci. Czemu zawdzięcza on swą popularność? Niezwykłemu dopasowaniu do potrzeb, łatwej konfiguracji oraz ogromnej społeczności, zawsze chętnej do pomocy. Kiedy zaprzęgniesz ten zestaw do pracy, już po kilku godzinach zobaczysz jej pierwsze efekty!\r\n\r\nCo zrobić, żeby osiągnąć jeszcze więcej? Nic prostszego! Sięgnij po tę książkę i zacznij swoją przygodę z PHP oraz MySQL. Na samym początku dowiesz się, jak przygotować środowisko pracy, oraz poznasz podstawy programowania w języku PHP. Potem płynnie przejdziesz do zdobywania wiedzy na temat programowania obiektowego, wyrażeń regularnych, obsługi formularzy HTML oraz integracji z usługami katalogowymi LDAP. Nauczysz się wykorzystywać mechanizm sesji, technologię AJAX oraz Zend Framework. Po przeprowadzeniu Cię przez komplet informacji na temat PHP autor przedstawi Ci bazę danych MySQL. Poznasz jej mocne elementy, sposoby podłączania klientów or', 'twarda', 2, 'podstawy_PHP.png', 4, 668, '253 x 938 x 029', 'nowa', 2),
-(35, 32, 'CSS. Nieoficjalny podręcznik', 89, 2018, 'CSS jest świetnym narzędziem do budowania profesjonalnych stron internetowych. Opanowanie jego tajników może wydawać się dość trudnym zadaniem, jednak wysiłek ten bardzo się opłaca. CSS wciąż zaskakuje nieoczekiwanymi możliwościami, dalece wykraczającymi poza proste ozdabianie stron WWW. Technologia ta pozwala na tworzenie znakomicie wyglądających witryn o przebogatej funkcjonalności. Co jakiś czas pojawiają się nowe narzędzia i modele, jeszcze bardziej poszerzające warsztat projektanta. CSS jest jedną z tych technik, które wymagają nieustannego uczenia się i zapoznawania z nowościami.\r\n\r\nNiniejsza książka to niezwykle wartościowy podręcznik dla projektantów stron o różnym poziomie zaawansowania. Zawarto tu zwięzłe wprowadzenie do języka HTML w zakresie niezbędnym dla każdego, kto chce programować w CSS. Przedstawiono wyczerpujące i dokładne wskazówki tworzenia stron WWW w CSS, wyjaśniając poszczególne niuanse tej technologii. W dobie rozwoju urządzeń mobilnych niezwykle cenne są infor', 'twarda', 1, 'CSS_Nieoficjalny_podręcznik.png', 0, 656, '370 x 337 x 76', 'nowa', 29),
+(2, 2, 'PHP i MySQL. Od podstaw. Wydanie IV', 54.5, 2016, 'PHP i MySQL to duet, na którym opiera się ogromna większość ciut bardziej zaawansowanych stron w sieci. Czemu zawdzięcza on swą popularność? Niezwykłemu dopasowaniu do potrzeb, łatwej konfiguracji oraz ogromnej społeczności, zawsze chętnej do pomocy. Kiedy zaprzęgniesz ten zestaw do pracy, już po kilku godzinach zobaczysz jej pierwsze efekty!\r\n\r\nCo zrobić, żeby osiągnąć jeszcze więcej? Nic prostszego! Sięgnij po tę książkę i zacznij swoją przygodę z PHP oraz MySQL. Na samym początku dowiesz się, jak przygotować środowisko pracy, oraz poznasz podstawy programowania w języku PHP. Potem płynnie przejdziesz do zdobywania wiedzy na temat programowania obiektowego, wyrażeń regularnych, obsługi formularzy HTML oraz integracji z usługami katalogowymi LDAP. Nauczysz się wykorzystywać mechanizm sesji, technologię AJAX oraz Zend Framework. Po przeprowadzeniu Cię przez komplet informacji na temat PHP autor przedstawi Ci bazę danych MySQL. Poznasz jej mocne elementy, sposoby podłączania klientów or', 'twarda', 2, 'podstawy_PHP.png', 0, 668, '253 x 938 x 029', 'nowa', 2),
+(35, 32, 'CSS. Nieoficjalny podręcznik', 89, 2018, 'CSS jest świetnym narzędziem do budowania profesjonalnych stron internetowych. Opanowanie jego tajników może wydawać się dość trudnym zadaniem, jednak wysiłek ten bardzo się opłaca. CSS wciąż zaskakuje nieoczekiwanymi możliwościami, dalece wykraczającymi poza proste ozdabianie stron WWW. Technologia ta pozwala na tworzenie znakomicie wyglądających witryn o przebogatej funkcjonalności. Co jakiś czas pojawiają się nowe narzędzia i modele, jeszcze bardziej poszerzające warsztat projektanta. CSS jest jedną z tych technik, które wymagają nieustannego uczenia się i zapoznawania z nowościami.\r\n\r\nNiniejsza książka to niezwykle wartościowy podręcznik dla projektantów stron o różnym poziomie zaawansowania. Zawarto tu zwięzłe wprowadzenie do języka HTML w zakresie niezbędnym dla każdego, kto chce programować w CSS. Przedstawiono wyczerpujące i dokładne wskazówki tworzenia stron WWW w CSS, wyjaśniając poszczególne niuanse tej technologii. W dobie rozwoju urządzeń mobilnych niezwykle cenne są infor', 'twarda', 1, 'CSS_Nieoficjalny_podręcznik.png', 0, 656, '370 x 337 x 76', 'nowa', 1),
 (36, 42, 'CSS od podszewki', 39.5, 2016, 'W ostatnich latach CSS bardzo się rozwinął. Mimo że istnieje od kilku dekad, wciąż jest ważnym elementem warsztatu profesjonalnych projektantów stron internetowych. Co prawda przyswojenie podstaw CSS nie jest specjalnie trudne, ale osiągnięcie prawdziwej biegłości w korzystaniu z tego języka wymaga stałego uczenia się i ciągłych ćwiczeń. Trzeba dobrze zrozumieć wszystkie części kodu CSS, a także sposób, w jaki są do siebie dopasowane. Wysiłek włożony w doskonałe opanowanie języka szybko się zwróci: CSS pozwala zwiększyć wygodę użytkownika, przyspieszyć proces projektowania, uniknąć potencjalnych błędów, a także urozmaicić i ożywić aplikację.\r\n\r\nTa książka jest kompleksowym przewodnikiem po języku CSS dla osób na różnych poziomach biegłości w stosowaniu kaskadowych arkuszy stylów. Zawiera kluczowe informacje o podstawach języka, dzięki czemu będzie nieocenioną pomocą dla początkujących. Szczegółowo opisano tu również nowości i ulepszenia, które pojawiły się w języku na przestrzeni ostat', 'twarda', 1, 'css-od-podszewki-b-iext135439318.webp', 0, 480, '837 x 773 x 253', 'nowa', 1),
-(48, 41, 'Czysty kod. Podręcznik dobrego programisty', 49.45, 2014, 'Poznaj najlepsze metody tworzenia doskonałego kodu\r\n\r\nJak pisać dobry kod, a zły przekształcić w dobry?\r\nJak formatować kod, aby osiągnąć maksymalną czytelność?\r\nJak implementować pełną obsługę błędów bez zaśmiecania logiki kodu?\r\nO tym, ile problemów sprawia niedbale napisany kod, wie każdy programista. Nie wszyscy jednak wiedzą, jak napisać ten świetny, „czysty” kod i czym właściwie powinien się on charakteryzować. Co więcej – jak odróżnić dobry kod od złego? Odpowiedź na te pytania oraz sposoby tworzenia czystego, czytelnego kodu znajdziesz właśnie w tej książce. Podręcznik jest obowiązkową pozycją dla każdego, kto chce poznać techniki rzetelnego i efektywnego programowania.\r\n\r\nW książce „Czysty kod. Podręcznik dobrego programisty” szczegółowo omówione zostały zasady, wzorce i najlepsze praktyki pisania czystego kodu. Podręcznik zawiera także kilka analiz przypadków o coraz większej złożoności, z których każda jest doskonałym ćwiczeniem porządkowania zanieczyszczonego bądź nieudaneg', 'miękka', 1, 'czysty-kod-podrecznik-dobrego-programisty-b-iext133438979.webp', 0, 425, '237 x 20 x 167', 'nowa', 1),
-(114, 40, 'Sztuczna inteligencja od podstaw', 32.57, 2023, 'Nie ma wątpliwości, że sztuczna inteligencja (AI) zrewolucjonizuje w najbliższych dekadach nasze życie. Wśród największych autorytetów świata nauki panuje przekonanie, że stoimy w obliczu przełomu porównywalnego z wynalezieniem i zastosowaniami elektryczności.\r\n\r\nSztuczna inteligencja od podstaw to pozycja, która począwszy od opisu klasycznych metod SI, takich jak algorytm genetyczny, algorytm mrówkowy, systemy ekspertowe czy sztuczne życie, zapoznaje Czytelnika z najbardziej zaawansowanymi modelami opartymi na sztucznych sieciach neuronowych.', 'miękka', 1, 'sztuczna-inteligencja-od-podstaw-b-iext131736947.webp', 4, 192, '210 x 10 x 150', 'nowa', 1),
+(48, 41, 'Czysty kod. Podręcznik dobrego programisty', 49.45, 2014, 'Poznaj najlepsze metody tworzenia doskonałego kodu\r\n\r\nJak pisać dobry kod, a zły przekształcić w dobry?\r\nJak formatować kod, aby osiągnąć maksymalną czytelność?\r\nJak implementować pełną obsługę błędów bez zaśmiecania logiki kodu?\r\nO tym, ile problemów sprawia niedbale napisany kod, wie każdy programista. Nie wszyscy jednak wiedzą, jak napisać ten świetny, „czysty” kod i czym właściwie powinien się on charakteryzować. Co więcej – jak odróżnić dobry kod od złego? Odpowiedź na te pytania oraz sposoby tworzenia czystego, czytelnego kodu znajdziesz właśnie w tej książce. Podręcznik jest obowiązkową pozycją dla każdego, kto chce poznać techniki rzetelnego i efektywnego programowania.\r\n\r\nW książce „Czysty kod. Podręcznik dobrego programisty” szczegółowo omówione zostały zasady, wzorce i najlepsze praktyki pisania czystego kodu. Podręcznik zawiera także kilka analiz przypadków o coraz większej złożoności, z których każda jest doskonałym ćwiczeniem porządkowania zanieczyszczonego bądź nieudaneg', 'twarda', 1, 'czysty-kod-podrecznik-dobrego-programisty-b-iext133438979.png', 0, 425, '237 x 20 x 167', 'nowa', 1),
+(114, 40, 'Sztuczna inteligencja od podstaw', 32.57, 2023, 'Nie ma wątpliwości, że sztuczna inteligencja (AI) zrewolucjonizuje w najbliższych dekadach nasze życie. Wśród największych autorytetów świata nauki panuje przekonanie, że stoimy w obliczu przełomu porównywalnego z wynalezieniem i zastosowaniami elektryczności.\r\n\r\nSztuczna inteligencja od podstaw to pozycja, która począwszy od opisu klasycznych metod SI, takich jak algorytm genetyczny, algorytm mrówkowy, systemy ekspertowe czy sztuczne życie, zapoznaje Czytelnika z najbardziej zaawansowanymi modelami opartymi na sztucznych sieciach neuronowych.', 'miękka', 1, 'sztuczna-inteligencja-od-podstaw-b-iext131736947.webp', 0, 192, '210 x 10 x 150', 'nowa', 1),
 (116, 38, 'PHP i MySQL. Tworzenie stron WWW. Vademecum profesjonalisty', 109, 2021, 'Język PHP i serwer bazy danych MySQL to niezwykle popularne narzędzia o otwartym kodzie źródłowym. Wiele świetnych, dynamicznych stron WWW powstało właśnie dzięki połączeniu tych dwóch narzędzi. Ogromne możliwości PHP oraz elastyczność i szybkość MySQL, bezustanne rozwijanie tych technologii, a także niezawodna i chętna do pomocy społeczność sprawiają, że tworzenie profesjonalnych, interaktywnych witryn WWW z wykorzystaniem synergii PHP i MySQL jest pracą przyjemną, efektywną i satysfakcjonującą!', 'twarda', 1, 'php-i-mysql-tworzenie-stron-www-vademecum-profesjonalisty-b-iext67290707.webp', 0, 712, '125 x 730 x 310', 'nowa', 1),
 (117, 39, 'Python od podstaw', 32.7, 2022, 'Ta książka zacznie Twoją przygodę z programowaniem. Prezentuje wiedzę w praktyczny, przystępny i zrozumiały sposób. Pomaga zbudować solidne podwaliny pod naukę języka Python oraz wytyczyć dalszy kierunek. Jeśli chcesz nauczyć się programowania albo zastanawia Cię czym ono jest, to jest to książka dla Ciebie.\r\n\r\nRazem z tą książką wejdziesz krok po kroku do świata języka Python. Pokaże Ci, że programowanie to świetna zabawa, a przy tym znacznie bardziej przydatna i dostępna umiejętność niż może się wydawać. Dowiesz się z niej:', 'miękka', 2, 'python-od-podstaw-b-iext117047464.webp', 0, 312, '200 x 20 x 140', 'nowa', 1),
 (124, 37, 'Linux dla admina. Najlepsze praktyki. O czym pamiętać podczas projektowania i zarządzania systemami', 56, 2023, 'Popularność systemów linuksowych cały czas rośnie. Mimo to bardzo niewielu administratorów stara się dokładnie opanować sztukę zarządzania Linuksem, większość ogranicza się do kilku rutynowych zadań. Tak administrowane systemy oczywiście mogą dłuższy czas działać poprawnie, jednak dopiero dogłębne zapoznanie się ze sposobem działania Linuksa pozwoli na pełniejsze skorzystanie z jego niesamowitych możliwości.\r\n\r\nTo książka przeznaczona dla profesjonalnych administratorów i użytkowników Linuksa. Dzięki niej szybciej zrozumiesz, w jakim stopniu dobre zarządzanie systemami na poziomie systemu operacyjnego może wynieść działanie infrastruktury biznesowej na zupełnie inny poziom. Znajdziesz tu najlepsze praktyki zarządzania systemami ― począwszy od wyboru optymalnej dystrybucji Linuksa, poprzez zaprojektowanie architektury systemu, skończywszy na strategiach zarządzania przeprowadzanymi w nim poprawkami i aktualizacjami.', 'miękka', 1, 'linux-dla-admina-najlepsze-praktyki-o-czym-pamietac-podczas-projektowania-i-zarzadzania-systemami-b-iext140747274.webp', 0, 382, '230 x 28 x 160', 'nowa', 34),
@@ -166,7 +149,7 @@ INSERT INTO `books` (`id_ksiazki`, `id_autora`, `tytul`, `cena`, `rok_wydania`, 
 (130, 46, 'Wielka księga łamigłówek przedszkolaka', 19.99, 2023, 'Wyruszcie w edukacyjną przygodę z \"Wielką księgą łamigłówek przedszkolaka\"! To fantastyczna propozycja dla dzieci, które nie lubią się nudzić. Znajdziecie tu fantastyczne łamigłówki, ciekawe zadania, kolorowanki, wyszukiwanki to wspaniały sposób na spędzenie czasu i super zabawę!\n\nZadania wspierają kształtowanie elementarnych umiejętności poznawczych przedszkolaków. Dzięki zadaniom dziecko będzie kształtować logiczne myślenie i rozwijać motorykę dłoni, a przede wszystkim świetnie się bawić!', 'Miekka', 3, 'Wielka księga łamigłówek przedszkolaka.png', NULL, 128, '250 x 215 x 150', 'nowa', 35),
 (131, 47, 'Pan Oskar na wakacjach', 25.59, 2023, 'Wyrusz z Panem Oskarem w niezapomnianą podróż! A przy okazji poznaj angielskie słówka.\n\nPan Oskar postanawia udać się na wyprawę życia. Dociera nad morze i w góry, biwakuje, żegluje i zjeżdża na nartach. Przy okazji odwiedza swoich przyjaciół. Dołącz do Oskara oraz jego złotej rybki Kory – wspólnie odkryjcie nie tylko nowe miejsca, ale także angielskie słowa i zwroty.\n\nWesoła, rewelacyjnie zilustrowana opowieść, której dodatkowym atutem jest nauka podstawowych wyrażeń z języka angielskiego. Autorem książki jest znany i ceniony na całym świecie Jim Field (twórca m.in. bestsellerowych picturebooków „Mysz, która chciała być lwem”, „Pandki, które obiecały”).', 'Twarda', 1, 'Pan Oskar na wakacjach.png', NULL, 32, '295 x 255 x 9', 'nowa', 35),
 (132, 48, 'Quiz dla 3-latka', 22.42, 2023, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Miekka', 3, 'Quiz dla 3-latka.png', NULL, 20, '125 x 730 x 310', 'nowa', 35),
-(133, 49, 'SQL w mgnieniu oka. Opanuj język zapytań w 10 minut dziennie', 38.12, 2020, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Miekka', 1, 'SQL w mgnieniu oka. Opanuj język zapytań w 10 minut dziennie.png', NULL, 256, '240 x 150 x 10', 'nowa', 34);
+(133, 49, 'SQL w mgnieniu oka. Opanuj język zapytań w 10 minut dziennie', 38.12, 2020, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Miekka', 1, 'SQL w mgnieniu oka. Opanuj język zapytań w 10 minut dziennie.png', 0, 256, '240 x 150 x 10', 'nowa', 34);
 
 -- --------------------------------------------------------
 
@@ -232,16 +215,7 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id_klienta`, `imie`, `nazwisko`, `wojewodztwo`, `kraj`, `PESEL`, `data_urodzenia`, `telefon`, `email`, `login`, `haslo`, `adres_id`) VALUES
-(386, 'Jakub', 'Wojciechowski', NULL, NULL, NULL, NULL, '515350960', 'jakub.wojciechowski.682@gmail.com', NULL, '$2y$10$minrPJkXlc1ZFtcVLfSRwegLIZCeoGO8n3SHhaeNZvmRIN2avZ2EK', 232),
-(394, 'Adam', 'Nowak', NULL, NULL, NULL, NULL, '505101303', 'adam.nowak123@wp.pl', NULL, '$2y$10$fAsA6qC0wSb6cGVNKhuvtuvixIFShl1Tvs92S6iHEceYpSudEf.sG', 241),
-(395, 'Adam', 'Nowak', NULL, NULL, NULL, NULL, '505101303', 'adam.nowak3@wp.pl', NULL, '$2y$10$H7ivQoL4jL/zKQlHoLyyOe56WO6r5ddpo.qtuo9pYjwV5MTpj8DIO', 242),
-(396, 'Adam', 'Nowak', NULL, NULL, NULL, NULL, '505101303', 'adam.nowak4@wp.pl', NULL, '$2y$10$1yzXlIJxaQN0nouBgSypi.ufy2LSQPXqLoDkba8CNMpddA5ct.Mt2', 243),
-(397, 'Adam', 'Nowak', NULL, NULL, NULL, NULL, '505101303', 'adam.nowak6@wp.pl', NULL, '$2y$10$k0.N9cjgenG6OCX.GFD7le805NCZ1YmG2H0vvOpjaKkeujP9PBoSK', 244),
-(398, 'Adam', 'Nowak', NULL, NULL, NULL, NULL, '505101303', 'adam.nowak7@wp.pl', NULL, '$2y$10$CNUwLYJr4AKqt3Uaae65y..PNqdMK9fyn8WHHMSYm7sItH0gH2AbS', 245),
-(399, 'Jakub', 'Wojciechowski', NULL, NULL, NULL, NULL, '505101303', 'b7cfr0na@flymail.tk', NULL, '$2y$10$SN1ZWv/en9tx8Jz8VfjmXuHC070sD3W5zCISyIZsOL4IChY08EqhW', 246),
-(400, 'Jan', 'Nowak', NULL, NULL, NULL, NULL, '505101303', 'adam.nowak1@wp.pl', NULL, '$2y$10$YZOyYN6/n.K00N84iX7nbeFBx4HXWVJg9xd6lwuyJFoU2LwyyAvhq', 247),
-(401, 'Adam', 'Nowak', NULL, NULL, NULL, NULL, '505101303', 'adam.nowak2@wp.pl', NULL, '$2y$10$qAnChO0nbyMRMAubQK/LquCyE.NyGZ7Mma2.cQBxjkJma3D5ZFPaG', 248),
-(402, 'Adam', 'Nowak', NULL, NULL, NULL, NULL, '505101303', 'afdaycdka@10mail.org', NULL, '$2y$10$XMW5lrhCL6pb//zfxA6eFe3gPZvi5iwazA8.pthaABypLz3vaiM.G', 249);
+(406, 'Adam', 'Nowak', NULL, NULL, NULL, NULL, '501827273', 'adam.nowak1@wp.pl', NULL, '$2y$10$y1yny/EIgPZ/LT6P5.RbY.A9V4cH2H/Y1o7yLaDGr2.2SSAfFI48K', 253);
 
 -- --------------------------------------------------------
 
@@ -290,8 +264,8 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`id_pracownika`, `imie`, `nazwisko`, `email`, `haslo`, `wynagrodzenie`, `stanowisko`, `data_zatrudnienia`, `telefon`, `adres_id`) VALUES
-(4, 'Jan', 'Nowak', 'jan.nowak@wp.pl', '$2y$10$NEm7t60JIe9OD7OdHyHn.OosZRExCCnW13E/mDtH2PJ886IjbrzIu', '2758.00', 'sprzedawca', '2023-04-25', '647918229', 32),
-(6, 'Adam', 'Kowalski', 'adam.nowak@wp.pl', '$2y$10$r2v0wivXQWdE2nAwe4vXS.uKGcudxJSRjcFlOL4gtAdMgfle.SiBm', '3758.00', 'sprzedawca', '2023-04-25', '647918229', 33);
+(4, 'Jan', 'Kowalski', 'jan.kowalski@wp.pl', '$2y$10$NEm7t60JIe9OD7OdHyHn.OosZRExCCnW13E/mDtH2PJ886IjbrzIu', '2758.00', 'sprzedawca', '2023-04-25', '748198271', 32),
+(6, 'Adam', 'Nowak', 'adam.nowak@wp.pl', '$2y$10$r2v0wivXQWdE2nAwe4vXS.uKGcudxJSRjcFlOL4gtAdMgfle.SiBm', '3758.00', 'sprzedawca', '2023-04-25', '647918229', 33);
 
 -- --------------------------------------------------------
 
@@ -312,14 +286,6 @@ CREATE TABLE `orders` (
   `id_pracownika` int(11) NOT NULL COMMENT 'pracownik, który obsługuje to zamówienie'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
---
--- Zrzut danych tabeli `orders`
---
-
-INSERT INTO `orders` (`id_zamowienia`, `id_klienta`, `data_zlozenia_zamowienia`, `termin_dostawy`, `data_wysłania_zamowienia`, `data_dostarczenia`, `id_formy_dostawy`, `status`, `komentarz`, `id_pracownika`) VALUES
-(1411, 400, '2024-06-01 18:10:11', '0000-00-00', '0000-00-00 00:00:00', '0000-00-00', 1, 'Oczekujące na potwierdzenie', '', 4),
-(1412, 400, '2024-06-17 14:24:36', '0000-00-00', '0000-00-00 00:00:00', '2024-06-20', 1, 'Dostarczono', '', 6);
-
 -- --------------------------------------------------------
 
 --
@@ -331,17 +297,6 @@ CREATE TABLE `order_details` (
   `id_ksiazki` int(11) NOT NULL,
   `ilosc` smallint(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
-
---
--- Zrzut danych tabeli `order_details`
---
-
-INSERT INTO `order_details` (`id_zamowienia`, `id_ksiazki`, `ilosc`) VALUES
-(1411, 2, 4),
-(1412, 129, 2),
-(1412, 130, 3),
-(1412, 131, 2),
-(1412, 132, 3);
 
 -- --------------------------------------------------------
 
@@ -356,13 +311,6 @@ CREATE TABLE `password_reset_tokens` (
   `exp_time` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Zrzut danych tabeli `password_reset_tokens`
---
-
-INSERT INTO `password_reset_tokens` (`token_id`, `token`, `email`, `exp_time`) VALUES
-(990, '3200b8f5c19c7595191585a62946ae9701567a6458fac106b23787e796579eb0', 'adam.nowak1@wp.pl', '2024-06-22 19:43:55');
-
 -- --------------------------------------------------------
 
 --
@@ -376,14 +324,6 @@ CREATE TABLE `payments` (
   `kwota` float NOT NULL,
   `id_metody_platnosci` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
-
---
--- Zrzut danych tabeli `payments`
---
-
-INSERT INTO `payments` (`id_platnosci`, `id_zamowienia`, `data_platnosci`, `kwota`, `id_metody_platnosci`) VALUES
-(1073, 1411, '2024-06-01 18:10:11', 329.1, 1),
-(1074, 1412, '2024-06-17 14:24:36', 196.39, 1);
 
 -- --------------------------------------------------------
 
@@ -453,18 +393,6 @@ CREATE TABLE `shopping_cart` (
   `id_ksiazki` int(11) NOT NULL,
   `ilosc` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
-
---
--- Zrzut danych tabeli `shopping_cart`
---
-
-INSERT INTO `shopping_cart` (`id_klienta`, `id_ksiazki`, `ilosc`) VALUES
-(386, 48, 4),
-(400, 129, 2),
-(400, 130, 3),
-(400, 131, 2),
-(400, 132, 3),
-(402, 48, 5);
 
 -- --------------------------------------------------------
 
@@ -550,7 +478,7 @@ INSERT INTO `warehouse_books` (`id_magazynu`, `id_ksiazki`, `ilosc_dostepnych_eg
 (1, 126, '85'),
 (1, 127, '78'),
 (2, 2, '1'),
-(2, 35, '0'),
+(2, 35, '150'),
 (2, 125, '67'),
 (2, 129, '50'),
 (2, 130, '50'),
@@ -709,7 +637,7 @@ ALTER TABLE `warehouse_books`
 -- AUTO_INCREMENT dla tabeli `address`
 --
 ALTER TABLE `address`
-  MODIFY `adres_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250;
+  MODIFY `adres_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
 
 --
 -- AUTO_INCREMENT dla tabeli `author`
@@ -721,7 +649,7 @@ ALTER TABLE `author`
 -- AUTO_INCREMENT dla tabeli `books`
 --
 ALTER TABLE `books`
-  MODIFY `id_ksiazki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `id_ksiazki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 
 --
 -- AUTO_INCREMENT dla tabeli `categories`
@@ -733,13 +661,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT dla tabeli `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id_komentarza` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
+  MODIFY `id_komentarza` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
 
 --
 -- AUTO_INCREMENT dla tabeli `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id_klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=403;
+  MODIFY `id_klienta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=407;
 
 --
 -- AUTO_INCREMENT dla tabeli `delivery_methods`
@@ -757,7 +685,7 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1413;
+  MODIFY `id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1418;
 
 --
 -- AUTO_INCREMENT dla tabeli `password_reset_tokens`
@@ -769,7 +697,7 @@ ALTER TABLE `password_reset_tokens`
 -- AUTO_INCREMENT dla tabeli `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id_platnosci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1075;
+  MODIFY `id_platnosci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1080;
 
 --
 -- AUTO_INCREMENT dla tabeli `payment_methods`
@@ -781,7 +709,7 @@ ALTER TABLE `payment_methods`
 -- AUTO_INCREMENT dla tabeli `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id_oceny` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=314;
+  MODIFY `id_oceny` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=319;
 
 --
 -- AUTO_INCREMENT dla tabeli `subcategories`
