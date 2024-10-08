@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {                 // Post - Redirect 
                             $mail->SMTPAuth = true;                  // Enable SMTP authentication
 
                             $mail->Username = 'jakub.wojciechowski.683@gmail.com'; // adres nadawcy; podaj swój adres gmail // SMTP username
-                            $mail->Password = 'ubkdmiyqcquifysy';                  // podaj swoje HASŁO DO APLIKACJI (!) - gmail; // SMTP password
+                            $mail->Password = '';                  // podaj swoje HASŁO DO APLIKACJI (!) - gmail; // SMTP password
 
                             $mail->CharSet = 'UTF-8';  // konfiguracja wiadomości
                             $mail->setFrom('app.bookstore@gmail.com', 'Księgarnia internetowa - Przypomnij hasło'); // nazwa odbiorcy (name)
