@@ -546,6 +546,12 @@ span.star.gold::before {
     /*border: 1px dashed black;*/
     padding: 0 30px 15px 30px;
     margin-top: 20px;
+
+}
+
+div.tab-panel {
+    border-bottom-left-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
 }
 
 section.comment {
