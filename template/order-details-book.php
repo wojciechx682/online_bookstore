@@ -17,7 +17,7 @@
 
     <div class="book-desc">
         <!--<span class="order-book-desc-row"><strong>%s</strong></span>-->
-        <form method="post" action="___book.php">
+        <form method="post" action="book.php">
             <input type="hidden" name="book-id" value="%s"> <!-- id_ksiazki -->
             <button class="submit-book-form" type="submit">
                 <h3 title="%s">%s</h3> <!-- tytuł -->
