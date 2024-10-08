@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {                 // Post - Redirect 
                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Enable implicit TLS encryption
                             $mail->SMTPAuth = true;                  // Enable SMTP authentication
 
-                            $mail->Username = 'jakub.wojciechowski.683@gmail.com'; // adres nadawcy; podaj swój adres gmail // SMTP username
+                            $mail->Username = ''; // adres nadawcy; podaj swój adres gmail // SMTP username
                             $mail->Password = '';                  // podaj swoje HASŁO DO APLIKACJI (!) - gmail; // SMTP password
 
                             $mail->CharSet = 'UTF-8';  // konfiguracja wiadomości
@@ -238,12 +238,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {                 // Post - Redirect 
                 if ($cur_date < $exp_time) {  // czy token był nadal ważny
                     // token był nadal aktualny;
                     $_SESSION["token-valid"] = true;
-                    unset($_SESSION["email-sent"]);
+                        unset($_SESSION["email-sent"]);
 
                 } else { // expired token
 
                     unset($_SESSION["email"]);
-                    $_SESSION["bad-token"] = "Podany kod nie jest juz aktualny. Spróbuj jeszcze raz";
+                        $_SESSION["bad-token"] = "Podany kod nie jest juz aktualny. Spróbuj jeszcze raz";
                 }
 
             } else {
