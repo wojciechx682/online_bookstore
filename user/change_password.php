@@ -9,11 +9,11 @@ $userType = $_SESSION["user-type"] ?? null; // $userType = isset($_SESSION["user
 
 switch ($userType) {
 	case "klient":
-		$table = "klienci";
+		$table = "customers";
 		$column = "id_klienta";
 		break;
 	case "admin":
-		$table = "pracownicy";
+		$table = "employees";
 		$column = "id_pracownika";
 		break;
 	default:

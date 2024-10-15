@@ -851,6 +851,8 @@ use PHPMailer\PHPMailer\SMTP;
             $row = $result->fetch_assoc();
         $_SESSION["password_hashed"] = $row["haslo"]; // hasło klienta (lub pracownika) w postaci zahashowanej;
         // $result->free_result();
+
+        //echo "$_SESSION password_hashed = <br>"; echo $_SESSION["password_hashed"]; exit();
 	}
 
 	function log_in($result) { // funkcja wykona się tylko, jeśli zwrócono wiersze (czyli wtedy gdy istnieje taki klient/pracownik)
