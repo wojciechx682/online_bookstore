@@ -31,9 +31,9 @@
                     <h3 id="cart-header">Złóż zamówienie</h3>
 
                     <?php
-                        echo '<pre>';
+                        /*echo '<pre>';
                         var_dump($_SESSION);
-                        echo '</pre>'; echo "<br>";
+                        echo '</pre>'; echo "<br>";*/
 
                         /*echo '<pre>';
                         var_dump($_SESSION["payment-methods"]);
