@@ -31,11 +31,11 @@
                     <h3 id="cart-header">Złóż zamówienie</h3>
 
                     <?php
-                        /*echo '<pre>';
-                        var_dump($_SESSION["delivery-types"]);
+                        echo '<pre>';
+                        var_dump($_SESSION);
                         echo '</pre>'; echo "<br>";
 
-                        echo '<pre>';
+                        /*echo '<pre>';
                         var_dump($_SESSION["payment-methods"]);
                         echo '</pre>'; echo "<br><br>";*/
 
@@ -207,14 +207,10 @@
                             data: {
                                 "delivery-price": price
                             },
-                            timeout: 2000,
                             success: function(data) {
-
-                                let orderSum = data.suma_zamowienia.toFixed(2);
-
+                                let orderSum = JSON.parse(data).suma_zamowienia.toFixed(2);
                                 let header = document.getElementById("order-sum");
                                 header.lastChild.textContent = orderSum + " PLN";
-
                             }
                         });
                     });
@@ -239,8 +235,8 @@
                             timeout: 2000,
                             success: function(data) {
 
-                                let orderSum = Number(data.suma_zamowienia).toFixed(2);
-
+                                //let orderSum = Number(data.suma_zamowienia).toFixed(2);
+                                let orderSum = JSON.parse(data).suma_zamowienia.toFixed(2);
                                 let header = document.getElementById("order-sum");
                                 header.lastChild.textContent = orderSum + " PLN";
                             }
