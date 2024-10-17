@@ -31,6 +31,15 @@
                     <h3 id="cart-header">Złóż zamówienie</h3>
 
                     <?php
+                        echo '<pre>';
+                        var_dump($_SESSION["delivery-types"]);
+                        echo '</pre>'; echo "<br>";
+
+                        echo '<pre>';
+                        var_dump($_SESSION["payment-methods"]);
+                        echo '</pre>'; echo "<br><br>";
+
+                        //echo var_dump($_SESSION["delivery-types"]); echo "<br>";
 
                         query("SELECT kl.id_klienta, 
                                       ko.id_ksiazki, ko.ilosc, 
@@ -190,6 +199,8 @@
 
                         let price = parseFloat(this.closest('.option').querySelector('.delivery-price').textContent);
 
+                        console.log("price = ", price);
+
                         $.ajax({
                             type: "POST",
                             url: "update-order-sum.php",
@@ -216,6 +227,8 @@
                         let selectedPaymentMethod = this.value;
 
                         let price = parseFloat(this.closest('.option').querySelector('.payment-price').textContent);
+
+                        console.log("price = ", price);
 
                         $.ajax({
                             type: "POST",
