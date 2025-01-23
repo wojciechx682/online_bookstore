@@ -1,29 +1,15 @@
 
 <?php
 
-//  ______  ___   __   __       ________ ___   __   ______        _______  ______  ______  ___   ___  ______  _________ ______  ______   ______
-// /_____/\/__/\ /__/\/_/\     /_______/Y__/\ /__/\/_____/\     /_______/\/_____/\/_____/\/___/\/__/\/_____/\/________/Y_____/\/_____/\ /_____/\
-// \:::_ \ \::\_\\  \ \:\ \    \__.::._\|::\_\\  \ \::::_\/_    \::: _  \ \:::_ \ \:::_ \ \::.\ \\ \ \::::_\/\__.::.__\|:::_ \ \:::_ \ \\::::_\/_
-//  \:\ \ \ \:. `-\  \ \:\ \      \::\ \ \:. `-\  \ \:\/___/\    \::(_)  \/\:\ \ \ \:\ \ \ \:: \/_) \ \:\/___/\ \::\ \  \:\ \ \ \:(_) ) )\:\/___/\
-//   \:\ \ \ \:. _    \ \:\ \____ _\::\ \_\:. _    \ \::___\/_    \::  _  \ \:\ \ \ \:\ \ \ \:. __  ( (\_::._\:\ \::\ \  \:\ \ \ \: __ `\ \::___\/_
-//    \:\_\ \ \. \`-\  \ \:\/___/Y__\::\__/\. \`-\  \ \:\____/\    \::(_)  \ \:\_\ \ \:\_\ \ \: \ )  \ \ /____\:\ \::\ \  \:\_\ \ \ \ `\ \ \:\____/\
-//     \_____\/\__\/ \__\/\_____\|________\/\__\/ \__\/\_____\/     \_______\/\_____\/\_____\/\__\/\__\/ \_____\/  \__\/   \_____\/\_\/ \_\/\_____\/
+    // Blokada dostępu do adresu "localhost/../functions.php" przez URL
+    $currentPage = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-                        // Funkcje php - połączenie z bazą danych,
-                        //			     wysyłanie zapytań (query) do bazy danych
+    if ($_SERVER['REQUEST_METHOD'] == "GET" && strcmp(basename($currentPage), basename(__FILE__)) == 0) {
+        http_response_code(404);
+        header('Location: index.php');
 
-                        // Blokada dostępu do adresu "localhost/../functions.php" przez URL
-                        $currentPage = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-                        if ($_SERVER['REQUEST_METHOD'] == "GET" && strcmp(basename($currentPage), basename(__FILE__)) == 0)
-                        {
-                            http_response_code(404);
-                            //include('index.php'); // provide your own 404 error page
-                            header('Location: index.php');
-
-                            die(); /* remove this if you want to execute the rest of
-                                      the code inside the file before redirecting. */
-                        }
+        die();
+    }
 
 require_once "vendor/autoload.php";
 use PHPMailer\PHPMailer\PHPMailer;
@@ -37,22 +23,14 @@ use PHPMailer\PHPMailer\SMTP;
         // funkcja "get_authors" wykona się tylko, jeśli $result zawiera rekordy - czyli jeśli istnieje conajmniej jeden autor !
 
         echo '<li>
-                                <label>
-                                <input type="checkbox" name="author-checkbox" class="author-checkbox" id="all-authors">Wszyscy
-                                </label>
-                            </li>';
+                <label>
+                    <input type="checkbox" name="author-checkbox" class="author-checkbox" id="all-authors">Wszyscy
+                </label>
+            </li>';
 
-        // load the content from the external template file into string
-        $author = file_get_contents("../template/content-authors.php");
+        $author = file_get_contents("../template/content-authors.php"); // load the content from the external template file into string
 
-        while ($row = $result->fetch_assoc())
-        {   // replace fields in $author string to author data from $result, display result content as HTML
-
-            /*if ($_SESSION["category"] != "Wszystkie") {
-
-            } else {
-
-            }*/
+        while ($row = $result->fetch_assoc()) {   // replace fields in $author string to author data from $result, display result content as HTML
             echo sprintf($author, $row['id_autora'], $row["imie"], $row["nazwisko"], $row["imie"], $row["nazwisko"], $row["ilosc_ksiazek"]);
         }
     }
@@ -60,51 +38,39 @@ use PHPMailer\PHPMailer\SMTP;
     function getAuthorsAdvSearch($result) {
         // get_authors_adv_search // \user\index.php - header -> advanced_search -> <select> - lista autorów - imie i nazwisko autora
 
-        // load the content from the external template file into string
-        $author = file_get_contents("../template/adv-search-authors.php");
+        $author = file_get_contents("../template/adv-search-authors.php"); // load the content from the external template file into string
 
         echo sprintf($author, "", "", "");
 
         while ($row = $result->fetch_assoc()) { // tyle ile jest autorów (imie, nazwisko, id_autora)
-
-            // replace fields in $author string to author data from $result, display result content as HTML
-            echo sprintf($author, $row["id_autora"], $row["imie"], $row["nazwisko"]);
+            echo sprintf($author, $row["id_autora"], $row["imie"], $row["nazwisko"]); // replace fields in $author string to author data from $result, display result content as HTML
         }
     }
 
 	function getCategories($result) {
-
 	    // get_categories // \user\index.php - top-nav - ol;
         // wyświetla listę kategorii;   wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
-
         $categoryName = "Wszystkie";
 
-        // load the content from the external template file into string
-        $listItem = file_get_contents("../template/top-nav-categories.php"); // <--- szablon dla elementu listy;
+        $listItem = file_get_contents("../template/top-nav-categories.php"); // <--- szablon dla elementu listy; // load the content from the external template file into string
 
-        // replace fields in $listItem string to category data from $result, display result content as HTML
-        echo sprintf($listItem, $categoryName, $categoryName);
+        echo sprintf($listItem, $categoryName, $categoryName); // replace fields in $listItem string to category data from $result, display result content as HTML
 
-		while ($row = $result->fetch_assoc()) // tyle ile jest kategorii (name);
-		{
+		while ($row = $result->fetch_assoc()) {// tyle ile jest kategorii (name);
             echo sprintf($listItem, $row["nazwa"], $row["nazwa"]);
 		}
-
     }
 
     function getCategoriesAdvSearch($result) {
-
         // get_categories_adv_search // \user\index.php // advanced_search --> <select> - lista kategorii;
         $categoryName = "Wszystkie";
 
-        // load the content from the external template file into string
-        $category = file_get_contents("../template/adv-search-categories.php");
+        $category = file_get_contents("../template/adv-search-categories.php"); // load the content from the external template file into string
 
         echo sprintf($category, $categoryName, $categoryName);
 
         while ($row = $result->fetch_assoc()) { // tyle ile jest kategorii
-            // replace fields in $author string to author data from $result, display result content as HTML
-            echo sprintf($category, $row["nazwa"], $row["nazwa"]);
+            echo sprintf($category, $row["nazwa"], $row["nazwa"]); // replace fields in $author string to author data from $result, display result content as HTML
         }
     }
 
@@ -115,34 +81,23 @@ use PHPMailer\PHPMailer\SMTP;
         $i = 0;
 
         while($row = $result->fetch_assoc()) {
-            // load the content from the external template file into string
-            $category = file_get_contents("../template/admin/categories.php");
-            // replace fields in $order string to author data from $result, display result content as HTML
-            echo sprintf($category, $row['id_kategorii'], $row["nazwa"], $row["id_kategorii"], $row["id_kategorii"], $row["nazwa"], $row["id_kategorii"]);
+            $category = file_get_contents("../template/admin/categories.php"); // load the content from the external template file into string
+            echo sprintf($category, $row['id_kategorii'], $row["nazwa"], $row["id_kategorii"], $row["id_kategorii"], $row["nazwa"], $row["id_kategorii"]); // replace fields in $order string to author data from $result, display result content as HTML
             $i++;
         }
     }
 
 	function getBooks($result) {
-
         // get_books - content -> wyświetla wszystkie książki
-
         // funkcja wykona się, tylko jeśli $result zawiera conajmniej jeden rekord;
-
         $i = 0;
 
         while ($row = $result->fetch_assoc()) {
 
-            // load the content from the external template file into string
-            $book = file_get_contents("../template/content-books.php");
-
+            $book = file_get_contents("../template/content-books.php"); // load the content from the external template file into string
             $row["ilosc_egzemplarzy"] = ($row["ilosc_egzemplarzy"] === null) ? 'niedostępna' : ($row["ilosc_egzemplarzy"] > 0 ? 'dostępna' : 'niedostępna');
-
             $button = ($row["ilosc_egzemplarzy"] === 'dostępna') ? '' : 'disabled'; // "Dodaj do koszyka" - <button> ;
-
-            // replace fields in $book string to book data from $result, display result content as HTML
-            echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["ilosc_egzemplarzy"],$row["id_ksiazki"], $button);
-
+            echo sprintf($book, $i, $row["id_ksiazki"], $row["image_url"], $row["tytul"], $row["tytul"], $row["id_ksiazki"], $row["tytul"], $row["tytul"], $row["cena"], $row["rok_wydania"], $row["imie"], $row["nazwisko"], $row["ilosc_egzemplarzy"],$row["id_ksiazki"], $button); // replace fields in $book string to book data from $result, display result content as HTML
             $i++;
         }
 	}
@@ -156,7 +111,6 @@ use PHPMailer\PHPMailer\SMTP;
         $_SESSION["rating"] = $row["rating"];
         $_SESSION["liczba_ocen"] = $row["liczba_ocen"];
         $_SESSION["avg_rating"] = $row["rating"];
-
 
         if ($row["liczba_ocen"] == 0) {
             query("UPDATE books SET rating = '' WHERE books.id_ksiazki = '%s'", "", $row["id_ksiazki"]);
