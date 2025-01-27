@@ -4,23 +4,23 @@
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        if (isset($_POST["input-search-nav"])) {
-            // title of the book from left nav-bar
+        if (isset($_POST["input-search-nav"])) { // title of the book from left nav-bar
+
             $title = filter_input(INPUT_POST, "input-search-nav", FILTER_SANITIZE_STRING);
             $_SESSION["input-search-nav"] = $title;
 
             if (empty($title) || ($_SESSION["input-search-nav"] !== $_POST["input-search-nav"])) {
-                    $_SESSION["application-error"] = true;
-                        unset($_POST, $title, $_SESSION["input-search-nav"]);
+                $_SESSION["application-error"] = true;
+                    unset($_POST, $title, $_SESSION["input-search-nav"]);
             }
 
-        } elseif (isset($_POST["category"])) {
+        } elseif (isset($_POST["category"])) { // name of the category from main top nav-bar list
 
-            if ($_POST["category"] != "Wszystkie") {
+            if ($_POST["category"] != "Wszystkie") { // "Informatyka", "Dla dzieci", ...
 
                 $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_STRING);
                 $_SESSION["category"] = $category;
-                $categoryExists = query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["category"]); // --> true - if caterogy exists;
+                $categoryExists = query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["category"]); // --> returns true - if caterogy exists;
 
                 if (empty($category) || ($_SESSION["category"] !== $_POST["category"]) || empty($categoryExists)) {
 
@@ -33,7 +33,7 @@
 
                         $subcategory = filter_input(INPUT_POST, "subcategory", FILTER_SANITIZE_STRING);
                         $_SESSION["subcategory"] = $subcategory;
-                        $subcategoryExists = query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // --> true - if subcaterogy exists;
+                        $subcategoryExists = query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // -->returns true - if subcaterogy exists;
 
                         if (empty($subcategory) || ($_SESSION["subcategory"] !== $_POST["subcategory"]) || empty($subcategoryExists)) {
 
@@ -52,13 +52,13 @@
             }
         } elseif (isset($_POST["input-search"])) {
 
-            $search_value = filter_input(INPUT_POST, "input-search", FILTER_SANITIZE_STRING);
-            $_SESSION["input-search"] = $search_value;
+            $searchValue = filter_input(INPUT_POST, "input-search", FILTER_SANITIZE_STRING);
+            $_SESSION["input-search"] = $searchValue;
             $_SESSION["category"] = "Wszystkie";
 
-            if (empty($search_value) || ($_SESSION["input-search"] !== $_POST["input-search"])) {
+            if (empty($searchValue) || ($_SESSION["input-search"] !== $_POST["input-search"])) {
                 $_SESSION["application-error"] = true;
-                    unset($_POST, $search_value, $_SESSION["input-search"], $_SESSION["category"], $_SESSION["subcategory"]);
+                    unset($_POST, $searchValue, $_SESSION["input-search"], $_SESSION["category"], $_SESSION["subcategory"]);
 
             } else {
                 unset($_SESSION["subcategory"]);
@@ -354,7 +354,7 @@
 
                             if (isset($_SESSION["input-search"])) {
 
-                                $search_value = $_SESSION["input-search"];
+                                $searchValue = $_SESSION["input-search"];
 
                                 unset($_SESSION["input-search"]);
 
@@ -373,16 +373,16 @@
                                         LEFT JOIN 
                                               warehouse_books ON warehouse_books.id_ksiazki = ks.id_ksiazki
                                         WHERE ks.tytul LIKE '%%%s%%' 
-                                        GROUP BY ks.id_ksiazki", "getBooks", $search_value);
+                                        GROUP BY ks.id_ksiazki", "getBooks", $searchValue);
                             }
 
                             elseif (isset($_SESSION["input-search-nav"])) {
 
-                                $search_value = $_SESSION["input-search-nav"];
+                                $searchValue = $_SESSION["input-search-nav"];
 
                                 unset($_SESSION["input-search-nav"]);
 
-                                $values = [$search_value];
+                                $values = [$searchValue];
 
                                 $query = "SELECT
                                             ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating, 
