@@ -69,11 +69,11 @@
                   isset($_POST["year-min"]) &&
                   isset($_POST["year-max"])
         ) {
-            $valid = true;
-                $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING);
-                $_SESSION["adv-search-category"] = $category;
-                $_SESSION["category"] = $category;
-                    unset($_SESSION["subcategory"]);
+            $valid = true; // validation flag
+            $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING);
+            $_SESSION["adv-search-category"] = $category;
+            $_SESSION["category"] = $category;
+                unset($_SESSION["subcategory"]);
 
             if (empty($category) || ($_SESSION["adv-search-category"] !== $_POST["adv-search-category"]) || strlen($category)>100) {
                     $valid = false;
@@ -83,8 +83,8 @@
                     $categoryExists = query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
 
                     if (empty($categoryExists)) {
-                        unset($categoryExists);
-                        $valid = false;
+                            unset($categoryExists);
+                                $valid = false;
                     }
                 }
             }
