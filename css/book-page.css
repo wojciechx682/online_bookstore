@@ -1,19 +1,11 @@
 #book-page {
-    /*border: 1px dashed black;*/
-    /*padding: 20px;*/
-
-
     min-width: 577px !important;
 }
 
 #book-page-image {
-    /*border: 1px dashed black;*/
     float: left;
-    /*width: 25%;*/
     padding: 15px;
-
     min-width: 195px;
-
     margin-right: 7px;
 }
 
@@ -22,41 +14,27 @@
 }
 
 #book-page-details {
-    /*border: 1px dashed black;*/
     float:left;
-   /* width: 45%;*/
     position: relative;
     top: 15px;
-
     margin-right: 42px;
     margin-bottom: 15px;
-
-   /* background-color: lightskyblue;*/
-    /*max-width: 65%;
-    width:48%;*/
-
 }
 
 #book-page-details span.book-page-details {
-
-    /*margin-right: 15px;*/
-
     min-width: 120px;
     display: block;
-
     float: left;
-
 }
+
 #book-page-details span.book-page-details-title {
     display: block;
     float: left;
-
 }
 
 #add-to-cart span.book-page-details {
     min-width: 57px;
     display: block;
-
     float: left;
 }
 
@@ -66,7 +44,6 @@
 #book-page-rate,
 #book-page-publ,
 #book-page-nopg {
-    /*border: 1px dashed black;*/
     margin-bottom: 9px;
 }
 
@@ -77,55 +54,35 @@
 
 #book-page-rate {
     min-height: 25px;
-
     margin-top: 10px;
 }
-
-/* ------------------------------------------------------------------------------------------------------------------ */
 
 .rate-inner,
 .comment-rate-inner {
     overflow: hidden;
     width: 0;
-
     position: absolute;
     top: 0;
     left: 0;
-
-    /*transition: width 0.2s ease-in-out;*/
 }
 
 span#book-price {
     margin-right: 4px;
 }
 
-/*..rate-inner::before {
-    content: "\f005 \f005 \f005 \f005 \f005";
-    font-family: FontAwesome;
-    font-size: 120%;
-    color: rgba(248, 209, 11, 0.96);
-}*/
 
 .rate-inner-base {
     overflow: hidden;
-        /* background: linear-gradient(90deg, #f8d10b, #c3c3c3);*/
-        /* background-size: 500% 100%;*/
     transition: background-position 0.4s ease-out;
-    /*position: fixed;*/
     max-width: 100%;
     text-align: right;
     opacity: .3;
-        /*transform: rotate(180deg);*/
     transform: scaleX(-1);
-
-    /*left: 0;
-    transition: left 0.2s ease-in-out;*/
 }
 
 .comment-rate-inner-base {
     position: relative;
     left: 0;
-
     overflow: hidden;
     transform: scaleX(-1);
 }
@@ -136,13 +93,10 @@ span#book-price {
 
 .rate-inner-base::before,
 .comment-rate-inner-base::before {
-
     content: "\f005 \f005 \f005 \f005 \f005";
     font-family: FontAwesome;
-
-    color: silver; /* set the color of the stars to silver/gray */
+    color: silver;
     -webkit-background-clip: text;
-    /*background-size: 500% 100%;*/
 }
 
 .rate-inner::before {
@@ -159,16 +113,10 @@ span#book-price {
     line-height: 22px;
 }
 
-/*#rating-num {
-    margin-left: 12px;
-}*/
-
 #rate-container {
     float: left;
     position: relative;
 }
-
-/* circle rates --> ------------------------------------------------------------------------------------------------- */
 
 #book-page-rate-circle {
     height: 200px;
@@ -202,22 +150,14 @@ span#book-price {
     transform-origin: center;
 }
 
-/* circle rates --> ------------------------------------------------------------------------------------------------- */
+
 #rating-circle {
-stroke-dasharray: 0, 62.83185307179586;  /* Set the stroke-dasharray to the circumference of the circle */
-                               /* Ta właściwość definiuje wzór kresek i przerw używanych do tworzenia linii przerywanej lub kropkowanej  - "5,2"*/
-/*stroke-dashoffset: 62.83185307179586;*/  /* Initially hide the filled (yelow) portion */
-                       /*  Ta właściwość określa pozycję początkową wzoru kreski - "Przesunięcie", zmieniając ją, zmieniamy początkową pozycję wzoru kreski; */
-
+stroke-dasharray: 0, 62.83185307179586;
     transition: stroke-dasharray 0.4s ease;
-
-    /*transform: rotate(90deg);*/ /* Rotate the circle by -90 degrees to start the fill from the top */
-
     width: 50px;
     height: 50px;
     position: relative;
     overflow: auto;
-    /* margin-top: 25px;*/
 }
 
 #circle-plot svg {
@@ -227,7 +167,6 @@ stroke-dasharray: 0, 62.83185307179586;  /* Set the stroke-dasharray to the circ
 }
 
 #circle-plot {
-    /*border: 1px dashed black;*/
     overflow: hidden;
     width: 225px;
     height: 225px;
@@ -235,8 +174,6 @@ stroke-dasharray: 0, 62.83185307179586;  /* Set the stroke-dasharray to the circ
 }
 
 #book-rating-details {
-    /*border: 1px dashed black;*/
-
     float: left;
     height: 232px;
     width: 225px;
@@ -244,8 +181,6 @@ stroke-dasharray: 0, 62.83185307179586;  /* Set the stroke-dasharray to the circ
 }
 
 .book-rating-details {
-    /*border: 1px dashed black;*/
-
     float: left;
     width: 225px;
     height: 45px;
@@ -254,47 +189,32 @@ stroke-dasharray: 0, 62.83185307179586;  /* Set the stroke-dasharray to the circ
 }
 
 .rate {
-    /*border: 1px dashed black;*/
     float: left;
     width: 25px;
-
     position: relative;
     top: -2.5px;
-
     margin-right: 10px;
-
-
 }
 
 .line {
-    /*border: 1px dashed black;*/
-
     float: left;
     width: 135px;
     height: 45px;
 }
 
 .no-rates {
-    /*border: 1px dashed #ff0000;*/
     float: left;
     width: 25px;
-
     position: relative;
     top: -2.5px;
 }
 
 .rated, .unrated {
-    /*float: left;*/
-    /*border: 1px solid red;*/
-
     border-radius: 10px;
-
     position: relative;
     top: 16px;
-    /*height: 5px;*/
     height: 10px;
     background-color: #FFD700FF;
-
     transition: width 0.4s ease-in-out;
 }
 
@@ -311,38 +231,18 @@ stroke-dasharray: 0, 62.83185307179586;  /* Set the stroke-dasharray to the circ
     z-index: 1;
 }
 
-/*.book-rating-line {
-    border: 1px dashed black;
-    float: left;
-    width: 55px;
-    height: 25px;
-    text-align: center;
-    line-height: 45px;
-}*/
-
-/* dodawanie recenzji -->  ------------------------------------------------------------------------------------------ */
-
 #add-review {
-    /*width: 100%;*/
     margin: 0 30px 15px 30px;
-    /*border: 1px solid black;*/
-    /*border-radius: 15px;*/
     padding: 0 0 15px 0;
-    /*overflow: auto;*/
-
     border-top: 1px ridge rgba(166, 166, 166, 0.38);
     border-bottom: 1px ridge rgba(166, 166, 166, 0.38);
 }
 
 div#tab-3 div#add-review hr {
     background-color: rgba(166, 166, 166, 0.38);
-
     border: none;
     height: 1px;
-
     margin: 5px 0 15px 0;
-
-
 }
 
 #textarea-comment {
@@ -350,14 +250,10 @@ div#tab-3 div#add-review hr {
     height: 145px;
     resize: none;
     margin: 10px 0 10px 0;
-
     border: 1px solid #4d4d4d70;
-    outline: none ;
-
+    outline: none;
     padding: 5px 5px;
-
     background-color: #fafafa;
-
     border-radius: 5px;
 }
 
@@ -366,11 +262,8 @@ div#tab-3 div#add-review hr {
 }
 
 #add-rate {
-    /*border: 1px dashed black;*/
-    /*height: 250px;*/
     overflow: auto;
     display: inline-block;
-
     position: relative;
     left: -4px;
 }
@@ -383,45 +276,25 @@ div#tab-3 div#add-review hr {
     /*border: 1px dashed black;*/
 }
 
-/*.rate-outer {
-
-}*/
-
 span.star {
-    /* border: 1px dashed black;*/
-
     display: block;
     float: left;
     text-align: center;
     width: 45px;
     cursor: pointer;
-
     user-select: none;
 }
 
 span.star::before {
     content: "\f005";
     font-family: FontAwesome;
-    /*font-size: 120%;*/
-    color: silver; /* set the color of the stars to silver/gray */
+    color: silver;
     -webkit-background-clip: text;
-    /*background-size: 500% 100%;*/
 }
-
-/*span.star:hover::before {
-    content: "\f005";
-    font-family: FontAwesome;
-    !*font-size: 120%;*!
-    !*color: silver; !* set the color of the stars to silver/gray *!*!
-    -webkit-background-clip: text;
-    color: rgba(248, 209, 11, 0.96);
-}*/
 
 span.star.gold::before {
     content: "\f005";
     font-family: FontAwesome;
-    /*font-size: 120%;*/
-    /*color: silver; !* set the color of the stars to silver/gray *!*/
     -webkit-background-clip: text;
     color: rgba(248, 209, 11, 0.96);
 }
@@ -433,22 +306,14 @@ span.star.gold::before {
 #add-rate-button {
     position: relative;
     top: -5px;
-
-    /* margin-left: 5px; */
-    /* width: 200px; */
     min-width: 100px;
-    /* width: calc(100% * 0.218); */
-    /*width: 235px;*/
-    /* background-color: rgb(255, 255, 255); */
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /* font-size: 20px; */
     font-weight: bold;
     padding: 4px 4px 5px 4px;
     box-sizing: border-box;
     outline: none;
-    /* margin-top: 10px; */
     margin-left: 12px;
 }
 
@@ -459,14 +324,6 @@ span.star.gold::before {
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
 }
 
-
-/*.rate-inner::before {
-    content: "\f005 \f005 \f005 \f005 \f005";
-    font-family: FontAwesome;
-    font-size: 120%;
-    color: rgba(248, 209, 11, 0.96);
-}*/
-
 .stars {
     display: inline-block;
 }
@@ -476,7 +333,7 @@ span.star.gold::before {
 }
 
 .stars label {
-    /*font-size: 50px;*/
+
     color: grey;
     cursor: pointer;
 }
@@ -488,8 +345,6 @@ span.star.gold::before {
 .stars input[type="radio"]:checked + label {
     color: #FFD700FF;
 }
-
-/* ------------------------------------------------------------------------------------------------------------------ */
 
 .comment-rate {
     float: left;
@@ -511,16 +366,10 @@ span.star.gold::before {
 
 .comment-rate-inner {
     overflow: hidden;
-    /*width: 100%;*/
-    /* position: absolute;
-     top: 0;
-     left: 0;*/
-    /*display: inline-block;*/
 }
 
 .comment-rate-inner {
     float: left;
-
     z-index: 10;
 }
 
@@ -541,9 +390,8 @@ span.star.gold::before {
     text-align: justify;
     padding: 15px 0 15px 0;
 }
-/* ------------------------------------------------------------------------------------------------------------------ */
+
 #book-comments {
-    /*border: 1px dashed black;*/
     padding: 0 30px 15px 30px;
     margin-top: 20px;
 
@@ -556,19 +404,15 @@ div.tab-panel {
 }
 
 section.comment {
-    /*border: 1px dashed black;*/
     border-radius: 10px;
     min-height: 45px;
     margin: 15px 0 15px 0;
-    /*overflow: auto;*/
     padding: 10px;
     background-color: #d7d7d7;
 }
-/* sekcja dodaj-do-koszyka --> -------------------------------------------------------------------------------------- */
+
 
 #add-to-cart {
-    /*border: 1px dashed black;*/
-
     float: left;
     position: relative;
     top: 15px;
@@ -579,12 +423,11 @@ section.comment {
     margin-top: 15px;
 }
 
-
 #add-to-cart form label:hover {
     cursor:pointer;
 }
 
-input[id^="book-amount"] { /* ta zasada jest już w main.css */
+input[id^="book-amount"] {
     width: 45px;
     text-align: center;
     margin-right: 10px;
@@ -595,62 +438,34 @@ input[id^="book-amount"] { /* ta zasada jest już w main.css */
     margin-bottom: 7px;
 }
 
-/* --------------------------------------------------------------------------- */
-
 div#add-to-cart form input[name="book-amount"] {
     min-width: 55px;
-    /*width: calc(100% * 0.75);*/
-    /*background-color: rgb(255, 255, 255);*/
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /*font-size: 20px;*/
     font-weight: bold;
     padding: 2px;
     box-sizing: border-box;
     outline: none;
-    /*margin-top: 10px;*/
     margin-left: 10px;
-
-
-
-    /*transition: all 0.125s ease-in-out;*/
 }
-
-
 
 div#add-to-cart form input[name="book-amount"]:focus,
 div#add-to-cart form input[name="book-amount"]:hover {
-    /*    -webkit-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
-        -moz-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
-        box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);*/
-
-    /*    border: 1px ridge #a2bbcb;
-        background-color: #f1f6ff;
-        color: #464646;*/
     cursor: pointer;
-
     -webkit-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     -moz-box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
     box-shadow: inset 0px 0px 13px -10px rgba(66, 68, 90, 1);
 }
 
 div#add-to-cart form button[type="button"] {
-    /* margin-left: 5px; */
-    /* width: 200px; */
     min-width: 25px;
-    /* width: calc(100% * 0.218); */
-    /*width: 235px;*/
-    /* background-color: rgb(255, 255, 255); */
     color: #707070;
     border: 1px ridge #b7b7b7;
     border-radius: 5px;
-    /* font-size: 20px; */
     font-weight: bold;
     padding: 2px;
     box-sizing: border-box;
-
-    /* margin-top: 10px; */
     margin-right: 2px;
 }
 
