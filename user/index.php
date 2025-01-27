@@ -33,7 +33,7 @@
 
                         $subcategory = filter_input(INPUT_POST, "subcategory", FILTER_SANITIZE_STRING);
                         $_SESSION["subcategory"] = $subcategory;
-                        $subcategoryExists = query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // -->returns true - if subcaterogy exists;
+                        $subcategoryExists = query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // --> returns true - if subcaterogy exists;
 
                         if (empty($subcategory) || ($_SESSION["subcategory"] !== $_POST["subcategory"]) || empty($subcategoryExists)) {
 
@@ -129,7 +129,7 @@
                         ]
                     ]
                 );
-                $authorExists = query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]);
+                $authorExists = query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]); // --> returns true - if author exists;
 
                 if (empty($author) || empty($_SESSION["adv-search-author"]) || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || empty($authorExists) ) {
                     $valid = false;

@@ -5,6 +5,7 @@
     <meta name="description" content="Online bookstore Web Application">
     <meta name="keywords" content="Online bookstore, Web Application, Księgarnia internetowa, Zamówienia online, Rejestracja, Zakup książek, E-commerce, Handel elektroniczny">
     <title>Online bookstore</title>
+    <link rel="icon" href="../assets/icon.png" type="image/png">
         <link rel="stylesheet" href="../css/new.css">
             <link rel="stylesheet" href="../css/book-page-tabs.css">
             <link rel="stylesheet" href="../css/book-page.css">
