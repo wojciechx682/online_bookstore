@@ -1429,7 +1429,7 @@ button.reset-password-button {
     font-size: 0.9rem;
     overflow: hidden !important;
     max-height: 17px;
-    color: #551a8b;
+    color: #000000;
 }
 
 .cart-book form button.submit-book-form h3.book-title {

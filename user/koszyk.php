@@ -23,8 +23,6 @@
 
                     <?php
 
-                        // (!) Problem implementacyjny - (do zrobienia) - Zmiana użycia formularza do wysyłania i zapisywania ilości książek w koszyku na użycie technologii AJAX - ponieważ przy zmienie ilości książek w koszyku następuje każdorazowo odświeżenie strony ;
-
                         query("SELECT kl.id_klienta, 
                                       ko.id_ksiazki, ko.ilosc, 
                                       ks.tytul, ks.cena, ks.rok_wydania, ks.image_url, 
@@ -42,15 +40,11 @@
                                      sb.id_subkategorii = ks.id_subkategorii
                                      AND sb.id_kategorii = kt.id_kategorii AND
                                      kl.id_klienta='%s'", "getProductsFromCart", $_SESSION["id"]);
-
-                        // książki które zamówił klient o danym ID; (które posiada aktualnie w koszyku);
-
-                        // $_SESSION["suma_zamowienia"] --> "285.45"
-
                     ?>
 
                     <h3 id='order-sum'>
-                        <span class='order-sum order-sum-cart'>suma</span><?= isset($_SESSION["suma_zamowienia"]) ? $_SESSION["suma_zamowienia"] : "0"; ?> PLN
+                        <span class='order-sum order-sum-cart'>suma</span>
+                        <?= isset($_SESSION["suma_zamowienia"]) ? $_SESSION["suma_zamowienia"] : "0"; ?> PLN
                     </h3>
 
                     <button class="btn-link btn-link-static">
@@ -74,7 +68,7 @@
 
     </div>
 
-    <script src="../scripts/change_cart_quantity.js"></script> <!-- Ajax - zmiany ilości książek w koszyku -->
+    <script src="../scripts/change_cart_quantity.js"></script>
 
     <?php require "../view/app-error-window.php"; ?>
 
