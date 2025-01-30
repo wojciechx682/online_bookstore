@@ -1,4 +1,3 @@
-
 function displayNav() {
 
 	const nav = document.querySelector("#nav");

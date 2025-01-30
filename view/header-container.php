@@ -43,15 +43,17 @@
             </div>
 
             <div id="div-search">
+
                 <form id="search-form" method="post" action="index.php">
 
-                    <input type="search" name="input-search" id="input-search" placeholder="Tytuł książki">
+                    <input type="search" name="input-search" id="input-search" placeholder="Tytuł książki" maxlength="50">
 
                     <button type="submit">
                         <i class="icon-search"></i>
                     </button>
 
                 </form>
+
             </div>
 
             <a class="top-nav-right" href="koszyk.php">

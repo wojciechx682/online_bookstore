@@ -48,7 +48,7 @@ use PHPMailer\PHPMailer\SMTP;
     }
 
 	function getCategories($result) {
-	    // get_categories // \user\index.php - top-nav - ol;
+	    // \user\index.php - top-nav - ol;
         // wyświetla listę kategorii;   wypisuje elementy listy <li> - wewnątrz kategorii (top_nav - n-top-nav-content);
         $categoryName = "Wszystkie";
 
