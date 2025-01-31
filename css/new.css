@@ -497,7 +497,8 @@ body {
     }
 
     #btn-parent a:nth-child(3):hover .btn.from-center {
-        color: #551a8b;
+        /*color: #551a8b;*/
+        color: #000000;
     }
 
     .btn-cart-main {
@@ -888,7 +889,7 @@ footer {
 #footer {
     height: 65px;
     background-color: white;
-    padding: 15px;
+    padding: 22px;
     text-align: center;
     border-left: 1px ridge rgba(166, 166, 166, 0.38);
     border-right: 1px ridge rgba(166, 166, 166, 0.38);
@@ -899,6 +900,7 @@ footer {
     white-space: nowrap;
     position: relative;
     border-top: 1px ridge rgba(166, 166, 166, 0.38);
+    letter-spacing: 1px;
 }
 
 #main-container {

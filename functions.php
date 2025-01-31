@@ -11,6 +11,9 @@
         die();
     }
 
+// Import PHPMailer classes into the global namespace
+// These must be at the top of your script, not inside a function
+//
 require_once "vendor/autoload.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -381,18 +384,18 @@ use PHPMailer\PHPMailer\SMTP;
         $_SESSION["email-exists"] = true;
 	}
 
-    function resetPasswordCheckEmail($result) { // reset_password_check_email
+    function resetPasswordCheckEmail($result) { // reset_password.php - resetowanie hasła
 
         $row = $result->fetch_assoc();
-
         $_SESSION["email-exists"] = true;
-        $_SESSION["imie"] = $row["imie"]; // reset_password.php - resetowanie hasła
+        $_SESSION["imie"] = $row["imie"];
+
     }
 
     function generate_token() { // reset_password.php; - return $token | OR | false;
 
-        //return false;
         try {
+
             $token = bin2hex(random_bytes(8)); // generate random token (16 letters);
 
             // 16-znakowy, kryptograficznie bezpieczny losowy ciąg heksadecymalny.
@@ -427,14 +430,7 @@ use PHPMailer\PHPMailer\SMTP;
 
     function sendEmail($message, $sendTo, $subject) {
 
-        try { // send email function;
-
-            /*require_once "vendor/autoload.php";
-            use PHPMailer\PHPMailer\PHPMailer;
-            use PHPMailer\PHPMailer\Exception;
-            use PHPMailer\PHPMailer\SMTP;*/
-
-            // wyślij do klienta email z tokenem
+        try {
 
             $mail = new PHPMailer(true);   // create a new PHPMailer instance, passing `true` enables exceptions;
 
@@ -462,18 +458,15 @@ use PHPMailer\PHPMailer\SMTP;
             $mail->Body = $message;
 
             //$mail->addAttachment('img/html-ebook.jpg'); // załącznik
-            //
 
             if ($mail->send()) {
-                    /*$_SESSION["email-sent"] = true;  // email wysłany pomyślnie
-                    unset($_POST, $email, $_SESSION["email-exists"], $_SESSION["imie"]);
-                    header('Location: ' . $_SERVER['PHP_SELF'], true, 303); exit(); // redirect with HTTP 303 response code;*/
+
                 return true;
 
             } else {
-                    //$_SESSION["email-sent"] = false; // email niewysłany, wystąpił błąd
-                //return false;
+
                 throw new Exception();
+
             }
 
         } catch(Exception $e) {
@@ -481,9 +474,7 @@ use PHPMailer\PHPMailer\SMTP;
             $_SESSION["sent-error"] = "Wystąpił błąd. Nie udało się wysłać wiadomości na podany adres e-mail. {$mail->ErrorInfo}"; // $e->getMessage();
 
             //return false;
-
         }
-
     }
 
 

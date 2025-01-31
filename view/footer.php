@@ -1,9 +1,7 @@
 
     <footer>
         <div id="footer">
-            <pre>
-                © 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us
-            </pre>
+            © 2023 Online Bookstore. All rights reserved. | Privacy Policy | Terms of Us
         </div>
     </footer>
 
