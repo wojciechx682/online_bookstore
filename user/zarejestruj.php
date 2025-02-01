@@ -205,7 +205,7 @@
                                             unset($_SESSION["register_kod_miejscowosc"]);
                                     }
                                     else {
-                                        echo "Dębno";
+                                        echo "Dolna odra";
                                     } ?>">
 
                                 <?php

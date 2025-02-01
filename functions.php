@@ -13,7 +13,7 @@
 
 // Import PHPMailer classes into the global namespace
 // These must be at the top of your script, not inside a function
-//
+
 require_once "vendor/autoload.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
