@@ -1,4 +1,5 @@
-Online bookstore web application Project
+Online bookstore web application Project.
+For educational purposes only
 
 <h3>How to install project on localhost:</h3>
 
