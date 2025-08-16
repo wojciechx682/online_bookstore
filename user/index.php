@@ -2,94 +2,97 @@
 
     require_once "../start-session.php";
 
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    function sanitizeAndValidateInput($inputType, $inputName, $filterType) {
+        // do rozbudowy w przyszłości - można dodać kolejny parametr (pierwszy) jako funkcję która ma zostać wywołana do filtracji (np filter_var lub filter_input) - wtedy by to była funkcja typu callback
+        return filter_input($inputType, $inputName, $filterType);
+    }
+    function validateSearchNavTitle() {
+        /*  Sanityzuje i waliduje pole 'input-search-nav' wysyłane metodą POST.
+            - Jeśli dane są poprawne, zapisuje je do $_SESSION["input-search-nav"]
+            - Jeśli są puste lub zmienione przez filtrację, ustawia $_SESSION["application-error"]
+            i usuwa dane z $_SESSION oraz $_POST
+            Przeznaczenie: lewy pasek wyszukiwania tytułu książki */
+        $title = sanitizeAndValidateInput(INPUT_POST, "input-search-nav", FILTER_SANITIZE_STRING);
+        $_SESSION["input-search-nav"] = $title;
+        if (empty($title) || ($_SESSION["input-search-nav"] !== $_POST["input-search-nav"])) {
+            $_SESSION["application-error"] = true;
+            unset($_POST, $title, $_SESSION["input-search-nav"]);
+        }
+    }
+    function validateCategory() {
 
-        if (isset($_POST["input-search-nav"])) { // title of the book from left nav-bar
+        if ($_POST["category"] != "Wszystkie") { // "Informatyka", "Dla dzieci", ...
 
-            $title = filter_input(INPUT_POST, "input-search-nav", FILTER_SANITIZE_STRING);
-            $_SESSION["input-search-nav"] = $title;
+            $category = sanitizeAndValidateInput(INPUT_POST, "category", FILTER_SANITIZE_STRING);
+            $_SESSION["category"] = $category;
 
-            if (empty($title) || ($_SESSION["input-search-nav"] !== $_POST["input-search-nav"])) {
+            $categoryExists = query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["category"]); // --> returns true - if category exists;
+
+            if (empty($category) || ($_SESSION["category"] !== $_POST["category"]) || empty($categoryExists)) {
+
                 $_SESSION["application-error"] = true;
-                    unset($_POST, $title, $_SESSION["input-search-nav"]);
-            }
+                unset($_POST, $category, $_SESSION["category"], $_SESSION["subcategory"], $categoryExists, $subcategoryExists);
 
-        } elseif (isset($_POST["category"])) { // name of the category from main top nav-bar list
+            } else { // validation OK (passed tests)
 
-            if ($_POST["category"] != "Wszystkie") { // "Informatyka", "Dla dzieci", ...
+                if (isset($_POST["subcategory"])) {
 
-                $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_STRING);
-                $_SESSION["category"] = $category;
-                $categoryExists = query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["category"]); // --> returns true - if caterogy exists;
+                    $subcategory = sanitizeAndValidateInput(INPUT_POST, "subcategory", FILTER_SANITIZE_STRING);
+                    $_SESSION["subcategory"] = $subcategory;
+                    $subcategoryExists = query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // --> returns true - if subcaterogy exists;
 
-                if (empty($category) || ($_SESSION["category"] !== $_POST["category"]) || empty($categoryExists)) {
+                    if (empty($subcategory) || ($_SESSION["subcategory"] !== $_POST["subcategory"]) || empty($subcategoryExists)) {
 
-                    $_SESSION["application-error"] = true;
-                        unset($_POST, $category, $_SESSION["category"], $_SESSION["subcategory"], $categoryExists, $subcategoryExists);
+                        $_SESSION["application-error"] = true;
+                        unset($_POST, $category, $subcategory, $_SESSION["category"], $_SESSION["subcategory"], $categoryExists, $subcategoryExists);
+                    }
 
                 } else {
-
-                    if (isset($_POST["subcategory"])) {
-
-                        $subcategory = filter_input(INPUT_POST, "subcategory", FILTER_SANITIZE_STRING);
-                        $_SESSION["subcategory"] = $subcategory;
-                        $subcategoryExists = query("SELECT nazwa FROM subcategories WHERE nazwa = '%s'", "verifySubcategoryExists", $_SESSION["subcategory"]); // --> returns true - if subcaterogy exists;
-
-                        if (empty($subcategory) || ($_SESSION["subcategory"] !== $_POST["subcategory"]) || empty($subcategoryExists)) {
-
-                            $_SESSION["application-error"] = true;
-                                unset($_POST, $category, $subcategory, $_SESSION["category"], $_SESSION["subcategory"], $categoryExists, $subcategoryExists);
-                        }
-
-                    } else {
-                        unset($_SESSION["subcategory"]);
-                    }
+                    unset($_SESSION["subcategory"]);
                 }
-
-            } else {
-                $_SESSION["category"] = "Wszystkie";
-                    unset($_SESSION["subcategory"], $categoryExists, $subcategoryExists);
             }
-        } elseif (isset($_POST["input-search"])) {
 
-            $searchValue = filter_input(INPUT_POST, "input-search", FILTER_SANITIZE_STRING);
-            $_SESSION["input-search"] = $searchValue;
+        } else {
             $_SESSION["category"] = "Wszystkie";
+            unset($_SESSION["subcategory"], $categoryExists, $subcategoryExists);
+        }
+    }
+    function validateMainInputSearch() {
+        $searchValue = sanitizeAndValidateInput(INPUT_POST, "input-search", FILTER_SANITIZE_STRING);
+        $_SESSION["input-search"] = $searchValue;
+        $_SESSION["category"] = "Wszystkie";
 
-            if (empty($searchValue) || ($_SESSION["input-search"] !== $_POST["input-search"])) {
-                $_SESSION["application-error"] = true;
-                    unset($_POST, $searchValue, $_SESSION["input-search"], $_SESSION["category"], $_SESSION["subcategory"]);
+        if (empty($searchValue) || ($_SESSION["input-search"] !== $_POST["input-search"])) {
+            $_SESSION["application-error"] = true;
+            unset($_POST, $searchValue, $_SESSION["input-search"], $_SESSION["category"], $_SESSION["subcategory"]);
 
-            } else {
-                unset($_SESSION["subcategory"]);
-            }
-        } elseif (isset($_POST["adv-search-title"]) &&
-                  isset($_POST["adv-search-category"]) &&
-                  isset($_POST["adv-search-author"]) &&
-                  isset($_POST["year-min"]) &&
-                  isset($_POST["year-max"])
-        ) {
-            $valid = true; // validation flag
-            $category = filter_input(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING);
-            $_SESSION["adv-search-category"] = $category;
-            $_SESSION["category"] = $category;
-                unset($_SESSION["subcategory"]);
+        } else {
+            unset($_SESSION["subcategory"]);
+        }
+    }
 
-            if (empty($category) || ($_SESSION["adv-search-category"] !== $_POST["adv-search-category"]) || strlen($category)>100) {
+    function validateAdvancedSearch() {
+        $valid = true; // validation flag
+        $category = sanitizeAndValidateInput(INPUT_POST, "adv-search-category", FILTER_SANITIZE_STRING);
+        $_SESSION["adv-search-category"] = $category;
+        $_SESSION["category"] = $category;
+        unset($_SESSION["subcategory"]);
+
+        if (empty($category) || ($_SESSION["adv-search-category"] !== $_POST["adv-search-category"]) || strlen($category)>100) {
+            $valid = false;
+        } else {
+            // validation OK (passed)
+            if ($_SESSION["adv-search-category"] != "Wszystkie") {
+
+                $categoryExists = query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
+
+                if (empty($categoryExists)) {
+                    unset($categoryExists);
                     $valid = false;
-            } else {
-                if ($_SESSION["adv-search-category"] != "Wszystkie") {
-
-                    $categoryExists = query("SELECT nazwa FROM categories WHERE nazwa = '%s'", "verifyCategoryExists", $_SESSION["adv-search-category"]);
-
-                    if (empty($categoryExists)) {
-                            unset($categoryExists);
-                                $valid = false;
-                    }
                 }
             }
-
-            $_SESSION["adv-search-query"] = "SELECT
+        }
+        $_SESSION["adv-search-query"] = "SELECT
                                 ks.id_ksiazki, ks.image_url, ks.tytul, ks.cena, ks.rok_wydania, ks.rating,
                                 kt.nazwa, sb.id_kategorii,
                                 au.imie, au.nazwisko,
@@ -106,116 +109,135 @@
                                 warehouse_books ON warehouse_books.id_ksiazki = ks.id_ksiazki
                             ";
 
+        if (!empty($_POST["adv-search-title"])) {
 
-            if (!empty($_POST["adv-search-title"])) {
+            $title = sanitizeAndValidateInput(INPUT_POST, "adv-search-title", FILTER_SANITIZE_STRING);
+            $_SESSION["adv-search-title"] = $title;
 
-                $title = filter_input(INPUT_POST, "adv-search-title", FILTER_SANITIZE_STRING);
-                $_SESSION["adv-search-title"] = $title;
-
-                if (empty($title) || ($_SESSION["adv-search-title"] !== $_POST["adv-search-title"]) || strlen($title)>255 ) {
-                    $valid = false;
-                }
+            if (empty($title) || ($_SESSION["adv-search-title"] !== $_POST["adv-search-title"]) || strlen($title)>255 ) {
+                $valid = false;
             }
+        }
 
-            if (!empty($_POST["adv-search-author"])) {
+        if (!empty($_POST["adv-search-author"])) {
 
-                $maxAuthorId = query("SELECT MAX(id_autora) AS id_autora FROM author", "getAuthorId", "");
-                $author = filter_input(INPUT_POST, "adv-search-author", FILTER_SANITIZE_NUMBER_INT);
+            $maxAuthorId = query("SELECT MAX(id_autora) AS id_autora FROM author", "getAuthorId", "");
+            $author = sanitizeAndValidateInput(INPUT_POST, "adv-search-author", FILTER_SANITIZE_NUMBER_INT);
 
-                $_SESSION["adv-search-author"] = filter_var($author, FILTER_VALIDATE_INT, [
-                        'options' => [
-                            'min_range' => 1,
-                            'max_range' => $maxAuthorId
-                        ]
+            $_SESSION["adv-search-author"] = filter_var($author, FILTER_VALIDATE_INT, [
+                    'options' => [
+                        'min_range' => 1,
+                        'max_range' => $maxAuthorId
                     ]
-                );
-                $authorExists = query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]); // --> returns true - if author exists;
+                ]
+            );
+            $authorExists = query("SELECT id_autora FROM author WHERE id_autora = '%s'", "verifyAuthorExists", $_SESSION["adv-search-author"]); // --> returns true - if author exists;
 
-                if (empty($author) || empty($_SESSION["adv-search-author"]) || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || empty($authorExists) ) {
-                    $valid = false;
-                }
-
-                unset($author, $_SESSION["max-author-id"], $authorExists);
+            if (empty($author) || empty($_SESSION["adv-search-author"]) || ($_SESSION["adv-search-author"] != $_POST["adv-search-author"]) || empty($authorExists)) {
+                $valid = false;
             }
 
-            if (!empty($_POST["year-min"])) {
+            unset($author, $_SESSION["max-author-id"], $authorExists);
+        }
 
-                $year_min = filter_input(INPUT_POST, "year-min", FILTER_SANITIZE_NUMBER_INT);
+        if (!empty($_POST["year-min"])) {
 
-                $_SESSION["year-min"] = filter_var($year_min, FILTER_VALIDATE_INT, [
-                        'options' => [
-                            'min_range' => 1900,
-                            'max_range' => 2023
-                        ]
+            $year_min = sanitizeAndValidateInput(INPUT_POST, "year-min", FILTER_SANITIZE_NUMBER_INT);
+
+            $_SESSION["year-min"] = filter_var($year_min, FILTER_VALIDATE_INT, [
+                    'options' => [
+                        'min_range' => 1900,
+                        'max_range' => 2023
                     ]
-                );
+                ]
+            );
 
-                if ($year_min === false || $_SESSION["year-min"] === false) {
-                    $valid = false;
-                }
+            if ($year_min === false || $_SESSION["year-min"] === false) {
+                $valid = false;
             }
+        }
 
-            if (!empty($_POST['year-max'])) {
+        if (!empty($_POST['year-max'])) {
 
-                $year_max = filter_input(INPUT_POST, "year-max", FILTER_SANITIZE_NUMBER_INT);
+            $year_max = sanitizeAndValidateInput(INPUT_POST, "year-max", FILTER_SANITIZE_NUMBER_INT);
 
-                $_SESSION["year-max"] = filter_var($year_max, FILTER_VALIDATE_INT, [
-                        'options' => [
-                            'min_range' => 1900,
-                            'max_range' => 2023
-                        ]
+            $_SESSION["year-max"] = filter_var($year_max, FILTER_VALIDATE_INT, [
+                    'options' => [
+                        'min_range' => 1900,
+                        'max_range' => 2023
                     ]
-                );
+                ]
+            );
 
-                if ($year_max === false || $_SESSION["year-max"] === false) {
-                    $valid = false;
-                }
-
-                if ($_SESSION["year-min"] > $_SESSION["year-max"]) {
-                    $valid = false;
-                }
+            if ($year_max === false || $_SESSION["year-max"] === false) {
+                $valid = false;
             }
 
-            if ($valid === false) {
-
-                $_SESSION["application-error"] = true;
-                    unset($_POST, $category, $_SESSION["adv-search-category"], $_SESSION["category"], $_SESSION["category-exists"], $title, $_SESSION["adv-search-title"], $author, $_SESSION["adv-search-author"], $_SESSION["max-author-id"], $_SESSION["author-exists"], $_SESSION["adv-search-query"], $year_min, $year_max, $_SESSION["year-min"], $_SESSION["year-max"]);
-
-            } else {
-
-                $where = [];
-                $values = [];
-
-                if (!empty($_SESSION["adv-search-title"])) {
-                    $where[] = "ks.tytul LIKE '%%%s%%'";
-                        $values[] = $_SESSION["adv-search-title"];
-                }
-
-                if ($_SESSION["adv-search-category"] != "Wszystkie") {
-                    $where[] = "kt.nazwa = '%s'";
-                        $values[] = $_SESSION["adv-search-category"];
-                }
-
-                if (!empty($_SESSION["adv-search-author"])) {
-                    $where[] = "ks.id_autora = '%s'";
-                        $values[] = $_SESSION["adv-search-author"];
-                }
-
-                if (!empty($_SESSION["year-min"])) {
-                    $where[] = "ks.rok_wydania >= '%s'";
-                        $values[] = $_SESSION["year-min"];
-                }
-
-                if (!empty($_SESSION["year-max"])) {
-                    $where[] = "ks.rok_wydania <= '%s'";
-                        $values[] = $_SESSION["year-max"];
-                }
-
-                if (!empty($where)) {
-                    $_SESSION["adv-search-query"] .= " WHERE " . implode(" AND ", $where) . " GROUP BY ks.id_ksiazki ";
-                        $_SESSION["adv-search-values"] = $values;
-                }
+            if ($_SESSION["year-min"] > $_SESSION["year-max"]) {
+                $valid = false;
             }
+        }
+
+        if ($valid === false) {
+
+            $_SESSION["application-error"] = true;
+            unset($_POST, $category, $_SESSION["adv-search-category"], $_SESSION["category"], $_SESSION["category-exists"], $title, $_SESSION["adv-search-title"], $author, $_SESSION["adv-search-author"], $_SESSION["max-author-id"], $_SESSION["author-exists"], $_SESSION["adv-search-query"], $year_min, $year_max, $_SESSION["year-min"], $_SESSION["year-max"]);
+
+        } else {
+
+            $where = [];
+            $values = [];
+
+            if (!empty($_SESSION["adv-search-title"])) {
+                $where[] = "ks.tytul LIKE '%%%s%%'";
+                $values[] = $_SESSION["adv-search-title"];
+            }
+
+            if ($_SESSION["adv-search-category"] != "Wszystkie") {
+                $where[] = "kt.nazwa = '%s'";
+                $values[] = $_SESSION["adv-search-category"];
+            }
+
+            if (!empty($_SESSION["adv-search-author"])) {
+                $where[] = "ks.id_autora = '%s'";
+                $values[] = $_SESSION["adv-search-author"];
+            }
+
+            if (!empty($_SESSION["year-min"])) {
+                $where[] = "ks.rok_wydania >= '%s'";
+                $values[] = $_SESSION["year-min"];
+            }
+
+            if (!empty($_SESSION["year-max"])) {
+                $where[] = "ks.rok_wydania <= '%s'";
+                $values[] = $_SESSION["year-max"];
+            }
+
+            if (!empty($where)) {
+                $_SESSION["adv-search-query"] .= " WHERE " . implode(" AND ", $where) . " GROUP BY ks.id_ksiazki ";
+                $_SESSION["adv-search-values"] = $values;
+            }
+        }
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+        if (isset($_POST["input-search-nav"])) { // title of the book from left nav-bar
+
+            validateSearchNavTitle();
+
+        } elseif (isset($_POST["category"])) { // name of the category from main top nav-bar list
+
+            validateCategory();
+
+        } elseif (isset($_POST["input-search"])) { // main search (top-left)
+
+            validateMainInputSearch();
+
+        } elseif (isset($_POST["adv-search-title"]) && isset($_POST["adv-search-category"]) && isset($_POST["adv-search-author"]) && isset($_POST["year-min"]) && isset($_POST["year-max"])) {
+
+            validateAdvancedSearch();
+
         }
 
         header('Location: ' . $_SERVER["REQUEST_URI"], true, 303);
