@@ -12,7 +12,7 @@
                 // w momencie gdy okaże się że zmienne pochodzące z formularza rejestracji nie przeszły walidacji, zmienna logiczna przyjmuje wartość "false" - co oznacza że dane nie były prawidłowe (nie przeszły walidacji);
 
                 // Walidacja odbywa się z użycieme szeregu różych metod walidacyjnych oraz wyrażeń regularnych;
-                // Proces ten polega m.in na sprawdzeniu poprawności Imienia i Nazwiska (czy składa się tylko z liter alfabetu, czy nie zawiera znaków specjalnych itp...), sprawdzenia poprawności adresu e-mail (czy jest to poprawny składniowo e-mail ? czy zawiera znak małpy ? Czy posiada w sobie ewentualny niebezpieczny kod który należało by sanityzować itp ...), sprawdzeniu poprawności hasła (Czy zawiera conajmniej jedną dużą, jedną małą literę, jeden znak specjalny oraz jedną cyfrę, czy posiada odpowiednią długość itp ...), Czy podano prawidłową nazwę miejscowości (czy nie zawiera w sobie cyfr, znaków specjalnych ?, ... )
+                // Proces ten polega m.in na sprawdzeniu poprawności Imienia i Nazwiska (czy składa się tylko z liter alfabetu, czy nie zawiera znaków specjalnych itp...), sprawdzenia poprawności adresu e-mail (czy jest to poprawny składniowo e-mail ? czy zawiera znak małpy ? Czy posiada w sobie ewentualny niebezpieczny kod który należało by sanityzować itp ...), Czy podano prawidłową nazwę miejscowości (czy nie zawiera w sobie cyfr, znaków specjalnych ?, ... )
 
 
                 // jeśli dane są poprawne, następuje stworzenie nowego konta uzytkownika, (dodanie nowego rekordu do bazy danych - do tabeli "klienci" oraz "adres");
@@ -64,7 +64,6 @@
         // kod_miejscowosc: Dębno
         // telefon: 505101303
             // regulamin: on
-            // g-recaptcha-response:
 
 		//$_SESSION['wszystko_OK'] = true; // validation flag; // $valid
 		$_SESSION["valid"] = true; // validation flag; // $valid
@@ -168,22 +167,6 @@
 			$_SESSION["e_email"] = "Podaj poprawny adres e-mail";
 		}
 
-		// Sprawdzenie, czy hasło zawiera - jeden duży znak, jeden mały znak, jeden znak specjalny, jedna cyfra, oraz długość od 10 do 30 znaków
-
-		// hasło - musi zawierać: 
-            // przynajmniej JEDNĄ DUŻĄ LITERĘ,    ✓     (?=.*[A-Z])
-            // przynajmniej JEDNĄ MAŁĄ LITERĘ,    ✓     (?=.*[a-z])
-            // przynajmniej JEDEN ZNAK SPECJALNY  ✓     (?=.*[!@#$%^&_*+-\/\?])
-            // conajmniej JEDNĄ CYFRĘ             ✓     (?=.*[0-9])
-            // długość od 10 do 30 znaków          ✓     .{10,31}
-
-		$pass_regex = '/^((?=.*[!@#$%^&_*+-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
-
-		if (!preg_match($pass_regex, $haslo1)) {
-			$_SESSION["valid"] = false;
-			$_SESSION["e_haslo"] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&_*+-\/\?)";
-		}	
-		
 		// Verifying that both passwords are the same;
 
 		if($haslo1 !== $haslo2) {
@@ -312,39 +295,6 @@
 		}
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Sprawdzenie zaznaczenie checkbox'a CAPTCHA
-
-        // secret key for recaptcha API, used to authenticate and verify that the reCAPTCHA response sent from your website to Google's servers is valid and coming from your website
-
-        require('C:\xampp\apache\conf\config.php');
-        $secret = RECAPTCHA_SECRET_KEY; // secret-key / klucz tajny;
-
-        // sprawdzenie odpowiedzi googla, czy weryfikacja CAPTCHA się udała;
-        // pobranie zawartości pliku do zmiennej;
-
-                    //$sprawdz = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
-                    //$response = json_decode($sprawdz);
-
-                    // make HTTP request to Google reCAPTCHA API to verify the user's response; returns encoded JSON string, that needs to be decoded;
-                        // pobierz zawartość pliku z odpowiedzią Google;
-        $response = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response'])); // $response - decoded PHP object;
-
-                    //if(!($odpowiedz->success))        // można także użyć takiego zapisu
-                    //if($odpowiedz->success == false)  // właściwość success
-                    //{
-                    //	$wszystko_OK = false;
-                    //	$_SESSION['e_bot'] = "Potwierdź, że nie jesteś botem!";
-                    //}
-
-        // $response => stdClass Object ( [success] => 1 [challenge_ts] => 2023-08-15T15:41:42Z [hostname] => localhost )
-
-        if ( !$response->success) {
-            //  check if "success" property of the $response object is true or false to determine whether the user's response was valid or not.
-			$_SESSION["valid"] = false;
-			$_SESSION["e_recaptcha"] = "<h3 style='font-weight: unset; margin-bottom: 5px;'>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>";
-		}
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		// Zapamiętanie danych z formularza - Formularz pamiętający wprowadzone dane;
 		
@@ -388,7 +338,6 @@
                 [kod_miejscowosc] => Dębno
                 [telefon] => 505101303
                 [regulamin] => on
-                [g-recaptcha-response] => 03AAYGu2S24Fm478...LShKtC5g0wXrabO0wSdvgfX-UC0PbE4WFrjXc
             )
 
             SESSION -> Array
@@ -404,7 +353,6 @@
                 [register_kod_miejscowosc] => Dębno
                 [register_telefon] => 505101303
                 [register_regulamin] => 1
-                [e_recaptcha] => <h3 style='font-weight: unset; margin-bottom: 5px;'>Weryfikacja reCaptcha nie przebiegła pomyślnie</h3>
             )
         */
 

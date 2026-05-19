@@ -1,5 +1,5 @@
 <?php
-    require_once "../start-session.php"; // reCaptcha - site-key -> linia 376
+    require_once "../start-session.php";
 ?>
 
 <!DOCTYPE HTML>
@@ -73,7 +73,7 @@
                                             unset($_SESSION["register_email"]);
                                     }
                                     else {
-                                        echo "adam.nowak@wp.pl";
+                                        echo "adam.nowak1@wp.pl";
                                     } ?>">
 
                                 <?php
@@ -89,8 +89,6 @@
                             <label>
                                 Hasło: <input type="password" name="haslo1" maxlength="30" id="haslo1"
                                               required>
-
-                                <div id="feedback" style="color:red;"></div>
 
                                 <?php
                                     if (isset($_SESSION["e_haslo"])) {
@@ -120,7 +118,7 @@
                                             unset($_SESSION["register_miejscowosc"]);
                                     }
                                     else {
-                                        echo "Dolna odra";
+                                        echo "Warszawa";
                                     } ?>">
 
                                 <?php
@@ -140,7 +138,7 @@
                                             unset($_SESSION["register_ulica"]);
                                     }
                                     else {
-                                        echo "Słoneczna";
+                                        echo "Ulicowa";
                                     } ?>">
 
                                 <?php
@@ -160,7 +158,7 @@
                                             unset($_SESSION["register_numer_domu"]);
                                     }
                                     else {
-                                        echo "61";
+                                        echo "42";
                                     } ?>">
 
                                 <?php
@@ -184,7 +182,7 @@
                                             unset($_SESSION["register_kod_pocztowy"]);
                                     }
                                     else {
-                                        echo "64-600";
+                                        echo "00-000";
                                     }
                                     ?>"> <br>
 
@@ -205,7 +203,7 @@
                                             unset($_SESSION["register_kod_miejscowosc"]);
                                     }
                                     else {
-                                        echo "Dolna odra";
+                                        echo "Warszawa";
                                     } ?>">
 
                                 <?php
@@ -225,7 +223,7 @@
                                             unset($_SESSION["register_telefon"]);
                                     }
                                     else {
-                                        echo "505101303";
+                                        echo "123456789";
                                     } ?>">
 
                                 <?php
@@ -262,15 +260,7 @@
                         }
                     ?>
 
-                    <div class="g-recaptcha" data-sitekey="6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1"></div>
-
-                    <?php
-                        if (isset($_SESSION["e_recaptcha"])) { // błąd z reCaptcha;
-                            echo '<div class="error">'.$_SESSION["e_recaptcha"].'</div>';
-                                unset($_SESSION["e_recaptcha"]);
-                        }
-                    ?>
-
+                    <br>
 
                     <input type="submit" value="Zarejestruj się" id="register-button">
 
@@ -288,79 +278,11 @@
                         }
                     ?>
 
-                    <?php
-                        /*reCAPTCHA (v2) - jan.nowak.6820@gmail.com
-
-                        klucze reCAPTCHA (v2) :
-                            Site key = klucz jawny (HTML)
-                            Secret key = klucz tajny (PHP)
-
-                        Tworzenie reCaptcha:
-
-                            google.com/recaptcha
-
-                            -> v3 Admin Console
-                            -> Utwórz + (google.com/recaptcha/admin/create)
-
-                        etykieta: "XAMPP"
-                        nazwa domeny : "localhost"
-
-                        Site Key   :    	(html)    	6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1
-                        Secret Key : 		(PHP)    	6LcW48gfAAAAALDhZZERPDMpGD5aYMcLJ3s_IszG
-
-                        Umieszceznie reCAPTCHA w html :
-                        -> v3 Documentation*/
-                    ?>
-
                 </form>
 
             </div>
 
         </main>
-
-        <script>
-
-            function checkUsername(e, minLength) {
-                let elMsg = document.getElementById("feedback");
-                let elUsernmae = document.getElementById("haslo1");
-
-                let eventElement = e.target;
-                console.log("eventElement = ", eventElement);
-                let elementParent = eventElement.parentElement;
-                console.log("elementParent = ", elementParent);
-                let elementGrandParent = eventElement.parentNode.parentNode;
-                console.log("elementGrandParent = ", elementGrandParent);
-
-                if(elUsernmae.value.length < minLength) {
-                    elMsg.textContent = "Hasło musi mieć conajmniej " + minLength + " znaków ";
-
-                } else {
-                    elMsg.textContent = "";
-                }
-            }
-
-            function removeMsg(e) {
-                let elMsg = document.getElementById("feedback");
-
-                let eventElement = e.target;
-                console.log("eventElement = ", eventElement);
-
-                if(elMsg.textContent !== "") {
-                    elMsg.textContent = "";
-                }
-            }
-
-            let el = document.getElementById("haslo1");
-
-            el.addEventListener("blur", function(e) {
-                checkUsername(e, 10);
-            }, false);
-
-            el.addEventListener("focus", function(e) {
-                removeMsg(e);
-            }, false);
-
-        </script>
 
     </div>
 
@@ -372,9 +294,6 @@
     content = document.getElementById("content");
     content.style.width = "100%";
 </script>
-
-
-<script src="https://www.google.com/recaptcha/api.js"></script>
 
 </body>
 </html>

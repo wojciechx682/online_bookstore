@@ -50,7 +50,7 @@
 
                             <span class="login-row">
                                 <label>
-                                    E-mail <input type="email" name="email" required value="adam.nowak@wp.pl">
+                                    E-mail <input type="email" name="email" required value="adam.nowak1@wp.pl">
                                 </label>
                             </span>
 
@@ -59,9 +59,6 @@
                                     Hasło <input type="password" name="password" required autocomplete="off">
                                 </label>
                             </span>
-
-
-                            <div class="g-recaptcha g-recaptcha-login" data-sitekey="6LcW48gfAAAAAGUsG8FaLDe_j8U6ZPbECr8egdx1"></div>
 
                             <input type="submit" value="Zaloguj się">
 
@@ -88,13 +85,6 @@
                         if (isset($_SESSION["invalid_credentials"])) {
                             echo $_SESSION["invalid_credentials"];
                                 unset($_SESSION["invalid_credentials"]);
-                        }
-                    ?>
-
-                    <?php
-                        if(isset($_SESSION["e_recaptcha"])) {
-                            echo $_SESSION["e_recaptcha"];
-                                unset($_SESSION["e_recaptcha"]);
                         }
                     ?>
 
@@ -164,8 +154,6 @@
         </script>
 
     <?php endif; ?>
-
-    <script src="https://www.google.com/recaptcha/api.js"></script>
 
 </body>
 </html>

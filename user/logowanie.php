@@ -19,19 +19,6 @@
                     exit();
         } else { // email is correct; (email is valid - filter_var);
 
-            require('C:\xampp\apache\conf\config.php');
-            $secret = RECAPTCHA_SECRET_KEY; // re-captcha secret-key
-
-            // make HTTP request to Google reCAPTCHA API to verify the user's response; returns encoded JSON string, that needs to be decoded;
-                // pobierz zawartość pliku z odpowiedzią Google;
-            $response = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response'])); // $response - decoded PHP object;
-            // $response => stdClass Object ( [success] => 1 [challenge_ts] => 2023-08-15T15:41:42Z [hostname] => localhost )
-            if (!$response->success) {
-                $_SESSION["e_recaptcha"] = '<span class="error">Weryfikacja reCaptcha nie przebiegła pomyślnie</span>';
-                    header('Location: zaloguj.php');
-                        exit();
-            }
-
             $_SESSION["invalid_credentials"] = '<span class="error">Nieprawidłowy e-mail lub hasło</span>'; // initialize erros message;
 
 			query("SELECT kl.id_klienta, kl.haslo, kl.imie, kl.nazwisko, kl.telefon, kl.email, kl.adres_id,

@@ -161,30 +161,21 @@
 
             if($newPassword === $confirmPassword) {
 
-                $pass_regex = '/^((?=.*[!@#$%^&_*+-\/\?])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])).{10,31}$/'; // https://regex101.com/
+                $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                $data = [$newPassword, $_SESSION["email"]];
+                    //unset($_SESSION["e-haslo"]);
+                $updateSuccessful = query("UPDATE customers SET haslo = '%s' WHERE email = '%s'", "", $data);
 
-                if ( !preg_match($pass_regex, $newPassword) ) {
+                if($updateSuccessful) {
 
-                    $_SESSION["e-haslo"] = "Hasło musi posiadać od 10 do 30 znaków, zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny (!@#$%^&_*+-\/\?)";
+                    $_SESSION["password-changed"] = true;
+
+                    query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["email"]);
+
+                    header('Location: zaloguj.php', true, 303); exit(); // redirect with HTTP 303 response code;
 
                 } else {
-
-                    $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-                    $data = [$newPassword, $_SESSION["email"]];
-                        //unset($_SESSION["e-haslo"]);
-                    $updateSuccessful = query("UPDATE customers SET haslo = '%s' WHERE email = '%s'", "", $data);
-
-                    if($updateSuccessful) {
-
-                        $_SESSION["password-changed"] = true;
-
-                        query("DELETE FROM password_reset_tokens WHERE email='%s'", "", $_SESSION["email"]);
-
-                        header('Location: zaloguj.php', true, 303); exit(); // redirect with HTTP 303 response code;
-
-                    } else {
-                        $_SESSION["e-haslo"] = "Wystąpił błąd. Nie udało się zmienić hasła";
-                    }
+                    $_SESSION["e-haslo"] = "Wystąpił błąd. Nie udało się zmienić hasła";
                 }
 
             } else {

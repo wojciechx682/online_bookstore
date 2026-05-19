@@ -1606,10 +1606,6 @@ hr.login-form-hr-line {
     margin-bottom: 10px;
 }
 
-div.g-recaptcha {
-    margin-top: 18px;
-}
-
 form#register-form input[type="submit"] {
     margin-top: 18px;
 }
@@ -1702,10 +1698,6 @@ a.a-login-page-link {
     margin: 18px 0 18px 0;
     width: 280px;
     color: #000000
-}
-
-div.g-recaptcha-login {
-    margin-bottom: 20px;
 }
 
 h3#cart-header {
